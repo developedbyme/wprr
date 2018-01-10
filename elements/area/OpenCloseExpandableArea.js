@@ -2,6 +2,14 @@ import React from "react";
 
 import TWEEN from "tween.js";
 
+//METODO: this needs to move out globally
+function animate(time) {
+	requestAnimationFrame(animate);
+	TWEEN.update(time);
+}
+
+requestAnimationFrame(animate);
+
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 //import OpenCloseExpandableArea from "wprr/elements/area/OpenCloseExpandableArea";
@@ -21,6 +29,9 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	}
 	
 	_setHeightElement(aElement) {
+		console.log("wprr/interaction/OpenCloseExpandableArea::_setHeightElement");
+		console.log(aElement);
+		
 		this._heightElement = aElement;
 		this._updateHeight();
 	}
