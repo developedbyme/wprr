@@ -23,7 +23,7 @@ export default class SelectSection extends ManipulationBaseObject {
 	}
 	
 	_renderClonedElement() {
-		console.log("wprr/elements/area/SelectSection::_renderClonedElement");
+		//console.log("wprr/elements/area/SelectSection::_renderClonedElement");
 		
 		//MENOTE: this.props.children can be undefiend, the only child or an array
 		var children = this.props.children;
