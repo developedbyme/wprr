@@ -14,10 +14,13 @@ export default class StepButtonWithLimit extends StepButton {
 	}
 	
 	_shouldTriggerValueChange(aNewValue) {
+		//console.log("wprr/manipulation/ManipulationBaseObject::_shouldTriggerValueChange");
 		//MENOTE: always return true, intented to be overriden.
 		
 		let minValue = this.getSourcedProp("minValue");
 		let maxValue = this.getSourcedProp("maxValue");
+		
+		//console.log(aNewValue, minValue, maxValue);
 		if(minValue != null && aNewValue < minValue) {
 			return  false;
 		}
@@ -26,18 +29,6 @@ export default class StepButtonWithLimit extends StepButton {
 		}
 		
 		return true;
-	}
-	
-	_callback_change(aEvent) {
-		//console.log("wprr/elements/interaction/StepButtonWithLimit::_callback_change");
-		
-		var valueName = this.getSourcedPropWithDefault("valueName", "value");
-		var stepValue = this.getSourcedPropWithDefault("stepValue", 1);
-		
-		var currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
-		var newValue = currentValue+stepValue;
-		
-		this.getReferences().getObject("value/" + valueName).updateValue(valueName, newValue, this.props.additionalData);
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -51,6 +42,7 @@ export default class StepButtonWithLimit extends StepButton {
 	}
 	
 	_manipulateProps(aReturnObject) {
+		//console.log("wprr/manipulation/ManipulationBaseObject::_manipulateProps");
 		let returnObject = super._manipulateProps(aReturnObject);
 		
 		returnObject["active"] = this._shouldTriggerValueChange(this.getNextValue());

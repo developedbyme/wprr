@@ -26,8 +26,15 @@ export default class StepButton extends ManipulationBaseObject {
 	_triggerValueChange(aNewValue, aAdditionalData) {
 		
 		let valueName = this.getSourcedPropWithDefault("valueName", "value");
+		let fullValuePath = "value/" + valueName;
 		
-		this.getReferences().getObject("value/" + valueName).updateValue(valueName, aNewValue, aAdditionalData);
+		const updateObject = this.getReferences().getObject(fullValuePath);
+		if(updateObject) {
+			updateObject.updateValue(valueName, aNewValue, aAdditionalData);
+		}
+		else {
+			console.warn("No controller listens to " + fullValuePath + ". Can't trigger update.", this);
+		}
 	}
 	
 	getNextValue() {

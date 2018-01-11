@@ -5,14 +5,14 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 import SelectSection from "wprr/elements/area/SelectSection";
 import SourceData from "wprr/reference/SourceData";
 
+import OnOffArea from "wprr/elements/area/OnOffArea";
+
 //import OnOffButton from "wprr/elements/interaction/OnOffButton";
 export default class OnOffButton extends ManipulationBaseObject {
 
 	constructor(props) {
 		//console.log("wprr/elements/interaction/OnOffButton::constructor");
 		super(props);
-		
-		this._mainElementType = "div";
 		
 		this._callback_changeBound = this._callback_change.bind(this);
 	}
@@ -38,7 +38,7 @@ export default class OnOffButton extends ManipulationBaseObject {
 		
 		var currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
 		
-		aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
+		aReturnObject["value"] = (currentValue === trueValue);
 		
 		return aReturnObject;
 	}
@@ -47,8 +47,8 @@ export default class OnOffButton extends ManipulationBaseObject {
 		//console.log("wprr/elements/interaction/OnOffButton::_getChildToClone");
 		//console.log(this);
 		
-		return [<SelectSection>
+		return [<OnOffArea>
 			{this.props.children}
-		</SelectSection>];
+		</OnOffArea>];
 	}
 }
