@@ -17,32 +17,55 @@ export default class StepButton extends ManipulationBaseObject {
 		this._callback_changeBound = this._callback_change.bind(this);
 	}
 	
+	_shouldTriggerValueChange(aNewValue) {
+		//MENOTE: always return true, intented to be overriden.
+		
+		return true;
+	}
+	
+	_triggerValueChange(aNewValue, aAdditionalData) {
+		
+		let valueName = this.getSourcedPropWithDefault("valueName", "value");
+		
+		this.getReferences().getObject("value/" + valueName).updateValue(valueName, aNewValue, aAdditionalData);
+	}
+	
+	getNextValue() {
+		let valueName = this.getSourcedPropWithDefault("valueName", "value");
+		let stepValue = this.getSourcedPropWithDefault("stepValue", 1);
+		
+		let currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
+		let newValue = currentValue+stepValue;
+		
+		return newValue;
+	}
+	
 	_callback_change(aEvent) {
 		//console.log("wprr/elements/interaction/StepButton::_callback_change");
 		
-		var valueName = this.getSourcedPropWithDefault("valueName", "value");
-		var stepValue = this.getSourcedPropWithDefault("stepValue", 1);
+		let newValue = this.getNextValue();
 		
-		var currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
-		var newValue = currentValue+stepValue;
-		
-		this.getReferences().getObject("value/" + valueName).updateValue(valueName, newValue, this.props.additionalData);
+		if(this._shouldTriggerValueChange(newValue)) {
+			this._triggerValueChange(newValue, this.props.additionalData); //METODO: source additional data
+		}
 	}
 	
 	_removeUsedProps(aReturnObject) {
 		//console.log("wprr/manipulation/ManipulationBaseObject::_removeUsedProps");
-		let returnArray = super._removeUsedProps(aReturnObject);
+		let returnObject = super._removeUsedProps(aReturnObject);
 		
-		delete returnArray["valueName"];
-		delete returnArray["stepValue"];
-		delete returnArray["value"];
+		delete returnObject["valueName"];
+		delete returnObject["stepValue"];
+		delete returnObject["value"];
 		
-		return returnArray;
+		return returnObject;
 	}
 	
 	_manipulateProps(aReturnObject) {
-		aReturnObject["onClick"] = this._callback_changeBound;
+		let returnObject = super._manipulateProps(aReturnObject);
 		
-		return aReturnObject;
+		returnObject["onClick"] = this._callback_changeBound;
+		
+		return returnObject;
 	}
 }
