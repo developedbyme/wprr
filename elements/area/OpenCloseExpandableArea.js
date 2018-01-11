@@ -59,7 +59,7 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 		//console.log("wprr/interaction/OpenCloseExpandableArea::componentWillReceiveProps");
 		//console.log(aNextProps);
 		
-		let open = this.resolveSourcedData(aNextProps["open"]);
+		let open = this.resolveSourcedDataInStateChange(aNextProps["open"], {"props": aNextProps, "state": this.state});
 		
 		if(open !== this.state["open"]) {
 			let tweenParameters = {"envelope": this.state.envelope};

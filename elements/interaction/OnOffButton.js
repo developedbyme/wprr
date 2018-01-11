@@ -3,6 +3,7 @@ import React from "react";
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import SelectSection from "wprr/elements/area/SelectSection";
+import SourceData from "wprr/reference/SourceData";
 
 //import OnOffButton from "wprr/elements/interaction/OnOffButton";
 export default class OnOffButton extends ManipulationBaseObject {
@@ -23,7 +24,7 @@ export default class OnOffButton extends ManipulationBaseObject {
 		var trueValue = this.getSourcedPropWithDefault("trueValue", true);
 		var falseValue = this.getSourcedPropWithDefault("falseValue", false);
 		
-		var currentValue = this.props[valueName];
+		var currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
 		var newValue = (currentValue === trueValue) ? falseValue : trueValue;
 		
 		this.getReferences().getObject("value/" + valueName).updateValue(valueName, newValue, this.props.additionalData);
@@ -35,7 +36,7 @@ export default class OnOffButton extends ManipulationBaseObject {
 		var valueName = this.getSourcedPropWithDefault("valueName", "value");
 		var trueValue = this.getSourcedPropWithDefault("trueValue", true);
 		
-		var currentValue = this.props[valueName];
+		var currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
 		
 		aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
 		
