@@ -2,6 +2,8 @@ import React from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
+import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
+
 //import Adjust from "wprr/manipulation/Adjust";
 export default class Adjust extends ManipulationBaseObject {
 

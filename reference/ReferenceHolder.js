@@ -29,7 +29,7 @@ export default class ReferenceHolder {
 	getObject(aName) {
 		//console.log("wprr/reference/ReferenceHolder::getObject");
 		
-		if(!this._objects[aName]) {
+		if(this._objects[aName] === undefined) {
 			if(this._parentReferenceHolder) {
 				return this._parentReferenceHolder.getObject(aName);
 			}

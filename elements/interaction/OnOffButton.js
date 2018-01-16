@@ -2,7 +2,6 @@ import React from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
-import SelectSection from "wprr/elements/area/SelectSection";
 import SourceData from "wprr/reference/SourceData";
 
 import OnOffArea from "wprr/elements/area/OnOffArea";

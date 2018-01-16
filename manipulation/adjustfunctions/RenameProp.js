@@ -1,13 +1,18 @@
+import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
+
 //import RenameProp from "wprr/manipulation/adjustfunctions/RenameProp";
 /**
  * Adjust function that renames a prop.
  */
-export default class RenameProp {
+export default class RenameProp extends AdjustFunction {
 	
 	/**
 	 * Constructor
 	 */
 	constructor() {
+		
+		super();
+		
 		this._fromName = "notSet";
 		this._toName = "notSet";
 	}
@@ -53,9 +58,9 @@ export default class RenameProp {
 	 *
 	 * @return	RenameProp	The new instance.
 	 */
-	static create(FromName, aToName) {
+	static create(aFromName, aToName) {
 		let newRenameProp = new RenameProp();
-		newRenameProp.setNames(FromName, aToName);
+		newRenameProp.setNames(aFromName, aToName);
 		
 		return newRenameProp;
 	}
