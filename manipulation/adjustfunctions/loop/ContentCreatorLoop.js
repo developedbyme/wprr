@@ -56,6 +56,19 @@ export default class ContentCreatorLoop extends AdjustFunction {
 	}
 	
 	/**
+	 * Function that removes the used props
+	 *
+	 * @param	aProps	Object	The props object that should be adjusted
+	 */
+	removeUsedProps(aProps) {
+		//METODO: change this to actual source cleanup
+		delete aProps["input"];
+		delete aProps["contentCreator"];
+		delete aProps["spacingContentCreator"];
+		delete aProps["noItemsContentCreator"];
+	}
+	
+	/**
 	 * Sets the class based on the prop.
 	 *
 	 * @param	aData				*				The data to adjust
@@ -74,8 +87,6 @@ export default class ContentCreatorLoop extends AdjustFunction {
 		let dataArray = this.resolveSource(this.data, aData, aManipulationObject);
 		let outputName = this.outputName;
 		
-		
-		
 		if(!contentCreator) {
 			console.error("Loop doesn't have content creator.", this);
 			
@@ -83,7 +94,7 @@ export default class ContentCreatorLoop extends AdjustFunction {
 			return aData;
 		}
 		
-		//METODO: remove used props
+		this.removeUsedProps(aData);
 		
 		let currentArray = dataArray;
 		if(currentArray) {
