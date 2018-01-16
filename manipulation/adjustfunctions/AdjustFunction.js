@@ -1,3 +1,5 @@
+import SourceData from "wprr/reference/SourceData";
+
 //import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 /**
  * Base object for adjust functions.
@@ -9,6 +11,35 @@ export default class AdjustFunction {
 	 */
 	constructor() {
 		
+	}
+	
+	/**
+	 * Function that removes the used props
+	 *
+	 * @param	aProps	Object	The props object that should be adjusted
+	 */
+	removeUsedProps(aProps) {
+		//MENOTE: should be overridden
+	}
+	
+	/**
+	 * Resolves a source
+	 * 
+	 * @param	aData				*				The data to resolve
+	 * @param	aProps				Object			The object with the current props.
+	 * @param	aManipulationObject	WprrBaseObject	The manipulation object that is performing the adjustment. Used to resolve sourcing.
+	 */
+	resolveSource(aData, aProps, aManipulationObject) {
+		//console.log("wprr/manipulation/adjustfunctions/AdjustFunction::resolveSource");
+		
+		if(aData instanceof SourceData) {
+			
+			let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state};
+			
+			return aManipulationObject.resolveSourcedDataInStateChange(aData, changePropsAndStateObject);
+		}
+		
+		return aData;
 	}
 	
 	/**

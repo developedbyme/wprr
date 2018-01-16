@@ -33,7 +33,7 @@ export default class ClassFromProp extends AdjustFunction {
 	/**
 	 * Sets the options for this switch
 	 *
-	 * @param	aOptions	Array	Teh array of options
+	 * @param	aOptions	Array	The array of options
 	 *
 	 * @return	ClassFromProp	self
 	 */
@@ -86,7 +86,7 @@ export default class ClassFromProp extends AdjustFunction {
 	 * Creates a new instance of this class.
 	 *
 	 * @param	aPropName	String	The name of the prop to get values from.
-	 * @param	aOptions	Array	Teh array of options
+	 * @param	aOptions	Array	The array of options
 	 *
 	 * @return	ClassFromProp	The new instance.
 	 */

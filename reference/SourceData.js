@@ -30,7 +30,20 @@ export default class SourceData {
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
+		//console.log("wprr/reference/SourceData::getSourceInStateChange");
 		return SourceData.getSource(this._type, this._path, aFromObject, aNewPropsAndState);
+	}
+	
+	removeUsedProps(aProps) {
+		if(this._type === "prop") {
+			let propName = this._path;
+			let dotIndex = propName.indexOf(".");
+			if(dotIndex !== -1) {
+				propName = propName.substring(dotIndex);
+			}
+			
+			delete aProps[propName];
+		}
 	}
 	
 	static create(aType, aPath) {
@@ -42,12 +55,17 @@ export default class SourceData {
 	}
 	
 	static getSource(aType, aPath, aFromObject, aPropsAndState) {
+		//console.log("wprr/reference/SourceData::getSource");
 		
 		const references = aFromObject.getReferences();
 		
 		switch(aType) {
 			case "prop":
-				return objectPath.get(aPropsAndState.props, aPath);
+				let returnData = objectPath.get(aPropsAndState.props, aPath);
+				if(returnData instanceof SourceData) {
+					returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+				}
+				return returnData;
 			case "acf":
 				return references.getObject("wprr/postData").getAcfData(aPath);
 			case "acfRow":

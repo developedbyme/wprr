@@ -34,23 +34,32 @@ export default class Adjust extends ManipulationBaseObject {
 		return aReturnObject;
 	}
 	
+	_getAdjustFunctions() {
+		let adjust = this.getSourcedProp("adjust");
+		if(adjust) {
+			if(adjust instanceof Array) {
+				return adjust
+			}
+			else {
+				return [adjust];
+			}
+		}
+		
+		return [];
+	}
+	
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/manipulation/Adjust::_manipulateProps");
 		
-		let adjust = this.getSourcedProp("adjust");
+		let adjustArray = this._getAdjustFunctions();
 		
 		let currentObject = aReturnObject;
 		
-		if(adjust) {
-			if(adjust instanceof Array) {
-				let currentArray = adjust;
-				let currentArrayLength = currentArray.length;
-				for(let i = 0; i < currentArrayLength; i++) {
-					currentObject = this._adjust(currentArray[i], currentObject);
-				}
-			}
-			else {
-				currentObject = this._adjust(adjust, currentObject);
+		if(adjustArray.length > 0) {
+			let currentArray = adjustArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				currentObject = this._adjust(currentArray[i], currentObject);
 			}
 		}
 		else {
