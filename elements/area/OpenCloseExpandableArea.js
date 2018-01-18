@@ -74,6 +74,12 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 		}
 	}
 	
+	componentWillMount() {
+		if(this.getSourcedProp("open")) {
+			this.setState({"open": true, "envelope": 1});
+		}
+	}
+	
 	componentDidMount() {
 		//console.log("wprr/interaction/OpenCloseExpandableArea::componentDidMount");
 		
