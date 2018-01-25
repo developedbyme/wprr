@@ -63,7 +63,17 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 	}
 	
 	_performClone(aChild, aProps) {
-		var callArray = [aChild, aProps];
+		
+		let newProps = aProps;
+		if(aProps.className && aChild.props && aChild.props.className) {
+			newProps = new Object();
+			for(let objectName in aProps) {
+				newProps[objectName] = aProps[objectName];
+			}
+			newProps.className = aProps.className + " " + aChild.props.className;
+		}
+		
+		var callArray = [aChild, newProps];
 		
 		var firstChildChildren = aChild.props.children;
 		if(!firstChildChildren) {

@@ -2,11 +2,11 @@ import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
 
-//import AnyOf from "wprr/manipulation/adjustfunctions/logic/AnyOf";
+//import ClosestIndex from "wprr/manipulation/adjustfunctions/logic/ClosestIndex";
 /**
  * Adjust function that creates content from an array of data.
  */
-export default class AnyOf extends AdjustFunction {
+export default class ClosestIndex extends AdjustFunction {
 	
 	/**
 	 * Constructor
@@ -16,7 +16,8 @@ export default class AnyOf extends AdjustFunction {
 		super();
 		
 		this.data = SourceData.create("prop", "input");
-		this.matchingValues = SourceData.create("prop", "matchingValues");
+		this.index = SourceData.create("prop", "index");
+		this.numberOfItems = -1;
 		this.outputName = "output";
 		
 	}
@@ -25,18 +26,22 @@ export default class AnyOf extends AdjustFunction {
 	 * Sets up all the data for this adjust function. If null is used for any parameter it will not overwrite the current setting
 	 *
 	 * @param	aData					* | SourceData			The data array to logic over.
-	 * @param	aMatchingValues			Array | SourceData		The array of values to match to.
+	 * @param	aIndex					Number | SourceData		The index to be close to.
+	 * @param	aNumberOfItems			Number | SourceData		The number of items before the range repeats.
 	 * @param	aOutputName				String					The name of the prop to set the data to.
 	 *
-	 * @return	AnyOf	self
+	 * @return	ClosestIndex	self
 	 */
-	setup(aData = null, aMatchingValues = null, aOutputName = null) {
+	setup(aData = null, aIndex = null, aNumberOfItems = null, aOutputName = null) {
 		
 		if(aData !== null) {
 			this.data = aData;
 		}
-		if(aMatchingValues !== null) {
-			this.matchingValues = aMatchingValues;
+		if(aIndex !== null) {
+			this.index = aIndex;
+		}
+		if(aNumberOfItems !== null) {
+			this.numberOfItems = aNumberOfItems;
 		}
 		if(aOutputName !== null) {
 			this.outputName = aOutputName;
@@ -53,7 +58,8 @@ export default class AnyOf extends AdjustFunction {
 	removeUsedProps(aProps) {
 		//METODO: change this to actual source cleanup
 		delete aProps["input"];
-		delete aProps["matchingValues"];
+		delete aProps["index"];
+		delete aProps["numberOfItems"];
 	}
 	
 	/**
@@ -65,15 +71,23 @@ export default class AnyOf extends AdjustFunction {
 	 * @return	*	The modified data
 	 */
 	adjust(aData, aManipulationObject) {
-		//console.log("wprr/manipulation/adjustfunctions/logic/AnyOf::adjust");
+		//console.log("wprr/manipulation/adjustfunctions/logic/ClosestIndex::adjust");
 		
-		let matchingValues = this.resolveSource(this.matchingValues, aData, aManipulationObject);
+		let index = this.resolveSource(this.index, aData, aManipulationObject);
 		let data = this.resolveSource(this.data, aData, aManipulationObject);
+		let numberOfItems = this.resolveSource(this.numberOfItems, aData, aManipulationObject);
 		let outputName = this.outputName;
 		
 		this.removeUsedProps(aData);
 		
-		let returnValue = (matchingValues.indexOf(data) !== -1);
+		//METODO:
+		let currentValue = Math.round(data);
+		if(numberOfItems > 0) {
+			let times = Math.floor(currentValue/numberOfItems);
+			currentValue -= times*numberOfItems;
+		}
+		
+		let returnValue = (currentValue === index);
 		
 		aData[outputName] = returnValue;
 		
@@ -83,17 +97,18 @@ export default class AnyOf extends AdjustFunction {
 	/**
 	 * Creates a new instance of this class.
 	 *
-	 * @param	aData					* | SourceData			The data array to logic over.
-	 * @param	aMatchingValues			Array | SourceData		The array of values to match to.
+	 * @param	aData					* | SourceData			The input data.
+	 * @param	aIndex					Number | SourceData		The index to be close to.
+	 * @param	aNumberOfItems			Number | SourceData		The number of items before the range repeats.
 	 * @param	aOutputName				String					The name of the prop to set the data to.
 	 *
-	 * @return	AnyOf	The new instance.
+	 * @return	ClosestIndex	The new instance.
 	 */
-	static create(aData = null, aMatchingValues = null, aOutputName = null) {
-		let newAnyOf = new AnyOf();
+	static create(aData = null, aIndex = null, aNumberOfItems = null, aOutputName = null) {
+		let newClosestIndex = new ClosestIndex();
 		
-		newAnyOf.setup(aData, aMatchingValues, aOutputName);
+		newClosestIndex.setup(aData, aIndex, aNumberOfItems, aOutputName);
 		
-		return newAnyOf;
+		return newClosestIndex;
 	}
 }

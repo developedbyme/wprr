@@ -61,11 +61,21 @@ export default class SourceData {
 		
 		switch(aType) {
 			case "prop":
-				let returnData = objectPath.get(aPropsAndState.props, aPath);
-				if(returnData instanceof SourceData) {
-					returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+				{
+					let returnData = objectPath.get(aPropsAndState.props, aPath);
+					if(returnData instanceof SourceData) {
+						returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return returnData;
 				}
-				return returnData;
+			case "state":
+				{
+					let returnData = objectPath.get(aPropsAndState.state, aPath);
+					if(returnData instanceof SourceData) {
+						returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return returnData;
+				}
 			case "acf":
 				return references.getObject("wprr/postData").getAcfData(aPath);
 			case "acfRow":
