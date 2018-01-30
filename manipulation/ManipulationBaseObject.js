@@ -114,8 +114,10 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentChild = currentArray[i];
 			
-			let newChild = this._performClone(currentChild, mainElementProps);
-			returnArray.push(newChild);
+			if(currentChild !== null) {
+				let newChild = this._performClone(currentChild, mainElementProps);
+				returnArray.push(newChild);
+			}
 		}
 		
 		return <Fragment>
