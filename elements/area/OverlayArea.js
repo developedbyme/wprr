@@ -23,11 +23,9 @@ export default class OverlayArea extends WprrBaseObject {
 		this._addMainElementClassName("overlay-area");
 		this._addMainElementClassName("absolute-container");
 		
-		let closeButtonMarkup = <Markup><TriggerButton trigger="closeCurrentOverlay" /><MarkupChildren placement="all" /></Markup>;
+		let closeButtonMarkup = <Markup><TriggerButton trigger="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
 		
-		this._closeButtonTemplate = <MarkupPlacement placement="closeButton" passOnInjection={true}>
-			<UseMarkup markup={closeButtonMarkup} />
-		</MarkupPlacement>;
+		this._closeButtonTemplate = <MarkupPlacement placement="closeButton" passOnInjection={true}><UseMarkup markup={closeButtonMarkup} /></MarkupPlacement>;
 	}
 	
 	_generateId() {
@@ -39,8 +37,9 @@ export default class OverlayArea extends WprrBaseObject {
 	trigger(aName, aValue) {
 		switch(aName) {
 			case "showOverlay":
-				//METODO: templates
-				this.showOverlay(this._generateId(), aValue);
+				let template = this.getSourcedProp("template");
+				let templateContent = [this._closeButtonTemplate, <MarkupPlacement placement="content">{aValue}</MarkupPlacement>];
+				this.showOverlay(this._generateId(), <UseMarkup markup={template} dynamicChildren={templateContent} />);
 				break;
 			case "hideOverlay":
 				this.hideOverlay(aValue);
