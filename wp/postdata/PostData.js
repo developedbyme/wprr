@@ -88,7 +88,7 @@ export default class PostData {
 				passedPath.push(currentPathPart);
 				
 				if(!currentObject || !currentObject[currentPathPart]) {
-					console.warn("No acf field for path", passedPath);
+					console.warn("No acf field for path", passedPath, this);
 					return null;
 				}
 				
