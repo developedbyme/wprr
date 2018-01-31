@@ -23,7 +23,7 @@ export default class OverlayArea extends WprrBaseObject {
 		this._addMainElementClassName("overlay-area");
 		this._addMainElementClassName("absolute-container");
 		
-		let closeButtonMarkup = <Markup><TriggerButton trigger="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
+		let closeButtonMarkup = <Markup><TriggerButton triggerName="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
 		
 		this._closeButtonTemplate = <MarkupPlacement placement="closeButton" passOnInjection={true}><UseMarkup markup={closeButtonMarkup} /></MarkupPlacement>;
 	}
@@ -48,11 +48,9 @@ export default class OverlayArea extends WprrBaseObject {
 	}
 	
 	showOverlay(aId, aContent) {
-		let overlaysArray = this.state["overlays"];
+		let overlaysArray = ([]).concat(this.state["overlays"]);
 		
-		let localTrigger = null; //METODO: implement local trigger
-		
-		overlaysArray.push({"id": aId, "content": aContent, "localTrigger": localTrigger});
+		overlaysArray.push({"id": aId, "content": aContent});
 		
 		let newStateObject = {"overlays": overlaysArray};
 		
@@ -62,14 +60,38 @@ export default class OverlayArea extends WprrBaseObject {
 	}
 	
 	hideOverlay(aId) {
-		//METODO
+		console.log("wprr/elements/area/OverlayArea::hideOverlay");
+		
+		let overlaysArray = ([]).concat(this.state["overlays"]);
+		
+		let currentArray = overlaysArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentOverlay = currentArray[i];
+			if(currentOverlay["id"] === aId) {
+				currentArray.splice(i, 1);
+				break;
+			}
+		}
+		
+		let newStateObject = {"overlays": overlaysArray};
+		
+		//METODO: use external state instead
+		
+		this.setState(newStateObject);
 	}
 	
 	_renderOverlay(aOverlayData) {
 		
 		let overlayId = aOverlayData.id;
-		//METODO: create the trigger here
-		let injectData = {"overlay/id": overlayId, "trigger/closeCurrentOverlay": aOverlayData.localTrigger};
+		
+		let triggerFunction = (function() {
+			console.log("triggerFunction");
+			this.trigger("hideOverlay", overlayId);
+		}).bind(this);
+		let localTriggerObject = {"trigger": triggerFunction};
+		
+		let injectData = {"overlay/id": overlayId, "trigger/closeCurrentOverlay": localTriggerObject};
 		
 		let returnElement = <ReferenceInjection key={"overlay-" + overlayId} injectData={injectData}>
 			{aOverlayData.content}
