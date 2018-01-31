@@ -16,16 +16,12 @@ export default class OverlayArea extends WprrBaseObject {
 	constructor (props) {
 		super(props);
 		
-		this.state["overlays"] = new Array();
-		
 		this._internalIdCounter = 0;
 		
 		this._addMainElementClassName("overlay-area");
 		this._addMainElementClassName("absolute-container");
 		
-		let closeButtonMarkup = <Markup><TriggerButton triggerName="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
-		
-		this._closeButtonTemplate = <MarkupPlacement placement="closeButton" passOnInjection={true}><UseMarkup markup={closeButtonMarkup} /></MarkupPlacement>;
+		this._closeButtonTemplate = OverlayArea.createCloseButtonMarkup();
 	}
 	
 	_generateId() {
@@ -38,8 +34,8 @@ export default class OverlayArea extends WprrBaseObject {
 		switch(aName) {
 			case "showOverlay":
 				let template = this.getSourcedProp("template");
-				let templateContent = [this._closeButtonTemplate, <MarkupPlacement placement="content">{aValue}</MarkupPlacement>];
-				this.showOverlay(this._generateId(), <UseMarkup markup={template} dynamicChildren={templateContent} />);
+				let useMarkup = OverlayArea.createUseMarkup(template, this._closeButtonTemplate, aValue);
+				this.showOverlay(this._generateId(), useMarkup);
 				break;
 			case "hideOverlay":
 				this.hideOverlay(aValue);
@@ -47,22 +43,20 @@ export default class OverlayArea extends WprrBaseObject {
 		}
 	}
 	
+	
+	
 	showOverlay(aId, aContent) {
-		let overlaysArray = ([]).concat(this.state["overlays"]);
+		let overlaysArray = ([]).concat(this.props.overlays);
 		
 		overlaysArray.push({"id": aId, "content": aContent});
 		
-		let newStateObject = {"overlays": overlaysArray};
-		
-		//METODO: use external state instead
-		
-		this.setState(newStateObject);
+		this.getReference("value/overlays").updateValue("overlays", overlaysArray, null);
 	}
 	
 	hideOverlay(aId) {
-		console.log("wprr/elements/area/OverlayArea::hideOverlay");
+		//console.log("wprr/elements/area/OverlayArea::hideOverlay");
 		
-		let overlaysArray = ([]).concat(this.state["overlays"]);
+		let overlaysArray = ([]).concat(this.props.overlays);
 		
 		let currentArray = overlaysArray;
 		let currentArrayLength = currentArray.length;
@@ -74,11 +68,7 @@ export default class OverlayArea extends WprrBaseObject {
 			}
 		}
 		
-		let newStateObject = {"overlays": overlaysArray};
-		
-		//METODO: use external state instead
-		
-		this.setState(newStateObject);
+		this.getReference("value/overlays").updateValue("overlays", overlaysArray, null);
 	}
 	
 	_renderOverlay(aOverlayData) {
@@ -86,7 +76,6 @@ export default class OverlayArea extends WprrBaseObject {
 		let overlayId = aOverlayData.id;
 		
 		let triggerFunction = (function() {
-			console.log("triggerFunction");
 			this.trigger("hideOverlay", overlayId);
 		}).bind(this);
 		let localTriggerObject = {"trigger": triggerFunction};
@@ -103,7 +92,7 @@ export default class OverlayArea extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let overlayElement = null;
-		let overlays = this.state["overlays"];
+		let overlays = this.props.overlays;
 		if(overlays.length > 0) {
 			let overlayElements = new Array();
 			let currentArray = overlays;
@@ -127,5 +116,16 @@ export default class OverlayArea extends WprrBaseObject {
 				{overlayElement}
 			</ReferenceInjection>
 		</wrapper>;
+	}
+	
+	static createCloseButtonMarkup() {
+		let closeButtonMarkup = <Markup><TriggerButton triggerName="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
+		
+		return <MarkupPlacement placement="closeButton" passOnInjection={true}><UseMarkup markup={closeButtonMarkup} /></MarkupPlacement>;
+	}
+	
+	static createUseMarkup(aTemplate, aCloseButton, aContent) {
+		let templateContent = [aCloseButton, <MarkupPlacement placement="content">{aContent}</MarkupPlacement>];
+		return <UseMarkup markup={aTemplate} dynamicChildren={templateContent} />;
 	}
 }
