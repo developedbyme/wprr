@@ -71,6 +71,10 @@ export default class PostData {
 		return null;
 	}
 	
+	getSingleMetaData(aField) {
+		return this.getFirstObjectInArray(this.getMetaData(aField));
+	}
+	
 	getAcfData() {
 		//console.log("wprr/wp/postdata/PostData::getAcfData");
 		//console.log(this._data);

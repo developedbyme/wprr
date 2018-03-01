@@ -50,8 +50,8 @@ export default class WpData extends Qualification {
 	 * @return	Boolean	The result of the evalutation. Always true.
 	 */
 	qualify(aData) {
-		//console.log("wprr/routing/qualification/wp/WpData::qualify");
-		//console.log(aData);
+		console.log("wprr/routing/qualification/wp/WpData::qualify");
+		console.log(aData);
 		
 		let path = this._path;
 		
@@ -79,7 +79,7 @@ export default class WpData extends Qualification {
 	/**
 	 * Creates a new instance of this class. 
 	 *
-	 * @param	aTemplateName	String	The name of the WP page tempalte that should be matched.
+	 * @param	aTemplateName	String	The name of the WP page template that should be matched.
 	 *
 	 * @return	WpData	The new instance
 	 */
@@ -87,6 +87,21 @@ export default class WpData extends Qualification {
 		let newWpData = new WpData();
 		newWpData.setDataPath("queriedData.meta._wp_page_template.0");
 		newWpData.setMatchValue(aTemplateName);
+		
+		return newWpData;
+	}
+	
+	/**
+	 * Creates a new instance of this class. 
+	 *
+	 * @param	aPostType	String	The name of the WP post type that should be matched.
+	 *
+	 * @return	WpData	The new instance
+	 */
+	static createForPostType(aPostType) {
+		let newWpData = new WpData();
+		newWpData.setDataPath("templateSelection.post_type");
+		newWpData.setMatchValue(aPostType);
 		
 		return newWpData;
 	}
