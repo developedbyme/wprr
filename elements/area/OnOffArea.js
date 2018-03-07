@@ -18,7 +18,15 @@ export default class OnOffArea extends ManipulationBaseObject {
 		let currentValue = this.getSourcedProp("value");
 		let trueValue = this.getSourcedPropWithDefault("trueValue", true);
 		
-		aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
+		let compareType = this.getSourcedPropWithDefault("compareType", null);
+		
+		if(compareType === "notNull") {
+			aReturnObject["selectedSections"] = (currentValue !== null) ? "on" : "off";
+		}
+		else {
+			aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
+		}
+		
 		
 		return aReturnObject;
 	}

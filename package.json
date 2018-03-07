@@ -9,6 +9,7 @@
   "author": "mattias@developedbyme.com",
   "license": "ISC",
   "dependencies": {
+    "document-offset": "^1.0.4",
     "object-path": "^0.11.4",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",

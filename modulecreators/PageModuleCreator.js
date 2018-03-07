@@ -92,6 +92,12 @@ export default class PageModuleCreator {
 		this._referenceHolder.addObject("redux/store", this._store);
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		
+		//METODO: change this to a local image loader
+		if(window.wprr.imageLoaderManager) {
+			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
+			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
+		}
+		
 		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
 		
 		let rootObject = <Provider store={this._store}>

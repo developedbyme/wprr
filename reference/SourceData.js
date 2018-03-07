@@ -78,9 +78,17 @@ export default class SourceData {
 				}
 			case "acf":
 				return references.getObject("wprr/postData").getAcfData(aPath);
+				//METODO: use acfField instead of post data
+			case "acfField":
+				{
+					let acfObject = references.getObject("wprr/postData/acfObject");
+					return AcfFunctions.getAcfSubfieldData(acfObject, aPath);
+				}
 			case "acfRow":
-				let rowObject = references.getObject("wprr/postData/acfRow");
-				return AcfFunctions.getAcfSubfieldData(rowObject, aPath);
+				{
+					let rowObject = references.getObject("wprr/postData/acfRow");
+					return AcfFunctions.getAcfSubfieldData(rowObject, aPath);
+				}
 			case "text":
 				return references.getObject("wprr/textManager").getText(aPath);
 			case "postData":
