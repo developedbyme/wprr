@@ -4,6 +4,9 @@ import objectPath from "object-path";
 export default class AcfFunctions {
 	
 	static getAcfSubfieldData(aStartObject) {
+		//console.log("wprr/wp/AcfFunctions::getAcfSubfieldData");
+		//console.log(aStartObject);
+		
 		let passedPath = new Array();
 		let currentObject = aStartObject;
 		

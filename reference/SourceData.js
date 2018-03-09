@@ -82,7 +82,9 @@ export default class SourceData {
 			case "acfField":
 				{
 					let acfObject = references.getObject("wprr/postData/acfObject");
-					return AcfFunctions.getAcfSubfieldData(acfObject, aPath);
+					let splittedPath = aPath.split(".");
+					let callArray = [acfObject].concat(splittedPath);
+					return AcfFunctions.getAcfSubfieldData.apply(AcfFunctions, callArray);
 				}
 			case "acfRow":
 				{
