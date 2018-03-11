@@ -131,6 +131,7 @@ export default class StoreController {
 		var currentLoadData = currentState.mRouter.apiData[aPath];
 		
 		if(currentLoadData.status === 0) {
+			
 			this._performDispatch(StoreController.START_LOADING, aPath, null);
 			
 			this._loadingPaths.push(aPath);
