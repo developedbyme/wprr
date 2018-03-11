@@ -58,7 +58,6 @@ export default class WprrRenderer  {
 					"body": JSON.stringify({"paths": paths, "permalink": this._permalink}),
 					"credentials": "include", 
 					"headers": {
-						"X-WP-Nonce": window.oaWpConfiguration.nonce,
 						'Content-Type': 'application/json'
 					}
 				});
@@ -73,7 +72,6 @@ export default class WprrRenderer  {
 					"body": JSON.stringify({"path": this._seoPath, "key": this._seoKey, "seoRender": seoRender}),
 					"credentials": "include", 
 					"headers": {
-						"X-WP-Nonce": window.oaWpConfiguration.nonce,
 						'Content-Type': 'application/json'
 					}
 				});

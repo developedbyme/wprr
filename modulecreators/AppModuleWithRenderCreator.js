@@ -29,10 +29,12 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 		let startCheckForRender = false;
 		
 		this._renderer.setup(this._storeController, aHolderNode);
+		
+		let currentHref = aData.paths.current;
 
 		if(aData.renderId > 0) {
 			let initialLoadPath = aData.paths.rest + "m-router-data/v1/post/" + aData.renderId + "/initial-load";
-			this._renderer.setupInitialLoad(initialLoadPath, currentHref, mRouterStoreController, rootElement);
+			this._renderer.setupInitialLoad(initialLoadPath, currentHref, this._storeController, aHolderNode);
 			startCheckForRender = true;
 		}
 
