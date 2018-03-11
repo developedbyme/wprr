@@ -87,15 +87,7 @@ export default class AppModuleCreator {
 		);
 	}
 	
-	/**
-	 * Creates a new module
-	 *
-	 * aHolderNode	HTMLElement	The element to add the module to
-	 * aData		Object		The dynamic data for the module
-	 */
-	createModule(aHolderNode, aData) {
-		//console.log("oa.AppModuleCreator::createModule");
-		//console.log(aHolderNode, aData);
+	_configurModule(aHolderNode, aData) {
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
@@ -110,6 +102,19 @@ export default class AppModuleCreator {
 		}
 		
 		this._urlResolvers.setBasePaths(aData.paths);
+	}
+	
+	/**
+	 * Creates a new module
+	 *
+	 * aHolderNode	HTMLElement	The element to add the module to
+	 * aData		Object		The dynamic data for the module
+	 */
+	createModule(aHolderNode, aData) {
+		//console.log("oa.AppModuleCreator::createModule");
+		//console.log(aHolderNode, aData);
+		
+		this._configurModule(aHolderNode, aData);
 		
 		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
 		
