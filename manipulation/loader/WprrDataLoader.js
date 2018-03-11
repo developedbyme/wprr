@@ -79,6 +79,17 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				loadingObject = this._getData(currentData.type, currentData.path);
 			}
 			
+			if(!loadingObject) {
+				console.error("Loading object doesn't exist", this);
+				console.log(loadingObject, currentData.type, currentData.path);
+				newStatus = -1;
+				if(this.state.status !== -1) {
+					hasChange = true;
+				}
+				break;
+			}
+			
+			
 			if(!currentState[objectName] || loadingObject["status"] !== currentState[objectName]["status"]) {
 				hasChange = true;
 			}
@@ -139,50 +150,32 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		//console.log(aType, aPath);
 		//console.log(this);
 		
+		let mRouterController = this.getReferences().getObject("redux/store/mRouterController");
+		if(!mRouterController) {
+			console.error("mRouterController doesn't exist, can't request data " + aPath, this);
+			return;
+		}
+		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
-				var mRouterController = this.getReference("redux/store/mRouterController");
-				if(mRouterController) {
-					mRouterController.requestPostRange(aPath);
-				}
-				else {
-					console.error("mRouterController doesn't exist, can't request data " + aPath, this);
-				}
+				mRouterController.requestPostRange(aPath);
 				break;
 			case "M-ROUTER-POST-BY-ID":
-				var mRouterController = this.getReference("redux/store/mRouterController");
-				if(mRouterController) {
-					mRouterController.requestPostById(aPath);
-				}
-				else {
-					console.error("mRouterController doesn't exist, can't request data " + aPath, this);
-				}
+				mRouterController.requestPostById(aPath);
 				break;
 			case "M-ROUTER-MENU":
-				this._redux_dispatch(requestOaSiteDataMenu(aPath));
+				mRouterController.requestMenuData(aPath);
 				break;
 			case "M-ROUTER-API-DATA":
-				var mRouterController = this.getReference("redux/store/mRouterController");
-				if(mRouterController) {
-					mRouterController.requestApiData(aPath);
-				}
-				else {
-					console.error("mRouterController doesn't exist, can't request data " + aPath, this);
-				}
+				mRouterController.requestApiData(aPath);
 				break;
 			case "M-ROUTER-URL":
-				var mRouterController = this.getReference("redux/store/mRouterController");
-				if(mRouterController) {
-					var dataUrl = aPath;
+				let dataUrl = aPath;
 
-					dataUrl += ((dataUrl.indexOf("?") === -1) ? "?" : "&");
-					dataUrl += "mRouterData=json";
-					
-					mRouterController.requestUrlData(aPath, dataUrl);
-				}
-				else {
-					console.error("mRouterController doesn't exist, can't request data " + aPath, this);
-				}
+				dataUrl += ((dataUrl.indexOf("?") === -1) ? "?" : "&");
+				dataUrl += "mRouterData=json";
+				
+				mRouterController.requestUrlData(aPath, dataUrl);
 				break;
 			default:
 				console.warn("Unknown type " + aType);
@@ -225,7 +218,8 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				var data = loadData.data ? loadData.data.data : null;
 				return {"status": loadData.status, "data": data};
 			case "M-ROUTER-MENU":
-				return currentState.oaSiteData.menus[aPath];
+				var apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath);
+				return currentState.mRouter.apiData[apiPath];
 			case "M-ROUTER-API-DATA":
 			case "M-ROUTER-URL":
 				//console.log(aPath, currentState.mRouter.apiData[aPath]);

@@ -188,6 +188,20 @@ export default class StoreController {
 		this._performRequest(path, dataUrl);
 	}
 	
+	getMenuApiPath(aPath) {
+		return "m-router-data/v1/menu/" + aPath;
+	}
+	
+	requestMenuData(aPath) {
+		let path = this.getMenuApiPath(aPath);
+		
+		let currentState = this._store.getState();
+		let apiBaseUrl = currentState.settings.wpApiUrlBase;
+		let dataUrl = apiBaseUrl + path;
+		
+		this._performRequest(path, dataUrl);
+	}
+	
 	adjustData(aId, aData) {
 		this._performDispatch(StoreController.DATA_ADJUSTMENT, aId, aData);
 	}
@@ -230,7 +244,7 @@ export default class StoreController {
 		if(!newState["customizerData"]) newState["customizerData"] = new Object();
 		if(!newState["apiData"]) newState["apiData"] = new Object();
 		if(!newState["dataAdjustments"]) newState["dataAdjustments"] = new Object();
-		
+		if(!newState["menus"]) newState["menus"] = new Object();
 		
 
 		switch (action.type) {

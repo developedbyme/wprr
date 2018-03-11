@@ -1,6 +1,7 @@
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
+import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
 
 //import Wprr from "wprr";
 export default class Wprr {
@@ -16,9 +17,17 @@ export default class Wprr {
 	}
 	
 	addPageModule(aName, aModule) {
-		this._moduleCreators[aName] = PageModuleCreator.create(aModule);
+		let newModuleCreator = PageModuleCreator.create(aModule);
+		this._moduleCreators[aName] = newModuleCreator;
 		
-		return this;
+		return newModuleCreator;
+	}
+	
+	addAppModule(aName, aModule) {
+		let newModuleCreator = AppModuleCreator.create(aModule);
+		this._moduleCreators[aName] = newModuleCreator;
+		
+		return newModuleCreator;
 	}
 	
 	insertModule(aName, aHolderElement, aData) {
