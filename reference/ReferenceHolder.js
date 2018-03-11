@@ -11,6 +11,8 @@ export default class ReferenceHolder {
 		
 		this._objects = new Object();
 		this._parentReferenceHolder = null;
+		
+		this._debug_id = Math.random();
 	}
 	
 	setParent(aParent) {

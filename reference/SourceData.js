@@ -96,6 +96,8 @@ export default class SourceData {
 			case "postData":
 				let dataObject = references.getObject("wprr/postData");
 				switch(aPath) {
+					case "rawData":
+						return dataObject._data;
 					case "title":
 						return dataObject.getTitle();
 					case "excerpt":

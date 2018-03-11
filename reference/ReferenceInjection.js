@@ -42,8 +42,10 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		this._references.setParent(this.context.references);
 		
 		let injectData = this._getInjectData();
+		
 		for(let objectName in injectData) {
 			let sourcedData = this.resolveSourcedData(injectData[objectName]);
+			
 			this._references.addObject(objectName, sourcedData);
 		}
 	}
