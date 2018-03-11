@@ -127,7 +127,6 @@ export default class StoreController {
 		}
 		
 		var currentState = this._store.getState();
-		console.log(currentState);
 		
 		var currentLoadData = currentState.mRouter.apiData[aPath];
 		
