@@ -17,12 +17,12 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	addValidation(aObject) {
-		console.log("wprr/elements/form/ValidatingForm::addValidation");
+		//console.log("wprr/elements/form/ValidatingForm::addValidation");
 		this._elementsToValidate.push(aObject);
 	}
 	
 	removeValidation(aObject) {
-		console.log("wprr/elements/form/ValidatingForm::removeValidation");
+		//console.log("wprr/elements/form/ValidatingForm::removeValidation");
 		var isFound = false;
 		
 		var currentArray = this._elementsToValidate;
@@ -55,8 +55,8 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	_callback_submit(aEvent) {
-		console.log("wprr/elements/form/ValidatingForm::_callback_submit");
-		console.log(aEvent);
+		//console.log("wprr/elements/form/ValidatingForm::_callback_submit");
+		//console.log(aEvent);
 		
 		if(!this.validate()) {
 			aEvent.preventDefault();
@@ -69,7 +69,7 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	submit() {
-		console.log("wprr/elements/form/ValidatingForm::submit");
+		//console.log("wprr/elements/form/ValidatingForm::submit");
 		
 		if(this.validate()) {
 			ReactDOM.findDOMNode(this).submit();

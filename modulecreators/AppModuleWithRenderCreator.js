@@ -20,11 +20,11 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 		this._renderer = new WprrRenderer();
 	}
 	
-	_configurModule(aHolderNode, aData) {
-		console.log("oa.AppModuleWithRenderCreator::_configurModule");
-		console.log(aHolderNode, aData);
+	_configureModule(aHolderNode, aData) {
+		//console.log("oa.AppModuleWithRenderCreator::_configureModule");
+		//console.log(aHolderNode, aData);
 		
-		super._configurModule(aHolderNode, aData);
+		super._configureModule(aHolderNode, aData);
 		
 		let startCheckForRender = false;
 		

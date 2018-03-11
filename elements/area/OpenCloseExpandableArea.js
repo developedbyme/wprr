@@ -29,8 +29,8 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	}
 	
 	_setHeightElement(aElement) {
-		console.log("wprr/interaction/OpenCloseExpandableArea::_setHeightElement");
-		console.log(aElement);
+		//console.log("wprr/interaction/OpenCloseExpandableArea::_setHeightElement");
+		//console.log(aElement);
 		
 		this._heightElement = aElement;
 		this._updateHeight();

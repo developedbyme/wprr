@@ -87,7 +87,7 @@ export default class AppModuleCreator {
 		);
 	}
 	
-	_configurModule(aHolderNode, aData) {
+	_configureModule(aHolderNode, aData) {
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
@@ -114,7 +114,7 @@ export default class AppModuleCreator {
 		//console.log("oa.AppModuleCreator::createModule");
 		//console.log(aHolderNode, aData);
 		
-		this._configurModule(aHolderNode, aData);
+		this._configureModule(aHolderNode, aData);
 		
 		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
 		
