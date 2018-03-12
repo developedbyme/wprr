@@ -88,12 +88,16 @@ export default class AppModuleCreator {
 	}
 	
 	_configureModule(aHolderNode, aData) {
+		console.log("oa.AppModuleCreator::_configureModule");
+		console.log(aHolderNode, aData);
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
 		
 		this._referenceHolder.addObject("redux/store", this._store);
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+		
+		this._referenceHolder.addObject("wprr/userData", aData.userData);
 		
 		//METODO: change this to a local image loader
 		if(window.wprr.imageLoaderManager) {

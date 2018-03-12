@@ -94,25 +94,36 @@ export default class SourceData {
 			case "text":
 				return references.getObject("wprr/textManager").getText(aPath);
 			case "postData":
-				let dataObject = references.getObject("wprr/postData");
-				switch(aPath) {
-					case "rawData":
-						return dataObject._data;
-					case "title":
-						return dataObject.getTitle();
-					case "excerpt":
-						return dataObject.getExcerpt();
-					case "content":
-						return dataObject.getContent();
-					case "permalink":
-						return dataObject.getPermalink();
-					case "image":
-						return dataObject.getImage();
-					default:
-						console.error("Unknown postData type " + aPath);
-						break;
+				{
+					let dataObject = references.getObject("wprr/postData");
+					switch(aPath) {
+						case "rawData":
+							return dataObject._data;
+						case "title":
+							return dataObject.getTitle();
+						case "excerpt":
+							return dataObject.getExcerpt();
+						case "content":
+							return dataObject.getContent();
+						case "permalink":
+							return dataObject.getPermalink();
+						case "image":
+							return dataObject.getImage();
+						default:
+							console.error("Unknown postData type " + aPath);
+							break;
+					}
+					break;
 				}
-				break;
+			case "userData":
+				{
+					let dataObject = references.getObject("wprr/userData");
+					switch(aPath) {
+						case "rawData":
+							return dataObject;
+					}
+					return objectPath.get(dataObject, aPath);
+				}
 			case "reference":
 				return references.getObject(aPath);
 			default:

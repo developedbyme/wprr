@@ -23,6 +23,13 @@ export default class OnOffArea extends ManipulationBaseObject {
 		if(compareType === "notNull") {
 			aReturnObject["selectedSections"] = (currentValue !== null) ? "on" : "off";
 		}
+		else if(compareType === "notEmpty") {
+			let isEmpty = true;
+			if(currentValue && currentValue.length > 0) {
+				isEmpty = false;
+			}
+			aReturnObject["selectedSections"] = (!isEmpty) ? "on" : "off";
+		}
 		else {
 			aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
 		}

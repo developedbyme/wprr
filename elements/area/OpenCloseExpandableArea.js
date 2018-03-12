@@ -110,7 +110,7 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 		}
 		
 		return <wrapper>
-			<div className="animation-element no-overflow" style={styleObject}>
+			<div className="animation-element no-overflow border-box-sizing" style={styleObject}>
 				<div ref={this._setHeightElementBound}>{this.props.children}</div>
 			</div>
 		</wrapper>;
