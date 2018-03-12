@@ -33,6 +33,15 @@ export default class MultipleUrlResolver {
 		if(this._basePaths && this._basePaths[aRealtiveTo] != undefined) {
 			return this._basePaths[aRealtiveTo] + "/" + aPath;
 		}
+		console.warn("Resulver doesn't have any base for " + aRealtiveTo, this);
 		return aPath;
+	}
+	
+	getBaseUrl(aRealtiveTo) {
+		if(this._basePaths && this._basePaths[aRealtiveTo] != undefined) {
+			return this._basePaths[aRealtiveTo];
+		}
+		console.warn("Resulver doesn't have any base for " + aRealtiveTo, this);
+		return null;
 	}
 }
