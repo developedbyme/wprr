@@ -1,6 +1,13 @@
 "use strict";
 
+import React from "react";
+
 import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
+
+import PostDataInjection from "wprr/wp/postdata/PostDataInjection";
+
+import SourceData from "wprr/reference/SourceData";
+import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 // import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
 export default class PageModuleCreator extends ModuleCreatorBaseObject {
@@ -12,6 +19,12 @@ export default class PageModuleCreator extends ModuleCreatorBaseObject {
 		//console.log("oa.PageModuleCreator::constructor");
 		
 		super();
+	}
+	
+	_getMainCompnentWithInjections() {
+		return <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+			{super._getMainCompnentWithInjections()}
+		</PostDataInjection>;
 	}
 	
 	static create(aClass) {

@@ -9,12 +9,12 @@ import thunk from 'redux-thunk';
 import ReferenceHolder from "wprr/reference/ReferenceHolder";
 import ReferenceExporter from "wprr/reference/ReferenceExporter";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
-import PostDataInjection from "wprr/wp/postdata/PostDataInjection";
 
 import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import StoreController from "wprr/store/StoreController";
+import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 
 // import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 export default class ModuleCreatorBaseObject {
@@ -30,6 +30,8 @@ export default class ModuleCreatorBaseObject {
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
+		
+		this._urlResolvers = new MultipleUrlResolver();
 	}
 	
 	/**
@@ -43,6 +45,10 @@ export default class ModuleCreatorBaseObject {
 		this._mainComponent = React.createElement(aClass, {});
 		
 		return this;
+	}
+	
+	getReferenceHolder() {
+		return this._referenceHolder;
 	}
 	
 	_createReduxStore(aConfigurationData) {
@@ -76,10 +82,29 @@ export default class ModuleCreatorBaseObject {
 		);
 	}
 	
+	_configureModule(aHolderNode, aData) {
+		console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
+		console.log(aHolderNode, aData);
+		
+		this._store = this._createReduxStore(aData);
+		this._storeController.setStore(this._store);
+		
+		this._referenceHolder.addObject("redux/store", this._store);
+		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+		
+		this._referenceHolder.addObject("wprr/userData", aData.userData);
+		
+		//METODO: change this to a local image loader
+		if(window.wprr.imageLoaderManager) {
+			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
+			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
+		}
+		
+		this._urlResolvers.setBasePaths(aData.paths);
+	}
+	
 	_getMainCompnentWithInjections() {
-		return <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{this._mainComponent}
-		</PostDataInjection>;
+		return this._mainComponent;
 	}
 	
 	_getRootObject(aData) {
@@ -106,19 +131,7 @@ export default class ModuleCreatorBaseObject {
 		//console.log("oa.ModuleCreatorBaseObject::createModule");
 		//console.log(aHolderNode, aData);
 		
-		this._store = this._createReduxStore(aData);
-		this._storeController.setStore(this._store);
-		
-		this._referenceHolder.addObject("redux/store", this._store);
-		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
-		
-		//METODO: change this to a local image loader
-		if(window.wprr.imageLoaderManager) {
-			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
-			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
-		}
-		
-		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
+		this._configureModule(aHolderNode, aData);
 		
 		let rootObject = this._getRootObject(aData);
 		
