@@ -13,7 +13,7 @@ export default class PageModuleCreator extends ModuleCreatorBaseObject {
 		
 		super();
 	}
-		
+	
 	static create(aClass) {
 		var newPageModuleCreator = new PageModuleCreator();
 		newPageModuleCreator.setClass(aClass);

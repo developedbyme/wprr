@@ -59,8 +59,6 @@ export default class AppModuleCreator {
 		//METODO: full store
 		//METODO: clean this up
 		
-		
-		
 		let initialState = {
 			"mRouter": {
 				"currentPage": aConfigurationData.paths.current,

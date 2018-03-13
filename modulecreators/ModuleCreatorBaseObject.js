@@ -49,10 +49,12 @@ export default class ModuleCreatorBaseObject {
 		
 		//METODO: full store
 		//METODO: clean this up
+		
 		let initialState = {
 			"mRouter": {
 				"currentPage": aConfigurationData.paths.current,
-				"data": aConfigurationData.initialMRouterData
+				"data": aConfigurationData.initialMRouterData,
+				"apiData": aConfigurationData.initialMRouterData.apiData
 			},
 			"settings": {
 				"homeUrl": aConfigurationData.paths.home,
@@ -72,6 +74,26 @@ export default class ModuleCreatorBaseObject {
 				applyMiddleware(thunk)
 			)
 		);
+	}
+	
+	_getMainCompnentWithInjections() {
+		return <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+			{this._mainComponent}
+		</PostDataInjection>;
+	}
+	
+	_getRootObject(aData) {
+		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
+		
+		let rootObject = <Provider store={this._store}>
+			<ReferenceExporter references={this._referenceHolder}>
+				<ReferenceInjection injectData={{"wprr/pageData": pageData}}>
+					{this._getMainCompnentWithInjections()}
+				</ReferenceInjection>
+			</ReferenceExporter>
+		</Provider>;
+		
+		return rootObject;
 	}
 	
 	/**
@@ -98,15 +120,7 @@ export default class ModuleCreatorBaseObject {
 		
 		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
 		
-		let rootObject = <Provider store={this._store}>
-			<ReferenceExporter references={this._referenceHolder}>
-				<ReferenceInjection injectData={{"wprr/pageData": pageData}}>
-					<PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-						{this._mainComponent}
-					</PostDataInjection>
-				</ReferenceInjection>
-			</ReferenceExporter>
-		</Provider>;
+		let rootObject = this._getRootObject(aData);
 		
 		return ReactDOM.render(rootObject, aHolderNode);
 	}
