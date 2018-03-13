@@ -15,26 +15,21 @@ import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import StoreController from "wprr/store/StoreController";
-import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 
-// import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
-export default class AppModuleCreator {
+// import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
+export default class ModuleCreatorBaseObject {
 	
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("wprr/modulecreators/AppModuleCreator::constructor");
+		//console.log("oa.ModuleCreatorBaseObject::constructor");
 		
-		this._reactClass = null;
+		this._mainComponent = null;
 		this._store = null;
-		
-		this._initialPath = null;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
-		
-		this._urlResolvers = new MultipleUrlResolver();
 	}
 	
 	/**
@@ -45,27 +40,19 @@ export default class AppModuleCreator {
 	 * @return	self
 	 */
 	setClass(aClass) {
-		this._reactClass = aClass;
+		this._mainComponent = React.createElement(aClass, {});
 		
 		return this;
-	}
-	
-	getReferenceHolder() {
-		return this._referenceHolder;
 	}
 	
 	_createReduxStore(aConfigurationData) {
 		
 		//METODO: full store
 		//METODO: clean this up
-		
-		
-		
 		let initialState = {
 			"mRouter": {
 				"currentPage": aConfigurationData.paths.current,
-				"data": aConfigurationData.initialMRouterData,
-				"apiData": aConfigurationData.initialMRouterData.apiData
+				"data": aConfigurationData.initialMRouterData
 			},
 			"settings": {
 				"homeUrl": aConfigurationData.paths.home,
@@ -87,27 +74,6 @@ export default class AppModuleCreator {
 		);
 	}
 	
-	_configureModule(aHolderNode, aData) {
-		console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
-		console.log(aHolderNode, aData);
-		
-		this._store = this._createReduxStore(aData);
-		this._storeController.setStore(this._store);
-		
-		this._referenceHolder.addObject("redux/store", this._store);
-		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
-		
-		this._referenceHolder.addObject("wprr/userData", aData.userData);
-		
-		//METODO: change this to a local image loader
-		if(window.wprr.imageLoaderManager) {
-			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
-			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
-		}
-		
-		this._urlResolvers.setBasePaths(aData.paths);
-	}
-	
 	/**
 	 * Creates a new module
 	 *
@@ -115,20 +81,29 @@ export default class AppModuleCreator {
 	 * aData		Object		The dynamic data for the module
 	 */
 	createModule(aHolderNode, aData) {
-		//console.log("wprr/modulecreators/AppModuleCreator::createModule");
+		//console.log("oa.ModuleCreatorBaseObject::createModule");
 		//console.log(aHolderNode, aData);
 		
-		this._configureModule(aHolderNode, aData);
+		this._store = this._createReduxStore(aData);
+		this._storeController.setStore(this._store);
+		
+		this._referenceHolder.addObject("redux/store", this._store);
+		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+		
+		//METODO: change this to a local image loader
+		if(window.wprr.imageLoaderManager) {
+			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
+			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
+		}
 		
 		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
 		
-		let injectData = {"wprr/pageData": pageData};
-		this._urlResolvers.addPathsToReferenceInjectionData(injectData);
-		
 		let rootObject = <Provider store={this._store}>
 			<ReferenceExporter references={this._referenceHolder}>
-				<ReferenceInjection injectData={injectData}>
-					{React.createElement(this._reactClass, {})}
+				<ReferenceInjection injectData={{"wprr/pageData": pageData}}>
+					<PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+						{this._mainComponent}
+					</PostDataInjection>
 				</ReferenceInjection>
 			</ReferenceExporter>
 		</Provider>;
@@ -137,9 +112,9 @@ export default class AppModuleCreator {
 	}
 	
 	static create(aClass) {
-		var newAppModuleCreator = new AppModuleCreator();
-		newAppModuleCreator.setClass(aClass);
+		var newModuleCreatorBaseObject = new ModuleCreatorBaseObject();
+		newModuleCreatorBaseObject.setClass(aClass);
 		
-		return newAppModuleCreator;
+		return newModuleCreatorBaseObject;
 	}
 }
