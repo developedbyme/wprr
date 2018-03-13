@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
+import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
 
 import WprrRenderer from "wprr/WprrRenderer";
 
-// import AppModuleWithRenderCreator from "wprr/modulecreators/AppModuleWithRenderCreator";
-export default class AppModuleWithRenderCreator extends AppModuleCreator {
+// import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRendererCreator";
+export default class PageModuleWithRendererCreator extends PageModuleCreator {
 	
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.AppModuleWithRenderCreator::constructor");
+		//console.log("oa.PageModuleWithRendererCreator::constructor");
 		
 		super();
 		
@@ -32,13 +32,15 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 			this._renderer.setupInitialLoad(initialLoadPath, currentHref, this._storeController, aHolderNode);
 			startCheckForRender = true;
 		}
-
+		
+		/*
 		var renderData = aData.render;
 		if(renderData) {
 			let renderPath = aData.paths.rest + "m-router-data/v1/seo-render";
 			this._renderer.setupSeoRender(renderPath, renderData.path, renderData.key);
 			startCheckForRender = true;
 		}
+		*/
 
 		if(startCheckForRender) {
 			this._renderer.startCheckingForRender();
@@ -46,8 +48,6 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 	}
 	
 	_configureModule(aHolderNode, aData) {
-		//console.log("oa.AppModuleWithRenderCreator::_configureModule");
-		//console.log(aHolderNode, aData);
 		
 		super._configureModule(aHolderNode, aData);
 		this._configureRenderer(aHolderNode, aData);
@@ -55,9 +55,9 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 	}
 	
 	static create(aClass) {
-		var newAppModuleWithRenderCreator = new AppModuleWithRenderCreator();
-		newAppModuleWithRenderCreator.setClass(aClass);
+		var newPageModuleWithRendererCreator = new PageModuleWithRendererCreator();
+		newPageModuleWithRendererCreator.setClass(aClass);
 		
-		return newAppModuleWithRenderCreator;
+		return newPageModuleWithRendererCreator;
 	}
 }
