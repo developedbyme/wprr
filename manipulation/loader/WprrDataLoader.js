@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -17,24 +17,6 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		this._propsThatShouldNotCopy.push("loadData");
 	}
-	
-	/*
-	_getMainElementClassNames() {
-		var returnArray = super._getMainElementClassNames();
-		
-		if(this.state.status === 1) {
-			returnArray.push("oa-loaded");
-		}
-		else if(this.state.status === 0 || this.state.status === 2) {
-			returnArray.push("oa-loading");
-		}
-		else{
-			returnArray.push("oa-loading-error");
-		}
-		
-		return returnArray;
-	}
-	*/
 	
 	_getMainElementProps() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_getMainElementProps");

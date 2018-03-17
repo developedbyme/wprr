@@ -18,6 +18,10 @@ export default class Wprr {
 		return this;
 	}
 	
+	addModuleCreator(aName, aModuleCreator) {
+		this._moduleCreators[aName] = aModuleCreator;
+	}
+	
 	addPageModule(aName, aModule) {
 		let newModuleCreator = PageModuleCreator.create(aModule);
 		this._moduleCreators[aName] = newModuleCreator;
