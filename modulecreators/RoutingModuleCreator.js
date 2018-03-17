@@ -32,6 +32,18 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		this._footer = null;
 	}
 	
+	setHeader(aReactComponent) {
+		this._header = aReactComponent;
+		
+		return this;
+	}
+	
+	setFooter(aReactComponent) {
+		this._footer = aReactComponent;
+		
+		return this;
+	}
+	
 	createRoute(aQualifier, aReactComponent) {
 		this._routes.push(<route key={"route-" + this._routes.length} qualify={aQualifier}>
 			{aReactComponent}
@@ -53,6 +65,10 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		</PostDataInjection>;
 
 		this.createRoute(WpConditional.create("is_singular"), componentWithInjectsions);
+	}
+	
+	createArchiveRoute(aReactComponent) {
+		this.createRoute(WpConditional.create("is_archive"), aReactComponent);
 	}
 	
 	_getMainCompnentWithInjections() {
