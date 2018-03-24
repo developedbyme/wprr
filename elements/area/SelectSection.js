@@ -26,19 +26,19 @@ export default class SelectSection extends ManipulationBaseObject {
 		//console.log("wprr/elements/area/SelectSection::_renderClonedElement");
 		
 		//MENOTE: this.props.children can be undefiend, the only child or an array
-		var children = this.props.children;
+		let children = this.props.children;
 		if(children == undefined) {
 			console.error("Object doesn't have any children. Can't render main element for ", this);
 			//METODO: check for error display
 			return null;
 		}
 		
-		var selectedSections = this.props.selectedSections;
+		let selectedSections = this.getSourcedProp("selectedSections");
 		if(typeof(selectedSections) === "string") {
 			selectedSections = selectedSections.split(","); //METODO: trim whitespace
 		}
 		
-		var availableChildren;
+		let availableChildren;
 		if(children instanceof Array) {
 			availableChildren = children;
 		}
@@ -46,13 +46,13 @@ export default class SelectSection extends ManipulationBaseObject {
 			availableChildren = [children];
 		}
 		
-		var mainProps = this._getMainElementProps();
+		let mainProps = this._getMainElementProps();
 		
-		var activeChildren = new Array();
-		var currentArray = availableChildren;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
-			var currentChild = currentArray[i];
+		let activeChildren = new Array();
+		let currentArray = availableChildren;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentChild = currentArray[i];
 			if(this._isSectionActive(currentChild.props.sectionName, selectedSections)) {
 				activeChildren.push(this._performClone(currentChild, mainProps));
 			}
