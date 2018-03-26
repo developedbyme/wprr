@@ -14,6 +14,14 @@ export default class WpMenu extends ManipulationBaseObject {
 		super(props);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		//console.log("wprr/wp/menu/WpMenu::_removeUsedProps");
+		
+		delete aReturnObject["menuLocation"];
+		
+		return aReturnObject;
+	}
+	
 	_getChildrenToClone() {
 		
 		let menuLocation = this.getSourcedProp("menuLocation");
