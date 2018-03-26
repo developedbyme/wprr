@@ -13,10 +13,14 @@ export default class Loop extends Adjust {
 		this._loopAdjustFunction = ContentCreatorLoop.create();
 	}
 	
+	_addAdjustFunctions(aReturnArray) {
+		aReturnArray.push(this._loopAdjustFunction);
+	}
+	
 	_getAdjustFunctions() {
 		let returnArray = super._getAdjustFunctions();
 		
-		returnArray.push(this._loopAdjustFunction);
+		this._addAdjustFunctions(returnArray);
 		
 		return returnArray;
 	}
