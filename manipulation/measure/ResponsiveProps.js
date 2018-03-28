@@ -28,7 +28,7 @@ export default class ResponsiveProps extends ManipulationBaseObject {
 			var currentArrayLength = currentArray.length;
 			for(var i = 0; i < currentArrayLength; i++) {
 				var currentMediaQuery = currentArray[i];
-				console.log(currentMediaQuery, currentWidth);
+				
 				if((currentMediaQuery.minWidth === undefined || currentWidth >= currentMediaQuery.minWidth) && (currentMediaQuery.maxWidth === undefined || currentWidth <= currentMediaQuery.maxWidth)) {
 					selectedIndicies.push(i);
 					selectedQueries.push(currentMediaQuery);

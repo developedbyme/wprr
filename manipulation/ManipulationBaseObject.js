@@ -99,7 +99,7 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		let children = aChildren;
 		
 		if(children.length === 0) {
-			return 0;
+			return null;
 		}
 		else if(children.length === 1) {
 			return this._performClone(children[0], this._getMainElementProps());
