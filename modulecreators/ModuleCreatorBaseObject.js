@@ -15,6 +15,7 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import StoreController from "wprr/store/StoreController";
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
+import TextManager from "wprr/textmanager/TextManager";
 
 // import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 export default class ModuleCreatorBaseObject {
@@ -32,6 +33,7 @@ export default class ModuleCreatorBaseObject {
 		this._storeController = new StoreController();
 		
 		this._urlResolvers = new MultipleUrlResolver();
+		this._textManager = new TextManager();
 	}
 	
 	/**
@@ -93,6 +95,8 @@ export default class ModuleCreatorBaseObject {
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		
 		this._referenceHolder.addObject("wprr/userData", aData.userData);
+		
+		this._referenceHolder.addObject("wprr/textManager", this._textManager);
 		
 		//METODO: change this to a local image loader
 		if(window.wprr.imageLoaderManager) {
