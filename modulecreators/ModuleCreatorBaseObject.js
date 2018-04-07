@@ -95,6 +95,7 @@ export default class ModuleCreatorBaseObject {
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		
 		this._referenceHolder.addObject("wprr/userData", aData.userData);
+		this._referenceHolder.addObject("wprr/settings", aData.settings);
 		
 		this._referenceHolder.addObject("wprr/textManager", this._textManager);
 		
