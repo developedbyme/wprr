@@ -49,9 +49,11 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		var currentState = this.state["loadData"];
 		var newLoadDataState = new Object();
 		
-		for(var objectName in this.props.loadData) {
+		let loadData = this.getSourcedProp("loadData");
+		
+		for(var objectName in loadData) {
 			
-			var currentData = this.props.loadData[objectName];
+			var currentData = this.resolveSourcedData(loadData[objectName]);
 			
 			var loadingObject;
 			if(typeof(currentData) === "string") {
@@ -224,7 +226,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			return;
 		}
 		
-		var loadData = this.props.loadData;
+		let loadData = this.getSourcedProp("loadData");
 		
 		/* METODO: this needs to do a double split
 		if(typeof(loadData) === "string") {
@@ -232,8 +234,8 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		*/
 		
-		for(var objectName in loadData) {
-			var currentData = loadData[objectName];
+		for(let objectName in loadData) {
+			let currentData = this.resolveSourcedData(loadData[objectName]);
 			
 			if(typeof(currentData) === "string") {
 				this._requestData("M-ROUTER-API-DATA", currentData);
@@ -241,8 +243,6 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			else {
 				this._requestData(currentData.type, currentData.path);
 			}
-			
-			
 		}
 		
 		this._callback_reduxChange();
@@ -267,6 +267,10 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		else if(this.state["status"] === 0 || this.state["status"] === 2) {
 			if(this.props.loadingComponent) {
 				return React.createElement(this.props.loadingComponent, this._getMainElementProps(), this.props.children);
+			}
+			let loadingElement = this.getSourcedProp("loadingElement");
+			if(loadingElement) {
+				return loadingElement;
 			}
 			//console.warn("Loading component not set", this);
 			return null;

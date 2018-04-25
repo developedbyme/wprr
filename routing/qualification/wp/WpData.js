@@ -50,8 +50,8 @@ export default class WpData extends Qualification {
 	 * @return	Boolean	The result of the evalutation. Always true.
 	 */
 	qualify(aData) {
-		console.log("wprr/routing/qualification/wp/WpData::qualify");
-		console.log(aData);
+		//console.log("wprr/routing/qualification/wp/WpData::qualify");
+		//console.log(aData);
 		
 		let path = this._path;
 		

@@ -40,9 +40,16 @@ export default class StepButton extends ManipulationBaseObject {
 	getNextValue() {
 		let valueName = this.getSourcedPropWithDefault("valueName", "value");
 		let stepValue = this.getSourcedPropWithDefault("stepValue", 1);
+		let stepFunction = this.getSourcedPropWithDefault("stepFunction", null);
 		
 		let currentValue = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
-		let newValue = currentValue+stepValue;
+		let newValue;
+		if(stepFunction) {
+			newValue = stepFunction(currentValue, stepValue);
+		}
+		else {
+			newValue = currentValue+stepValue;
+		}
 		
 		return newValue;
 	}
@@ -63,6 +70,7 @@ export default class StepButton extends ManipulationBaseObject {
 		
 		delete returnObject["valueName"];
 		delete returnObject["stepValue"];
+		delete returnObject["stepFunction"];
 		delete returnObject["value"];
 		
 		return returnObject;

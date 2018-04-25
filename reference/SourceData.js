@@ -126,6 +126,24 @@ export default class SourceData {
 				}
 			case "reference":
 				return references.getObject(aPath);
+			case "combine":
+				{
+					let returnString = "";
+					
+					let currentArray = aPath;
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let currentItem = currentArray[i];
+						if(currentItem instanceof SourceData) {
+							returnString += currentItem.getSourceInStateChange(aFromObject, aPropsAndState);
+						}
+						else {
+							returnString += currentItem;
+						}
+					}
+					
+					return returnString;
+				}
 			default:
 				console.error("Unknown type " + aType);
 				break;
