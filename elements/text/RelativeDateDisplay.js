@@ -24,8 +24,6 @@ export default class RelativeDateDisplay extends SourcedText {
 			"sameElse": "MMMM D, Y"
 		});
 		
-		console.log(formats, this);
-		
 		let returnText = RelativeDateDisplay.momentFunction(input).calendar(RelativeDateDisplay.momentFunction(today), formats);
 		
 		return returnText;
