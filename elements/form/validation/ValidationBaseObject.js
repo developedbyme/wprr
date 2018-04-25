@@ -91,6 +91,10 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		
 		aReturnObject["valid"] = this.state["valid"];
 		
+		delete aReturnObject["validateFunction"];
+		delete aReturnObject["validateOnChange"];
+		delete aReturnObject["validateOnBlur"];
+		
 		return aReturnObject;
 	}
 	
