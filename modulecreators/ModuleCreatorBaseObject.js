@@ -85,8 +85,8 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_configureModule(aHolderNode, aData) {
-		console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
-		console.log(aHolderNode, aData);
+		//console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
+		//console.log(aHolderNode, aData);
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
@@ -98,6 +98,13 @@ export default class ModuleCreatorBaseObject {
 		this._referenceHolder.addObject("wprr/settings", aData.settings);
 		
 		this._referenceHolder.addObject("wprr/textManager", this._textManager);
+		
+		let paths = aData.paths;
+		if(paths) {
+			for(let objectName in paths) {
+				this._referenceHolder.addObject("wprr/paths/" + objectName, paths[objectName]);
+			}
+		}
 		
 		//METODO: change this to a local image loader
 		if(window.wprr.imageLoaderManager) {
