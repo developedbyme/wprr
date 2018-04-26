@@ -2,6 +2,8 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
+import SourceData from "wprr/reference/SourceData";
+
 // import FormField from "wprr/elements/form/FormField";
 export default class FormField extends WprrBaseObject {
 
@@ -50,7 +52,7 @@ export default class FormField extends WprrBaseObject {
 		returnObject["type"] = this.getSourcedProp("type");
 		returnObject["placeholder"] = this.getSourcedProp("placeholder");
 		
-		returnObject["value"] = this.getSourcedProp("value");
+		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("prop", this.props.valueName));
 		returnObject["onChange"] = this._callback_changeBound;
 		returnObject["onBlur"] = this._callback_blurBound;
 		returnObject["onFocus"] = this._callback_focusBound;
