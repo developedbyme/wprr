@@ -17,6 +17,38 @@ export default class EditableProps extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("editableProps");
 	}
 	
+	getData() {
+		let returnObject = new Object();
+		
+		let editableProps = this.getSourcedProp("editableProps");
+		
+		if(editableProps) {
+			let currentArray;
+			if(typeof(editableProps) === "string") {
+				currentArray = editableProps.split(","); //METODO: remove whitespace
+			}
+			else if(editableProps instanceof Array) {
+				currentArray = editableProps;
+			}
+			
+			if(currentArray) {
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentName = currentArray[i];
+					
+					if(this.state[currentName] !== undefined) {
+						returnObject[currentName] = this.state[currentName];
+					}
+					else {
+						returnObject[currentName] = this.props[currentName];
+					}
+				}
+			}
+		}
+		
+		return returnObject;
+	}
+	
 	getReferences() {
 		return this._references;
 	}
