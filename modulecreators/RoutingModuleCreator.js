@@ -13,6 +13,11 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 import WpConditional from "wprr/routing/qualification/wp/WpConditional";
 import WpData from "wprr/routing/qualification/wp/WpData";
 
+import Markup from "wprr/markup/Markup";
+import MarkupChildren from "wprr/markup/MarkupChildren";
+import UseMarkup from "wprr/markup/UseMarkup";
+import MarkupPlacement from "wprr/markup/MarkupPlacement";
+
 // import RoutingModuleCreator from "wprr/modulecreators/RoutingModuleCreator";
 export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	
@@ -30,6 +35,12 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		
 		this._header = null;
 		this._footer = null;
+		
+		this._markup = RoutingModuleCreator.DEFAULT_MARKUP;
+	}
+	
+	setMarkup(aMarkup) {
+		this._markup = aMarkup;
 	}
 	
 	setHeader(aReactComponent) {
@@ -78,13 +89,20 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 			return null;
 		}
 		
-		return <React.Fragment>
-			{this._header}
+		let childrensArray = new Array();
+		if(this._header) {
+			childrensArray.push(<MarkupPlacement placement="header">{this._header}</MarkupPlacement>);
+		}
+		childrensArray.push(<MarkupPlacement placement="routes">
 			<FirstMatchingRoute>
 				{this._routes}
 			</FirstMatchingRoute>
-			{this._footer}
-		</React.Fragment>;
+		</MarkupPlacement>);
+		if(this._footer) {
+			childrensArray.push(<MarkupPlacement placement="footer">{this._footer}</MarkupPlacement>);
+		}
+		
+		return <UseMarkup markup={this._markup} dynamicChildren={childrensArray} />;
 	}
 	
 	static create() {
@@ -93,3 +111,7 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		return newRoutingModuleCreator;
 	}
 }
+
+RoutingModuleCreator.DEFAULT_MARKUP = <Markup>
+	<MarkupChildren placement="all" />
+</Markup>;
