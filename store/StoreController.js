@@ -118,7 +118,7 @@ export default class StoreController {
 	
 	_performRequest(aPath, aDataPath) {
 		//console.log("wprr/store/StoreController::_performRequest");
-		//console.log(aPath);
+		//console.log(aPath, aDataPath);
 		
 		this._performDispatch(StoreController.ENSURE_LOAD_DATA_EXISTS, aPath, null);
 		

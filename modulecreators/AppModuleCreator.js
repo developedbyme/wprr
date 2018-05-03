@@ -96,6 +96,7 @@ export default class AppModuleCreator {
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		
 		this._referenceHolder.addObject("wprr/userData", aData.userData);
+		this._referenceHolder.addObject("wprr/settings", aData.settings);
 		
 		//METODO: change this to a local image loader
 		if(window.wprr.imageLoaderManager) {
