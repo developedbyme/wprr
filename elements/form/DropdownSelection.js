@@ -69,7 +69,7 @@ DropdownSelection.DEFAULT_MARKUP = <Markup usedPlacements="button">
 										<ToggleButton valueName="dropdownSelection/open" value={SourceData.create("reference", "dropdownSelection/open")}>
 											<MarkupChildren placement="button" />
 										</ToggleButton>
-										<div className="position-absolute drop-down-selection-popup">
+										<div className="position-absolute dropdown-selection-popup">
 											<OpenCloseExpandableArea open={SourceData.create("reference", "dropdownSelection/open")}>
 												<MarkupChildren placement="rest" />
 											</OpenCloseExpandableArea>
