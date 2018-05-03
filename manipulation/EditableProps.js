@@ -61,10 +61,17 @@ export default class EditableProps extends ManipulationBaseObject {
 	updateValue(aName, aValue, aAdditionalData) {
 		//console.log("wprr/manipulation/EditableProps::updateValue");
 		
-		var stateObject = new Object();
+		let stateObject = new Object();
 		stateObject[aName] = aValue;
 		
 		this.setState(stateObject);
+		
+		let triggerName = this.getSourcedPropWithDefault("triggerName", "propEdited") + "/" + aName;
+		let triggerController = this.getReference("trigger/" + triggerName);
+		
+		if(triggerController) {
+			triggerController.trigger(triggerName, aValue);
+		}
 	}
 	
 	_manipulateProps(aReturnObject) {
