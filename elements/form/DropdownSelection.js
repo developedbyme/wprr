@@ -7,10 +7,12 @@ import FormField from "wprr/elements/form/FormField";
 import ToggleButton from "wprr/elements/interaction/ToggleButton";
 import OpenCloseExpandableArea from "wprr/elements/area/OpenCloseExpandableArea";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
+import EditableProps from "wprr/manipulation/EditableProps";
 
 import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
 import UseMarkup from "wprr/markup/UseMarkup";
+import MarkupPlacement from "wprr/markup/MarkupPlacement";
 
 // import DropdownSelection from "wprr/elements/form/DropdownSelection";
 export default class DropdownSelection extends WprrBaseObject {
@@ -61,6 +63,32 @@ export default class DropdownSelection extends WprrBaseObject {
 				</UseMarkup>
 			</ReferenceInjection>
 		</wrapper>
+	}
+	
+	static createPlacements(aButton, aOverlayContent) {
+		let returnArray = new Array();
+		
+		returnArray.push(<MarkupPlacement placement="button">{aButton}</MarkupPlacement>);
+		returnArray.push(<MarkupPlacement placement="overlay">{aOverlayContent}</MarkupPlacement>);
+		
+		return returnArray;
+	}
+	
+	static makeSelfContained(aElement, aValue = null, aOpen = false) {
+		return <EditableProps editableProps="value,open" value={aValue} open={aOpen}>
+			{aElement}
+		</EditableProps>;
+	}
+	
+	static createSelfContained(aButton, aOverlayContent, aProps = {}, aValue = null, aOpen = false) {
+		
+		let placements = DropdownSelection.createPlacements(aButton, aOverlayContent);
+		
+		return DropdownSelection.makeSelfContained(
+			React.createElement(DropdownSelection, aProps, placements[0], placements[1]),
+			aValue,
+			aOpen
+		);
 	}
 }
 
