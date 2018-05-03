@@ -21,7 +21,14 @@ export default class SetValueButton extends ManipulationBaseObject {
 		
 		let value = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
 		
-		this.getReferences().getObject("value/" + valueName).updateValue(valueName, value, this.props.additionalData);
+		let updateController = this.getReferences().getObject("value/" + valueName);
+		
+		if(updateController) {
+			updateController.updateValue(valueName, value, this.props.additionalData);
+		}
+		else {
+			console.warn("Controller for " + valueName + " doesn't exist. Can't trigger update.", this);
+		}
 	}
 	
 	_manipulateProps(aReturnObject) {
