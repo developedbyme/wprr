@@ -79,10 +79,10 @@ export default class ValidatingForm extends WprrBaseObject {
 	_copyPassthroughProps(aReturnObject) {
 		
 		if(this.props["action"]) {
-			aReturnObject["action"] = this.props["action"];
+			aReturnObject["action"] = this.getSourcedProp("action");
 		}
 		if(this.props["method"]) {
-			aReturnObject["method"] = this.props["method"];
+			aReturnObject["method"] = this.getSourcedProp("method");
 		}
 	}
 	

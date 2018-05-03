@@ -3,6 +3,7 @@ import React from "react";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
+import EditableProps from "wprr/manipulation/EditableProps";
 
 // import FormField from "wprr/elements/form/FormField";
 export default class FormField extends WprrBaseObject {
@@ -65,5 +66,10 @@ export default class FormField extends WprrBaseObject {
 		
 		return <wrapper />;
 	}
-
+	
+	static makeSelfContained(aElement, aValue = null) {
+		return <EditableProps editableProps="value" value={aValue} valueName="value">
+			{aElement}
+		</EditableProps>;
+	}
 }
