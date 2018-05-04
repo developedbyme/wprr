@@ -58,6 +58,8 @@ export default class FormField extends WprrBaseObject {
 		returnObject["onBlur"] = this._callback_blurBound;
 		returnObject["onFocus"] = this._callback_focusBound;
 		
+		returnObject["autoFocus"] = this.getSourcedProp("autoFocus");
+		
 		return returnObject;
 	}
 
