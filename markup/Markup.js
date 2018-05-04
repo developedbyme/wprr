@@ -61,7 +61,7 @@ export default class Markup extends ManipulationBaseObject {
 			this._clonedElement = this._performClone(returnArray[0], this._getMainElementProps());
 		}
 		else {
-			var callArray = [this._getMainElementType(), {}];
+			var callArray = [React.Fragment, {}];
 			callArray = callArray.concat(returnArray);
 			
 			this._clonedElement = React.createElement.apply(React, callArray);
