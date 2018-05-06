@@ -1,5 +1,7 @@
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
+import SourceData from "wprr/reference/SourceData";
+
 //import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
 /**
  * Adjust function that sets a class based on a prop
@@ -13,19 +15,32 @@ export default class ClassFromProp extends AdjustFunction {
 		
 		super();
 		
-		this._propName = "notSet";
+		this._propName = SourceData.create("prop", "notSet");
 		this._options = new Array();
 	}
 	
 	/**
-	 * Sets the names for the prop to rename.
+	 * Sets the name for the prop to get values from.
 	 *
 	 * @param	aPropName	String	The name of the prop to get values from.
 	 *
 	 * @return	ClassFromProp	self
 	 */
 	setProp(aPropName) {
-		this._propName = aPropName;
+		this._propName = SourceData.create("prop", aPropName);
+		
+		return this;
+	}
+	
+	/**
+	 * Sets the the source to get values from.
+	 *
+	 * @param	aSource	SourceData	The source to get the value from.
+	 *
+	 * @return	ClassFromProp	self
+	 */
+	setPropSource(aSource) {
+		this._propName = aSource;
 		
 		return this;
 	}
@@ -52,8 +67,7 @@ export default class ClassFromProp extends AdjustFunction {
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/ClassFromProp::adjust");
 		
-		let currentProp = aData[this._propName];
-		let currentData = aManipulationObject.resolveSourcedData(currentProp);
+		let currentData = aManipulationObject.resolveSourcedData(this._propName);
 		
 		delete aData[this._propName];
 		
@@ -93,6 +107,22 @@ export default class ClassFromProp extends AdjustFunction {
 	static create(aPropName, aOptions) {
 		let newClassFromProp = new ClassFromProp();
 		newClassFromProp.setProp(aPropName);
+		newClassFromProp.setOptions(aOptions);
+		
+		return newClassFromProp;
+	}
+	
+	/**
+	 * Creates a new instance of this class.
+	 *
+	 * @param	aSource		SourceDAta	The source to the get the values from
+	 * @param	aOptions	Array	The array of options
+	 *
+	 * @return	ClassFromProp	The new instance.
+	 */
+	static createWithSource(aSource, aOptions) {
+		let newClassFromProp = new ClassFromProp();
+		newClassFromProp.setPropSource(aSource);
 		newClassFromProp.setOptions(aOptions);
 		
 		return newClassFromProp;

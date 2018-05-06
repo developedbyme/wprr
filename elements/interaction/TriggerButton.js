@@ -12,17 +12,23 @@ export default class TriggerButton extends ManipulationBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		console.log("wprr/elements/interaction/TriggerButton::_callback_change");
+		//console.log("wprr/elements/interaction/TriggerButton::_callback_change");
 		
-		var triggerName = this.getSourcedPropWithDefault("triggerName", "button");
-		var triggerData = this.getSourcedPropWithDefault("triggerData", null);
+		let triggerName = this.getSourcedPropWithDefault("triggerName", "button");
+		let triggerData = this.getSourcedPropWithDefault("triggerData", null);
 		
-		this.getReferences().getObject("trigger/" + triggerName).trigger(triggerName, triggerData);
+		let triggerController = this.getReferences().getObject("trigger/" + triggerName);
+		if(triggerController) {
+			triggerController.trigger(triggerName, triggerData);
+		}
+		else {
+			console.warn("No controller for " + triggerName + ". Can't trigger.", this);
+		}
 	}
 	
 	_manipulateProps(aReturnObject) {
 		
-		var returnObject = super._manipulateProps(aReturnObject);
+		let returnObject = super._manipulateProps(aReturnObject);
 		
 		returnObject["onClick"] = this._callback_changeBound;
 		
