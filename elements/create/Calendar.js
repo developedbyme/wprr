@@ -102,7 +102,7 @@ export default class Calendar extends WprrBaseObject {
 		
 		return <wrapper>
 			<ReferenceInjection injectData={injectData}>
-				<Loop input={weekDataArray} contentCreator={Calendar._contentCreator_row}/>
+				<Loop input={weekDataArray} contentCreator={Calendar._contentCreator_row} spacingContentCreator={SourceData.create("reference", "calendar/rowSpacingContentCreator")}/>
 			</ReferenceInjection>
 		</wrapper>;
 	}
