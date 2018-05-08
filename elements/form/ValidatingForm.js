@@ -16,6 +16,20 @@ export default class ValidatingForm extends WprrBaseObject {
 		this._callback_submitBound = this._callback_submit.bind(this);
 	}
 	
+	trigger(aName, aValue) {
+		if(aName === "form/submit") {
+			if(this.validate()) {
+				if(this.props.onSubmit) {
+					//METODO: send out fake event?
+					this.props.onSubmit(null);
+				}
+				else {
+					ReactDOM.findDOMNode(this).submit();
+				}
+			}
+		}
+	}
+	
 	addValidation(aObject) {
 		//console.log("wprr/elements/form/ValidatingForm::addValidation");
 		this._elementsToValidate.push(aObject);
@@ -98,7 +112,7 @@ export default class ValidatingForm extends WprrBaseObject {
 		//console.log("wprr/elements/form/ValidatingForm::_renderMainElement");
 		
 		return <wrapper>
-			<ReferenceInjection injectData={{"validation/form": this}}>
+			<ReferenceInjection injectData={{"validation/form": this, "trigger/form/submit": this}}>
 				<div>
 					{this.props.children}
 				</div>
