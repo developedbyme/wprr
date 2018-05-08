@@ -134,6 +134,21 @@ export default class Calendar extends WprrBaseObject {
 		
 		aReturnArray.push(returnObject);
 	}
+	
+	static _adjust_isSelectedDate(aReturnObject, aManipulationObject) {
+		console.log("wprr/elements/form/ValidatingForm::_adjust_isSelectedDate");
+		console.log(aManipulationObject.getReference("calendar/day/date"), aManipulationObject.getReference("calendar/selectedDate"), aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate"))
+		
+		if(aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate")) {
+			if(!aReturnObject["className"]) {
+				aReturnObject["className"] = "";
+			}
+			
+			aReturnObject["className"] += " selected";
+		}
+		
+		return aReturnObject;
+	}
 }
 
 Calendar.DEFAULT_ROW_MARKUP = <Markup>
@@ -155,6 +170,7 @@ Calendar.DEFAULT_CELL_MARKUP = <Markup>
 				{"key": -1, "value": "other-month past-month"},
 				{"key": 1, "value": "other-month future-month"}]
 			),
+			Calendar._adjust_isSelectedDate
 		]}>
 			<div className="calendar-day"><DateDisplay date={SourceData.create("reference", "calendar/day/date")} format="D" /></div>
 		</Adjust>
