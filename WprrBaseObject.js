@@ -35,7 +35,7 @@ export default class WprrBaseObject extends React.Component {
 	
 	resolveSourcedData(aData) {
 		//console.log(aData, aData instanceof SourceData);
-		if(aData instanceof SourceData) {
+		if(aData && aData.getSource) {
 			return aData.getSource(this);
 		}
 		
@@ -43,7 +43,7 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	resolveSourcedDataInStateChange(aData, aNewPropsAndState) {
-		if(aData instanceof SourceData) {
+		if(aData && aData.getSourceInStateChange) {
 			return aData.getSourceInStateChange(this, aNewPropsAndState);
 		}
 		
