@@ -34,8 +34,8 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	resolveSourcedData(aData) {
-		console.log("wprr/WprrBaseObject::resolveSourcedData");
-		console.log(aData);
+		//console.log("wprr/WprrBaseObject::resolveSourcedData");
+		//console.log(aData);
 		
 		if(aData && aData.getSource) {
 			return aData.getSource(this);
