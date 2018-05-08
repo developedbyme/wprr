@@ -32,7 +32,7 @@ export default class ControlFunction extends AdjustFunction {
 	}
 	
 	_setInitialStateToOwner(aOwner) {
-		aOwner.setState(this._getInitialState);
+		aOwner.setState(this._getInitialState());
 	}
 	
 	addOwner(aOwner) {
