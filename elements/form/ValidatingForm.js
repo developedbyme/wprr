@@ -88,6 +88,9 @@ export default class ValidatingForm extends WprrBaseObject {
 		if(this.validate()) {
 			ReactDOM.findDOMNode(this).submit();
 		}
+		else {
+			console.log("Form did not validate.", this);
+		}
 	}
 	
 	_copyPassthroughProps(aReturnObject) {

@@ -26,7 +26,7 @@ export default class Calendar extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		//console.log("wprr/elements/form/ValidatingForm::_renderMainElement");
+		//console.log("wprr/elements/create/Calendar::_renderMainElement");
 		
 		let defaultToday = moment();
 		
@@ -136,8 +136,8 @@ export default class Calendar extends WprrBaseObject {
 	}
 	
 	static _adjust_isSelectedDate(aReturnObject, aManipulationObject) {
-		console.log("wprr/elements/form/ValidatingForm::_adjust_isSelectedDate");
-		console.log(aManipulationObject.getReference("calendar/day/date"), aManipulationObject.getReference("calendar/selectedDate"), aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate"))
+		//console.log("wprr/elements/create/Calendar::_adjust_isSelectedDate");
+		//console.log(aManipulationObject.getReference("calendar/day/date"), aManipulationObject.getReference("calendar/selectedDate"), aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate"))
 		
 		if(aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate")) {
 			if(!aReturnObject["className"]) {

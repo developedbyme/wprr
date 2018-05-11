@@ -27,7 +27,7 @@ export default class FormField extends WprrBaseObject {
 	}
 	
 	_validate(aType) {
-		var validation = this.getReference("validation/validate");
+		let validation = this.getReference("validation/validate");
 		if(validation) {
 			validation.validate(aType);
 		}
