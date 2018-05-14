@@ -12,7 +12,9 @@ export default class ValidationFunctions {
 	static notEmpty(aCheckValue, aAdditionalData) {
 		//console.log("wprr/elements/form/validation/ValidationFunctions::notEmpty");
 		
-		return (aCheckValue && aCheckValue.length > 0);
+		let checkString = aCheckValue + "";
+		
+		return (checkString && checkString.length > 0);
 	}
 	
 	static isEmail(aCheckValue, aAdditionalData) {

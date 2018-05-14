@@ -32,6 +32,7 @@ export default class PostDataInjection extends ReferenceInjection {
 		if(postData) {
 			this._postData.setData(postData);
 			returnObject["wprr/postData"] = this._postData;
+			returnObject["wprr/postData/meta"] = postData.meta;
 			returnObject["wprr/postData/acfObject"] = postData.acf;
 		}
 		else {
