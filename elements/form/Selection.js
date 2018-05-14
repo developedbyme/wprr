@@ -24,7 +24,7 @@ export default class Selection extends WprrBaseObject {
 		let returnObject = super._getMainElementProps();
 		
 		returnObject["onChange"] = this._callback_changeBound;
-		returnObject["value"] = this.props.selection;
+		returnObject["value"] = this.getSourcedProp("selection");
 		
 		return returnObject;
 	}
