@@ -71,7 +71,7 @@ export default class FormField extends WprrBaseObject {
 		return <wrapper />;
 	}
 	
-	static makeSelfContained(aElement, aValue = null) {
+	static makeSelfContained(aElement, aValue = "") {
 		return <EditableProps editableProps="value" value={aValue} valueName="value">
 			{aElement}
 		</EditableProps>;

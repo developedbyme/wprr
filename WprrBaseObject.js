@@ -219,7 +219,9 @@ export default class WprrBaseObject extends React.Component {
 	_renderMainElement() {
 		//console.log("wprr/WprrBaseObject::_renderMainElement");
 		
-		return <wrapper />;
+		return <wrapper>
+			{this.props.children}
+		</wrapper>;
 	}
 	
 	_renderSafe() {

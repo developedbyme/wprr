@@ -68,19 +68,19 @@ export default class DropdownSelection extends WprrBaseObject {
 	static createPlacements(aButton, aOverlayContent) {
 		let returnArray = new Array();
 		
-		returnArray.push(<MarkupPlacement placement="button">{aButton}</MarkupPlacement>);
-		returnArray.push(<MarkupPlacement placement="overlay">{aOverlayContent}</MarkupPlacement>);
+		returnArray.push(<MarkupPlacement key="button" placement="button">{aButton}</MarkupPlacement>);
+		returnArray.push(<MarkupPlacement key="overlay" placement="overlay">{aOverlayContent}</MarkupPlacement>);
 		
 		return returnArray;
 	}
 	
-	static makeSelfContained(aElement, aValue = null, aOpen = false) {
+	static makeSelfContained(aElement, aValue = "", aOpen = false) {
 		return <EditableProps editableProps="value,open" value={aValue} open={aOpen}>
 			{aElement}
 		</EditableProps>;
 	}
 	
-	static createSelfContained(aButton, aOverlayContent, aProps = {}, aValue = null, aOpen = false) {
+	static createSelfContained(aButton, aOverlayContent, aProps = {}, aValue = "", aOpen = false) {
 		
 		let placements = DropdownSelection.createPlacements(aButton, aOverlayContent);
 		

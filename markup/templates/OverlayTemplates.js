@@ -12,7 +12,7 @@ export default class OverlayTemplates {
 		return <Markup>
 			<EditableProps editableProps="overlays" overlays={[]}>
 				<OverlayArea template={aTemplate}>
-					<MarkupChildren placement="all" />
+					<MarkupChildren key="children" placement="all" />
 				</OverlayArea>
 			</EditableProps>
 		</Markup>;

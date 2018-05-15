@@ -53,7 +53,11 @@ export default class SelectSection extends ManipulationBaseObject {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentChild = currentArray[i];
-			if(this._isSectionActive(currentChild.props.sectionName, selectedSections)) {
+			
+			if(this._isSectionActive(currentChild.props["data-section-name"], selectedSections)) {
+				activeChildren.push(this._performClone(currentChild, mainProps));
+			}
+			else if(this._isSectionActive(currentChild.props.sectionName, selectedSections)) {
 				activeChildren.push(this._performClone(currentChild, mainProps));
 			}
 		}

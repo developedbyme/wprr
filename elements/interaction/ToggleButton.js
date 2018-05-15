@@ -14,6 +14,18 @@ export default class ToggleButton extends ManipulationBaseObject {
 		this._callback_changeBound = this._callback_change.bind(this);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		//console.log("wprr/elements/interaction/ToggleButton::_removeUsedProps");
+		let returnObject = super._removeUsedProps(aReturnObject);
+		
+		delete returnObject["valueName"];
+		delete returnObject["trueValue"];
+		delete returnObject["falseValue"];
+		delete returnObject["value"];
+		
+		return returnObject;
+	}
+	
 	_callback_change(aEvent) {
 		//console.log("wprr/elements/interaction/ToggleButton::_callback_change");
 		

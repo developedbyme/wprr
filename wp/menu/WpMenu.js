@@ -32,8 +32,8 @@ export default class WpMenu extends ManipulationBaseObject {
 			children = <InjectChildren />;
 		}
 		
-		return [<WprrDataLoader loadData={{"menuData": "m-router-data/v1/menu/" + menuLocation}}>
-			<Loop input={SourceData.create("prop", "menuData")}>
+		return [<WprrDataLoader loadData={{"input": "m-router-data/v1/menu/" + menuLocation}}>
+			<Loop>
 				{children}
 			</Loop>
 		</WprrDataLoader>];

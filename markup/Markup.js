@@ -16,6 +16,7 @@ export default class Markup extends ManipulationBaseObject {
 		//console.log("wprr/markup/Markup::_removeUsedProps");
 		
 		delete aReturnObject["injectChildren"];
+		delete aReturnObject["usedPlacements"];
 		
 		return aReturnObject;
 	}

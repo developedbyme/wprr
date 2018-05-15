@@ -82,7 +82,7 @@ export default class StoreController {
 		if(currentIndex !== -1) {
 			this._loadingPaths.splice(currentIndex, 1);
 		}
-		console.log(this._loadingPaths);
+		//console.log(this._loadingPaths);
 	}
 	
 	_dataLoaded(aPath, aData) {

@@ -101,7 +101,7 @@ export default class OverlayArea extends WprrBaseObject {
 				overlayElements.push(this._renderOverlay(currentArray[i]));
 			}
 			
-			overlayElement = <div className="absolute-overlay no-pointer-events">
+			overlayElement = <div key="overlay" className="absolute-overlay no-pointer-events">
 				{overlayElements}
 			</div>;
 		}
