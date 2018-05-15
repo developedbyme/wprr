@@ -103,14 +103,15 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let height = this.state["height"]*this.state["envelope"];
-		let styleObject = {"height": height};
+		let styleObject = {"height": height, "overflow": "hidden"};
 		
 		if(this.state["envelope"] === 1) {
 			styleObject["height"] = "auto";
+			styleObject["overflow"] = "visible";
 		}
 		
 		return <wrapper>
-			<div className="animation-element no-overflow border-box-sizing" style={styleObject}>
+			<div className="animation-element border-box-sizing" style={styleObject}>
 				<div ref={this._setHeightElementBound}>{this.props.children}</div>
 			</div>
 		</wrapper>;
