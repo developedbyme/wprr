@@ -118,6 +118,15 @@ export default class SourceData {
 			case "postMeta":
 				let postMeta = references.getObject("wprr/postData/meta");
 				return objectPath.get(postMeta, aPath);
+			case "rangeItem":
+				{
+					let dataObject = references.getObject("wprr/rangeData");
+					switch(aPath) {
+						case "rawData":
+							return dataObject;
+					}
+					return objectPath.get(dataObject, aPath);
+				}
 			case "userData":
 				{
 					let dataObject = references.getObject("wprr/userData");

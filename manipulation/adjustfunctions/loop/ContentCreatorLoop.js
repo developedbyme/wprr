@@ -2,6 +2,8 @@ import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
 
+import ReferenceInjection from "wprr/reference/ReferenceInjection";
+
 //import ContentCreatorLoop from "wprr/manipulation/adjustfunctions/loop/ContentCreatorLoop";
 /**
  * Adjust function that creates content from an array of data.

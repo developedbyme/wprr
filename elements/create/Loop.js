@@ -4,6 +4,7 @@ import Adjust from "wprr/manipulation/Adjust";
 
 import ContentCreatorLoop from "wprr/manipulation/adjustfunctions/loop/ContentCreatorLoop";
 import InjectChildren from "wprr/manipulation/InjectChildren";
+import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
 //import Loop from "wprr/elements/create/Loop";
 export default class Loop extends Adjust {
@@ -14,8 +15,24 @@ export default class Loop extends Adjust {
 		this._loopAdjustFunction = ContentCreatorLoop.create();
 	}
 	
+	/**
+	 * Function that removes the used props
+	 *
+	 * @param	aReturnObject	Object	The props object that should be adjusted
+	 */
+	_removeUsedProps(aReturnObject) {
+		//METODO: change this to actual source cleanup
+		aReturnObject = super._removeUsedProps(aReturnObject);
+		delete aReturnObject["loop"];
+		
+		return aReturnObject;
+	}
+	
 	_addAdjustFunctions(aReturnArray) {
-		aReturnArray.push(this._loopAdjustFunction);
+		
+		let loop = this.getSourcedPropWithDefault("loop", this._loopAdjustFunction);
+		
+		aReturnArray.push(loop);
 	}
 	
 	_getAdjustFunctions() {
@@ -31,9 +48,27 @@ export default class Loop extends Adjust {
 		let children = super._getChildrenToClone();
 		
 		if(children.length === 0) {
-			children = [<InjectChildren />];
+			children = [React.createElement(InjectChildren)];
 		}
 		
 		return children;
+	}
+	
+	_renderMainElement() {
+		let clonedElementes = super._renderMainElement();
+		let injectData = new Object();
+		
+		let loopLength = 0;
+		let input = this.getSourcedProp("input");
+		if(input) {
+			loopLength = input.length;
+		}
+		
+		injectData["loop/allItems"] = input;
+		injectData["loop/length"] = loopLength;
+		
+		return <ReferenceInjection injectData={injectData}>
+			{clonedElementes}
+		</ReferenceInjection>
 	}
 }

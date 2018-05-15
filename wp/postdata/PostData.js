@@ -285,12 +285,11 @@ export default class PostData {
 	
 	getTermById(aId, aTaxonomy) {
 		if(this._data && this._data.terms) {
-			var currentArray = this._data.terms[aTaxonomy];
+			let currentArray = this._data.terms[aTaxonomy];
 			if(currentArray) {
-				var currentArrayLength = currentArray.length;
-				for(var i = 0; i < currentArrayLength; i++) {
-					var currentTerm = currentArray[i];
-					console.log(currentTerm);
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentTerm = currentArray[i];
 					if(currentTerm.id === aId) {
 						return currentTerm;
 					}

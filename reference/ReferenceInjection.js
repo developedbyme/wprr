@@ -49,6 +49,10 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 			this._references.addObject(objectName, sourcedData);
 		}
 	}
+	
+	static createReactElement(aData, aChildOrChildren) {
+		return React.createElement(ReferenceInjection, {"injectData": aData}, aChildOrChildren);
+	}
 }
 
 ReferenceInjection.childContextTypes = {

@@ -2,8 +2,6 @@ import React from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
-/*import {requestOaSiteDataMenu} from "oa/sitedata/store/actioncreators/oaSiteDataActionCreators";*/
-
 //import WprrDataLoader from "wprr/manipulation/loader/WprrDataLoader";
 export default class WprrDataLoader extends ManipulationBaseObject {
 
