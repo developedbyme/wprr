@@ -23,7 +23,9 @@ export default class FormField extends WprrBaseObject {
 		//console.log(aEvent);
 		//console.log(aEvent.target.value);
 		
-		this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value, this.props.additionalData);
+		let additionalData = this.getSourcedProp("additionalData");
+		
+		this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value, additionalData);
 	}
 	
 	_validate(aType) {
