@@ -120,9 +120,8 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 			}
 		}
 		
-		return <Fragment>
-			{returnArray}
-		</Fragment>;
+		let callArray = [Fragment, {}].concat(returnArray);
+		return React.createElement.apply(React, callArray);
 	}
 	
 	_renderClonedElement() {

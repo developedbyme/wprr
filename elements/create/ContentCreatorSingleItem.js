@@ -9,6 +9,15 @@ export default class ContentCreatorSingleItem extends ManipulationBaseObject {
 		super(props);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		let returnObject = super._removeUsedProps(aReturnObject);
+		
+		delete returnObject["data"];
+		delete returnObject["contentCreator"];
+		
+		return returnObject;
+	}
+	
 	_getChildrenToClone() {
 		
 		var data = this.getSourcedProp("data");
