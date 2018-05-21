@@ -8,6 +8,7 @@ import ToggleButton from "wprr/elements/interaction/ToggleButton";
 import OpenCloseExpandableArea from "wprr/elements/area/OpenCloseExpandableArea";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
 import EditableProps from "wprr/manipulation/EditableProps";
+import ClickOutsideTrigger from "wprr/elements/interaction/ClickOutsideTrigger";
 
 import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
@@ -32,8 +33,13 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	trigger(aName, aValue) {
-		this._updateExternalValue(this.getSourcedPropWithDefault("valueName", "value"), aValue);
-		this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+		if(aName === "setSelection") {
+			this._updateExternalValue(this.getSourcedPropWithDefault("valueName", "value"), aValue);
+			this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+		}
+		if(aName === "close") {
+			this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+		}
 	}
 	
 	_updateExternalValue(aValueName, aValue) {
@@ -57,7 +63,7 @@ export default class DropdownSelection extends WprrBaseObject {
 		
 		return <wrapper>
 			<FormField type="hidden" name={this.props.name} value={value} />
-			<ReferenceInjection injectData={{"value/selection": this, "value/dropdownSelection/open": this, "trigger/setSelection": this, "dropdownSelection/open": open, "dropdownSelection/value": value}}>
+			<ReferenceInjection injectData={{"value/selection": this, "value/dropdownSelection/open": this, "trigger/setSelection": this, "trigger/close": this, "dropdownSelection/open": open, "dropdownSelection/value": value}}>
 				<UseMarkup markup={markup}>
 					{this.props.children}
 				</UseMarkup>
@@ -98,9 +104,11 @@ DropdownSelection.DEFAULT_MARKUP = <Markup usedPlacements="button">
 											<MarkupChildren placement="button" />
 										</ToggleButton>
 										<div className="position-absolute dropdown-selection-popup">
-											<OpenCloseExpandableArea open={SourceData.create("reference", "dropdownSelection/open")}>
-												<MarkupChildren placement="rest" />
-											</OpenCloseExpandableArea>
+											<ClickOutsideTrigger triggerName="close" active={SourceData.create("reference", "dropdownSelection/open")}>
+												<OpenCloseExpandableArea open={SourceData.create("reference", "dropdownSelection/open")}>
+													<MarkupChildren placement="rest" />
+												</OpenCloseExpandableArea>
+											</ClickOutsideTrigger>
 										</div>
 									</div>
 								</Markup>;
