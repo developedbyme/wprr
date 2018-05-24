@@ -39,6 +39,8 @@ export default class Checkbox extends WprrBaseObject {
 		returnObject["checked"] = this.getSourcedProp("checked");
 		returnObject["onChange"] = this._callback_changeBound;
 		
+		returnObject["disabled"] = this.getSourcedProp("disabled");
+		
 		return returnObject;
 	}
 

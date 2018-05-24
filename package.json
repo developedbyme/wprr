@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "document-offset": "^1.0.4",
+    "js-cookie": "^2.2.0",
     "moment": "^2.22.1",
     "object-path": "^0.11.4",
     "prop-types": "^15.6.0",
