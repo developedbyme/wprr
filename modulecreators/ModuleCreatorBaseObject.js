@@ -84,7 +84,7 @@ export default class ModuleCreatorBaseObject {
 		);
 	}
 	
-	_configureModule(aHolderNode, aData) {
+	_configureModule(aHolderNode, aData, aModuleData) {
 		//console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
 		//console.log(aHolderNode, aData);
 		
@@ -96,6 +96,8 @@ export default class ModuleCreatorBaseObject {
 		
 		this._referenceHolder.addObject("wprr/userData", aData.userData);
 		this._referenceHolder.addObject("wprr/settings", aData.settings);
+		
+		this._referenceHolder.addObject("wprr/moduleData", aModuleData);
 		
 		this._referenceHolder.addObject("wprr/textManager", this._textManager);
 		
@@ -137,13 +139,14 @@ export default class ModuleCreatorBaseObject {
 	 * Creates a new module
 	 *
 	 * aHolderNode	HTMLElement	The element to add the module to
-	 * aData		Object		The dynamic data for the module
+	 * aData		Object		The confuguration data for the module
+	 * aModuleData	Object		The dynamic data for just this module
 	 */
-	createModule(aHolderNode, aData) {
+	createModule(aHolderNode, aData, aModuleData) {
 		//console.log("oa.ModuleCreatorBaseObject::createModule");
 		//console.log(aHolderNode, aData);
 		
-		this._configureModule(aHolderNode, aData);
+		this._configureModule(aHolderNode, aData, aModuleData);
 		
 		let rootObject = this._getRootObject(aData);
 		

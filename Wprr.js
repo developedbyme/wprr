@@ -50,10 +50,10 @@ export default class Wprr {
 		return newModuleCreator;
 	}
 	
-	insertModule(aName, aHolderElement, aData) {
+	insertModule(aName, aHolderElement, aData, aLocalData) {
 		let currentModuleCreator = this._moduleCreators[aName];
 		if(currentModuleCreator) {
-			currentModuleCreator.createModule(aHolderElement, aData);
+			currentModuleCreator.createModule(aHolderElement, aData, aLocalData);
 		}
 		else {
 			console.error("No module named " + aName, this);

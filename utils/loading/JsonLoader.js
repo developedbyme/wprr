@@ -18,6 +18,8 @@ export default class JsonLoader {
 		this._status = 0;
 		this._data = null;
 		this._body = null;
+		
+		this.onLoad = null;
 	}
 	
 	setUrl(aUrl) {
