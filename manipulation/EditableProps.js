@@ -74,6 +74,13 @@ export default class EditableProps extends ManipulationBaseObject {
 		}
 	}
 	
+	updateValueWithoutTrigger(aName, aValue) {
+		let stateObject = new Object();
+		stateObject[aName] = aValue;
+		
+		this.setState(stateObject);
+	}
+	
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/manipulation/EditableProps::_manipulateProps");
 		
