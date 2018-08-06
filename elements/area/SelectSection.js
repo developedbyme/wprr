@@ -37,6 +37,10 @@ export default class SelectSection extends ManipulationBaseObject {
 		if(typeof(selectedSections) === "string") {
 			selectedSections = selectedSections.split(","); //METODO: trim whitespace
 		}
+		if(!(selectedSections instanceof Array)) {
+			console.warn("Selected sections are not an array.", this);
+			selectedSections = [];
+		}
 		
 		let availableChildren;
 		if(children instanceof Array) {

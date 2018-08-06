@@ -13,6 +13,7 @@ export default class SourceData {
 	constructor() {
 		//console.log("wprr/reference/SourceData::constructor");
 		
+		this._sourceFunction = SourceData.getSource;
 		this._type = null;
 		this._path = null;
 	}
@@ -25,13 +26,19 @@ export default class SourceData {
 		return this;
 	}
 	
+	setSourceFunction(aFunction) {
+		this._sourceFunction = aFunction;
+		
+		return this;
+	}
+	
 	getSource(aFromObject) {
-		return SourceData.getSource(this._type, this._path, aFromObject, aFromObject);
+		return this._sourceFunction(this._type, this._path, aFromObject, aFromObject);
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		//console.log("wprr/reference/SourceData::getSourceInStateChange");
-		return SourceData.getSource(this._type, this._path, aFromObject, aNewPropsAndState);
+		return this._sourceFunction(this._type, this._path, aFromObject, aNewPropsAndState);
 	}
 	
 	removeUsedProps(aProps) {
@@ -50,6 +57,15 @@ export default class SourceData {
 		let newSourceData = new SourceData();
 		
 		newSourceData.setup(aType, aPath);
+		
+		return newSourceData;
+	}
+	
+	static createFunction(aFunction, aPath) {
+		let newSourceData = new SourceData();
+		
+		newSourceData.setup("function", aPath);
+		newSourceData.setSourceFunction(aFunction);
 		
 		return newSourceData;
 	}
