@@ -3,6 +3,11 @@ import React from 'react';
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
+import ContentCreatorSingleItem from "wprr/elements/create/ContentCreatorSingleItem";
+import SourceData from "wprr/reference/SourceData";
+import Loop from "wprr/elements/create/Loop";
+import Adjust from "wprr/manipulation/Adjust";
+import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
 
 //import SortableTable from "wprr/elements/area/table/SortableTable";
 export default class SortableTable extends WprrBaseObject {
@@ -30,7 +35,7 @@ export default class SortableTable extends WprrBaseObject {
 		
 		var headerRowData = new Array();
 		
-		var currentArray2 = this.props.headerData;
+		var currentArray2 = this.getSourcedProp("headerData");
 		var currentArray2Length = currentArray2.length;
 		for(var j = 0; j < currentArray2Length; j++) {
 			var currentHeader = currentArray2[j];
@@ -81,39 +86,32 @@ export default class SortableTable extends WprrBaseObject {
 	_renderHeadElement() {
 		//console.log("wprr/elements/area/table/SortableTable::_renderHeadElement");
 		
-		if(!this.props.headerData) {
+		let headerData = this.getSourcedProp("headerData");
+		
+		if(!headerData) {
 			console.warn("Table doesn't have any header data");
 			return null;
 		}
 		
-		var contentCreator = this.getReference("contentCreators/table/head");
-		var rowContentCreator = this.getReference("contentCreators/table/headRow");
-		var rowItemContentCreator = this.getReference("contentCreators/table/headRowItem");
-		
-		if(contentCreator !== null && rowContentCreator !== null) {
+		let loopData = new Array();
+		let currentArray = headerData;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentData = currentArray[i];
 			
-			var rowItems = new Array();
-			
-			var currentArray = this.props.headerData;
-			var currentArrayLength = currentArray.length;
-			for(var i = 0; i < currentArrayLength; i++) {
-				
-				var currentData = currentArray[i];
-				
-				var clickCallback = null;
-				if(this._shouldSort && (currentData["sortFunction"] !== "none")) {
-					clickCallback = this._headItemClickedBound;
-				}
-				
-				rowItems.push(rowItemContentCreator({"index": i, "data": currentData, "selected": (this.state.selectedIndex === i), "sortOrder": this.state.sortOrder, "clickCallback": clickCallback}, "header-row-item-" + i, this._references));
+			let clickCallback = null;
+			if(this._shouldSort && (currentData["sortFunction"] !== "none")) {
+				clickCallback = this._headItemClickedBound;
 			}
 			
-			var rowElement = rowContentCreator({"data": currentArray, "children": rowItems}, "row", this._references);
-			var returnElement = contentCreator({"children": [rowElement]}, "head", this._references);
-			return returnElement;
+			loopData.push({"index": i, "data": currentData, "selected": (this.state.selectedIndex === i), "sortOrder": this.state.sortOrder, "clickCallback": clickCallback});
 		}
 		
-		return null;
+		return <ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/head")}>
+			<ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/headRow")}>
+				<Loop input={loopData} contentCreator={SourceData.create("reference", "contentCreators/table/headRowItem")} />
+			</ContentCreatorSingleItem>
+		</ContentCreatorSingleItem>;
 	}
 	
 	_defaultCompareFunction(aA, aB) {
@@ -148,11 +146,13 @@ export default class SortableTable extends WprrBaseObject {
 		//console.log("wprr/elements/area/table/SortableTable::_defaultSortFunction");
 		//console.log(aA, aB);
 		
-		var currentIndex = this.state["selectedIndex"];
-		var currentHeader = this.props.headerData[currentIndex];
+		let headerData = this.getSourcedProp("headerData");
 		
-		var aData = this._getRowItemData(currentIndex, currentHeader["key"], aA);
-		var bData = this._getRowItemData(currentIndex, currentHeader["key"], aB);
+		let currentIndex = this.state["selectedIndex"];
+		let currentHeader = headerData[currentIndex];
+		
+		let aData = this._getRowItemData(currentIndex, currentHeader["key"], aA);
+		let bData = this._getRowItemData(currentIndex, currentHeader["key"], aB);
 		
 		return aCompareFunction(aData, bData);
 	}
@@ -160,13 +160,21 @@ export default class SortableTable extends WprrBaseObject {
 	_sortRows(aReturnArray) {
 		//console.log("wprr/elements/area/table/SortableTable::_defaultSortFunction");
 		
-		var currentIndex = this.state["selectedIndex"];
-		var currentHeader = this.props.headerData[currentIndex];
+		let headerData = this.getSourcedProp("headerData");
 		
-		var compareFunction = null;
+		let currentIndex = this.state["selectedIndex"];
+		let currentHeader = headerData[currentIndex];
+		
+		let compareFunction = null;
 		
 		if(currentHeader.sortFunction) {
-			compareFunction = this._references.getObject("sort/compare/" + currentHeader.sortFunction);
+			if(this._injectData["sort/compare/" + currentHeader.sortFunction]) {
+				compareFunction = this._injectData["sort/compare/" + currentHeader.sortFunction];
+			}
+			else {
+				compareFunction = this.getReference("sort/compare/" + currentHeader.sortFunction);
+			}
+			
 		}
 		if(!compareFunction) {
 			compareFunction = this._defaultCompareFunction;
@@ -181,8 +189,8 @@ export default class SortableTable extends WprrBaseObject {
 	
 	_selectRows() {
 		
-		var returnArray = new Array()
-		returnArray = returnArray.concat(this.props.rows);
+		let returnArray = new Array()
+		returnArray = returnArray.concat(this.getSourcedProp("rows"));
 		
 		if(this._shouldSort) {
 			this._sortRows(returnArray);
@@ -203,13 +211,15 @@ export default class SortableTable extends WprrBaseObject {
 	_getRowItemsData(aRowData) {
 		//console.log("wprr/elements/area/table/SortableTable::_getRowItemsData");
 		
-		var returnArray = new Array();
+		let returnArray = new Array();
 		
-		var currentArray = this.props.headerData;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
+		let headerData = this.getSourcedProp("headerData");
+		
+		let currentArray = headerData;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
 			
-			var currentHeader = currentArray[i];
+			let currentHeader = currentArray[i];
 			
 			returnArray.push(this._getFormattedRowItemData(i, currentHeader["key"], aRowData));
 			
@@ -221,42 +231,39 @@ export default class SortableTable extends WprrBaseObject {
 	_renderBodyElement() {
 		//console.log("wprr/elements/area/table/SortableTable::_renderBodyElement");
 		
-		if(!this.props.rows) {
+		//return null; //MEDEBUG
+		
+		let headerData = this.getSourcedProp("headerData");
+		let rowsData = this.getSourcedProp("rows");
+		
+		if(!rowsData) {
 			return null;
 		}
 		
-		var contentCreator = this.getReference("contentCreators/table/body");
-		var rowContentCreator = this.getReference("contentCreators/table/bodyRow");
-		var rowItemContentCreator = this.getReference("contentCreators/table/bodyRowItem");
+		let rowsLoopData = new Array();
 		
-		if(contentCreator !== null && rowContentCreator !== null) {
+		let currentArray = this._selectRows();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentRow = currentArray[i];
 			
-			var rows = new Array();
+			let cellsLoopData = new Array();
 			
-			var currentArray = this._selectRows();
-			var currentArrayLength = currentArray.length;
-			for(var i = 0; i < currentArrayLength; i++) {
-				
-				var currentRow = currentArray[i];
-				
-				var rowItems = new Array();
-				
-				var currentArray2 = this._getRowItemsData(currentRow);
-				var currentArray2Length = currentArray2.length;
-				for(var j = 0; j < currentArray2Length; j++) {
-					var currentData = currentArray2[j];
-					rowItems.push(rowItemContentCreator({"index": j, "rowIndex": i, "data": currentData, "headerData": this.props.headerData[j]}, "body-row-item-" + j, this._references));
-				}
-				
-				var currentRow = rowContentCreator({"data": currentRow, "children": rowItems}, "row-" + i, this._references);
-				rows.push(currentRow);
+			let currentArray2 = this._getRowItemsData(currentRow);
+			let currentArray2Length = currentArray2.length;
+			for(let j = 0; j < currentArray2Length; j++) {
+				let currentData = currentArray2[j];
+				cellsLoopData.push({"index": j, "rowIndex": i, "data": currentData, "headerData": headerData[j]});
 			}
 			
-			var returnElement = contentCreator({"children": rows}, "body", this._references);
-			return returnElement;
+			let cellsLoop = <Loop input={cellsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRowItem")} />
+			
+			rowsLoopData.push({"data": currentRow, "children": cellsLoop});
 		}
 		
-		return null;
+		return <ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/body")}>
+			<Loop input={rowsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRow")} />
+		</ContentCreatorSingleItem>;
 	}
 	
 	_renderMainElement() {

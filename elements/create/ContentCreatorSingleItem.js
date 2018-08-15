@@ -20,15 +20,19 @@ export default class ContentCreatorSingleItem extends ManipulationBaseObject {
 	
 	_getChildrenToClone() {
 		
-		var data = this.getSourcedProp("data");
-		var contentCreator = this.getSourcedProp("contentCreator");
+		let data = this.getSourcedProp("data");
+		let contentCreator = this.getSourcedProp("contentCreator");
 		
 		if(!contentCreator) {
 			console.error("Content creator is not set.", this);
 			return <div>Content creator is not set</div>;
 		}
 		
-		var returnArray = new Array();
+		if(!data) {
+			data = {"children": this.props.children};
+		}
+		
+		let returnArray = new Array();
 		contentCreator(data, 0, this.getReferences(), returnArray);
 		
 		if(returnArray.length === 0) {
