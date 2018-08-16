@@ -53,6 +53,10 @@ export default class ModuleCreatorBaseObject {
 		return this._referenceHolder;
 	}
 	
+	getTextManager() {
+		return this._textManager;
+	}
+	
 	_createReduxStore(aConfigurationData) {
 		
 		//METODO: full store

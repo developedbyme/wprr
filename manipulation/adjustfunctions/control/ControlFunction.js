@@ -26,6 +26,27 @@ export default class ControlFunction extends AdjustFunction {
 		}
 	}
 	
+	getInputFromSingleOwner(aName) {
+		let inputData = this.getRawInput(aName);
+		if(inputData instanceof SourceData) {
+			if(this._owners.length === 0) {
+				console.error("Source can't be resolved without any owner.");
+				return null;
+			}
+			else if(this._owners.length !== 1) {
+				console.error("Source can't be resolved with multiple owners.");
+				return null;
+			}
+			
+			let singleOwner = this._owners[0];
+			return this.getInput(aName, singleOwner.props, singleOwner);
+		}
+		
+		return inputData;
+		
+		
+	}
+	
 	_getInitialState() {
 		//MENOTE: should be overridden
 		return {};

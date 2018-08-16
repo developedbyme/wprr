@@ -43,6 +43,14 @@ export default class AdjustFunction {
 		return this;
 	}
 	
+	getRawInput(aName) {
+		if(this._inputs[aName] === undefined) {
+			console.warn("Input " + aName + " doesn't exist.", this);
+			return null;
+		}
+		return this._inputs[aName];
+	}
+	
 	/**
 	 * Gets an input for this function.
 	 *

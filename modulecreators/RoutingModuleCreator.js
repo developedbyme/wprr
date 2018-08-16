@@ -70,12 +70,28 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		this.createRoute(WpData.createForPageTemplate(aPageTemplatePath), componentWithInjectsions);
 	}
 	
+	createSingularRouteWithQualifier(aQualifier, aReactComponent) {
+		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+			{aReactComponent}
+		</PostDataInjection>;
+
+		this.createRoute(aQualifier, componentWithInjectsions);
+	}
+	
 	createSingularRoute(aReactComponent) {
 		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
 			{aReactComponent}
 		</PostDataInjection>;
 
 		this.createRoute(WpConditional.create("is_singular"), componentWithInjectsions);
+	}
+	
+	createSingularPostTypeRoute(aPostType, aReactComponent) {
+		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+			{aReactComponent}
+		</PostDataInjection>;
+
+		this.createRoute(WpData.createForPostType(aPostType), componentWithInjectsions);
 	}
 	
 	createArchiveRoute(aReactComponent) {
