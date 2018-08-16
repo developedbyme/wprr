@@ -9,6 +9,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 		this.setInput("url", null);
 		this.setInput("method", "GET");
 		this.setInput("headers", {});
+		this.setInput("repsonseType", "json");
 		this.setInput("statusStateName", "urlRequestStatus");
 		this.setInput("resultStateName", "urlRequestResult");
 		this.setInput("triggerName", "urlRequest/request");
@@ -17,16 +18,57 @@ export default class TriggerUrlRequest extends ControlFunction {
 		
 		this._requestStatus = TriggerUrlRequest.STATUS_NONE;
 		this._requestResult = null;
+		
+		this._responseOk = null;
+		
+		this._loadPromise = null;
+		
+		this._promise_loadResponseBound = this._promise_loadResponse.bind(this);
+		this._promise_dataEncodedBound = this._promise_dataEncoded.bind(this);
+		this._promise_loadingErrorBound = this._promise_loadingError.bind(this);
 	}
 	
 	trigger(aName, aValue) {
 		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::trigger");
 		
 		if(aName === this.getInputFromSingleOwner("triggerName")) {
-			//METODO
 			
-			console.log(">>>>");
+			let bodyData = aValue;
+			
+			if(!(aValue instanceof String)) {
+				bodyData = JSON.stringify(aValue);
+			}
+
+			this._loadPromise = fetch(this.getInputFromSingleOwner("url"), {
+				"method": this.getInputFromSingleOwner("method"),
+				"body": bodyData,
+				"credentials": "include",
+				"headers": this.getInputFromSingleOwner("headers")
+			})
+			.then(this._promise_loadResponseBound)
+			.then(this._promise_dataEncoded)
+			.catch(this._promise_loadingErrorBound);
 		}
+	}
+	
+	_promise_loadResponse(aResponse) {
+		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadResponse");
+		
+		this._responseOk = aResponse.ok;
+		
+		return aResponse.text();
+	}
+	
+	_promise_dataEncoded(aDataString) {
+		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_dataEncoded");
+		//METODO
+		console.log(aDataString);
+	}
+	
+	_promise_loadingError(aError) {
+		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadingError");
+		console.error(aError);
+		//METODO
 	}
 	
 	injectReferences(aReturnObject) {
