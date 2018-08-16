@@ -1,6 +1,6 @@
 import objectPath from "object-path";
 
-import ArrayFunctions from "oa/utils/ArrayFunctions";
+import ArrayFunctions from "wprr/utils/ArrayFunctions";
 
 // import WpTermFunctions from "wprr/wp/WpTermFunctions";
 export default class WpTermFunctions {
@@ -30,6 +30,40 @@ export default class WpTermFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static getHierarchLevelTermFromSlug(aSlug, aHierarchTerms) {
+		//console.log(aSlug, aHierarchTerms);
+		
+		let currentArray = aHierarchTerms;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentHierarchyTerm = currentArray[i];
+			if(currentHierarchyTerm.term.slug === aSlug) {
+				return currentHierarchyTerm;
+			}
+		}
+		
+		console.warn("Term with slug " + aSlug + " doesn't exist in terms.", aHierarchTerms);
+	}
+	
+	static getSubtreeFromHierarchTerms(aPath, aHierarchTerms) {
+		
+		let currentTerms = aHierarchTerms;
+		
+		let currentArray = aPath.split("/");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentPathPart = currentArray[i];
+			let newTerm = WpTermFunctions.getHierarchLevelTermFromSlug(currentPathPart, currentTerms);
+			if(!newTerm) {
+				console.warn("No term for path " + aPath + " at " + currentPathPart);
+				return [];
+			}
+			currentTerms = newTerm.children;
+		}
+		
+		return currentTerms;
 	}
 	
 	static createEditLinkFromId(aId, aTaxonomy, aSiteUrl) {
