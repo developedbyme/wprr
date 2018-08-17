@@ -19,7 +19,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 		this._requestStatus = TriggerUrlRequest.STATUS_NONE;
 		this._requestResult = null;
 		
-		this._responseOk = null;
+		this._response = null;
 		
 		this._loadPromise = null;
 		
@@ -46,7 +46,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 				"headers": this.getInputFromSingleOwner("headers")
 			})
 			.then(this._promise_loadResponseBound)
-			.then(this._promise_dataEncoded)
+			.then(this._promise_dataEncodedBound)
 			.catch(this._promise_loadingErrorBound);
 		}
 	}
@@ -54,21 +54,67 @@ export default class TriggerUrlRequest extends ControlFunction {
 	_promise_loadResponse(aResponse) {
 		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadResponse");
 		
-		this._responseOk = aResponse.ok;
+		this._response = aResponse;
 		
 		return aResponse.text();
 	}
 	
 	_promise_dataEncoded(aDataString) {
 		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_dataEncoded");
-		//METODO
 		console.log(aDataString);
+		
+		if(!this._response.ok) {
+			throw Error(this._response.statusText + "\n" + aDataString);
+		}
+		
+		let data = null;
+		let responseType = this.getInputFromSingleOwner("repsonseType");
+		switch(responseType) {
+			case "json":
+				try {
+					data = JSON.parse(aDataString);
+				}
+				catch(theError) {
+					throw Error("Could not parse data. \n" + aDataString);
+				}
+				break;
+			default:
+				console.warn("Unknown response type " + responseType + ". Using text instead.");
+			case "text":
+				data = responseType;
+				break;
+		}
+		
+		let resultTriggerName = this.getInputFromSingleOwner("resultTriggerName");
+		
+		let currentArray = this._owners;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentOwner = currentArray[i];
+			let triggerController = currentOwner.getReference("trigger/" + resultTriggerName);
+			if(triggerController) {
+				triggerController.trigger(resultTriggerName, data);
+			}
+		}
 	}
 	
 	_promise_loadingError(aError) {
 		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadingError");
 		console.error(aError);
-		//METODO
+		
+		//METODO: set status
+		
+		let errorTriggerName = this.getInputFromSingleOwner("errorTriggerName");
+		
+		let currentArray = this._owners;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentOwner = currentArray[i];
+			let triggerController = currentOwner.getReference("trigger/" + errorTriggerName);
+			if(triggerController) {
+				triggerController.trigger(errorTriggerName, aError);
+			}
+		}
 	}
 	
 	injectReferences(aReturnObject) {
