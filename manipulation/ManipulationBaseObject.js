@@ -64,6 +64,19 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 	
 	_performClone(aChild, aProps) {
 		
+		if(aChild instanceof Array) {
+			let returnArray = new Array();
+			
+			let currentArray = aChild;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentChild = currentArray[i];
+				returnArray.push(this._performClone(currentChild, aProps));
+			}
+			
+			return returnArray;
+		}
+		
 		let newProps = aProps;
 		if(aProps.className && aChild.props && aChild.props.className) {
 			newProps = new Object();
@@ -73,17 +86,19 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 			newProps.className = aProps.className + " " + aChild.props.className;
 		}
 		
-		var callArray = [aChild, newProps];
+		let callArray = [aChild, newProps];
 		
-		var firstChildChildren = aChild.props.children;
-		if(!firstChildChildren) {
-			callArray.push(null);
-		}
-		else if(firstChildChildren instanceof Array) {
-			callArray = callArray.concat(firstChildChildren);
-		}
-		else {
-			callArray.push(firstChildChildren);
+		if(aChild && aChild.props) {
+			let firstChildChildren = aChild.props.children;
+			if(!firstChildChildren) {
+				callArray.push(null);
+			}
+			else if(firstChildChildren instanceof Array) {
+				callArray = callArray.concat(firstChildChildren);
+			}
+			else {
+				callArray.push(firstChildChildren);
+			}
 		}
 		
 		return React.cloneElement.apply(React, callArray);
