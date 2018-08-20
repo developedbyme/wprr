@@ -15,13 +15,49 @@ export default class EditableProps extends ManipulationBaseObject {
 		this._references = new ReferenceHolder();
 		
 		this._propsThatShouldNotCopy.push("editableProps");
+		this._propsThatShouldNotCopy.push("externalStorage");
 	}
 	
-	getData() {
-		let returnObject = new Object();
+	_updateExternalStorage(aName, aValue) {
+		//console.log("wprr/manipulation/EditableProps::_updateExternalStorage");
 		
+		let externalStorage = this.getSourcedProp("externalStorage");
+		
+		if(externalStorage) {
+			externalStorage.updateValue(aName, aValue);
+		}
+	}
+	
+	componentWillMount() {
+		//console.log("wprr/manipulation/EditableProps::componentWillMount");
+		
+		super.componentWillMount();
+		
+		this._prepareRender();
+		
+		let externalStorage = this.getSourcedProp("externalStorage");
+		
+		if(externalStorage) {
+			let currentArray = this._getEditablePropNames();
+		
+			if(currentArray) {
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentName = currentArray[i];
+				
+					let currentValue = externalStorage.getValue(currentName);
+					console.log(currentName, currentValue);
+					if(currentValue !== null && currentValue !== undefined) {
+						this.state[currentName] = currentValue;
+					}
+					
+				}
+			}
+		}
+	}
+	
+	_getEditablePropNames() {
 		let editableProps = this.getSourcedProp("editableProps");
-		
 		if(editableProps) {
 			let currentArray;
 			if(typeof(editableProps) === "string") {
@@ -30,18 +66,26 @@ export default class EditableProps extends ManipulationBaseObject {
 			else if(editableProps instanceof Array) {
 				currentArray = editableProps;
 			}
-			
-			if(currentArray) {
-				let currentArrayLength = currentArray.length;
-				for(let i = 0; i < currentArrayLength; i++) {
-					let currentName = currentArray[i];
-					
-					if(this.state[currentName] !== undefined) {
-						returnObject[currentName] = this.state[currentName];
-					}
-					else {
-						returnObject[currentName] = this.props[currentName];
-					}
+			return currentArray;
+		}
+		return [];
+	}
+	
+	getData() {
+		let returnObject = new Object();
+		
+		let currentArray = this._getEditablePropNames();
+		
+		if(currentArray) {
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentName = currentArray[i];
+				
+				if(this.state[currentName] !== undefined) {
+					returnObject[currentName] = this.state[currentName];
+				}
+				else {
+					returnObject[currentName] = this.props[currentName];
 				}
 			}
 		}
@@ -66,8 +110,10 @@ export default class EditableProps extends ManipulationBaseObject {
 		
 		this.setState(stateObject);
 		
+		this._updateExternalStorage(aName, aValue);
+		
 		let triggerName = this.getSourcedPropWithDefault("triggerName", "propEdited") + "/" + aName;
-		let triggerController = this.getReference("trigger/" + triggerName);
+		let triggerController = this.getReferenceIfExists("trigger/" + triggerName);
 		
 		if(triggerController) {
 			triggerController.trigger(triggerName, aValue);
@@ -79,6 +125,8 @@ export default class EditableProps extends ManipulationBaseObject {
 		stateObject[aName] = aValue;
 		
 		this.setState(stateObject);
+		
+		this._updateExternalStorage(aName, aValue);
 	}
 	
 	_manipulateProps(aReturnObject) {

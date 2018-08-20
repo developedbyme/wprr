@@ -154,6 +154,8 @@ export default class SourceData {
 				}
 			case "reference":
 				return references.getObject(aPath);
+			case "referenceIfExists":
+				return references.getObjectIfExists(aPath);
 			case "combine":
 				{
 					let returnString = "";

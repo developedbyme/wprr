@@ -14,6 +14,16 @@ export default class ChangeDataFunctions  {
 		return returnObject;
 	}
 	
+	static createEditData(aChanges) {
+		//console.log("wprr/wp/admin/ChangeDataFunctions::createEditData");
+		
+		let returnObject = new Object();
+		
+		returnObject["changes"] = aChanges;
+		
+		return returnObject;
+	}
+	
 	static createSingleValueData(aValue) {
 		let returnObject = new Object();
 		
@@ -45,6 +55,15 @@ export default class ChangeDataFunctions  {
 		
 		returnObject["type"] = aType;
 		returnObject["data"] = ChangeDataFunctions.createSingleValueData(aValue);
+		
+		return returnObject;
+	}
+	
+	static createAcfData(aField, aValue) {
+		let returnObject = new Object();
+		
+		returnObject["value"] = aValue;
+		returnObject["field"] = aField;
 		
 		return returnObject;
 	}

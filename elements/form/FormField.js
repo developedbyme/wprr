@@ -24,8 +24,9 @@ export default class FormField extends WprrBaseObject {
 		//console.log(aEvent.target.value);
 		
 		let additionalData = this.getSourcedProp("additionalData");
+		let valueName = this.getSourcedProp("valueName");
 		
-		this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value, additionalData);
+		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.value, additionalData);
 	}
 	
 	_validate(aType) {
@@ -55,7 +56,9 @@ export default class FormField extends WprrBaseObject {
 		returnObject["type"] = this.getSourcedProp("type");
 		returnObject["placeholder"] = this.getSourcedProp("placeholder");
 		
-		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("prop", this.props.valueName));
+		let valueName = this.getSourcedProp("valueName");
+		
+		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
 		returnObject["onChange"] = this._callback_changeBound;
 		returnObject["onBlur"] = this._callback_blurBound;
 		returnObject["onFocus"] = this._callback_focusBound;

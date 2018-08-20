@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
+import SourceData from "wprr/reference/SourceData";
+
 // import Selection from "wprr/elements/form/Selection";
 export default class Selection extends WprrBaseObject {
 
@@ -24,7 +26,9 @@ export default class Selection extends WprrBaseObject {
 		let returnObject = super._getMainElementProps();
 		
 		returnObject["onChange"] = this._callback_changeBound;
-		returnObject["value"] = this.getSourcedProp("selection");
+		
+		let valueName = this.getSourcedProp("valueName");
+		returnObject["value"] = this.getSourcedPropWithDefault("selection", SourceData.create("prop", valueName));
 		
 		return returnObject;
 	}
@@ -39,7 +43,7 @@ export default class Selection extends WprrBaseObject {
 		//console.log(aEvent.target.value);
 		
 		let value = aEvent.target.value;
-		let additionalData = this.props.additionalData;
+		let additionalData = this.getSourcedProp("additionalData");
 		
 		let options = this.getSourcedProp("options");
 		
@@ -57,11 +61,16 @@ export default class Selection extends WprrBaseObject {
 			}
 		}
 		
-		if(this.props.valueName) {
-			this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value, additionalData);
+		let valueName = this.getSourcedProp("valueName");
+		
+		if(valueName) {
+			this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.value, additionalData);
 		}
-		if(this.props.triggerName) {
-			this.getReference("trigger/" + this.props.triggerName).trigger(this.props.triggerName, {"value": aEvent.target.value, "additionalData": additionalData});
+		
+		let triggerName = this.getSourcedProp("triggerName");
+		
+		if(triggerName) {
+			this.getReference("trigger/" + triggerName).trigger(triggerName, {"value": aEvent.target.value, "additionalData": additionalData});
 		}
 	}
 
@@ -79,20 +88,30 @@ export default class Selection extends WprrBaseObject {
 				let currentObject = currentArray[i];
 				
 				if(typeof(currentObject) === "object") {
-					optionElements.push(<option key={currentObject["value"]} ref={"option-" + currentObject["value"]} value={currentObject["value"]}>{currentObject["label"]}</option>);
+					optionElements.push(<option key={currentObject["value"]} ref={"option-" + currentObject["value"]} value={currentObject["value"]}>{Selection.escapeString(currentObject["label"])}</option>);
 				}
 				else {
-					optionElements.push(<option key={currentObject} value={currentObject}>{currentObject}</option>);
+					optionElements.push(<option key={currentObject} value={currentObject}>{Selection.escapeString(currentObject)}</option>);
 				}
 			}
 		}
 		else {
 			for(let objectName in options) {
-				optionElements.push(<option key={objectName} value={objectName}>{options[objectName]}</option>);
+				optionElements.push(<option key={objectName} value={objectName}>{Selection.escapeString(options[objectName])}</option>);
 			}
 		}
 		
 		return <wrapper>{optionElements}</wrapper>;
 	}
-
+	
+	static escapeString(aText) {
+		if(!Selection.tempTextArea) {
+			Selection.tempTextArea = document.createElement("textarea");
+		}
+		
+		Selection.tempTextArea.innerHTML = aText;
+		return Selection.tempTextArea.value;
+	}
 }
+
+Selection.tempTextArea = null;

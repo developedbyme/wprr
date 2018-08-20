@@ -18,16 +18,29 @@ export default class ValidatingForm extends WprrBaseObject {
 	
 	trigger(aName, aValue) {
 		if(aName === "form/submit") {
-			if(this.validate()) {
-				if(this.props.onSubmit) {
-					//METODO: send out fake event?
-					this.props.onSubmit(null);
-				}
-				else {
-					ReactDOM.findDOMNode(this).submit();
-				}
+			this._trigger_submit();
+		}
+	}
+	
+	_trigger_submit() {
+		if(this.validate()) {
+			
+			//METODO: send out fake event?
+			let handleResult = this._handleSubmit(null);
+			
+			if(!handleResult) {
+				ReactDOM.findDOMNode(this).submit();
 			}
 		}
+	}
+	
+	_handleSubmit(aEvent) {
+		if(this.props.onSubmit) {
+			this.props.onSubmit(aEvent, this);
+			return true;
+		}
+		
+		return false;
 	}
 	
 	addValidation(aObject) {
@@ -76,9 +89,7 @@ export default class ValidatingForm extends WprrBaseObject {
 			aEvent.preventDefault();
 		}
 		else {
-			if(this.props.onSubmit) {
-				this.props.onSubmit(aEvent);
-			}
+			this._handleSubmit(aEvent);
 		}
 	}
 	
@@ -98,6 +109,8 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	_copyPassthroughProps(aReturnObject) {
+		
+		super._copyPassthroughProps(aReturnObject);
 		
 		if(this.props["action"]) {
 			aReturnObject["action"] = this.getSourcedProp("action");

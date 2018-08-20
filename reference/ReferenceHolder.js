@@ -41,4 +41,17 @@ export default class ReferenceHolder {
 		
 		return this._objects[aName];
 	}
+	
+	getObjectIfExists(aName) {
+		//console.log("wprr/reference/ReferenceHolder::getObjectIfExists");
+		
+		if(this._objects[aName] === undefined) {
+			if(this._parentReferenceHolder) {
+				return this._parentReferenceHolder.getObjectIfExists(aName);
+			}
+			return null;
+		}
+		
+		return this._objects[aName];
+	}
 }

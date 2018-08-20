@@ -26,6 +26,10 @@ export default class WprrBaseObject extends React.Component {
 		return this.context.references.getObject(aPath);
 	}
 	
+	getReferenceIfExists(aPath) {
+		return this.context.references.getObjectIfExists(aPath);
+	}
+	
 	getPropWithDefault(aPropName, aDefaultValue) {
 		if(this.props[aPropName] !== undefined) {
 			return this.props[aPropName];
