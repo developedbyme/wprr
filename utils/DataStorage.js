@@ -2,7 +2,11 @@
 export default class DataStorage {
 	
 	constructor() {
-		this._data = new Object;
+		this.setData(new Object());
+	}
+	
+	setData(aData) {
+		this._data = aData;
 	}
 	
 	updateValue(aName, aValue) {

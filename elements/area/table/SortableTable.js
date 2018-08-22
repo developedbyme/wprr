@@ -187,10 +187,16 @@ export default class SortableTable extends WprrBaseObject {
 		}
 	}
 	
-	_selectRows() {
-		
+	_getRows() {
 		let returnArray = new Array()
 		returnArray = returnArray.concat(this.getSourcedProp("rows"));
+		
+		return returnArray;
+	}
+	
+	_selectRows() {
+		
+		let returnArray = this._getRows();
 		
 		if(this._shouldSort) {
 			this._sortRows(returnArray);
@@ -231,14 +237,7 @@ export default class SortableTable extends WprrBaseObject {
 	_renderBodyElement() {
 		//console.log("wprr/elements/area/table/SortableTable::_renderBodyElement");
 		
-		//return null; //MEDEBUG
-		
 		let headerData = this.getSourcedProp("headerData");
-		let rowsData = this.getSourcedProp("rows");
-		
-		if(!rowsData) {
-			return null;
-		}
 		
 		let rowsLoopData = new Array();
 		
@@ -261,9 +260,13 @@ export default class SortableTable extends WprrBaseObject {
 			rowsLoopData.push({"data": currentRow, "children": cellsLoop});
 		}
 		
-		return <ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/body")}>
-			<Loop input={rowsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRow")} />
-		</ContentCreatorSingleItem>;
+		return <ReferenceInjection injectData={{
+			"tableHeaderData": headerData
+		}}>
+			<ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/body")}>
+				<Loop input={rowsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRow")} />
+			</ContentCreatorSingleItem>
+		</ReferenceInjection>;
 	}
 	
 	_renderMainElement() {
