@@ -101,6 +101,11 @@ export default class MarkupLoop extends AdjustFunction {
 		
 		this.removeUsedProps(aData);
 		
+		let loopName = aManipulationObject.getSourcedPropWithDefault("loopName", "");
+		if(loopName !== "") {
+			loopName += "/";
+		}
+		
 		let currentArray = dataArray;
 		if(currentArray) {
 			let references = aManipulationObject.getReferences();
@@ -111,10 +116,16 @@ export default class MarkupLoop extends AdjustFunction {
 					let currentData = currentArray[i];
 				
 					if(spacingMarkup != null && i !== 0) {
-						returnArray.push(React.createElement(ReferenceInjection, {"key": "spacing-" + i, "injectData": {"loop/spacingIndex": i}}, spacingMarkup));
+						let spacingInjectData = new Object();
+						spacingInjectData["loop/" + loopName + "spacingIndex"] = i;
+						
+						returnArray.push(React.createElement(ReferenceInjection, {"key": "spacing-" + i, "injectData": spacingInjectData}, spacingMarkup));
 					}
 					
-					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + i, "injectData": {"loop/index": i, "loop/item": currentData}}, markup));
+					let loopInjectData = new Object();
+					loopInjectData["loop/" + loopName + "index"] = i;
+					loopInjectData["loop/" + loopName + "item"] = currentData;
+					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + i, "injectData": loopInjectData}, markup));
 				}
 			}
 			else {

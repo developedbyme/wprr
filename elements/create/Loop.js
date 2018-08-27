@@ -24,6 +24,7 @@ export default class Loop extends Adjust {
 		//METODO: change this to actual source cleanup
 		aReturnObject = super._removeUsedProps(aReturnObject);
 		delete aReturnObject["loop"];
+		delete aReturnObject["loopName"];
 		
 		return aReturnObject;
 	}
@@ -64,8 +65,14 @@ export default class Loop extends Adjust {
 			loopLength = input.length;
 		}
 		
-		injectData["loop/allItems"] = input;
-		injectData["loop/length"] = loopLength;
+		let loopName = this.getSourcedPropWithDefault("loopName", "");
+		if(loopName !== "") {
+			loopName += "/";
+		}
+		
+		injectData["loop/name"] = loopName;
+		injectData["loop/" + loopName + "allItems"] = input;
+		injectData["loop/" + loopName + "length"] = loopLength;
 		
 		return <ReferenceInjection injectData={injectData}>
 			{clonedElementes}
