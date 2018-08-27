@@ -58,7 +58,8 @@ export default class FormField extends WprrBaseObject {
 		
 		let valueName = this.getSourcedProp("valueName");
 		
-		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("prop", valueName));
+		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		
 		returnObject["onChange"] = this._callback_changeBound;
 		returnObject["onBlur"] = this._callback_blurBound;
 		returnObject["onFocus"] = this._callback_focusBound;

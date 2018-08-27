@@ -84,6 +84,14 @@ export default class SourceData {
 					}
 					return returnData;
 				}
+			case "propWithDots":
+				{
+					let returnData = aPropsAndState.props[aPath];
+					if(returnData instanceof SourceData) {
+						returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return returnData;
+				}
 			case "state":
 				{
 					let returnData = objectPath.get(aPropsAndState.state, aPath);

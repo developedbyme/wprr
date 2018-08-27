@@ -46,7 +46,6 @@ export default class EditableProps extends ManipulationBaseObject {
 					let currentName = currentArray[i];
 				
 					let currentValue = externalStorage.getValue(currentName);
-					console.log(currentName, currentValue);
 					if(currentValue !== null && currentValue !== undefined) {
 						this.state[currentName] = currentValue;
 					}

@@ -1,3 +1,5 @@
+import objectPath from "object-path";
+
 // import DataStorage from "wprr/utils/DataStorage";
 export default class DataStorage {
 	
@@ -9,9 +11,13 @@ export default class DataStorage {
 		this._data = aData;
 	}
 	
+	getData() {
+		return this._data;
+	}
+	
 	updateValue(aName, aValue) {
 		//console.log("wprr/utils/DataStorage::updateValue");
-		this._data[aName] = aValue;
+		objectPath.set(this._data, aName, aValue);
 		
 		return this;
 	}
@@ -19,6 +25,6 @@ export default class DataStorage {
 	getValue(aName) {
 		//console.log("wprr/utils/DataStorage::getValue");
 		
-		return this._data[aName];
+		return objectPath.get(this._data, aName);
 	}
 }

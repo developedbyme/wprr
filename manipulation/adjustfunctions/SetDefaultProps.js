@@ -40,8 +40,6 @@ export default class SetDefaultProps extends AdjustFunction {
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/SetDefaultProps::adjust");
 		
-		let currentArray = this._propNames;
-		let currentArrayLength = currentArray.length;
 		for(let objectName in this._props) {
 			if(!aData[objectName]) {
 				aData[objectName] = this._props[objectName];

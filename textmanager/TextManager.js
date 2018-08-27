@@ -13,6 +13,10 @@ export default class TextManager {
 		this._data = aDataObject;
 	}
 	
+	addTexts(aDataObject, aPath) {
+		objectPath.set(this._data, aPath, aDataObject);
+	}
+	
 	getText(aPath) {
 		//console.log("wprr/textmanager/TextManager::getText");
 		

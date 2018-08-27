@@ -14,9 +14,9 @@ export default class Checkbox extends WprrBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		console.log("wprr/elements/form/Checkbox::_callback_change");
-		console.log(aEvent);
-		console.log(aEvent.target.value, aEvent.target.checked);
+		//console.log("wprr/elements/form/Checkbox::_callback_change");
+		//console.log(aEvent);
+		//console.log(aEvent.target.value, aEvent.target.checked);
 		
 		this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.checked, {"value": this.getSourcedProp("value")});
 	}
