@@ -67,4 +67,21 @@ export default class ChangeDataFunctions  {
 		
 		return returnObject;
 	}
+	
+	static createBatchPostData(aId, aChanges) {
+		let returnObject = new Object();
+		
+		returnObject["id"] = aId;
+		returnObject["changes"] = aChanges;
+		
+		return returnObject;
+	}
+	
+	static createBatchEditData(aPostChanges) {
+		let returnObject = new Object();
+		
+		returnObject["batch"] = aPostChanges;
+		
+		return returnObject;
+	}
 }
