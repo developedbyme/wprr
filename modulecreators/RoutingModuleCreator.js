@@ -12,6 +12,8 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import WpConditional from "wprr/routing/qualification/wp/WpConditional";
 import WpData from "wprr/routing/qualification/wp/WpData";
+import HasTerm from "wprr/routing/qualification/wp/HasTerm";
+import QualifyAll from "wprr/routing/qualification/QualifyAll";
 
 import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
@@ -92,6 +94,14 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		</PostDataInjection>;
 
 		this.createRoute(WpData.createForPostType(aPostType), componentWithInjectsions);
+	}
+	
+	createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent) {
+		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
+			{aReactComponent}
+		</PostDataInjection>;
+		
+		this.createRoute(QualifyAll.create(WpConditional.create("is_singular"), HasTerm.create(aTaxonomy, aTermSlug, "slug")), componentWithInjectsions);
 	}
 	
 	createArchiveRoute(aReactComponent) {

@@ -220,7 +220,7 @@ export default class WprrBaseObject extends React.Component {
 		
 	}
 	
-	_renderMainElement() {
+	_renderMainElement(aCurrentElement, aOwner) {
 		//console.log("wprr/WprrBaseObject::_renderMainElement");
 		
 		return <wrapper>
@@ -232,10 +232,10 @@ export default class WprrBaseObject extends React.Component {
 		
 		this._prepareRender();
 		
-		var mainElement = this._renderMainElement();
+		let mainElement = this._renderMainElement(this, this);
 		
 		if(mainElement && mainElement.type === "wrapper") {
-			var renderArguments = [this._getMainElementType(), this._getMainElementProps()];
+			let renderArguments = [this._getMainElementType(), this._getMainElementProps()];
 			
 			if(mainElement.props.children) {
 				if(Array.isArray(mainElement.props.children)) {
@@ -254,13 +254,13 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	render() {
-		var returnObject;
+		let returnObject;
 		if(WprrBaseObject.CATCH_RENDER_ERRORS) {
 			try {
 				returnObject = this._renderSafe();
 			}
 			catch(aError) {
-				var errorProperties = new Array();
+				let errorProperties = new Array();
 				if(aError.fileName) {
 					errorProperties.push("fileName: " + aError.fileName);
 				}
@@ -277,7 +277,7 @@ export default class WprrBaseObject extends React.Component {
 					errorProperties.push("stack: " + aError.stack);
 				}
 		
-				var errorString = aError.message +" (" + errorProperties.join(", ") + ")";
+				let errorString = aError.message +" (" + errorProperties.join(", ") + ")";
 		
 				console.error(this, aError, errorString);
 				

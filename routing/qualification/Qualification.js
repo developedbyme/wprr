@@ -8,7 +8,52 @@ export default class Qualification {
 	 * Constructor
 	 */
 	constructor() {
+		this._inputs = new Object();
+	}
+	
+	/**
+	 * Sets an input of this qualification, and skipping null values.
+	 *
+	 * @param	aName	String			The name of the input.
+	 * @param	aValue	SourceData|*	The value of the input
+	 *
+	 * @return	AdjustFunction	self
+	 */
+	setInputWithoutNull(aName, aValue) {
+		if(aValue !== null && aValue !== undefined) {
+			this.setInput(aName, aValue);
+		}
 		
+		return this;
+	}
+	
+	/**
+	 * Sets an input of this qualification
+	 *
+	 * @param	aName	String			The name of the input.
+	 * @param	aValue	SourceData|*	The value of the input
+	 *
+	 * @return	AdjustFunction	self
+	 */
+	setInput(aName, aValue) {
+		this._inputs[aName] = aValue;
+		
+		return this;
+	}
+	
+	/**
+	 * Gets an input
+	 *
+	 * @param	aName	String	The name of the input.
+	 *
+	 * @return	*	The raw value of the input
+	 */
+	getInput(aName) {
+		if(this._inputs[aName] === undefined) {
+			console.warn("Input " + aName + " doesn't exist.", this);
+			return null;
+		}
+		return this._inputs[aName];
 	}
 	
 	/**

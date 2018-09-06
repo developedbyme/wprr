@@ -47,7 +47,7 @@ export default class WpData extends Qualification {
 	 *
 	 * @param	aData	*	The data that needs to meet the correct criteria.
 	 *
-	 * @return	Boolean	The result of the evalutation. Always true.
+	 * @return	Boolean	The result of the evalutation.
 	 */
 	qualify(aData) {
 		//console.log("wprr/routing/qualification/wp/WpData::qualify");

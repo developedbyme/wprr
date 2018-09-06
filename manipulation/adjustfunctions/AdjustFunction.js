@@ -43,6 +43,13 @@ export default class AdjustFunction {
 		return this;
 	}
 	
+	/**
+	 * Gets the input without resolving sources
+	 *
+	 * @param	aName	String	The name of the input.
+	 *
+	 * @return	*	The raw value of the input
+	 */
 	getRawInput(aName) {
 		if(this._inputs[aName] === undefined) {
 			console.warn("Input " + aName + " doesn't exist.", this);
@@ -58,7 +65,7 @@ export default class AdjustFunction {
 	 * @param	aProps				Object			The object with the current props.
 	 * @param	aManipulationObject	WprrBaseObject	The manipulation object that is performing the adjustment. Used to resolve sourcing.
 	 *
-	 * @return	*	Thne value of the input
+	 * @return	*	The value of the input
 	 */
 	getInput(aName, aProps, aManipulationObject) {
 		if(this._inputs[aName] === undefined) {
