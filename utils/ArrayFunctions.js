@@ -15,4 +15,15 @@ export default class ArrayFunctions {
 		console.error(aData + " is not array or string.");
 		return [];
 	}
+	
+	static numericArrayOrSeparatedString(aData, aSeparator = ",", aTrim = 3) {
+		let returnArray = new Array();
+		let currentArray = ArrayFunctions.arrayOrSeparatedString(aData, aSeparator, aTrim);
+		let currentarrayLength = currentArray.length;
+		for(let i = 0; i < currentarrayLength; i++) {
+			returnArray.push(parseFloat(currentArray[i]));
+		}
+		
+		return returnArray;
+	}
 }

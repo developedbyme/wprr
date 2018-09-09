@@ -2,6 +2,8 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
+import SourceData from "wprr/reference/SourceData";
+
 // import Checkbox from "wprr/elements/form/Checkbox";
 export default class Checkbox extends WprrBaseObject {
 
@@ -14,11 +16,15 @@ export default class Checkbox extends WprrBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		//console.log("wprr/elements/form/Checkbox::_callback_change");
-		//console.log(aEvent);
-		//console.log(aEvent.target.value, aEvent.target.checked);
+		console.log("wprr/elements/form/Checkbox::_callback_change");
+		console.log(aEvent);
+		console.log(aEvent.target.value, aEvent.target.checked);
 		
-		this.getReference("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.checked, {"value": this.getSourcedProp("value")});
+		let valueName = this.getSourcedProp("valueName");
+		
+		console.log(valueName);
+		
+		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.checked, {"value": this.getSourcedProp("value")});
 	}
 	
 	_validate(aType) {
@@ -31,12 +37,14 @@ export default class Checkbox extends WprrBaseObject {
 	_getMainElementProps() {
 		var returnObject = super._getMainElementProps();
 		
+		let valueName = this.getSourcedProp("valueName");
+		
 		returnObject["id"] = this.getSourcedProp("id");
 		returnObject["name"] = this.getSourcedProp("name");
 		returnObject["type"] = "checkbox";
 		
 		returnObject["value"] = this.getSourcedProp("value");
-		returnObject["checked"] = this.getSourcedProp("checked");
+		returnObject["checked"] = this.getSourcedPropWithDefault("checked", SourceData.create("propWithDots", valueName));
 		returnObject["onChange"] = this._callback_changeBound;
 		
 		returnObject["disabled"] = this.getSourcedProp("disabled");

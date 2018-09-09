@@ -252,7 +252,7 @@ export default class SortableTable extends WprrBaseObject {
 			let currentArray2Length = currentArray2.length;
 			for(let j = 0; j < currentArray2Length; j++) {
 				let currentData = currentArray2[j];
-				cellsLoopData.push({"index": j, "rowIndex": i, "data": currentData, "headerData": headerData[j]});
+				cellsLoopData.push({"index": j, "rowIndex": i, "data": currentData, "rowData": currentRow, "headerData": headerData[j]});
 			}
 			
 			let cellsLoop = <Loop input={cellsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRowItem")} />

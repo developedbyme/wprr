@@ -88,10 +88,12 @@ export default class TriggerUrlRequest extends ControlFunction {
 		let resultTriggerName = this.getInputFromSingleOwner("resultTriggerName");
 		
 		let currentArray = this._owners;
+		console.log(">", currentArray);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
 			let triggerController = currentOwner.getReference("trigger/" + resultTriggerName);
+			console.log(">>", triggerController);
 			if(triggerController) {
 				triggerController.trigger(resultTriggerName, data);
 			}

@@ -47,6 +47,20 @@ export default class ControlFunction extends AdjustFunction {
 		
 	}
 	
+	getSingleOwner() {
+		if(this._owners.length === 0) {
+			console.error("No owner.");
+			return null;
+		}
+		else if(this._owners.length !== 1) {
+			console.error("Too many owners.");
+			return null;
+		}
+		
+		let singleOwner = this._owners[0];
+		return singleOwner;
+	}
+	
 	_getInitialState() {
 		//MENOTE: should be overridden
 		return {};

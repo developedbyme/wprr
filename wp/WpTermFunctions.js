@@ -47,6 +47,27 @@ export default class WpTermFunctions {
 		console.warn("Term with slug " + aSlug + " doesn't exist in terms.", aHierarchTerms);
 	}
 	
+	static getTermFromHierarchTermsBySlugPath(aPath, aHierarchTerms) {
+		let currentTerms = aHierarchTerms;
+		
+		let currentArray = aPath.split("/");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentPathPart = currentArray[i];
+			let newTerm = WpTermFunctions.getHierarchLevelTermFromSlug(currentPathPart, currentTerms);
+			if(!newTerm) {
+				console.warn("No term for path " + aPath + " at " + currentPathPart);
+				return null;
+			}
+			if(i === currentArrayLength-1) {
+				return newTerm.term;
+			}
+			currentTerms = newTerm.children;
+		}
+		
+		return currentTerms;
+	}
+	
 	static getSubtreeFromHierarchTerms(aPath, aHierarchTerms) {
 		
 		let currentTerms = aHierarchTerms;

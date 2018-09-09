@@ -9,12 +9,14 @@ export default class DbmContentFunctions  {
 		
 		let returnArray = new Array();
 		
-		let currentArray = idsArray;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentId = currentArray[i];
-			let currentTerm = aPostData.getTermById(currentId, "dbm_relation");
-			returnArray.push(currentTerm);
+		if(idsArray) {
+			let currentArray = idsArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentId = currentArray[i];
+				let currentTerm = aPostData.getTermById(currentId, "dbm_relation");
+				returnArray.push(currentTerm);
+			}
 		}
 		
 		return returnArray;

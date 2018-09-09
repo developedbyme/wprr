@@ -42,21 +42,28 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 	_validateWithProps(aType, aProps) {
 		//console.log("wprr/elements/form/validation/ValidationBaseObject::_validateWithProps");
 		
-		var statePropsObject = {"state": this.state, "props": aProps};
+		let statePropsObject = {"state": this.state, "props": aProps};
 		
-		var checkValue = this.getSourcedPropInStateChange("check", statePropsObject);
-		var validationFunction = this.getSourcedPropInStateChange("validateFunction", statePropsObject);
+		let checkValue = null;
+		if(aProps.check) {
+			checkValue = this.getSourcedPropInStateChange("check", statePropsObject);
+		}
+		else {
+			let valueName = this.getSourcedPropInStateChange("valueName", statePropsObject);
+			checkValue = this.getSourcedPropInStateChange(valueName, statePropsObject);
+		}
+		let validationFunction = this.getSourcedPropInStateChange("validateFunction", statePropsObject);
 		
 		//console.log(checkValue);
 		
-		var newValid = this.state["valid"];
+		let newValid = this.state["valid"];
 		if(aType === "focus") {
 			if(this.state["valid"] === -1) {
 				newValid = 0;
 			}
 		}
 		else if(aType === "blur") {
-			var validateOnBlur = this.getSourcedPropInStateChange("validateOnBlur", statePropsObject);
+			let validateOnBlur = this.getSourcedPropInStateChange("validateOnBlur", statePropsObject);
 			if(validateOnBlur) {
 				newValid = validationFunction(checkValue) ? 1 : -1;
 			}
@@ -66,7 +73,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 			}
 		}
 		else if(aType === "change") {
-			var validateOnChange = this.getSourcedPropInStateChange("validateOnChange", statePropsObject);
+			let validateOnChange = this.getSourcedPropInStateChange("validateOnChange", statePropsObject);
 			if(validateOnChange) {
 				newValid = validationFunction(checkValue) ? 1 : -1;
 			}

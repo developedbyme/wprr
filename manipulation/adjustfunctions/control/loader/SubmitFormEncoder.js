@@ -26,7 +26,7 @@ export default class SubmitFormEncoder extends ControlFunction {
 		let submitData = aForm.getFormData();
 		
 		if(encode) {
-			submitData = encode(submitData);
+			submitData = encode(submitData, this.getSingleOwner());
 		}
 		
 		let triggerName = this.getInputFromSingleOwner("triggerName");

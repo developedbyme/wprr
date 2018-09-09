@@ -57,6 +57,9 @@ export default class EditableProps extends ManipulationBaseObject {
 	
 	_getEditablePropNames() {
 		let editableProps = this.getSourcedProp("editableProps");
+		
+		console.log(">>>", editableProps);
+		
 		if(editableProps) {
 			let currentArray;
 			if(typeof(editableProps) === "string") {
@@ -102,7 +105,8 @@ export default class EditableProps extends ManipulationBaseObject {
 	}
 	
 	updateValue(aName, aValue, aAdditionalData) {
-		//console.log("wprr/manipulation/EditableProps::updateValue");
+		console.log("wprr/manipulation/EditableProps::updateValue");
+		console.log(aName, aValue, aAdditionalData);
 		
 		let stateObject = new Object();
 		stateObject[aName] = aValue;

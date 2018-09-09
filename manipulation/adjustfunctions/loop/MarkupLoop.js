@@ -21,6 +21,7 @@ export default class MarkupLoop extends AdjustFunction {
 		super();
 		
 		this.data = SourceData.create("prop", "input");
+		this.itemPrefix = "item-";
 		this.markup = SourceData.create("prop", "markup");
 		this.spacingMarkup = SourceData.create("prop", "spacingMarkup");
 		this.noItemsMarkup = SourceData.create("prop", "noItemsMarkup");
@@ -87,6 +88,7 @@ export default class MarkupLoop extends AdjustFunction {
 		let returnArray = new Array();
 		
 		let markup = this.resolveSource(this.markup, aData, aManipulationObject);
+		let itemPrefix = this.resolveSource(this.itemPrefix, aData, aManipulationObject);
 		let spacingMarkup = this.resolveSource(this.spacingMarkup, aData, aManipulationObject);
 		let noItemsMarkup = this.resolveSource(this.noItemsMarkup, aData, aManipulationObject);
 		let dataArray = this.resolveSource(this.data, aData, aManipulationObject);
@@ -124,6 +126,7 @@ export default class MarkupLoop extends AdjustFunction {
 					
 					let loopInjectData = new Object();
 					loopInjectData["loop/" + loopName + "index"] = i;
+					loopInjectData["loop/" + loopName + "indexName"] = itemPrefix + i;
 					loopInjectData["loop/" + loopName + "item"] = currentData;
 					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + i, "injectData": loopInjectData}, markup));
 				}
