@@ -32,11 +32,12 @@ export default class ChangeDataFunctions  {
 		return returnObject;
 	}
 	
-	static createTermsData(aTerms, aTaxonomy) {
+	static createTermsData(aTerms, aTaxonomy, aField = "id") {
 		let returnObject = new Object();
 		
 		returnObject["value"] = aTerms;
 		returnObject["taxonomy"] = aTaxonomy;
+		returnObject["field"] = aField;
 		
 		return returnObject;
 	}

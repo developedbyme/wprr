@@ -58,8 +58,6 @@ export default class EditableProps extends ManipulationBaseObject {
 	_getEditablePropNames() {
 		let editableProps = this.getSourcedProp("editableProps");
 		
-		console.log(">>>", editableProps);
-		
 		if(editableProps) {
 			let currentArray;
 			if(typeof(editableProps) === "string") {

@@ -2,6 +2,8 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
+import SourceData from "wprr/reference/SourceData";
+
 // import TextArea from "wprr/elements/form/TextArea";
 export default class TextArea extends WprrBaseObject {
 
@@ -24,10 +26,11 @@ export default class TextArea extends WprrBaseObject {
 	_getMainElementProps() {
 		var returnObject = super._getMainElementProps();
 		
-		returnObject["id"] = this.props.id;
-		returnObject["name"] = this.props.name;
-		
+		returnObject["id"] = this.getSourcedProp("id");
+		returnObject["name"] = this.getSourcedProp("name");
 		returnObject["placeholder"] = this.getSourcedProp("placeholder");
+		
+		returnObject["rows"] = this.getSourcedProp("rows");
 		
 		returnObject["onChange"] = this._callback_changeBound;
 		
@@ -37,7 +40,11 @@ export default class TextArea extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/TextArea::_renderMainElement");
 		
-		return <wrapper>{this.props.value}</wrapper>;
+		let valueName = this.getSourcedProp("valueName");
+		
+		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		
+		return <wrapper>{value}</wrapper>;
 	}
 
 }

@@ -1,3 +1,5 @@
+import objectPath from "object-path";
+
 //import ArrayFunctions from "wprr/utils/ArrayFunctions";
 export default class ArrayFunctions {
 	
@@ -22,6 +24,39 @@ export default class ArrayFunctions {
 		let currentarrayLength = currentArray.length;
 		for(let i = 0; i < currentarrayLength; i++) {
 			returnArray.push(parseFloat(currentArray[i]));
+		}
+		
+		return returnArray;
+	}
+	
+	static mapArrayToObject(aArray, aKeyField, aDataField = null, aKeyPrefix = "") {
+		
+		let returnObject = new Object();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentArrayEntry = currentArray[i];
+			let key = aKeyPrefix + objectPath.get(currentArrayEntry, aKeyField);
+			let data = aDataField ? objectPath.get(currentArrayEntry, aDataField) : currentArrayEntry;
+			
+			returnObject[key] = data;
+		}
+		
+		return returnObject;
+	}
+	
+	static mapObjectToArray(aObject, aKeyField, aDataField, aKeyPrefix = "") {
+		let returnArray = new Array();
+		
+		for(let objectName in aObject) {
+			let currentEntry = aObject[objectName];
+			
+			let newObject = new Object();
+			newObject[aKeyField] = objectName.substring(aKeyPrefix.length, objectName.length);
+			newObject[aDataField] = currentEntry;
+			
+			returnArray.push(newObject);
 		}
 		
 		return returnArray;

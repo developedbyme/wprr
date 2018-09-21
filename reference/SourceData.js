@@ -73,7 +73,7 @@ export default class SourceData {
 	static getSource(aType, aPath, aFromObject, aPropsAndState) {
 		//console.log("wprr/reference/SourceData::getSource");
 		
-		const references = aFromObject.getReferences();
+		const references = aFromObject ? aFromObject.getReferences() : {};
 		
 		switch(aType) {
 			case "prop":
@@ -182,6 +182,9 @@ export default class SourceData {
 					
 					return returnString;
 				}
+			case "event":
+				return aPropsAndState.event;
+				break;
 			default:
 				console.error("Unknown type " + aType);
 				break;

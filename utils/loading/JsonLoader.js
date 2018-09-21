@@ -20,16 +20,29 @@ export default class JsonLoader {
 		this._body = null;
 		
 		this.onLoad = null;
+		
+		this._successCommands = [];
+		this._errorCommands = [];
+	}
+	
+	setMethod(aMethod) {
+		this._method = aMethod;
+		
+		return this;
 	}
 	
 	setUrl(aUrl) {
 		this._url = aUrl;
+		
+		return this;
 	}
 	
 	setupPost(aUrl, aBody) {
 		this._url = aUrl;
 		this._method = "POST";
 		this._body = aBody;
+		
+		return this;
 	}
 	
 	setupJsonPost(aUrl, aBody) {
@@ -38,10 +51,28 @@ export default class JsonLoader {
 		this._body = JSON.stringify(aBody);
 		
 		this.addHeader("Content-Type", "application/json");
+		
+		return this;
 	}
 	
 	addHeader(aName, aValue) {
 		this._headers[aName] = aValue;
+		
+		return this;
+	}
+	
+	setBody(aBody) {
+		this._body = aBody;
+		
+		return this;
+	}
+	
+	addSuccessCommand(aCommand) {
+		this._successCommands.push(aCommand);
+	}
+	
+	addErrorCommand(aCommand) {
+		this._errorCommands.push(aCommand);
 	}
 	
 	setData(aData) {
@@ -55,6 +86,25 @@ export default class JsonLoader {
 			//METODO: use a better way for this
 			if(this.onLoad) {
 				this.onLoad(this._data);
+			}
+			
+			let currentArray = this._successCommands;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentCommand = currentArray[i];
+				
+				currentCommand.setEventData(this._data);
+				currentCommand.perform();
+			}
+		}
+		else if(this._status === -1) {
+			let currentArray = this._errorCommands;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentCommand = currentArray[i];
+				
+				currentCommand.setEventData(this._data);
+				currentCommand.perform();
 			}
 		}
 	}
