@@ -1,6 +1,7 @@
 "use strict";
 
 import objectPath from "object-path";
+const objectPathWithInheritedProps = objectPath.create({includeInheritedProps: true});
 
 import SourceData from "wprr/reference/SourceData";
 
@@ -27,12 +28,12 @@ export default class SourceDataWithPath extends SourceData {
 	
 	getSource(aFromObject) {
 		let sourceData = super.getSource(aFromObject);
-		return objectPath.get(sourceData, this._deepPath);
+		return objectPathWithInheritedProps.get(sourceData, this._deepPath);
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		let sourceData = super.getSourceInStateChange(aFromObject, aNewPropsAndState);
-		return objectPath.get(sourceData, this._deepPath);
+		return objectPathWithInheritedProps.get(sourceData, this._deepPath);
 	}
 	
 	static create(aType, aPath, aDeepPath) {

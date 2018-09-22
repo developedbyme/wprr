@@ -64,6 +64,7 @@ export default class LoadUrlCommand extends BaseCommand {
 		
 		loader.setUrl(url);
 		loader.setMethod(method);
+		loader.setBody(data);
 		
 		for(let objectName in headers) {
 			loader.addHeader(objectName, headers[objectName]);
@@ -73,6 +74,7 @@ export default class LoadUrlCommand extends BaseCommand {
 		
 		loader.addSuccessCommand(successCommand);
 		
+		console.log(">>>>>>", loader);
 		//METODO: add error commands
 		loader.load();
 	}

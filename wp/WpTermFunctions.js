@@ -5,6 +5,24 @@ import ArrayFunctions from "wprr/utils/ArrayFunctions";
 // import WpTermFunctions from "wprr/wp/WpTermFunctions";
 export default class WpTermFunctions {
 	
+	static getTermBy(aField, aIdentifier, aTerms) {
+		let currentArray = aTerms;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentTerm = currentArray[i];
+			if(currentTerm[aField] === aIdentifier) {
+				return currentTerm;
+			}
+		}
+		console.warn("No term with " + aField + " " + aIdentifier + " exists.", aTerms);
+		
+		return null;
+	}
+	
+	static getTermById(aId, aTerms) {
+		return WpTermFunctions.getTermBy("id", aId, aTerms);
+	}
+	
 	static getHierarchTerms(aTerms) {
 		var returnArray = new Array();
 		

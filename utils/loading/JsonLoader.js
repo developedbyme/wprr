@@ -62,7 +62,7 @@ export default class JsonLoader {
 	}
 	
 	setBody(aBody) {
-		this._body = aBody;
+		this._body = (aBody instanceof String) ? aBody : JSON.stringify(aBody);
 		
 		return this;
 	}

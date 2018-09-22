@@ -18,6 +18,11 @@ export default class FormField extends WprrBaseObject {
 		this._callback_focusBound = this._callback_focus.bind(this);
 	}
 	
+	getValue() {
+		let valueName = this.getSourcedProp("valueName");
+		return this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+	}
+	
 	_callback_change(aEvent) {
 		//console.log("wprr/elements/form/FormField::_callback_change");
 		//console.log(aEvent);

@@ -16,6 +16,7 @@ export default class SourceData {
 		this._sourceFunction = SourceData.getSource;
 		this._type = null;
 		this._path = null;
+		this._debug_lastEvaluatedValue = null;
 	}
 	
 	setup(aType, aPath) {
@@ -33,12 +34,20 @@ export default class SourceData {
 	}
 	
 	getSource(aFromObject) {
-		return this._sourceFunction(this._type, this._path, aFromObject, aFromObject);
+		let returnValue = this._sourceFunction(this._type, this._path, aFromObject, aFromObject);
+		
+		this._debug_lastEvaluatedValue = returnValue;
+		
+		return returnValue;
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		//console.log("wprr/reference/SourceData::getSourceInStateChange");
-		return this._sourceFunction(this._type, this._path, aFromObject, aNewPropsAndState);
+		let returnValue = this._sourceFunction(this._type, this._path, aFromObject, aNewPropsAndState);
+		
+		this._debug_lastEvaluatedValue = returnValue;
+		
+		return returnValue;
 	}
 	
 	removeUsedProps(aProps) {
@@ -184,7 +193,34 @@ export default class SourceData {
 				}
 			case "event":
 				return aPropsAndState.event;
-				break;
+			case "object":
+				{
+					let returnObject = new Object();
+					for(let objectName in aPath) {
+						let currentItem = aPath[objectName];
+						if(currentItem instanceof SourceData) {
+							returnObject[objectName] = currentItem.getSourceInStateChange(aFromObject, aPropsAndState);
+						}
+						else {
+							returnObject[objectName] = currentItem;
+						}
+					}
+					return returnObject;
+				}
+			case "staticSource":
+				if(aPath instanceof SourceData) {
+					return aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+				}
+				return aPath;
+			case "command":
+				{
+					let command = aPath;
+					if(command instanceof SourceData) {
+						command = command.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					command.setTriggerElement(aFromObject);
+					return command.perform();
+				}
 			default:
 				console.error("Unknown type " + aType);
 				break;
