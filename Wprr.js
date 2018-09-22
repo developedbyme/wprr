@@ -1,4 +1,13 @@
+import React from "react";
+
+import objectPath from "object-path";
+
 import WprrBaseObject from "wprr/WprrBaseObject";
+
+import SourceData from "wprr/reference/SourceData";
+import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
+
+import SourcedText from "wprr/elements/text/SourcedText";
 
 import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
 import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRendererCreator";
@@ -60,7 +69,27 @@ export default class Wprr {
 		}
 	}
 	
-	static test() {
-		console.log(WprrBaseObject);
+	static addClass(aName, aClass) {
+		Wprr[aName] = aClass;
+	}
+	
+	static addAutonamedClasses(...aClasses) {
+		let currentArray = aClasses;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentClass = currentArray[i];
+			Wprr.addClass(currentClass.name, currentClass);
+		}
+	}
+	
+	static source(aType, aData, aDeepPath = null) {
+		if(aDeepPath !== null) {
+			return SourceDataWithPath.create(aType, aData, aDeepPath);
+		}
+		return SourceData.create(aType, aData);
+	}
+	
+	static text(aText, aFormat = "text") {
+		React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}
 }
