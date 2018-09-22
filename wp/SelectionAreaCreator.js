@@ -45,11 +45,15 @@ export default class SelectionAreaCreator {
 		return React.createElement(SelectSection, {"selectedSections": this._source}, sections);
 	}
 	
-	static create(aSource, aAreasObject) {
+	static create(aSource = null, aAreasObject = null) {
 		var newSelectionAreaCreator = new SelectionAreaCreator();
 		
-		newSelectionAreaCreator.setSource(aSource);
-		newSelectionAreaCreator.addAreas(aAreasObject);
+		if(aSource) {
+			newSelectionAreaCreator.setSource(aSource);
+		}
+		if(aAreasObject) {
+			newSelectionAreaCreator.addAreas(aAreasObject);
+		}
 		
 		return newSelectionAreaCreator;
 	}

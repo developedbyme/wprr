@@ -1,5 +1,4 @@
-import SourceData from "wprr/reference/SourceData";
-import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
+import Wprr from "wprr";
 
 import BaseCommand from "wprr/commands/BaseCommand";
 
@@ -21,7 +20,6 @@ export default class CallFunctionCommand extends BaseCommand {
 	}
 	
 	perform() {
-		console.log(">>>>>>>", {"object": this});
 		
 		let thisObject = this.getInput("thisObject");
 		let theFunction = this.getInput("theFunction");
@@ -52,7 +50,7 @@ export default class CallFunctionCommand extends BaseCommand {
 		let newCallFunctionCommand = new CallFunctionCommand();
 		
 		newCallFunctionCommand.setInputWithoutNull("thisObject", aThisObject);
-		newCallFunctionCommand.setInputWithoutNull("theFunction", SourceDataWithPath.create("staticSource", aThisObject, aFunctionName));
+		newCallFunctionCommand.setInputWithoutNull("theFunction", Wprr.source("staticSource", aThisObject, aFunctionName));
 		newCallFunctionCommand.setInputWithoutNull("theArguments", aArguments);
 		
 		return newCallFunctionCommand;

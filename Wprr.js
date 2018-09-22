@@ -86,6 +86,10 @@ export default class Wprr {
 		Wprr.commands[aName] = aCreateFunction;
 	}
 	
+	static addCreator(aName, aCreateFunction) {
+		Wprr.creators[aName] = aCreateFunction;
+	}
+	
 	static source(aType, aData, aDeepPath = null) {
 		if(aDeepPath !== null) {
 			return SourceDataWithPath.create(aType, aData, aDeepPath);
@@ -111,3 +115,4 @@ export default class Wprr {
 }
 
 Wprr.commands = new Object();
+Wprr.creators = new Object();
