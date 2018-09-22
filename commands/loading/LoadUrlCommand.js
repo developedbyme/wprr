@@ -79,7 +79,7 @@ export default class LoadUrlCommand extends BaseCommand {
 		loader.load();
 	}
 	
-	static creatJsonGet(aUrl = null, aData = null, aHeaders = null) {
+	static createJsonGet(aUrl = null, aData = null, aHeaders = null) {
 		let newLoadUrlCommand = new LoadUrlCommand();
 		
 		newLoadUrlCommand.setInput("format", "json");

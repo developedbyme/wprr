@@ -82,6 +82,10 @@ export default class Wprr {
 		}
 	}
 	
+	static addCommand(aName, aCreateFunction) {
+		Wprr.commands[aName] = aCreateFunction;
+	}
+	
 	static source(aType, aData, aDeepPath = null) {
 		if(aDeepPath !== null) {
 			return SourceDataWithPath.create(aType, aData, aDeepPath);
@@ -89,7 +93,21 @@ export default class Wprr {
 		return SourceData.create(aType, aData);
 	}
 	
+	static sourceReference(aPath, aDeepPath = null) {
+		return Wprr.source("reference", aPath, aDeepPath);
+	}
+	
+	static sourceProp(aPath, aDeepPath = null) {
+		return Wprr.source("prop", aPath, aDeepPath);
+	}
+	
+	static sourceText(aPath) {
+		return Wprr.source("text", aPath);
+	}
+	
 	static text(aText, aFormat = "text") {
-		React.createElement(SourcedText, {"text": aText, "format": aFormat});
+		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}
 }
+
+Wprr.commands = new Object();
