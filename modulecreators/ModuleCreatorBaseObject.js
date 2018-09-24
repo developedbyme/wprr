@@ -126,11 +126,15 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_getRootObject(aData) {
-		let pageData = aData.initialMRouterData.data[aData.paths.current].data;
+		
+		let pageData = null;
+		if(aData.initialMRouterData.data[aData.paths.current]) {
+			pageData = aData.initialMRouterData.data[aData.paths.current].data;
+		}
 		
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
-				React.createElement(ReferenceInjection, {"injectData": injectData},
+				React.createElement(ReferenceInjection, {"injectData": {"wprr/pageData": pageData}},
 					this._getMainCompnentWithInjections()
 				)
 			)	
