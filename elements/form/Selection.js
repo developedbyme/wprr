@@ -72,6 +72,29 @@ export default class Selection extends WprrBaseObject {
 		if(triggerName) {
 			this.getReference("trigger/" + triggerName).trigger(triggerName, {"value": aEvent.target.value, "additionalData": additionalData});
 		}
+		
+		let commandData = aEvent.target.value;
+		let commands = this.getSourcedProp("changeCommands");
+		if(commands) {
+			let currentArray;
+			if(Array.isArray(commands)) {
+				currentArray = commands;
+			}
+			else {
+				currentArray = [commands];
+			}
+			
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				//METODO: resolve command
+				let currentCommand = currentArray[i];
+				
+				currentCommand.setTriggerElement(this);
+				currentCommand.setEventData(commandData);
+				
+				currentCommand.perform();
+			}
+		}
 	}
 
 	_renderMainElement() {
