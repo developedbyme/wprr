@@ -54,7 +54,7 @@ export default class RefGroup extends ManipulationBaseObject {
 			injectData["refs/" + group + "/" + objectName] = refs[objectName];
 		}
 		
-		return <ReferenceInjection injectData={injectData}>{super._renderClonedElement()}</ReferenceInjection>;
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, super._renderClonedElement());
 	}
 	
 	static getCallback(aName, aGroup = "main") {

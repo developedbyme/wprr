@@ -24,7 +24,7 @@ export default class PartRenderFunction extends WprrBaseObject {
 		
 		if(returnValue === undefined) {
 			console.error("Render function did not return anything", this);
-			return <div>Render function did not return anything</div>;
+			return React.createElement("div", {}, "Render function did not return anything");
 		}
 		
 		return returnValue;
