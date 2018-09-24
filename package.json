@@ -1,6 +1,6 @@
 {
   "name": "wprr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React router for WordPress",
   "main": "Wprr.js",
   "scripts": {
