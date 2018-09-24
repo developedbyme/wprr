@@ -124,13 +124,13 @@ export default class AppModuleCreator {
 		let injectData = {"wprr/pageData": pageData};
 		this._urlResolvers.addPathsToReferenceInjectionData(injectData);
 		
-		let rootObject = <Provider store={this._store}>
-			<ReferenceExporter references={this._referenceHolder}>
-				<ReferenceInjection injectData={injectData}>
-					{React.createElement(this._reactClass, {})}
-				</ReferenceInjection>
-			</ReferenceExporter>
-		</Provider>;
+		let rootObject = React.createElement(Provider, {"store": this._store},
+			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
+				React.createElement(ReferenceInjection, {"injectData": injectData},
+					React.createElement(this._reactClass, {})
+				)
+			)	
+		);
 		
 		return ReactDOM.render(rootObject, aHolderNode);
 	}

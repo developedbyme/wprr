@@ -22,9 +22,8 @@ export default class PageModuleCreator extends ModuleCreatorBaseObject {
 	}
 	
 	_getMainCompnentWithInjections() {
-		return <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{super._getMainCompnentWithInjections()}
-		</PostDataInjection>;
+		
+		return React.createElement(PostDataInjection, {postData: SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}, super._getMainCompnentWithInjections());
 	}
 	
 	static create(aClass) {

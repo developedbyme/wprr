@@ -29,7 +29,7 @@ export default class SourcedText extends WprrBaseObject {
 	_renderMainElement() {
 		
 		if(this.getSourcedProp("format") === "html") {
-			return <wrapper />;
+			return React.createElement("wrapper");
 		}
 		
 		return SourcedText.escapeString(this._getText());

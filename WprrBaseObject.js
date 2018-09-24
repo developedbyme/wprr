@@ -223,9 +223,7 @@ export default class WprrBaseObject extends React.Component {
 	_renderMainElement(aCurrentElement, aOwner) {
 		//console.log("wprr/WprrBaseObject::_renderMainElement");
 		
-		return <wrapper>
-			{this.props.children}
-		</wrapper>;
+		return React.createElement("wrapper", {}, this.props.children);
 	}
 	
 	_renderSafe() {
@@ -281,10 +279,10 @@ export default class WprrBaseObject extends React.Component {
 		
 				console.error(this, aError, errorString);
 				
-				returnObject = <div className="react-error">
-					<div>Component had an error while rendering</div>
-					<div className="description">{errorString}</div>
-				</div>;
+				returnObject = React.createElement("div", {className: "react-error"},
+					React.createElement("div", {}, "Component had an error while rendering"),
+					React.createElement("div", {className: "description"}, errorString)
+				);
 			}
 		}
 		else {
