@@ -69,6 +69,16 @@ export default class Wprr {
 		}
 	}
 	
+	hydrateModule(aName, aHolderElement, aData, aLocalData) {
+		let currentModuleCreator = this._moduleCreators[aName];
+		if(currentModuleCreator) {
+			currentModuleCreator.createModule(aHolderElement, aData, aLocalData, "hydrate");
+		}
+		else {
+			console.error("No module named " + aName, this);
+		}
+	}
+	
 	static addClass(aName, aClass) {
 		Wprr[aName] = aClass;
 	}
