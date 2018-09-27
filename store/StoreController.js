@@ -11,7 +11,16 @@ export default class StoreController {
 		
 		this._store = null;
 		
+		this._dynamicReducers = [];
+		
 		this._encodeLoadedDataBound = this._encodeLoadedData.bind(this);
+		this.dynamicReduceBound = this.dynamicReduce.bind(this);
+	}
+	
+	addDynamicReducer(aReducer) {
+		this._dynamicReducers.push(aReducer);
+		
+		return this._dynamicReducers;
 	}
 	
 	setStore(aStore) {
@@ -225,6 +234,20 @@ export default class StoreController {
 		.catch( (error) => {
 			this.adjustData(aAdjustId, {"status": aErrorStatus, "transactionId": transactionId});
 		});
+	}
+	
+	dynamicReduce(aState, aAction) {
+		
+		let newState = aState;
+		
+		let currentArray = this._dynamicReducers;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentReducer = currentArray[i];
+			newState = currentReducer(aState, aAction);
+		}
+		
+		return newState;
 	}
 	
 	reduce(state, action) {
