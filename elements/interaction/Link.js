@@ -24,8 +24,6 @@ export default class Link extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		return <wrapper>
-			{this.props.children}
-		</wrapper>;
+		return React.createElement("wrapper", {}, this.props.children);
 	}
 }

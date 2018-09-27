@@ -37,7 +37,7 @@ export default class FlexRow extends WprrBaseObject {
 	}
 	
 	_getFlexItem(aChild, aKeyIndex) {
-		return <div key={"flex-item-"+aKeyIndex} className={this._getItemClassName(aChild, aKeyIndex)}>{aChild}</div>;
+		return React.createElement("div", {"key": "flex-item-"+aKeyIndex, className: this._getItemClassName(aChild, aKeyIndex)}, aChild);
 	}
 	
 	_getFlexItems() {
@@ -60,8 +60,6 @@ export default class FlexRow extends WprrBaseObject {
 	}
 
 	_renderMainElement() {
-		return <wrapper>
-			{this._getFlexItems()}
-		</wrapper>;
+		return React.createElement("wrapper", {}, this._getFlexItems());
 	}
 }

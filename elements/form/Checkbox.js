@@ -55,7 +55,7 @@ export default class Checkbox extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/Checkbox::_renderMainElement");
 		
-		return <wrapper />;
+		return React.createElement("wrapper");
 	}
 
 }

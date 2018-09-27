@@ -74,9 +74,7 @@ export default class SelectSection extends ManipulationBaseObject {
 		}
 		if(activeChildren.length > 1) {
 			if(this._canHaveMultipleChildren) {
-				return <Fragment>
-					{activeChildren}
-				</Fragment>;
+				return React.createElement(React.Fragment, {}, activeChildren);
 			}
 			
 			console.warn("Object has to many active children. Using first active child for ", this);

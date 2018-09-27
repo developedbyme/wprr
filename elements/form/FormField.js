@@ -77,12 +77,11 @@ export default class FormField extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/FormField::_renderMainElement");
 		
-		return <wrapper />;
+		return React.createElement("wrapper");
 	}
 	
 	static makeSelfContained(aElement, aValue = "") {
-		return <EditableProps editableProps="value" value={aValue} valueName="value">
-			{aElement}
-		</EditableProps>;
+		
+		return React.createElement(EditableProps, {"editableProps": "value", "value": aValue, "valueName": "value"}, aElement);
 	}
 }

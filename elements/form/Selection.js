@@ -111,20 +111,20 @@ export default class Selection extends WprrBaseObject {
 				let currentObject = currentArray[i];
 				
 				if(typeof(currentObject) === "object") {
-					optionElements.push(<option key={currentObject["value"]} ref={"option-" + currentObject["value"]} value={currentObject["value"]}>{Selection.escapeString(currentObject["label"])}</option>);
+					optionElements.push(React.createElement("option", {"key": currentObject["value"], "ref": "option-" + currentObject["value"], "value": currentObject["value"]}, Selection.escapeString(currentObject["label"])));
 				}
 				else {
-					optionElements.push(<option key={currentObject} value={currentObject}>{Selection.escapeString(currentObject)}</option>);
+					optionElements.push(React.createElement("option", {"key": currentObject, "value": currentObject}, Selection.escapeString(currentObject)));
 				}
 			}
 		}
 		else {
 			for(let objectName in options) {
-				optionElements.push(<option key={objectName} value={objectName}>{Selection.escapeString(options[objectName])}</option>);
+				optionElements.push(React.createElement("option", {"key": objectName, "value": objectName}, Selection.escapeString(options[objectName])));
 			}
 		}
 		
-		return <wrapper>{optionElements}</wrapper>;
+		return React.createElement("wrapper", {}, optionElements);
 	}
 	
 	static escapeString(aText) {
