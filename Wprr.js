@@ -28,33 +28,36 @@ export default class Wprr {
 	}
 	
 	addModuleCreator(aName, aModuleCreator) {
+		aModuleCreator.setWprrInstance(this);
 		this._moduleCreators[aName] = aModuleCreator;
+		
+		return this;
 	}
 	
 	addPageModule(aName, aModule) {
 		let newModuleCreator = PageModuleCreator.create(aModule);
-		this._moduleCreators[aName] = newModuleCreator;
+		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addPageModuleWithRenderer(aName, aModule) {
 		let newModuleCreator = PageModuleWithRendererCreator.create(aModule);
-		this._moduleCreators[aName] = newModuleCreator;
+		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addAppModule(aName, aModule) {
 		let newModuleCreator = AppModuleCreator.create(aModule);
-		this._moduleCreators[aName] = newModuleCreator;
+		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addAppWithRendererModule(aName, aModule) {
 		let newModuleCreator = AppModuleWithRenderCreator.create(aModule);
-		this._moduleCreators[aName] = newModuleCreator;
+		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}

@@ -28,6 +28,7 @@ export default class ModuleCreatorBaseObject {
 	constructor() {
 		//console.log("oa.ModuleCreatorBaseObject::constructor");
 		
+		this._wprrInstance = null;
 		this._mainComponent = null;
 		this._store = null;
 		
@@ -36,6 +37,12 @@ export default class ModuleCreatorBaseObject {
 		
 		this._urlResolvers = new MultipleUrlResolver();
 		this._textManager = new TextManager();
+	}
+	
+	setWprrInstance(aWprrInstance) {
+		this._wprrInstance = aWprrInstance;
+		
+		return this;
 	}
 	
 	/**
@@ -126,12 +133,10 @@ export default class ModuleCreatorBaseObject {
 		}
 		
 		//METODO: change this to a local image loader
-		/*
-		if(window.wprr.imageLoaderManager) {
-			window.wprr.imageLoaderManager.setNamedSizes(aData.imageSizes);
-			this._referenceHolder.addObject("wprr/imageLoaderManager", this._storeController);
+		if(this._wprrInstance && this._wprrInstance.imageLoaderManager) {
+			this._wprrInstance.imageLoaderManager.setNamedSizes(aData.imageSizes);
+			this._referenceHolder.addObject("wprr/imageLoaderManager", this._wprrInstance);
 		}
-		*/
 		
 		this._urlResolvers.setBasePaths(aData.paths);
 	}
