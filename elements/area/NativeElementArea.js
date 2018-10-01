@@ -24,6 +24,10 @@ export default class NativeElementArea extends WprrBaseObject {
 		this._element = this._createElement("div");
 	}
 	
+	componentDidMount() {
+		this.componentDidUpdate();
+	}
+	
 	componentDidUpdate() {
 		let domNode = ReactDOM.findDOMNode(this);
 		
