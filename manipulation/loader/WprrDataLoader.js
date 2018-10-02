@@ -192,7 +192,6 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		
 		var currentState = store.getState();
-		console.log(">>>>>>", currentState);
 		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
