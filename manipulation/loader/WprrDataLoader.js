@@ -49,16 +49,19 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		let loadData = this.getSourcedProp("loadData");
 		
+		let locationBase = this.getSourcedPropWithDefault("location", "default");
+		
 		for(var objectName in loadData) {
 			
 			var currentData = this.resolveSourcedData(loadData[objectName]);
 			
 			var loadingObject;
 			if(typeof(currentData) === "string") {
-				loadingObject = this._getData("M-ROUTER-API-DATA", currentData);
+				loadingObject = this._getData("M-ROUTER-API-DATA", currentData, locationBase);
 			}
 			else {
-				loadingObject = this._getData(currentData.type, currentData.path);
+				let currentLocationBase = currentData.location ? currentData.location : locationBase;
+				loadingObject = this._getData(currentData.type, currentData.path, currentLocationBase);
 			}
 			
 			if(!loadingObject) {
@@ -127,7 +130,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 	};
 	
-	_requestData(aType, aPath) {
+	_requestData(aType, aPath, aLocation) {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_requestData");
 		//console.log(aType, aPath);
 		//console.log(this);
@@ -140,16 +143,16 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
-				mRouterController.requestPostRange(aPath);
+				mRouterController.requestPostRange(aPath, aLocation);
 				break;
 			case "M-ROUTER-POST-BY-ID":
-				mRouterController.requestPostById(aPath);
+				mRouterController.requestPostById(aPath, aLocation);
 				break;
 			case "M-ROUTER-MENU":
-				mRouterController.requestMenuData(aPath);
+				mRouterController.requestMenuData(aPath, aLocation);
 				break;
 			case "M-ROUTER-API-DATA":
-				mRouterController.requestApiData(aPath);
+				mRouterController.requestApiData(aPath, aLocation);
 				break;
 			case "M-ROUTER-URL":
 				let dataUrl = aPath;
@@ -157,7 +160,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				dataUrl += ((dataUrl.indexOf("?") === -1) ? "?" : "&");
 				dataUrl += "mRouterData=json";
 				
-				mRouterController.requestUrlData(aPath, dataUrl);
+				mRouterController.requestUrlData(aPath, dataUrl, aLocation);
 				break;
 			default:
 				console.warn("Unknown type " + aType);
@@ -165,8 +168,8 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 	}
 	
-	_getData(aType, aPath) {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
+	_getData(aType, aPath, aLocation) {
+		console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
 		//console.log(aType, aPath);
 		
 		var store = null;
@@ -189,18 +192,19 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		
 		var currentState = store.getState();
+		console.log(">>>>>>", currentState);
 		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
-				var apiPath = this.getReference("redux/store/mRouterController").getPostRangeApiPath(aPath);
+				var apiPath = this.getReference("redux/store/mRouterController").getPostRangeApiPath(aPath, aLocation);
 				return currentState.mRouter.apiData[apiPath];
 			case "M-ROUTER-POST-BY-ID":
-				var apiPath = this.getReference("redux/store/mRouterController").getPostByIdApiPath(aPath);
+				var apiPath = this.getReference("redux/store/mRouterController").getPostByIdApiPath(aPath, aLocation);
 				var loadData = currentState.mRouter.apiData[apiPath];
 				var data = loadData.data ? loadData.data.data : null;
 				return {"status": loadData.status, "data": data};
 			case "M-ROUTER-MENU":
-				var apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath);
+				var apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath, aLocation);
 				return currentState.mRouter.apiData[apiPath];
 			case "M-ROUTER-API-DATA":
 			case "M-ROUTER-URL":
@@ -232,14 +236,17 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		*/
 		
+		let locationBase = this.getSourcedPropWithDefault("location", "default");
+		
 		for(let objectName in loadData) {
 			let currentData = this.resolveSourcedData(loadData[objectName]);
 			
 			if(typeof(currentData) === "string") {
-				this._requestData("M-ROUTER-API-DATA", currentData);
+				this._requestData("M-ROUTER-API-DATA", currentData, locationBase);
 			}
 			else {
-				this._requestData(currentData.type, currentData.path);
+				let currentLocationBase = currentData.location ? currentData.location : locationBase;
+				this._requestData(currentData.type, currentData.path, currentLocationBase);
 			}
 		}
 		

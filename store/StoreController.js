@@ -15,6 +15,8 @@ export default class StoreController {
 		
 		this._encodeLoadedDataBound = this._encodeLoadedData.bind(this);
 		this.dynamicReduceBound = this.dynamicReduce.bind(this);
+		
+		this.apiFormat = "wprr";
 	}
 	
 	addDynamicReducer(aReducer) {
@@ -96,8 +98,21 @@ export default class StoreController {
 	
 	_dataLoaded(aPath, aData) {
 		//console.log("wprr/store/StoreController::_dataLoaded");
+		//console.log(aPath, aData);
 		
-		this._performDispatch(StoreController.LOADED, aPath, aData);
+		let data = null;
+		switch(this.apiFormat) {
+			case "wprr":
+				data = aData.data;
+				break;
+			default:
+				console.warn("No format named " + this.apiFormat + ". Using raw.");
+			case "raw":
+				data = aData;
+				break;
+		}
+		
+		this._performDispatch(StoreController.LOADED, aPath, data);
 		this._removeLoadingPath(aPath);
 	}
 	
@@ -112,7 +127,7 @@ export default class StoreController {
 		
 		var loadPromise = this._load(aDataPath).then(this._encodeLoadedDataBound)
 		.then( (data) => {
-			this._dataLoaded(aPath, data.data);
+			this._dataLoaded(aPath, data);
 			//dispatch({ type: StoreController.RECEIVE_API_DATA, data: data.data, timeStamp: Date.now(), path: aPath });
 		})
 		.catch( (error) => {
@@ -268,7 +283,6 @@ export default class StoreController {
 		if(!newState["apiData"]) newState["apiData"] = new Object();
 		if(!newState["dataAdjustments"]) newState["dataAdjustments"] = new Object();
 		if(!newState["menus"]) newState["menus"] = new Object();
-		
 
 		switch (action.type) {
 			case StoreController.SET_CURRENT_PAGE:
@@ -379,8 +393,6 @@ export default class StoreController {
 				newArray.push(action.data);
 				
 				newState.dataAdjustments[action.path] = newArray;
-				
-				console.log(newArray);
 				
 				return newState;
 			default:

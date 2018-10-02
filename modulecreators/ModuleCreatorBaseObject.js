@@ -66,6 +66,10 @@ export default class ModuleCreatorBaseObject {
 		return this._textManager;
 	}
 	
+	getStoreController() {
+		return this._storeController;
+	}
+	
 	_addReducers() {
 		this._storeController.addDynamicReducer(combineReducers({
 			"mRouter": this._storeController.reduce,
