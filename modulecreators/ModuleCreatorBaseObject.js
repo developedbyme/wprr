@@ -85,10 +85,10 @@ export default class ModuleCreatorBaseObject {
 		}
 		else {
 			//METODO: clean this up
-			let initialState = {
+			initialState = {
 				"mRouter": {
 					"currentPage": aConfigurationData.paths.current,
-					"data": aConfigurationData.initialMRouterData,
+					"data": aConfigurationData.initialMRouterData.data,
 					"apiData": aConfigurationData.initialMRouterData.apiData
 				},
 				"settings": {

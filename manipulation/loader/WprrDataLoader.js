@@ -169,7 +169,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	}
 	
 	_getData(aType, aPath, aLocation) {
-		console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
+		//console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
 		//console.log(aType, aPath);
 		
 		var store = null;
