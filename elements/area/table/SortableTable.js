@@ -24,7 +24,7 @@ export default class SortableTable extends WprrBaseObject {
 		
 		this._injectData = {
 			"sort/compare/string": this._caseInsensitiveCompareFunction,
-			"sort/compare/number": this._defaultCompareFunction
+			"sort/compare/number": this._numericCompareFunction
 		};
 		
 		this._headItemClickedBound = this._headItemClicked.bind(this);
@@ -114,7 +114,24 @@ export default class SortableTable extends WprrBaseObject {
 		</ContentCreatorSingleItem>;
 	}
 	
+	_numericCompareFunction(aA, aB) {
+		
+		aA = parseFloat(aA);
+		aB = parseFloat(aB);
+		
+		if(aA < aB) {
+			return -1;
+		}
+		else if(aA > aB) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+	
 	_defaultCompareFunction(aA, aB) {
+		
 		if(aA < aB) {
 			return -1;
 		}
@@ -158,7 +175,7 @@ export default class SortableTable extends WprrBaseObject {
 	}
 	
 	_sortRows(aReturnArray) {
-		//console.log("wprr/elements/area/table/SortableTable::_defaultSortFunction");
+		//console.log("wprr/elements/area/table/SortableTable::_sortRows");
 		
 		let headerData = this.getSourcedProp("headerData");
 		
