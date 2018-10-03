@@ -133,6 +133,7 @@ export default class ModuleCreatorBaseObject {
 		if(paths) {
 			for(let objectName in paths) {
 				this._referenceHolder.addObject("wprr/paths/" + objectName, paths[objectName]);
+				this._referenceHolder.addObject("urlResolver/" + objectName, this._urlResolvers);
 			}
 		}
 		
