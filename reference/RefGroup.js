@@ -1,4 +1,5 @@
 import React from "react";
+import objectPath from "object-path";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -15,6 +16,8 @@ export default class RefGroup extends ManipulationBaseObject {
 	}
 	
 	trigger(aName, aValue) {
+		//console.log("wprr/reference/RefGroup::trigger");
+		//console.log(aName, aValue);
 		
 		let group = this.getSourcedPropWithDefault("group", "main");
 		
@@ -58,7 +61,16 @@ export default class RefGroup extends ManipulationBaseObject {
 	}
 	
 	static getCallback(aName, aGroup = "main") {
-		return function(aRef) {
+		
+		let fullCallbackPath = aGroup + "." + aName;
+		
+		//MENOTE: reusing callbacks as the causes unmount/mount in other cases
+		let existingFunction = objectPath.get(RefGroup._callbackFunctions, fullCallbackPath);
+		if(existingFunction) {
+			return  existingFunction;
+		}
+		
+		let refCallbackFunction = function(aRef) {
 			if(aRef instanceof WprrBaseObject) {
 				let refGroup = aRef.getReference("trigger/addRef/" + aGroup);
 				
@@ -69,9 +81,20 @@ export default class RefGroup extends ManipulationBaseObject {
 					console.warn("Ref doesn't have any group " + aGroup + ". Can't add.", aRef);
 				}
 			}
+			else if(aRef === null) {
+				//MENOTE: React send out a null ref when a component is unmounted.
+				//METODO: solve so that the ref is removed
+			}
 			else {
 				console.warn("Ref is not a WprrBaseObject. Can't set " + aName + " in group " + aGroup + ".", aRef);
 			}
-		}
+		};
+		
+		
+		objectPath.set(RefGroup._callbackFunctions, fullCallbackPath, refCallbackFunction);
+		
+		return refCallbackFunction;
 	}
 }
+
+RefGroup._callbackFunctions = new Object();
