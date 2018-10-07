@@ -16,6 +16,8 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 import StoreController from "wprr/store/StoreController";
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 import TextManager from "wprr/textmanager/TextManager";
+import RefGroup from "wprr/reference/RefGroup";
+import DataStorage from "wprr/utils/DataStorage";
 
 // import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 export default class ModuleCreatorBaseObject {
@@ -34,6 +36,8 @@ export default class ModuleCreatorBaseObject {
 		
 		this._urlResolvers = new MultipleUrlResolver();
 		this._textManager = new TextManager();
+		
+		this._siteStorage = new DataStorage();
 	}
 	
 	/**
@@ -94,6 +98,7 @@ export default class ModuleCreatorBaseObject {
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
+		this._storeController.setUser(aData.userData);
 		
 		this._referenceHolder.addObject("redux/store", this._store);
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
@@ -130,9 +135,11 @@ export default class ModuleCreatorBaseObject {
 		
 		let rootObject = <Provider store={this._store}>
 			<ReferenceExporter references={this._referenceHolder}>
-				<ReferenceInjection injectData={{"wprr/pageData": pageData}}>
-					{this._getMainCompnentWithInjections()}
-				</ReferenceInjection>
+				<RefGroup group="site">
+					<ReferenceInjection injectData={{"wprr/pageData": pageData, "wprr/externalStorage/site": this._siteStorage}}>
+						{this._getMainCompnentWithInjections()}
+					</ReferenceInjection>
+				</RefGroup>
 			</ReferenceExporter>
 		</Provider>;
 		

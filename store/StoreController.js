@@ -10,6 +10,7 @@ export default class StoreController {
 		this._paths = new Array();
 		
 		this._store = null;
+		this._userData = null;
 		
 		this._encodeLoadedDataBound = this._encodeLoadedData.bind(this);
 	}
@@ -20,6 +21,10 @@ export default class StoreController {
 		//this._performDispatch("wprr_StoreController_setup", null, null);
 		
 		return  this;
+	}
+	
+	setUser(aUserData) {
+		this._userData = aUserData;
 	}
 	
 	getPaths() {
@@ -41,16 +46,15 @@ export default class StoreController {
 	
 	_load(aPath) {
 		
-		var currentState = this._store.getState();
-		var nonce = currentState.settings.nonce;
+		let currentState = this._store.getState();
 		
-		var headers = new Object();
+		let headers = new Object();
 		
-		if(nonce) {
-			headers["X-WP-Nonce"] = nonce;
+		if(this._userData && this._userData.restNonce) {
+			headers["X-WP-Nonce"] = this._userData.restNonce;
 		}
 		
-		var loadPromise = fetch(aPath, {"credentials": "include", "headers": headers});
+		let loadPromise = fetch(aPath, {"credentials": "include", "headers": headers});
 		return loadPromise;
 	}
 	
