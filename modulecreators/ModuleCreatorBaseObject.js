@@ -18,6 +18,8 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 import StoreController from "wprr/store/StoreController";
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 import TextManager from "wprr/textmanager/TextManager";
+import RefGroup from "wprr/reference/RefGroup";
+import DataStorage from "wprr/utils/DataStorage";
 
 // import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 export default class ModuleCreatorBaseObject {
@@ -37,6 +39,8 @@ export default class ModuleCreatorBaseObject {
 		
 		this._urlResolvers = new MultipleUrlResolver();
 		this._textManager = new TextManager();
+		
+		this._siteStorage = new DataStorage();
 	}
 	
 	setWprrInstance(aWprrInstance) {
@@ -111,6 +115,13 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_configureReferences(aData, aModuleData) {
+		//console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
+		//console.log(aHolderNode, aData);
+		
+		this._store = this._createReduxStore(aData);
+		this._storeController.setStore(this._store);
+		this._storeController.setUser(aData.userData);
+		
 		this._referenceHolder.addObject("redux/store", this._store);
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		
@@ -164,8 +175,10 @@ export default class ModuleCreatorBaseObject {
 		
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
-				React.createElement(ReferenceInjection, {"injectData": {"wprr/pageData": pageData}},
-					this._getMainCompnentWithInjections()
+				React.createElement(RefGroup, {"group": "site"},
+					React.createElement(ReferenceInjection, {"injectData": {"wprr/pageData": pageData, "wprr/externalStorage/site": this._siteStorage}},
+						this._getMainCompnentWithInjections()
+					)
 				)
 			)	
 		);
