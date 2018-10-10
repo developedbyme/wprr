@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import WprrBaseObject from "wprr/WprrBaseObject";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+
 // import ValidatingForm from "wprr/elements/form/ValidatingForm";
 export default class ValidatingForm extends WprrBaseObject {
 
@@ -32,11 +34,22 @@ export default class ValidatingForm extends WprrBaseObject {
 				ReactDOM.findDOMNode(this).submit();
 			}
 		}
+		else {
+			console.log("Form did not validate.", this);
+		}
 	}
 	
 	_handleSubmit(aEvent) {
-		if(this.props.onSubmit) {
-			this.props.onSubmit(aEvent, this);
+		
+		let submitCommands = this.getSourcedProp("submitCommands");
+		if(submitCommands) {
+			CommandPerformer.perform(submitCommands, this.getFormData(), this);
+			return true;
+		}
+		
+		let submitFunction = this.getSourcedProp("onSubmit");
+		if(submitFunction) {
+			submitFunction(aEvent, this);
 			return true;
 		}
 		
@@ -96,12 +109,8 @@ export default class ValidatingForm extends WprrBaseObject {
 	submit() {
 		//console.log("wprr/elements/form/ValidatingForm::submit");
 		
-		if(this.validate()) {
-			ReactDOM.findDOMNode(this).submit();
-		}
-		else {
-			console.log("Form did not validate.", this);
-		}
+		this._trigger_submit();
+		
 	}
 	
 	getFormData() {

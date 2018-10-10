@@ -69,10 +69,14 @@ export default class JsonLoader {
 	
 	addSuccessCommand(aCommand) {
 		this._successCommands.push(aCommand);
+		
+		return this;
 	}
 	
 	addErrorCommand(aCommand) {
 		this._errorCommands.push(aCommand);
+		
+		return this;
 	}
 	
 	setData(aData) {

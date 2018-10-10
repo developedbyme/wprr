@@ -1,6 +1,5 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
