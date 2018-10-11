@@ -140,13 +140,13 @@ export default class ValidatingForm extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/ValidatingForm::_renderMainElement");
 		
-		return <wrapper>
-			<ReferenceInjection injectData={{"validation/form": this, "trigger/form/submit": this}}>
-				<div>
-					{this.props.children}
-				</div>
-			</ReferenceInjection>
-		</wrapper>;
+		React.createElement("wrapper", {}, 
+			React.createElement(ReferenceInjection, {"injectData": {"validation/form": this, "trigger/form/submit": this}},
+				React.createElement("div", {}, 
+					this.props.children
+				)
+			)
+		);
 	}
 
 }

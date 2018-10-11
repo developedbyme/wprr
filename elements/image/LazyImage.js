@@ -80,6 +80,6 @@ export default class LazyImage extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		return <wrapper>{this.props.children}</wrapper>;
+		return React.createElement("wrapper", {}, this.props.children);
 	}
 }

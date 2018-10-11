@@ -147,20 +147,18 @@ export default class MarkupChildren extends ManipulationBaseObject {
 				else if(this.props.dynamicChildren) {
 					var allChildren = this.context.markupChildren;
 					
-					children = <Markup injectChildren={allChildren}>{this.props.dynamicChildren}</Markup>;
+					children = React.createElement(Markup, {"injectChildren": allChildren}, this.props.dynamicChildren);
 				}
 				else if(this.props.children) {
 					var allChildren = this.context.markupChildren;
 					
-					children = <Markup injectChildren={allChildren}>{this.props.children}</Markup>;
+					children = React.createElement(Markup, {"injectChildren": allChildren}, this.props.children);
 				}
 				else {
 					children = currentElement.props.dynamicChildren ? currentElement.props.dynamicChildren : currentElement.props.children;
 				}
 				
-				var selectChildren = <ManipulationBaseObject dynamicChildren={children}>
-					{currentElement}
-				</ManipulationBaseObject>;
+				var selectChildren = React.createElement(ManipulationBaseObject, {"dynamicChildren": children}, currentElement);
 				
 				returnArray.push(selectChildren);
 			}

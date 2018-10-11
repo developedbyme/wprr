@@ -111,9 +111,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 	
 	_createClonedElement() {
 		
-		this._clonedElement = <ReferenceInjection injectData={{"validation/validate": this}}>
-			{this._renderClonedElement()}
-		</ReferenceInjection>;
+		this._clonedElement = React.createElement(ReferenceInjection, {"injectData": {"validation/validate": this}}, this._renderClonedElement());
 	}
 }
 

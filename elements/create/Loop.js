@@ -74,8 +74,6 @@ export default class Loop extends Adjust {
 		injectData["loop/" + loopName + "allItems"] = input;
 		injectData["loop/" + loopName + "length"] = loopLength;
 		
-		return <ReferenceInjection injectData={injectData}>
-			{clonedElementes}
-		</ReferenceInjection>
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElementes);
 	}
 }
