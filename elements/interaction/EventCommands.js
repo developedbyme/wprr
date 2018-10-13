@@ -26,12 +26,11 @@ export default class EventCommands extends ManipulationBaseObject {
 		if(commands) {
 			let commandData = this.getSourcedProp("commandData");
 			
-			let currentComamndData = null;
+			let currentCommandData = null;
 			if(commandData && commandData[onName]) {
-				currentComamndData = commandData[onName];
+				currentCommandData = commandData[onName];
 			}
 			
-			console.log(commands);
 			CommandPerformer.perform(commands, commandData, this);
 		}
 		else {
