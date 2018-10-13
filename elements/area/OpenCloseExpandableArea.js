@@ -110,10 +110,10 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 			styleObject["overflow"] = "visible";
 		}
 		
-		return <wrapper>
-			<div className="animation-element border-box-sizing" style={styleObject}>
-				<div ref={this._setHeightElementBound}>{this.props.children}</div>
-			</div>
-		</wrapper>;
+		return React.createElement("wrapper", {},
+			React.createElement("div", {"className": "animation-element border-box-sizing", "style": styleObject},
+				React.createElement("div", {"ref": this._setHeightElementBound}, this.props.children)
+			)
+		);
 	}
 }
