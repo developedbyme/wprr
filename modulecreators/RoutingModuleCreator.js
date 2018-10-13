@@ -15,6 +15,8 @@ import WpData from "wprr/routing/qualification/wp/WpData";
 import HasTerm from "wprr/routing/qualification/wp/HasTerm";
 import QualifyAll from "wprr/routing/qualification/QualifyAll";
 
+import RouteCreator from "wprr/routing/RouteCreator";
+
 import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
 import UseMarkup from "wprr/markup/UseMarkup";
@@ -29,11 +31,9 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	constructor() {
 		//console.log("oa.RoutingModuleCreator::constructor");
 		
-		//METODO: all routing factory funcitonlaity should be broken out to a separate class
-		
 		super();
 		
-		this._routes = new Array();
+		this._routeCreator = RouteCreator.create();
 		
 		this._header = null;
 		this._footer = null;
@@ -57,78 +57,62 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		return this;
 	}
 	
+	getRouteCreator() {
+		return this._routeCreator;
+	}
+	
 	createRoute(aQualifier, aReactComponent) {
-		this._routes.push(<route key={"route-" + this._routes.length} qualify={aQualifier}>
-			{aReactComponent}
-		</route>);
+		this._routeCreator.createRoute(aQualifier, aReactComponent);
+		
+		return this;
 	}
 	
 	createPageTemplateRoute(aPageTemplatePath, aReactComponent) {
+		this._routeCreator.createPageTemplateRoute(aPageTemplatePath, aReactComponent);
 		
-		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{aReactComponent}
-		</PostDataInjection>;
-		
-		this.createRoute(WpData.createForPageTemplate(aPageTemplatePath), componentWithInjectsions);
+		return this;
 	}
 	
 	createSingularRouteWithQualifier(aQualifier, aReactComponent) {
-		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{aReactComponent}
-		</PostDataInjection>;
-
-		this.createRoute(aQualifier, componentWithInjectsions);
+		this._routeCreator.createSingularRouteWithQualifier(aQualifier, aReactComponent);
+		
+		return this;
 	}
 	
 	createSingularRoute(aReactComponent) {
-		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{aReactComponent}
-		</PostDataInjection>;
-
-		this.createRoute(WpConditional.create("is_singular"), componentWithInjectsions);
+		this._routeCreator.createSingularRoute(aReactComponent);
+		
+		return this;
 	}
 	
 	createSingularPostTypeRoute(aPostType, aReactComponent) {
-		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{aReactComponent}
-		</PostDataInjection>;
-
-		this.createRoute(WpData.createForPostType(aPostType), componentWithInjectsions);
+		this._routeCreator.createSingularPostTypeRoute(aPostType, aReactComponent);
+		
+		return this;
 	}
 	
 	createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent) {
-		let componentWithInjectsions = <PostDataInjection postData={SourceDataWithPath.create("reference", "wprr/pageData", "queriedData")}>
-			{aReactComponent}
-		</PostDataInjection>;
+		this._routeCreator.createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent);
 		
-		this.createRoute(QualifyAll.create(WpConditional.create("is_singular"), HasTerm.create(aTaxonomy, aTermSlug, "slug")), componentWithInjectsions);
+		return this;
 	}
 	
 	createArchiveRoute(aReactComponent) {
-		this.createRoute(WpConditional.create("is_archive"), aReactComponent);
+		this._routeCreator.createArchiveRoute(aReactComponent);
 	}
 	
 	_getMainCompnentWithInjections() {
 		
-		if(this._routes.length === 0) {
-			console.warn("Module creator doesn't have any routes.", this);
-			return null;
-		}
-		
 		let childrensArray = new Array();
 		if(this._header) {
-			childrensArray.push(<MarkupPlacement placement="header">{this._header}</MarkupPlacement>);
+			childrensArray.push(React.createElement(MarkupPlacement, {"placement": "header"}, this._header));
 		}
-		childrensArray.push(<MarkupPlacement placement="routes">
-			<FirstMatchingRoute>
-				{this._routes}
-			</FirstMatchingRoute>
-		</MarkupPlacement>);
+		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, this._routeCreator.getReactElements()));
 		if(this._footer) {
-			childrensArray.push(<MarkupPlacement placement="footer">{this._footer}</MarkupPlacement>);
+			childrensArray.push(React.createElement(MarkupPlacement, {"placement": "footer"}, this._footer));
 		}
 		
-		return <UseMarkup markup={this._markup} dynamicChildren={childrensArray} />;
+		return React.createElement(UseMarkup, {"markup": this._markup, "dynamicChildren": childrensArray});
 	}
 	
 	static create() {
@@ -138,6 +122,4 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	}
 }
 
-RoutingModuleCreator.DEFAULT_MARKUP = <Markup>
-	<MarkupChildren placement="all" />
-</Markup>;
+RoutingModuleCreator.DEFAULT_MARKUP = React.createElement(Markup, {}, React.createElement(MarkupChildren, {"placement": "all"}));
