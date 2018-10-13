@@ -4,14 +4,13 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import WprrDataLoader from "wprr/manipulation/loader/WprrDataLoader";
 import Loop from "wprr/elements/create/Loop";
-import SourceData from "wprr/reference/SourceData";
 import InjectChildren from "wprr/manipulation/InjectChildren";
 
 //import WpMenu from "wprr/wp/menu/WpMenu";
 export default class WpMenu extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -29,13 +28,11 @@ export default class WpMenu extends ManipulationBaseObject {
 		let children = super._getChildrenToClone();
 		
 		if(children.length === 0) {
-			children = <InjectChildren />;
+			children = React.createElement(InjectChildren);
 		}
 		
-		return [<WprrDataLoader loadData={{"input": "m-router-data/v1/menu/" + menuLocation}}>
-			<Loop>
-				{children}
-			</Loop>
-		</WprrDataLoader>];
+		return [React.createElement(WprrDataLoader, {"loadData": {"input": "m-router-data/v1/menu/" + menuLocation}},
+			React.createElement(Loop, {}, children)
+		)];
 	}
 }
