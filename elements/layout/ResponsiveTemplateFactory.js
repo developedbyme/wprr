@@ -10,7 +10,7 @@ export default class ResponsiveTemplateFactory  {
 
 	constructor() {
 		
-		this._defaultTemplate = null;
+		this._defaultTemplate = React.createElement("div");
 		this._responsiveTemplates = new Array();
 		
 	}
@@ -38,13 +38,15 @@ export default class ResponsiveTemplateFactory  {
 	}
 	
 	getReactElements() {
-		return <ResponsiveProps markup={this._defaultTemplate} mediaQueries={this._responsiveTemplates}>
-			<UseMarkup />
-		</ResponsiveProps>;
+		return React.createElement(ResponsiveProps, {"markup": this._defaultTemplate, "mediaQueries": this._responsiveTemplates}, React.createElement(UseMarkup));
 	}
 	
-	static create() {
+	static create(aDefaultTemplate = null) {
 		let newResponsiveTemplateFactory = new ResponsiveTemplateFactory();
+		
+		if(aDefaultTemplate) {
+			newResponsiveTemplateFactory.setDefaultTemplate(aDefaultTemplate);
+		}
 		
 		return newResponsiveTemplateFactory;
 	}

@@ -18,40 +18,46 @@ export default class ResponsiveProps extends ManipulationBaseObject {
 	_selectProps() {
 		//console.log("wprr/manipulation/measure/ResponsiveProps::_selectProps");
 		
-		var currentWidth = ReactDOM.findDOMNode(this).clientWidth;
+		let currentElement = ReactDOM.findDOMNode(this);
+		if(currentElement) {
+			let currentWidth = currentElement.clientWidth;
 		
-		var selectedQueries = new Array();
-		var selectedIndicies = new Array();
+			let selectedQueries = new Array();
+			let selectedIndicies = new Array();
 		
-		var currentArray = this.getSourcedProp("mediaQueries");
-		if(currentArray) {
-			var currentArrayLength = currentArray.length;
-			for(var i = 0; i < currentArrayLength; i++) {
-				var currentMediaQuery = currentArray[i];
+			let currentArray = this.getSourcedProp("mediaQueries");
+			if(currentArray) {
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentMediaQuery = currentArray[i];
 				
-				if((currentMediaQuery.minWidth === undefined || currentWidth >= currentMediaQuery.minWidth) && (currentMediaQuery.maxWidth === undefined || currentWidth <= currentMediaQuery.maxWidth)) {
-					selectedIndicies.push(i);
-					selectedQueries.push(currentMediaQuery);
+					if((currentMediaQuery.minWidth === undefined || currentWidth >= currentMediaQuery.minWidth) && (currentMediaQuery.maxWidth === undefined || currentWidth <= currentMediaQuery.maxWidth)) {
+						selectedIndicies.push(i);
+						selectedQueries.push(currentMediaQuery);
+					}
 				}
+			}
+		
+			let newId = selectedIndicies.join("-");
+			if(newId !== this._selectedId) {
+			
+				let stateResponsiveProps = new Object();
+			
+				let currentArray = selectedQueries;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentProps = currentArray[i]["props"];
+					for(let objectName in currentProps) {
+						stateResponsiveProps[objectName] = currentProps[objectName];
+					}
+				}
+			
+				this._selectedId = newId;
+				this.setState({"responsiveProps": stateResponsiveProps});
 			}
 		}
-		
-		var newId = selectedIndicies.join("-");
-		if(newId !== this._selectedId) {
-			
-			var stateResponsiveProps = new Object();
-			
-			var currentArray = selectedQueries;
-			var currentArrayLength = currentArray.length;
-			for(var i = 0; i < currentArrayLength; i++) {
-				var currentProps = currentArray[i]["props"];
-				for(var objectName in currentProps) {
-					stateResponsiveProps[objectName] = currentProps[objectName];
-				}
-			}
-			
-			this._selectedId = newId;
-			this.setState({"responsiveProps": stateResponsiveProps});
+		else {
+			console.log("Element doesn't exist, can't get responsive props.", this);
 		}
 	}
 	
@@ -84,10 +90,10 @@ export default class ResponsiveProps extends ManipulationBaseObject {
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/manipulation/measure/ResponsiveProps::_manipulateProps");
 		
-		var returnObject = super._manipulateProps(aReturnObject);
+		let returnObject = super._manipulateProps(aReturnObject);
 		
-		var responsiveProps = this.state["responsiveProps"];
-		for(var objectName in responsiveProps) {
+		let responsiveProps = this.state["responsiveProps"];
+		for(let objectName in responsiveProps) {
 			returnObject[objectName] = responsiveProps[objectName];
 		}
 		
