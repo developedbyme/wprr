@@ -40,7 +40,7 @@ export default class ClickOutsideTrigger extends ManipulationBaseObject {
 					}
 				}
 			
-				let shouldStopClick = this.getSourcedPropWithDefault("shouldStopClick", true);
+				let shouldStopClick = this.getSourcedPropWithDefault("shouldStopClick", false);
 				if(shouldStopClick) {
 					aEvent.preventDefault();
 					aEvent.stopImmediatePropagation();
