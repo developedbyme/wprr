@@ -14,7 +14,7 @@ import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRen
 import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
 import AppModuleWithRenderCreator from "wprr/modulecreators/AppModuleWithRenderCreator";
 
-//import Wprr from "wprr";
+//import Wprr from "wprr/Wprr";
 export default class Wprr {
 	
 	constructor() {

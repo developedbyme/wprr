@@ -1,4 +1,4 @@
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
 
 import ImageLoaderManager from "wprr/imageloader/ImageLoaderManager";
 

@@ -1,4 +1,4 @@
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
 
 import BaseCommand from "wprr/commands/BaseCommand";
 
