@@ -1,3 +1,5 @@
+import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
+
 // import StoreController from "wprr/store/StoreController";
 export default class StoreController {
 	
@@ -18,6 +20,12 @@ export default class StoreController {
 		this.dynamicReduceBound = this.dynamicReduce.bind(this);
 		
 		this.apiFormat = "wprr";
+		
+		this._urlResolvers = new MultipleUrlResolver();
+	}
+	
+	getUrlResolvers() {
+		return this._urlResolvers;
 	}
 	
 	addDynamicReducer(aReducer) {
@@ -60,12 +68,15 @@ export default class StoreController {
 		let currentState = this._store.getState();
 		
 		let headers = new Object();
+		let options = new Object();
 		
 		if(this._userData && this._userData.restNonce) {
 			headers["X-WP-Nonce"] = this._userData.restNonce;
+			options["credentials"] = "include";
+			options["headers"] = "headers";
 		}
 		
-		let loadPromise = fetch(aPath, {"credentials": "include", "headers": headers});
+		let loadPromise = fetch(aPath, options);
 		return loadPromise;
 	}
 	
@@ -168,12 +179,14 @@ export default class StoreController {
 		}
 	}
 	
-	requestApiData(aPath) {
-		//console.log("wprr/store/StoreController::requestApiData");
+	requestApiData(aPath, aLocation) {
+		console.log("wprr/store/StoreController::requestApiData");
+		console.log(aPath, aLocation);
+		console.log(this._urlResolvers);
 		
-		var currentState = this._store.getState();
-		var apiBaseUrl = currentState.settings.wpApiUrlBase;
-		var dataUrl = apiBaseUrl + aPath;
+		let currentState = this._store.getState();
+		let dataUrl = this._urlResolvers.resolveUrl(aPath, aLocation);
+		console.log(dataUrl);
 		
 		this._performRequest(aPath, dataUrl);
 		

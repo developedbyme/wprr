@@ -14,6 +14,12 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._redux_unsubscribeFunction = null;
 		
 		this._propsThatShouldNotCopy.push("loadData");
+		this._propsThatShouldNotCopy.push("loadingElement");
+		this._propsThatShouldNotCopy.push("loadingComponent");
+		this._propsThatShouldNotCopy.push("errorComponent");
+		this._propsThatShouldNotCopy.push("errorElement");
+		this._propsThatShouldNotCopy.push("nonBlocking");
+		
 	}
 	
 	_getMainElementProps() {
@@ -42,20 +48,20 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	_callback_reduxChange() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_callback_reduxChange");
 		
-		var hasChange = false;
-		var newStatus = 1;
-		var currentState = this.state["loadData"];
-		var newLoadDataState = new Object();
+		let hasChange = false;
+		let newStatus = 1;
+		let currentState = this.state["loadData"];
+		let newLoadDataState = new Object();
 		
 		let loadData = this.getSourcedProp("loadData");
 		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
 		
-		for(var objectName in loadData) {
+		for(let objectName in loadData) {
 			
-			var currentData = this.resolveSourcedData(loadData[objectName]);
+			let currentData = this.resolveSourcedData(loadData[objectName]);
 			
-			var loadingObject;
+			let loadingObject;
 			if(typeof(currentData) === "string") {
 				loadingObject = this._getData("M-ROUTER-API-DATA", currentData, locationBase);
 			}
@@ -93,7 +99,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	
 	_redux_subscribe() {
 		if(this.getReferences()) {
-			var store = this.getReferences().getObject("redux/store");
+			let store = this.getReferences().getObject("redux/store");
 			if(store) {
 				this._redux_unsubscribeFunction = store.subscribe(this._callback_reduxChangeBound);
 			}
@@ -117,7 +123,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	
 	_redux_dispatch(aDispatchData) {
 		if(this.getReferences()) {
-			var store = this.getReferences().getObject("redux/store");
+			let store = this.getReferences().getObject("redux/store");
 			if(store) {
 				store.dispatch(aDispatchData);
 			}
@@ -172,7 +178,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
 		//console.log(aType, aPath);
 		
-		var store = null;
+		let store = null;
 		if(this.getReferences()) {
 			store = this.getReferences().getObject("redux/store");
 			if(store) {
@@ -191,20 +197,26 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			return {"status": 0, "data": null};
 		}
 		
-		var currentState = store.getState();
+		let currentState = store.getState();
 		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
-				var apiPath = this.getReference("redux/store/mRouterController").getPostRangeApiPath(aPath, aLocation);
-				return currentState.mRouter.apiData[apiPath];
+				{
+					let apiPath = this.getReference("redux/store/mRouterController").getPostRangeApiPath(aPath, aLocation);
+					return currentState.mRouter.apiData[apiPath];
+				}
 			case "M-ROUTER-POST-BY-ID":
-				var apiPath = this.getReference("redux/store/mRouterController").getPostByIdApiPath(aPath, aLocation);
-				var loadData = currentState.mRouter.apiData[apiPath];
-				var data = loadData.data ? loadData.data.data : null;
-				return {"status": loadData.status, "data": data};
+				{
+					let apiPath = this.getReference("redux/store/mRouterController").getPostByIdApiPath(aPath, aLocation);
+					let loadData = currentState.mRouter.apiData[apiPath];
+					let data = loadData.data ? loadData.data.data : null;
+					return {"status": loadData.status, "data": data};
+				}
 			case "M-ROUTER-MENU":
-				var apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath, aLocation);
-				return currentState.mRouter.apiData[apiPath];
+				{
+					let apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath, aLocation);
+					return currentState.mRouter.apiData[apiPath];
+				}
 			case "M-ROUTER-API-DATA":
 			case "M-ROUTER-URL":
 				//console.log(aPath, currentState.mRouter.apiData[aPath]);
@@ -221,13 +233,14 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	componentWillMount() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::componentWillMount");
 		
-		if(!this.props.loadData) {
+		
+		let loadData = this.getSourcedProp("loadData");
+		
+		if(!loadData) {
 			console.error("Loader doesn't have any load data.", this);
 			this.setState({"status": -1});
 			return;
 		}
-		
-		let loadData = this.getSourcedProp("loadData");
 		
 		/* METODO: this needs to do a double split
 		if(typeof(loadData) === "string") {
@@ -264,13 +277,14 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	}
 	
 	_renderMainElement() {
-		if(this.state["status"] === 1 || this.props.nonBlocking) {
+		if(this.state["status"] === 1 || this.getSourcedPropWithDefault("nonBlocking", false)) {
 			this._createClonedElement();
 			return this._clonedElement;
 		}
 		else if(this.state["status"] === 0 || this.state["status"] === 2) {
-			if(this.props.loadingComponent) {
-				return React.createElement(this.props.loadingComponent, this._getMainElementProps(), this.props.children);
+			let loadingComponent = this.getSourcedProp("loadingComponent");
+			if(loadingComponent) {
+				return React.createElement(loadingComponent, this._getMainElementProps(), this.props.children);
 			}
 			let loadingElement = this.getSourcedProp("loadingElement");
 			if(loadingElement) {
@@ -280,8 +294,9 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			return null;
 		}
 		
-		if(this.props.errorComponent) {
-			return React.createElement(this.props.errorComponent, this._getMainElementProps(), this.props.children);
+		let errorComponent = this.getSourcedProp("errorComponent");
+		if(errorComponent) {
+			return React.createElement(errorComponent, this._getMainElementProps(), this.props.children);
 		}
 		console.warn("Error component not set", this);
 		return null;

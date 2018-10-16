@@ -104,6 +104,14 @@ export default class ModuleCreatorBaseObject {
 			};
 		}
 		
+		let defaultPath = objectPath.get(initialState, "settings.wpApiUrlBase");
+		if(defaultPath) {
+			this._storeController.getUrlResolvers().addBasePath("default", defaultPath);
+		}
+		else {
+			console.warn("No default API path set", this);
+		}
+		
 		this._addReducers();
 		return createStore(
 			this._storeController.dynamicReduceBound,
@@ -146,6 +154,8 @@ export default class ModuleCreatorBaseObject {
 				this._referenceHolder.addObject("wprr/paths/" + objectName, paths[objectName]);
 				this._referenceHolder.addObject("urlResolver/" + objectName, this._urlResolvers);
 			}
+			this._urlResolvers.setBasePaths(paths);
+			this._storeController.getUrlResolvers().setBasePaths(paths);
 		}
 		
 		//METODO: change this to a local image loader
@@ -153,8 +163,6 @@ export default class ModuleCreatorBaseObject {
 			this._wprrInstance.imageLoaderManager.setNamedSizes(aData.imageSizes);
 			this._referenceHolder.addObject("wprr/imageLoaderManager", this._wprrInstance);
 		}
-		
-		this._urlResolvers.setBasePaths(aData.paths);
 	}
 	
 	_getMainCompnentWithInjections() {
