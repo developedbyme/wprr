@@ -14,10 +14,9 @@ export default class CommandButton extends ManipulationBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		console.log("wprr/elements/interaction/CommandButton::_callback_change");
+		//console.log("wprr/elements/interaction/CommandButton::_callback_change");
 		
 		let commands = this.getSourcedProp("commands");
-		
 		
 		if(commands) {
 			let commandData = this.getSourcedProp("commandData");

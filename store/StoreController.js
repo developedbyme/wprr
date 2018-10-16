@@ -180,13 +180,11 @@ export default class StoreController {
 	}
 	
 	requestApiData(aPath, aLocation) {
-		console.log("wprr/store/StoreController::requestApiData");
-		console.log(aPath, aLocation);
-		console.log(this._urlResolvers);
+		//console.log("wprr/store/StoreController::requestApiData");
+		//console.log(aPath, aLocation);
 		
 		let currentState = this._store.getState();
 		let dataUrl = this._urlResolvers.resolveUrl(aPath, aLocation);
-		console.log(dataUrl);
 		
 		this._performRequest(aPath, dataUrl);
 		
