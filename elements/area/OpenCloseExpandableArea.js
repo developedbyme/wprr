@@ -3,12 +3,14 @@ import React from "react";
 import TWEEN from "tween.js";
 
 //METODO: this needs to move out globally
-function animate(time) {
-	requestAnimationFrame(animate);
-	TWEEN.update(time);
-}
+if(window.requestAnimationFrame) {
+	function animate(time) {
+		window.requestAnimationFrame(animate);
+		TWEEN.update(time);
+	}
 
-requestAnimationFrame(animate);
+	window.requestAnimationFrame(animate);
+}
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
