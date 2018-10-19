@@ -1,0 +1,22 @@
+import CreateHierarchyTerms from "wprr/manipulation/adjustfunctions/wp/CreateHierarchyTerms";
+import SelectTermsSubtree from "wprr/manipulation/adjustfunctions/wp/SelectTermsSubtree";
+import OptionsFromHierarchyTerms from "wprr/manipulation/adjustfunctions/wp/OptionsFromHierarchyTerms";
+import AddToArray from "wprr/manipulation/adjustfunctions/logic/AddToArray";
+import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
+import ResolveSources from "wprr/manipulation/adjustfunctions/ResolveSources";
+import MarkupLoop from "wprr/manipulation/adjustfunctions/loop/MarkupLoop";
+
+let createHierarchyTerms = CreateHierarchyTerms.create;
+export {createHierarchyTerms};
+let selectTermsSubtree = SelectTermsSubtree.create;
+export {selectTermsSubtree};
+let optionsFromHierarchyTerms = OptionsFromHierarchyTerms.create;
+export {optionsFromHierarchyTerms};
+let addToArray = AddToArray.create;
+export {addToArray};
+let classFromProp = ClassFromProp.create;
+export {classFromProp};
+let resolveSources = ResolveSources.create;
+export {resolveSources};
+let markupLoop = MarkupLoop.create;
+export {markupLoop};
