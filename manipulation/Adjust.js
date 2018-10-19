@@ -59,7 +59,12 @@ export default class Adjust extends ManipulationBaseObject {
 			let currentArray = adjustArray;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
-				currentObject = this._adjust(currentArray[i], currentObject);
+				let newObject = this._adjust(currentArray[i], currentObject);
+				if(!newObject) {
+					console.error("Adjust function didn't return anything.", currentArray[i], this);
+					continue;
+				}
+				currentObject = newObject;
 			}
 		}
 		else {

@@ -31,9 +31,12 @@ export default class CallFunctionCommand extends BaseCommand {
 			currentArray[i] = this.resolveSource(currentArray[i]);
 		}
 		
-		let returnValue = theFunction.apply(thisObject, theArguments);
+		if(theFunction instanceof Function) {
+			let returnValue = theFunction.apply(thisObject, theArguments);
+			return returnValue;
+		}
 		
-		return returnValue;
+		console.error(theFunction + " is not a function. Can't call.", thisObject, theArguments, this);
 	}
 	
 	static create(aThisObject = null, aFunction = null, aArguments = null) {

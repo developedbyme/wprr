@@ -6,6 +6,7 @@ import UseMarkupCreator from "wprr/markup/UseMarkupCreator";
 import ValidationFunctions from "wprr/elements/form/validation/ValidationFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
 import WpConditional from "wprr/routing/qualification/wp/WpConditional";
+import DataStorage from "wprr/utils/DataStorage";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -16,3 +17,4 @@ export {JsonLoader as JsonLoader};
 export {SyncronizedClock as SyncronizedClock};
 export {UseMarkupCreator as UseMarkupCreator};
 export {WpConditional as WpConditional};
+export {DataStorage as DataStorage};
