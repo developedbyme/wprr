@@ -73,7 +73,7 @@ export default class StoreController {
 		if(this._userData && this._userData.restNonce) {
 			headers["X-WP-Nonce"] = this._userData.restNonce;
 			options["credentials"] = "include";
-			options["headers"] = "headers";
+			options["headers"] = headers;
 		}
 		
 		let loadPromise = fetch(aPath, options);
