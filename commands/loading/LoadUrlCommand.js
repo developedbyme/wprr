@@ -62,12 +62,17 @@ export default class LoadUrlCommand extends BaseCommand {
 				return;
 		}
 		
+		let resolvedData = new Object();
+		for(let objectName in data) {
+			resolvedData[objectName] = this.resolveSource(data[objectName]);
+		}
+		
 		loader.setUrl(url);
 		loader.setMethod(method);
-		loader.setBody(data);
+		loader.setBody(resolvedData);
 		
 		for(let objectName in headers) {
-			loader.addHeader(objectName, headers[objectName]);
+			loader.addHeader(objectName, this.resolveSource(headers[objectName]));
 		}
 		
 		let successCommand = CallFunctionCommand.create(this, this.loaded, [SourceData.create("event", null)]).setTriggerElement(this._triggerElement);

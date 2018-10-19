@@ -61,4 +61,15 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static createRange(aStartValue, aEndValue, aStepValue = 1) {
+		
+		let returnArray = new Array();
+		
+		for(let i = aStartValue; i <= aEndValue; i += aStepValue) {
+			returnArray.push(i);
+		}
+		
+		return returnArray;
+	}
 }
