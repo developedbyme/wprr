@@ -5,6 +5,7 @@ import SyncronizedClock from "wprr/utils/timing/SyncronizedClock";
 import UseMarkupCreator from "wprr/markup/UseMarkupCreator";
 import ValidationFunctions from "wprr/elements/form/validation/ValidationFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
+import WpConditional from "wprr/routing/qualification/wp/WpConditional";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -14,3 +15,4 @@ export {ArrayFunctions as array};
 export {JsonLoader as JsonLoader};
 export {SyncronizedClock as SyncronizedClock};
 export {UseMarkupCreator as UseMarkupCreator};
+export {WpConditional as WpConditional};

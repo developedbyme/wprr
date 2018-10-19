@@ -10,6 +10,7 @@ import WpConditional from "wprr/routing/qualification/wp/WpConditional";
 import WpData from "wprr/routing/qualification/wp/WpData";
 import HasTerm from "wprr/routing/qualification/wp/HasTerm";
 import QualifyAll from "wprr/routing/qualification/QualifyAll";
+import AlwaysTrue from "wprr/routing/qualification/AlwaysTrue";
 
 // import RouteCreator from "wprr/routing/RouteCreator";
 export default class RouteCreator {
@@ -76,6 +77,12 @@ export default class RouteCreator {
 	
 	createArchiveRoute(aReactComponent) {
 		this.createRoute(WpConditional.create("is_archive"), aReactComponent);
+		
+		return this;
+	}
+	
+	createCatchAllRoute(aReactComponent) {
+		this.createRoute(AlwaysTrue.create(), aReactComponent);
 		
 		return this;
 	}
