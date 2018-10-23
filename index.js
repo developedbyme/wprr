@@ -6,11 +6,17 @@ import * as utils from "wprr/utils";
 import * as creators from "wprr/creators";
 import * as adjusts from "wprr/adjusts";
 
+let BaseObject = elements["WprrBaseObject"];
+let DataLoader = elements["WprrDataLoader"];
+
 //Elements
 {
 	for(let objectName in elements) {
 		Wprr.addAutonamedClasses(elements[objectName]);
 	}
+	
+	Wprr.addClass("BaseObject", BaseObject);
+	Wprr.addClass("DataLoader", DataLoader);
 }
 
 //Commands
@@ -43,6 +49,7 @@ import * as adjusts from "wprr/adjusts";
 
 export default Wprr;
 export * from "wprr/elements";
+export {BaseObject, DataLoader};
 export {commands as commands};
 export {utils as utils};
 export {creators as creators};

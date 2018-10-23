@@ -21,9 +21,7 @@ export {default as ValidatingForm} from "wprr/elements/form/ValidatingForm";
 export {default as ValidationBaseObject} from "wprr/elements/form/validation/ValidationBaseObject";
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";
 
-import {default as WprrLazyImage} from "wprr/elements/image/WprrLazyImage";
-import {default as LazyImage} from "wprr/elements/image/LazyImage";
-
+export {default as Adjust} from "wprr/manipulation/Adjust";
 export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
