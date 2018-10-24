@@ -105,9 +105,9 @@ export default class DbmJsonTranslationsEditor extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/dbmcontent/DbmJsonTranslationsEditor::_renderMainElement");
 		
-		let titleMarkup = <div>
-			<SourcedText text={SourceData.create("reference", "loop/item")} />
-		</div>;
+		let titleMarkup = React.createElement("div", {},
+			React.createElement(SourcedText, {text: SourceData.create("reference", "loop/item")})
+		);
 		
 		return React.createElement("wrapper", {},
 			React.createElement(Control, {adjust: [this._getTriggerUrlRequest()]},
