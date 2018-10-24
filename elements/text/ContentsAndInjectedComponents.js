@@ -102,7 +102,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 				catch(theError) {
 					console.error("Error when creating injected component");
 					console.log(dataString);
-					this._renderInjectComponents.push(<div ref={this._refCollector.getCallbackFunction(id)}>Error when creating injected component: {theError.message}<br />{theError.stack}</div>);
+					this._renderInjectComponents.push(React.createElement("div", {ref: this._refCollector.getCallbackFunction(id)}, "Error when creating injected component: " + theError.message + "<br />" + theError.stack ));
 				}
 			
 			
