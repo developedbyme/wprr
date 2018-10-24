@@ -20,6 +20,7 @@ export {default as FlexRow} from "wprr/elements/area/grid/FlexRow";
 export {default as ValidatingForm} from "wprr/elements/form/ValidatingForm";
 export {default as ValidationBaseObject} from "wprr/elements/form/validation/ValidationBaseObject";
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";
+export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 
 export {default as Adjust} from "wprr/manipulation/Adjust";
 export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";

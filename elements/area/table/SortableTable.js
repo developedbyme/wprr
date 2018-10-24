@@ -107,11 +107,11 @@ export default class SortableTable extends WprrBaseObject {
 			loopData.push({"index": i, "data": currentData, "selected": (this.state.selectedIndex === i), "sortOrder": this.state.sortOrder, "clickCallback": clickCallback});
 		}
 		
-		return <ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/head")}>
-			<ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/headRow")}>
-				<Loop input={loopData} contentCreator={SourceData.create("reference", "contentCreators/table/headRowItem")} />
-			</ContentCreatorSingleItem>
-		</ContentCreatorSingleItem>;
+		return React.createElement(ContentCreatorSingleItem, {contentCreator: SourceData.create("reference", "contentCreators/table/head")},
+			React.createElement(ContentCreatorSingleItem, {contentCreator: SourceData.create("reference", "contentCreators/table/headRow")},
+				React.createElement(Loop, {input: loopData, contentCreator: SourceData.create("reference", "contentCreators/table/headRowItem")})
+			)
+		);
 	}
 	
 	_numericCompareFunction(aA, aB) {
@@ -272,28 +272,26 @@ export default class SortableTable extends WprrBaseObject {
 				cellsLoopData.push({"index": j, "rowIndex": i, "data": currentData, "rowData": currentRow, "headerData": headerData[j]});
 			}
 			
-			let cellsLoop = <Loop input={cellsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRowItem")} />
+			let cellsLoop = React.createElement(Loop, {input: cellsLoopData, contentCreator: SourceData.create("reference", "contentCreators/table/bodyRowItem")});
 			
 			rowsLoopData.push({"data": currentRow, "children": cellsLoop});
 		}
 		
-		return <ReferenceInjection injectData={{
-			"tableHeaderData": headerData
-		}}>
-			<ContentCreatorSingleItem contentCreator={SourceData.create("reference", "contentCreators/table/body")}>
-				<Loop input={rowsLoopData} contentCreator={SourceData.create("reference", "contentCreators/table/bodyRow")} />
-			</ContentCreatorSingleItem>
-		</ReferenceInjection>;
+		return React.createElement(ReferenceInjection, {injectData: {"tableHeaderData": headerData}},
+			React.createElement(ContentCreatorSingleItem, {contentCreator: SourceData.create("reference", "contentCreators/table/body")},
+				React.createElement(Loop, {input: rowsLoopData, contentCreator: SourceData.create("reference", "contentCreators/table/bodyRow")})
+			)
+		);
 	}
 	
 	_renderMainElement() {
 		//console.log("wprr/elements/area/table/SortableTable::_renderMainElement");
 		
-		return <wrapper>
-			<ReferenceInjection injectData={this._injectData}>
-				{this._renderHeadElement()}
-				{this._renderBodyElement()}
-			</ReferenceInjection>
-		</wrapper>;
+		return React.createElement("wrapper", {},
+			React.createElement(ReferenceInjection, {injectData: this._injectData},
+				this._renderHeadElement(),
+				this._renderBodyElement()
+			)
+		);
 	}
 }
