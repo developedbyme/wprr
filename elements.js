@@ -24,6 +24,7 @@ export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
 
 export {default as Adjust} from "wprr/manipulation/Adjust";
+export {default as Control} from "wprr/manipulation/Control";
 export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";
 export {default as ContentCreatorSingleItem} from "wprr/elements/create/ContentCreatorSingleItem";
 

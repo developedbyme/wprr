@@ -64,13 +64,11 @@ export default class Control extends Adjust {
 	}
 	
 	_renderMainElement() {
-		let clonedElementes = super._renderMainElement();
+		let clonedElements = super._renderMainElement();
 		let injectData = new Object();
 		
 		this._getControlReferences(injectData);
 		
-		return <ReferenceInjection injectData={injectData}>
-			{clonedElementes}
-		</ReferenceInjection>
+		return React.createElement(ReferenceInjection, {injectData: injectData}, clonedElements);
 	}
 }
