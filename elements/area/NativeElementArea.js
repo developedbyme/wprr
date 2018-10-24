@@ -40,6 +40,6 @@ export default class NativeElementArea extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return <wrapper />;
+		return React.createElement("wrapper");
 	}
 }
