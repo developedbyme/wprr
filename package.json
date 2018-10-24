@@ -1,6 +1,6 @@
 {
   "name": "wprr",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "React router for WordPress",
   "repository": "https://github.com/developedbyme/wprr.git",
   "main": "index.js",
