@@ -109,24 +109,24 @@ export default class DbmJsonTranslationsEditor extends WprrBaseObject {
 			<SourcedText text={SourceData.create("reference", "loop/item")} />
 		</div>;
 		
-		return <wrapper>
-			<Control adjust={[this._getTriggerUrlRequest()]}>
-				<Control adjust={[this._submitFormEncoder]}>
-					<ValidatingForm>
-						<FlexRow className="halfs justify-between">
-							<SourcedText text="Text id" />
-							<Loop input={this._fileNames} loop={MarkupLoop.create()} markup={titleMarkup}>
-								<FlexRow />
-							</Loop>
-						</FlexRow>
-						<MultipleObjectsEditor objects={this._decodedFiles} />
-						<TriggerButton triggerName="form/submit">
-							<div>Save</div>
-						</TriggerButton>
-					</ValidatingForm>
-				</Control>
-			</Control>
-		</wrapper>;
+		return React.createElement("wrapper", {},
+			React.createElement(Control, {adjust: [this._getTriggerUrlRequest()]},
+				React.createElement(Control, {adjust: [this._submitFormEncoder]},
+					React.createElement(ValidatingForm, {},
+						React.createElement(FlexRow, {className: "halfs justify-between"},
+							React.createElement(SourcedText, {text: "Text id"}),
+							React.createElement(Loop, {input: this._fileNames, loop: MarkupLoop.create(), markup: titleMarkup},
+								React.createElement(FlexRow)
+							)
+						),
+						React.createElement(MultipleObjectsEditor, {objects: this._decodedFiles}),
+						React.createElement(TriggerButton, {triggerName: "form/submit"},
+							React.createElement("div", {}, "Save")
+						)
+					)
+				)
+			)
+		);
 	}
 
 }
