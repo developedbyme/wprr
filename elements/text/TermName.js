@@ -20,7 +20,7 @@ export default class TermName extends WprrBaseObject {
 		let termId = this.getSourcedProp("termId");
 		
 		return React.createElement(WprrDataLoader, {loadData: {"terms": "wprr/v1/taxonomy/" + taxonomy +"/terms"}},
-			React.createElement(Adjust, adjust: TermName._adjust_selectTerm, termId: termId},
+			React.createElement(Adjust, {adjust: TermName._adjust_selectTerm, termId: termId},
 				React.createElement(SourcedText, {text: SourceDataWithPath.create("prop", "term", "name")})
 			)
 		);
