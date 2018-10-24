@@ -62,11 +62,9 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		//METODO: make it work with direct injection
 		
-		return <div ref={this._refCollector.getCallbackFunction(aId)}>
-			<ContentCreatorSingleItem data={aData} contentCreator={SourceData.create("reference", "contentCreators/inject/" + aType)} />
-		</div>;
-		
-		//return <div ref={aId}>Injected {aId} {aType}</div>;
+		return React.createElement("div", {ref: this._refCollector.getCallbackFunction(aId)},
+			React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)})
+		);
 	}
 	
 	_createContent() {
@@ -121,16 +119,16 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 			if(currentElement.nodeType === 1 && currentElement.getAttribute("data-expanded-content") == "1") {
 				if(currentElements.length > 0) {
 					this._containers.push(
-						<div key={"container-" + this._containers.length} className="post-content centered-content-text">
-							<div className="wp-rich-text-formatting" ref={this._refCollector.getCallbackFunction("group-" + this._groups.length)} />
-						</div>
+						React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
+							React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+						)
 					);
 					this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
 					
 					currentElements = new Array();
 				}
 				
-				this._containers.push(<div key={"container-" + this._containers.length} ref={this._refCollector.getCallbackFunction("group-" + this._groups.length)} />);
+				this._containers.push(React.createElement("div", {key: "container-" + this._containers.length, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)}));
 				this._groups.push({"id": "group-" + this._groups.length, "children": [currentElement]});
 			}
 			else {
@@ -140,9 +138,9 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		if(currentElements.length > 0) {
 			this._containers.push(
-				<div key={"container-" + this._containers.length} className="post-content centered-content-text">
-					<div className="wp-rich-text-formatting" ref={this._refCollector.getCallbackFunction("group-" + this._groups.length)} />
-				</div>
+				React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
+					React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+				)
 			);
 			this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
 		}
@@ -157,7 +155,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 
 	_renderMainElement() {
-		console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
+		//console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
 		
 		let containers = this._getContainers();
 		
