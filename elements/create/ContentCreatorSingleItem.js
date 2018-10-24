@@ -25,7 +25,7 @@ export default class ContentCreatorSingleItem extends ManipulationBaseObject {
 		
 		if(!contentCreator) {
 			console.error("Content creator is not set.", this);
-			return <div>Content creator is not set</div>;
+			return React.createElement("div", {}, "Content creator is not set");
 		}
 		
 		if(!data) {
@@ -37,7 +37,7 @@ export default class ContentCreatorSingleItem extends ManipulationBaseObject {
 		
 		if(returnArray.length === 0) {
 			console.error("Content creator didn't return any node.", this);
-			return [<div>Content creator did not return any object</div>];
+			return [React.createElement("div", {}, "Content creator did not return any object")];
 		}
 		
 		return returnArray;
