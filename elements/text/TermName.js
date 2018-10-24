@@ -19,13 +19,11 @@ export default class TermName extends WprrBaseObject {
 		let taxonomy = this.getSourcedPropWithDefault("taxonomy", "category");
 		let termId = this.getSourcedProp("termId");
 		
-		return <WprrDataLoader loadData={{
-			"terms": "wprr/v1/taxonomy/" + taxonomy +"/terms",
-		}}>
-			<Adjust adjust={TermName._adjust_selectTerm} termId={termId}>
-				<SourcedText text={SourceDataWithPath.create("prop", "term", "name")} />
-			</Adjust>
-		</WprrDataLoader>;
+		return React.createElement(WprrDataLoader, {loadData: {"terms": "wprr/v1/taxonomy/" + taxonomy +"/terms"}},
+			React.createElement(Adjust, adjust: TermName._adjust_selectTerm, termId: termId},
+				React.createElement(SourcedText, {text: SourceDataWithPath.create("prop", "term", "name")})
+			)
+		);
 	}
 	
 	static _adjust_selectTerm(aReturnObject, aManipulationObject) {
