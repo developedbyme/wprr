@@ -181,54 +181,52 @@ export default class MultipleObjectsEditor extends ManipulationBaseObject {
 		injectData["objectEditor/filePrefixes"] = [0, 1]; //METODO: set dynamic length
 		injectData["objectEditor/externalStorage"] = this._externalStorage;
 		
-		return <ReferenceInjection injectData={injectData}>
-			<Adjust adjust={SetDefaultProps.create({"markup": MultipleObjectsEditor.DEFAULT_ROW_MARKUP})}>
-				<ReferenceInjection injectData={{
-					"objectEditor/loopMarkup": SourceData.create("prop", "markup"),
-				}}>
-					<Loop input={mergedRows} loop={MarkupLoop.create()} />
-				</ReferenceInjection>
-			</Adjust>
-		</ReferenceInjection>
+		return React.createElement(ReferenceInjection, {injectData: injectData},
+			React.createElement(Adjust, {adjust: SetDefaultProps.create({"markup": MultipleObjectsEditor.DEFAULT_ROW_MARKUP})},
+				React.createElement(ReferenceInjection, {injectData: {"objectEditor/loopMarkup": SourceData.create("prop", "markup")}},
+					React.createElement(Loop, {input: mergedRows, loop: MarkupLoop.create()})
+				)
+			)
+		);
 	}
 }
 
-MultipleObjectsEditor.DEFAULT_TEXT_FIELD_MARKUP = <Adjust adjust={[Combine.create([SourceData.create("reference", "loop/fileIndex/item"),".",SourceDataWithPath.create("reference", "loop/item", "name")], "fieldName"), JoinArray.create(SourceData.create("prop", "fieldName"), "", "valueName")]}>
-	<EditableProps editableProps={SourceData.create("prop", "valueName")} externalStorage={SourceData.create("reference", "objectEditor/externalStorage")}>
-		<FormField type="text" valueName={SourceDataWithPath.create("reference", "loop/item", "name")} />
-	</EditableProps>
-</Adjust>;
+MultipleObjectsEditor.DEFAULT_TEXT_FIELD_MARKUP = React.createElement(Adjust, {adjust: [Combine.create([SourceData.create("reference", "loop/fileIndex/item"),".",SourceDataWithPath.create("reference", "loop/item", "name")], "fieldName"), JoinArray.create(SourceData.create("prop", "fieldName"), "", "valueName")]},
+React.createElement(EditableProps, {editableProps: SourceData.create("prop", "valueName"), externalStorage: SourceData.create("reference", "objectEditor/externalStorage")},
+		React.createElement(FormField, {type: "text", valueName: SourceDataWithPath.create("reference", "loop/item", "name")})
+	)
+);
 
-MultipleObjectsEditor.DEFAULT_ROW_MARKUP = <SelectSection selectedSections={SourceDataWithPath.create("reference", "loop/item", "type")}>
-	<div data-section-name="string">
-		<FlexRow className="halfs justify-between">
-			<SourcedText text={SourceDataWithPath.create("reference", "loop/item", "name")} />
-			<Loop loopName="fileIndex" input={SourceData.create("reference", "objectEditor/filePrefixes")} loop={MarkupLoop.create()} markup={MultipleObjectsEditor.DEFAULT_TEXT_FIELD_MARKUP}>
-				<FlexRow />
-			</Loop>
-		</FlexRow>
-	</div>
-	<div data-section-name="object">
-		<div className="">
-			<SourcedText text={SourceDataWithPath.create("reference", "loop/item", "name")} />
-			<hr />
-			<Loop input={SourceDataWithPath.create("reference", "loop/item", "children")} loop={MarkupLoop.create()} markup={SourceData.create("reference", "objectEditor/loopMarkup")} />
-		</div>
-	</div>
-	<div data-section-name="array">
-		<div className="">
-			<SourcedText text={SourceDataWithPath.create("reference", "loop/item", "name")} />
-			<hr />
-			<Loop input={SourceDataWithPath.create("reference", "loop/item", "children")} loop={MarkupLoop.create()} markup={SourceData.create("reference", "objectEditor/loopMarkup")} />
-			<TriggerButton triggerName="objectEditor/addRow" triggerData={SourceDataWithPath.create("reference", "loop/item", "name")}>
-				<div>Add row</div>
-			</TriggerButton>
-		</div>
-	</div>
-	<div data-section-name="conflict">
-		<div className="">
-			<SourcedText text={SourceDataWithPath.create("reference", "loop/item", "name")} />
-			<div>Conflicting type</div>
-		</div>
-	</div>
-</SelectSection>;
+MultipleObjectsEditor.DEFAULT_ROW_MARKUP = React.createElement(SelectSection, {selectedSections: SourceDataWithPath.create("reference", "loop/item", "type")},
+	React.createElement("div", {"data-section-name": "string"}, 
+		React.createElement(FlexRow, {className: "halfs justify-between"},
+			React.createElement(SourcedText, {text: SourceDataWithPath.create("reference", "loop/item", "name")}),
+			React.createElement(Loop, {loopName: "fileIndex", input: SourceData.create("reference", "objectEditor/filePrefixes"), loop: MarkupLoop.create(), markup: MultipleObjectsEditor.DEFAULT_TEXT_FIELD_MARKUP},
+				React.createElement(FlexRow)
+			)
+		)
+	),
+	React.createElement("div", {"data-section-name": "object"},
+		React.createElement("div", {},
+			React.createElement(SourcedText, {text: SourceDataWithPath.create("reference", "loop/item", "name")}),
+			React.createElement("hr"),
+			React.createElement(Loop, {input: SourceDataWithPath.create("reference", "loop/item", "children"), loop: MarkupLoop.create(), markup: SourceData.create("reference", "objectEditor/loopMarkup")})
+		)
+	),
+	React.createElement("div", {"data-section-name": "array"},
+		React.createElement("div", {},
+			React.createElement(SourcedText, {text: SourceDataWithPath.create("reference", "loop/item", "name")}),
+			React.createElement("hr"),
+			React.createElement(Loop, {input: SourceDataWithPath.create("reference", "loop/item", "children"), loop: MarkupLoop.create(), markup: SourceData.create("reference", "objectEditor/loopMarkup")}),
+			React.createElement(TriggerButton, {triggerName: "objectEditor/addRow", triggerData: SourceDataWithPath.create("reference", "loop/item", "name")}, 
+				React.createElement("div", {}, "Add row")
+			)
+		)
+	),
+	React.createElement("div", {"data-section-name": "conflict"},
+		React.createElement("div", {},
+			React.createElement(SourcedText, {text: SourceDataWithPath.create("reference", "loop/item", "name")}),
+			React.createElement("div", {}, "Conflicting type")
+		)
+	)
+);

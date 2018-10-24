@@ -159,13 +159,13 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	_renderMainElement() {
 		console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
 		
-		var containers = this._getContainers();
+		let containers = this._getContainers();
 		
-		return <wrapper>
-			{containers}
-			<div className="wprr-inject-components">
-				{this._renderInjectComponents}
-			</div>
-		</wrapper>;
+		return React.createElement("wrapper", {},
+			containers,
+			React.createElement("div", {className: "wprr-inject-components"},
+				this._renderInjectComponents
+			)
+		);
 	}
 }
