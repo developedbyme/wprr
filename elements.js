@@ -37,6 +37,7 @@ export {default as MarkupPlacement} from "wprr/markup/MarkupPlacement";
 export {default as UseMarkup} from "wprr/markup/UseMarkup";
 
 export {default as Loop} from "wprr/elements/create/Loop";
+export {default as TriggerHandler} from "wprr/reference/TriggerHandler";
 
 export {default as WprrLazyImage} from "wprr/elements/image/WprrLazyImage";
 export {default as LazyImage} from "wprr/elements/image/LazyImage";

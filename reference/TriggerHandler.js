@@ -42,6 +42,6 @@ export default class TriggerHandler extends ManipulationBaseObject {
 			injectData["trigger/" + objectName] = this;
 		}
 		
-		return <ReferenceInjection injectData={injectData}>{super._renderClonedElement()}</ReferenceInjection>;
+		return React.createElement(ReferenceInjection, {injectData: injectData}, super._renderClonedElement());
 	}
 }
