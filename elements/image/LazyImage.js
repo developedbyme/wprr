@@ -21,16 +21,22 @@ export default class LazyImage extends WprrBaseObject {
 		//console.log("_getMainElementProps");
 		//console.log(this.state["imageStatus"], this.state["renderedImage"]);
 		
-		var returnObject = super._getMainElementProps();
-		if(!returnObject["style"]) {
-			returnObject["style"] = new Object();
-		}
-		if(!returnObject["style"]["backgroundImage"]) {
-			returnObject["style"]["backgroundImage"] = "none";
+		let returnObject = super._getMainElementProps();
+		let elementType = this._getMainElementType();
+		
+		if(elementType === "img") {
+			if(!returnObject["style"]) {
+				returnObject["style"] = new Object();
+			}
+			if(!returnObject["style"]["backgroundImage"]) {
+				returnObject["style"]["backgroundImage"] = "none";
+			}
 		}
 		
 		if(this.state["imageStatus"] === 1) {
-			if(this._mainElementType === "img") {
+			
+			
+			if(elementType === "img") {
 				returnObject["src"] = this.state["renderedImage"];
 			}
 			else {
@@ -55,13 +61,20 @@ export default class LazyImage extends WprrBaseObject {
 	componentDidMount() {
 		//console.log("wprr/elements/image/OaBaseComponent.componentDidMount");
 		
-		var imageData = this._getImageData();
-		
-		//METODO: change window.wprr to reference
+		let imageData = this._getImageData();
 		
 		if(imageData) {
-			this._imageUpdater = ReactImageUpdater.create(this, ReactDOM.findDOMNode(this), imageData, this._getSettings(), window.wprr.imageLoaderManager);
-			window.wprr.imageLoaderManager.addUpdater(this._imageUpdater);
+			let imageLoaderManager = this.getReference("wprr/imageLoaderManager");
+			
+			console.log(imageLoaderManager);
+			
+			if(imageLoaderManager) {
+				this._imageUpdater = ReactImageUpdater.create(this, ReactDOM.findDOMNode(this), imageData, this._getSettings(), imageLoaderManager);
+				imageLoaderManager.addUpdater(this._imageUpdater);
+			}
+			else {
+				console.error("wprr/imageLoaderManager doesn't exist", this);
+			}
 		}
 		else {
 			console.warn("Image doesn't data", this);
@@ -73,8 +86,12 @@ export default class LazyImage extends WprrBaseObject {
 	componentWillUnmount() {
 		//console.log("wprr/elements/image/OaBaseComponent.componentWillUnmount");
 		
-		window.wprr.imageLoaderManager.removeUpdater(this._imageUpdater);
-		this._imageUpdater = null;
+		let imageLoaderManager = this.getReference("wprr/imageLoaderManager");
+		
+		if(imageLoaderManager) {
+			imageLoaderManager.removeUpdater(this._imageUpdater);
+			this._imageUpdater = null;
+		}
 		
 		super.componentWillUnmount();
 	}

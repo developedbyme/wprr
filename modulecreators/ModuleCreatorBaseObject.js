@@ -161,7 +161,7 @@ export default class ModuleCreatorBaseObject {
 		//METODO: change this to a local image loader
 		if(this._wprrInstance && this._wprrInstance.imageLoaderManager) {
 			this._wprrInstance.imageLoaderManager.setNamedSizes(aData.imageSizes);
-			this._referenceHolder.addObject("wprr/imageLoaderManager", this._wprrInstance);
+			this._referenceHolder.addObject("wprr/imageLoaderManager", this._wprrInstance.imageLoaderManager);
 		}
 	}
 	

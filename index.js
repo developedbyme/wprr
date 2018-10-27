@@ -6,8 +6,9 @@ import * as utils from "wprr/utils";
 import * as creators from "wprr/creators";
 import * as adjusts from "wprr/adjusts";
 
-let BaseObject = elements["WprrBaseObject"];
-let DataLoader = elements["WprrDataLoader"];
+let BaseObject = elements.WprrBaseObject;
+let DataLoader = elements.WprrDataLoader;
+let Validation = elements.ValidationBaseObject;
 
 //Elements
 {
@@ -17,6 +18,7 @@ let DataLoader = elements["WprrDataLoader"];
 	
 	Wprr.addClass("BaseObject", BaseObject);
 	Wprr.addClass("DataLoader", DataLoader);
+	Wprr.addClass("Validation", Validation);
 }
 
 //Commands
@@ -49,7 +51,7 @@ let DataLoader = elements["WprrDataLoader"];
 
 export default Wprr;
 export * from "wprr/elements";
-export {BaseObject, DataLoader};
+export {BaseObject, DataLoader, Validation};
 export {commands as commands};
 export {utils as utils};
 export {creators as creators};

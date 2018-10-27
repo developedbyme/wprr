@@ -11,6 +11,7 @@ export {default as ReferenceInjection} from "wprr/reference/ReferenceInjection";
 
 export {default as SourcedText} from "wprr/elements/text/SourcedText";
 export {default as TermName} from "wprr/elements/text/TermName";
+export {default as LanguageName} from "wprr/elements/text/LanguageName";
 export {default as ContentsAndInjectedComponents} from "wprr/elements/text/ContentsAndInjectedComponents";
 
 export {default as RefGroup} from "wprr/reference/RefGroup";

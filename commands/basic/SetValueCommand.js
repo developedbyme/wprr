@@ -27,7 +27,17 @@ export default class SetValueCommand extends BaseCommand {
 		let value = this.getInput("value");
 		let additionalData = this.getInput("additionalData");
 		
-		element.updateValue(valueName, value, additionalData);
+		if(element) {
+			if(element.updateValue) {
+				element.updateValue(valueName, value, additionalData);
+			}
+			else {
+				console.error("Element doesn't have an updateValue function, can't set value " + valueName + " to " + value, element, this);
+			}
+		}
+		else {
+			console.error("Element is not set, can't set value " + valueName + " to " + value, this);
+		}
 	}
 	
 	static create(aElement = null, aValueName = null, aValue = null, aAditionalData = null) {

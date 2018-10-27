@@ -101,8 +101,9 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_getMainElementType() {
-		if(this.props.overrideMainElementType) {
-			return this.props.overrideMainElementType;
+		let overrideType = this.getSourcedProp("overrideMainElementType");
+		if(overrideType) {
+			return overrideType;
 		}
 		return this._mainElementType;
 	}

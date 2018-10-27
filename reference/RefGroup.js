@@ -33,6 +33,16 @@ export default class RefGroup extends ManipulationBaseObject {
 		}
 	}
 	
+	getRef(aName) {
+		let currentRef = this.state.refs[aName];
+		if(currentRef) {
+			console.log(">>>>>>>>>>", currentRef);
+			return currentRef;
+		}
+		console.warn("Group doesn't have ref " + aName);
+		return null;
+	}
+	
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/reference/RefGroup::_manipulateProps");
 		
