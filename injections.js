@@ -1,0 +1,1 @@
+export {default as InjectWpLoginForm} from "wprr/injections/wp/InjectWpLoginForm";

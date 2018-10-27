@@ -1,6 +1,7 @@
 import Wprr from "wprr/Wprr";
 
 import * as elements from "wprr/elements";
+import * as injections from "wprr/injections";
 import * as commands from "wprr/commands";
 import * as utils from "wprr/utils";
 import * as creators from "wprr/creators";
@@ -19,6 +20,13 @@ let Validation = elements.ValidationBaseObject;
 	Wprr.addClass("BaseObject", BaseObject);
 	Wprr.addClass("DataLoader", DataLoader);
 	Wprr.addClass("Validation", Validation);
+}
+
+//Injections
+{
+	for(let objectName in injections) {
+		Wprr.addAutonamedClasses(injections[objectName]);
+	}
 }
 
 //Commands
