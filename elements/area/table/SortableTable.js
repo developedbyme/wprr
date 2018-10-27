@@ -179,6 +179,11 @@ export default class SortableTable extends WprrBaseObject {
 		
 		let headerData = this.getSourcedProp("headerData");
 		
+		if(!headerData) {
+			console.warn("Table is missing headerData. Can't sort.", this);
+			return;
+		}
+		
 		let currentIndex = this.state["selectedIndex"];
 		let currentHeader = headerData[currentIndex];
 		
@@ -255,6 +260,11 @@ export default class SortableTable extends WprrBaseObject {
 		//console.log("wprr/elements/area/table/SortableTable::_renderBodyElement");
 		
 		let headerData = this.getSourcedProp("headerData");
+		
+		if(!headerData) {
+			console.error("Table doesn't have any headerData.", this);
+			return React.createElement("div", {"className": "react-error wprr-error"}, "Table doesn't have any headerData");
+		}
 		
 		let rowsLoopData = new Array();
 		
