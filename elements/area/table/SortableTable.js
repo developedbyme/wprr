@@ -8,6 +8,7 @@ import SourceData from "wprr/reference/SourceData";
 import Loop from "wprr/elements/create/Loop";
 import Adjust from "wprr/manipulation/Adjust";
 import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
+import MarkupLoop from "wprr/manipulation/adjustfunctions/loop/MarkupLoop";
 
 //import SortableTable from "wprr/elements/area/table/SortableTable";
 export default class SortableTable extends WprrBaseObject {
@@ -282,7 +283,12 @@ export default class SortableTable extends WprrBaseObject {
 				cellsLoopData.push({"index": j, "rowIndex": i, "data": currentData, "rowData": currentRow, "headerData": headerData[j]});
 			}
 			
-			let cellsLoop = React.createElement(Loop, {input: cellsLoopData, contentCreator: SourceData.create("reference", "contentCreators/table/bodyRowItem")});
+			let bodyRowItemMarkup = this.getSourcedProp("bodyRowItemMarkup");
+			if(!bodyRowItemMarkup) {
+				bodyRowItemMarkup = React.createElement(ContentCreatorSingleItem, {"contentCreator": SourceData.create("reference", "contentCreators/table/bodyRowItem"), "data": SourceData.create("reference", "loop/item")});
+			}
+			
+			let cellsLoop = React.createElement(Loop, {loop: MarkupLoop.create(cellsLoopData, bodyRowItemMarkup)});
 			
 			rowsLoopData.push({"data": currentRow, "children": cellsLoop});
 		}
