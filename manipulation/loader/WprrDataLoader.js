@@ -2,6 +2,8 @@ import React from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+
 //import WprrDataLoader from "wprr/manipulation/loader/WprrDataLoader";
 export default class WprrDataLoader extends ManipulationBaseObject {
 
@@ -93,6 +95,14 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		
 		if(hasChange) {
+			if(newStatus === 1) {
+				let commands = this.getSourcedProp("loadedCommands");
+		
+				if(commands) {
+					CommandPerformer.perform(commands, newLoadDataState, this);
+				}
+			}
+			
 			this.setState({"status": newStatus, "loadData": newLoadDataState});
 		}
 	}

@@ -93,6 +93,15 @@ export default class EditableProps extends ManipulationBaseObject {
 		return returnObject;
 	}
 	
+	getValue(aName) {
+		if(this.state[aName] !== undefined) {
+			return this.state[aName];
+		}
+		else {
+			return this.props[aName];
+		}
+	}
+	
 	getReferences() {
 		return this._references;
 	}
