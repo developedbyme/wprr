@@ -3,6 +3,7 @@ import LoadUrlCommand from "wprr/commands/loading/LoadUrlCommand";
 import SetValueCommand from "wprr/commands/basic/SetValueCommand";
 import ToggleValueCommand from "wprr/commands/basic/ToggleValueCommand";
 import PerformSelectedCommands from "wprr/commands/logic/PerformSelectedCommands";
+import SetStateValueCommand from "wprr/commands/basic/SetStateValueCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -15,5 +16,6 @@ export {getJson, postJson};
 let setValue = SetValueCommand.create;
 let toggleValue = ToggleValueCommand.create;
 let performSelectedCommands = PerformSelectedCommands.create;
+let setStateValue = SetStateValueCommand.create;
 
-export {setValue, toggleValue, performSelectedCommands};
+export {setValue, toggleValue, performSelectedCommands, setStateValue};

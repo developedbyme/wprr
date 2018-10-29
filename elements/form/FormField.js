@@ -4,6 +4,7 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
 import EditableProps from "wprr/manipulation/EditableProps";
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 // import FormField from "wprr/elements/form/FormField";
 export default class FormField extends WprrBaseObject {
@@ -31,7 +32,17 @@ export default class FormField extends WprrBaseObject {
 		let additionalData = this.getSourcedProp("additionalData");
 		let valueName = this.getSourcedProp("valueName");
 		
-		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.value, additionalData);
+		let newValue = aEvent.target.value;
+		
+		if(valueName) {
+			this.getReference("value/" + valueName).updateValue(valueName, newValue, additionalData);
+		}
+		
+		let commands = this.getSourcedProp("changeCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, newValue, this);
+		}
 	}
 	
 	_validate(aType) {
@@ -45,12 +56,24 @@ export default class FormField extends WprrBaseObject {
 		//console.log("wprr/elements/form/FormField::_callback_blur");
 		
 		this._validate("blur");
+		
+		let commands = this.getSourcedProp("blurCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, this, this);
+		}
 	}
 	
 	_callback_focus(aEvent) {
 		//console.log("wprr/elements/form/FormField::_callback_focus");
 		
 		this._validate("focus");
+		
+		let commands = this.getSourcedProp("focusCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, this, this);
+		}
 	}
 	
 	_getMainElementProps() {

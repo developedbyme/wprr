@@ -49,11 +49,16 @@ export default class OptionsFromTerms extends AdjustFunction {
 		
 		let returnArray = new Array();
 		
-		let currentArray = terms;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentItem = currentArray[i];
-			returnArray.push({"value": currentItem["id"], "label": currentItem["name"]});
+		if(terms) {
+			let currentArray = terms;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				returnArray.push({"value": currentItem["id"], "label": currentItem["name"]});
+			}
+		}
+		else {
+			console.error("Terms are not set.", terms, this);
 		}
 		
 		aData[outputName] = returnArray;

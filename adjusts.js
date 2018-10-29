@@ -5,6 +5,8 @@ import AddToArray from "wprr/manipulation/adjustfunctions/logic/AddToArray";
 import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
 import ResolveSources from "wprr/manipulation/adjustfunctions/ResolveSources";
 import MarkupLoop from "wprr/manipulation/adjustfunctions/loop/MarkupLoop";
+import OptionsFromTerms from "wprr/manipulation/adjustfunctions/wp/OptionsFromTerms";
+import RelationTerms from "wprr/manipulation/adjustfunctions/wp/dbmcontent/RelationTerms";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -20,3 +22,7 @@ let resolveSources = ResolveSources.create;
 export {resolveSources};
 let markupLoop = MarkupLoop.create;
 export {markupLoop};
+let optionsFromTerms = OptionsFromTerms.create;
+export {optionsFromTerms};
+let relationTerms = RelationTerms.create;
+export {relationTerms};
