@@ -125,9 +125,14 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_copyPassthroughProps(aReturnObject) {
-		for(var objectName in this.props) {
+		for(let objectName in this.props) {
 			//MENOTE: copy all data attributes
 			if(objectName.indexOf("data-") === 0) {
+				aReturnObject[objectName] = this.props[objectName];
+			}
+			
+			//MENOTE: copy all data attributes
+			if(objectName.indexOf("on") === 0) {
 				aReturnObject[objectName] = this.props[objectName];
 			}
 			
