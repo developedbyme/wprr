@@ -131,7 +131,7 @@ export default class WprrBaseObject extends React.Component {
 				aReturnObject[objectName] = this.props[objectName];
 			}
 			
-			//MENOTE: copy all data attributes
+			//MENOTE: copy all callbacks
 			if(objectName.indexOf("on") === 0) {
 				aReturnObject[objectName] = this.props[objectName];
 			}
