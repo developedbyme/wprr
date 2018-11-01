@@ -10,6 +10,7 @@ import * as adjusts from "wprr/adjusts";
 let BaseObject = elements.WprrBaseObject;
 let DataLoader = elements.WprrDataLoader;
 let Validation = elements.ValidationBaseObject;
+let AddProps = elements.ManipulationBaseObject;
 
 //Elements
 {
@@ -20,6 +21,7 @@ let Validation = elements.ValidationBaseObject;
 	Wprr.addClass("BaseObject", BaseObject);
 	Wprr.addClass("DataLoader", DataLoader);
 	Wprr.addClass("Validation", Validation);
+	Wprr.addClass("AddProps", AddProps);
 }
 
 //Injections
@@ -59,7 +61,7 @@ let Validation = elements.ValidationBaseObject;
 
 export default Wprr;
 export * from "wprr/elements";
-export {BaseObject, DataLoader, Validation};
+export {BaseObject, DataLoader, Validation, AddProps};
 export {commands as commands};
 export {utils as utils};
 export {creators as creators};

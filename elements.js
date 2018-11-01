@@ -10,6 +10,8 @@ export {default as PartRenderFunction} from "wprr/elements/create/PartRenderFunc
 export {default as ReferenceInjection} from "wprr/reference/ReferenceInjection";
 
 export {default as SourcedText} from "wprr/elements/text/SourcedText";
+export {default as DateDisplay} from "wprr/elements/text/DateDisplay";
+export {default as RelativeDateDisplay} from "wprr/elements/text/RelativeDateDisplay";
 export {default as TermName} from "wprr/elements/text/TermName";
 export {default as LanguageName} from "wprr/elements/text/LanguageName";
 export {default as ContentsAndInjectedComponents} from "wprr/elements/text/ContentsAndInjectedComponents";
@@ -26,6 +28,7 @@ export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseEx
 export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
 
+export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
 export {default as Control} from "wprr/manipulation/Control";
 export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";
