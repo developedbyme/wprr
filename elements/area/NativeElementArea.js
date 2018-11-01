@@ -35,7 +35,31 @@ export default class NativeElementArea extends WprrBaseObject {
 			domNode.appendChild(this._element);
 		}
 		
-		this._updateRender();
+		try {
+			this._updateRender();
+		}
+		catch(theError) {
+			let errorProperties = new Array();
+			if(theError.fileName) {
+				errorProperties.push("fileName: " + theError.fileName);
+			}
+			if(theError.sourceURL) {
+				errorProperties.push("sourceURL: " + theError.sourceURL);
+			}
+			if(theError.lineNumber) {
+				errorProperties.push("lineNumber: " + theError.lineNumber);
+			}
+			if(theError.line) {
+				errorProperties.push("lineNumber: " + theError.line);
+			}
+			if(theError.stack) {
+				errorProperties.push("stack: " + theError.stack);
+			}
+	
+			let errorString = theError.message +" (" + errorProperties.join(", ") + ")";
+	
+			console.error(this, theError, errorString);
+		}
 	}
 	
 	_renderMainElement() {
