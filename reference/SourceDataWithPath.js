@@ -28,12 +28,24 @@ export default class SourceDataWithPath extends SourceData {
 	
 	getSource(aFromObject) {
 		let sourceData = super.getSource(aFromObject);
-		return objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		let returnData = objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		
+		if(returnData instanceof SourceData) {
+			returnData = returnData.getSource(aFromObject);
+		}
+		return returnData;
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		let sourceData = super.getSourceInStateChange(aFromObject, aNewPropsAndState);
-		return objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		
+		let returnData = objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		
+		if(returnData instanceof SourceData) {
+			returnData = returnData.getSourceInStateChange(aFromObject, aNewPropsAndState);
+		}
+		
+		return returnData;
 	}
 	
 	static create(aType, aPath, aDeepPath) {
