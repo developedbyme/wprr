@@ -22,6 +22,19 @@ export default class DbmContentFunctions  {
 		return returnArray;
 	}
 	
+	static getSingleRelation(aPostData, aRelationType) {
+		let relations = DbmContentFunctions.getRelations(aPostData, aRelationType);
+		if(relations.length > 0) {
+			if(relations.length > 1) {
+				console.warn("There are more than 1 relations for " + aRelationType + ". Selecting first.", aPostData);
+			}
+			return relations[0];
+		}
+		
+		console.warn("There are no relations for " + aRelationType + ".", aPostData);
+		return null;
+	}
+	
 	static _source_relationSlugs(aType, aPath, aFromObject, aPropsAndState) {
 		const references = aFromObject.getReferences();
 		let postData = references.getObject("wprr/postData");

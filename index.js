@@ -6,6 +6,7 @@ import * as commands from "wprr/commands";
 import * as utils from "wprr/utils";
 import * as creators from "wprr/creators";
 import * as adjusts from "wprr/adjusts";
+import * as qualifications from "wprr/qualifications";
 
 let BaseObject = elements.WprrBaseObject;
 let DataLoader = elements.WprrDataLoader;
@@ -59,6 +60,13 @@ let AddProps = elements.ManipulationBaseObject;
 	}
 }
 
+//Qualifications
+{
+	for(let objectName in qualifications) {
+		Wprr.addQualification(objectName, qualifications[objectName]);
+	}
+}
+
 export default Wprr;
 export * from "wprr/elements";
 export {BaseObject, DataLoader, Validation, AddProps};
@@ -66,3 +74,4 @@ export {commands as commands};
 export {utils as utils};
 export {creators as creators};
 export {adjusts as adjusts};
+export {qualifications as qualifications};

@@ -111,6 +111,10 @@ export default class Wprr {
 		Wprr.adjusts[aName] = aCreateFunction;
 	}
 	
+	static addQualification(aName, aCreateFunction) {
+		Wprr.qualifications[aName] = aCreateFunction;
+	}
+	
 	static source(aType, aData, aDeepPath = null) {
 		if(aDeepPath !== null) {
 			return SourceDataWithPath.create(aType, aData, aDeepPath);
@@ -139,3 +143,4 @@ Wprr.commands = new Object();
 Wprr.creators = new Object();
 Wprr.utils = new Object();
 Wprr.adjusts = new Object();
+Wprr.qualifications = new Object();

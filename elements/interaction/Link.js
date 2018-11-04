@@ -12,14 +12,21 @@ export default class Link extends WprrBaseObject {
 	}
 	
 	_copyPassthroughProps(aReturnObject) {
-		if(this.props.href) {
-			aReturnObject["href"] = this.getSourcedProp("href");
+		
+		super._copyPassthroughProps(aReturnObject);
+		
+		let href = this.getSourcedProp("href");
+		if(href) {
+			let prefix = this.getSourcedProp("prefix");
+			if(prefix) {
+				href = prefix + href;
+			}
+			aReturnObject["href"] = href;
 		}
-		if(this.props.target) {
-			aReturnObject["target"] = this.getSourcedProp("target");
-		}
-		if(this.props.onClick) {
-			aReturnObject["onClick"] = this.getSourcedProp("onClick");
+		
+		let target = this.getSourcedProp("target");
+		if(target) {
+			aReturnObject["target"] = target;
 		}
 	}
 	
