@@ -14,3 +14,4 @@ export {default as UseMarkupCreator} from "wprr/markup/UseMarkupCreator";
 export {default as WpConditional} from "wprr/routing/qualification/wp/WpConditional";
 export {default as DataStorage} from "wprr/utils/DataStorage";
 export {default as RefCollector} from "wprr/utils/RefCollector";
+export {default as ReduxDataStorage} from "wprr/utils/ReduxDataStorage";

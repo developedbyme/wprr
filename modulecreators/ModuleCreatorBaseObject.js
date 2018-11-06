@@ -75,10 +75,12 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_addReducers() {
-		this._storeController.addDynamicReducer(combineReducers({
-			"mRouter": this._storeController.reduce,
-			"settings": this._storeController.reduceSettings
-		}));
+		
+		let storeController = this._storeController;
+		
+		storeController.addDynamicReducer(storeController.createLocalReducer("mRouter", storeController.reduce));
+		storeController.addDynamicReducer(storeController.createLocalReducer("settings", storeController.reduceSettings));
+		storeController.addDynamicReducer(storeController.createLocalReducer("globalVariables", storeController.reduceGlobalVariables));
 	}
 	
 	_createReduxStore(aConfigurationData) {
@@ -132,6 +134,7 @@ export default class ModuleCreatorBaseObject {
 		
 		this._referenceHolder.addObject("redux/store", this._store);
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+		this._referenceHolder.addObject("redux/store/wprrController", this._storeController);
 		
 		this._referenceHolder.addObject("wprr/userData", aData.userData);
 		this._referenceHolder.addObject("wprr/settings", aData.settings);

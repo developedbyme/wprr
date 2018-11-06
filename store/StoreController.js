@@ -1,3 +1,7 @@
+import objectPath from "object-path";
+
+import JsonLoader from "wprr/utils/loading/JsonLoader";
+
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 
 // import StoreController from "wprr/store/StoreController";
@@ -40,6 +44,10 @@ export default class StoreController {
 		//this._performDispatch("wprr_StoreController_setup", null, null);
 		
 		return  this;
+	}
+	
+	getStore() {
+		return this._store;
 	}
 	
 	setUser(aUserData) {
@@ -245,6 +253,13 @@ export default class StoreController {
 		this._performDispatch(StoreController.DATA_ADJUSTMENT, aId, aData);
 	}
 	
+	setGlobalVariable(aPath, aValue) {
+		//console.log("setGlobalVariable");
+		//console.log(aPath, aValue);
+		
+		this._performDispatch(StoreController.SET_GLOBAL_VARIABLE, aPath, aValue);
+	}
+	
 	postWithAdjustTransaction(aUrl, aData, aAdjustId, aInitialStatus = "loading", aSuccessStatus = "done", aErrorStatus = "failed") {
 		
 		var currentState = this._store.getState();
@@ -274,7 +289,8 @@ export default class StoreController {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentReducer = currentArray[i];
-			newState = currentReducer(aState, aAction);
+			newState = currentReducer(newState, aAction);
+			console.log(newState);
 		}
 		
 		return newState;
@@ -416,19 +432,62 @@ export default class StoreController {
 	}
 	
 	reduceSettings(state, action) {
-
-		var newState = new Object();
-		for(var objectName in state) {
+		
+		let newState = new Object();
+		for(let objectName in state) {
 			newState[objectName] = state[objectName];
 		}
-
-		switch (action.type) {
-		case 'setSetting': // MENOTE: move this to const
-			newState.data[action.name] = action.value;
-			return newState;
-		default:
-			return newState;
+		
+		switch(action.type) {
+			case StoreController.SET_SETTING:
+				newState.data[action.name] = action.value;
+				return newState;
+			default:
+				return newState;
+			}
+	}
+	
+	reduceGlobalVariables(aState, aAction) {
+		//console.log("wprr/store/StoreController::reduceGlobalVariables");
+		//console.log(aState, aAction);
+		
+		let newState = StoreController.copyState(aState);
+		
+		switch(aAction.type) {
+			case StoreController.SET_GLOBAL_VARIABLE:
+				objectPath.set(newState, aAction.path, aAction.data);
+				break;
+			default:
+				if(!aState) {
+					return new Object();
+				}
+				return aState;
 		}
+		
+		return newState;
+	}
+	
+	localReduce(aPath, aReducer, aState, aAction) {
+		let newState = StoreController.copyState(aState);
+		
+		let localState = objectPath.get(newState, aPath);
+		let newLocalState = aReducer(localState, aAction);
+		objectPath.set(newState, aPath, newLocalState);
+		
+		return newState;
+	}
+	
+	createLocalReducer(aPath, aReducer) {
+		return this.localReduce.bind(this, aPath, aReducer);
+	}
+	
+	static copyState(aState) {
+		let newState = new Object();
+		for(let objectName in aState) {
+			newState[objectName] = aState[objectName];
+		}
+		
+		return newState;
 	}
 }
 
@@ -450,3 +509,6 @@ StoreController.LOADED = "M_ROUTER_LOADED";
 StoreController.ERROR_LOADING = "M_ROUTER_ERROR_LOADING";
 
 StoreController.DATA_ADJUSTMENT = "M_ROUTER_DATA_ADJUSTMENT";
+
+StoreController.SET_SETTING = "setSetting";
+StoreController.SET_GLOBAL_VARIABLE = "wprr/setGlobalVariable";
