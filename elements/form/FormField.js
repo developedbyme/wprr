@@ -33,6 +33,9 @@ export default class FormField extends WprrBaseObject {
 		let valueName = this.getSourcedProp("valueName");
 		
 		let newValue = aEvent.target.value;
+		if(this.getSourcedProp("type") === "file") {
+			newValue = aEvent.target.files;
+		}
 		
 		if(valueName) {
 			this.getReference("value/" + valueName).updateValue(valueName, newValue, additionalData);
