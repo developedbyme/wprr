@@ -16,6 +16,8 @@ export default class WprrBaseObject extends React.Component {
 		
 		this._propsToCheckForUpdate = null;
 		this._statesToCheckForUpdate = null;
+		
+		this._elementRef = React.createRef();
 	}
 	
 	getReferences() {
@@ -24,6 +26,15 @@ export default class WprrBaseObject extends React.Component {
 	
 	getReference(aPath) {
 		return this.context.references.getObject(aPath);
+	}
+	
+	getMainElement() {
+		if(this._elementRef.current) {
+			return this._elementRef.current;
+		}
+		console.warn("Component doesn't have a main element.", this);
+		
+		return null;
 	}
 	
 	getReferenceIfExists(aPath) {
@@ -115,9 +126,9 @@ export default class WprrBaseObject extends React.Component {
 			returnArray.push(this.props.className);
 		}
 		
-		var currentArray = this._classNames;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
+		let currentArray = this._classNames;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
 			returnArray.push(currentArray[i]);
 		}
 		
@@ -157,9 +168,9 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_getMainElementProps() {
-		var returnObject = new Object();
+		let returnObject = new Object();
 		
-		var classNames = this._getMainElementClassNames();
+		let classNames = this._getMainElementClassNames();
 		
 		if(classNames.length > 0) {
 			returnObject["className"] = classNames.join(" ");
@@ -173,16 +184,16 @@ export default class WprrBaseObject extends React.Component {
 	shouldComponentUpdate(aNextProps, aNextStates) {
 		//console.log("wprr/WprrBaseObject::shouldComponentUpdate");
 		
-		var returnValue = true;
+		let returnValue = true;
 		
 		if(this._propsToCheckForUpdate !== null || this._statesToCheckForUpdate !== null) {
 			returnValue = false;
 			
 			if(this._propsToCheckForUpdate !== null && !returnValue && aNextProps) {
-				var currentArray = this._propsToCheckForUpdate;
-				var currentArrayLength = currentArray.length;
-				for(var i = 0; i < currentArrayLength; i++) {
-					var currentPropName = currentArray[i];
+				let currentArray = this._propsToCheckForUpdate;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentPropName = currentArray[i];
 				
 					if(this.props[currentPropName] != aNextProps[currentPropName]) {
 						returnValue = true;
@@ -193,10 +204,10 @@ export default class WprrBaseObject extends React.Component {
 		
 		
 			if(this._statesToCheckForUpdate !== null && !returnValue && aNextStates) {
-				var currentArray = this._statesToCheckForUpdate;
-				var currentArrayLength = currentArray.length;
-				for(var i = 0; i < currentArrayLength; i++) {
-					var currentStateName = currentArray[i];
+				let currentArray = this._statesToCheckForUpdate;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentStateName = currentArray[i];
 					
 					if(this.state[currentStateName] != aNextStates[currentStateName]) {
 						returnValue = true;
@@ -239,7 +250,10 @@ export default class WprrBaseObject extends React.Component {
 		let mainElement = this._renderMainElement(this, this);
 		
 		if(mainElement && mainElement.type === "wrapper") {
-			let renderArguments = [this._getMainElementType(), this._getMainElementProps()];
+			let mainElementProps = this._getMainElementProps();
+			mainElementProps["ref"] = this._elementRef;
+			
+			let renderArguments = [this._getMainElementType(), mainElementProps];
 			
 			if(mainElement.props.children) {
 				if(Array.isArray(mainElement.props.children)) {

@@ -20,6 +20,14 @@ export default class FormField extends WprrBaseObject {
 	}
 	
 	getValue() {
+		if(this.getSourcedProp("type") === "file") {
+			let mainElement = this.getMainElement();
+			if(mainElement !== null) {
+				return mainElement.files;
+			}
+			return null;
+		}
+		
 		let valueName = this.getSourcedProp("valueName");
 		return this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
 	}
