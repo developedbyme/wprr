@@ -15,7 +15,7 @@ export default class ClickOutsideTrigger extends ManipulationBaseObject {
 	}
 	
 	_callback_click(aEvent) {
-		console.log("wprr/elements/interaction/ClickOutsideTrigger::_callback_click");
+		//console.log("wprr/elements/interaction/ClickOutsideTrigger::_callback_click");
 		
 		if(this.getSourcedProp("active") !== false) {
 			
@@ -50,7 +50,7 @@ export default class ClickOutsideTrigger extends ManipulationBaseObject {
 	}
 	
 	componentDidMount() {
-		console.log("wprr/elements/interaction/ClickOutsideTrigger::componentDidMount");
+		//console.log("wprr/elements/interaction/ClickOutsideTrigger::componentDidMount");
 		
 		document.body.addEventListener("click", this._callback_clickBound, true);
 	}

@@ -290,7 +290,6 @@ export default class StoreController {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentReducer = currentArray[i];
 			newState = currentReducer(newState, aAction);
-			console.log(newState);
 		}
 		
 		return newState;
