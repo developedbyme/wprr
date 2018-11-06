@@ -114,7 +114,7 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	getFormData() {
-		return new FormData(ReactDOM.findDOMNode(this));
+		return new FormData(this.getMainElement());
 	}
 	
 	_copyPassthroughProps(aReturnObject) {
