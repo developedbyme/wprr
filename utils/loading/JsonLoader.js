@@ -25,6 +25,14 @@ export default class JsonLoader {
 		this._errorCommands = [];
 	}
 	
+	getStatus() {
+		return this._status;
+	}
+	
+	hasCompleted() {
+		return (this._status === 1 || this._status === -1);
+	}
+	
 	setMethod(aMethod) {
 		this._method = aMethod;
 		
