@@ -20,15 +20,27 @@ export default class FormField extends WprrBaseObject {
 	}
 	
 	getValue() {
+		//console.log("wprr/elements/form/FormField::getValue");
+		
 		if(this.getSourcedProp("type") === "file") {
 			let mainElement = this.getMainElement();
 			if(mainElement !== null) {
 				return mainElement.files;
 			}
+			console.error("Field doesn't have an element. Can't get value.", this);
 			return null;
 		}
 		
 		let valueName = this.getSourcedProp("valueName");
+		if(!valueName) {
+			console.warn("Field doesn't have a value name. Getting value from element instead.", this);
+			let mainElement = this.getMainElement();
+			if(mainElement !== null) {
+				return mainElement.value;
+			}
+			console.error("Field doesn't have an element. Can't get value.", this);
+			return null;
+		}
 		return this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
 	}
 	
