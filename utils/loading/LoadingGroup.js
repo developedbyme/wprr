@@ -33,7 +33,7 @@ export default class LoadingGroup {
 	}
 	
 	removeAllLoaders() {
-		console.log("wprr/utils/loading/LoadingGroup::removeAllLoaders");
+		//console.log("wprr/utils/loading/LoadingGroup::removeAllLoaders");
 		
 		let currentArray = this._loaders;
 		let currentArrayLength = currentArray.length;
@@ -47,7 +47,7 @@ export default class LoadingGroup {
 	}
 	
 	addLoaderByPath(aPath) {
-		console.log("wprr/utils/loading/LoadingGroup::addLoaderByPath");
+		//console.log("wprr/utils/loading/LoadingGroup::addLoaderByPath");
 		
 		let loader = this._storeController.getLoader(aPath);
 		loader.addSuccessCommand(this._updateCommand);
@@ -56,7 +56,7 @@ export default class LoadingGroup {
 	}
 	
 	load() {
-		console.log("wprr/utils/loading/LoadingGroup::load");
+		//console.log("wprr/utils/loading/LoadingGroup::load");
 		
 		let currentArray = this._loaders;
 		let currentArrayLength = currentArray.length;
@@ -91,7 +91,7 @@ export default class LoadingGroup {
 	}
 	
 	updateStatus() {
-		console.log("wprr/utils/loading/LoadingGroup::updateStatus");
+		//console.log("wprr/utils/loading/LoadingGroup::updateStatus");
 		
 		let status = this.getStatus();
 		
@@ -108,37 +108,4 @@ export default class LoadingGroup {
 			}
 		}
 	}
-	
-	setStatus(aStatus) {
-		/*
-		this._status = aStatus;
-		
-		if(this._status === 1) {
-			//METODO: use a better way for this
-			if(this.onLoad) {
-				this.onLoad(this._data);
-			}
-			
-			let currentArray = this._successCommands;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentCommand = currentArray[i];
-				
-				currentCommand.setEventData(this._data);
-				currentCommand.perform();
-			}
-		}
-		else if(this._status === -1) {
-			let currentArray = this._errorCommands;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentCommand = currentArray[i];
-				
-				currentCommand.setEventData(this._data);
-				currentCommand.perform();
-			}
-		}
-		*/
-	}
-	
 }

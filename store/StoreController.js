@@ -150,20 +150,6 @@ export default class StoreController {
 		//console.log("wprr/store/StoreController::_dataLoaded");
 		//console.log(aPath, aData);
 		
-		/*
-		let data = null;
-		switch(this.apiFormat) {
-			case "wprr":
-				data = aData.data;
-				break;
-			default:
-				console.warn("No format named " + this.apiFormat + ". Using raw.");
-			case "raw":
-				data = aData;
-				break;
-		}
-		*/
-		
 		this._performDispatch(StoreController.LOADED, aPath, aData);
 		this._removeLoadingPath(aPath);
 	}
@@ -176,8 +162,8 @@ export default class StoreController {
 	}
 	
 	_performRequest(aPath) {
-		console.log("wprr/store/StoreController::_performRequest");
-		console.log(aPath);
+		//console.log("wprr/store/StoreController::_performRequest");
+		//console.log(aPath);
 		
 		this._load(aPath);
 	}
@@ -391,11 +377,11 @@ export default class StoreController {
 		
 		switch(aType) {
 			case "M-ROUTER-POST-RANGE":
-				return mRouterController.requestPostRange(this.getPostRangeApiPath(aPath), aLocation);
+				return this._urlResolvers.resolveUrl(this.getPostRangeApiPath(aPath), aLocation);
 			case "M-ROUTER-POST-BY-ID":
-				return mRouterController.requestPostById(this.getPostByIdApiPath(aPath), aLocation);
+				return this._urlResolvers.resolveUrl(this.getPostByIdApiPath(aPath), aLocation);
 			case "M-ROUTER-MENU":
-				return mRouterController.requestMenuData(this.getMenuApiPath(aPath), aLocation);
+				return this._urlResolvers.resolveUrl(this.getMenuApiPath(aPath), aLocation);
 			case "M-ROUTER-API-DATA":
 				return this._urlResolvers.resolveUrl(aPath, aLocation);
 			case "M-ROUTER-URL":

@@ -31,6 +31,9 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			case "wprr":
 				data = aData.data;
 				break;
+			case "wprrById":
+				data = aData.data.data;
+				break;
 			default:
 				console.warn("No format named " + aFormat + ". Using raw.");
 			case "raw":
@@ -66,6 +69,9 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				if(currentData.apiFormat) {
 					currentApiFormat = currentData.apiFormat;
 				}
+				else if(currentData.type === "M-ROUTER-POST-BY-ID") {
+					currentApiFormat = "wprrById";
+				}
 				currentPath = storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase);
 			}
 			
@@ -88,6 +94,10 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	componentDidUpdate() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader.componentDidUpdate");
 		this.updateLoad();
+	}
+	
+	componenetWillUnmount() {
+		//METODO: remove the loading group
 	}
 	
 	_setupLoading() {
