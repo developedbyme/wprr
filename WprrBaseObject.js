@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import SourceData from "wprr/reference/SourceData";
 
+import WprrContext from "wprr/reference/WprrContext";
+
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
 	
@@ -315,6 +317,10 @@ export default class WprrBaseObject extends React.Component {
 
 WprrBaseObject.CATCH_RENDER_ERRORS = true;
 
+WprrBaseObject.contextType = WprrContext;
+
+/*
 WprrBaseObject.contextTypes = {
 	"references": PropTypes.object
 };
+*/

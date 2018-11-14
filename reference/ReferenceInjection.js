@@ -6,6 +6,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 import ReferenceHolder from "wprr/reference/ReferenceHolder";
 import SourceData from "wprr/reference/SourceData";
 
+import WprrContext from "wprr/reference/WprrContext";
+
 //import ReferenceInjection from "wprr/reference/ReferenceInjection";
 export default class ReferenceInjection extends ManipulationBaseObject {
 
@@ -19,10 +21,12 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		return this._references;
 	}
 	
+	/*
 	getChildContext() {
 		//console.log("wprr/reference/ReferenceInjection::getReferences")
 		return {"references": this._references};
 	}
+	*/
 	
 	_removeUsedProps(aReturnObject) {
 		//console.log("wprr/reference/ReferenceInjection::_removeUsedProps");
@@ -50,11 +54,20 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		}
 	}
 	
+	_renderMainElement() {
+		let clonedElements = super._renderMainElement();
+		
+		console.log(this, this._references);
+		return React.createElement(WprrContext.Provider, {"value": {"references": this._references}}, clonedElements);
+	}
+	
 	static createReactElement(aData, aChildOrChildren) {
 		return React.createElement(ReferenceInjection, {"injectData": aData}, aChildOrChildren);
 	}
 }
 
+/*
 ReferenceInjection.childContextTypes = {
 	"references": PropTypes.object
 };
+*/
