@@ -33,7 +33,7 @@ export default class TextArea extends WprrBaseObject {
 		let valueName = this.getSourcedProp("valueName");
 		
 		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
-		returnObject["value"] = this.getSourcedProp("value");
+		returnObject["value"] = value;
 		
 		returnObject["rows"] = this.getSourcedProp("rows");
 		
