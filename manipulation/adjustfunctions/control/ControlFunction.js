@@ -86,7 +86,7 @@ export default class ControlFunction extends AdjustFunction {
 			let currentOwner = currentArray[i];
 			if(currentOwner === aOwner) {
 				currentArray.splice(i, 1);
-				isFound = false;
+				isFound = true;
 				break;
 			}
 		}

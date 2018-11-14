@@ -56,7 +56,7 @@ export default class InArraySelection extends ControlFunction {
 	}
 	
 	updateValue(aName, aValue) {
-		console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::updateValue");
+		//console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::updateValue");
 		
 		if(aName === this.getInputFromSingleOwner("internalValueName")) {
 			if(aValue) {
@@ -69,7 +69,7 @@ export default class InArraySelection extends ControlFunction {
 	}
 	
 	trigger(aName, aValue) {
-		console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::trigger");
+		//console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::trigger");
 		
 		if(aName === this.getInputFromSingleOwner("internalValueName")) {
 			if(aValue) {
@@ -103,13 +103,11 @@ export default class InArraySelection extends ControlFunction {
 	 * @return	*	The modified data
 	 */
 	adjust(aData, aManipulationObject) {
-		console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::adjust");
+		//console.log("wprr/manipulation/adjustfunctions/control/form/InArraySelection::adjust");
 		
 		let value = this.getInput("value", aData, aManipulationObject);
 		let selectedValue = this.getInput("selectedValue", aData, aManipulationObject);
 		let internalValueName = this.getInput("internalValueName", aData, aManipulationObject);
-		
-		console.log(value, selectedValue);
 		
 		let isSelected = (value.indexOf(selectedValue) !== -1);
 		
