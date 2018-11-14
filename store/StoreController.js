@@ -1,6 +1,7 @@
 import objectPath from "object-path";
 
 import JsonLoader from "wprr/utils/loading/JsonLoader";
+import CallFunctionCommand from "wprr/commands/basic/CallFunctionCommand";
 
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 
@@ -14,16 +15,17 @@ export default class StoreController {
 		
 		this._loadingPaths = new Array();
 		this._paths = new Array();
+		this._loaders = new Object();
 		
 		this._store = null;
 		this._userData = null;
 		
 		this._dynamicReducers = [];
 		
-		this._encodeLoadedDataBound = this._encodeLoadedData.bind(this);
+		//this._encodeLoadedDataBound = this._encodeLoadedData.bind(this);
 		this.dynamicReduceBound = this.dynamicReduce.bind(this);
 		
-		this.apiFormat = "wprr";
+		//this.apiFormat = "wprr";
 		
 		this._urlResolvers = new MultipleUrlResolver();
 	}
@@ -71,23 +73,47 @@ export default class StoreController {
 		});
 	}
 	
-	_load(aPath) {
-		
-		let currentState = this._store.getState();
-		
-		let headers = new Object();
-		let options = new Object();
-		
-		if(this._userData && this._userData.restNonce) {
-			headers["X-WP-Nonce"] = this._userData.restNonce;
-			options["credentials"] = "include";
-			options["headers"] = headers;
+	getLoader(aPath) {
+		let loader = this._loaders[aPath];
+		if(!loader) {
+			loader = new JsonLoader();
+			loader.setUrl(aPath);
+			
+			let currentState = this._store.getState();
+			
+			if(false) {
+				//METODO: check
+			}
+			else {
+				if(this._userData && this._userData.restNonce) {
+					loader.addHeader("X-WP-Nonce", this._userData.restNonce);
+				}
+				loader.addSuccessCommand(CallFunctionCommand.create(this, this._loaderLoaded, [aPath, loader]));
+				loader.addErrorCommand(CallFunctionCommand.create(this, this._loaderError, [aPath, loader]));
+			}
+			this._loaders[aPath] = loader;
 		}
 		
-		let loadPromise = fetch(aPath, options);
-		return loadPromise;
+		return loader;
 	}
 	
+	_loaderLoaded(aPath, aLoader) {
+		this._dataLoaded(aPath, aLoader.getData());
+	}
+	
+	_loaderError(aPath, aLoader) {
+		this._loadingError(aPath, null);
+	}
+	
+	_load(aPath) {
+		let loader = this.getLoader(aPath);
+		if(loader.getStatus() === 0) {
+			loader.load();
+		}
+		return loader;
+	}
+	
+	/*
 	_post(aPath, aData) {
 		var currentState = this._store.getState();
 		var nonce = currentState.settings.nonce;
@@ -110,6 +136,7 @@ export default class StoreController {
 		
 		return returnObject;
 	}
+	*/
 	
 	_removeLoadingPath(aPath) {
 		var currentIndex = this._loadingPaths.indexOf(aPath);
@@ -123,6 +150,7 @@ export default class StoreController {
 		//console.log("wprr/store/StoreController::_dataLoaded");
 		//console.log(aPath, aData);
 		
+		/*
 		let data = null;
 		switch(this.apiFormat) {
 			case "wprr":
@@ -134,8 +162,9 @@ export default class StoreController {
 				data = aData;
 				break;
 		}
+		*/
 		
-		this._performDispatch(StoreController.LOADED, aPath, data);
+		this._performDispatch(StoreController.LOADED, aPath, aData);
 		this._removeLoadingPath(aPath);
 	}
 	
@@ -146,45 +175,11 @@ export default class StoreController {
 		this._removeLoadingPath(aPath);
 	}
 	
-	_createLoader(aPath, aDataPath) {
+	_performRequest(aPath) {
+		console.log("wprr/store/StoreController::_performRequest");
+		console.log(aPath);
 		
-		var loadPromise = this._load(aDataPath).then(this._encodeLoadedDataBound)
-		.then( (data) => {
-			this._dataLoaded(aPath, data);
-			//dispatch({ type: StoreController.RECEIVE_API_DATA, data: data.data, timeStamp: Date.now(), path: aPath });
-		})
-		.catch( (error) => {
-			console.error("Loading or setting data crashed.");
-			console.log(error);
-			this._loadingError(aPath, error);
-			//dispatch({ type: StoreController.RECEIVE_API_DATA, error: error, timeStamp: Date.now(), path: aPath });
-		});
-		
-		return loadPromise;
-	}
-	
-	_performRequest(aPath, aDataPath) {
-		//console.log("wprr/store/StoreController::_performRequest");
-		//console.log(aPath, aDataPath);
-		
-		this._performDispatch(StoreController.ENSURE_LOAD_DATA_EXISTS, aPath, null);
-		
-		if(this._paths.indexOf(aPath) === -1) {
-			this._paths.push(aPath);
-		}
-		
-		var currentState = this._store.getState();
-		
-		var currentLoadData = currentState.mRouter.apiData[aPath];
-		
-		if(currentLoadData.status === 0) {
-			
-			this._performDispatch(StoreController.START_LOADING, aPath, null);
-			
-			this._loadingPaths.push(aPath);
-			
-			this._createLoader(aPath, aDataPath);
-		}
+		this._load(aPath);
 	}
 	
 	requestApiData(aPath, aLocation) {
@@ -194,14 +189,14 @@ export default class StoreController {
 		let currentState = this._store.getState();
 		let dataUrl = this._urlResolvers.resolveUrl(aPath, aLocation);
 		
-		this._performRequest(aPath, dataUrl);
+		this._performRequest(dataUrl);
 		
 	}
 	
 	requestUrlData(aPath, aDataUrl) {
 		//console.log("wprr/store/StoreController::requestUrlData");
 		
-		this._performRequest(aPath, aDataUrl);
+		this._performRequest(aDataUrl);
 		
 	}
 	
@@ -217,7 +212,7 @@ export default class StoreController {
 		var apiBaseUrl = currentState.settings.wpApiUrlBase;
 		var dataUrl = apiBaseUrl + path;
 		
-		this._performRequest(path, dataUrl);
+		this._performRequest(dataUrl);
 	}
 	
 	getPostRangeApiPath(aPath) {
@@ -232,7 +227,7 @@ export default class StoreController {
 		var apiBaseUrl = currentState.settings.wpApiUrlBase;
 		var dataUrl = apiBaseUrl + path;
 		
-		this._performRequest(path, dataUrl);
+		this._performRequest(dataUrl);
 	}
 	
 	getMenuApiPath(aPath) {
@@ -246,18 +241,21 @@ export default class StoreController {
 		let apiBaseUrl = currentState.settings.wpApiUrlBase;
 		let dataUrl = apiBaseUrl + path;
 		
-		this._performRequest(path, dataUrl);
+		this._performRequest(dataUrl);
 	}
 	
-	adjustData(aId, aData) {
-		this._performDispatch(StoreController.DATA_ADJUSTMENT, aId, aData);
-	}
+	
 	
 	setGlobalVariable(aPath, aValue) {
 		//console.log("setGlobalVariable");
 		//console.log(aPath, aValue);
 		
 		this._performDispatch(StoreController.SET_GLOBAL_VARIABLE, aPath, aValue);
+	}
+	
+	/*
+	adjustData(aId, aData) {
+		this._performDispatch(StoreController.DATA_ADJUSTMENT, aId, aData);
 	}
 	
 	postWithAdjustTransaction(aUrl, aData, aAdjustId, aInitialStatus = "loading", aSuccessStatus = "done", aErrorStatus = "failed") {
@@ -280,6 +278,7 @@ export default class StoreController {
 			this.adjustData(aAdjustId, {"status": aErrorStatus, "transactionId": transactionId});
 		});
 	}
+	*/
 	
 	dynamicReduce(aState, aAction) {
 		
@@ -303,118 +302,25 @@ export default class StoreController {
 		for(var objectName in state) {
 			newState[objectName] = state[objectName];
 		}
+		
+		if(!newState["loadedData"]) newState["loadedData"] = new Object();
 	
 		if(!newState["currentPage"]) newState["currentPage"] = null;
-		if(!newState["data"]) newState["data"] = new Object();
-		if(!newState["idLinks"]) newState["idLinks"] = new Object();
-		if(!newState["postData"]) newState["postData"] = new Object();
-		if(!newState["postRanges"]) newState["postRanges"] = new Object();
-		if(!newState["customizerData"]) newState["customizerData"] = new Object();
-		if(!newState["apiData"]) newState["apiData"] = new Object();
-		if(!newState["dataAdjustments"]) newState["dataAdjustments"] = new Object();
-		if(!newState["menus"]) newState["menus"] = new Object();
+		//if(!newState["dataAdjustments"]) newState["dataAdjustments"] = new Object();
 
 		switch (action.type) {
 			case StoreController.SET_CURRENT_PAGE:
 				newState["currentPage"] = action.url;
 				return newState;
-			case StoreController.REQUEST_URL:
-				if(!newState.data[action.url]) {
-					newState.data[action.url] = {"status": 2};
-				}
-				return newState;
-
-			case StoreController.RECEIVE_URL:
-				if(action.data) {
-					newState.data[action.url] = {status: 1, data: action.data};
-					//METODO: add id link
-				}
-				else {
-					newState.data[action.url] = {status: -1};
-				}
-				return newState;
-			case StoreController.ENSURE_LOAD_DATA_EXISTS:
-				//console.log("case StoreController.ENSURE_LOAD_DATA_EXISTS");
-				//console.log(action.path);
-				if(!newState.apiData[action.path]) {
-					newState.apiData[action.path] = {"status": 0};
-				}
-				return newState;
-			case StoreController.START_LOADING:
-				if(newState.apiData[action.path] && newState.apiData[action.path]["status"] === 0) {
-					newState.apiData[action.path]["status"] = 2;
-				}
-				return newState;
 			case StoreController.LOADED:
 				//console.log(action.path, newState.apiData[action.path]);
-				newState.apiData[action.path]["status"] = 1;
-				newState.apiData[action.path]["data"] = action.data;
+				newState["loadedData"][action.path] = action.data;
 				return newState;
 			case StoreController.ERROR_LOADING:
 				//console.log(action.path, newState.apiData[action.path]);
-				newState.apiData[action.path]["status"] = -1;
-				newState.apiData[action.path]["error"] = action.data;
+				newState["loadedData"][action.path] = null;
 				return newState;
-				
-			case StoreController.REQUEST_API_DATA:
-				if(!newState.apiData[action.path]) {
-					newState.apiData[action.path] = {"status": 2};
-				}
-				return newState;
-
-			case StoreController.RECEIVE_API_DATA:
-				if(action.data) {
-					newState.apiData[action.path] = {status: 1, data: action.data};
-					//METODO: add id link
-				}
-				else {
-					newState.apiData[action.path] = {status: -1};
-				}
-				return newState;
-			case StoreController.REQUEST_POST_BY_ID:
-				if(!newState.idLinks[action.id]) {
-					newState.idLinks[action.id] = {"status": 2};
-				}
-				return newState;
-
-			case StoreController.RECEIVE_POST_BY_ID:
-				if(action.data) {
-				
-					newState.idLinks[action.id] = {status: 1, url: action.data.url};
-					newState.postData[action.data.url] = {status: 1, data: action.data.data};
-				}
-				else {
-					newState.idLinks[action.id] = {status: -1};
-				}
-				return newState;
-			case StoreController.REQUEST_CUSTOMIZER_DATA:
-				if(!newState.customizerData[action.options]) {
-					newState.customizerData[action.options] = {"status": 2};
-				}
-				return newState;
-
-			case StoreController.RECEIVE_CUSTOMIZER_DATA:
-				if(action.data) {
-					newState.customizerData[action.options] = {status: 1, data: action.data};
-				}
-				else {
-					newState.customizerData[action.options] = {status: -1};
-				}
-				return newState;
-			case StoreController.REQUEST_POST_RANGE:
-				if(!newState.postRanges[action.path]) {
-					newState.postRanges[action.path] = {"status": 2};
-				}
-				return newState;
-
-			case StoreController.RECEIVE_POST_RANGE:
-				if(action.data) {
-					newState.postRanges[action.path] = {status: 1, data: action.data};
-				}
-				else {
-					newState.postRanges[action.path] = {status: -1};
-				}
-				return newState;
+			/*
 			case StoreController.DATA_ADJUSTMENT:
 				if(!newState.dataAdjustments[action.path]) {
 					newState.dataAdjustments[action.path] = new Array();
@@ -425,6 +331,7 @@ export default class StoreController {
 				newState.dataAdjustments[action.path] = newArray;
 				
 				return newState;
+				*/
 			default:
 				return newState;
 		}
@@ -478,6 +385,34 @@ export default class StoreController {
 	
 	createLocalReducer(aPath, aReducer) {
 		return this.localReduce.bind(this, aPath, aReducer);
+	}
+	
+	getAbsolutePath(aType, aPath, aLocation) {
+		
+		switch(aType) {
+			case "M-ROUTER-POST-RANGE":
+				return mRouterController.requestPostRange(this.getPostRangeApiPath(aPath), aLocation);
+			case "M-ROUTER-POST-BY-ID":
+				return mRouterController.requestPostById(this.getPostByIdApiPath(aPath), aLocation);
+			case "M-ROUTER-MENU":
+				return mRouterController.requestMenuData(this.getMenuApiPath(aPath), aLocation);
+			case "M-ROUTER-API-DATA":
+				return this._urlResolvers.resolveUrl(aPath, aLocation);
+			case "M-ROUTER-URL":
+				{
+					let dataUrl = aPath;
+					
+					dataUrl += ((dataUrl.indexOf("?") === -1) ? "?" : "&");
+					dataUrl += "mRouterData=json";
+					
+					return this._urlResolvers.resolveUrl(dataUrl, aLocation);
+				}
+			default:
+				console.warn("Unknown type " + aType);
+				break;
+		}
+		
+		return aPath;
 	}
 	
 	static copyState(aState) {

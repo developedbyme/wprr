@@ -3,17 +3,19 @@ import React from "react";
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import CommandPerformer from "wprr/commands/CommandPerformer";
+import LoadingGroup from "wprr/utils/loading/LoadingGroup";
+import SetStateValueCommand from "wprr/commands/basic/SetStateValueCommand";
+import SourceData from "wprr/reference/SourceData";
 
 //import WprrDataLoader from "wprr/manipulation/loader/WprrDataLoader";
 export default class WprrDataLoader extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		this.state["status"] = 0;
-		this.state["loadData"] = {};
 		
-		this._callback_reduxChangeBound = this._callback_reduxChange.bind(this);
-		this._redux_unsubscribeFunction = null;
+		this._loadingGroup = new LoadingGroup();
+		this._loadingGroup.addStatusCommand(SetStateValueCommand.create(this, "status", SourceData.create("event", "raw")));
 		
 		this._propsThatShouldNotCopy.push("loadData");
 		this._propsThatShouldNotCopy.push("loadingElement");
@@ -21,228 +23,79 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("errorComponent");
 		this._propsThatShouldNotCopy.push("errorElement");
 		this._propsThatShouldNotCopy.push("nonBlocking");
+	}
+	
+	_formatData(aData, aFormat) {
+		let data = null;
+		switch(aFormat) {
+			case "wprr":
+				data = aData.data;
+				break;
+			default:
+				console.warn("No format named " + aFormat + ". Using raw.");
+			case "raw":
+				data = aData;
+				break;
+		}
 		
+		return data;
 	}
 	
 	_getMainElementProps() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_getMainElementProps");
-		var returnObject = super._getMainElementProps();
+		let returnObject = super._getMainElementProps();
 		
-		for(var objectName in this.state["loadData"]) {
+		let loadData = this.getSourcedProp("loadData");
+		let storeController = this.getReference("redux/store/wprrController");
+		
+		//METODO: check taht we have load data and storeController
+		
+		let locationBase = this.getSourcedPropWithDefault("location", "default");
+		let defaultApiFormat = this.getSourcedPropWithDefault("apiFormat", "wprr");
+		
+		for(let objectName in loadData) {
+			let currentData = this.resolveSourcedData(loadData[objectName]);
+			let currentPath = null;
+			let currentApiFormat = defaultApiFormat;
 			
-			var loadingData = this.state["loadData"][objectName];
-			
-			if(loadingData["status"] === 1) {
-				returnObject[objectName] = loadingData["data"];
+			if(typeof(currentData) === "string") {
+				currentPath = storeController.getAbsolutePath("M-ROUTER-API-DATA", currentData, locationBase);
 			}
 			else {
-				returnObject[objectName] = this.state["status"];
+				let currentLocationBase = currentData.location ? currentData.location : locationBase;
+				if(currentData.apiFormat) {
+					currentApiFormat = currentData.apiFormat;
+				}
+				currentPath = storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase);
 			}
+			
+			returnObject[objectName] = this._formatData(this._loadingGroup.getData(currentPath), currentApiFormat);
 		}
 		
-		if(this.props.nonBlocking) {
-			returnObject["status"] = null;
+		let nonBlocking = this.getSourcedProp("nonBlocking");
+		if(nonBlocking) {
+			returnObject["status"] = this.state["status"];
 		}
 		
 		return returnObject;
 	}
-	
-	_callback_reduxChange() {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::_callback_reduxChange");
-		
-		let hasChange = false;
-		let newStatus = 1;
-		let currentState = this.state["loadData"];
-		let newLoadDataState = new Object();
-		
-		let loadData = this.getSourcedProp("loadData");
-		
-		let locationBase = this.getSourcedPropWithDefault("location", "default");
-		
-		for(let objectName in loadData) {
-			
-			let currentData = this.resolveSourcedData(loadData[objectName]);
-			
-			let loadingObject;
-			if(typeof(currentData) === "string") {
-				loadingObject = this._getData("M-ROUTER-API-DATA", currentData, locationBase);
-			}
-			else {
-				let currentLocationBase = currentData.location ? currentData.location : locationBase;
-				loadingObject = this._getData(currentData.type, currentData.path, currentLocationBase);
-			}
-			
-			if(!loadingObject) {
-				console.error("Loading object doesn't exist", this);
-				console.log(loadingObject, currentData.type, currentData.path);
-				newStatus = -1;
-				if(this.state.status !== -1) {
-					hasChange = true;
-				}
-				break;
-			}
-			
-			
-			if(!currentState[objectName] || loadingObject["status"] !== currentState[objectName]["status"]) {
-				hasChange = true;
-			}
-			
-			newLoadDataState[objectName] = {"status": loadingObject["status"], "data": loadingObject["data"]};
-			
-			if(loadingObject["status"] !== 1) {
-				newStatus = loadingObject["status"];
-			}
-		}
-		
-		if(hasChange) {
-			if(newStatus === 1) {
-				let commands = this.getSourcedProp("loadedCommands");
-		
-				if(commands) {
-					CommandPerformer.perform(commands, newLoadDataState, this);
-				}
-			}
-			
-			this.setState({"status": newStatus, "loadData": newLoadDataState});
-		}
+
+	componentDidMount() {
+		//console.log("wprr/manipulation/loader/WprrDataLoader.componentDidMount");
+		this.updateLoad();
 	}
 	
-	_redux_subscribe() {
-		if(this.getReferences()) {
-			let store = this.getReferences().getObject("redux/store");
-			if(store) {
-				this._redux_unsubscribeFunction = store.subscribe(this._callback_reduxChangeBound);
-			}
-			else {
-				console.error("Store found in references. Can't subscribe.", this);
-			}
-		}
-		else {
-			console.error("References not set. Can't subscribe.", this);
-		}
+	componentDidUpdate() {
+		//console.log("wprr/manipulation/loader/WprrDataLoader.componentDidUpdate");
+		this.updateLoad();
 	}
 	
-	_redux_unsubscribe() {
-		//console.log("_redux_unsubscribe");
-		
-		if(this._redux_unsubscribeFunction) {
-			this._redux_unsubscribeFunction();
-			this._redux_unsubscribeFunction = null;
-		}
-	}
-	
-	_redux_dispatch(aDispatchData) {
-		if(this.getReferences()) {
-			let store = this.getReferences().getObject("redux/store");
-			if(store) {
-				store.dispatch(aDispatchData);
-			}
-			else {
-				console.error("Store found in references. Can't dispatch.", this);
-			}
-		}
-		else {
-			console.error("References not set. Can't dispatch.", this);
-		}
-	};
-	
-	_requestData(aType, aPath, aLocation) {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::_requestData");
-		//console.log(aType, aPath);
-		//console.log(this);
-		
-		let mRouterController = this.getReferences().getObject("redux/store/mRouterController");
-		if(!mRouterController) {
-			console.error("mRouterController doesn't exist, can't request data " + aPath, this);
+	_setupLoading() {
+		let storeController = this.getReference("redux/store/wprrController");
+		if(!storeController) {
+			console.error("Store controller doesn't exist, can't request data.", this);
 			return;
 		}
-		
-		switch(aType) {
-			case "M-ROUTER-POST-RANGE":
-				mRouterController.requestPostRange(aPath, aLocation);
-				break;
-			case "M-ROUTER-POST-BY-ID":
-				mRouterController.requestPostById(aPath, aLocation);
-				break;
-			case "M-ROUTER-MENU":
-				mRouterController.requestMenuData(aPath, aLocation);
-				break;
-			case "M-ROUTER-API-DATA":
-				mRouterController.requestApiData(aPath, aLocation);
-				break;
-			case "M-ROUTER-URL":
-				let dataUrl = aPath;
-
-				dataUrl += ((dataUrl.indexOf("?") === -1) ? "?" : "&");
-				dataUrl += "mRouterData=json";
-				
-				mRouterController.requestUrlData(aPath, dataUrl, aLocation);
-				break;
-			default:
-				console.warn("Unknown type " + aType);
-				break;
-		}
-	}
-	
-	_getData(aType, aPath, aLocation) {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::_getData");
-		//console.log(aType, aPath);
-		
-		let store = null;
-		if(this.getReferences()) {
-			store = this.getReferences().getObject("redux/store");
-			if(store) {
-				//MENOTE: do nothing
-			}
-			else {
-				console.error("Store found in references. Can't dispatch.", this);
-			}
-		}
-		else {
-			console.error("References not set. Can't dispatch.", this);
-		}
-		
-		if(!store) {
-			console.warn("No store. Can't get data " + aType + " " + aPath);
-			return {"status": 0, "data": null};
-		}
-		
-		let currentState = store.getState();
-		
-		switch(aType) {
-			case "M-ROUTER-POST-RANGE":
-				{
-					let apiPath = this.getReference("redux/store/mRouterController").getPostRangeApiPath(aPath, aLocation);
-					return currentState.mRouter.apiData[apiPath];
-				}
-			case "M-ROUTER-POST-BY-ID":
-				{
-					let apiPath = this.getReference("redux/store/mRouterController").getPostByIdApiPath(aPath, aLocation);
-					let loadData = currentState.mRouter.apiData[apiPath];
-					let data = loadData.data ? loadData.data.data : null;
-					return {"status": loadData.status, "data": data};
-				}
-			case "M-ROUTER-MENU":
-				{
-					let apiPath = this.getReference("redux/store/mRouterController").getMenuApiPath(aPath, aLocation);
-					return currentState.mRouter.apiData[apiPath];
-				}
-			case "M-ROUTER-API-DATA":
-			case "M-ROUTER-URL":
-				//console.log(aPath, currentState.mRouter.apiData[aPath]);
-				return currentState.mRouter.apiData[aPath];
-			default:
-				console.warn("Unknown type " + aType, this);
-				console.log(currentState);
-				break;
-		}
-		
-		return {"status": 0, "data": null};
-	}
-	
-	componentWillMount() {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::componentWillMount");
-		
 		
 		let loadData = this.getSourcedProp("loadData");
 		
@@ -252,46 +105,45 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			return;
 		}
 		
-		/* METODO: this needs to do a double split
-		if(typeof(loadData) === "string") {
-			loadData = loadData.split(";");
-		}
-		*/
-		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
+		
+		this._loadingGroup.setStoreController(storeController);
+		this._loadingGroup.removeAllLoaders();
 		
 		for(let objectName in loadData) {
 			let currentData = this.resolveSourcedData(loadData[objectName]);
 			
 			if(typeof(currentData) === "string") {
-				this._requestData("M-ROUTER-API-DATA", currentData, locationBase);
+				this._loadingGroup.addLoaderByPath(storeController.getAbsolutePath("M-ROUTER-API-DATA", currentData, locationBase));
 			}
 			else {
 				let currentLocationBase = currentData.location ? currentData.location : locationBase;
-				this._requestData(currentData.type, currentData.path, currentLocationBase);
+				this._loadingGroup.addLoaderByPath(storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase));
 			}
 		}
-		
-		this._callback_reduxChange();
-		this._redux_subscribe();
 	}
-
-	componentDidMount() {
-		//console.log("wprr/manipulation/loader/WprrDataLoader.componentDidMount");
+	
+	updateLoad() {
+		this._setupLoading();
+		this._loadingGroup.updateStatus();
+		this._loadingGroup.load();
 	}
-
-	componentWillUnmount() {
-		//console.log("wprr/manipulation/loader/WprrDataLoader.componentWillUnmount");
-		
-		this._redux_unsubscribe();
+	
+	_prepareRender() {
+		//console.log("wprr/manipulation/loader/WprrDataLoader::_prepareRender");
+		super._prepareRender();
+		this._setupLoading();
 	}
 	
 	_renderMainElement() {
-		if(this.state["status"] === 1 || this.getSourcedPropWithDefault("nonBlocking", false)) {
+		
+		let status = this._loadingGroup.getStatus();
+		
+		if(status === 1 || this.getSourcedPropWithDefault("nonBlocking", false)) {
 			this._createClonedElement();
 			return this._clonedElement;
 		}
-		else if(this.state["status"] === 0 || this.state["status"] === 2) {
+		else if(status === 0 || status === 2) {
 			let loadingComponent = this.getSourcedProp("loadingComponent");
 			if(loadingComponent) {
 				return React.createElement(loadingComponent, this._getMainElementProps(), this.props.children);
@@ -310,9 +162,5 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		}
 		console.warn("Error component not set", this);
 		return null;
-	}
-	
-	_prepareRender() {
-		super._prepareRender();
 	}
 }

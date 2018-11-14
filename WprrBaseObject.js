@@ -234,7 +234,7 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_prepareRender() {
-		
+		//console.log("wprr/WprrBaseObject::_prepareRender");
 	}
 	
 	_renderMainElement(aCurrentElement, aOwner) {

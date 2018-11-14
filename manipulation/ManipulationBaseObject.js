@@ -155,6 +155,7 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 	}
 	
 	_prepareRender() {
+		//console.log("wprr/manipulation/ManipulationBaseObject::_prepareRender");
 		super._prepareRender();
 	}
 }

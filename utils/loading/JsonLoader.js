@@ -10,7 +10,7 @@ export default class JsonLoader {
 	constructor() {
 		this._url = null;
 		this._method = "GET";
-		this._credentials = "include";
+		this._credentials = "same-origin";
 		this._headers = {
 			"Accept": "application/json"
 		};
@@ -87,8 +87,42 @@ export default class JsonLoader {
 		return this;
 	}
 	
+	removeSuccessCommand(aCommand) {
+		let currentArray = this._successCommands;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentCommand = currentArray[i];
+			if(currentCommand === aCommand) {
+				currentArray.splice(i, 1);
+				i--;
+				currentArrayLength--;
+			}
+		}
+		
+		return this;
+	}
+	
+	removeErrorCommand(aCommand) {
+		let currentArray = this._errorCommands;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentCommand = currentArray[i];
+			if(currentCommand === aCommand) {
+				currentArray.splice(i, 1);
+				i--;
+				currentArrayLength--;
+			}
+		}
+		
+		return this;
+	}
+	
 	setData(aData) {
 		this._data = aData;
+	}
+	
+	getData() {
+		return this._data;
 	}
 	
 	setStatus(aStatus) {
