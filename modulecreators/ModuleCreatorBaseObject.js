@@ -185,7 +185,6 @@ export default class ModuleCreatorBaseObject {
 			pageData = urlData[currentPath].data;
 		}
 		
-		/*
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
 				React.createElement(RefGroup, {"group": "site"},
@@ -195,10 +194,6 @@ export default class ModuleCreatorBaseObject {
 				)
 			)	
 		);
-		*/
-		let rootObject = React.createElement(ReferenceExporter, {"references": this._referenceHolder},
-				React.createElement(WprrBaseObject, {})
-			);
 		
 		return rootObject;
 	}
