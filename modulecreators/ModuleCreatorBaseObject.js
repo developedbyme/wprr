@@ -179,15 +179,19 @@ export default class ModuleCreatorBaseObject {
 		let currentPath = objectPath.get(aData, "paths.current");
 		let urlData = objectPath.get(initialState, "mRouter.data");
 		
+		let injectData = new Object();
+		injectData["wprr/externalStorage/site"] = this._siteStorage;
+		
 		let pageData = null;
-		if(urlData[currentPath]) {
+		if(urlData && urlData[currentPath]) {
 			pageData = urlData[currentPath].data;
+			injectData["wprr/pageData"] = pageData;
 		}
 		
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
 				React.createElement(RefGroup, {"group": "site"},
-					React.createElement(ReferenceInjection, {"injectData": {"wprr/pageData": pageData, "wprr/externalStorage/site": this._siteStorage}},
+					React.createElement(ReferenceInjection, {"injectData": injectData},
 						this._getMainCompnentWithInjections()
 					)
 				)
