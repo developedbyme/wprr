@@ -54,7 +54,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		//METODO: check taht we have load data and storeController
 		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
-		let defaultApiFormat = this.getSourcedPropWithDefault("apiFormat", "wprr");
+		let defaultApiFormat = this.getSourcedPropWithDefault("apiFormat", WprrDataLoader.DEFAULT_API_FORMAT);
 		
 		for(let objectName in loadData) {
 			let currentData = this.resolveSourcedData(loadData[objectName]);
@@ -174,3 +174,5 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		return null;
 	}
 }
+
+WprrDataLoader.DEFAULT_API_FORMAT = "wprr";
