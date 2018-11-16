@@ -21,12 +21,19 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		this._injectComponents = null;
 		this._renderInjectComponents = null;
 		
+		this._readMorePosition = -1;
+		this.state["showReadMore"] = false;
+		
 		this._refCollector = new RefCollector();
 	}
 	
 	_addContentToGroups() {
 		var currentArray = this._groups;
 		var currentArrayLength = currentArray.length;
+		if(this._readMorePosition !== -1 && !this.state["showReadMore"]) {
+			currentArrayLength = Math.min(this._readMorePosition, currentArrayLength);
+		}
+		
 		for(var i = 0; i < currentArrayLength; i++) {
 			var currentGroup = currentArray[i];
 			var currentContainer = this._refCollector.getRef(currentGroup["id"]);
@@ -74,8 +81,10 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		this._containers = new Array();
 		this._injectComponents = new Array();
 		this._renderInjectComponents = new Array();
+		this._readMorePosition = -1;
 		
 		var temporaryElement = document.createElement("div");
+		
 		temporaryElement.innerHTML = content;
 		
 		var componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
@@ -133,6 +142,35 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 			}
 			else {
 				currentElements.push(currentElement);
+				
+				if(currentElement.nodeType === 1 && currentElement.localName === "p") {
+					console.dir(currentElement);
+					console.log(currentElement.childNodes);
+					if(currentElement.childNodes && currentElement.childNodes.length === 1) {
+						let onlyChild = currentElement.childNodes[0];
+						
+						if(onlyChild.nodeType === 8 && onlyChild.nodeValue) {
+							var injectComponentData = new Object();
+							var id = "inject-" + this._injectComponents.length;
+							injectComponentData["id"] = id;
+							injectComponentData["container"] = currentElement;
+							this._renderInjectComponents.push(this._createInjectComponent(id, "readMoreButton", {"controller": this}));
+							this._injectComponents.push(injectComponentData);
+							
+							this._containers.push(
+								React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
+									React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+								)
+							);
+							this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
+				
+							currentElements = new Array();
+							
+							this._readMorePosition = this._groups.length;
+							console.log(onlyChild, this._readMorePosition, this._groups);
+						}
+					}
+				}
 			}
 		}
 		
@@ -143,6 +181,10 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 				)
 			);
 			this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
+		}
+		
+		if(this._readMorePosition === -1) {
+			this._readMorePosition = this._groups.length;
 		}
 	}
 	

@@ -27,6 +27,7 @@ export {default as ValidationBaseObject} from "wprr/elements/form/validation/Val
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";
 export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
+export {default as SelectSection} from "wprr/elements/area/SelectSection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
@@ -44,6 +45,7 @@ export {default as MarkupPlacement} from "wprr/markup/MarkupPlacement";
 export {default as UseMarkup} from "wprr/markup/UseMarkup";
 
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
+export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";
 
 export {default as Loop} from "wprr/elements/create/Loop";
 export {default as TriggerHandler} from "wprr/reference/TriggerHandler";

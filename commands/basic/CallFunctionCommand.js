@@ -1,4 +1,4 @@
-import Wprr from "wprr/Wprr";
+import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import BaseCommand from "wprr/commands/BaseCommand";
 
@@ -53,7 +53,7 @@ export default class CallFunctionCommand extends BaseCommand {
 		let newCallFunctionCommand = new CallFunctionCommand();
 		
 		newCallFunctionCommand.setInputWithoutNull("thisObject", aThisObject);
-		newCallFunctionCommand.setInputWithoutNull("theFunction", Wprr.source("staticSource", aThisObject, aFunctionName));
+		newCallFunctionCommand.setInputWithoutNull("theFunction", SourceDataWithPath.create("staticSource", aThisObject, aFunctionName));
 		newCallFunctionCommand.setInputWithoutNull("theArguments", aArguments);
 		
 		return newCallFunctionCommand;
