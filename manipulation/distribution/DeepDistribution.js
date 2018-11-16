@@ -1,8 +1,9 @@
 import React from "react";
 import {Fragment} from "react";
-import PropTypes from "prop-types";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
+
+import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
 //import DeepDistribution from "wprr/manipulation/distribution/DeepDistribution";
 export default class DeepDistribution extends ManipulationBaseObject {
@@ -12,19 +13,14 @@ export default class DeepDistribution extends ManipulationBaseObject {
 		
 	}
 	
-	getChildContext() {
-		//console.log("wprr/ReferenceInjection::getReferences")
-		
-		var distributions = new Object();
+	_renderMainElement() {
+		let clonedElements = super._renderMainElement();
 		
 		var distributionName = "default";
 		
-		distributions[distributionName] = this._getMainElementProps();
+		let injectData = {};
+		injectData["distributions/" + distributionName] = this._getMainElementProps();
 		
-		return {"distributions": distributions};
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElements);
 	}
 }
-
-DeepDistribution.childContextTypes = {
-	"distributions": PropTypes.object
-};

@@ -57,7 +57,6 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 	_renderMainElement() {
 		let clonedElements = super._renderMainElement();
 		
-		console.log(this, this._references);
 		return React.createElement(WprrContext.Provider, {"value": {"references": this._references}}, clonedElements);
 	}
 	

@@ -1,7 +1,5 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 //import DistributionTarget from "wprr/manipulation/distribution/DistributionTarget";
@@ -19,7 +17,7 @@ export default class DistributionTarget extends ManipulationBaseObject {
 		
 		var distributionName = "default";
 		
-		var distributionObject = this.context.distributions[distributionName];
+		var distributionObject = this.getReference("distributions/" + distributionName);
 		for(var objectName in distributionObject) {
 			returnObject[objectName] = distributionObject[objectName];
 		}
@@ -27,7 +25,3 @@ export default class DistributionTarget extends ManipulationBaseObject {
 		return returnObject;
 	}
 }
-
-DistributionTarget.contextTypes = {
-	"distributions": PropTypes.object
-};

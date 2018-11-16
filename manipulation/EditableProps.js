@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
-import ReferenceHolder from "wprr/reference/ReferenceHolder";
+import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
 //import EditableProps from "wprr/manipulation/EditableProps";
 export default class EditableProps extends ManipulationBaseObject {
 
 	constructor (props) {
 		super(props);
-		
-		this._references = new ReferenceHolder();
 		
 		this._propsThatShouldNotCopy.push("editableProps");
 		this._propsThatShouldNotCopy.push("externalStorage");
@@ -102,15 +100,6 @@ export default class EditableProps extends ManipulationBaseObject {
 		}
 	}
 	
-	getReferences() {
-		return this._references;
-	}
-	
-	getChildContext() {
-		//console.log("wprr/manipulation/EditableProps::getReferences")
-		return {"references": this._references};
-	}
-	
 	updateValue(aName, aValue, aAdditionalData) {
 		//console.log("wprr/manipulation/EditableProps::updateValue");
 		//console.log(aName, aValue, aAdditionalData);
@@ -161,8 +150,6 @@ export default class EditableProps extends ManipulationBaseObject {
 					if(this.state[currentName] !== undefined) {
 						aReturnObject[currentName] = this.state[currentName];
 					}
-					
-					this._references.addObject("value/" + currentName, this);
 				}
 			}
 		}
@@ -176,14 +163,35 @@ export default class EditableProps extends ManipulationBaseObject {
 		return aReturnObject;
 	}
 	
-	_prepareRender() {
+	_renderMainElement() {
+		let clonedElements = super._renderMainElement();
 		
-		this._references.setParent(this.context.references);
+		let injectData = {};
 		
-		super._prepareRender();
+		var editableProps = this.getSourcedProp("editableProps");
+		
+		if(editableProps) {
+			var currentArray;
+			if(typeof(editableProps) === "string") {
+				currentArray = editableProps.split(","); //METODO: remove whitespace
+			}
+			else if(editableProps instanceof Array) {
+				currentArray = editableProps;
+			}
+			
+			if(currentArray) {
+				var currentArrayLength = currentArray.length;
+				for(var i = 0; i < currentArrayLength; i++) {
+					var currentName = currentArray[i];
+					
+					injectData["value/" + currentName] = this;
+				}
+			}
+		}
+		else {
+			console.warn("No props are set as editable.");
+		}
+		
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElements);
 	}
 }
-
-EditableProps.childContextTypes = {
-	"references": PropTypes.object
-};

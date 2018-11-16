@@ -1,9 +1,9 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
+import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
 //import Markup from "wprr/markup/Markup";
 export default class Markup extends ManipulationBaseObject {
@@ -41,15 +41,6 @@ export default class Markup extends ManipulationBaseObject {
 		return usedPlacements;
 	}
 	
-	getChildContext() {
-		//console.log("wprr/markup/Markup::getChildContext");
-		
-		return {
-			"markupUsedPlacements": this._getUsedPlacements(),
-			"markupChildren": this._getMarkupChildren()
-		};
-	}
-	
 	_createClonedElement() {
 		//console.log("wprr/markup/Markup::_createClonedElement");
 		
@@ -68,9 +59,15 @@ export default class Markup extends ManipulationBaseObject {
 			this._clonedElement = React.createElement.apply(React, callArray);
 		}
 	}
+	
+	_renderMainElement() {
+		let clonedElements = super._renderMainElement();
+		
+		let injectData = {
+			"markupUsedPlacements": this._getUsedPlacements(),
+			"markupChildren": this._getMarkupChildren()
+		};
+		
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElements);
+	}
 }
-
-Markup.childContextTypes = {
-	"markupUsedPlacements": PropTypes.array,
-	"markupChildren": PropTypes.array
-};

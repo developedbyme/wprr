@@ -1,7 +1,5 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import UseMarkup from "wprr/markup/UseMarkup";
@@ -87,8 +85,8 @@ export default class MarkupChildren extends ManipulationBaseObject {
 	
 	_getInjectionChildren() {
 		//console.log("wprr/markup/MarkupChildren::_getInjectionChildren");
-		var allChildren = this.context.markupChildren;
-		var usedPlacements = this.context.markupUsedPlacements;
+		var allChildren = this.getReference("markupChildren");
+		var usedPlacements = this.getReference("markupUsedPlacements");
 		
 		if(!allChildren) {
 			console.error("Markup doesn't have any children", this);
@@ -129,8 +127,8 @@ export default class MarkupChildren extends ManipulationBaseObject {
 					if(typeof(selectData) === "string") {
 						children = new Array();
 						
-						var allChildren = this.context.markupChildren;
-						var usedPlacements = this.context.markupUsedPlacements;
+						var allChildren = this.getRefernce("markupChildren");
+						var usedPlacements = this.getRefernce("markupUsedPlacements");
 						
 						var currentArray2 = selectData.split(",");
 						var currentArray2Length = currentArray2.length;
@@ -145,12 +143,12 @@ export default class MarkupChildren extends ManipulationBaseObject {
 					}
 				}
 				else if(this.props.dynamicChildren) {
-					var allChildren = this.context.markupChildren;
+					var allChildren = this.getReference("markupChildren");
 					
 					children = React.createElement(Markup, {"injectChildren": allChildren}, this.props.dynamicChildren);
 				}
 				else if(this.props.children) {
-					var allChildren = this.context.markupChildren;
+					var allChildren = this.getReference("markupChildren");
 					
 					children = React.createElement(Markup, {"injectChildren": allChildren}, this.props.children);
 				}
@@ -197,8 +195,3 @@ export default class MarkupChildren extends ManipulationBaseObject {
 		}
 	}
 }
-
-MarkupChildren.contextTypes = {
-	"markupUsedPlacements": PropTypes.array,
-	"markupChildren": PropTypes.array
-};
