@@ -27,6 +27,7 @@ export {default as ValidationBaseObject} from "wprr/elements/form/validation/Val
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";
 export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
+export {default as SelectSection} from "wprr/elements/area/SelectSection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
