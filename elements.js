@@ -44,6 +44,7 @@ export {default as MarkupPlacement} from "wprr/markup/MarkupPlacement";
 export {default as UseMarkup} from "wprr/markup/UseMarkup";
 
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
+export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";
 
 export {default as Loop} from "wprr/elements/create/Loop";
 export {default as TriggerHandler} from "wprr/reference/TriggerHandler";
