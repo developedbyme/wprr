@@ -25,6 +25,11 @@ export default class CallFunctionCommand extends BaseCommand {
 		let theFunction = this.getInput("theFunction");
 		let theArguments = this.getInput("theArguments");
 		
+		if(!Array.isArray(theArguments)) {
+			console.warn("Arguments are not an array. Assuming value as first argument.", theArguments, this);
+			theArguments = [theArguments];
+		}
+		
 		let currentArray = theArguments;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {

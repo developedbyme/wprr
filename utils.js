@@ -17,4 +17,5 @@ export {default as RefCollector} from "wprr/utils/RefCollector";
 export {default as ReduxDataStorage} from "wprr/utils/ReduxDataStorage";
 export {default as ChangeDataFunctions} from "wprr/wp/admin/ChangeDataFunctions";
 export {default as PostData} from "wprr/wp/postdata/PostData";
+export {default as LoadingGroup} from "wprr/utils/loading/LoadingGroup";
 

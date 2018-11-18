@@ -97,6 +97,11 @@ export default class StoreController {
 		return loader;
 	}
 	
+	getLoaderByRelativePath(aPath, aLocation = "default") {
+		let absolutePath = this.getAbsolutePath("M-ROUTER-API-DATA", aPath, aLocation);
+		return this.getLoader(absolutePath);
+	}
+	
 	_loaderLoaded(aPath, aLoader) {
 		this._dataLoaded(aPath, aLoader.getData());
 	}
