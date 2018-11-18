@@ -15,6 +15,7 @@ export default class JsonLoader {
 			"Accept": "application/json"
 		};
 		
+		this._loadedAt = -1;
 		this._status = 0;
 		this._data = null;
 		this._body = null;
@@ -118,6 +119,7 @@ export default class JsonLoader {
 	}
 	
 	setData(aData) {
+		this._loadedAt = (new Date()).valueOf();
 		this._data = aData;
 	}
 	
