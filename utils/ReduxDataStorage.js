@@ -5,7 +5,7 @@ export default class ReduxDataStorage {
 	
 	constructor() {
 		
-		this._pathPrefix = "mainDataStorage";
+		this._pathPrefix = null;
 		this._storeController = null;
 		this._currentState = null;
 		
@@ -82,6 +82,11 @@ export default class ReduxDataStorage {
 	getValue(aName) {
 		//console.log("wprr/utils/ReduxDataStorage::getValue");
 		
-		return objectPath.get(this._currentState, aName);
+		let path = aName;
+		if(this._pathPrefix) {
+			path = this._pathPrefix + "." + path;
+		}
+		
+		return objectPath.get(this._currentState.globalVariables, path);
 	}
 }

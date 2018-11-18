@@ -16,6 +16,11 @@ export default class EditableProps extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("externalStorage");
 	}
 	
+	externalDataChange() {
+		this._updateState();
+	}
+	
+	
 	_updateExternalStorage(aName, aValue) {
 		//console.log("wprr/manipulation/EditableProps::_updateExternalStorage");
 		
@@ -23,6 +28,33 @@ export default class EditableProps extends ManipulationBaseObject {
 		
 		if(externalStorage) {
 			externalStorage.updateValue(aName, aValue);
+		}
+	}
+	
+	_updateState() {
+		let externalStorage = this.getSourcedProp("externalStorage");
+		let currentArray = this._getEditablePropNames();
+		
+		let newState = {};
+		let hasChange = false;
+		
+		if(currentArray) {
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentName = currentArray[i];
+			
+				let currentValue = externalStorage.getValue(currentName);
+				if(currentValue !== null && currentValue !== undefined) {
+					if(this.state[currentName] !== currentValue) {
+						newState[currentName] = currentValue;
+						hasChange = true;
+					}
+				}
+			}
+		}
+		
+		if(hasChange) {
+			this.setState(newState);
 		}
 	}
 	
@@ -36,6 +68,7 @@ export default class EditableProps extends ManipulationBaseObject {
 		let externalStorage = this.getSourcedProp("externalStorage");
 		
 		if(externalStorage) {
+			externalStorage.addOwner(this);
 			let currentArray = this._getEditablePropNames();
 		
 			if(currentArray) {
@@ -47,7 +80,6 @@ export default class EditableProps extends ManipulationBaseObject {
 					if(currentValue !== null && currentValue !== undefined) {
 						this.state[currentName] = currentValue;
 					}
-					
 				}
 			}
 		}
