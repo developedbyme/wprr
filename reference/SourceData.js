@@ -221,6 +221,8 @@ export default class SourceData {
 					command.setTriggerElement(aFromObject);
 					return command.perform();
 				}
+			case "commandElement":
+				return aFromObject;
 			default:
 				console.error("Unknown type " + aType);
 				break;

@@ -1,9 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import SourceData from "wprr/reference/SourceData";
 
 import WprrContext from "wprr/reference/WprrContext";
+
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
@@ -221,18 +222,32 @@ export default class WprrBaseObject extends React.Component {
 		
 		return returnValue;
 	}
-	
-	componentWillMount() {
-		//console.log("wprr/WprrBaseObject.componentWillMount");
-		
-	}
 
 	componentDidMount() {
 		//console.log("wprr/WprrBaseObject.componentDidMount");
+		
+		let commands = this.getSourcedProp("didMountCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
+	}
+	
+	componentDidUpdate() {
+		//console.log("wprr/WprrBaseObject.componentDidUpdate");
+		
+		let commands = this.getSourcedProp("didUpdateCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
 	}
 
 	componentWillUnmount() {
 		//console.log("wprr/WprrBaseObject.componentWillUnmount");
+		
+		let commands = this.getSourcedProp("willUnmountCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
 	}
 	
 	_prepareRender() {
@@ -318,9 +333,3 @@ export default class WprrBaseObject extends React.Component {
 WprrBaseObject.CATCH_RENDER_ERRORS = true;
 
 WprrBaseObject.contextType = WprrContext;
-
-/*
-WprrBaseObject.contextTypes = {
-	"references": PropTypes.object
-};
-*/

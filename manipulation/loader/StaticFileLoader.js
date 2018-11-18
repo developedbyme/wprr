@@ -22,6 +22,8 @@ export default class StaticFileLoader extends ManipulationBaseObject {
 	componentWillMount() {
 		//console.log("wprr/manipulation/loader/StaticFileLoader::componentWillMount");
 		
+		//METODO: this function is depreciated by react
+		
 		let url = this.getSourcedProp("url");
 		
 		this.setState({"status": 2});

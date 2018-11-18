@@ -12,6 +12,9 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		super(props);
 		
 		this._propsThatShouldNotCopy = new Array();
+		this._propsThatShouldNotCopy.push("didMountCommands");
+		this._propsThatShouldNotCopy.push("didUpdateCommands");
+		this._propsThatShouldNotCopy.push("willUnmountCommands");
 		this._propsThatShouldNotOverride = new Array(); //METODO: implement this
 		
 		this._clonedElement = null;

@@ -34,6 +34,7 @@ export default class ModuleCreatorBaseObject {
 		this._wprrInstance = null;
 		this._mainComponent = null;
 		this._store = null;
+		this._strictMode = false;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
@@ -198,6 +199,10 @@ export default class ModuleCreatorBaseObject {
 				)
 			)	
 		);
+		
+		if(this._strictMode) {
+			rootObject = React.createElement(React.StrictMode, {}, rootObject);
+		}
 		
 		return rootObject;
 	}

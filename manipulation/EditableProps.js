@@ -29,7 +29,7 @@ export default class EditableProps extends ManipulationBaseObject {
 	componentWillMount() {
 		//console.log("wprr/manipulation/EditableProps::componentWillMount");
 		
-		super.componentWillMount();
+		//METODO: this function is depreciated by react
 		
 		this._prepareRender();
 		
