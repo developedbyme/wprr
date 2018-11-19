@@ -34,8 +34,12 @@ export default class ReduxDataStorage {
 		this._redux_subscribe();
 	}
 	
+	setPathPrefix(aPathPrefix) {
+		this._pathPrefix = aPathPrefix;
+	}
+	
 	_callback_reduxChange() {
-		console.log("wprr/utils/ReduxDataStorage::_callback_reduxChange");
+		//console.log("wprr/utils/ReduxDataStorage::_callback_reduxChange");
 		
 		this._currentState = this._storeController.getStore().getState();
 		
@@ -48,13 +52,13 @@ export default class ReduxDataStorage {
 	}
 	
 	_redux_subscribe() {
-		console.log("wprr/utils/ReduxDataStorage::_redux_subscribe");
+		//console.log("wprr/utils/ReduxDataStorage::_redux_subscribe");
 		
 		this._redux_unsubscribeFunction = this._storeController.getStore().subscribe(this._callback_reduxChangeBound);
 	}
 	
 	_redux_unsubscribe() {
-		console.log("wprr/utils/ReduxDataStorage::_redux_unsubscribe");
+		//console.log("wprr/utils/ReduxDataStorage::_redux_unsubscribe");
 		
 		if(this._redux_unsubscribeFunction) {
 			this._redux_unsubscribeFunction();
