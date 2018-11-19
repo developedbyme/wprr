@@ -89,8 +89,6 @@ export default class Condition extends AdjustFunction {
 				break;
 		}
 		
-		console.log(returnValue, outputName);
-		
 		aData[outputName] = returnValue;
 		
 		return aData;
