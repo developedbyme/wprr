@@ -13,8 +13,8 @@ export default class RenameProp extends AdjustFunction {
 		
 		super();
 		
-		this._fromName = "notSet";
-		this._toName = "notSet";
+		this.setInput("fromName", "output");
+		this.setInput("toName", "input");
 	}
 	
 	/**
@@ -26,8 +26,9 @@ export default class RenameProp extends AdjustFunction {
 	 * @return	RenameProp	self
 	 */
 	setNames(aFromName, aToName) {
-		this._fromName = aFromName;
-		this._toName = aToName;
+		
+		this.setInputWithoutNull("fromName", aFromName);
+		this.setInputWithoutNull("toName", aToName);
 		
 		return this;
 	}
@@ -43,9 +44,14 @@ export default class RenameProp extends AdjustFunction {
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/RenameProp::adjust");
 		
-		let currentData = aData[this._fromName];
-		delete aData[this._fromName];
-		aData[this._toName] = currentData
+		let fromName = this.getInput("fromName", aData, aManipulationObject);
+		let toName = this.getInput("toName", aData, aManipulationObject);
+		
+		let currentData = aData[fromName];
+		delete aData[fromName];
+		aData[toName] = currentData;
+		
+		console.log(">", fromName, toName, currentData);
 		
 		return aData;
 	}

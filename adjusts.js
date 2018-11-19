@@ -9,6 +9,7 @@ import OptionsFromTerms from "wprr/manipulation/adjustfunctions/wp/OptionsFromTe
 import RelationTerms from "wprr/manipulation/adjustfunctions/wp/dbmcontent/RelationTerms";
 import FilterProps from "wprr/manipulation/adjustfunctions/FilterProps";
 import RemoveProps from "wprr/manipulation/adjustfunctions/RemoveProps";
+import RenameProp from "wprr/manipulation/adjustfunctions/RenameProp";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -33,3 +34,5 @@ let filterProps = FilterProps.create;
 export {filterProps};
 let removeProps = RemoveProps.create;
 export {removeProps};
+let renameProp = RenameProp.create;
+export {renameProp};
