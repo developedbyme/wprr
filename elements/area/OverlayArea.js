@@ -43,7 +43,11 @@ export default class OverlayArea extends WprrBaseObject {
 		}
 	}
 	
-	
+	showOverlayInDefaultTemplate(aId, aContent) {
+		let template = this.getSourcedProp("template");
+		let useMarkup = OverlayArea.createUseMarkup(template, this._closeButtonTemplate, aContent);
+		this.showOverlay(aId, useMarkup);
+	}
 	
 	showOverlay(aId, aContent) {
 		let overlaysArray = ([]).concat(this.props.overlays);
@@ -82,9 +86,9 @@ export default class OverlayArea extends WprrBaseObject {
 		
 		let injectData = {"overlay/id": overlayId, "trigger/closeCurrentOverlay": localTriggerObject};
 		
-		let returnElement = <ReferenceInjection key={"overlay-" + overlayId} injectData={injectData}>
-			{aOverlayData.content}
-		</ReferenceInjection>;
+		let returnElement = React.createElement(ReferenceInjection, {key: "overlay-" + overlayId, injectData: injectData},
+			aOverlayData.content
+		);
 		
 		return returnElement;
 	}
@@ -101,31 +105,37 @@ export default class OverlayArea extends WprrBaseObject {
 				overlayElements.push(this._renderOverlay(currentArray[i]));
 			}
 			
-			overlayElement = <div key="overlay" className="absolute-overlay overlay-layer no-pointer-events">
-				{overlayElements}
-			</div>;
+			overlayElement = React.createElement("div", {key: "overlay", "className": "absolute-overlay overlay-layer no-pointer-events"},
+				overlayElements
+			);
 		}
 		
 		let injectData = new Object();
 		injectData["trigger/showOverlay"] = this;
 		injectData["trigger/hideOverlay"] = this;
 		
-		return <wrapper>
-			<ReferenceInjection injectData={injectData}>
-				{this.props.children}
-				{overlayElement}
-			</ReferenceInjection>
-		</wrapper>;
+		return React.createElement("wrapper", {},
+			React.createElement(ReferenceInjection, {"injectData": injectData},
+				this.props.children,
+				overlayElement
+			)
+		);
 	}
 	
 	static createCloseButtonMarkup() {
-		let closeButtonMarkup = <Markup><TriggerButton triggerName="closeCurrentOverlay"><MarkupChildren placement="all" /></TriggerButton></Markup>;
+		let closeButtonMarkup = React.createElement(Markup, {},
+			React.createElement(TriggerButton, {triggerName: "closeCurrentOverlay"},
+				React.createElement(MarkupChildren, {placement: "all"})
+			)
+		);
 		
-		return <MarkupPlacement placement="closeButton" passOnInjection={true}><UseMarkup markup={closeButtonMarkup} /></MarkupPlacement>;
+		return React.createElement(MarkupPlacement, {placement: "closeButton", passOnInjection: true},
+			React.createElement(UseMarkup, {markup: closeButtonMarkup})
+		);
 	}
 	
 	static createUseMarkup(aTemplate, aCloseButton, aContent) {
-		let templateContent = [aCloseButton, <MarkupPlacement placement="content">{aContent}</MarkupPlacement>];
-		return <UseMarkup markup={aTemplate} dynamicChildren={templateContent} />;
+		let templateContent = [aCloseButton, React.createElement(MarkupPlacement, {placement: "content"}, aContent)];
+		return React.createElement(UseMarkup, {markup: aTemplate, dynamicChildren: templateContent});
 	}
 }

@@ -45,6 +45,8 @@ export {default as MarkupChildren} from "wprr/markup/MarkupChildren";
 export {default as MarkupPlacement} from "wprr/markup/MarkupPlacement";
 export {default as UseMarkup} from "wprr/markup/UseMarkup";
 
+export {default as OverlayArea} from "wprr/elements/area/OverlayArea";
+
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
 export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";
 
