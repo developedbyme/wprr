@@ -15,8 +15,8 @@ export default class ClassFromProp extends AdjustFunction {
 		
 		super();
 		
-		this._propName = SourceData.create("prop", "notSet");
-		this._options = new Array();
+		this.setInput("prop", SourceData.create("prop", "notSet"));
+		this.setInput("options", new Array());
 	}
 	
 	/**
@@ -27,7 +27,7 @@ export default class ClassFromProp extends AdjustFunction {
 	 * @return	ClassFromProp	self
 	 */
 	setProp(aPropName) {
-		this._propName = SourceData.create("prop", aPropName);
+		this.setInput("prop", SourceData.create("prop", aPropName));
 		
 		return this;
 	}
@@ -40,7 +40,7 @@ export default class ClassFromProp extends AdjustFunction {
 	 * @return	ClassFromProp	self
 	 */
 	setPropSource(aSource) {
-		this._propName = aSource;
+		this.setInput("prop", aSource);
 		
 		return this;
 	}
@@ -53,7 +53,9 @@ export default class ClassFromProp extends AdjustFunction {
 	 * @return	ClassFromProp	self
 	 */
 	setOptions(aOptions) {
-		this._options = aOptions;
+		this.setInput("options", aOptions);
+		
+		return this;
 	}
 	
 	/**
@@ -67,13 +69,13 @@ export default class ClassFromProp extends AdjustFunction {
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/ClassFromProp::adjust");
 		
-		let currentData = aManipulationObject.resolveSourcedData(this._propName);
+		let currentData = this.getInput("prop", aData, aManipulationObject);
 		
-		delete aData[this._propName];
+		//METODO: source cleanup
 		
 		let isFound = false;
 		
-		let currentArray = this._options;
+		let currentArray = this.getInput("options", aData, aManipulationObject);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOption = currentArray[i];
