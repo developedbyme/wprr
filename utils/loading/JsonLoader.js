@@ -136,7 +136,7 @@ export default class JsonLoader {
 				this.onLoad(this._data);
 			}
 			
-			let currentArray = this._successCommands;
+			let currentArray = [].concat(this._successCommands);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentCommand = currentArray[i];
@@ -146,7 +146,7 @@ export default class JsonLoader {
 			}
 		}
 		else if(this._status === -1) {
-			let currentArray = this._errorCommands;
+			let currentArray = [].concat(this._errorCommands);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentCommand = currentArray[i];
