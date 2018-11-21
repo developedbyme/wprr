@@ -28,39 +28,43 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_addContentToGroups() {
-		var currentArray = this._groups;
-		var currentArrayLength = currentArray.length;
-		if(this._readMorePosition !== -1 && !this.state["showReadMore"]) {
-			currentArrayLength = Math.min(this._readMorePosition, currentArrayLength);
-		}
+		{
+			let currentArray = this._groups;
+			let currentArrayLength = currentArray.length;
+			if(this._readMorePosition !== -1 && !this.state["showReadMore"]) {
+				currentArrayLength = Math.min(this._readMorePosition, currentArrayLength);
+			}
 		
-		for(var i = 0; i < currentArrayLength; i++) {
-			var currentGroup = currentArray[i];
-			var currentContainer = this._refCollector.getRef(currentGroup["id"]);
-			var currentArray2 = currentGroup["children"];
-			var currentArray2Length = currentArray2.length;
-			for(var j = 0; j < currentArray2Length; j++) {
-				var currentElement = currentArray2[j];
-				currentContainer.appendChild(currentElement);
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentGroup = currentArray[i];
+				let currentContainer = this._refCollector.getRef(currentGroup["id"]);
+				let currentArray2 = currentGroup["children"];
+				let currentArray2Length = currentArray2.length;
+				for(var j = 0; j < currentArray2Length; j++) {
+					let currentElement = currentArray2[j];
+					currentContainer.appendChild(currentElement);
+				}
 			}
 		}
 		
-		var currentArray = this._injectComponents;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
-			var injectionData = currentArray[i];
-			injectionData["container"].appendChild(this._refCollector.getRef(injectionData["id"]));
+		{
+			let currentArray = this._injectComponents;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let injectionData = currentArray[i];
+				injectionData["container"].appendChild(this._refCollector.getRef(injectionData["id"]));
+			}
 		}
 	}
 	
 	componentDidMount() {
-		console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidMount");
+		//console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidMount");
 		
 		this._addContentToGroups();
 	}
 	
 	componentDidUpdate() {
-		console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidUpdate");
+		//console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidUpdate");
 		
 		this._addContentToGroups();
 	}
@@ -75,7 +79,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_createContent() {
-		var content = this.getReference("wprr/postData").getContent();
+		let content = this.getSourcedPropWithDefault("content", SourceData.create("postData", "content"));
 		
 		this._groups = new Array();
 		this._containers = new Array();
@@ -83,24 +87,25 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		this._renderInjectComponents = new Array();
 		this._readMorePosition = -1;
 		
-		var temporaryElement = document.createElement("div");
+		let temporaryElement = document.createElement("div");
 		
 		temporaryElement.innerHTML = content;
 		
-		var componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
-		var currentArray = componentObjects;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
-			var currentElement = currentArray[i];
+		{
+			let componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
+			let currentArray = componentObjects;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentElement = currentArray[i];
 			
-			var injectComponentData = new Object();
-			var id = "inject-" + this._injectComponents.length;
-			injectComponentData["id"] = id;
-			injectComponentData["container"] = currentElement;
+				let injectComponentData = new Object();
+				let id = "inject-" + this._injectComponents.length;
+				injectComponentData["id"] = id;
+				injectComponentData["container"] = currentElement;
 			
-			var type = currentElement.getAttribute("data-wprr-component");
-			var data = null;
-			var dataString = currentElement.getAttribute("data-wprr-component-data");
+				let type = currentElement.getAttribute("data-wprr-component");
+				let data = null;
+				let dataString = currentElement.getAttribute("data-wprr-component-data");
 			
 				try {
 					if(dataString != null) {
@@ -115,59 +120,60 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 				}
 			
 			
-			this._injectComponents.push(injectComponentData);
+				this._injectComponents.push(injectComponentData);
+			}
 		}
 		
-		var currentElements = new Array();
 		
-		var currentArray = temporaryElement.children;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
-			var currentElement = currentArray[i];
+		let currentElements = new Array();
+		
+		{
+			let currentArray = temporaryElement.children;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentElement = currentArray[i];
 			
-			if(currentElement.nodeType === 1 && currentElement.getAttribute("data-expanded-content") == "1") {
-				if(currentElements.length > 0) {
-					this._containers.push(
-						React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
-							React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
-						)
-					);
-					this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
+				if(currentElement.nodeType === 1 && currentElement.getAttribute("data-expanded-content") == "1") {
+					if(currentElements.length > 0) {
+						this._containers.push(
+							React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
+								React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+							)
+						);
+						this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
 					
-					currentElements = new Array();
+						currentElements = new Array();
+					}
+				
+					this._containers.push(React.createElement("div", {key: "container-" + this._containers.length, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)}));
+					this._groups.push({"id": "group-" + this._groups.length, "children": [currentElement]});
 				}
+				else {
+					currentElements.push(currentElement);
 				
-				this._containers.push(React.createElement("div", {key: "container-" + this._containers.length, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)}));
-				this._groups.push({"id": "group-" + this._groups.length, "children": [currentElement]});
-			}
-			else {
-				currentElements.push(currentElement);
-				
-				if(currentElement.nodeType === 1 && currentElement.localName === "p") {
-					console.dir(currentElement);
-					console.log(currentElement.childNodes);
-					if(currentElement.childNodes && currentElement.childNodes.length === 1) {
-						let onlyChild = currentElement.childNodes[0];
+					if(currentElement.nodeType === 1 && currentElement.localName === "p") {
+						if(currentElement.childNodes && currentElement.childNodes.length === 1) {
+							let onlyChild = currentElement.childNodes[0];
 						
-						if(onlyChild.nodeType === 8 && onlyChild.nodeValue) {
-							var injectComponentData = new Object();
-							var id = "inject-" + this._injectComponents.length;
-							injectComponentData["id"] = id;
-							injectComponentData["container"] = currentElement;
-							this._renderInjectComponents.push(this._createInjectComponent(id, "readMoreButton", {"controller": this}));
-							this._injectComponents.push(injectComponentData);
+							if(onlyChild.nodeType === 8 && onlyChild.nodeValue) {
+								let injectComponentData = new Object();
+								let id = "inject-" + this._injectComponents.length;
+								injectComponentData["id"] = id;
+								injectComponentData["container"] = currentElement;
+								this._renderInjectComponents.push(this._createInjectComponent(id, "readMoreButton", {"controller": this}));
+								this._injectComponents.push(injectComponentData);
 							
-							this._containers.push(
-								React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
-									React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
-								)
-							);
-							this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
+								this._containers.push(
+									React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
+										React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+									)
+								);
+								this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
 				
-							currentElements = new Array();
+								currentElements = new Array();
 							
-							this._readMorePosition = this._groups.length;
-							console.log(onlyChild, this._readMorePosition, this._groups);
+								this._readMorePosition = this._groups.length;
+							}
 						}
 					}
 				}
