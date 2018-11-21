@@ -50,7 +50,8 @@ export default class OverlayArea extends WprrBaseObject {
 	}
 	
 	showOverlay(aId, aContent) {
-		let overlaysArray = ([]).concat(this.props.overlays);
+		//MENOTE: we operate on the current array as it can have concurrency problems otherwise
+		let overlaysArray = this.props.overlays; //([]).concat(this.props.overlays);
 		
 		overlaysArray.push({"id": aId, "content": aContent});
 		
@@ -58,9 +59,11 @@ export default class OverlayArea extends WprrBaseObject {
 	}
 	
 	hideOverlay(aId) {
-		//console.log("wprr/elements/area/OverlayArea::hideOverlay");
+		console.log("wprr/elements/area/OverlayArea::hideOverlay");
+		console.log(aId);
 		
-		let overlaysArray = ([]).concat(this.props.overlays);
+		//MENOTE: we operate on the current array as it can have concurrency problems otherwise
+		let overlaysArray = this.props.overlays; //([]).concat(this.props.overlays);
 		
 		let currentArray = overlaysArray;
 		let currentArrayLength = currentArray.length;
