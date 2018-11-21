@@ -116,7 +116,7 @@ export default class OverlayArea extends WprrBaseObject {
 		
 		return React.createElement("wrapper", {},
 			React.createElement(ReferenceInjection, {"injectData": injectData},
-				this.props.children,
+				React.createElement(React.Fragment, {"key": "main"}, this.props.children),
 				overlayElement
 			)
 		);
