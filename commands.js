@@ -7,6 +7,7 @@ import SetStateValueCommand from "wprr/commands/basic/SetStateValueCommand";
 import ReloadPageCommand from "wprr/commands/navigation/ReloadPageCommand";
 import NavigationCommand from "wprr/commands/navigation/NavigationCommand";
 import ForceUpdateCommand from "wprr/commands/navigation/ForceUpdateCommand";
+import InjectReferencesCommand from "wprr/commands/elements/InjectReferencesCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -27,3 +28,6 @@ let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;
 let forceUpdate = ForceUpdateCommand.create;
 export {reload, navigate, forceUpdate};
+
+let injectReferences = InjectReferencesCommand.create;
+export {injectReferences};
