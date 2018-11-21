@@ -5,6 +5,8 @@ export default class DataStorage {
 	
 	constructor() {
 		this.setData(new Object());
+		
+		this._owners = new Array();
 	}
 	
 	setData(aData) {
@@ -15,9 +17,30 @@ export default class DataStorage {
 		return this._data;
 	}
 	
+	addOwner(aOwner) {
+		this._owners.push(aOwner);
+	}
+	
+	removeOwner(aOwner) {
+		let currentIndex = this._owners.indexOf(aOwner);
+		if(currentIndex !== -1) {
+			this._owners.splice(currentIndex, 1);
+		}
+	}
+	
+	_updateOwners() {
+		let currentArray = this._owners;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentOwner = currentArray[i];
+			currentOwner.externalDataChange();
+		}
+	}
+	
 	updateValue(aName, aValue) {
 		//console.log("wprr/utils/DataStorage::updateValue");
 		objectPath.set(this._data, aName, aValue);
+		this._updateOwners();
 		
 		return this;
 	}
