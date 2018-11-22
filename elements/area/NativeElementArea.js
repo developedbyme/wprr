@@ -1,13 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
+
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 //import NativeElementArea from "wprr/elements/area/NativeElementArea";
 export default class NativeElementArea extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._element = null;
 	}
@@ -17,7 +18,11 @@ export default class NativeElementArea extends WprrBaseObject {
 	}
 	
 	_updateRender() {
+		let commands = this.getSourcedProp("renderCommands");
 		
+		if(commands) {
+			CommandPerformer.perform(commands, this._element, this);
+		}
 	}
 	
 	componentWillMount() {
@@ -25,11 +30,17 @@ export default class NativeElementArea extends WprrBaseObject {
 	}
 	
 	componentDidMount() {
-		this.componentDidUpdate();
+		super.componentDidMount();
+		this._addAndUpdate();
 	}
 	
 	componentDidUpdate() {
-		let domNode = ReactDOM.findDOMNode(this);
+		super.componentDidUpdate();
+		this._addAndUpdate();
+	}
+	
+	_addAndUpdate() {
+		let domNode = this.getMainElement();
 		
 		if(this._element.parentNode !== domNode) {
 			domNode.appendChild(this._element);
