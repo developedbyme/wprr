@@ -50,13 +50,13 @@ export default class ToggleValueCommand extends BaseCommand {
 		element.updateValue(valueName, selectedValue, additionalData);
 	}
 	
-	static create(aElement = null, aValueName = null, aValue = null, aAlternateValue = null, aAditionalData = null) {
+	static create(aElement = null, aValueName = null, aValue = null, aAlternateValues = null, aAditionalData = null) {
 		let newToggleValueCommand = new ToggleValueCommand();
 		
 		newToggleValueCommand.setInputWithoutNull("element", aElement);
 		newToggleValueCommand.setInputWithoutNull("valueName", aValueName);
 		newToggleValueCommand.setInputWithoutNull("value", aValue);
-		newToggleValueCommand.setInputWithoutNull("alternateValues", aAlternateValue);
+		newToggleValueCommand.setInputWithoutNull("alternateValues", aAlternateValues);
 		newToggleValueCommand.setInputWithoutNull("additionalData", aAditionalData);
 		
 		return newToggleValueCommand;

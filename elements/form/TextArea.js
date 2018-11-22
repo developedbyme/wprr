@@ -16,15 +16,15 @@ export default class TextArea extends WprrBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		console.log("wprr/elements/form/TextArea::_callback_change");
-		console.log(aEvent);
-		console.log(aEvent.target.value);
+		//console.log("wprr/elements/form/TextArea::_callback_change");
+		//console.log(aEvent);
+		//console.log(aEvent.target.value);
 		
 		this.getReferences().getObject("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value);
 	}
 	
 	_getMainElementProps() {
-		var returnObject = super._getMainElementProps();
+		let returnObject = super._getMainElementProps();
 		
 		returnObject["id"] = this.getSourcedProp("id");
 		returnObject["name"] = this.getSourcedProp("name");
