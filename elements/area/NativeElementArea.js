@@ -10,7 +10,7 @@ export default class NativeElementArea extends WprrBaseObject {
 	constructor(aProps) {
 		super(aProps);
 		
-		this._element = null;
+		this._element = this._createElement();
 	}
 	
 	_createElement() {
@@ -23,10 +23,6 @@ export default class NativeElementArea extends WprrBaseObject {
 		if(commands) {
 			CommandPerformer.perform(commands, this._element, this);
 		}
-	}
-	
-	componentWillMount() {
-		this._element = this._createElement("div");
 	}
 	
 	componentDidMount() {
