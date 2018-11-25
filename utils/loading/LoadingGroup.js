@@ -1,5 +1,7 @@
 import CallFunctionCommand from "wprr/commands/basic/CallFunctionCommand";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+
 // import LoadingGroup from "wprr/utils/loading/LoadingGroup";
 /**
  * Loading group that checks the status of multiple loaders.
@@ -97,15 +99,7 @@ export default class LoadingGroup {
 		
 		if(status !== this._status) {
 			this._status = status;
-			
-			let currentArray = this._statusCommands;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentCommand = currentArray[i];
-				
-				currentCommand.setEventData(this._status);
-				currentCommand.perform();
-			}
+			CommandPerformer.perform(this._statusCommands, this._status, null);
 		}
 	}
 }

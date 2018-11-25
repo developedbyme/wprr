@@ -6,6 +6,7 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 import LoadingGroup from "wprr/utils/loading/LoadingGroup";
 import SetStateValueCommand from "wprr/commands/basic/SetStateValueCommand";
 import SourceData from "wprr/reference/SourceData";
+import CallFunctionCommand from "wprr/commands/basic/CallFunctionCommand";
 
 //import WprrDataLoader from "wprr/manipulation/loader/WprrDataLoader";
 export default class WprrDataLoader extends ManipulationBaseObject {
@@ -16,6 +17,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		this._loadingGroup = new LoadingGroup();
 		this._loadingGroup.addStatusCommand(SetStateValueCommand.create(this, "status", SourceData.create("event", "raw")));
+		this._loadingGroup.addStatusCommand(CallFunctionCommand.create(this, this._runStatusCommands, [SourceData.create("event", "raw")]));
 		
 		this._propsThatShouldNotCopy.push("loadData");
 		this._propsThatShouldNotCopy.push("loadingElement");
@@ -23,6 +25,26 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("errorComponent");
 		this._propsThatShouldNotCopy.push("errorElement");
 		this._propsThatShouldNotCopy.push("nonBlocking");
+		this._propsThatShouldNotCopy.push("loadedCommands");
+		
+		
+	}
+	
+	_runStatusCommands(aStatus) {
+		//console.log("wprr/manipulation/loader/WprrDataLoader::_runStatusCommands");
+		//console.log(aStatus);
+		
+		if(aStatus === 1) {
+			let commands = this.getSourcedProp("loadedCommands");
+			
+			if(commands) {
+				let commandData = new Object();
+				
+				this._getLoadedData(commandData);
+				
+				CommandPerformer.perform(commands, commandData, this);
+			}
+		}
 	}
 	
 	_formatData(aData, aFormat) {
@@ -44,10 +66,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		return data;
 	}
 	
-	_getMainElementProps() {
-		//console.log("wprr/manipulation/loader/WprrDataLoader::_getMainElementProps");
-		let returnObject = super._getMainElementProps();
-		
+	_getLoadedData(aReturnObject) {
 		let loadData = this.getSourcedProp("loadData");
 		let storeController = this.getReference("redux/store/wprrController");
 		
@@ -75,8 +94,15 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				currentPath = storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase);
 			}
 			
-			returnObject[objectName] = this._formatData(this._loadingGroup.getData(currentPath), currentApiFormat);
+			aReturnObject[objectName] = this._formatData(this._loadingGroup.getData(currentPath), currentApiFormat);
 		}
+	}
+	
+	_getMainElementProps() {
+		//console.log("wprr/manipulation/loader/WprrDataLoader::_getMainElementProps");
+		let returnObject = super._getMainElementProps();
+		
+		this._getLoadedData(returnObject);
 		
 		let nonBlocking = this.getSourcedProp("nonBlocking");
 		if(nonBlocking) {
