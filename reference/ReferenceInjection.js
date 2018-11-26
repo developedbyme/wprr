@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -20,13 +19,6 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 	getReferences() {
 		return this._references;
 	}
-	
-	/*
-	getChildContext() {
-		//console.log("wprr/reference/ReferenceInjection::getReferences")
-		return {"references": this._references};
-	}
-	*/
 	
 	_removeUsedProps(aReturnObject) {
 		//console.log("wprr/reference/ReferenceInjection::_removeUsedProps");
@@ -64,9 +56,3 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		return React.createElement(ReferenceInjection, {"injectData": aData}, aChildOrChildren);
 	}
 }
-
-/*
-ReferenceInjection.childContextTypes = {
-	"references": PropTypes.object
-};
-*/

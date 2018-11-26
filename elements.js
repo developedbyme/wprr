@@ -30,6 +30,7 @@ export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
 export {default as SelectSection} from "wprr/elements/area/SelectSection";
 export {default as ReduxGlobalVariables} from "wprr/manipulation/ReduxGlobalVariables";
+export {default as CookieData} from "wprr/manipulation/CookieData";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

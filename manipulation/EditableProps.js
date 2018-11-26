@@ -1,7 +1,5 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import ReferenceInjection from "wprr/reference/ReferenceInjection";

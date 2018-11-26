@@ -1,7 +1,5 @@
 import React from 'react';
 
-import PropTypes from 'prop-types';
-
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
@@ -63,8 +61,6 @@ export default class CookieData extends ManipulationBaseObject {
 		
 		let editableElement = React.createElement.apply(React, callArray)
 		
-		return <ReferenceInjection injectData={injectData}>
-			{editableElement}
-		</ReferenceInjection>
+		return React.createElement(ReferenceInjection, {"injectData": injectData}, editableElement);
 	}
 }

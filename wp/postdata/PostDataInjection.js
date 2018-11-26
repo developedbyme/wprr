@@ -29,11 +29,13 @@ export default class PostDataInjection extends ReferenceInjection {
 		
 		let postData = this.getSourcedProp("postData");
 		
+		let prefix = "wprr/postData";
+		
 		if(postData) {
 			this._postData.setData(postData);
-			returnObject["wprr/postData"] = this._postData;
-			returnObject["wprr/postData/meta"] = postData.meta;
-			returnObject["wprr/postData/acfObject"] = postData.acf;
+			returnObject[prefix] = this._postData;
+			returnObject[prefix + "/meta"] = postData.meta;
+			returnObject[prefix + "/acfObject"] = postData.acf;
 		}
 		else {
 			console.error("No post data provided.", this);
