@@ -156,9 +156,4 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		this._createClonedElement();
 		return this._clonedElement;
 	}
-	
-	_prepareRender() {
-		//console.log("wprr/manipulation/ManipulationBaseObject::_prepareRender");
-		super._prepareRender();
-	}
 }

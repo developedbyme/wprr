@@ -11,16 +11,29 @@ export default class WprrBaseObject extends React.Component {
 	
 	constructor(aProps) {
 		super(aProps);
-		this.state = {
 		
-		};
+		this.state = new Object();
+		
 		this._mainElementType = "div";
 		this._classNames = new Array();
 		
 		this._propsToCheckForUpdate = null;
 		this._statesToCheckForUpdate = null;
 		
+		this._isRendering = false;
+		this._hasRendered = false;
 		this._elementRef = React.createRef();
+	}
+	
+	setState(aNewState) {
+		if(this._hasRendered) {
+			super.setState(aNewState);
+		}
+		else {
+			for(let objectName in aNewState) {
+				this.state[objectName] = aNewState[objectName];
+			}
+		}
 	}
 	
 	getReferences() {
@@ -250,6 +263,10 @@ export default class WprrBaseObject extends React.Component {
 		}
 	}
 	
+	_prepareInitialRender() {
+		//console.log("wprr/WprrBaseObject::_prepareInitialRender");
+	}
+	
 	_prepareRender() {
 		//console.log("wprr/WprrBaseObject::_prepareRender");
 	}
@@ -261,6 +278,12 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_renderSafe() {
+		
+		this._isRendering = true;
+		
+		if(!this._hasRendered) {
+			this._prepareInitialRender();
+		}
 		
 		this._prepareRender();
 		
@@ -284,8 +307,10 @@ export default class WprrBaseObject extends React.Component {
 			mainElement = React.createElement.apply(React, renderArguments);
 		}
 		
-		return mainElement;
+		this._hasRendered = true;
+		this._isRendering = false;
 		
+		return mainElement;
 	}
 	
 	render() {

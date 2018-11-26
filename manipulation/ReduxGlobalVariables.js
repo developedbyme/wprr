@@ -67,8 +67,6 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 		
 		this._externalStorage.addOwner(this);
 		
-		this._prepareRender();
-		
 		let currentArray = this._getVariableNames();
 	
 		if(currentArray) {

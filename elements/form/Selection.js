@@ -32,10 +32,6 @@ export default class Selection extends WprrBaseObject {
 		
 		return returnObject;
 	}
-		
-	componentWillMount() {
-		
-	}
 	
 	_callback_change(aEvent) {
 		//console.log("Selection::_callback_change");

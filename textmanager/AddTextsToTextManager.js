@@ -33,8 +33,6 @@ export default class AddTextsToTextManager extends ManipulationBaseObject {
 			textManager.setData(texts);
 		}
 		
-		console.log(">>>>>>>", textManager);
-		
 		super._prepareRender();
 	}
 }

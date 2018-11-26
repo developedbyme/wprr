@@ -61,8 +61,6 @@ export default class EditableProps extends ManipulationBaseObject {
 		
 		//METODO: this function is depreciated by react
 		
-		this._prepareRender();
-		
 		let externalStorage = this.getSourcedProp("externalStorage");
 		
 		if(externalStorage) {

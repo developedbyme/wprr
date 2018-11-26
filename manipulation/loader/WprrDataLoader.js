@@ -165,6 +165,11 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._loadingGroup.load();
 	}
 	
+	_prepareInitialRender() {
+		//console.log("wprr/manipulation/loader/WprrDataLoader::_prepareInitialRender");
+		this.updateLoad();
+	}
+	
 	_prepareRender() {
 		//console.log("wprr/manipulation/loader/WprrDataLoader::_prepareRender");
 		super._prepareRender();

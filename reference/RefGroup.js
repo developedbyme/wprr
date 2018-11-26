@@ -36,7 +36,6 @@ export default class RefGroup extends ManipulationBaseObject {
 	getRef(aName) {
 		let currentRef = this.state.refs[aName];
 		if(currentRef) {
-			console.log(">>>>>>>>>>", currentRef);
 			return currentRef;
 		}
 		console.warn("Group doesn't have ref " + aName);
