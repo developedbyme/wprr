@@ -12,6 +12,7 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 		
 		this._propsThatShouldNotCopy.push("variables");
 		this._propsThatShouldNotCopy.push("pathPrefix");
+		this._propsThatShouldNotCopy.push("externalStorage");
 		
 		this._externalStorage = new ReduxDataStorage();
 	}
@@ -51,13 +52,20 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 		
 		//METODO: this function is depreciated by react
 		
-		this._externalStorage.setStoreController(this.getReference("redux/store/wprrController"));
-		this._externalStorage.addOwner(this);
-		
-		let pathPrefix = this.getSourcedProp("pathPrefix");
-		if(pathPrefix) {
-			this._externalStorage.setPathPrefix(pathPrefix);
+		let propExternalStorage = this.getSourcedProp("externalStorage");
+		if(propExternalStorage) {
+			this._externalStorage = propExternalStorage;
 		}
+		else {
+			this._externalStorage.setStoreController(this.getReference("redux/store/wprrController"));
+			
+			let pathPrefix = this.getSourcedProp("pathPrefix");
+			if(pathPrefix) {
+				this._externalStorage.setPathPrefix(pathPrefix);
+			}
+		}
+		
+		this._externalStorage.addOwner(this);
 		
 		this._prepareRender();
 		
