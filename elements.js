@@ -39,6 +39,7 @@ export {default as Control} from "wprr/manipulation/Control";
 export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";
 export {default as ContentCreatorSingleItem} from "wprr/elements/create/ContentCreatorSingleItem";
 export {default as HasData} from "wprr/manipulation/HasData";
+export {default as QueryStringParameters} from "wprr/manipulation/QueryStringParameters";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
 export {default as DistributionTarget} from "wprr/manipulation/distribution/DistributionTarget";
