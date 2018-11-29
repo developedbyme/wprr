@@ -136,10 +136,12 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_getMainElementClassNames() {
-		var returnArray = new Array();
+		let returnArray = new Array();
 		
-		if(this.props.className) {
-			returnArray.push(this.props.className);
+		let className = this.getSourcedProp("className");
+		
+		if(className) {
+			returnArray.push(className);
 		}
 		
 		let currentArray = this._classNames;
