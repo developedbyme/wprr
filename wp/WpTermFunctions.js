@@ -23,6 +23,10 @@ export default class WpTermFunctions {
 		return WpTermFunctions.getTermBy("id", aId, aTerms);
 	}
 	
+	static getTermBySlugPath(aPath, aTerms) {
+		return WpTermFunctions.getTermFromHierarchTermsBySlugPath(aPath, WpTermFunctions.getHierarchTerms(aTerms));
+	}
+	
 	static getHierarchTerms(aTerms) {
 		var returnArray = new Array();
 		
