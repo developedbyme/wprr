@@ -26,7 +26,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("errorElement");
 		this._propsThatShouldNotCopy.push("nonBlocking");
 		this._propsThatShouldNotCopy.push("loadedCommands");
-		
+		this._propsThatShouldNotCopy.push("apiFormat");
 		
 	}
 	

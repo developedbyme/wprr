@@ -8,6 +8,7 @@ import ReloadPageCommand from "wprr/commands/navigation/ReloadPageCommand";
 import NavigationCommand from "wprr/commands/navigation/NavigationCommand";
 import ForceUpdateCommand from "wprr/commands/navigation/ForceUpdateCommand";
 import InjectReferencesCommand from "wprr/commands/elements/InjectReferencesCommand";
+import TriggerCommand from "wprr/commands/basic/TriggerCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -21,8 +22,9 @@ let setValue = SetValueCommand.create;
 let toggleValue = ToggleValueCommand.create;
 let performSelectedCommands = PerformSelectedCommands.create;
 let setStateValue = SetStateValueCommand.create;
+let trigger = TriggerCommand.create;
 
-export {setValue, toggleValue, performSelectedCommands, setStateValue};
+export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;
