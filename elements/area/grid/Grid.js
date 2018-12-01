@@ -145,18 +145,14 @@ export default class Grid extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/area/grid/Grid::_renderMainElement");
 		
-		return <wrapper>
-			{this._getRows()}
-		</wrapper>;
+		return React.createElement("wrapper", {}, this._getRows());
 	}
 
 	static _contentCreator_row(aData, aKeyIndex, aReferences) {
-		return <FlexRow key={"row-" + aKeyIndex} className={aData.className} itemClasses={aData.itemClasses} >
-			{aData.children}
-		</FlexRow>;
+		return React.createElement(FlexRow, {"key": "row-" + aKeyIndex, "className": aData.className, "itemClasses": aData.itemClasses}, aData.children);
 	}
 
 	static _contentCreator_rowSpacing(aData, aKeyIndex, aReferences) {
-		return <div key={"spacing-" + aKeyIndex} className="spacing standard" />;
+		return React.createElement("div", {"key": "spacing-" + aKeyIndex, "className": "spacing standard"});
 	}
 }
