@@ -8,6 +8,11 @@ export default class TextManager {
 		
 		this._data = null;
 		this._translationMap = new Object();
+		
+		//METODO: only use this in development mode
+		this._unmappedTexts = new Object();
+		this._untranslatedTexts = new Object();
+		//window._debugTextManager = this;
 	}
 	
 	setData(aDataObject) {
@@ -40,6 +45,7 @@ export default class TextManager {
 				return translatedText;
 			}
 			console.warn("Translation doesn't exist for text " + aText);
+			this._untranslatedTexts[textId] = aText;
 		}
 		
 		return aText;
@@ -51,6 +57,7 @@ export default class TextManager {
 		}
 		
 		console.warn("Translation is not mapped for text " + aText);
+		this._unmappedTexts[this._convertToCamelCase(aText)] = aText;
 		return null;
 	}
 	
@@ -80,5 +87,55 @@ export default class TextManager {
 			let stringVersion = aData+"";
 			this._translationMap[stringVersion] = prefix + aName;
 		}
+	}
+	
+	_convertToCamelCase(aText) {
+		//METODO: move this to utils
+		
+		//METODO: remove special characters
+		
+		let specialCharactersRegExp = new RegExp("[^A-Za-z0-9 ]+", "g");
+		
+		//METODO: better replacement of all special characters
+		aText = aText
+			.replace(/å/g, "a")
+			.replace(/ä/g, "a")
+			.replace(/ö/g, "o")
+			.replace(/Å/g, "A")
+			.replace(/Ä/g, "A")
+			.replace(/Ö/g, "O")
+			.replace(specialCharactersRegExp, "");
+		
+		var currentArray = aText.split(" ");
+		var currentArrayLength = currentArray.length;
+		var returnText = currentArray[0].toLowerCase();
+		for(var i = 1; i < currentArrayLength; i++) { //MENOTE: first iteration is done outside of loop
+			var currentString = currentArray[i].toLowerCase();
+			if(currentString.length > 0) {
+				returnText += currentString[0].toUpperCase() + currentString.substring(1, currentString.length);
+			}
+		}
+	
+		return returnText;
+	};
+	
+	_debug_getUnmappedObject() {
+		console.log(JSON.stringify(this._unmappedTexts, null, "\t"));
+		return this._unmappedTexts;
+	}
+	
+	_debug_getNewTranslatedObject(aPath = null) {
+		
+		let newTranslationObject = JSON.parse(JSON.stringify(this._data));
+		
+		for(let objectName in this._untranslatedTexts) {
+			objectPath.set(newTranslationObject, objectName, this._untranslatedTexts[objectName]);
+		}
+		
+		let returnObject = aPath ? objectPath.get(newTranslationObject, aPath) : newTranslationObject;
+		
+		console.log(JSON.stringify(returnObject, null, "\t"));
+		
+		return returnObject;
 	}
 }
