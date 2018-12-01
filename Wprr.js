@@ -137,6 +137,10 @@ export default class Wprr {
 	static text(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}
+	
+	static translateText(aText, aFormat = "text") {
+		return React.createElement(SourcedText, {"text": Wprr.source("translation", aText), "format": aFormat});
+	}
 }
 
 Wprr.commands = new Object();
