@@ -134,8 +134,16 @@ export default class Wprr {
 		return Wprr.source("text", aPath);
 	}
 	
+	static sourceTranslation(aText) {
+		return Wprr.source("translation", aText);
+	}
+	
 	static text(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
+	}
+	
+	static translateText(aText, aFormat = "text") {
+		return React.createElement(SourcedText, {"text": Wprr.sourceTranslation(aText), "format": aFormat});
 	}
 }
 
