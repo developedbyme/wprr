@@ -28,7 +28,7 @@ export default class TermName extends WprrBaseObject {
 	
 	static _adjust_selectTerm(aReturnObject, aManipulationObject) {
 		
-		let termId = aReturnObject["termId"];
+		let termId = parseInt(aReturnObject["termId"], 10);
 		
 		let currentArray = aReturnObject["terms"];
 		let currentArrayLength = currentArray.length;

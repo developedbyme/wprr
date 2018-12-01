@@ -23,6 +23,7 @@ export {default as TextArea} from "wprr/elements/form/TextArea";
 export {default as Selection} from "wprr/elements/form/Selection";
 export {default as Checkbox} from "wprr/elements/form/Checkbox";
 export {default as FlexRow} from "wprr/elements/area/grid/FlexRow";
+export {default as EqualRowsGrid} from "wprr/elements/area/grid/EqualRowsGrid";
 export {default as ValidatingForm} from "wprr/elements/form/ValidatingForm";
 export {default as ValidationBaseObject} from "wprr/elements/form/validation/ValidationBaseObject";
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";

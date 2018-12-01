@@ -62,6 +62,10 @@ export default class PostData {
 		return this._data.type;
 	}
 	
+	getChildren() {
+		return this._data.children;
+	}
+	
 	getMetaData(aField) {
 		if(this._data.meta) {
 			return objectPath.get(this._data.meta, aField);
