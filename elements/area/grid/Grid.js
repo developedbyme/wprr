@@ -127,6 +127,7 @@ export default class Grid extends WprrBaseObject {
 		
 		var rowContentCreator = this._getRowContentCreator();
 		var rowSpacingContentCreator = this.getSourcedPropWithDefault("rowSpacingContentCreatorPath", Grid._contentCreator_rowSpacing);
+		let rowSpacingMarkup = this.getSourcedProp("rowSpacingMarkup");
 		
 		var returnArray = new Array();
 		
@@ -136,6 +137,9 @@ export default class Grid extends WprrBaseObject {
 			returnArray.push(rowContentCreator(currentArray[i], i, references));
 			if(i < currentArrayLength-1 && rowSpacingContentCreator) {
 				returnArray.push(rowSpacingContentCreator(null, i, references));
+			}
+			else if(rowSpacingMarkup) {
+				returnArray.push(React.createElement(React.Fragment, {"key": "spacing-" + i}, rowSpacingMarkup));
 			}
 		}
 		

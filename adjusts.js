@@ -11,6 +11,7 @@ import FilterProps from "wprr/manipulation/adjustfunctions/FilterProps";
 import RemoveProps from "wprr/manipulation/adjustfunctions/RemoveProps";
 import RenameProp from "wprr/manipulation/adjustfunctions/RenameProp";
 import Condition from "wprr/manipulation/adjustfunctions/logic/Condition";
+import FittingItems from "wprr/manipulation/adjustfunctions/measure/FittingItems";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -40,3 +41,6 @@ export {renameProp};
 
 let condition = Condition.create;
 export {condition};
+
+let fittingItems = FittingItems.create;
+export {fittingItems};
