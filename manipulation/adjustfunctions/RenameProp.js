@@ -51,8 +51,6 @@ export default class RenameProp extends AdjustFunction {
 		delete aData[fromName];
 		aData[toName] = currentData;
 		
-		console.log(">", fromName, toName, currentData);
-		
 		return aData;
 	}
 	

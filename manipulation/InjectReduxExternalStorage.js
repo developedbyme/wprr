@@ -25,9 +25,10 @@ export default class InjectReduxExternalStorage extends ManipulationBaseObject {
 	}
 	
 	_prepareInitialRender() {
-		console.log("wprr/reference/InjectReduxExternalStorage::_prepareInitialRender");
+		//console.log("wprr/reference/InjectReduxExternalStorage::_prepareInitialRender");
 		this._externalStorage.setStoreController(this.getReference("redux/store/wprrController"));
 		
+		//METODO
 		//let pathPrefix = 
 	}
 	

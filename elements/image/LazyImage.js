@@ -66,8 +66,6 @@ export default class LazyImage extends WprrBaseObject {
 		if(imageData) {
 			let imageLoaderManager = this.getReference("wprr/imageLoaderManager");
 			
-			console.log(imageLoaderManager);
-			
 			if(imageLoaderManager) {
 				this._imageUpdater = ReactImageUpdater.create(this, ReactDOM.findDOMNode(this), imageData, this._getSettings(), imageLoaderManager);
 				imageLoaderManager.addUpdater(this._imageUpdater);
