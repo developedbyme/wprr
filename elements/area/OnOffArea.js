@@ -34,7 +34,6 @@ export default class OnOffArea extends ManipulationBaseObject {
 			aReturnObject["selectedSections"] = (currentValue === trueValue) ? "on" : "off";
 		}
 		
-		
 		return aReturnObject;
 	}
 	
@@ -42,8 +41,6 @@ export default class OnOffArea extends ManipulationBaseObject {
 		//console.log("wprr/elements/area/OnOffArea::_getChildToClone");
 		//console.log(this);
 		
-		return [<SelectSection>
-			{this.props.children}
-		</SelectSection>];
+		return [React.createElement(SelectSection, {}, this.props.children)];
 	}
 }
