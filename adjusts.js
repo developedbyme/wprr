@@ -12,6 +12,9 @@ import RemoveProps from "wprr/manipulation/adjustfunctions/RemoveProps";
 import RenameProp from "wprr/manipulation/adjustfunctions/RenameProp";
 import Condition from "wprr/manipulation/adjustfunctions/logic/Condition";
 import FittingItems from "wprr/manipulation/adjustfunctions/measure/FittingItems";
+import Ratio from "wprr/manipulation/adjustfunctions/logic/Ratio";
+import StyleFromHeight from "wprr/manipulation/adjustfunctions/css/StyleFromHeight";
+import StyleFromSize from "wprr/manipulation/adjustfunctions/css/StyleFromSize";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -44,3 +47,9 @@ export {condition};
 
 let fittingItems = FittingItems.create;
 export {fittingItems};
+let ratio = Ratio.create;
+export {ratio};
+let styleFromHeight = StyleFromHeight.create;
+export {styleFromHeight};
+let styleFromSize = StyleFromSize.create;
+export {styleFromSize};
