@@ -57,7 +57,10 @@ export default class Grid extends WprrBaseObject {
 	}
 	
 	_createRowData(aChildren) {
-		return {"children": aChildren};
+		return {
+			"children": aChildren,
+			"spacingMarkup": this.getSourcedProp("spacingMarkup")
+		};
 	}
 	
 	_startSplitUpChildren() {
@@ -135,11 +138,13 @@ export default class Grid extends WprrBaseObject {
 		var currentArrayLength = currentArray.length;
 		for(var i = 0; i < currentArrayLength; i++) {
 			returnArray.push(rowContentCreator(currentArray[i], i, references));
-			if(i < currentArrayLength-1 && rowSpacingContentCreator) {
-				returnArray.push(rowSpacingContentCreator(null, i, references));
-			}
-			else if(rowSpacingMarkup) {
-				returnArray.push(React.createElement(React.Fragment, {"key": "spacing-" + i}, rowSpacingMarkup));
+			if(i < currentArrayLength-1) {
+				if(rowSpacingMarkup) {
+					returnArray.push(React.createElement(React.Fragment, {"key": "spacing-" + i}, rowSpacingMarkup));
+				}
+				else if(rowSpacingContentCreator) {
+					returnArray.push(rowSpacingContentCreator(null, i, references));
+				}
 			}
 		}
 		
@@ -153,7 +158,7 @@ export default class Grid extends WprrBaseObject {
 	}
 
 	static _contentCreator_row(aData, aKeyIndex, aReferences) {
-		return React.createElement(FlexRow, {"key": "row-" + aKeyIndex, "className": aData.className, "itemClasses": aData.itemClasses}, aData.children);
+		return React.createElement(FlexRow, {"key": "row-" + aKeyIndex, "className": aData.className, "itemClasses": aData.itemClasses, "spacingMarkup": aData.spacingMarkup}, aData.children);
 	}
 
 	static _contentCreator_rowSpacing(aData, aKeyIndex, aReferences) {

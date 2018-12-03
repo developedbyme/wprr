@@ -44,12 +44,17 @@ export default class FlexRow extends WprrBaseObject {
 		
 		var returnArray = new Array();
 		
+		let spacingMarkup = this.getSourcedProp("spacingMarkup");
+		
 		var currentArray = this._getChildren();
 		if(currentArray) {
 			var currentArrayLength = currentArray.length;
 			for(var i = 0; i < currentArrayLength; i++) {
 				var currentChild = currentArray[i];
 				returnArray.push(this._getFlexItem(currentChild, i));
+				if(i < currentArrayLength-1 && spacingMarkup) {
+					returnArray.push(React.createElement(React.Fragment, {"key": "spacing-" + i}, spacingMarkup));
+				}
 			}
 		}
 		else {
