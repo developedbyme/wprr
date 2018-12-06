@@ -9,6 +9,7 @@ import NavigationCommand from "wprr/commands/navigation/NavigationCommand";
 import ForceUpdateCommand from "wprr/commands/navigation/ForceUpdateCommand";
 import InjectReferencesCommand from "wprr/commands/elements/InjectReferencesCommand";
 import TriggerCommand from "wprr/commands/basic/TriggerCommand";
+import ReactRouterPushCommand from "wprr/commands/thirdparty/reactrouter/ReactRouterPushCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -29,7 +30,8 @@ export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger};
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;
 let forceUpdate = ForceUpdateCommand.create;
-export {reload, navigate, forceUpdate};
+let reactRouterNavigate = ReactRouterPushCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate};
 
 let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};
