@@ -8,6 +8,7 @@ export {default as ClickOutsideTrigger} from "wprr/elements/interaction/ClickOut
 export {default as WprrDataLoader} from "wprr/manipulation/loader/WprrDataLoader";
 export {default as PartRenderFunction} from "wprr/elements/create/PartRenderFunction";
 export {default as ReferenceInjection} from "wprr/reference/ReferenceInjection";
+export {default as AddContextReference} from "wprr/reference/AddContextReference";
 
 export {default as SourcedText} from "wprr/elements/text/SourcedText";
 export {default as DateDisplay} from "wprr/elements/text/DateDisplay";
