@@ -38,6 +38,12 @@ export default class CallFunctionCommand extends BaseCommand {
 			currentArray[i] = this.resolveSource(currentArray[i]);
 		}
 		
+		if(typeof(theFunction) === "string") {
+			if(thisObject[theFunction]) {
+				theFunction = thisObject[theFunction];
+			}
+		}
+		
 		if(theFunction instanceof Function) {
 			let returnValue = theFunction.apply(thisObject, resolvedArguments);
 			return returnValue;
