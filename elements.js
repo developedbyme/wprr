@@ -54,6 +54,9 @@ export {default as UseMarkup} from "wprr/markup/UseMarkup";
 
 export {default as OverlayArea} from "wprr/elements/area/OverlayArea";
 
+export {default as AnimationControl} from "wprr/manipulation/animation/AnimationControl";
+export {default as AnimationPart} from "wprr/manipulation/animation/AnimationPart";
+
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
 export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import {Fragment} from "react";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
