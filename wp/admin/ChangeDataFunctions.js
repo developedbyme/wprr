@@ -60,13 +60,17 @@ export default class ChangeDataFunctions  {
 		return returnObject;
 	}
 	
-	static createAcfData(aField, aValue) {
+	static createFieldData(aField, aValue) {
 		let returnObject = new Object();
 		
 		returnObject["value"] = aValue;
 		returnObject["field"] = aField;
 		
 		return returnObject;
+	}
+	
+	static createAcfData(aField, aValue) {
+		return ChangeDataFunctions.createFieldData(aField, aValue);
 	}
 	
 	static createBatchPostData(aId, aChanges) {

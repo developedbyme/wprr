@@ -38,4 +38,11 @@ export default class ChangeData  {
 		
 		return this;
 	}
+	
+	setMeta(aField, aValue) {
+		
+		let changeValue = ChangeDataFunctions.createFieldData(aField, aValue);
+		
+		this.addChange(ChangeDataFunctions.createChangeData("meta", changeValue));
+	}
 }
