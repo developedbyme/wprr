@@ -10,6 +10,7 @@
   "author": "mattias@developedbyme.com",
   "license": "MIT",
   "dependencies": {
+    "@tweenjs/tween.js": "^17.2.0",
     "document-offset": "^1.0.4",
     "js-cookie": "^2.2.0",
     "moment": "^2.22.2",
@@ -19,8 +20,7 @@
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "tween.js": "^16.6.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.1.6",

@@ -1,18 +1,8 @@
 import React from "react";
 
-import TWEEN from "tween.js";
-
-//METODO: this needs to move out globally
-if(window.requestAnimationFrame) {
-	function animate(time) {
-		window.requestAnimationFrame(animate);
-		TWEEN.update(time);
-	}
-
-	window.requestAnimationFrame(animate);
-}
-
 import WprrBaseObject from "wprr/WprrBaseObject";
+
+import TWEEN from "@tweenjs/tween.js";
 
 //import OpenCloseExpandableArea from "wprr/elements/area/OpenCloseExpandableArea";
 export default class OpenCloseExpandableArea extends WprrBaseObject {

@@ -1,6 +1,6 @@
 import ControlFunction from "wprr/manipulation/adjustfunctions/control/ControlFunction";
 
-import TWEEN from "tween.js";
+import TWEEN from "@tweenjs/tween.js";
 
 //import SliderControl from "wprr/manipulation/adjustfunctions/control/slider/SliderControl";
 export default class SliderControl extends ControlFunction {

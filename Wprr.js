@@ -14,11 +14,22 @@ import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRen
 import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
 import AppModuleWithRenderCreator from "wprr/modulecreators/AppModuleWithRenderCreator";
 
+import TWEEN from "@tweenjs/tween.js";
+
 //import Wprr from "wprr/Wprr";
 export default class Wprr {
 	
 	constructor() {
 		this._moduleCreators = new Object();
+		
+		if(window && window.requestAnimationFrame) {
+			function animate(time) {
+				window.requestAnimationFrame(animate);
+				TWEEN.update(time);
+			}
+
+			window.requestAnimationFrame(animate);
+		}
 	}
 	
 	addGlobalReference(aGlobalObject) {
