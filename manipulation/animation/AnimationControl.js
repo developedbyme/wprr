@@ -7,11 +7,13 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 import TWEEN from "@tweenjs/tween.js";
 import objectPath from "object-path";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+
 //import AnimationControl from "wprr/manipulation/animation/AnimationControl";
 export default class AnimationControl extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._propsThatShouldNotCopy.push("state");
 		this._propsThatShouldNotCopy.push("states");
@@ -27,7 +29,6 @@ export default class AnimationControl extends ManipulationBaseObject {
 	}
 	
 	addAnimationPart(aPart) {
-		console.log("wprr/manipulation/animation/AnimationControl::addAnimationPart");
 		this._animationParts.push(aPart);
 		aPart.updateAnimation(this._tweenParameters);
 	}
@@ -42,10 +43,10 @@ export default class AnimationControl extends ManipulationBaseObject {
 	}
 	
 	runCompleteCommands(aCommands) {
-		//METODO
+		CommandPerformer.perform(aCommands, null, this);
 	}
 	
-	animate(aValues, aTime, aEasingFunction, aCompleteCommands = null) {
+	animate(aValues, aTime, aEasingFunction, aDelay = 0, aCompleteCommands = null) {
 		
 		let completeCallback = (function() {
 			this._tween = null;
@@ -54,7 +55,29 @@ export default class AnimationControl extends ManipulationBaseObject {
 			}
 		}).bind(this);
 		
-		this._tween = new TWEEN.Tween(this._tweenParameters).to(aValues, 1000*aTime).easing(aEasingFunction).onUpdate(this._updateTweenBound).onComplete(completeCallback).start();
+		this._tween = new TWEEN.Tween(this._tweenParameters).to(aValues, 1000*aTime).easing(aEasingFunction).delay(1000*aDelay).onUpdate(this._updateTweenBound).onComplete(completeCallback).start();
+		
+		return this;
+	}
+	
+	animateToState(aName, aTime, aEasingFunction, aDelay = 0, aCompleteCommands = null) {
+		
+		let stateValues = this.getStateValues(aName);
+		
+		if(stateValues) {
+			this.animate(stateValues, aTime, aEasingFunction, aDelay, aCompleteCommands);
+			this._lastState = aName;
+			
+			let valueController = this.getReference("value/state");
+			if(valueController) {
+				valueController.updateValue("state", aName);
+			}
+		}
+		else {
+			console.warn("No state named " + aName + ". Ignoring animation.", this);
+		}
+		
+		return this;
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -71,6 +94,7 @@ export default class AnimationControl extends ManipulationBaseObject {
 		
 		if(states) {
 			if(states[aName]) {
+				//METODO: resolve properties
 				return states[aName];
 			}
 			console.warn("Animation control has no state named " + aName + ".", this);
@@ -86,7 +110,7 @@ export default class AnimationControl extends ManipulationBaseObject {
 		let newState = this.getSourcedProp("state");
 		
 		if(newState && (newState !== this._lastState)) {
-			this.animate(this.getStateValues(newState), 2, TWEEN.Easing.Quadratic.Out);
+			this.animate(this.getStateValues(newState), 0.5, TWEEN.Easing.Quadratic.Out);
 			this._lastState = newState;
 		}
 	}
