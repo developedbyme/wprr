@@ -43,6 +43,8 @@ export {default as ElementSize} from "wprr/manipulation/measure/ElementSize";
 export {default as ContentCreatorSingleItem} from "wprr/elements/create/ContentCreatorSingleItem";
 export {default as HasData} from "wprr/manipulation/HasData";
 export {default as QueryStringParameters} from "wprr/manipulation/QueryStringParameters";
+export {default as ScrollActivatedItem} from "wprr/manipulation/measure/ScrollActivatedItem";
+export {default as ScrollPosition} from "wprr/manipulation/measure/ScrollPosition";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
 export {default as DistributionTarget} from "wprr/manipulation/distribution/DistributionTarget";
@@ -56,6 +58,7 @@ export {default as OverlayArea} from "wprr/elements/area/OverlayArea";
 
 export {default as AnimationControl} from "wprr/manipulation/animation/AnimationControl";
 export {default as AnimationPart} from "wprr/manipulation/animation/AnimationPart";
+export {default as StateCommands} from "wprr/manipulation/StateCommands";
 
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
 export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";

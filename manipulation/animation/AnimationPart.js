@@ -27,10 +27,6 @@ export default class AnimationPart extends ManipulationBaseObject {
 		return aReturnObject;
 	}
 	
-	_debug_animationFunction(aProps, aStyles, aAnimationValues, aElement) {
-		aStyles["opacity"] = aAnimationValues.envelope;
-	}
-	
 	updateAnimation(aAnimationValues) {
 		//console.log("wprr/manipulation/animation/AnimationPart::updateAnimation");
 		//console.log(aAnimationValues);

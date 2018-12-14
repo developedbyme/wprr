@@ -17,6 +17,8 @@ export default class SourceData {
 		this._type = null;
 		this._path = null;
 		this._debug_lastEvaluatedValue = null;
+		
+		this._shouldCleanup = true;
 	}
 	
 	setup(aType, aPath) {
@@ -31,6 +33,16 @@ export default class SourceData {
 		this._sourceFunction = aFunction;
 		
 		return this;
+	}
+	
+	setCleanup(aShouldCleanup) {
+		this._shouldCleanup = aShouldCleanup;
+		
+		return this;
+	}
+	
+	shouldCleanup() {
+		return this._shouldCleanup;
 	}
 	
 	getSource(aFromObject) {
@@ -51,6 +63,8 @@ export default class SourceData {
 	}
 	
 	removeUsedProps(aProps) {
+		//METODO: add propWithDots
+		
 		if(this._type === "prop") {
 			let propName = this._path;
 			let dotIndex = propName.indexOf(".");
@@ -58,6 +72,10 @@ export default class SourceData {
 				propName = propName.substring(dotIndex);
 			}
 			
+			let prop = aProps[propName];
+			if(prop instanceof SourceData && !prop.shouldCleanup()) {
+				return;
+			}
 			delete aProps[propName];
 		}
 	}

@@ -7,8 +7,8 @@ import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 //import Adjust from "wprr/manipulation/Adjust";
 export default class Adjust extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 	}
 	

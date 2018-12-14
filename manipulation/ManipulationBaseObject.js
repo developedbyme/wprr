@@ -4,6 +4,7 @@ import {Fragment} from "react";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
+import SourceData from "wprr/reference/SourceData";
 
 //import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 export default class ManipulationBaseObject extends WprrBaseObject {
@@ -18,6 +19,20 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		this._propsThatShouldNotOverride = new Array(); //METODO: implement this
 		
 		this._clonedElement = null;
+	}
+	
+	_cleanupProp(aPropName, aProps) {
+		let prop = aProps[aPropName];
+		
+		if(prop instanceof SourceData) {
+			console.log(">>", prop);
+			if(!prop.shouldCleanup()) {
+				return;
+			}
+			prop.removeUsedProps(aProps);
+		}
+		
+		delete aProps[aPropName];
 	}
 	
 	_removeUsedProps(aReturnObject) {

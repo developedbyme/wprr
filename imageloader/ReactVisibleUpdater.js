@@ -38,7 +38,7 @@ export default class ReactVisibleUpdater {
 	shouldActivate(aScrollX, aScrollY, aPreparationLength) {
 		//console.log("wprr/imageloader/ReactVisibleUpdater::shouldActivate");
 		
-		var currentOffset = offset(this._element);
+		let currentOffset = offset(this._element);
 		
 		if(currentOffset.top <= aScrollY+aPreparationLength) {
 			return true;
@@ -64,9 +64,9 @@ export default class ReactVisibleUpdater {
 	}
 	
 	static create(aComponent, aElement, aOwner) {
-		console.log("wprr/imageloader/ReactVisibleUpdater::create");
+		//console.log("wprr/imageloader/ReactVisibleUpdater::create");
 		
-		var newReactVisibleUpdater = new ReactVisibleUpdater();
+		let newReactVisibleUpdater = new ReactVisibleUpdater();
 		
 		newReactVisibleUpdater.setComponent(aComponent);
 		newReactVisibleUpdater.setupData(aElement);

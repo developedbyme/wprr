@@ -58,8 +58,6 @@ export default class OnOffButton extends ManipulationBaseObject {
 		//console.log("wprr/elements/interaction/OnOffButton::_getChildToClone");
 		//console.log(this);
 		
-		return [<OnOffArea>
-			{this.props.children}
-		</OnOffArea>];
+		return [React.createElement(OnOffArea, {}, this.props.children)];
 	}
 }
