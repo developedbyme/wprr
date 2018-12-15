@@ -13,11 +13,17 @@ export default class ChangeData  {
 	}
 	
 	getEditData() {
-		return ChangeDataFunctions.currentChange(this._changes);
+		return ChangeDataFunctions.createEditData(this._changes);
 	}
 	
 	addChange(aChange) {
 		this._changes.push(aChange);
+		
+		return this;
+	}
+	
+	createChange(aType, aData) {
+		this.addChange(ChangeDataFunctions.createChangeData(aType, aData));
 		
 		return this;
 	}
@@ -39,10 +45,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
-	setMeta(aField, aValue) {
+	setMeta(aField, aValue, aChangeType = "meta") {
 		
 		let changeValue = ChangeDataFunctions.createFieldData(aField, aValue);
 		
-		this.addChange(ChangeDataFunctions.createChangeData("meta", changeValue));
+		this.addChange(ChangeDataFunctions.createChangeData(aChangeType, changeValue));
+		
+		return this;
 	}
 }
