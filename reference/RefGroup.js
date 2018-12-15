@@ -104,6 +104,18 @@ export default class RefGroup extends ManipulationBaseObject {
 		
 		return refCallbackFunction;
 	}
+	
+	static createRef(aPath) {
+		let pathArray = aPath.split("/");
+		if(pathArray.length === 1) {
+			console.error("Path " + aPath + " doesn't have any group name. Format is \"group/element-path\"");
+			return null;
+		}
+		
+		let group = pathArray.shift();
+		let elementPath = pathArray.join("/");
+		return RefGroup.getCallback(elementPath, group);
+	}
 }
 
 RefGroup._callbackFunctions = new Object();

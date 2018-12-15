@@ -149,6 +149,10 @@ export default class Wprr {
 		return Wprr.source("translation", aText);
 	}
 	
+	static sourceRef(aPath) {
+		return Wprr.sourceReference("refs/" + aPath);
+	}
+	
 	static text(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}
