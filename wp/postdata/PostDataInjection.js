@@ -18,6 +18,7 @@ export default class PostDataInjection extends ReferenceInjection {
 		//console.log("wprr/wp/postdata/PostDataInjection::_removeUsedProps");
 		
 		delete aReturnObject["postData"];
+		delete aReturnObject["injectionName"];
 		
 		return aReturnObject;
 	}
@@ -30,6 +31,10 @@ export default class PostDataInjection extends ReferenceInjection {
 		let postData = this.getSourcedProp("postData");
 		
 		let prefix = "wprr/postData";
+		let injectionName = this.getSourcedProp("injectionName");
+		if(injectionName) {
+			prefix = injectionName;
+		}
 		
 		if(postData) {
 			this._postData.setData(postData);
