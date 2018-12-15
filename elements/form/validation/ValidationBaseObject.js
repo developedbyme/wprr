@@ -42,16 +42,24 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		
 		let statePropsObject = {"state": this.state, "props": aProps};
 		
+		let valueName = this.getSourcedPropInStateChange("valueName", statePropsObject);
+		
 		let checkValue = null;
 		if(aProps.check) {
 			checkValue = this.getSourcedPropInStateChange("check", statePropsObject);
 		}
 		else {
-			let valueName = this.getSourcedPropInStateChange("valueName", statePropsObject);
 			checkValue = this.getSourcedPropInStateChange(valueName, statePropsObject);
 		}
 		let validationFunction = this.getSourcedPropInStateChange("validateFunction", statePropsObject);
 		
+		let additionalData = this.getSourcedPropInStateChange("additionalData", statePropsObject);
+		let alsoValidate = this.getSourcedPropInStateChange("alsoValidate", statePropsObject);
+		
+		let additionalDataAndElement = {
+			"element": this,
+			"data": additionalData
+		}
 		//console.log(checkValue);
 		
 		let newValid = this.state["valid"];
@@ -63,28 +71,37 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		else if(aType === "blur") {
 			let validateOnBlur = this.getSourcedPropInStateChange("validateOnBlur", statePropsObject);
 			if(validateOnBlur) {
-				newValid = validationFunction(checkValue) ? 1 : -1;
+				newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
 			}
 			
 			if(validateOnBlur === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
 				newValid = 0;
 			}
+			
+			if(alsoValidate) {
+				//METODO: support arrays
+				alsoValidate.validate(aType);
+			}
 		}
 		else if(aType === "change") {
 			let validateOnChange = this.getSourcedPropInStateChange("validateOnChange", statePropsObject);
 			if(validateOnChange) {
-				newValid = validationFunction(checkValue) ? 1 : -1;
+				newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
 			}
 			
 			if(validateOnChange === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
 				newValid = 0;
 			}
+			
+			if(alsoValidate) {
+				//METODO: support arrays
+				alsoValidate.validate(aType);
+			}
 		}
 		else if(aType === "submit") {
-			newValid = validationFunction(checkValue) ? 1 : -1;
-			console.log(newValid);
+			newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
 			if(newValid === -1) {
-				console.log(checkValue + " is not valid.");
+				console.log(checkValue + " is not valid for field " + valueName + ".", this);
 			}
 		}
 		
@@ -103,6 +120,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		delete aReturnObject["validateFunction"];
 		delete aReturnObject["validateOnChange"];
 		delete aReturnObject["validateOnBlur"];
+		delete aReturnObject["alsoValidate"];
 		
 		return aReturnObject;
 	}

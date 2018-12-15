@@ -14,6 +14,8 @@ export default class Selection extends WprrBaseObject {
 		this._mainElementType = "select";
 		
 		this._callback_changeBound = this._callback_change.bind(this);
+		this._callback_blurBound = this._callback_blur.bind(this);
+		this._callback_focusBound = this._callback_focus.bind(this);
 	}
 	
 	getValue() {
@@ -26,11 +28,52 @@ export default class Selection extends WprrBaseObject {
 		let returnObject = super._getMainElementProps();
 		
 		returnObject["onChange"] = this._callback_changeBound;
+		returnObject["onBlur"] = this._callback_blurBound;
+		returnObject["onFocus"] = this._callback_focusBound;
 		
 		let valueName = this.getSourcedProp("valueName");
 		returnObject["value"] = this.getSourcedPropWithDefault("selection", SourceData.create("propWithDots", valueName));
 		
 		return returnObject;
+	}
+	
+	validate(aType) {
+		console.log("wprr/elements/form/Selection::validate");
+		
+		return this._validate(aType);
+	}
+	
+	_validate(aType) {
+		let validation = this.getReferenceIfExists("validation/validate");
+		if(validation) {
+			return validation.validate(aType);
+		}
+		
+		return 1;
+	}
+	
+	_callback_blur(aEvent) {
+		//console.log("wprr/elements/form/Selection::_callback_blur");
+		
+		this._validate("blur");
+		
+		let commands = this.getSourcedProp("blurCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, this, this);
+		}
+	}
+	
+	_callback_focus(aEvent) {
+		//console.log("wprr/elements/form/Selection::_callback_focus");
+		
+		this._validate("focus");
+		
+		let commands = this.getSourcedProp("focusCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, this, this);
+		}
 	}
 	
 	_callback_change(aEvent) {

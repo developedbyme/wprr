@@ -27,6 +27,7 @@ export {default as FlexRow} from "wprr/elements/area/grid/FlexRow";
 export {default as EqualRowsGrid} from "wprr/elements/area/grid/EqualRowsGrid";
 export {default as ValidatingForm} from "wprr/elements/form/ValidatingForm";
 export {default as ValidationBaseObject} from "wprr/elements/form/validation/ValidationBaseObject";
+export {default as ClassNameValidation} from "wprr/elements/form/validation/ClassNameValidation";
 export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseExpandableArea";
 export {default as OnOffArea} from "wprr/elements/area/OnOffArea";
 export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
