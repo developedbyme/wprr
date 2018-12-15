@@ -16,6 +16,7 @@ import Ratio from "wprr/manipulation/adjustfunctions/logic/Ratio";
 import StyleFromHeight from "wprr/manipulation/adjustfunctions/css/StyleFromHeight";
 import StyleFromSize from "wprr/manipulation/adjustfunctions/css/StyleFromSize";
 import ValueToState from "wprr/manipulation/adjustfunctions/logic/ValueToState";
+import HtmlToText from "wprr/manipulation/adjustfunctions/text/HtmlToText";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -47,6 +48,8 @@ let condition = Condition.create;
 export {condition};
 let valueToState = ValueToState.create;
 export {valueToState};
+let htmlToText = HtmlToText.create;
+export {htmlToText};
 
 let fittingItems = FittingItems.create;
 export {fittingItems};
