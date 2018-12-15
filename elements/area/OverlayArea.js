@@ -78,6 +78,31 @@ export default class OverlayArea extends WprrBaseObject {
 		this.getReference("value/overlays").updateValue("overlays", overlaysArray, null);
 	}
 	
+	_updateHtmlScroll() {
+		
+		let lockHtmlScroll = this.getSourcedPropWithDefault("lockHtmlScroll", false);
+		
+		if(lockHtmlScroll) {
+			let overlays = this.getSourcedProp("overlays");
+			if(overlays.length > 0) {
+				document.documentElement.classList.add("no-html-scoll");
+			}
+			else {
+				document.documentElement.classList.remove("no-html-scoll");
+			}
+		}
+	}
+	
+	componentDidMount() {
+		super.componentDidMount();
+		this._updateHtmlScroll();
+	}
+	
+	componentDidUpdate() {
+		super.componentDidUpdate();
+		this._updateHtmlScroll();
+	}
+	
 	_renderOverlay(aOverlayData) {
 		
 		let overlayId = aOverlayData.id;
@@ -99,7 +124,7 @@ export default class OverlayArea extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let overlayElement = null;
-		let overlays = this.props.overlays;
+		let overlays = this.getSourcedProp("overlays");
 		if(overlays.length > 0) {
 			let overlayElements = new Array();
 			let currentArray = overlays;
