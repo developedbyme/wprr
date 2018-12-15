@@ -7,19 +7,25 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 //import CommandButton from "wprr/elements/interaction/CommandButton";
 export default class CommandButton extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
-		this._callback_changeBound = this._callback_change.bind(this);
+		this._callback_clickBound = this._callback_click.bind(this);
 	}
 	
-	_callback_change(aEvent) {
-		//console.log("wprr/elements/interaction/CommandButton::_callback_change");
+	_callback_click(aEvent) {
+		//console.log("wprr/elements/interaction/CommandButton::_callback_click");
 		
 		let commands = this.getSourcedProp("commands");
 		
 		if(commands) {
 			let commandData = this.getSourcedProp("commandData");
+			if(!commandData) {
+				commandData = aEvent;
+			}
+			else {
+				console.warn("commandData is depreciated.", this);
+			}
 			
 			CommandPerformer.perform(commands, commandData, this);
 		}
@@ -32,7 +38,7 @@ export default class CommandButton extends ManipulationBaseObject {
 		
 		let returnObject = super._manipulateProps(aReturnObject);
 		
-		returnObject["onClick"] = this._callback_changeBound;
+		returnObject["onClick"] = this._callback_clickBound;
 		
 		delete returnObject["commands"];
 		delete returnObject["commandData"];
