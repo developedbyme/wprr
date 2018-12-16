@@ -30,6 +30,7 @@ export default class TextManager {
 		
 		if(returnText == undefined) {
 			console.warn("No text for path " + aPath);
+			this.addUntranslatedTextId(aPath);
 			return null;
 		}
 		
@@ -67,6 +68,12 @@ export default class TextManager {
 	
 	addUntranslatedText(aId, aText) {
 		this._untranslatedTexts[aId] = aText;
+	}
+	
+	addUntranslatedTextId(aId) {
+		if(!this._untranslatedTexts[aId]) {
+			this._untranslatedTexts[aId] = "";
+		}
 	}
 	
 	addUnmappedText(aId, aText) {

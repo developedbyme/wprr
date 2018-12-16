@@ -13,10 +13,14 @@ export default class TranslationOrId extends SourcedText {
 		
 		let id = this.getSourcedProp("id");
 		let prefix = this.getSourcedProp("prefix");
+		let suffix = this.getSourcedProp("suffix");
 		
 		let fullPath = id;
 		if(prefix) {
 			fullPath = prefix + "." + fullPath;
+		}
+		if(suffix) {
+			fullPath = fullPath + "." + suffix;
 		}
 		
 		let textManager = this.getReference("wprr/textManager");
