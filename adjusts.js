@@ -17,6 +17,7 @@ import StyleFromHeight from "wprr/manipulation/adjustfunctions/css/StyleFromHeig
 import StyleFromSize from "wprr/manipulation/adjustfunctions/css/StyleFromSize";
 import ValueToState from "wprr/manipulation/adjustfunctions/logic/ValueToState";
 import HtmlToText from "wprr/manipulation/adjustfunctions/text/HtmlToText";
+import FilterArray from "wprr/manipulation/adjustfunctions/logic/FilterArray";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -26,6 +27,8 @@ let optionsFromHierarchyTerms = OptionsFromHierarchyTerms.create;
 export {optionsFromHierarchyTerms};
 let addToArray = AddToArray.create;
 export {addToArray};
+let filterArray = FilterArray.create;
+export {filterArray};
 let classFromProp = ClassFromProp.create;
 export {classFromProp};
 let resolveSources = ResolveSources.create;
