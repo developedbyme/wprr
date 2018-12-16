@@ -5,8 +5,8 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 //import SourcedText from "wprr/elements/text/SourcedText";
 export default class SourcedText extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._mainElementType = "span";
 	}

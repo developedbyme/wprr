@@ -6,8 +6,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import SelectSection from "wprr/elements/area/SelectSection";
 export default class SelectSection extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._canBeEmpty = false;
 		this._canHaveMultipleChildren = false;

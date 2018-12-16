@@ -9,8 +9,8 @@ import Markup from "wprr/markup/Markup";
 //import MarkupChildren from "wprr/markup/MarkupChildren";
 export default class MarkupChildren extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_manipulateProps(aReturnObject) {

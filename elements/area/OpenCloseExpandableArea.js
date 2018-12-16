@@ -7,8 +7,8 @@ import TWEEN from "@tweenjs/tween.js";
 //import OpenCloseExpandableArea from "wprr/elements/area/OpenCloseExpandableArea";
 export default class OpenCloseExpandableArea extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._heightElement = null;
 		

@@ -13,8 +13,8 @@ import MarkupLoop from "wprr/manipulation/adjustfunctions/loop/MarkupLoop";
 //import SortableTable from "wprr/elements/area/table/SortableTable";
 export default class SortableTable extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this.state["selectedIndex"] = 0;
 		this.state["sortOrder"] = 1;

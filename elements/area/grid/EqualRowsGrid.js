@@ -5,8 +5,8 @@ import Grid from "wprr/elements/area/grid/Grid";
 //import EqualRowsGrid from "wprr/elements/area/grid/EqualRowsGrid";
 export default class EqualRowsGrid extends Grid {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_getRowLength() {

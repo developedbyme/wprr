@@ -10,8 +10,8 @@ import WprrContext from "wprr/reference/WprrContext";
 //import ReferenceInjection from "wprr/reference/ReferenceInjection";
 export default class ReferenceInjection extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._references = new ReferenceHolder();
 	}

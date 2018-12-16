@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import LoaderDisplay from "wprr/manipulation/loader/LoaderDisplay";
 export default class LoaderDisplay extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._propsThatShouldNotCopy.push("status");
 	}

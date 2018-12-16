@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import TriggerButton from "wprr/elements/interaction/TriggerButton";
 export default class TriggerButton extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._callback_changeBound = this._callback_change.bind(this);
 	}

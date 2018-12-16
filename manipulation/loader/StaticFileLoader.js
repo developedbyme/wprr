@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import StaticFileLoader from "wprr/manipulation/loader/StaticFileLoader";
 export default class StaticFileLoader extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		this.state["status"] = 0;
 		this.state["loadedData"] = null;
 		

@@ -10,8 +10,8 @@ import RefCollector from "wprr/utils/RefCollector";
 //import ContentsAndInjectedComponents from "wprr/elements/text/ContentsAndInjectedComponents";
 export default class ContentsAndInjectedComponents extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._mainElementType = "section";
 		this._addMainElementClassName("main-section");

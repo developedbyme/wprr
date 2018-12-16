@@ -7,8 +7,8 @@ import ReduxDataStorage from "wprr/utils/ReduxDataStorage";
 //import ReduxGlobalVariables from "wprr/manipulation/ReduxGlobalVariables";
 export default class ReduxGlobalVariables extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._propsThatShouldNotCopy.push("variables");
 		this._propsThatShouldNotCopy.push("pathPrefix");

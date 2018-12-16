@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import AddTextsToTextManager from "wprr/textmanager/AddTextsToTextManager";
 export default class AddTextsToTextManager extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 	}
 	

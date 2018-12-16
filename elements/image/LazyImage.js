@@ -8,8 +8,8 @@ import ReactImageUpdater from "wprr/imageloader/ReactImageUpdater";
 //import LazyImage from "wprr/elements/image/LazyImage";
 export default class LazyImage extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this.state["imageStatus"] = 0;
 		this.state["renderedImage"] = null;

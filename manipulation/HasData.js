@@ -7,8 +7,8 @@ import SourceData from "wprr/reference/SourceData";
 //import HasData from "wprr/manipulation/HasData";
 export default class HasData extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 	}
 	

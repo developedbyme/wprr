@@ -8,8 +8,8 @@ import ReactVisibleUpdater from "wprr/imageloader/ReactVisibleUpdater";
 //import ScrollActivatedItem from "wprr/manipulation/measure/ScrollActivatedItem";
 export default class ScrollActivatedItem extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this.state["isVisible"] = false;
 		

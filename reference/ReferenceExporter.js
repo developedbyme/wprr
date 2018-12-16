@@ -7,8 +7,8 @@ import WprrContext from "wprr/reference/WprrContext";
 //import ReferenceExporter from "wprr/reference/ReferenceExporter";
 export default class ReferenceExporter extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	getReferences() {

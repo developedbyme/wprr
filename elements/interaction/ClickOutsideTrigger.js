@@ -8,8 +8,8 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 //import ClickOutsideTrigger from "wprr/elements/interaction/ClickOutsideTrigger";
 export default class ClickOutsideTrigger extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._callback_clickBound = this._callback_click.bind(this);
 	}

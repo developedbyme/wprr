@@ -13,8 +13,8 @@ import UseMarkup from "wprr/markup/UseMarkup";
 //import OverlayArea from "wprr/elements/area/OverlayArea";
 export default class OverlayArea extends WprrBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._internalIdCounter = 0;
 		

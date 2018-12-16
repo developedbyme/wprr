@@ -8,8 +8,8 @@ import PostData from "wprr/wp/postdata/PostData";
 //import PostDataInjection from "wprr/wp/postdata/PostDataInjection";
 export default class PostDataInjection extends ReferenceInjection {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._postData = new PostData();
 	}

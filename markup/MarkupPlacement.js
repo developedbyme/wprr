@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import MarkupPlacement from "wprr/markup/MarkupPlacement";
 export default class MarkupPlacement extends ManipulationBaseObject {
 	
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_removeUsedProps(aReturnObject) {

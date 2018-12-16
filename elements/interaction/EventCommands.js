@@ -7,8 +7,8 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 //import EventCommands from "wprr/elements/interaction/EventCommands";
 export default class EventCommands extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._callback_eventBound = this._callback_event.bind(this);
 	}

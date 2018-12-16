@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import ContentCreatorSingleItem from "wprr/elements/create/ContentCreatorSingleItem";
 export default class ContentCreatorSingleItem extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_removeUsedProps(aReturnObject) {

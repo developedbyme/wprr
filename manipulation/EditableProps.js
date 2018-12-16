@@ -7,8 +7,8 @@ import ReferenceInjection from "wprr/reference/ReferenceInjection";
 //import EditableProps from "wprr/manipulation/EditableProps";
 export default class EditableProps extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._propsThatShouldNotCopy.push("editableProps");
 		this._propsThatShouldNotCopy.push("externalStorage");

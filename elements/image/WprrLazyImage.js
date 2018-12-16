@@ -5,8 +5,8 @@ import LazyImage from "wprr/elements/image/LazyImage";
 //import WprrLazyImage from "wprr/elements/image/WprrLazyImage";
 export default class WprrLazyImage extends LazyImage {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_getImageData() {

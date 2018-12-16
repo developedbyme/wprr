@@ -7,8 +7,8 @@ import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
 //import UseMarkup from "wprr/markup/UseMarkup";
 export default class UseMarkup extends ManipulationBaseObject {
 	
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_createClonedElement() {

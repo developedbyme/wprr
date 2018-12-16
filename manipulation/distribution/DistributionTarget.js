@@ -5,8 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import DistributionTarget from "wprr/manipulation/distribution/DistributionTarget";
 export default class DistributionTarget extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 	}
 	

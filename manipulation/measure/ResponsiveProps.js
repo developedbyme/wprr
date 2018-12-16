@@ -6,8 +6,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import ResponsiveProps from "wprr/manipulation/measure/ResponsiveProps";
 export default class ResponsiveProps extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 		this._selectedId = "";
 		this.state["responsiveProps"] = new Object();

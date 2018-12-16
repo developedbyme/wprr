@@ -7,8 +7,8 @@ import ReferenceInjection from "wprr/reference/ReferenceInjection";
 //import DeepDistribution from "wprr/manipulation/distribution/DeepDistribution";
 export default class DeepDistribution extends ManipulationBaseObject {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 		
 	}
 	

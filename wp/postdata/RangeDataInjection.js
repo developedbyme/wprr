@@ -5,8 +5,8 @@ import ReferenceInjection from "wprr/reference/ReferenceInjection";
 //import RangeDataInjection from "wprr/wp/postdata/RangeDataInjection";
 export default class RangeDataInjection extends ReferenceInjection {
 
-	constructor (props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
 	}
 	
 	_removeUsedProps(aReturnObject) {
