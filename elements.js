@@ -16,6 +16,7 @@ export {default as RelativeDateDisplay} from "wprr/elements/text/RelativeDateDis
 export {default as TermName} from "wprr/elements/text/TermName";
 export {default as LanguageName} from "wprr/elements/text/LanguageName";
 export {default as ContentsAndInjectedComponents} from "wprr/elements/text/ContentsAndInjectedComponents";
+export {default as TranslationOrId} from "wprr/elements/text/TranslationOrId";
 
 export {default as RefGroup} from "wprr/reference/RefGroup";
 export {default as EditableProps} from "wprr/manipulation/EditableProps";
@@ -46,6 +47,7 @@ export {default as HasData} from "wprr/manipulation/HasData";
 export {default as QueryStringParameters} from "wprr/manipulation/QueryStringParameters";
 export {default as ScrollActivatedItem} from "wprr/manipulation/measure/ScrollActivatedItem";
 export {default as ScrollPosition} from "wprr/manipulation/measure/ScrollPosition";
+export {default as StepController} from "wprr/manipulation/StepController";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
 export {default as DistributionTarget} from "wprr/manipulation/distribution/DistributionTarget";
