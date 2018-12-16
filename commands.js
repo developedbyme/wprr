@@ -10,6 +10,7 @@ import ForceUpdateCommand from "wprr/commands/navigation/ForceUpdateCommand";
 import InjectReferencesCommand from "wprr/commands/elements/InjectReferencesCommand";
 import TriggerCommand from "wprr/commands/basic/TriggerCommand";
 import ReactRouterPushCommand from "wprr/commands/thirdparty/reactrouter/ReactRouterPushCommand";
+import ScrollToCommand from "wprr/commands/browser/ScrollToCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -31,7 +32,8 @@ let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;
 let forceUpdate = ForceUpdateCommand.create;
 let reactRouterNavigate = ReactRouterPushCommand.create;
-export {reload, navigate, forceUpdate, reactRouterNavigate};
+let scrollTo = ScrollToCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo};
 
 let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};
