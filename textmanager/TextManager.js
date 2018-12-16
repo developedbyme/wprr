@@ -12,7 +12,7 @@ export default class TextManager {
 		//METODO: only use this in development mode
 		this._unmappedTexts = new Object();
 		this._untranslatedTexts = new Object();
-		//window._debugTextManager = this;
+		window._debugTextManager = this;
 	}
 	
 	setData(aDataObject) {
@@ -26,11 +26,25 @@ export default class TextManager {
 	getText(aPath) {
 		//console.log("wprr/textmanager/TextManager::getText");
 		
-		var returnText = objectPath.get(this._data, aPath);
+		let returnText = objectPath.get(this._data, aPath);
 		
 		if(returnText == undefined) {
 			console.warn("No text for path " + aPath);
 			return null;
+		}
+		
+		return returnText;
+	}
+	
+	getTextOrId(aPath, aId) {
+		let returnText = objectPath.get(this._data, aPath);
+		if(returnText == undefined) {
+			//METODO: should this be added to both
+			console.warn("No text for path " + aPath + ". Using id.");
+			
+			this.addUntranslatedText(aPath, aId);
+			
+			returnText = aId;
 		}
 		
 		return returnText;
@@ -45,10 +59,18 @@ export default class TextManager {
 				return translatedText;
 			}
 			console.warn("Translation doesn't exist for text " + aText);
-			this._untranslatedTexts[textId] = aText;
+			this.addUntranslatedText(textId, aText);
 		}
 		
 		return aText;
+	}
+	
+	addUntranslatedText(aId, aText) {
+		this._untranslatedTexts[aId] = aText;
+	}
+	
+	addUnmappedText(aId, aText) {
+		this._unmappedTexts[aId] = aText;
 	}
 	
 	getTranslationId(aText) {
@@ -57,7 +79,7 @@ export default class TextManager {
 		}
 		
 		console.warn("Translation is not mapped for text " + aText);
-		this._unmappedTexts[this._convertToCamelCase(aText)] = aText;
+		this.addUnmappedText(this._convertToCamelCase(aText), aText);
 		return null;
 	}
 	
@@ -120,8 +142,15 @@ export default class TextManager {
 	};
 	
 	_debug_getUnmappedObject() {
-		console.log(JSON.stringify(this._unmappedTexts, null, "\t"));
-		return this._unmappedTexts;
+		
+		let returnObject = new Object();
+		
+		for(let objectName in this._unmappedTexts) {
+			objectPath.set(returnObject, objectName, this._unmappedTexts[objectName]);
+		}
+		
+		console.log(JSON.stringify(returnObject, null, "\t"));
+		return returnObject;
 	}
 	
 	_debug_getNewTranslatedObject(aPath = null) {
