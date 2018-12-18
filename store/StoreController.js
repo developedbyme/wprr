@@ -244,6 +244,12 @@ export default class StoreController {
 		this._performDispatch(StoreController.SET_GLOBAL_VARIABLE, aPath, aValue);
 	}
 	
+	getGlobalVariable(aPath) {
+		let currentState = this._store.getState();
+		
+		return objectPath.get(currentState.globalVariables, aPath);
+	}
+	
 	/*
 	adjustData(aId, aData) {
 		this._performDispatch(StoreController.DATA_ADJUSTMENT, aId, aData);
