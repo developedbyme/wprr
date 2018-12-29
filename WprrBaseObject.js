@@ -166,7 +166,7 @@ export default class WprrBaseObject extends React.Component {
 			}
 			
 			//MENOTE: copy all callbacks
-			if(objectName.indexOf("on") === 0) {
+			if(objectName.indexOf("on") === 0 && objectName.charCodeAt(2) >= 65 && objectName.charCodeAt(2) <= 90) {
 				aReturnObject[objectName] = this.props[objectName];
 			}
 			
