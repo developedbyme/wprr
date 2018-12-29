@@ -65,6 +65,7 @@ export {default as StateCommands} from "wprr/manipulation/StateCommands";
 
 export {default as InsertElement} from "wprr/manipulation/InsertElement";
 export {default as PostDataInjection} from "wprr/wp/postdata/PostDataInjection";
+export {default as WpPaginationLoader} from "wprr/manipulation/loader/WpPaginationLoader";
 
 export {default as Loop} from "wprr/elements/create/Loop";
 export {default as TriggerHandler} from "wprr/reference/TriggerHandler";

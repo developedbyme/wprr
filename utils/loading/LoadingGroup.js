@@ -55,6 +55,8 @@ export default class LoadingGroup {
 		loader.addSuccessCommand(this._updateCommand);
 		loader.addErrorCommand(this._updateCommand);
 		this._loaders.push(loader);
+		
+		return loader;
 	}
 	
 	load() {
