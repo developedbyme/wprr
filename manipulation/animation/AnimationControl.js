@@ -55,7 +55,11 @@ export default class AnimationControl extends ManipulationBaseObject {
 			}
 		}).bind(this);
 		
-		this._tween = new TWEEN.Tween(this._tweenParameters).to(aValues, 1000*aTime).easing(aEasingFunction).delay(1000*aDelay).onUpdate(this._updateTweenBound).onComplete(completeCallback).start();
+		this._tween = new TWEEN.Tween(this._tweenParameters).to(aValues, 1000*aTime).onStart(function(aTweenParameters) {
+			for(let objectName in this._valuesStart) {
+				this._valuesStart[objectName] = aTweenParameters[objectName] ? aTweenParameters[objectName] : 0;
+			}
+		}).easing(aEasingFunction).delay(1000*aDelay).onUpdate(this._updateTweenBound).onComplete(completeCallback).start();
 		
 		return this;
 	}

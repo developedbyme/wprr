@@ -17,6 +17,8 @@ export default class AnimationPart extends ManipulationBaseObject {
 		
 		this.state["animationProps"] = new Object();
 		this.state["animationStyles"] = new Object();
+		
+		this._propsThatShouldNotCopy.push("animationFunctions");
 	}
 	
 	_removeUsedProps(aReturnObject) {

@@ -11,6 +11,7 @@ import InjectReferencesCommand from "wprr/commands/elements/InjectReferencesComm
 import TriggerCommand from "wprr/commands/basic/TriggerCommand";
 import ReactRouterPushCommand from "wprr/commands/thirdparty/reactrouter/ReactRouterPushCommand";
 import ScrollToCommand from "wprr/commands/browser/ScrollToCommand";
+import AnimateCommand from "wprr/commands/animation/AnimateCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -37,3 +38,6 @@ export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo};
 
 let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};
+
+let animate = AnimateCommand.create;
+export {animate};
