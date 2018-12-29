@@ -17,6 +17,7 @@ export default class HasData extends ManipulationBaseObject {
 		
 		delete aReturnObject["check"];
 		delete aReturnObject["checkType"];
+		delete aReturnObject["compareValue"];
 		
 		return aReturnObject;
 	}
