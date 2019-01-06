@@ -145,7 +145,14 @@ export default class SourceData {
 			case "text":
 				return references.getObject("wprr/textManager").getText(aPath);
 			case "translation":
-				return references.getObject("wprr/textManager").translateText(aPath);
+				{
+					let textPath = aPath;
+				
+					if(textPath instanceof SourceData) {
+						textPath = textPath.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return references.getObject("wprr/textManager").translateText(textPath);
+				}
 			case "postData":
 				{
 					let dataObject = references.getObject("wprr/postData");

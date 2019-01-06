@@ -13,6 +13,8 @@ export default class TextManager {
 		this._unmappedTexts = new Object();
 		this._untranslatedTexts = new Object();
 		window._debugTextManager = this;
+		
+		//this._debugUseZzLanguage = true;
 	}
 	
 	setData(aDataObject) {
@@ -34,6 +36,10 @@ export default class TextManager {
 			return null;
 		}
 		
+		if(this._debugUseZzLanguage) {
+			return "ZZZZZ";
+		}
+		
 		return returnText;
 	}
 	
@@ -48,6 +54,10 @@ export default class TextManager {
 			returnText = aId;
 		}
 		
+		if(this._debugUseZzLanguage) {
+			return "ZZZZZ";
+		}
+		
 		return returnText;
 	}
 	
@@ -57,10 +67,19 @@ export default class TextManager {
 		if(textId) {
 			let translatedText = this.getText(textId);
 			if(translatedText) {
+				
+				if(this._debugUseZzLanguage) {
+					return "ZZZZZ";
+				}
+				
 				return translatedText;
 			}
 			console.warn("Translation doesn't exist for text " + aText);
 			this.addUntranslatedText(textId, aText);
+		}
+		
+		if(this._debugUseZzLanguage) {
+			return "ZZZZZ";
 		}
 		
 		return aText;
