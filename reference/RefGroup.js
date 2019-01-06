@@ -22,15 +22,21 @@ export default class RefGroup extends ManipulationBaseObject {
 		let group = this.getSourcedPropWithDefault("group", "main");
 		
 		if(aName === "addRef/" + group) {
-			let refs = this.state["refs"];
-			refs[aValue.name] = aValue.item;
-			this.setState({"refs": refs});
+			this.addRef(aValue.name, aValue.item);
 		}
 		else if(aName === "removeRef/" + group) {
 			let refs = this.state["refs"];
 			delete refs[aValue.name];
 			this.setState({"refs": refs});
 		}
+	}
+	
+	addRef(aName, aObject) {
+		let refs = this.state["refs"];
+		refs[aName] = aObject;
+		this.setState({"refs": refs});
+		
+		return this;
 	}
 	
 	getRef(aName) {
@@ -57,6 +63,7 @@ export default class RefGroup extends ManipulationBaseObject {
 		let group = this.getSourcedPropWithDefault("group", "main");
 		
 		let injectData = new Object();
+		injectData["refGroup/" + group] = this;
 		injectData["refs/currentGroupName"] = group;
 		injectData["trigger/addRef/" + group] = this;
 		injectData["trigger/removeRef/" + group] = this;
