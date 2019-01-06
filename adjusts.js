@@ -1,6 +1,7 @@
 import CreateHierarchyTerms from "wprr/manipulation/adjustfunctions/wp/CreateHierarchyTerms";
 import SelectTermsSubtree from "wprr/manipulation/adjustfunctions/wp/SelectTermsSubtree";
 import OptionsFromHierarchyTerms from "wprr/manipulation/adjustfunctions/wp/OptionsFromHierarchyTerms";
+import FilterOptions from "wprr/manipulation/adjustfunctions/logic/FilterOptions";
 import AddToArray from "wprr/manipulation/adjustfunctions/logic/AddToArray";
 import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
 import ResolveSources from "wprr/manipulation/adjustfunctions/ResolveSources";
@@ -18,6 +19,7 @@ import StyleFromSize from "wprr/manipulation/adjustfunctions/css/StyleFromSize";
 import ValueToState from "wprr/manipulation/adjustfunctions/logic/ValueToState";
 import HtmlToText from "wprr/manipulation/adjustfunctions/text/HtmlToText";
 import FilterArray from "wprr/manipulation/adjustfunctions/logic/FilterArray";
+import DynamicKey from "wprr/manipulation/adjustfunctions/DynamicKey";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -25,6 +27,8 @@ let selectTermsSubtree = SelectTermsSubtree.create;
 export {selectTermsSubtree};
 let optionsFromHierarchyTerms = OptionsFromHierarchyTerms.create;
 export {optionsFromHierarchyTerms};
+let filterOptions = FilterOptions.create;
+export {filterOptions};
 let addToArray = AddToArray.create;
 export {addToArray};
 let filterArray = FilterArray.create;
@@ -46,6 +50,9 @@ let removeProps = RemoveProps.create;
 export {removeProps};
 let renameProp = RenameProp.create;
 export {renameProp};
+
+let dynamicKey = DynamicKey.create;
+export {dynamicKey};
 
 let condition = Condition.create;
 export {condition};
