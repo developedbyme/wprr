@@ -12,6 +12,7 @@ import TriggerCommand from "wprr/commands/basic/TriggerCommand";
 import ReactRouterPushCommand from "wprr/commands/thirdparty/reactrouter/ReactRouterPushCommand";
 import ScrollToCommand from "wprr/commands/browser/ScrollToCommand";
 import AnimateCommand from "wprr/commands/animation/AnimateCommand";
+import DelayCommand from "wprr/commands/animation/DelayCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -40,4 +41,5 @@ let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};
 
 let animate = AnimateCommand.create;
-export {animate};
+let delay = DelayCommand.create;
+export {animate, delay};
