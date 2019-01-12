@@ -23,6 +23,30 @@ export default class WprrBaseObject extends React.Component {
 		this._isRendering = false;
 		this._hasRendered = false;
 		this._elementRef = React.createRef();
+		
+		this._namedRefs = new Object();
+	}
+	
+	getRef(aName) {
+		let currentRef = this._namedRefs[aName];
+		if(currentRef) {
+			return currentRef.current;
+		}
+		
+		console.warn("No ref named " + aName);
+		return null;
+	}
+	
+	createRef(aName) {
+		let currentRef = this._namedRefs[aName];
+		if(currentRef) {
+			return currentRef;
+		}
+		
+		let newRef = React.createRef();
+		this._namedRefs[aName] = newRef;
+		
+		return newRef;
 	}
 	
 	setState(aNewState) {
