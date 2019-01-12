@@ -97,15 +97,6 @@ export default class Wprr {
 		Wprr[aName] = aClass;
 	}
 	
-	static addAutonamedClasses(...aClasses) {
-		let currentArray = aClasses;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentClass = currentArray[i];
-			Wprr.addClass(currentClass.name, currentClass);
-		}
-	}
-	
 	static addCommand(aName, aCreateFunction) {
 		Wprr.commands[aName] = aCreateFunction;
 	}

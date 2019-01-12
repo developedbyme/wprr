@@ -16,7 +16,7 @@ let AddProps = elements.ManipulationBaseObject;
 //Elements
 {
 	for(let objectName in elements) {
-		Wprr.addAutonamedClasses(elements[objectName]);
+		Wprr.addClass(objectName, elements[objectName]);
 	}
 	
 	Wprr.addClass("BaseObject", BaseObject);
@@ -28,7 +28,7 @@ let AddProps = elements.ManipulationBaseObject;
 //Injections
 {
 	for(let objectName in injections) {
-		Wprr.addAutonamedClasses(injections[objectName]);
+		Wprr.addClass(objectName, injections[objectName]);
 	}
 }
 
