@@ -167,6 +167,30 @@ export default class TextManager {
 		return returnText;
 	};
 	
+	_convertToWpSlug(aText) {
+		//METODO: move this to utils
+		
+		//METODO: remove special characters
+		
+		let specialCharactersRegExp = new RegExp("[^A-Za-z0-9 ]+", "g");
+		
+		//METODO: better replacement of all special characters
+		aText = aText
+			.replace(/å/g, "a")
+			.replace(/ä/g, "a")
+			.replace(/ö/g, "o")
+			.replace(/Å/g, "A")
+			.replace(/Ä/g, "A")
+			.replace(/Ö/g, "O")
+			.replace(specialCharactersRegExp, "");
+		
+		var currentArray = aText.toLowerCase().split(" ");
+		
+		currentArray = currentArray.filter(function(aValue) {return aValue.length > 0});
+		
+		return currentArray.join("-");
+	};
+	
 	_debug_getUnmappedObject() {
 		
 		let returnObject = new Object();

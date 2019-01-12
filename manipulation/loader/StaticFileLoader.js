@@ -66,7 +66,7 @@ export default class StaticFileLoader extends ManipulationBaseObject {
 			default:
 				console.warn("Unknown response type " + responseType + ". Using text instead.");
 			case "text":
-				data = responseType;
+				data = aDataString;
 				break;
 		}
 		

@@ -11,6 +11,7 @@ export {ArrayFunctions as array};
 export {ApplyAnimation as applyAnimation};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
+export {default as TextLoader} from "wprr/utils/loading/TextLoader";
 export {default as SyncronizedClock} from "wprr/utils/timing/SyncronizedClock";
 export {default as UseMarkupCreator} from "wprr/markup/UseMarkupCreator";
 export {default as WpConditional} from "wprr/routing/qualification/wp/WpConditional";

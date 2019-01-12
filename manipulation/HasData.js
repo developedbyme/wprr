@@ -44,6 +44,11 @@ export default class HasData extends ManipulationBaseObject {
 					return true;
 				}
 				break;
+			case "equal":
+				if(aData && aData == this.getSourcedProp("compareValue")) {
+					return true;
+				}
+				break;
 			default:
 				console.warn("Unknown check type " + aType + ". Using default.");
 			case "default":
