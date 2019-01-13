@@ -31,7 +31,11 @@ export default class EventCommands extends ManipulationBaseObject {
 				currentCommandData = commandData[onName];
 			}
 			
-			CommandPerformer.perform(commands, commandData, this);
+			if(!currentCommandData) {
+				currentCommandData = aEvent;
+			}
+			
+			CommandPerformer.perform(commands, currentCommandData, this);
 		}
 		else {
 			console.error("No commands for " + type + "/" + onName, EventCommands, this);
