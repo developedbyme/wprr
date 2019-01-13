@@ -166,7 +166,7 @@ export default class JsonLoader {
 		
 		let sendParameters =  {"credentials": this._credentials, "method": this._method, headers: this._headers};
 		if(this._method !== "GET" && this._method !== "HEAD") {
-			sendParameters["body"] = sendParameters;
+			sendParameters["body"] = this._body;
 		}
 		
 		fetch(this._url, sendParameters)
