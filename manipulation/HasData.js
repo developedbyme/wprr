@@ -28,6 +28,13 @@ export default class HasData extends ManipulationBaseObject {
 			return !this._checkData(aData, aType.substring(("invert/").length, aType.length));
 		}
 		
+		let compareValue = this.getSourcedProp("compareValue");
+		
+		if(typeof(aType) === "function") {
+			let checkFunction = aType;
+			return checkFunction(aData, compareValue);
+		}
+		
 		switch(aType) {
 			case "notEmpty":
 				if(aData && aData.length > 0) {
@@ -40,12 +47,12 @@ export default class HasData extends ManipulationBaseObject {
 				}
 				break;
 			case "greaterThan":
-				if(aData && 1*aData > 1*this.getSourcedProp("compareValue")) {
+				if(aData && 1*aData > 1*compareValue) {
 					return true;
 				}
 				break;
 			case "equal":
-				if(aData && aData == this.getSourcedProp("compareValue")) {
+				if(aData && aData == compareValue) {
 					return true;
 				}
 				break;
