@@ -57,9 +57,7 @@ export default class SyncronizedClock {
 	
 	getCurrentDate() {
 		
-		let timePassed = (new Date()).valueOf()-this._syncTime;
-		
-		let returnDate = new Date(this._fromDate.valueOf()+this.getDiff()+timePassed);
+		let returnDate = new Date(this.getCurrentTime());
 		
 		return returnDate;
 	}
