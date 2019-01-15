@@ -125,6 +125,13 @@ export default class OverlayArea extends WprrBaseObject {
 		
 		let overlayElement = null;
 		let overlays = this.getSourcedProp("overlays");
+		
+		let className = "absolute-overlay overlay-layer"
+		let pointerEvents = this.getSourcedPropWithDefault("pointerEvents", false);
+		if(!pointerEvents) {
+			className += " no-pointer-events";
+		}
+		
 		if(overlays.length > 0) {
 			let overlayElements = new Array();
 			let currentArray = overlays;
@@ -133,7 +140,7 @@ export default class OverlayArea extends WprrBaseObject {
 				overlayElements.push(this._renderOverlay(currentArray[i]));
 			}
 			
-			overlayElement = React.createElement("div", {key: "overlay", "className": "absolute-overlay overlay-layer no-pointer-events"},
+			overlayElement = React.createElement("div", {key: "overlay", "className": className},
 				overlayElements
 			);
 		}
