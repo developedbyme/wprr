@@ -1,4 +1,6 @@
 import React from "react";
+import objectPath from "object-path";
+import queryString from "query-string";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -27,6 +29,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("nonBlocking");
 		this._propsThatShouldNotCopy.push("loadedCommands");
 		this._propsThatShouldNotCopy.push("apiFormat");
+		this._propsThatShouldNotCopy.push("skipLanguageParameter");
 		
 	}
 	
@@ -72,6 +75,10 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		//METODO: check taht we have load data and storeController
 		
+		let skipLanguageParameter = this.getSourcedPropWithDefault("skipLanguageParameter", false);
+		let language = objectPath.get(this.getReference("wprr/pageData"), "queryData.language");
+		let hasLanguageParameterRegExp = new RegExp("[\\?&]language=");
+		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
 		let defaultApiFormat = this.getSourcedPropWithDefault("apiFormat", WprrDataLoader.DEFAULT_API_FORMAT);
 		
@@ -92,6 +99,11 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 					currentApiFormat = "wprrById";
 				}
 				currentPath = storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase);
+			}
+			
+			if(!skipLanguageParameter && language && !hasLanguageParameterRegExp.test(currentPath)) {
+				let separator = (currentPath.indexOf("?") === -1) ? "?" : "&";
+				currentPath += separator + "language=" + language;
 			}
 			
 			aReturnObject[objectName] = this._formatData(this._loadingGroup.getData(currentPath), currentApiFormat);
@@ -146,16 +158,35 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._loadingGroup.setStoreController(storeController);
 		this._loadingGroup.removeAllLoaders();
 		
+		let skipLanguageParameter = this.getSourcedPropWithDefault("skipLanguageParameter", false);
+		let language = objectPath.get(this.getReference("wprr/pageData"), "queryData.language");
+		let hasLanguageParameterRegExp = new RegExp("[\\?&]language=");
+		
 		for(let objectName in loadData) {
 			let currentData = this.resolveSourcedData(loadData[objectName]);
+			let currentLocationBase = locationBase;
+			let currentType = "M-ROUTER-API-DATA";
+			let currentPath;
 			
 			if(typeof(currentData) === "string") {
-				this._loadingGroup.addLoaderByPath(storeController.getAbsolutePath("M-ROUTER-API-DATA", currentData, locationBase));
+				currentPath = currentData;
 			}
 			else {
-				let currentLocationBase = currentData.location ? currentData.location : locationBase;
-				this._loadingGroup.addLoaderByPath(storeController.getAbsolutePath(currentData.type, currentData.path, currentLocationBase));
+				if(currentData.location) {
+					currentLocationBase = currentData.location;
+				}
+				currentType = currentData.type;
+				currentPath = currentData.path;
 			}
+			
+			let absolutePath = storeController.getAbsolutePath(currentType, currentData, currentLocationBase);
+			
+			if(!skipLanguageParameter && language && !hasLanguageParameterRegExp.test(absolutePath)) {
+				let separator = (absolutePath.indexOf("?") === -1) ? "?" : "&";
+				absolutePath += separator + "language=" + language;
+			}
+			
+			this._loadingGroup.addLoaderByPath(absolutePath);
 		}
 	}
 	
