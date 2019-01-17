@@ -32,7 +32,7 @@ export default class HasData extends ManipulationBaseObject {
 		
 		if(typeof(aType) === "function") {
 			let checkFunction = aType;
-			return checkFunction(aData, compareValue);
+			return checkFunction(aData, compareValue, this);
 		}
 		
 		switch(aType) {

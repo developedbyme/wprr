@@ -40,7 +40,7 @@ export default class PerformSelectedCommands extends BaseCommand {
 		}
 		
 		if(!isFound) {
-			console.log("No commnads for key " + selected, this);
+			console.log("No commands for key " + selected, this);
 		}
 	}
 	

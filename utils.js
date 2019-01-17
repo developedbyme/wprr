@@ -22,4 +22,5 @@ export {default as ChangeDataFunctions} from "wprr/wp/admin/ChangeDataFunctions"
 export {default as ChangeData} from "wprr/wp/admin/ChangeData";
 export {default as PostData} from "wprr/wp/postdata/PostData";
 export {default as LoadingGroup} from "wprr/utils/loading/LoadingGroup";
+export {default as MultipleUrlResolver} from "wprr/utils/MultipleUrlResolver";
 
