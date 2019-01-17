@@ -179,7 +179,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				currentPath = currentData.path;
 			}
 			
-			let absolutePath = storeController.getAbsolutePath(currentType, currentData, currentLocationBase);
+			let absolutePath = storeController.getAbsolutePath(currentType, currentPath, currentLocationBase);
 			
 			if(!skipLanguageParameter && language && !hasLanguageParameterRegExp.test(absolutePath)) {
 				let separator = (absolutePath.indexOf("?") === -1) ? "?" : "&";
