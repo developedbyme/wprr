@@ -20,6 +20,7 @@ import ValueToState from "wprr/manipulation/adjustfunctions/logic/ValueToState";
 import HtmlToText from "wprr/manipulation/adjustfunctions/text/HtmlToText";
 import FilterArray from "wprr/manipulation/adjustfunctions/logic/FilterArray";
 import DynamicKey from "wprr/manipulation/adjustfunctions/DynamicKey";
+import SetDefaultProps from "wprr/manipulation/adjustfunctions/SetDefaultProps";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -50,6 +51,8 @@ let removeProps = RemoveProps.create;
 export {removeProps};
 let renameProp = RenameProp.create;
 export {renameProp};
+let defaultProps = SetDefaultProps.create;
+export {defaultProps};
 
 let dynamicKey = DynamicKey.create;
 export {dynamicKey};
