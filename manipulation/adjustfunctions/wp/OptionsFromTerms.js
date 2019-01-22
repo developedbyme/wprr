@@ -16,6 +16,7 @@ export default class OptionsFromTerms extends AdjustFunction {
 		super();
 		
 		this.setInput("terms", SourceData.create("prop", "input"));
+		this.setInput("keyField", "id");
 		this.setInput("outputName", "options");
 		
 	}
@@ -28,6 +29,7 @@ export default class OptionsFromTerms extends AdjustFunction {
 	removeUsedProps(aProps) {
 		//METODO: change this to actual source cleanup
 		delete aProps["terms"];
+		delete aProps["keyField"];
 		delete aProps["outputName"];
 	}
 	
@@ -43,6 +45,7 @@ export default class OptionsFromTerms extends AdjustFunction {
 		//console.log("wprr/manipulation/adjustfunctions/wp/OptionsFromTerms::adjust");
 		
 		let terms = this.getInput("terms", aData, aManipulationObject);
+		let keyField = this.getInput("keyField", aData, aManipulationObject);
 		let outputName = this.getInput("outputName", aData, aManipulationObject);
 		
 		this.removeUsedProps(aData);
@@ -54,7 +57,7 @@ export default class OptionsFromTerms extends AdjustFunction {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentItem = currentArray[i];
-				returnArray.push({"value": currentItem["id"], "label": currentItem["name"]});
+				returnArray.push({"value": currentItem[keyField], "label": currentItem["name"]});
 			}
 		}
 		else {
