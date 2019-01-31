@@ -17,7 +17,7 @@ export default class ScrollActivatedItem extends WprrBaseObject {
 	}
 	
 	componentDidMount() {
-		console.log("wprr/manipulation/measure/ScrollActivatedItem::componentDidMount");
+		//console.log("wprr/manipulation/measure/ScrollActivatedItem::componentDidMount");
 		
 		let imageLoaderManager = this.getReference("wprr/imageLoaderManager");
 		
@@ -28,7 +28,7 @@ export default class ScrollActivatedItem extends WprrBaseObject {
 	}
 
 	componentWillUnmount() {
-		console.log("wprr/manipulation/measure/ScrollActivatedItem::componentWillUnmount");
+		//console.log("wprr/manipulation/measure/ScrollActivatedItem::componentWillUnmount");
 		
 		let imageLoaderManager = this.getReference("wprr/imageLoaderManager");
 		

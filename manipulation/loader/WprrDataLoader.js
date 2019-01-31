@@ -76,7 +76,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		//METODO: check taht we have load data and storeController
 		
 		let skipLanguageParameter = this.getSourcedPropWithDefault("skipLanguageParameter", false);
-		let language = objectPath.get(this.getReference("wprr/pageData"), "queryData.language");
+		let language = objectPath.get(this.getReferenceIfExists("wprr/pageData"), "queryData.language");
 		let hasLanguageParameterRegExp = new RegExp("[\\?&]language=");
 		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
@@ -159,7 +159,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._loadingGroup.removeAllLoaders();
 		
 		let skipLanguageParameter = this.getSourcedPropWithDefault("skipLanguageParameter", false);
-		let language = objectPath.get(this.getReference("wprr/pageData"), "queryData.language");
+		let language = objectPath.get(this.getReferenceIfExists("wprr/pageData"), "queryData.language");
 		let hasLanguageParameterRegExp = new RegExp("[\\?&]language=");
 		
 		for(let objectName in loadData) {
