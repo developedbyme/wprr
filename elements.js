@@ -24,6 +24,7 @@ export {default as FormField} from "wprr/elements/form/FormField";
 export {default as TextArea} from "wprr/elements/form/TextArea";
 export {default as Selection} from "wprr/elements/form/Selection";
 export {default as Checkbox} from "wprr/elements/form/Checkbox";
+export {default as Slider} from "wprr/elements/form/Slider";
 export {default as FlexRow} from "wprr/elements/area/grid/FlexRow";
 export {default as EqualRowsGrid} from "wprr/elements/area/grid/EqualRowsGrid";
 export {default as ValidatingForm} from "wprr/elements/form/ValidatingForm";
