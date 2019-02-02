@@ -197,9 +197,20 @@ export default class SourceData {
 					return objectPath.get(dataObject, aPath);
 				}
 			case "reference":
-				return references.getObject(aPath);
+				{
+					//METODO: make this a general solution to resolve until all parts have been resolved
+					if(aPath instanceof SourceData) {
+						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return references.getObject(aPath);
+				}
 			case "referenceIfExists":
-				return references.getObjectIfExists(aPath);
+				{
+					if(aPath instanceof SourceData) {
+						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return references.getObjectIfExists(aPath);
+				}
 			case "combine":
 				{
 					let returnString = "";
@@ -233,6 +244,22 @@ export default class SourceData {
 						}
 					}
 					return returnObject;
+				}
+			case "array":
+				{
+					let returnArray = new Array();
+					let currentArray = aPath;
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let currentItem = currentArray[i];
+						if(currentItem instanceof SourceData) {
+							returnArray.push(currentItem.getSourceInStateChange(aFromObject, aPropsAndState));
+						}
+						else {
+							returnArray.push(currentItem);
+						}
+					}
+					return returnArray;
 				}
 			case "staticSource":
 				if(aPath instanceof SourceData) {
