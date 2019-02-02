@@ -21,6 +21,7 @@ import HtmlToText from "wprr/manipulation/adjustfunctions/text/HtmlToText";
 import FilterArray from "wprr/manipulation/adjustfunctions/logic/FilterArray";
 import DynamicKey from "wprr/manipulation/adjustfunctions/DynamicKey";
 import SetDefaultProps from "wprr/manipulation/adjustfunctions/SetDefaultProps";
+import ConvertTermField from "wprr/manipulation/adjustfunctions/wp/ConvertTermField";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -44,6 +45,8 @@ let optionsFromTerms = OptionsFromTerms.create;
 export {optionsFromTerms};
 let relationTerms = RelationTerms.create;
 export {relationTerms};
+let convertTermField = ConvertTermField.create;
+export {convertTermField};
 
 let filterProps = FilterProps.create;
 export {filterProps};

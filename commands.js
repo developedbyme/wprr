@@ -14,6 +14,7 @@ import ScrollToCommand from "wprr/commands/browser/ScrollToCommand";
 import AnimateCommand from "wprr/commands/animation/AnimateCommand";
 import DelayCommand from "wprr/commands/animation/DelayCommand";
 import SubmitFormCommand from "wprr/commands/navigation/SubmitFormCommand";
+import AlertCommand from "wprr/commands/browser/AlertCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -37,7 +38,8 @@ let forceUpdate = ForceUpdateCommand.create;
 let reactRouterNavigate = ReactRouterPushCommand.create;
 let scrollTo = ScrollToCommand.create;
 let submitForm = SubmitFormCommand.create;
-export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm};
+let alert = AlertCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert};
 
 let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};
