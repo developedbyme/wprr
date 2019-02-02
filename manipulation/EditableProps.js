@@ -3,6 +3,7 @@ import React from 'react';
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 //import EditableProps from "wprr/manipulation/EditableProps";
 export default class EditableProps extends ManipulationBaseObject {
@@ -144,6 +145,12 @@ export default class EditableProps extends ManipulationBaseObject {
 		
 		if(triggerController) {
 			triggerController.trigger(triggerName, aValue);
+		}
+		
+		let commands = this.getSourcedProp("changeCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, {"name": aName, "value": aValue, "additionalData": aAdditionalData}, this);
 		}
 	}
 	
