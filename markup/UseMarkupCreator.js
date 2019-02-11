@@ -43,4 +43,10 @@ export default class UseMarkupCreator {
 		
 		return React.createElement(UseMarkup, {"markup": this._markup}, placements);
 	}
+	
+	static create() {
+		let newUseMarkupCreator = new UseMarkupCreator();
+		
+		return newUseMarkupCreator;
+	}
 }

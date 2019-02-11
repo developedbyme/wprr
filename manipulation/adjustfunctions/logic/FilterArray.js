@@ -18,7 +18,7 @@ export default class FilterArray extends AdjustFunction {
 		super();
 		
 		this.setInput("input", SourceData.create("prop", "input"));
-		this.setInput("filterFunction", SourceData.create("prop", "sort"));
+		this.setInput("filterFunction", SourceData.create("prop", "filterFunction"));
 		this.setInput("outputName", "output");
 		
 	}

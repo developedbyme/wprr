@@ -64,7 +64,7 @@ export default class Slider extends WprrBaseObject {
 		
 		let transform = "translate(" + x + "px," + y + "px)";
 		
-		returnObject["style"] = {"transform": transform};
+		returnObject["style"] = {"transform": transform, "position": "absolute"};
 		
 		return returnObject;
 	}

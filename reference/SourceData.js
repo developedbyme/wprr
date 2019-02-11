@@ -143,7 +143,13 @@ export default class SourceData {
 					return AcfFunctions.getAcfSubfieldData(rowObject, aPath);
 				}
 			case "text":
-				return references.getObject("wprr/textManager").getText(aPath);
+				{
+					//METODO: make this a general solution to resolve until all parts have been resolved
+					if(aPath instanceof SourceData) {
+						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return references.getObject("wprr/textManager").getText(aPath);
+				}
 			case "translation":
 				{
 					let textPath = aPath;
