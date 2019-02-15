@@ -211,7 +211,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		let status = this._loadingGroup.getStatus();
 		
-		if(status === 1 || this.getSourcedPropWithDefault("nonBlocking", false)) {
+		if(status === 1 || status === 3 || status === 4 || this.getSourcedPropWithDefault("nonBlocking", false)) {
 			this._createClonedElement();
 			return this._clonedElement;
 		}

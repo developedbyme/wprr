@@ -16,6 +16,7 @@ export default class LoadingGroup {
 		this._storeController = null;
 		
 		this._status = 0;
+		this._statusString = "";
 		
 		this._loaders = new Array();
 		
@@ -41,8 +42,7 @@ export default class LoadingGroup {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentLoader = currentArray[i];
-			currentLoader.removeSuccessCommand(this._updateCommand);
-			currentLoader.removeErrorCommand(this._updateCommand);
+			currentLoader.removeCommand(this._updateCommand, "status");
 		}
 		
 		currentArray.splice(0, currentArrayLength);
@@ -52,15 +52,14 @@ export default class LoadingGroup {
 		//console.log("wprr/utils/loading/LoadingGroup::addLoaderByPath");
 		
 		let loader = this._storeController.getLoader(aPath);
-		loader.addSuccessCommand(this._updateCommand);
-		loader.addErrorCommand(this._updateCommand);
+		loader.addCommand(this._updateCommand, "status");
 		this._loaders.push(loader);
 		
 		return loader;
 	}
 	
 	load() {
-		//console.log("wprr/utils/loading/LoadingGroup::load");
+		console.log("wprr/utils/loading/LoadingGroup::load");
 		
 		let currentArray = this._loaders;
 		let currentArrayLength = currentArray.length;
@@ -75,32 +74,56 @@ export default class LoadingGroup {
 		return loader.getData();
 	}
 	
+	_determineCompleteStatus(aStatuses) {
+		if(aStatuses.indexOf(-1) !== -1) {
+			return -1;
+		}
+		else if(aStatuses.indexOf(0) !== -1) {
+			return 0;
+		}
+		else if(aStatuses.indexOf(2) !== -1) {
+			return 2;
+		}
+		else if(aStatuses.indexOf(4) !== -1) {
+			return 4;
+		}
+		else if(aStatuses.indexOf(3) !== -1) {
+			return 3;
+		}
+		
+		return 1;
+	}
+	
 	getStatus() {
-		let status = 1;
+		let statuses = this.getStatuses();
+		
+		let status = this._determineCompleteStatus(statuses);
+		
+		return status;
+	}
+	
+	getStatuses() {
+		let returnArray = new Array();
 		
 		let currentArray = this._loaders;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentLoader = currentArray[i];
 			let currentStatus = currentLoader.getStatus();
-			if(currentStatus !== 1) {
-				status = currentStatus;
-				if(status === -1) {
-					break;
-				}
-			}
+			returnArray.push(currentStatus);
 		}
 		
-		return status;
+		return returnArray;
 	}
 	
 	updateStatus() {
-		//console.log("wprr/utils/loading/LoadingGroup::updateStatus");
+		console.log("wprr/utils/loading/LoadingGroup::updateStatus");
 		
-		let status = this.getStatus();
+		let statusString = this.getStatuses().join(",");
 		
-		if(status !== this._status) {
-			this._status = status;
+		if(statusString !== this._statusString) {
+			this._statusString = statusString;
+			this._status = this.getStatus();
 			CommandPerformer.perform(this._statusCommands, this._status, null);
 		}
 	}

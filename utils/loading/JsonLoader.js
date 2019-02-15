@@ -16,14 +16,17 @@ export default class JsonLoader {
 		};
 		
 		this._loadedAt = -1;
-		this._status = 0;
+		this._status = JsonLoader.STATUS_NOT_STARTED;
 		this._data = null;
 		this._body = null;
 		
 		this.onLoad = null;
 		
-		this._successCommands = [];
-		this._errorCommands = [];
+		this._commandGroups = {
+			"status": [],
+			"success": [],
+			"error": [],
+		}
 	}
 	
 	getStatus() {
@@ -31,7 +34,7 @@ export default class JsonLoader {
 	}
 	
 	hasCompleted() {
-		return (this._status === 1 || this._status === -1);
+		return (this._status === JsonLoader.LOADED || this._status === JsonLoader.ERROR_LOADING);
 	}
 	
 	setMethod(aMethod) {
@@ -76,49 +79,73 @@ export default class JsonLoader {
 		return this;
 	}
 	
+	addCommand(aCommand, aGroup) {
+		if(!this._commandGroups[aGroup]) {
+			this._commandGroups[aGroup] = new Array();
+		}
+		this._commandGroups[aGroup].push(aCommand);
+		
+		return this;
+	}
+	
+	removeCommand(aCommand, aGroup) {
+		let currentArray = this._commandGroups[aGroup];
+		if(currentArray) {
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentCommand = currentArray[i];
+				if(currentCommand === aCommand) {
+					currentArray.splice(i, 1);
+					i--;
+					currentArrayLength--;
+				}
+			}
+		}
+		
+		return this;
+	}
+	
 	addSuccessCommand(aCommand) {
-		this._successCommands.push(aCommand);
+		this.addCommand(aCommand, "success");
 		
 		return this;
 	}
 	
 	addErrorCommand(aCommand) {
-		this._errorCommands.push(aCommand);
+		this.addCommand(aCommand, "error");
 		
 		return this;
 	}
 	
 	removeSuccessCommand(aCommand) {
-		let currentArray = this._successCommands;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentCommand = currentArray[i];
-			if(currentCommand === aCommand) {
-				currentArray.splice(i, 1);
-				i--;
-				currentArrayLength--;
-			}
-		}
+		this.removeCommand(aCommand, "success");
 		
 		return this;
 	}
 	
 	removeErrorCommand(aCommand) {
-		let currentArray = this._errorCommands;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentCommand = currentArray[i];
-			if(currentCommand === aCommand) {
-				currentArray.splice(i, 1);
-				i--;
-				currentArrayLength--;
-			}
-		}
+		this.removeCommand(aCommand, "error");
 		
 		return this;
 	}
 	
+	runCommandGroup(aGroup, aData) {
+		if(this._commandGroups[aGroup]) {
+			let currentArray = [].concat(this._commandGroups[aGroup]);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentCommand = currentArray[i];
+			
+				currentCommand.setEventData(aData);
+				currentCommand.perform();
+			}
+		}
+	}
+	
 	setData(aData) {
+		console.log("wprr/utils/loading/JsonLoader::setData");
+		console.log(aData);
+		
 		this._loadedAt = (new Date()).valueOf();
 		this._data = aData;
 	}
@@ -128,41 +155,39 @@ export default class JsonLoader {
 	}
 	
 	setStatus(aStatus) {
+		console.log("wprr/utils/loading/JsonLoader::setStatus");
+		console.log(aStatus);
+		
 		this._status = aStatus;
 		
-		if(this._status === 1) {
-			//METODO: use a better way for this
-			if(this.onLoad) {
+		if(this._status === JsonLoader.LOADED) {
+			
+			if(this.onLoad) { //METODO: remove the callback and just use the command
 				this.onLoad(this._data);
 			}
 			
-			let currentArray = [].concat(this._successCommands);
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentCommand = currentArray[i];
-				
-				currentCommand.setEventData(this._data);
-				currentCommand.perform();
-			}
+			this.runCommandGroup("success", this._data);
 		}
-		else if(this._status === -1) {
-			let currentArray = [].concat(this._errorCommands);
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentCommand = currentArray[i];
-				
-				currentCommand.setEventData(this._data);
-				currentCommand.perform();
-			}
+		else if(this._status === JsonLoader.ERROR_LOADING) {
+			this.runCommandGroup("error", this._data);
 		}
+		
+		this.runCommandGroup("status", this._data);
+		
+		return this;
 	}
 	
 	load() {
 		
-		if(this._status !== 0) {
-			return;
+		if(this._status === JsonLoader.STATUS_NOT_STARTED) {
+			this.setStatus(JsonLoader.LOADING);
 		}
-		this.setStatus(2);
+		else if(this._status === JsonLoader.INVALID) {
+			this.setStatus(JsonLoader.LOADING_FROM_INVALID);
+		}
+		else {
+			return this;
+		}
 		
 		let sendParameters =  {"credentials": this._credentials, "method": this._method, headers: this._headers};
 		if(this._method !== "GET" && this._method !== "HEAD") {
@@ -175,13 +200,37 @@ export default class JsonLoader {
 		})
 		.then( (data) => {
 			this.setData(data);
-			this.setStatus(1);
+			this.setStatus(JsonLoader.LOADED);
 		})
 		.catch( (error) => {
 			console.error("Error submitting");
 			console.log(error);
 			
-			this.setStatus(-1);
+			this.setStatus(JsonLoader.ERROR_LOADING);
 		});
+		
+		return this;
+	}
+	
+	invalidate() {
+		console.log("wprr/utils/loading/JsonLoader::invalidate");
+		if(this._status !== JsonLoader.LOADED && this._status !== JsonLoader.ERROR_LOADING) {
+			return this;
+		}
+		
+		this.setStatus(JsonLoader.INVALID);
+		
+		if(JsonLoader.RELOAD_ON_INVALID) {
+			this.load();
+		}
 	}
 }
+
+JsonLoader.STATUS_NOT_STARTED = 0;
+JsonLoader.LOADED = 1;
+JsonLoader.LOADING = 2;
+JsonLoader.ERROR_LOADING = -1;
+JsonLoader.INVALID = 3;
+JsonLoader.LOADING_FROM_INVALID = 4;
+
+JsonLoader.RELOAD_ON_INVALID = false;
