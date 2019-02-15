@@ -143,8 +143,8 @@ export default class JsonLoader {
 	}
 	
 	setData(aData) {
-		console.log("wprr/utils/loading/JsonLoader::setData");
-		console.log(aData);
+		//console.log("wprr/utils/loading/JsonLoader::setData");
+		//console.log(aData);
 		
 		this._loadedAt = (new Date()).valueOf();
 		this._data = aData;
@@ -155,8 +155,8 @@ export default class JsonLoader {
 	}
 	
 	setStatus(aStatus) {
-		console.log("wprr/utils/loading/JsonLoader::setStatus");
-		console.log(aStatus);
+		//console.log("wprr/utils/loading/JsonLoader::setStatus");
+		//console.log(aStatus);
 		
 		this._status = aStatus;
 		
@@ -213,7 +213,7 @@ export default class JsonLoader {
 	}
 	
 	invalidate() {
-		console.log("wprr/utils/loading/JsonLoader::invalidate");
+		//console.log("wprr/utils/loading/JsonLoader::invalidate");
 		if(this._status !== JsonLoader.LOADED && this._status !== JsonLoader.ERROR_LOADING) {
 			return this;
 		}

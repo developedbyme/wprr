@@ -59,7 +59,7 @@ export default class LoadingGroup {
 	}
 	
 	load() {
-		console.log("wprr/utils/loading/LoadingGroup::load");
+		//console.log("wprr/utils/loading/LoadingGroup::load");
 		
 		let currentArray = this._loaders;
 		let currentArrayLength = currentArray.length;
@@ -117,7 +117,7 @@ export default class LoadingGroup {
 	}
 	
 	updateStatus() {
-		console.log("wprr/utils/loading/LoadingGroup::updateStatus");
+		//console.log("wprr/utils/loading/LoadingGroup::updateStatus");
 		
 		let statusString = this.getStatuses().join(",");
 		
