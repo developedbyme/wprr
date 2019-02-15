@@ -27,6 +27,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this._propsThatShouldNotCopy.push("errorComponent");
 		this._propsThatShouldNotCopy.push("errorElement");
 		this._propsThatShouldNotCopy.push("nonBlocking");
+		this._propsThatShouldNotCopy.push("exposeStatus");
 		this._propsThatShouldNotCopy.push("loadedCommands");
 		this._propsThatShouldNotCopy.push("apiFormat");
 		this._propsThatShouldNotCopy.push("skipLanguageParameter");
@@ -116,8 +117,9 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		this._getLoadedData(returnObject);
 		
-		let nonBlocking = this.getSourcedProp("nonBlocking");
-		if(nonBlocking) {
+		let nonBlocking = this.getSourcedPropWithDefault("nonBlocking", false);
+		let exposeStatus = this.getSourcedPropWithDefault("exposeStatus", false);
+		if(nonBlocking || exposeStatus) {
 			returnObject["status"] = this.state["status"];
 		}
 		
