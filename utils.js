@@ -3,12 +3,14 @@ import DbmContentFunctions from "wprr/wp/dbmcontent/DbmContentFunctions";
 import ValidationFunctions from "wprr/elements/form/validation/ValidationFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
 import ApplyAnimation from "wprr/manipulation/animation/applyfunctions/ApplyAnimation";
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
 export {DbmContentFunctions as dbmContent};
 export {ArrayFunctions as array};
 export {ApplyAnimation as applyAnimation};
+export {CommandPerformer as commandPerformer}
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";
