@@ -25,6 +25,7 @@ import SetDefaultProps from "wprr/manipulation/adjustfunctions/SetDefaultProps";
 import ConvertTermField from "wprr/manipulation/adjustfunctions/wp/ConvertTermField";
 import GroupArray from "wprr/manipulation/adjustfunctions/logic/GroupArray";
 import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
+import OptionsFromRange from "wprr/manipulation/adjustfunctions/wp/OptionsFromRange";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -50,6 +51,8 @@ let markupLoop = MarkupLoop.create;
 export {markupLoop};
 let optionsFromTerms = OptionsFromTerms.create;
 export {optionsFromTerms};
+let optionsFromRange = OptionsFromRange.create;
+export {optionsFromRange};
 let relationTerms = RelationTerms.create;
 export {relationTerms};
 let convertTermField = ConvertTermField.create;
