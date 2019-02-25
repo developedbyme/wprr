@@ -55,10 +55,10 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		let data = null;
 		switch(aFormat) {
 			case "wprr":
-				data = aData.data;
+				data = objectPath.get(aData, "data");
 				break;
 			case "wprrById":
-				data = aData.data.data;
+				data = objectPath.get(aData, "data.data");
 				break;
 			default:
 				console.warn("No format named " + aFormat + ". Using raw.");

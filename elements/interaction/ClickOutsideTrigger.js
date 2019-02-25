@@ -25,7 +25,14 @@ export default class ClickOutsideTrigger extends ManipulationBaseObject {
 				let commands = this.getSourcedProp("commands");
 				if(commands) {
 					let commandData = this.getSourcedProp("commandData");
-					CommandPerformer.perform(commands, commandData, this);
+					
+					if(commandData) {
+						//METODO: depreciation warning
+						CommandPerformer.perform(commands, commandData, this);
+					}
+					else {
+						CommandPerformer.perform(commands, aEvent, this);
+					}
 				}
 				else {
 					//METODO: show upgrade notice

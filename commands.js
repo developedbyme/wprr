@@ -15,6 +15,10 @@ import AnimateCommand from "wprr/commands/animation/AnimateCommand";
 import DelayCommand from "wprr/commands/animation/DelayCommand";
 import SubmitFormCommand from "wprr/commands/navigation/SubmitFormCommand";
 import AlertCommand from "wprr/commands/browser/AlertCommand";
+import ShowOverlayCommand from "wprr/commands/navigation/ShowOverlayCommand";
+import CloseCurrentOverlayCommand from "wprr/commands/navigation/CloseCurrentOverlayCommand";
+import StopPropagationCommand from "wprr/commands/browser/StopPropagationCommand";
+import PreventDefaultCommand from "wprr/commands/browser/PreventDefaultCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -39,7 +43,13 @@ let reactRouterNavigate = ReactRouterPushCommand.create;
 let scrollTo = ScrollToCommand.create;
 let submitForm = SubmitFormCommand.create;
 let alert = AlertCommand.create;
-export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert};
+let showOverlay = ShowOverlayCommand.create;
+let closeCurrentOverlay = CloseCurrentOverlayCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert, showOverlay, closeCurrentOverlay};
+
+let preventDefault = PreventDefaultCommand.create;
+let stopPropagation = StopPropagationCommand.create;
+export {preventDefault, stopPropagation};
 
 let injectReferences = InjectReferencesCommand.create;
 export {injectReferences};

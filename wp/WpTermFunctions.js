@@ -27,6 +27,29 @@ export default class WpTermFunctions {
 		return WpTermFunctions.getTermFromHierarchTermsBySlugPath(aPath, WpTermFunctions.getHierarchTerms(aTerms));
 	}
 	
+	static getTermPath(aId, aTerms) {
+		let returnArray = new Array();
+		
+		let debugCounter = 0;
+		let currentId = aId;
+		while(currentId !== 0) {
+			if(debugCounter > 100) {
+				console.error("While loop ran for too long.", aId, aTerms);
+				return [];
+			}
+			let currentTerm = WpTermFunctions.getTermById(currentId, aTerms);
+			if(!currentTerm) {
+				console.error("No term with id " + currentId + " from " + aId, aTerms);
+				return returnArray;
+			}
+			returnArray.unshift(currentTerm);
+			console.log(currentTerm);
+			currentId = currentTerm["parentId"];
+		}
+		
+		return returnArray;
+	}
+	
 	static getHierarchTerms(aTerms) {
 		var returnArray = new Array();
 		

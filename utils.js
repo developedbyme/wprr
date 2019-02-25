@@ -4,13 +4,15 @@ import ValidationFunctions from "wprr/elements/form/validation/ValidationFunctio
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
 import ApplyAnimation from "wprr/manipulation/animation/applyfunctions/ApplyAnimation";
 import CommandPerformer from "wprr/commands/CommandPerformer";
+import ProgrammingLanguageFunctions from "wprr/wp/ProgrammingLanguageFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
 export {DbmContentFunctions as dbmContent};
 export {ArrayFunctions as array};
 export {ApplyAnimation as applyAnimation};
-export {CommandPerformer as commandPerformer}
+export {CommandPerformer as commandPerformer};
+export {ProgrammingLanguageFunctions as programmingLanaguage};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";
