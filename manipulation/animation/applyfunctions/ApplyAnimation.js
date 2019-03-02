@@ -25,4 +25,12 @@ export default class ApplyAnimation {
 	static translate(aXValueName = "x", aYValueName = "y", aUnit = "px") {
 		return ApplyAnimation.transform("translate", [aXValueName, aYValueName], aUnit);
 	}
+	
+	static staticTranslate(aXWithUnit, aYWithUnit) {
+		let returnApplyFunction = TransformApplyFunction.create("translate", []);
+		
+		returnApplyFunction.setInput("valueNames", ["staticX", "staticY"]).setInput("staticX", aXWithUnit).setInput("staticY", aYWithUnit);
+		
+		return returnApplyFunction;
+	}
 }
