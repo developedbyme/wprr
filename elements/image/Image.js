@@ -12,6 +12,11 @@ export default class Image extends WprrBaseObject {
 	}
 	
 	_getClassNameFromSource(aSource, aPrefix = "source") {
+		if(!aSource) {
+			console.warn("No source set", this);
+			return "no-source";
+		}
+		
 		let tempArray = aSource.split(".");
 		tempArray.pop();
 		let sourcePath = tempArray.join(".");
