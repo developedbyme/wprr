@@ -16,6 +16,8 @@ export default class OptionsFromRange extends AdjustFunction {
 		super();
 		
 		this.range = SourceData.create("prop", "input");
+		this.setInput("keyField", "id");
+		this.setInput("labelField", "title");
 		this.outputName = "options";
 		
 	}
@@ -63,6 +65,8 @@ export default class OptionsFromRange extends AdjustFunction {
 		//console.log("wprr/manipulation/adjustfunctions/wp/OptionsFromRange::adjust");
 		
 		let range = this.resolveSource(this.range, aData, aManipulationObject);
+		let keyField = this.getInput("keyField", aData, aManipulationObject);
+		let labelField = this.getInput("labelField", aData, aManipulationObject);
 		let outputName = this.outputName;
 		
 		this.removeUsedProps(aData);
@@ -73,7 +77,7 @@ export default class OptionsFromRange extends AdjustFunction {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			returnArray.push({"value": currentItem["id"], "label": currentItem["title"]});
+			returnArray.push({"value": currentItem[keyField], "label": currentItem[labelField]});
 		}
 		
 		aData[outputName] = returnArray;
