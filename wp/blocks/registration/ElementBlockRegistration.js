@@ -1,8 +1,13 @@
 import React from "react";
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
 
 import ReferenceExporter from "wprr/reference/ReferenceExporter";
 import ReferenceHolder from "wprr/reference/ReferenceHolder";
 import AttributeDataStorage from "wprr/wp/blocks/AttributeDataStorage";
+
+import TextManager from "wprr/textmanager/TextManager";
+import StoreController from "wprr/store/StoreController";
 
 // import ElementBlockRegistration from "wprr/wp/blocks/registration/ElementBlockRegistration";
 export default class ElementBlockRegistration {
@@ -21,6 +26,44 @@ export default class ElementBlockRegistration {
 		
 		this.addAttribute("componentData", "object");
 		this.addAttribute("adminData", "object");
+		
+		this._textManager = new TextManager();
+		this._storeController = new StoreController();
+		
+		this._store = this._createReduxStore(wprrAdminData);
+		this._storeController.setStore(this._store);
+		this._storeController.setUser(wprrAdminData.userData);
+	}
+	
+	_addReducers() {
+		
+		let storeController = this._storeController;
+		
+		storeController.addDynamicReducer(storeController.createLocalReducer("mRouter", storeController.reduce));
+		storeController.addDynamicReducer(storeController.createLocalReducer("settings", storeController.reduceSettings));
+		storeController.addDynamicReducer(storeController.createLocalReducer("globalVariables", storeController.reduceGlobalVariables));
+	}
+	
+	_createReduxStore(aConfigurationData) {
+		
+		let initialState = {
+			"mRouter": {
+				
+			},
+			"settings": {
+				"wpApiUrlBase": aConfigurationData.restApiBaseUrl
+			}
+		};
+		this._storeController.getUrlResolvers().addBasePath("default", aConfigurationData.restApiBaseUrl);
+		
+		this._addReducers();
+		return createStore(
+			this._storeController.dynamicReduceBound,
+			initialState,
+			compose(
+				applyMiddleware(thunk)
+			)
+		);
 	}
 	
 	setElement(aElement) {
@@ -73,6 +116,14 @@ export default class ElementBlockRegistration {
 		referenceHolder.addObject(blocksPrefix + "attributes", aProps.attributes);
 		referenceHolder.addObject(blocksPrefix + "setAttributes", aProps.setAttributes);
 		referenceHolder.addObject(blocksPrefix + "externalStorage", externalStorage);
+		
+		console.log(wprrAdminData);
+		
+		referenceHolder.addObject("redux/store", this._store);
+		referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+		referenceHolder.addObject("redux/store/wprrController", this._storeController);
+		
+		referenceHolder.addObject("wprr/textManager", this._textManager);
 		
 		return <ReferenceExporter references={referenceHolder} attributes={aProps.attributes}>
 			{this._element}
