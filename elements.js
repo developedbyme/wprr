@@ -75,6 +75,7 @@ export {default as TriggerHandler} from "wprr/reference/TriggerHandler";
 
 export {default as WprrLazyImage} from "wprr/elements/image/WprrLazyImage";
 export {default as LazyImage} from "wprr/elements/image/LazyImage";
+export {default as Image} from "wprr/elements/image/Image";
 export {default as WpMenu} from "wprr/wp/menu/WpMenu";
 
 export {default as StaticFileLoader} from "wprr/manipulation/loader/StaticFileLoader";
