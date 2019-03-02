@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
+import SourcedText from "wprr/elements/text/SourcedText";
 
 // import Selection from "wprr/elements/form/Selection";
 export default class Selection extends WprrBaseObject {
@@ -150,30 +151,25 @@ export default class Selection extends WprrBaseObject {
 				let currentObject = currentArray[i];
 				
 				if(typeof(currentObject) === "object") {
-					optionElements.push(React.createElement("option", {"key": currentObject["value"], "ref": "option-" + currentObject["value"], "value": currentObject["value"]}, Selection.escapeString(currentObject["label"])));
+					optionElements.push(React.createElement("option", {"key": currentObject["value"], "value": currentObject["value"]},
+						SourcedText.escapeString(currentObject["label"])
+					));
 				}
 				else {
-					optionElements.push(React.createElement("option", {"key": currentObject, "value": currentObject}, Selection.escapeString(currentObject)));
+					optionElements.push(React.createElement("option", {"key": currentObject, "value": currentObject},
+						SourcedText.escapeString(currentObject)
+					));
 				}
 			}
 		}
 		else {
 			for(let objectName in options) {
-				optionElements.push(React.createElement("option", {"key": objectName, "value": objectName}, Selection.escapeString(options[objectName])));
+				optionElements.push(React.createElement("option", {"key": objectName, "value": objectName},
+					SourcedText.escapeString(options[objectName])
+				));
 			}
 		}
 		
 		return React.createElement("wrapper", {}, optionElements);
 	}
-	
-	static escapeString(aText) {
-		if(!Selection.tempTextArea) {
-			Selection.tempTextArea = document.createElement("textarea");
-		}
-		
-		Selection.tempTextArea.innerHTML = aText;
-		return Selection.tempTextArea.value;
-	}
 }
-
-Selection.tempTextArea = null;
