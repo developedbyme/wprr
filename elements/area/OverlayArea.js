@@ -59,8 +59,8 @@ export default class OverlayArea extends WprrBaseObject {
 	}
 	
 	hideOverlay(aId) {
-		console.log("wprr/elements/area/OverlayArea::hideOverlay");
-		console.log(aId);
+		//console.log("wprr/elements/area/OverlayArea::hideOverlay");
+		//console.log(aId);
 		
 		//MENOTE: we operate on the current array as it can have concurrency problems otherwise
 		let overlaysArray = this.props.overlays; //([]).concat(this.props.overlays);
