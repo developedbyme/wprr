@@ -32,7 +32,7 @@ export default class Image extends WprrBaseObject {
 		let imageSource = this.getSourcedProp("src");
 		let classPrefix = this.getSourcedPropWithDefault("classPrefix", "source");
 		
-		returnArray.push(this._getClassNameFromSource(classPrefix));
+		returnArray.push(this._getClassNameFromSource(imageSource, classPrefix));
 		
 		return returnArray;
 	}
@@ -45,15 +45,25 @@ export default class Image extends WprrBaseObject {
 		let elementType = this._getMainElementType();
 		
 		let imageSource = this.getSourcedProp("src");
+		let sourceLocation = this.getSourcedProp("location");
+		if(!sourceLocation) {
+			sourceLocation = this.getReference("wprr/defaultImageLocation");
+			if(!sourceLocation) {
+				sourceLocation = "theme";
+			}
+		}
+		
+		//METODO: resolve location instead of append
+		let fullPath = this.getReference("wprr/paths/" + sourceLocation) + "/" + imageSource;
 		
 		if(elementType === "img") {
-			returnObject["src"] = imageSource;
+			returnObject["src"] = fullPath;
 		}
 		else {
 			if(!returnObject["style"]) {
 				returnObject["style"] = new Object();
 			}
-			returnObject["style"]["backgroundImage"] = "url('" + imageSource + "')";
+			returnObject["style"]["backgroundImage"] = "url('" + fullPath + "')";
 		}
 		
 		return returnObject;
