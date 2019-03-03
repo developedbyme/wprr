@@ -134,6 +134,9 @@ export default class ElementBlockRegistration {
 		console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
 		console.log(aProps);
 		
-		return <div data-expanded-content="1" data-wprr-component={this._componentName} data-wprr-component-data={JSON.stringify(aProps.attributes.componentData)}></div>;
+		let componentData = JSON.stringify(aProps.attributes.componentData);
+		componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+		
+		return <div data-expanded-content="1" data-wprr-component={this._componentName} data-wprr-component-data={componentData}></div>;
 	}
 }
