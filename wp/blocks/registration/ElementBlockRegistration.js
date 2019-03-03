@@ -135,7 +135,9 @@ export default class ElementBlockRegistration {
 		console.log(aProps);
 		
 		let componentData = JSON.stringify(aProps.attributes.componentData);
-		componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+		if(componentData) {
+			componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+		}
 		
 		return <div data-expanded-content="1" data-wprr-component={this._componentName} data-wprr-component-data={componentData}></div>;
 	}
