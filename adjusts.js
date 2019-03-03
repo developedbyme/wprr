@@ -26,6 +26,7 @@ import ConvertTermField from "wprr/manipulation/adjustfunctions/wp/ConvertTermFi
 import GroupArray from "wprr/manipulation/adjustfunctions/logic/GroupArray";
 import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
 import OptionsFromRange from "wprr/manipulation/adjustfunctions/wp/OptionsFromRange";
+import SelectItemInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemInArray";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -61,6 +62,8 @@ let groupArray = GroupArray.create;
 export {groupArray};
 let sortArray = SortArray.create;
 export {sortArray};
+let selectItemInArray = SelectItemInArray.create;
+export {selectItemInArray};
 
 let filterProps = FilterProps.create;
 export {filterProps};
