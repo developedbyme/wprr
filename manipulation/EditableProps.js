@@ -16,6 +16,8 @@ export default class EditableProps extends ManipulationBaseObject {
 	}
 	
 	externalDataChange() {
+		console.log("wprr/manipulation/EditableProps::externalDataChange");
+		
 		this._updateState();
 	}
 	
@@ -45,6 +47,10 @@ export default class EditableProps extends ManipulationBaseObject {
 				let currentValue = externalStorage.getValue(currentName);
 				if(currentValue !== null && currentValue !== undefined) {
 					if(this.state[currentName] !== currentValue) {
+						newState[currentName] = currentValue;
+						hasChange = true;
+					}
+					else if(JSON.stringify(this.state[currentName]) === JSON.stringify(currentValue)) {
 						newState[currentName] = currentValue;
 						hasChange = true;
 					}
