@@ -127,6 +127,9 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		let currentElements = new Array();
 		
+		let richTextClassName = this.getSourcedPropWithDefault("richTextClassName", "wp-rich-text-formatting");
+		let textGroupClassName = this.getSourcedPropWithDefault("textGroupClassName", "post-content centered-content-text");
+		
 		{
 			let currentArray = temporaryElement.children;
 			let currentArrayLength = currentArray.length;
@@ -136,8 +139,8 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 				if(currentElement.nodeType === 1 && currentElement.getAttribute("data-expanded-content") == "1") {
 					if(currentElements.length > 0) {
 						this._containers.push(
-							React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
-								React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+							React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
+								React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
 							)
 						);
 						this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
@@ -164,8 +167,8 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 								this._injectComponents.push(injectComponentData);
 							
 								this._containers.push(
-									React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
-										React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+									React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
+										React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
 									)
 								);
 								this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
@@ -182,8 +185,8 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		if(currentElements.length > 0) {
 			this._containers.push(
-				React.createElement("div", {key: "container-" + this._containers.length, className: "post-content centered-content-text"},
-					React.createElement("div", {className: "wp-rich-text-formatting", ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
+				React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
+					React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
 				)
 			);
 			this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
