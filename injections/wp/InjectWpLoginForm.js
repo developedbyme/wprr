@@ -13,6 +13,7 @@ import SourcedText from "wprr/elements/text/SourcedText";
 import Link from "wprr/elements/interaction/Link";
 import DeepDistribution from "wprr/manipulation/distribution/DeepDistribution";
 import DistributionTarget from "wprr/manipulation/distribution/DistributionTarget";
+import Checkbox from "wprr/elements/form/Checkbox";
 
 //import InjectWpLoginForm from "wprr/injections/wp/InjectWpLoginForm";
 export default function InjectWpLoginForm(aProps) {
@@ -61,6 +62,9 @@ export default function InjectWpLoginForm(aProps) {
 		"elements/login/submitButton": React.createElement(FormField, {"type": "submit", "value": "Submit"}),
 		"elements/login/lostPasswordLink": lostPasswordLink,
 		"elements/login/signUpLink": signUpLink,
+		"elements/login/rememberMeCheckbox": React.createElement(EditableProps, {"editableProps": "rememberme", "rememberme": true},
+			React.createElement(Checkbox, {"valueName": "rememberme", "name": "rememberme", "value": "forever"})
+		),
 	};
 	
 	return React.createElement(RefGroup, newProps,
