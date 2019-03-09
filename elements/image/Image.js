@@ -2,6 +2,8 @@ import React from 'react';
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
+import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
+
 //import Image from "wprr/elements/image/Image";
 export default class Image extends WprrBaseObject {
 
@@ -9,6 +11,8 @@ export default class Image extends WprrBaseObject {
 		super(aProps);
 		
 		this._addMainElementClassName("image");
+		
+		this._urlResolver = new MultipleUrlResolver();
 	}
 	
 	_getClassNameFromSource(aSource, aPrefix = "source") {
@@ -58,8 +62,9 @@ export default class Image extends WprrBaseObject {
 			}
 		}
 		
-		//METODO: resolve location instead of append
-		let fullPath = this.getReference("wprr/paths/" + sourceLocation) + "/" + imageSource;
+		this._urlResolver.setBasePaths({"default": this.getReference("wprr/paths/" + sourceLocation)});
+		
+		let fullPath = this._urlResolver.resolveUrl(imageSource, "default");
 		
 		if(elementType === "img") {
 			returnObject["src"] = fullPath;

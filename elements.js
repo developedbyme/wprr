@@ -78,6 +78,8 @@ export {default as LazyImage} from "wprr/elements/image/LazyImage";
 export {default as Image} from "wprr/elements/image/Image";
 export {default as WpMenu} from "wprr/wp/menu/WpMenu";
 export {default as DbmNotice} from "wprr/wp/dbmcontent/DbmNotice";
+export {default as WpmlLanguageSwitcher} from "wprr/wp/menu/WpmlLanguageSwitcher";
+export {default as WpmlLanguageName} from "wprr/wp/menu/WpmlLanguageName";
 
 export {default as StaticFileLoader} from "wprr/manipulation/loader/StaticFileLoader";
 
