@@ -59,6 +59,11 @@ export default class JsonLoader {
 	
 	setupJsonPost(aUrl, aBody) {
 		this._url = aUrl;
+		
+		return this.setJsonPostBody(aBody);
+	}
+	
+	setJsonPostBody(aBody) {
 		this._method = "POST";
 		this._body = JSON.stringify(aBody);
 		
