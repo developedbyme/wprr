@@ -64,7 +64,7 @@ export default class Table extends WprrBaseObject {
 		let rowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "rowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/rowItem"),
-			React.createElement("th", {},
+			React.createElement("td", {},
 				React.createElement(Adjust, {"adjust": [
 					Table._adjust_getContentSources,
 					GetFirstResolvingSource.create(SourceData.create("prop", "sources"), this, "element")
