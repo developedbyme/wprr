@@ -51,6 +51,7 @@ export {default as QueryStringParameters} from "wprr/manipulation/QueryStringPar
 export {default as ScrollActivatedItem} from "wprr/manipulation/measure/ScrollActivatedItem";
 export {default as ScrollPosition} from "wprr/manipulation/measure/ScrollPosition";
 export {default as StepController} from "wprr/manipulation/StepController";
+export {default as Table} from "wprr/elements/area/table/Table";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
 export {default as DistributionTarget} from "wprr/manipulation/distribution/DistributionTarget";
