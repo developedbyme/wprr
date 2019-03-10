@@ -27,6 +27,7 @@ import GroupArray from "wprr/manipulation/adjustfunctions/logic/GroupArray";
 import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
 import OptionsFromRange from "wprr/manipulation/adjustfunctions/wp/OptionsFromRange";
 import SelectItemInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemInArray";
+import GetFirstResolvingSource from "wprr/manipulation/adjustfunctions/GetFirstResolvingSource";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -92,3 +93,6 @@ let styleFromHeight = StyleFromHeight.create;
 export {styleFromHeight};
 let styleFromSize = StyleFromSize.create;
 export {styleFromSize};
+
+let getFirstResolvingSource = GetFirstResolvingSource.create();
+export {getFirstResolvingSource};

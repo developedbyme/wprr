@@ -88,6 +88,25 @@ export default class WprrBaseObject extends React.Component {
 		return aDefaultValue;
 	}
 	
+	getFirstValidSource(...aArguments) {
+		return this.getFirstValidSourceInArray(aArguments);
+	}
+	
+	getFirstValidSourceInArray(aSources) {
+		let currentArray = aSources;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentSource = currentArray[i];
+			let resolvedValue = this.resolveSourcedData(currentSource);
+			if(resolvedValue !== null && resolvedValue !== undefined) {
+				return resolvedValue;
+			}
+		}
+		
+		console.warn("No sourced resolved", aSources, this);
+		return null;
+	}
+	
 	resolveSourcedData(aData) {
 		//console.log("wprr/WprrBaseObject::resolveSourcedData");
 		//console.log(aData);
