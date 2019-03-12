@@ -96,12 +96,17 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		}
 		
 		let newProps = aProps;
-		if(aProps.className && aChild.props && aChild.props.className) {
+		if(aChild && aChild.props && aChild.props.className) {
 			newProps = new Object();
 			for(let objectName in aProps) {
 				newProps[objectName] = aProps[objectName];
 			}
-			newProps.className = aProps.className + " " + aChild.props.className;
+			if(aProps.className) {
+				newProps.className = aProps.className + " " + aChild.props.className;
+			} 
+			else {
+				newProps.className = aChild.props.className;
+			}
 		}
 		
 		let callArray = [aChild, newProps];
