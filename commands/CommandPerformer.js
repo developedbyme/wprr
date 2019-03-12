@@ -20,10 +20,35 @@ export default class CommandPerformer {
 			//METODO: resolve command
 			let currentCommand = currentArray[i];
 			
-			currentCommand.setTriggerElement(aTriggerElement);
-			currentCommand.setEventData(aData);
-			
-			currentCommand.perform();
+			CommandPerformer.safePerformCommand(currentCommand, aData, aTriggerElement);
 		}
 	}
+	
+	static performCommand(aCommand, aData, aTriggerElement) {
+		if(CommandPerformer.CATCH_ERRORS) {
+			CommandPerformer.safePerformCommand(aCommand, aData, aTriggerElement);
+		}
+		else {
+			CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
+		}
+	}
+	
+	static safePerformCommand(aCommand, aData, aTriggerElement) {
+		try {
+			CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
+		}
+		catch(theError) {
+			console.error("Command had an error.", aCommand, aData, aTriggerElement);
+			console.error(theError);
+		}
+	}
+	
+	static unsafePerformCommand(aCommand, aData, aTriggerElement) {
+		aCommand.setTriggerElement(aTriggerElement);
+		aCommand.setEventData(aData);
+		
+		aCommand.perform();
+	}
 }
+
+CommandPerformer.CATCH_ERRORS = true;
