@@ -63,11 +63,11 @@ export default class ValidatingForm extends WprrBaseObject {
 	
 	removeValidation(aObject) {
 		//console.log("wprr/elements/form/ValidatingForm::removeValidation");
-		var isFound = false;
+		let isFound = false;
 		
-		var currentArray = this._elementsToValidate;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
+		let currentArray = this._elementsToValidate;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
 			if(currentArray[i] === aObject) {
 				currentArray.splice(i, 1);
 				i--;
@@ -82,13 +82,34 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	validate() {
-		var returnValue = true;
-		var currentArray = this._elementsToValidate;
-		var currentArrayLength = currentArray.length;
-		for(var i = 0; i < currentArrayLength; i++) {
-			var currentFieldIsValid = currentArray[i].validate("submit");
+		
+		let invalidFields = new Array();
+		
+		let returnValue = true;
+		let currentArray = this._elementsToValidate;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentField = currentArray[i];
+			let currentFieldIsValid = currentField.validate("submit");
+			
+			if(!currentFieldIsValid) {
+				invalidFields.push(currentField);
+			}
 			
 			returnValue &= currentFieldIsValid;
+		}
+		
+		if(returnValue) {
+			let commands = this.getSourcedProp("validCommands");
+			if(commands) {
+				CommandPerformer.perform(commands, null, this);
+			}
+		}
+		else {
+			let commands = this.getSourcedProp("invalidCommands");
+			if(commands) {
+				CommandPerformer.perform(commands, invalidFields, this);
+			}
 		}
 		
 		return returnValue;
@@ -130,7 +151,7 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	_getMainElementProps() {
-		var returnObject = super._getMainElementProps();
+		let returnObject = super._getMainElementProps();
 		
 		returnObject["onSubmit"] = this._callback_submitBound;
 		
