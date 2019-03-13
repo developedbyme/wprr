@@ -28,6 +28,7 @@ import SortArray from "wprr/manipulation/adjustfunctions/logic/SortArray";
 import OptionsFromRange from "wprr/manipulation/adjustfunctions/wp/OptionsFromRange";
 import SelectItemInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemInArray";
 import GetFirstResolvingSource from "wprr/manipulation/adjustfunctions/GetFirstResolvingSource";
+import SwitchValue from "wprr/manipulation/adjustfunctions/logic/SwitchValue";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -65,6 +66,8 @@ let sortArray = SortArray.create;
 export {sortArray};
 let selectItemInArray = SelectItemInArray.create;
 export {selectItemInArray};
+let switchValue = SwitchValue.create;
+export {switchValue};
 
 let filterProps = FilterProps.create;
 export {filterProps};

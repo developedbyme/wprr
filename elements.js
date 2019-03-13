@@ -40,6 +40,8 @@ export {default as CookieData} from "wprr/manipulation/CookieData";
 export {default as InjectReduxExternalStorage} from "wprr/manipulation/InjectReduxExternalStorage";
 export {default as MultipleSelection} from "wprr/manipulation/MultipleSelection";
 export {default as MultipleSelectionValue} from "wprr/manipulation/MultipleSelectionValue";
+export {default as LoggedInStatusSection} from "wprr/elements/area/selectsections/LoggedInStatusSection";
+export {default as UserRoleSection} from "wprr/elements/area/selectsections/UserRoleSection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
