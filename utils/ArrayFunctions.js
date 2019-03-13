@@ -87,4 +87,16 @@ export default class ArrayFunctions {
 		console.warn("No item with field " + aField + " matching " + aIdentifier, aArray);
 		return null;
 	}
+	
+	static mapField(aArray, aField) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray.push(objectPath.get(currentArray[i], aField));
+		}
+		
+		return returnArray;
+	}
 }
