@@ -16,6 +16,20 @@ export default class ChangeData  {
 		return ChangeDataFunctions.createEditData(this._changes);
 	}
 	
+	getChanges() {
+		return this._changes;
+	}
+	
+	addChanges(aChanges) {
+		let currentArray = aChanges;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this._changes.push(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
 	addChange(aChange) {
 		this._changes.push(aChange);
 		
@@ -52,5 +66,12 @@ export default class ChangeData  {
 		this.addChange(ChangeDataFunctions.createChangeData(aChangeType, changeValue));
 		
 		return this;
+	}
+	
+	setTerms(aTerms, aTaxonomy, aField = "id", aChangeType = "terms") {
+		let changeValue = ChangeDataFunctions.createFieldData(aField, aTerms);
+		changeValue['taxonomy'] = aTaxonomy;
+		
+		this.addChange(ChangeDataFunctions.createChangeData(aChangeType, changeValue));
 	}
 }

@@ -81,6 +81,8 @@ export {default as WpMenu} from "wprr/wp/menu/WpMenu";
 export {default as DbmNotice} from "wprr/wp/dbmcontent/DbmNotice";
 export {default as WpmlLanguageSwitcher} from "wprr/wp/menu/WpmlLanguageSwitcher";
 export {default as WpmlLanguageName} from "wprr/wp/menu/WpmlLanguageName";
+export {default as EditPostForm} from "wprr/wp/admin/EditPostForm";
+export {default as MediaFileUpload} from "wprr/wp/admin/MediaFileUpload";
 
 export {default as StaticFileLoader} from "wprr/manipulation/loader/StaticFileLoader";
 
