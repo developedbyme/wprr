@@ -136,7 +136,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			Wprr.source("prop", "markup"),
 			Wprr.source("referenceIfExists", "arrayEditor/markup"),
 			React.createElement(Wprr.Markup, {"usedPlacements": "loop"},
-				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey("dynamicKey"), "dynamicKey": Wprr.source("combine", ["list-", Wprr.sourceReference("arrayEditor/loop", "length")])},
+				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey("dynamicKey"), "dynamicKey": Wprr.source("combine", ["list-", Wprr.sourceReference("arrayEditor/numberOfItems")])},
 					React.createElement(Wprr.MarkupChildren, {"placement": "loop"})
 				),
 				React.createElement(Wprr.MarkupChildren, {"placement": "rest"})
@@ -152,6 +152,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			"trigger/createItem": this,
 			"trigger/removeItem": this,
 			"arrayEditor/loop": loop,
+			"arrayEditor/numberOfItems": value.length,
 			"arrayEditor/addButton": addButton
 		};
 		
