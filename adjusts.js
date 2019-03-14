@@ -97,5 +97,5 @@ export {styleFromHeight};
 let styleFromSize = StyleFromSize.create;
 export {styleFromSize};
 
-let getFirstResolvingSource = GetFirstResolvingSource.create();
+let getFirstResolvingSource = GetFirstResolvingSource.create;
 export {getFirstResolvingSource};
