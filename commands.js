@@ -19,6 +19,7 @@ import ShowOverlayCommand from "wprr/commands/navigation/ShowOverlayCommand";
 import CloseCurrentOverlayCommand from "wprr/commands/navigation/CloseCurrentOverlayCommand";
 import StopPropagationCommand from "wprr/commands/browser/StopPropagationCommand";
 import PreventDefaultCommand from "wprr/commands/browser/PreventDefaultCommand";
+import ConfirmCommand from "wprr/commands/browser/ConfirmCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -45,7 +46,8 @@ let submitForm = SubmitFormCommand.create;
 let alert = AlertCommand.create;
 let showOverlay = ShowOverlayCommand.create;
 let closeCurrentOverlay = CloseCurrentOverlayCommand.create;
-export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert, showOverlay, closeCurrentOverlay};
+let confirm = ConfirmCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert, showOverlay, closeCurrentOverlay, confirm};
 
 let preventDefault = PreventDefaultCommand.create;
 let stopPropagation = StopPropagationCommand.create;
