@@ -165,8 +165,8 @@ export default class SliderControl extends ControlFunction {
 	startInterval() {
 		//console.log("wprr/manipulation/adjustfunctions/control/slider/SliderControl::startInterval");
 		
-		if(this._intervalLength !== -1 && this._intervalId === -1) {
-			this._intervalId = setInterval(this._animateToNextPositionBound, this.numberOfItems*1000)
+		if(this._intervalLength > 0 && this._intervalId === -1) {
+			this._intervalId = setInterval(this._animateToNextPositionBound, this._intervalLength*1000)
 		}
 		
 		return this;

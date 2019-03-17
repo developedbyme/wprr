@@ -29,6 +29,7 @@ import OptionsFromRange from "wprr/manipulation/adjustfunctions/wp/OptionsFromRa
 import SelectItemInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemInArray";
 import GetFirstResolvingSource from "wprr/manipulation/adjustfunctions/GetFirstResolvingSource";
 import SwitchValue from "wprr/manipulation/adjustfunctions/logic/SwitchValue";
+import SliderControl from "wprr/manipulation/adjustfunctions/control/slider/SliderControl";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -99,3 +100,6 @@ export {styleFromSize};
 
 let getFirstResolvingSource = GetFirstResolvingSource.create;
 export {getFirstResolvingSource};
+
+let sliderControl = SliderControl.create;
+export {sliderControl};

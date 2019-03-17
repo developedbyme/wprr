@@ -43,6 +43,7 @@ export {default as MultipleSelectionValue} from "wprr/manipulation/MultipleSelec
 export {default as LoggedInStatusSection} from "wprr/elements/area/selectsections/LoggedInStatusSection";
 export {default as UserRoleSection} from "wprr/elements/area/selectsections/UserRoleSection";
 export {default as ArrayEditor} from "wprr/elements/form/ArrayEditor";
+export {default as SliderDisplay} from "wprr/elements/area/slider/SliderDisplay";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
