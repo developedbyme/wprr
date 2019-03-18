@@ -315,16 +315,48 @@ export default class WprrBaseObject extends React.Component {
 	
 	_prepareInitialRender() {
 		//console.log("wprr/WprrBaseObject::_prepareInitialRender");
+		
+		//MENOTE: should be overridden
 	}
 	
 	_prepareRender() {
 		//console.log("wprr/WprrBaseObject::_prepareRender");
+		
+		//MENOTE: should be overridden
+	}
+	
+	_setActivePart(aName) {
+		//console.log("wprr/WprrBaseObject::_setActivePart");
+		
+		//MENOTE: should be overridden
 	}
 	
 	_renderMainElement(aCurrentElement, aOwner) {
 		//console.log("wprr/WprrBaseObject::_renderMainElement");
 		
 		return React.createElement("wrapper", {}, this.props.children);
+	}
+	
+	_replaceWrapper(aElement) {
+		if(aElement && aElement.type === "wrapper") {
+			let mainElementProps = this._getMainElementProps();
+			mainElementProps["ref"] = this._elementRef;
+			
+			let renderArguments = [this._getMainElementType(), mainElementProps];
+			
+			if(aElement.props.children) {
+				if(Array.isArray(aElement.props.children)) {
+					renderArguments = renderArguments.concat(aElement.props.children);
+				}
+				else {
+					renderArguments.push(aElement.props.children);
+				}
+			}
+			
+			return React.createElement.apply(React, renderArguments);
+		}
+		
+		return aElement;
 	}
 	
 	_renderSafe() {
@@ -337,25 +369,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		this._prepareRender();
 		
-		let mainElement = this._renderMainElement(this, this);
-		
-		if(mainElement && mainElement.type === "wrapper") {
-			let mainElementProps = this._getMainElementProps();
-			mainElementProps["ref"] = this._elementRef;
-			
-			let renderArguments = [this._getMainElementType(), mainElementProps];
-			
-			if(mainElement.props.children) {
-				if(Array.isArray(mainElement.props.children)) {
-					renderArguments = renderArguments.concat(mainElement.props.children);
-				}
-				else {
-					renderArguments.push(mainElement.props.children);
-				}
-			}
-			
-			mainElement = React.createElement.apply(React, renderArguments);
-		}
+		let mainElement = this._replaceWrapper(this._renderMainElement(this, this));
 		
 		this._hasRendered = true;
 		this._isRendering = false;
@@ -367,6 +381,7 @@ export default class WprrBaseObject extends React.Component {
 		let returnObject;
 		if(WprrBaseObject.CATCH_RENDER_ERRORS) {
 			try {
+				this._setActivePart("initial");
 				returnObject = this._renderSafe();
 			}
 			catch(aError) {
