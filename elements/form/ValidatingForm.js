@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+require('formdata-polyfill');
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
@@ -135,6 +136,9 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	getFormData() {
+		
+		console.log(FormData);
+		
 		return new FormData(this.getMainElement());
 	}
 	
