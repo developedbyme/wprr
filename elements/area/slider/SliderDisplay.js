@@ -95,9 +95,7 @@ export default class SliderDisplay extends WprrBaseObject {
 				"width": itemWidth
 			}
 			
-			returnArray.push(<div className={placementClasses} key={"placement-" + globalIndex} style={styleObject} >
-				{currentElement}
-			</div>);
+			returnArray.push(React.createElement("div", {"className": placementClasses, "key": "placement-" + globalIndex, "style": styleObject}, currentElement));
 		}
 		
 		return returnArray;
@@ -109,8 +107,6 @@ export default class SliderDisplay extends WprrBaseObject {
 		let items = ReactChildFunctions.getInputChildrenForComponent(this);
 		let placedItems = this._renderPlacedItems(items);
 		
-		return <wrapper>
-			{placedItems}
-		</wrapper>;
+		return React.createElement("wrapper", {}, placedItems);
 	}
 }
