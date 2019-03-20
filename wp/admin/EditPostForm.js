@@ -69,9 +69,13 @@ export default class EditPostForm extends WprrBaseObject {
 	
 	_getApplyChangeFunction(aFieldName) {
 		
-		//METODO: add overrides
+		let applyFunction = this.getFirstValidSource(
+			Wprr.sourceProp("apply_" + aFieldName),
+			Wprr.sourceReference("wprr/editPost/apply/" + aFieldName),
+			EditPostForm.defaultApplyChange
+		);
 		
-		return EditPostForm.defaultApplyChange;
+		return applyFunction;
 	}
 	
 	static defaultApplyChange(aFieldName, aValue, aChangeData) {
