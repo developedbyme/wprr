@@ -128,24 +128,44 @@ export default class EditPostForm extends WprrBaseObject {
 		return changeData;
 	}
 	
+	_saved(aId) {
+		//console.log("wprr/wp/admin/EditPostForm::_saved");
+		
+		let commands = this.getSourcedProp("savedCommands");
+		if(commands) {
+			Wprr.utils.commandPerformer.perform(commands, aId, this);
+		}
+	}
+	
+	_errorSaving() {
+		//console.log("wprr/wp/admin/EditPostForm::_errorSaving");
+		
+		let commands = this.getSourcedProp("errorCommands");
+		if(commands) {
+			Wprr.utils.commandPerformer.perform(commands, aId, this);
+		}
+	}
+	
 	publish() {
-		console.log("wprr/wp/admin/EditPostForm::publish");
+		//console.log("wprr/wp/admin/EditPostForm::publish");
 		
 		let changeData = this.getChangeData();
 		changeData.setField("status", "publish");
 		
 		let loader = this._getLoader(changeData);
-		//METODO: add success command
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._saved, [Wprr.source("event", "raw", "data.id")]));
+		loader.addErrorCommand(Wprr.commands.callFunction(this, this._errorSaving));
 		loader.load();
 	}
 	
 	save() {
-		console.log("wprr/wp/admin/EditPostForm::save");
+		//console.log("wprr/wp/admin/EditPostForm::save");
 		
 		let changeData = this.getChangeData();
 		
 		let loader = this._getLoader(changeData);
-		//METODO: add success command
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._saved, [Wprr.source("event", "raw", "data.id")]));
+		loader.addErrorCommand(Wprr.commands.callFunction(this, this._errorSaving));
 		loader.load();
 	}
 	
