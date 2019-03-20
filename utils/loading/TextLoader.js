@@ -166,7 +166,12 @@ export default class TextLoader {
 		
 		fetch(this._url, {"credentials": this._credentials, "method": this._method, "body": this._body, headers: this._headers})
 		.then( (response) => {
-			return response.text();
+			if(response.ok) {
+				return response.text();
+			}
+			else {
+				throw(new Error("Server response: " + response.status + " " + response.statusText));
+			}
 		})
 		.then( (data) => {
 			this.setData(data);

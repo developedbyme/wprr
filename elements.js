@@ -95,3 +95,6 @@ export {default as AddTranslationMapToTextManager} from "wprr/textmanager/AddTra
 
 export {default as DbmJsonTranslationsEditor} from "wprr/elements/dbmcontent/DbmJsonTranslationsEditor";
 export {default as MultipleObjectsEditor} from "wprr/elements/create/MultipleObjectsEditor";
+
+export {default as MultipleRenderObject} from "wprr/elements/abstract/MultipleRenderObject";
+export {default as Part} from "wprr/elements/abstract/Part";

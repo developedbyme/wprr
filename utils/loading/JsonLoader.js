@@ -201,7 +201,12 @@ export default class JsonLoader {
 		
 		fetch(this._url, sendParameters)
 		.then( (response) => {
-			return response.json();
+			if(response.ok) {
+				return response.json();
+			}
+			else {
+				throw(new Error("Server response: " + response.status + " " + response.statusText));
+			}
 		})
 		.then( (data) => {
 			this.setData(data);

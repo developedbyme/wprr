@@ -27,6 +27,14 @@ export default class WprrBaseObject extends React.Component {
 		this._namedRefs = new Object();
 	}
 	
+	getProps() {
+		return this.props;
+	}
+	
+	getContext() {
+		return this.context;
+	}
+	
 	getRef(aName) {
 		let currentRef = this._namedRefs[aName];
 		if(currentRef) {
@@ -61,11 +69,11 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getReferences() {
-		return this.context.references;
+		return this.getContext().references;
 	}
 	
 	getReference(aPath) {
-		return this.context.references.getObject(aPath);
+		return this.getContext().references.getObject(aPath);
 	}
 	
 	getMainElement() {
@@ -78,12 +86,14 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getReferenceIfExists(aPath) {
-		return this.context.references.getObjectIfExists(aPath);
+		return this.getContext().references.getObjectIfExists(aPath);
 	}
 	
 	getPropWithDefault(aPropName, aDefaultValue) {
-		if(this.props[aPropName] !== undefined) {
-			return this.props[aPropName];
+		let props = this.getProps();
+		
+		if(props[aPropName] !== undefined) {
+			return props[aPropName];
 		}
 		return aDefaultValue;
 	}
@@ -127,7 +137,9 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getSourcedProp(aPropName) {
-		return this.resolveSourcedData(this.props[aPropName]);
+		let props = this.getProps();
+		
+		return this.resolveSourcedData(props[aPropName]);
 	}
 	
 	getSourcedPropWithDefault(aPropName, aDefault) {
@@ -135,7 +147,9 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getSourcedPropInStateChange(aPropName, aNewPropsAndState) {
-		return this.resolveSourcedDataInStateChange(this.props[aPropName], aNewPropsAndState);
+		let props = this.getProps();
+		
+		return this.resolveSourcedDataInStateChange(props[aPropName], aNewPropsAndState);
 	}
 	
 	translate(aText) {
@@ -202,27 +216,29 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_copyPassthroughProps(aReturnObject) {
-		for(let objectName in this.props) {
+		let props = this.getProps();
+		
+		for(let objectName in props) {
 			//MENOTE: copy all data attributes
 			if(objectName.indexOf("data-") === 0) {
-				aReturnObject[objectName] = this.props[objectName];
+				aReturnObject[objectName] = props[objectName];
 			}
 			
 			//MENOTE: copy all callbacks
 			if(objectName.indexOf("on") === 0 && objectName.charCodeAt(2) >= 65 && objectName.charCodeAt(2) <= 90) {
-				aReturnObject[objectName] = this.props[objectName];
+				aReturnObject[objectName] = props[objectName];
 			}
 			
 			//MENOTE: pass through id and name
 			if(objectName === "name" || objectName === "id") {
-				aReturnObject[objectName] = this.props[objectName];
+				aReturnObject[objectName] = props[objectName];
 			}
 			
 			//MENOTE: pass through style
 			if(objectName === "style") {
 				
 				//MENOTE: getting the prop as an object means that it is read only
-				let currentStyleObject = this.props[objectName];
+				let currentStyleObject = props[objectName];
 				let newStyleObject = new Object();
 				for(let styleProperty in currentStyleObject) {
 					newStyleObject[styleProperty] = currentStyleObject[styleProperty];
@@ -255,13 +271,15 @@ export default class WprrBaseObject extends React.Component {
 		if(this._propsToCheckForUpdate !== null || this._statesToCheckForUpdate !== null) {
 			returnValue = false;
 			
+			let props = this.getProps();
+			
 			if(this._propsToCheckForUpdate !== null && !returnValue && aNextProps) {
 				let currentArray = this._propsToCheckForUpdate;
 				let currentArrayLength = currentArray.length;
 				for(let i = 0; i < currentArrayLength; i++) {
 					let currentPropName = currentArray[i];
 				
-					if(this.props[currentPropName] != aNextProps[currentPropName]) {
+					if(props[currentPropName] != aNextProps[currentPropName]) {
 						returnValue = true;
 						break;
 					}
@@ -325,16 +343,27 @@ export default class WprrBaseObject extends React.Component {
 		//MENOTE: should be overridden
 	}
 	
+	setPartData(aName, aProps, aElement) {
+		//console.log("wprr/WprrBaseObject::setPartData");
+		
+		//MENOTE: should be overridden
+	}
+	
 	_setActivePart(aName) {
 		//console.log("wprr/WprrBaseObject::_setActivePart");
 		
 		//MENOTE: should be overridden
 	}
 	
+	_getDefaultPart() {
+		return "initial";
+	}
+	
 	_renderMainElement(aCurrentElement, aOwner) {
 		//console.log("wprr/WprrBaseObject::_renderMainElement");
+		let props = this.getProps();
 		
-		return React.createElement("wrapper", {}, this.props.children);
+		return React.createElement("wrapper", {}, props.children);
 	}
 	
 	_replaceWrapper(aElement) {
@@ -377,44 +406,53 @@ export default class WprrBaseObject extends React.Component {
 		return mainElement;
 	}
 	
+	_renderErrorComponent(aError) {
+		let errorProperties = new Array();
+		if(aError.fileName) {
+			errorProperties.push("fileName: " + aError.fileName);
+		}
+		if(aError.sourceURL) {
+			errorProperties.push("sourceURL: " + aError.sourceURL);
+		}
+		if(aError.lineNumber) {
+			errorProperties.push("lineNumber: " + aError.lineNumber);
+		}
+		if(aError.line) {
+			errorProperties.push("lineNumber: " + aError.line);
+		}
+		if(aError.stack) {
+			errorProperties.push("stack: " + aError.stack);
+		}
+
+		let errorString = aError.message +" (" + errorProperties.join(", ") + ")";
+
+		console.error(this, aError, errorString);
+		
+		return React.createElement("div", {className: "react-error"},
+			React.createElement("div", {}, "Component had an error while rendering"),
+			React.createElement("div", {className: "description"}, errorString)
+		);
+	}
+	
 	render() {
 		let returnObject;
+		
+		this.setPartData("initial", this.props, this);
+		this._setActivePart("initial");
+		
 		if(WprrBaseObject.CATCH_RENDER_ERRORS) {
 			try {
-				this._setActivePart("initial");
 				returnObject = this._renderSafe();
 			}
-			catch(aError) {
-				let errorProperties = new Array();
-				if(aError.fileName) {
-					errorProperties.push("fileName: " + aError.fileName);
-				}
-				if(aError.sourceURL) {
-					errorProperties.push("sourceURL: " + aError.sourceURL);
-				}
-				if(aError.lineNumber) {
-					errorProperties.push("lineNumber: " + aError.lineNumber);
-				}
-				if(aError.line) {
-					errorProperties.push("lineNumber: " + aError.line);
-				}
-				if(aError.stack) {
-					errorProperties.push("stack: " + aError.stack);
-				}
-		
-				let errorString = aError.message +" (" + errorProperties.join(", ") + ")";
-		
-				console.error(this, aError, errorString);
-				
-				returnObject = React.createElement("div", {className: "react-error"},
-					React.createElement("div", {}, "Component had an error while rendering"),
-					React.createElement("div", {className: "description"}, errorString)
-				);
+			catch(theError) {
+				returnObject = this._renderErrorComponent(theError);
 			}
 		}
 		else {
 			returnObject = this._renderSafe();
 		}
+		
+		this._setActivePart(this._getDefaultPart());
 		
 		return returnObject;
 	}
