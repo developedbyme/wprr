@@ -21,6 +21,12 @@ export default class ElementBlockRegistration {
 		
 		this._componentName = null;
 		
+		/*
+		this._registrationData["getEditWrapperProps"] = function( attributes ) {
+			return { 'data-align': "wide", 'data-resized': false };
+		};
+		*/
+		
 		this._registrationData["edit"] = this.edit.bind(this);
 		this._registrationData["save"] = this.save.bind(this);
 		
