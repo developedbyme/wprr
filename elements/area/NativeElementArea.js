@@ -69,6 +69,14 @@ export default class NativeElementArea extends WprrBaseObject {
 		}
 	}
 	
+	_prepareInitialRender() {
+		let commands = this.getSourcedProp("setupCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, this._element, this);
+		}
+	}
+	
 	_renderMainElement() {
 		
 		return React.createElement("wrapper");
