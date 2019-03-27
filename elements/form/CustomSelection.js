@@ -66,7 +66,11 @@ export default class CustomSelection extends ManipulationBaseObject {
 		let button = this.getFirstValidSource(
 			Wprr.sourceProp("buttonMarkup"),
 			Wprr.sourceReference("customSelection/button"),
-			React.createElement("div", {"className": "custom-selection custom-selection-padding"}, Wprr.text(Wprr.sourceReference("value")))
+			React.createElement("div", {"className": "custom-selection custom-selection-padding"},
+				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"))]},
+					Wprr.text(Wprr.sourceProp("text"))
+				)
+			)
 		);
 		
 		let loopItemMarkup = React.createElement(Wprr.CommandButton, {
@@ -74,7 +78,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 				Wprr.commands.setValue(Wprr.sourceReference("value/" + valueName), valueName, Wprr.sourceReference("loop/item", "value")),
 				Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false),
 			]
-		}, React.createElement("div", {"className": "custom-selection-option custom-selection-option-padding"}, Wprr.text(Wprr.sourceReference("loop/item", "label"))));
+		}, React.createElement("div", {"className": "custom-selection-option custom-selection-option-padding cursor-pointer"}, Wprr.text(Wprr.sourceReference("loop/item", "label"))));
 		
 		let defaultLoopItem = this.getFirstValidSource(
 			Wprr.sourceProp("optionMarkup"),
@@ -87,10 +91,10 @@ export default class CustomSelection extends ManipulationBaseObject {
 			React.createElement(React.Fragment)
 		);
 		
-		let defaultLoop = React.createElement(Wprr.Loop, {
+		let defaultLoop = React.createElement("div", {"className": "custom-selection-menu custom-selection-menu-padding"}, React.createElement(Wprr.Loop, {
 			"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), defaultLoopItem, defaultLoopItemSpacing),
-			"className": "custom-selection-menu custom-selection-menu-padding"
-		});
+			"className": "custom-selection-menu-item custom-selection-menu-item-padding"
+		}));
 		
 		let loop = this.getFirstValidSource(Wprr.sourceProp("loop"), Wprr.sourceReference("customSelection/loop"), defaultLoop);
 		

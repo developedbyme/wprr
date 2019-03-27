@@ -99,7 +99,7 @@ DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: 
 		React.createElement(ToggleButton, {valueName: "dropdownSelection/open", value: SourceData.create("reference", "dropdownSelection/open")},
 			React.createElement(MarkupChildren, {placement: "button"})
 		),
-		React.createElement("div", {className: "position-absolute dropdown-selection-popup"},
+		React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
 			React.createElement(ClickOutsideTrigger, {triggerName: "close", active: SourceData.create("reference", "dropdownSelection/open")},
 				React.createElement(OpenCloseExpandableArea, {"open": SourceData.create("reference", "dropdownSelection/open")},
 					React.createElement(MarkupChildren, {"placement": "rest"})
