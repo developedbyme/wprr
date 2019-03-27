@@ -33,6 +33,7 @@ import SliderControl from "wprr/manipulation/adjustfunctions/control/slider/Slid
 import ApplyFilterChain from "wprr/manipulation/adjustfunctions/logic/ApplyFilterChain";
 import MapPropertyInArray from "wprr/manipulation/adjustfunctions/logic/MapPropertyInArray";
 import LabelFromOptions from "wprr/manipulation/adjustfunctions/text/LabelFromOptions";
+import AdditionalDataFromOptions from "wprr/manipulation/adjustfunctions/text/AdditionalDataFromOptions";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -78,6 +79,9 @@ let mapPropertyInArray = MapPropertyInArray.create;
 export {mapPropertyInArray};
 let labelFromOptions = LabelFromOptions.create;
 export {labelFromOptions};
+let additionalDataFromOptions = AdditionalDataFromOptions.create;
+export {additionalDataFromOptions};
+
 
 let filterProps = FilterProps.create;
 export {filterProps};

@@ -1,3 +1,5 @@
+import objectPath from "object-path";
+
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
@@ -57,7 +59,7 @@ export default class OptionsFromTerms extends AdjustFunction {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentItem = currentArray[i];
-				returnArray.push({"value": currentItem[keyField], "label": currentItem["name"]});
+				returnArray.push({"value": objectPath.get(currentItem, keyField), "label": objectPath.get(currentItem, "name"), "additionalData": currentItem});
 			}
 		}
 		else {

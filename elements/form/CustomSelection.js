@@ -34,7 +34,13 @@ export default class CustomSelection extends ManipulationBaseObject {
 					continue;
 				}
 				else if(typeof(currentObject) === "object") {
-					returnArray.push({"key": currentObject["value"], "value": currentObject["value"], "label": currentObject["label"]});
+					
+					let encodedData = {"key": currentObject["value"], "value": currentObject["value"], "label": currentObject["label"]};
+					if(currentObject["additionalData"]) {
+						encodedData["additionalData"] = currentObject["additionalData"];
+					}
+					
+					returnArray.push(encodedData);
 				}
 				else {
 					returnArray.push({"key": currentObject, "value": currentObject, "label": currentObject});
@@ -77,12 +83,18 @@ export default class CustomSelection extends ManipulationBaseObject {
 			)
 		);
 		
+		let optionContentItem = this.getFirstValidSource(
+			Wprr.sourceProp("optionContentMarkup"),
+			Wprr.sourceReference("customSelection/optionContent"),
+			React.createElement("div", {"className": "custom-selection-option custom-selection-option-padding cursor-pointer"}, Wprr.text(Wprr.sourceReference("loop/item", "label")))
+		);
+		
 		let loopItemMarkup = React.createElement(Wprr.CommandButton, {
 			"commands": [
 				Wprr.commands.setValue(Wprr.sourceReference("value/" + valueName), valueName, Wprr.sourceReference("loop/item", "value")),
 				Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false),
 			]
-		}, React.createElement("div", {"className": "custom-selection-option custom-selection-option-padding cursor-pointer"}, Wprr.text(Wprr.sourceReference("loop/item", "label"))));
+		}, optionContentItem);
 		
 		let defaultLoopItem = this.getFirstValidSource(
 			Wprr.sourceProp("optionMarkup"),
