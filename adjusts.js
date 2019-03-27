@@ -30,6 +30,8 @@ import SelectItemInArray from "wprr/manipulation/adjustfunctions/logic/SelectIte
 import GetFirstResolvingSource from "wprr/manipulation/adjustfunctions/GetFirstResolvingSource";
 import SwitchValue from "wprr/manipulation/adjustfunctions/logic/SwitchValue";
 import SliderControl from "wprr/manipulation/adjustfunctions/control/slider/SliderControl";
+import ApplyFilterChain from "wprr/manipulation/adjustfunctions/logic/ApplyFilterChain";
+import MapPropertyInArray from "wprr/manipulation/adjustfunctions/logic/MapPropertyInArray";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -69,6 +71,10 @@ let selectItemInArray = SelectItemInArray.create;
 export {selectItemInArray};
 let switchValue = SwitchValue.create;
 export {switchValue};
+let applyFilterChain = ApplyFilterChain.create;
+export {applyFilterChain};
+let mapPropertyInArray = MapPropertyInArray.create;
+export {mapPropertyInArray};
 
 let filterProps = FilterProps.create;
 export {filterProps};

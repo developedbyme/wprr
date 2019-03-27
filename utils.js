@@ -5,6 +5,7 @@ import ArrayFunctions from "wprr/utils/ArrayFunctions";
 import ApplyAnimation from "wprr/manipulation/animation/applyfunctions/ApplyAnimation";
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import ProgrammingLanguageFunctions from "wprr/wp/ProgrammingLanguageFunctions";
+import FilterPartFunctions from "wprr/utils/filter/parts/FilterPartFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -12,7 +13,7 @@ export {DbmContentFunctions as dbmContent};
 export {ArrayFunctions as array};
 export {ApplyAnimation as applyAnimation};
 export {CommandPerformer as commandPerformer};
-export {ProgrammingLanguageFunctions as programmingLanaguage};
+export {FilterPartFunctions as filterPartFunctions};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";
@@ -29,3 +30,6 @@ export {default as LoadingGroup} from "wprr/utils/loading/LoadingGroup";
 export {default as MultipleUrlResolver} from "wprr/utils/MultipleUrlResolver";
 export {default as KeyValueGenerator} from "wprr/utils/KeyValueGenerator";
 
+export {default as FilterChain} from "wprr/utils/filter/FilterChain";
+export {default as InputDataHolder} from "wprr/utils/InputDataHolder";
+export {default as FilterPart} from "wprr/utils/filter/parts/FilterPart";

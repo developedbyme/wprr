@@ -61,29 +61,25 @@ export default class DropdownSelection extends WprrBaseObject {
 		
 		//METODO: check that button exists
 		
-		return <wrapper>
-			<FormField type="hidden" name={this.props.name} value={value} />
-			<ReferenceInjection injectData={{"value/selection": this, "value/dropdownSelection/open": this, "trigger/setSelection": this, "trigger/close": this, "dropdownSelection/open": open, "dropdownSelection/value": value}}>
-				<UseMarkup markup={markup}>
-					{this.props.children}
-				</UseMarkup>
-			</ReferenceInjection>
-		</wrapper>
+		return React.createElement("wrapper", {},
+			React.createElement(FormField, {type: "hidden", name: this.props.name, value: value}),
+			React.createElement(ReferenceInjection, {injectData: {"value/selection": this, "value/dropdownSelection/open": this, "trigger/setSelection": this, "trigger/close": this, "dropdownSelection/open": open, "dropdownSelection/value": value}},
+				React.createElement(UseMarkup, {markup: markup}, this.props.children)
+			)
+		);
 	}
 	
 	static createPlacements(aButton, aOverlayContent) {
 		let returnArray = new Array();
 		
-		returnArray.push(<MarkupPlacement key="button" placement="button">{aButton}</MarkupPlacement>);
-		returnArray.push(<MarkupPlacement key="overlay" placement="overlay">{aOverlayContent}</MarkupPlacement>);
+		returnArray.push(React.createElement(MarkupPlacement, {key: "button", placement: "button"}, aButton));
+		returnArray.push(React.createElement(MarkupPlacement, {key: "overlay", placement: "overlay"}, aOverlayContent));
 		
 		return returnArray;
 	}
 	
 	static makeSelfContained(aElement, aValue = "", aOpen = false) {
-		return <EditableProps editableProps="value,open" value={aValue} open={aOpen}>
-			{aElement}
-		</EditableProps>;
+		return React.createElement(EditableProps, {editableProps: "value,open", value: aValue, open: aOpen}, aElement);
 	}
 	
 	static createSelfContained(aButton, aOverlayContent, aProps = {}, aValue = "", aOpen = false) {
@@ -98,17 +94,17 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 }
 
-DropdownSelection.DEFAULT_MARKUP = <Markup usedPlacements="button">
-									<div className="absolute-container">
-										<ToggleButton valueName="dropdownSelection/open" value={SourceData.create("reference", "dropdownSelection/open")}>
-											<MarkupChildren placement="button" />
-										</ToggleButton>
-										<div className="position-absolute dropdown-selection-popup">
-											<ClickOutsideTrigger triggerName="close" active={SourceData.create("reference", "dropdownSelection/open")}>
-												<OpenCloseExpandableArea open={SourceData.create("reference", "dropdownSelection/open")}>
-													<MarkupChildren placement="rest" />
-												</OpenCloseExpandableArea>
-											</ClickOutsideTrigger>
-										</div>
-									</div>
-								</Markup>;
+DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: "button"},
+	React.createElement("div", {className: "absolute-container"},
+		React.createElement(ToggleButton, {valueName: "dropdownSelection/open", value: SourceData.create("reference", "dropdownSelection/open")},
+			React.createElement(MarkupChildren, {placement: "button"})
+		),
+		React.createElement("div", {className: "position-absolute dropdown-selection-popup"},
+			React.createElement(ClickOutsideTrigger, {triggerName: "close", active: SourceData.create("reference", "dropdownSelection/open")},
+				React.createElement(OpenCloseExpandableArea, {"open": SourceData.create("reference", "dropdownSelection/open")},
+					React.createElement(MarkupChildren, {"placement": "rest"})
+				)
+			)
+		)
+	)
+);
