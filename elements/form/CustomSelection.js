@@ -29,7 +29,11 @@ export default class CustomSelection extends ManipulationBaseObject {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentObject = currentArray[i];
 				
-				if(typeof(currentObject) === "object") {
+				if(currentObject === null || currentObject === undefined) {
+					console.error("Option is null.", i, currentArray);
+					continue;
+				}
+				else if(typeof(currentObject) === "object") {
 					returnArray.push({"key": currentObject["value"], "value": currentObject["value"], "label": currentObject["label"]});
 				}
 				else {
