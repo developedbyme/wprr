@@ -131,20 +131,18 @@ export default class ElementBlockRegistration {
 		
 		referenceHolder.addObject("wprr/textManager", this._textManager);
 		
-		return <ReferenceExporter references={referenceHolder} attributes={aProps.attributes}>
-			{this._element}
-		</ReferenceExporter>
+		return React.createElement(ReferenceExporter, {"references": referenceHolder, "attributes": aProps.attributes}, this._element);
 	}
 	
 	save(aProps) {
-		console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
-		console.log(aProps);
+		//console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
+		//console.log(aProps);
 		
 		let componentData = JSON.stringify(aProps.attributes.componentData);
 		if(componentData) {
 			componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
 		}
 		
-		return <div data-expanded-content="1" data-wprr-component={this._componentName} data-wprr-component-data={componentData}></div>;
+		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentData});
 	}
 }
