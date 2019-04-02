@@ -7,6 +7,7 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 import ProgrammingLanguageFunctions from "wprr/wp/ProgrammingLanguageFunctions";
 import FilterPartFunctions from "wprr/utils/filter/parts/FilterPartFunctions";
 import BlockInjectionFunctions from "wprr/wp/blocks/BlockInjectionFunctions";
+import EditPostEncodeFunctions from "wprr/wp/admin/EditPostEncodeFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -16,6 +17,7 @@ export {ApplyAnimation as applyAnimation};
 export {CommandPerformer as commandPerformer};
 export {FilterPartFunctions as filterPartFunctions};
 export {BlockInjectionFunctions as blockInjection};
+export {EditPostEncodeFunctions as editPostEncode};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";
