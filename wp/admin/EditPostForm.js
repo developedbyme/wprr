@@ -125,6 +125,11 @@ export default class EditPostForm extends WprrBaseObject {
 			}
 		}
 		
+		let additionalChangeData = this.getSourcedProp("additionalChangeData");
+		if(additionalChangeData) {
+			changeData.addChanges(additionalChangeData.getChanges());
+		}
+		
 		return changeData;
 	}
 	
