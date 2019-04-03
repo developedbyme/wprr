@@ -12,6 +12,33 @@ export default class CustomSelection extends ManipulationBaseObject {
 		super(aProps);
 	}
 	
+	_changed(aNewValue) {
+		console.log("wprr/elements/form/CustomSelection::_changed");
+		console.log(aNewValue);
+		
+		let commands = this.getSourcedProp("changeCommands");
+		if(commands) {
+			let currentArray;
+			if(Array.isArray(commands)) {
+				currentArray = commands;
+			}
+			else {
+				currentArray = [commands];
+			}
+			
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				//METODO: resolve command
+				let currentCommand = currentArray[i];
+				
+				currentCommand.setTriggerElement(this);
+				currentCommand.setEventData(aNewValue);
+				
+				currentCommand.perform();
+			}
+		}
+	}
+	
 	_normalizeOptions(aOptions) {
 		let returnArray = new Array();
 		
@@ -55,6 +82,14 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		return returnArray;
 	}
+	
+	_removeUsedProps(aReturnObject) {
+		//console.log("CustomSelection::_removeUsedProps");
+		
+		delete aReturnObject["changeCommands"];
+		
+		return aReturnObject;
+	}
 
 	_getChildrenToClone() {
 		//console.log("CustomSelection::_createClonedElement");
@@ -92,6 +127,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 		let loopItemMarkup = React.createElement(Wprr.CommandButton, {
 			"commands": [
 				Wprr.commands.setValue(Wprr.sourceReference("value/" + valueName), valueName, Wprr.sourceReference("loop/item", "value")),
+				Wprr.commands.callFunction(this, this._changed, [Wprr.sourceReference("loop/item", "value")]),
 				Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false),
 			]
 		}, optionContentItem);

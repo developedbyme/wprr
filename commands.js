@@ -20,6 +20,7 @@ import CloseCurrentOverlayCommand from "wprr/commands/navigation/CloseCurrentOve
 import StopPropagationCommand from "wprr/commands/browser/StopPropagationCommand";
 import PreventDefaultCommand from "wprr/commands/browser/PreventDefaultCommand";
 import ConfirmCommand from "wprr/commands/browser/ConfirmCommand";
+import OptionsStepCommand from "wprr/commands/basic/OptionsStepCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -34,8 +35,9 @@ let toggleValue = ToggleValueCommand.create;
 let performSelectedCommands = PerformSelectedCommands.create;
 let setStateValue = SetStateValueCommand.create;
 let trigger = TriggerCommand.create;
+let optionsStep = OptionsStepCommand.create;
 
-export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger};
+export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;
