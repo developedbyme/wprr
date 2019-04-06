@@ -34,6 +34,7 @@ import ApplyFilterChain from "wprr/manipulation/adjustfunctions/logic/ApplyFilte
 import MapPropertyInArray from "wprr/manipulation/adjustfunctions/logic/MapPropertyInArray";
 import LabelFromOptions from "wprr/manipulation/adjustfunctions/text/LabelFromOptions";
 import AdditionalDataFromOptions from "wprr/manipulation/adjustfunctions/text/AdditionalDataFromOptions";
+import ApplySortChain from "wprr/manipulation/adjustfunctions/logic/ApplySortChain";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -75,6 +76,8 @@ let switchValue = SwitchValue.create;
 export {switchValue};
 let applyFilterChain = ApplyFilterChain.create;
 export {applyFilterChain};
+let applySortChain = ApplySortChain.create;
+export {applySortChain};
 let mapPropertyInArray = MapPropertyInArray.create;
 export {mapPropertyInArray};
 let labelFromOptions = LabelFromOptions.create;

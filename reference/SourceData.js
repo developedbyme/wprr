@@ -255,6 +255,9 @@ export default class SourceData {
 				{
 					let returnArray = new Array();
 					let currentArray = aPath;
+					if(currentArray instanceof SourceData) {
+						currentArray = currentArray.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
 					let currentArrayLength = currentArray.length;
 					for(let i = 0; i < currentArrayLength; i++) {
 						let currentItem = currentArray[i];
