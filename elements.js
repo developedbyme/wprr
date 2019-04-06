@@ -13,6 +13,7 @@ export {default as AddContextReference} from "wprr/reference/AddContextReference
 
 export {default as SourcedText} from "wprr/elements/text/SourcedText";
 export {default as DateDisplay} from "wprr/elements/text/DateDisplay";
+export {default as UnitDisplay} from "wprr/elements/text/UnitDisplay";
 export {default as RelativeDateDisplay} from "wprr/elements/text/RelativeDateDisplay";
 export {default as TermName} from "wprr/elements/text/TermName";
 export {default as LanguageName} from "wprr/elements/text/LanguageName";
