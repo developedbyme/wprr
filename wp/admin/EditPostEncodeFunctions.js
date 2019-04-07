@@ -36,6 +36,20 @@ export default class EditPostEncodeFunctions {
 		}
 		return currentFunction;
 	}
+	
+	static createAddTermFromOwner(aGroup) {
+		
+		let path = "dbm/addTermFromOwner" + "." + aGroup;
+		
+		let currentFunction = objectPath.get(EditPostEncodeFunctions._storedFunctions, aGroup);
+		if(!currentFunction) {
+			currentFunction = function(aFieldName, aValue, aChangeData) {
+				return aChangeData.createChange("dbm/addTermFromOwner", {"value": aValue, "group": aGroup});
+			}
+			objectPath.set(EditPostEncodeFunctions._storedFunctions, path, currentFunction);
+		}
+		return currentFunction;
+	}
 }
 
 EditPostEncodeFunctions._storedFunctions = new Object();
