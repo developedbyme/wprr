@@ -37,6 +37,12 @@ export default class FilterPart  {
 		return aCurrentArray;
 	}
 	
+	setInput(aName, aValue) {
+		this.inputs.setInput(aName, aValue);
+		
+		return this;
+	}
+	
 	getInput(aName) {
 		return this.inputs.getInput(aName, this._props, this._performingElement);
 	}

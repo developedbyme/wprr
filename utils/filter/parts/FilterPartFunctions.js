@@ -36,6 +36,42 @@ export default class FilterPartFunctions  {
 		return newFilterPart;
 	}
 	
+	static _compare(aA, aB, aCompareType) {
+		switch(aCompareType) {
+			case "<":
+				return (aA < aB);
+			case "<=":
+				return (aA <= aB);
+			case ">":
+				return (aA > aB);
+			case ">=":
+				return (aA >= aB);
+			case "===":
+				return (aA === aB);
+			case "==":
+				return (aA == aB);
+			case "!==":
+				return (aA !== aB);
+			case "!=":
+				return (aA != aB);
+			default:
+				console.error("Unknown comparison " + aCompareType);
+		}
+		
+		return false;
+	}
+	
+	static _formatValue(aValue, aFormat) {
+		switch(aFormat) {
+			case "number":
+				return 1*aValue;
+			case "string":
+				return ""+aValue;
+		}
+		
+		return aValue;
+	}
+	
 	static compareNumericField(aCurrentArray, aOriginalArray) {
 		let returnArray = new Array();
 		
@@ -49,51 +85,7 @@ export default class FilterPartFunctions  {
 			let currentItem = currentArray[i];
 			let currentValue = 1*objectPath.get(currentItem, field);
 			
-			let passes = false;
-			console.log(compareType, currentValue, matchValue);
-			
-			switch(compareType) {
-				case "<":
-					if(currentValue < matchValue) {
-						passes = true;
-					}
-					break;
-				case "<=":
-					if(currentValue <= matchValue) {
-						passes = true;
-					}
-					break;
-				case ">":
-					if(currentValue > matchValue) {
-						passes = true;
-					}
-					break;
-				case ">=":
-					if(currentValue >= matchValue) {
-						passes = true;
-					}
-					break;
-				case "===":
-					if(currentValue === matchValue) {
-						passes = true;
-					}
-					break;
-				case "==":
-					if(currentValue == matchValue) {
-						passes = true;
-					}
-					break;
-				case "!==":
-					if(currentValue !== matchValue) {
-						passes = true;
-					}
-					break;
-				case "!=":
-					if(currentValue != matchValue) {
-						passes = true;
-					}
-					break;
-			}
+			let passes = FilterPartFunctions._compare(currentValue, matchValue, compareType);
 			
 			if(passes) {
 				returnArray.push(currentItem);
@@ -109,6 +101,40 @@ export default class FilterPartFunctions  {
 		newFilterPart.inputs.setInput("field", aField);
 		newFilterPart.inputs.setInput("compareValue", aCompareValue);
 		newFilterPart.inputs.setInput("compareType", aCompareType);
+		
+		return newFilterPart;
+	}
+	
+	static matchInArray(aCurrentArray, aOriginalArray) {
+		let returnArray = new Array();
+		
+		let matchValues = this.getInput("compareValues");
+		let field = this.getInput("field");
+		let valueFormat = this.getInput("valueFormat");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentValue = objectPath.get(currentItem, field);
+			if(valueFormat) {
+				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
+			}
+			console.log(matchValues, currentValue);
+			if(matchValues.indexOf(currentValue) !== -1) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createInArrayField(aField, aCompareValues, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.matchInArray, aActive);
+		
+		newFilterPart.inputs.setInput("field", aField);
+		newFilterPart.inputs.setInput("compareValues", aCompareValues);
 		
 		return newFilterPart;
 	}
