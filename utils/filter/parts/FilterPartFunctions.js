@@ -121,7 +121,6 @@ export default class FilterPartFunctions  {
 			if(valueFormat) {
 				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
 			}
-			console.log(matchValues, currentValue);
 			if(matchValues.indexOf(currentValue) !== -1) {
 				returnArray.push(currentItem);
 			}
