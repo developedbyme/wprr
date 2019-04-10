@@ -62,6 +62,17 @@ export default class InputDataHolder  {
 	}
 	
 	/**
+	 * Checks if an input exists. The source can still resolve to nothing.
+	 *
+	 * @param	aName	String	The name of the input.
+	 *
+	 * @return	Boolean	True if there is an input
+	 */
+	hasInput(aName) {
+		return (this._values[aName] !== undefined);
+	}
+	
+	/**
 	 * Gets an input for this function.
 	 *
 	 * @param	aName				String			The name of the input.
@@ -114,9 +125,8 @@ export default class InputDataHolder  {
 		return aData;
 	}
 	
-	static create(aPath = null) {
+	static create() {
 		let newInputDataHolder = new InputDataHolder();
-		
 		
 		return newInputDataHolder;
 	}

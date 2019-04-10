@@ -32,6 +32,7 @@ export {default as ChangeData} from "wprr/wp/admin/ChangeData";
 export {default as BatchChangeData} from "wprr/wp/admin/BatchChangeData";
 export {default as PostData} from "wprr/wp/postdata/PostData";
 export {default as LoadingGroup} from "wprr/utils/loading/LoadingGroup";
+export {default as LoadingSequence} from "wprr/utils/loading/LoadingSequence";
 export {default as MultipleUrlResolver} from "wprr/utils/MultipleUrlResolver";
 export {default as KeyValueGenerator} from "wprr/utils/KeyValueGenerator";
 
