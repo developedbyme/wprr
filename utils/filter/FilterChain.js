@@ -18,6 +18,7 @@ export default class FilterChain extends FilterPart {
 	};
 	
 	_performFilter(aCurrentArray, aOriginalArray) {
+		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		
 		let returnArray = aCurrentArray;
 		

@@ -31,6 +31,7 @@ export default class FilterPart  {
 	}
 	
 	_performFilter(aCurrentArray, aOriginalArray) {
+		//console.log("wprr/utils/filter/parts/FilterPart::_performFilter");
 		
 		//MENOTE: should be overridden
 		
@@ -48,7 +49,7 @@ export default class FilterPart  {
 	}
 	
 	applyFilter(aCurrentArray, aOriginalArray) {
-		console.log("wprr/utils/filter/parts/FilterPart::applyFilter");
+		//console.log("wprr/utils/filter/parts/FilterPart::applyFilter");
 		
 		let active = this.getInput("active");
 		if(active) {

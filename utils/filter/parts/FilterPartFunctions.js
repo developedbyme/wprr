@@ -10,6 +10,8 @@ import FilterPart from "wprr/utils/filter/parts/FilterPart";
 export default class FilterPartFunctions  {
 	
 	static matchField(aCurrentArray, aOriginalArray) {
+		//console.log("wprr/utils/filter/parts/FilterPartFunctions::matchField");
+		
 		let returnArray = new Array();
 		
 		let matchValue = this.getInput("compareValue");
