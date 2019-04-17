@@ -29,7 +29,7 @@ export default class ClassNameValidation extends ManipulationBaseObject {
 		
 		let validClass = this.getSourcedPropWithDefault("validClass", "valid");
 		let invalidClass = this.getSourcedPropWithDefault("invalidClass", "invalid");
-		let notValidatedClass = this.getSourcedPropWithDefault("notValidatedClass", "notValidated");
+		let notValidatedClass = this.getSourcedPropWithDefault("notValidatedClass", "not-validated");
 		
 		return [React.createElement(ValidationBaseObject, {}, 
 			React.createElement(Adjust, {"adjust": [
