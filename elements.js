@@ -49,6 +49,7 @@ export {default as SliderDisplay} from "wprr/elements/area/slider/SliderDisplay"
 export {default as DropdownSelection} from "wprr/elements/form/DropdownSelection";
 export {default as CustomSelection} from "wprr/elements/form/CustomSelection";
 export {default as TermSelection} from "wprr/elements/form/wp/TermSelection";
+export {default as ResponsiveProps} from "wprr/manipulation/measure/ResponsiveProps";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
