@@ -120,6 +120,13 @@ export default class SortableTable extends WprrBaseObject {
 		aA = parseFloat(aA);
 		aB = parseFloat(aB);
 		
+		if(isNaN(aA)) {
+			aA = 0;
+		}
+		if(isNaN(aB)) {
+			aB = 0;
+		}
+		
 		if(aA < aB) {
 			return -1;
 		}
