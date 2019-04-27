@@ -5,6 +5,7 @@ import SourceData from "wprr/reference/SourceData";
 import WprrContext from "wprr/reference/WprrContext";
 
 import CommandPerformer from "wprr/commands/CommandPerformer";
+import UrlResolver from "wprr/utils/UrlResolver";
 
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
@@ -74,6 +75,22 @@ export default class WprrBaseObject extends React.Component {
 	
 	getReference(aPath) {
 		return this.getContext().references.getObject(aPath);
+	}
+	
+	getWprrUrl(aPath, aBaseLocation = "rest") {
+		
+		let baseReferencePath = "wprr/paths/";
+		let referencePath =  baseReferencePath + aBaseLocation;
+		
+		let baseUrl = this.getReference(referencePath);
+		if(!baseUrl) {
+			console.warn("No base url for location " + aBaseLocation + " (" + referencePath + ")");
+			return aPath;
+		}
+		
+		let tempUrlResolver = UrlResolver.tempUrlResolver;
+		tempUrlResolver.setupBaseUrlFromPath(baseUrl);
+		return tempUrlResolver.getAbsolutePath(aPath);
 	}
 	
 	getMainElement() {

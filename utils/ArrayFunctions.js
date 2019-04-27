@@ -99,4 +99,11 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static arrayFromSingleOrMultiple(aArrayOrItem) {
+		if(Array.isArray(aArrayOrItem)) {
+			return aArrayOrItem;
+		}
+		return [aArrayOrItem];
+	}
 }

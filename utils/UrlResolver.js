@@ -182,3 +182,5 @@ export default class UrlResolver  {
 		return newUrlResolver;
 	}
 }
+
+UrlResolver.tempUrlResolver = new UrlResolver();

@@ -53,6 +53,11 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		}
 		let validationFunction = this.getSourcedPropInStateChange("validateFunction", statePropsObject);
 		
+		if(!validationFunction) {
+			console.error("validateFunction prop is not set", this);
+			return false;
+		}
+		
 		let additionalData = this.getSourcedPropInStateChange("additionalData", statePropsObject);
 		let alsoValidate = this.getSourcedPropInStateChange("alsoValidate", statePropsObject);
 		
