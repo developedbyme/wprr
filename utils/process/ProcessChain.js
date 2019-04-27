@@ -94,7 +94,7 @@ export default class ProcessChain extends ProcessPart {
 	}
 	
 	continue() {
-		console.log("wprr/utils/process/ProcessChain::continue");
+		//console.log("wprr/utils/process/ProcessChain::continue");
 		
 		this.getCurrentStep().continue();
 	}

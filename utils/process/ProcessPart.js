@@ -1,4 +1,5 @@
 import Wprr from "wprr/Wprr";
+import objectPath from "object-path";
 
 import InputDataHolder from "wprr/utils/InputDataHolder";
 import CommandPerformer from "wprr/commands/CommandPerformer";
@@ -12,6 +13,7 @@ export default class ProcessPart {
 		this._owner = null;
 		this._element = null;
 		
+		this.inputs = InputDataHolder.create();
 		this._commands = new Object();
 		
 		this._nextStepName = null;
@@ -27,6 +29,22 @@ export default class ProcessPart {
 		this._element = aElement;
 		
 		return this;
+	}
+	
+	setInput(aName, aValue) {
+		this.inputs.setInput(aName, aValue);
+		
+		return this;
+	}
+	
+	setInputWithoutNull(aName, aValue) {
+		this.inputs.setInputWithoutNull(aName, aValue);
+		
+		return this;
+	}
+	
+	getInput(aName) {
+		return this.inputs.getInput(aName, objectPath.get(this._element, "props"), this._element);
 	}
 	
 	addCommand(aName, aCommandOrCommands) {
@@ -51,13 +69,13 @@ export default class ProcessPart {
 		return this.addStartCommand(Wprr.commands.callFunction(this, this.done));
 	}
 	
-	_runCommandGroup(aName) {
+	_runCommandGroup(aName, aData = null) {
 		//console.log("wprr/utils/process/ProcessPart::_runCommandGroup");
-		//console.log(aName);
+		//console.log(aName, aData);
 		
 		let commands = this._commands[aName];
 		if(commands) {
-			CommandPerformer.perform(commands, this, this._element);
+			CommandPerformer.perform(commands, {"process": this, "data": aData}, this._element);
 		}
 	}
 	
@@ -69,13 +87,13 @@ export default class ProcessPart {
 	}
 	
 	continue() {
-		console.log("wprr/utils/process/ProcessPart::continue");
+		//console.log("wprr/utils/process/ProcessPart::continue");
 		
 		this.done();
 	}
 	
 	done() {
-		console.log("wprr/utils/process/ProcessPart::done");
+		//console.log("wprr/utils/process/ProcessPart::done");
 		
 		this.nextStep();
 	}
@@ -85,7 +103,7 @@ export default class ProcessPart {
 	}
 	
 	nextStep() {
-		console.log("wprr/utils/process/ProcessPart::nextStep");
+		//console.log("wprr/utils/process/ProcessPart::nextStep");
 		
 		let nextStep = this.getNextStep();
 		return this.step(nextStep);
@@ -96,8 +114,8 @@ export default class ProcessPart {
 	}
 	
 	step(aStepName) {
-		console.log("wprr/utils/process/ProcessPart::step");
-		console.log(aStepName);
+		//console.log("wprr/utils/process/ProcessPart::step");
+		//console.log(aStepName);
 		
 		if(this._steps[aStepName]) {
 			this._owner.perfomChangeStep(this._steps[aStepName], aStepName);
