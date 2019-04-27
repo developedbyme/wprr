@@ -33,11 +33,16 @@ export default class DataStorage {
 	}
 	
 	_updateOwners() {
+		
+		//METODO: need this to be safe for removing or adding owners in the middle of an update
+		
 		let currentArray = this._owners;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
-			currentOwner.externalDataChange();
+			if(currentOwner) { //METODO: improve this to have a safe array
+				currentOwner.externalDataChange();
+			}
 		}
 	}
 	

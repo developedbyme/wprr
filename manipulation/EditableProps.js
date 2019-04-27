@@ -88,6 +88,16 @@ export default class EditableProps extends ManipulationBaseObject {
 		}
 	}
 	
+	componentWillUnmount() {
+		//console.log("wprr/manipulation/EditableProps::componentWillUnmount");
+		
+		let externalStorage = this.getSourcedProp("externalStorage");
+		
+		if(externalStorage) {
+			externalStorage.removeOwner(this);
+		}
+	}
+	
 	_getEditablePropNames() {
 		let editableProps = this.getSourcedProp("editableProps");
 		
