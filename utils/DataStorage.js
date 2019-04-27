@@ -9,6 +9,10 @@ export default class DataStorage {
 		this._owners = new Array();
 	}
 	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
 	setData(aData) {
 		this._data = aData;
 	}
@@ -49,5 +53,9 @@ export default class DataStorage {
 		//console.log("wprr/utils/DataStorage::getValue");
 		
 		return objectPath.get(this._data, aName);
+	}
+	
+	getValueForPath(aPath) {
+		return this.getValue(aPath);
 	}
 }

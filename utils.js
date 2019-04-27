@@ -39,6 +39,7 @@ export {default as LoadingGroup} from "wprr/utils/loading/LoadingGroup";
 export {default as LoadingSequence} from "wprr/utils/loading/LoadingSequence";
 export {default as MultipleUrlResolver} from "wprr/utils/MultipleUrlResolver";
 export {default as KeyValueGenerator} from "wprr/utils/KeyValueGenerator";
+export {default as PathGenerator} from "wprr/utils/PathGenerator";
 
 import * as process from "wprr/utils/process";
 export {process as process};

@@ -17,6 +17,7 @@ export default class SourceDataWithPath extends SourceData {
 		super();
 		
 		this._deepPath = null;
+		this._debug_lastEvaluatedDeepValue = null;
 	}
 	
 	setDeepPath(aPath) {
@@ -26,24 +27,39 @@ export default class SourceDataWithPath extends SourceData {
 		return this;
 	}
 	
+	getDeepPathValue(aData, aPath) {
+		if(aData && aData.hasObjectPathHandling && aData.hasObjectPathHandling()) {
+			return aData.getValueForPath(aPath);
+		}
+		
+		let returnData = objectPathWithInheritedProps.get(aData, aPath);
+		
+		return returnData;
+	}
+	
 	getSource(aFromObject) {
 		let sourceData = super.getSource(aFromObject);
-		let returnData = objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		let returnData = this.getDeepPathValue(sourceData, this._deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSource(aFromObject);
 		}
+		
+		this._debug_lastEvaluatedDeepValue = returnData;
+		
 		return returnData;
 	}
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		let sourceData = super.getSourceInStateChange(aFromObject, aNewPropsAndState);
 		
-		let returnData = objectPathWithInheritedProps.get(sourceData, this._deepPath);
+		let returnData = this.getDeepPathValue(sourceData, this._deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSourceInStateChange(aFromObject, aNewPropsAndState);
 		}
+		
+		this._debug_lastEvaluatedDeepValue = returnData;
 		
 		return returnData;
 	}
