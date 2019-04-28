@@ -22,6 +22,15 @@ export default class SelectSection extends ManipulationBaseObject {
 		return (aActiveSection.indexOf(aSection) !== -1);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		//console.log("wprr/reference/StatusGroup::_removeUsedProps");
+		
+		delete aReturnObject["selectedSections"];
+		delete aReturnObject["canBeEmpty"];
+		
+		return aReturnObject;
+	}
+	
 	_renderClonedElement() {
 		//console.log("wprr/elements/area/SelectSection::_renderClonedElement");
 		

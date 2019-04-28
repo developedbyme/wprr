@@ -1,3 +1,5 @@
+import objectPath from "object-path";
+
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
@@ -20,6 +22,7 @@ export default class SelectItemInArray extends AdjustFunction {
 		this.setInput("array", SourceData.create("prop", "input"));
 		this.setInput("item", SourceData.create("prop", "item"));
 		this.setInput("field", "id");
+		this.setInput("outputField", null);
 		this.setInput("outputName", "output");
 		
 	}
@@ -49,11 +52,19 @@ export default class SelectItemInArray extends AdjustFunction {
 		let range = this.getInput("array", aData, aManipulationObject);
 		let item = this.getInput("item", aData, aManipulationObject);
 		let field = this.getInput("field", aData, aManipulationObject);
+		let outputField = this.getInput("outputField", aData, aManipulationObject);
 		let outputName = this.getInput("outputName", aData, aManipulationObject);
 		
 		this.removeUsedProps(aData);
 		
-		aData[outputName] = ArrayFunctions.getItemBy(field, item, range);
+		let returnObject = ArrayFunctions.getItemBy(field, item, range);
+		if(outputField !== null) {
+			aData[outputName] = objectPath.get(returnObject, outputField);
+		}
+		else {
+			aData[outputName] = returnObject;
+		}
+		
 		
 		return aData;
 	}

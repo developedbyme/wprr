@@ -54,6 +54,7 @@ export {default as ExternalStorageInjection} from "wprr/reference/ExternalStorag
 export {default as ProcessController} from "wprr/manipulation/ProcessController";
 export {default as ExternalStorageProps} from "wprr/manipulation/ExternalStorageProps";
 export {default as StatusGroup} from "wprr/reference/StatusGroup";
+export {default as StatusSection} from "wprr/elements/area/selectsections/StatusSection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
