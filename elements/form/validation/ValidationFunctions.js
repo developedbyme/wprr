@@ -12,6 +12,10 @@ export default class ValidationFunctions {
 	static positiveValue(aCheckValue, aAdditionalData) {
 		//console.log("wprr/elements/form/validation/ValidationFunctions::positiveValue");
 		
+		if(aCheckValue === null || aCheckValue === undefined) {
+			return false;
+		}
+		
 		let checkNumber = parseFloat(aCheckValue);
 		
 		return (!isNaN(checkNumber) && checkNumber > 0);
@@ -20,6 +24,10 @@ export default class ValidationFunctions {
 	static notEmpty(aCheckValue, aAdditionalData) {
 		//console.log("wprr/elements/form/validation/ValidationFunctions::notEmpty");
 		
+		if(aCheckValue === null || aCheckValue === undefined) {
+			return false;
+		}
+		
 		let checkString = aCheckValue + "";
 		
 		return (checkString && checkString.length > 0);
@@ -27,11 +35,20 @@ export default class ValidationFunctions {
 	
 	static isEmail(aCheckValue, aAdditionalData) {
 		
+		if(aCheckValue === null || aCheckValue === undefined) {
+			return false;
+		}
+		
 		let re = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/;
 		return re.test(aCheckValue.toLowerCase());
 	}
 	
 	static internationalPhoneNumber(aCheckValue, aAdditionalData) {
+		
+		if(aCheckValue === null || aCheckValue === undefined) {
+			return false;
+		}
+		
 		let re = /^\+[1-9]{1,3} ?[0-9]{3,15}$/;
 		return re.test(aCheckValue.toLowerCase());
 	}
