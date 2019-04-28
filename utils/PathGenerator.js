@@ -17,6 +17,18 @@ export default class PathGenerator  {
 		this._markers = new Object();
 	};
 	
+	clone() {
+		let newPathGenerator = PathGenerator.create();
+		newPathGenerator.setSeparator(this._separator);
+		newPathGenerator.setPath(this.get());
+		
+		for(let objectName in this._markers) {
+			newPathGenerator.addMarker(objectName, this._markers[objectName]);
+		}
+		
+		return newPathGenerator;
+	}
+	
 	setSeparator(aSeparator) {
 		this._separator = aSeparator;
 		this._separatorReplacement = "%" + this._separator.charCodeAt(0).toString(16).toUpperCase();
@@ -69,6 +81,12 @@ export default class PathGenerator  {
 		return this;
 	}
 	
+	addMarker(aName, aPath) {
+		this._markers[aName] = aPath;
+		
+		return this;
+	}
+	
 	gotoMarker(aName) {
 		let markerPath = this._markers[aName];
 		if(markerPath) {
@@ -76,6 +94,16 @@ export default class PathGenerator  {
 		}
 		
 		return this;
+	}
+	
+	getMarker(aName) {
+		let markerPath = this._markers[aName];
+		if(markerPath) {
+			return markerPath;
+		}
+		
+		console.warn("No marker named " + aName, this);
+		return null;
 	}
 	
 	static create() {
