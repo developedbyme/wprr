@@ -45,6 +45,13 @@ export default class ProcessChain extends ProcessPart {
 		return currentStep;
 	}
 	
+	getStepByPath(aPath) {
+		let pathParts = aPath.split("/");
+		let part = this.getStepByPathParts(pathParts);
+		
+		return part;
+	}
+	
 	addStepToChain(aPath, aStep, aIsNext = true) {
 		//console.log("wprr/utils/process/ProcessChain::addStepToChain");
 		//console.log(aPath, aStep, aIsNext);
@@ -78,6 +85,15 @@ export default class ProcessChain extends ProcessPart {
 		}
 		
 		this.addStepToChain(aPath, newPart, aIsNext);
+		
+		return this;
+	}
+	
+	linkStep(aPath, aToPath, aIsNext = true) {
+		console.log("wprr/utils/process/ProcessChain::addStepToChain");
+		console.log(aPath, aToPath, aIsNext);
+		
+		this.addStepToChain(aPath, this.getStepByPath(aToPath), aIsNext);
 		
 		return this;
 	}
