@@ -85,7 +85,7 @@ export default class LoadingProcess extends ProcessPart {
 	}
 	
 	start() {
-		console.log("wprr/utils/process/parts/LoadingProcess::start");
+		//console.log("wprr/utils/process/parts/LoadingProcess::start");
 		
 		super.start();
 		
@@ -101,7 +101,7 @@ export default class LoadingProcess extends ProcessPart {
 	}
 	
 	continue() {
-		console.log("wprr/utils/process/parts/LoadingProcess::continue");
+		//console.log("wprr/utils/process/parts/LoadingProcess::continue");
 		
 		console.warn("Continue can't be called on a loading process");
 	}

@@ -13,6 +13,8 @@ export default class PathGenerator  {
 		this._separatorReplacement = null;
 		this.setSeparator("/");
 		this._parts = new Array();
+		
+		this._markers = new Object();
 	};
 	
 	setSeparator(aSeparator) {
@@ -56,6 +58,21 @@ export default class PathGenerator  {
 		
 		for(let i = 0; i < length; i++) {
 			this._parts.pop();
+		}
+		
+		return this;
+	}
+	
+	setMarker(aName) {
+		this._markers[aName] = this.get();
+		
+		return this;
+	}
+	
+	gotoMarker(aName) {
+		let markerPath = this._markers[aName];
+		if(markerPath) {
+			this.setPath(markerPath);
 		}
 		
 		return this;
