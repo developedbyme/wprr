@@ -15,6 +15,10 @@ export default class ReduxDataStorage {
 		this._owners = new Array();
 	}
 	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
 	addOwner(aOwner) {
 		this._owners.push(aOwner);
 	}
@@ -92,5 +96,9 @@ export default class ReduxDataStorage {
 		}
 		
 		return objectPath.get(this._currentState.globalVariables, path);
+	}
+	
+	getValueForPath(aPath) {
+		return this.getValue(aPath);
 	}
 }
