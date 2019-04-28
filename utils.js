@@ -10,6 +10,7 @@ import BlockInjectionFunctions from "wprr/wp/blocks/BlockInjectionFunctions";
 import EditPostEncodeFunctions from "wprr/wp/admin/EditPostEncodeFunctions";
 import WpUrlFunctions from "wprr/wp/WpUrlFunctions";
 import WprrUrlFunctions from "wprr/wp/WprrUrlFunctions";
+import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -22,6 +23,7 @@ export {BlockInjectionFunctions as blockInjection};
 export {EditPostEncodeFunctions as editPostEncode};
 export {WpUrlFunctions as wpUrl};
 export {WprrUrlFunctions as wprrUrl};
+export {ReactChildFunctions as reactChildren};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";
