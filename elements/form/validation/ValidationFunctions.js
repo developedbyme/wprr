@@ -43,6 +43,16 @@ export default class ValidationFunctions {
 		return re.test(aCheckValue.toLowerCase());
 	}
 	
+	static phoneNumber(aCheckValue, aAdditionalData) {
+		
+		if(aCheckValue === null || aCheckValue === undefined) {
+			return false;
+		}
+		
+		let re = /^\+?[0-9 ]{8,}$/;
+		return re.test(aCheckValue.toLowerCase());
+	}
+	
 	static internationalPhoneNumber(aCheckValue, aAdditionalData) {
 		
 		if(aCheckValue === null || aCheckValue === undefined) {
