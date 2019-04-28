@@ -53,6 +53,7 @@ export {default as ResponsiveProps} from "wprr/manipulation/measure/ResponsivePr
 export {default as ExternalStorageInjection} from "wprr/reference/ExternalStorageInjection";
 export {default as ProcessController} from "wprr/manipulation/ProcessController";
 export {default as ExternalStorageProps} from "wprr/manipulation/ExternalStorageProps";
+export {default as StatusGroup} from "wprr/reference/StatusGroup";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

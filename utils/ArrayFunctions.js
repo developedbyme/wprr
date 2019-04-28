@@ -3,6 +3,24 @@ import objectPath from "object-path";
 //import ArrayFunctions from "wprr/utils/ArrayFunctions";
 export default class ArrayFunctions {
 	
+	static trimArray(aArray, aMode = 3) {
+		
+		if(aMode > 0) {
+			//METODO: use mode
+			if(aArray) {
+				let currentArray = aArray;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentString = currentArray[i];
+				
+					currentArray[i] = currentString.trim();
+				}
+			}
+		}
+		
+		return aArray;
+	}
+	
 	static arrayOrSeparatedString(aData, aSeparator = ",", aTrim = 3) {
 		if(aData === null || aData === undefined) {
 			return [];
@@ -11,7 +29,7 @@ export default class ArrayFunctions {
 			return aData;
 		}
 		else if(typeof(aData) === "string") {
-			return aData.split(aSeparator); //METODO: trim
+			return ArrayFunctions.trimArray(aData.split(aSeparator));
 		}
 		
 		console.error(aData + " is not array or string.");
