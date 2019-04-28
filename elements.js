@@ -52,6 +52,7 @@ export {default as TermSelection} from "wprr/elements/form/wp/TermSelection";
 export {default as ResponsiveProps} from "wprr/manipulation/measure/ResponsiveProps";
 export {default as ExternalStorageInjection} from "wprr/reference/ExternalStorageInjection";
 export {default as ProcessController} from "wprr/manipulation/ProcessController";
+export {default as ExternalStorageProps} from "wprr/manipulation/ExternalStorageProps";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
