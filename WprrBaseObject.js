@@ -351,13 +351,19 @@ export default class WprrBaseObject extends React.Component {
 	_prepareInitialRender() {
 		//console.log("wprr/WprrBaseObject::_prepareInitialRender");
 		
-		//MENOTE: should be overridden
+		let commands = this.getSourcedProp("prepareInitialRenderCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
 	}
 	
 	_prepareRender() {
 		//console.log("wprr/WprrBaseObject::_prepareRender");
 		
-		//MENOTE: should be overridden
+		let commands = this.getSourcedProp("prepareRenderCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
 	}
 	
 	setPartData(aName, aProps, aElement) {
