@@ -139,4 +139,41 @@ export default class FilterPartFunctions  {
 		
 		return newFilterPart;
 	}
+	
+	static filterOutValues(aCurrentArray, aOriginalArray) {
+		let returnArray = new Array();
+		
+		let ignoreValues = this.getInput("ignoreValues");
+		let field = this.getInput("field");
+		let valueFormat = this.getInput("valueFormat");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentValue = currentItem;
+			if(field) {
+				currentValue = objectPath.get(currentItem, field);
+			}
+			if(valueFormat) {
+				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
+			}
+			
+			if(ignoreValues.indexOf(currentValue) === -1) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createFilterOutValues(aIgnoreValues, aField = null, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.filterOutValues, aActive);
+		
+		newFilterPart.inputs.setInput("ignoreValues", aIgnoreValues);
+		newFilterPart.inputs.setInput("field", aField);
+		
+		return newFilterPart;
+	}
 }

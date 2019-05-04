@@ -103,4 +103,12 @@ export default class WprrUrlFunctions {
 		
 		return returnUrl;
 	}
+	
+	static getPostUrl(aId) {
+		let returnUrl = this.getBasePath(this.getBasePath());
+		
+		returnUrl += "post/" + aId;
+		
+		return returnUrl;
+	}
 }
