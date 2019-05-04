@@ -61,6 +61,13 @@ export default class DataStorage {
 	}
 	
 	getValueForPath(aPath) {
+		switch(aPath) {
+			case "getValue":
+				return this.getValue;
+			case "updateValue":
+				return this.updateValue;
+		}
+		
 		return this.getValue(aPath);
 	}
 }
