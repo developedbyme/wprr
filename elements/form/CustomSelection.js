@@ -108,10 +108,16 @@ export default class CustomSelection extends ManipulationBaseObject {
 			defaultMarkup
 		);
 		
+		let buttonClasses = this.getFirstValidSource(
+			Wprr.sourceProp("buttonClasses"),
+			Wprr.sourceReference("customSelection/buttonClasses"),
+			"custom-selection custom-selection-padding"
+		);
+		
 		let button = this.getFirstValidSource(
 			Wprr.sourceProp("buttonMarkup"),
 			Wprr.sourceReference("customSelection/button"),
-			React.createElement("div", {"className": "custom-selection custom-selection-padding"},
+			React.createElement("div", {"className": buttonClasses},
 				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"))]},
 					Wprr.text(Wprr.sourceProp("text"))
 				)
@@ -143,22 +149,41 @@ export default class CustomSelection extends ManipulationBaseObject {
 			React.createElement(React.Fragment)
 		);
 		
-		let defaultLoop = React.createElement("div", {"className": "custom-selection-menu custom-selection-menu-padding"}, React.createElement(Wprr.Loop, {
+		let selectionMenuClasses = this.getFirstValidSource(
+			Wprr.sourceProp("selectionMenuClasses"),
+			Wprr.sourceReference("customSelection/selectionMenuClasses"),
+			"custom-selection-menu custom-selection-menu-padding"
+		);
+		
+		let defaultLoop = React.createElement("div", {"className": selectionMenuClasses}, React.createElement(Wprr.Loop, {
 			"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), defaultLoopItem, defaultLoopItemSpacing),
 			"className": "custom-selection-menu-item custom-selection-menu-item-padding"
 		}));
+		
+		let filter = this.getFirstValidSource(
+			Wprr.sourceProp("filterOptions"),
+			Wprr.sourceReference("customSelection/filterOptions")
+		);
+		
+		if(filter) {
+			defaultLoop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.applyFilterChain(Wprr.sourceReference("options"), filter, "options")},
+				React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": Wprr.sourceProp("options")}},
+					defaultLoop
+				)
+			);
+		}
 		
 		let loop = this.getFirstValidSource(Wprr.sourceProp("loop"), Wprr.sourceReference("customSelection/loop"), defaultLoop);
 		
 		let loopPlacement = React.createElement(Wprr.MarkupPlacement, {"placement": "main"}, loop);
 		let buttonPlacement = React.createElement(Wprr.MarkupPlacement, {"placement": "button"}, button);
 		
-		return [
-			React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": options, "valueName": valueName, "value": value}},
-				React.createElement(Wprr.EditableProps, {"editableProps": "open", "open": false}, 
-					React.createElement(DropdownSelection, {"markup": markup}, buttonPlacement, loopPlacement)
-				)
+		let returnObject = React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": options, "valueName": valueName, "value": value}},
+			React.createElement(Wprr.EditableProps, {"editableProps": "open", "open": false}, 
+				React.createElement(DropdownSelection, {"markup": markup}, buttonPlacement, loopPlacement)
 			)
-		]
+		);
+		
+		return [returnObject];
 	}
 }
