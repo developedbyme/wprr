@@ -22,7 +22,7 @@ export default class SliderDisplay extends WprrBaseObject {
 		//console.log("wprr/elements/area/slider/SliderDisplay::_getNumberOfVisibleItems");
 		//console.log(aPosition, aContainerWidth, aItemWidth, aSpacing);
 		
-		let numberOfItemsFitting = (aContainerWidth/aItemWidth);
+		let numberOfItemsFitting = (aContainerWidth/(aItemWidth+aSpacing));
 		let focusIndex = Math.floor(aPosition);
 		
 		if(focusIndex !== aPosition) {
@@ -64,6 +64,7 @@ export default class SliderDisplay extends WprrBaseObject {
 		let itemWidth = this.getSourcedPropWithDefault("itemWidth", SourceData.create("prop", "width"));
 		let spacing = this.getSourcedPropWithDefault("spacing", 0);
 		let position = this.getSourcedPropWithDefault("position", 0);
+		let adjustSpacing = this.getSourcedPropWithDefault("adjustSpacing", false);
 		
 		let placementClasses = "absolute-for-transform";
 		let propPlacementClassName = this.getSourcedProp("placementClassName");
@@ -77,8 +78,16 @@ export default class SliderDisplay extends WprrBaseObject {
 			return returnArray;
 		}
 		
+		if(adjustSpacing) {
+			let calculateOnFittingItems = Math.max(1, Math.floor(this._getNumberOfVisibleItems(0, containerWidth, itemWidth, spacing)));
+			if(calculateOnFittingItems > 1) {
+				spacing = (containerWidth-(itemWidth*calculateOnFittingItems))/(calculateOnFittingItems-1);
+			}
+		}
+		
 		let startIndex = this._getStartIndex(position, containerWidth, itemWidth, spacing);
 		let numberOfVisibleItems = this._getNumberOfVisibleItems(position, containerWidth, itemWidth, spacing);
+		
 		let numberOfItems = aItems.length;
 		
 		for(let i = 0; i < numberOfVisibleItems; i++) {
