@@ -16,6 +16,7 @@ export {default as DateDisplay} from "wprr/elements/text/DateDisplay";
 export {default as UnitDisplay} from "wprr/elements/text/UnitDisplay";
 export {default as RelativeDateDisplay} from "wprr/elements/text/RelativeDateDisplay";
 export {default as TermName} from "wprr/elements/text/TermName";
+export {default as TermPathName} from "wprr/elements/text/TermPathName";
 export {default as LanguageName} from "wprr/elements/text/LanguageName";
 export {default as ContentsAndInjectedComponents} from "wprr/elements/text/ContentsAndInjectedComponents";
 export {default as TranslationOrId} from "wprr/elements/text/TranslationOrId";
