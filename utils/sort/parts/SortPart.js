@@ -13,7 +13,9 @@ export default class SortPart  {
 		
 		this.inputs = InputDataHolder.create();
 		this.inputs.setInput("active", true);
-		this.inputs.setInput("filterFunction", this._performSortItem);
+		this.inputs.setInput("sortFunction", this._performSortItem);
+		this.inputs.setInput("formatFunction", this._formatValue);
+		this.inputs.setInput("orderMultipler", 1);
 		
 		this._performingElement = null;
 		this._props = null;
@@ -30,9 +32,22 @@ export default class SortPart  {
 		return this;
 	}
 	
+	_formatValue(aValue) {
+		return aValue
+	}
+	
 	_performSortItem(aA, aB) {
 		
-		//MENOTE: should be overridden
+		let formatFunction = this.getInput("formatFunction");
+		aA = formatFunction(aA);
+		aB = formatFunction(aB);
+		
+		if(aA < aB) {
+			return -1;
+		}
+		else if(aA > aB) {
+			return 1;
+		}
 		
 		return 0;
 	}
@@ -46,8 +61,9 @@ export default class SortPart  {
 		
 		let active = this.getInput("active");
 		if(active) {
-			let filterFunction = this.getInput("filterFunction");
-			return filterFunction.call(this, aA, aB);
+			let sortFunction = this.getInput("sortFunction");
+			let orderMultipler = this.getInput("orderMultipler");
+			return orderMultipler*sortFunction.call(this, aA, aB);
 		}
 		return 0;
 	}
@@ -60,10 +76,27 @@ export default class SortPart  {
 		this.inputs.setInput("active", false);
 	}
 	
-	static create(aFilterFunction = null, aActive = null) {
+	setOrder(aOrder) {
+		switch(aOrder) {
+			case "asc":
+				this.inputs.setInput("orderMultipler", 1);
+				break;
+			case "desc":
+				this.inputs.setInput("orderMultipler", -1);
+				break;
+			default:
+				console.warn("Unknown order " + aOrder, this);
+				break;
+		}
+		
+		return this;
+	}
+	
+	static create(aSortFunction = null, aFormatFunction = null, aActive = null) {
 		let newSortPart = new SortPart();
 		
-		newSortPart.inputs.setInputWithoutNull("filterFunction", aFilterFunction);
+		newSortPart.inputs.setInputWithoutNull("sortFunction", aSortFunction);
+		newSortPart.inputs.setInputWithoutNull("formatFunction", aFormatFunction);
 		newSortPart.inputs.setInputWithoutNull("active", aActive);
 		
 		return newSortPart;

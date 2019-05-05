@@ -55,6 +55,15 @@ export default class SortChain extends SortPart {
 		return currentArray;
 	}
 	
+	addPart(aPart) {
+		
+		let parts = this.getInput("parts");
+		parts.push(aPart);
+		this.inputs.getInput("parts", parts);
+		
+		return this;
+	}
+	
 	static create(aParts = null, aActive = null) {
 		let newSortChain = new SortChain();
 		

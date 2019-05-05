@@ -51,3 +51,4 @@ export {default as InputDataHolder} from "wprr/utils/InputDataHolder";
 export {default as FilterPart} from "wprr/utils/filter/parts/FilterPart";
 export {default as SortChain} from "wprr/utils/sort/SortChain";
 export {default as SortPart} from "wprr/utils/sort/parts/SortPart";
+export {default as FieldSort} from "wprr/utils/sort/parts/FieldSort";
