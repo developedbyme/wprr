@@ -28,9 +28,8 @@ export default class EditPostForm extends WprrBaseObject {
 					//MENOTE: do nothing
 					break;
 				default:
-					//METODO: fix no sharing of complex data
-					this._originalData.updateValue(objectName, aData[objectName]);
-					this._externalData.updateValue(objectName, aData[objectName]);
+					this._originalData.updateValue(objectName, JSON.parse(JSON.stringify(aData[objectName])));
+					this._externalData.updateValue(objectName, JSON.parse(JSON.stringify(aData[objectName])));
 					break;
 			}
 		}
