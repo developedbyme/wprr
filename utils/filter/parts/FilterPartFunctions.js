@@ -1,11 +1,12 @@
 import wprr from "wprr/Wprr";
 import objectPath from "object-path";
+import moment from "moment";
 
 import FilterPart from "wprr/utils/filter/parts/FilterPart";
 
 // import FilterPartFunctions from "wprr/utils/filter/parts/FilterPartFunctions";
 /**
- * Filtering functions to use for firlter parts.
+ * Filtering functions to use for filter parts.
  */
 export default class FilterPartFunctions  {
 	
@@ -69,6 +70,12 @@ export default class FilterPartFunctions  {
 				return 1*aValue;
 			case "string":
 				return ""+aValue;
+			case "date":
+				let theMoment = moment(aValue);
+				if(!theMoment.isValid()) {
+					return null;
+				}
+				return theMoment.format("Y-MM-DD");
 		}
 		
 		return aValue;
@@ -172,6 +179,47 @@ export default class FilterPartFunctions  {
 		let newFilterPart = FilterPart.create(FilterPartFunctions.filterOutValues, aActive);
 		
 		newFilterPart.inputs.setInput("ignoreValues", aIgnoreValues);
+		newFilterPart.inputs.setInput("field", aField);
+		
+		return newFilterPart;
+	}
+	
+	static filterInDateRange(aCurrentArray, aOriginalArray) {
+		let returnArray = new Array();
+		
+		console.log(this.getInput("startDate"), this.getInput("endDate"), this);
+		let startDate = FilterPartFunctions._formatValue(this.getInput("startDate"), "date");
+		let endDate = FilterPartFunctions._formatValue(this.getInput("endDate"), "date");
+		let field = this.getInput("field");
+		let valueFormat = this.getInput("valueFormat");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentValue = currentItem;
+			if(field) {
+				currentValue = objectPath.get(currentItem, field);
+			}
+			if(valueFormat) {
+				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
+			}
+			
+			if(startDate <= currentValue && endDate >= currentValue) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createInDateRange(aStartDate, aEndDate, aField = null, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.filterInDateRange, aActive);
+		
+		newFilterPart.inputs.setInput("valueFormat", "date");
+		newFilterPart.inputs.setInput("startDate", aStartDate);
+		newFilterPart.inputs.setInput("endDate", aEndDate);
 		newFilterPart.inputs.setInput("field", aField);
 		
 		return newFilterPart;
