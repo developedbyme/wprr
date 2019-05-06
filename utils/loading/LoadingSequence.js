@@ -44,8 +44,6 @@ export default class LoadingSequence {
 	}
 	
 	addCommand(aName, aCommand) {
-		this._statusCommands.push(aCommand);
-		
 		if(!this._commands.hasInput(aName)) {
 			this._commands.setInput(aName, []);
 		}
