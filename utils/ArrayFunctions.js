@@ -64,15 +64,22 @@ export default class ArrayFunctions {
 		return returnObject;
 	}
 	
-	static mapObjectToArray(aObject, aKeyField, aDataField, aKeyPrefix = "") {
+	static mapObjectToArray(aObject, aKeyField, aDataField = null, aKeyPrefix = "") {
 		let returnArray = new Array();
 		
 		for(let objectName in aObject) {
 			let currentEntry = aObject[objectName];
-			
 			let newObject = new Object();
+			
+			if(aDataField !== null) {
+				newObject[aDataField] = currentEntry;
+			}
+			else {
+				for(let objectName2 in currentEntry) {
+					newObject[objectName2] = currentEntry[objectName2];
+				}
+			}
 			newObject[aKeyField] = objectName.substring(aKeyPrefix.length, objectName.length);
-			newObject[aDataField] = currentEntry;
 			
 			returnArray.push(newObject);
 		}
