@@ -39,7 +39,12 @@ export default class SourceDataWithPath extends SourceData {
 	
 	getSource(aFromObject) {
 		let sourceData = super.getSource(aFromObject);
-		let returnData = this.getDeepPathValue(sourceData, this._deepPath);
+		let deepPath = this._deepPath;
+		if(deepPath instanceof SourceData) {
+			deepPath = deepPath.getSource(aFromObject);
+		}
+		
+		let returnData = this.getDeepPathValue(sourceData, deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSource(aFromObject);
@@ -52,8 +57,12 @@ export default class SourceDataWithPath extends SourceData {
 	
 	getSourceInStateChange(aFromObject, aNewPropsAndState) {
 		let sourceData = super.getSourceInStateChange(aFromObject, aNewPropsAndState);
+		let deepPath = this._deepPath;
+		if(deepPath instanceof SourceData) {
+			deepPath = deepPath.getSourceInStateChange(aFromObject, aNewPropsAndState);
+		}
 		
-		let returnData = this.getDeepPathValue(sourceData, this._deepPath);
+		let returnData = this.getDeepPathValue(sourceData, deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSourceInStateChange(aFromObject, aNewPropsAndState);
