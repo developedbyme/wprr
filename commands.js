@@ -21,6 +21,8 @@ import StopPropagationCommand from "wprr/commands/browser/StopPropagationCommand
 import PreventDefaultCommand from "wprr/commands/browser/PreventDefaultCommand";
 import ConfirmCommand from "wprr/commands/browser/ConfirmCommand";
 import OptionsStepCommand from "wprr/commands/basic/OptionsStepCommand";
+import GetValueCommand from "wprr/commands/basic/GetValueCommand";
+import AddValueToArrayCommand from "wprr/commands/basic/AddValueToArrayCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -36,8 +38,10 @@ let performSelectedCommands = PerformSelectedCommands.create;
 let setStateValue = SetStateValueCommand.create;
 let trigger = TriggerCommand.create;
 let optionsStep = OptionsStepCommand.create;
+let getValue = GetValueCommand.create;
+let addValueToArray = AddValueToArrayCommand.create;
 
-export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep};
+export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;

@@ -60,6 +60,15 @@ export default class DataStorage {
 		return objectPath.get(this._data, aName);
 	}
 	
+	addValueToArray(aName, aValue) {
+		
+		let currentArray = [].concat(this.getValue(aName));
+		currentArray.push(aValue);
+		this.updateValue(aName, currentArray);
+		
+		return this;
+	}
+	
 	getValueForPath(aPath) {
 		switch(aPath) {
 			case "getValue":
