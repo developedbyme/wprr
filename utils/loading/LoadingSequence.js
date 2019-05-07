@@ -59,6 +59,8 @@ export default class LoadingSequence {
 	}
 	
 	_loaderIsDone(aLoader) {
+		//console.log("wprr/utils/loading/LoadingSequence::_loaderIsDone");
+		
 		let index = this._loadingLoaders.indexOf(aLoader);
 		
 		if(index >= 0) {
@@ -83,6 +85,7 @@ export default class LoadingSequence {
 	}
 	
 	_performLoadMoreLoaders() {
+		//console.log("wprr/utils/loading/LoadingSequence::_performLoadMoreLoaders");
 		let currentArray = this._waitingLoaders;
 		let currentArrayLength = currentArray.length;
 		let numberOfLoadersToAdd = currentArrayLength;
@@ -100,7 +103,6 @@ export default class LoadingSequence {
 			
 			let currentLoader = currentArray.shift();
 			currentArrayLength--;
-			this._loadingLoaders.push(currentLoader);
 			
 			let currentStatus = currentLoader.getStatus();
 			if(currentStatus === 1 || currentStatus === -1) {
@@ -156,6 +158,7 @@ export default class LoadingSequence {
 	}
 	
 	_checkForFurtherLoad() {
+		//console.log("wprr/utils/loading/LoadingSequence::_checkForFurtherLoad");
 		
 		if(this._hasError && !this._continueOnError) {
 			console.log("Loader sequence has stopped due to an error in a load.");
