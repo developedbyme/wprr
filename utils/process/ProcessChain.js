@@ -76,6 +76,18 @@ export default class ProcessChain extends ProcessPart {
 		return this;
 	}
 	
+	addEmptyStep(aPath, aCompleteDirectly = true, aIsNext = true) {
+		let newPart = ProcessPart.create();
+		
+		if(aCompleteDirectly) {
+			newPart.completeDirectlyWhenStarted();
+		}
+		
+		this.addStepToChain(aPath, newPart, aIsNext);
+		
+		return this;
+	}
+	
 	addCommandStep(aPath, aCommandOrCommands, aCompleteDirectly = true, aIsNext = true) {
 		let newPart = ProcessPart.create();
 		
