@@ -34,7 +34,7 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 		let initialValues = this.getSourcedProp("initialValues");
 		if(initialValues) {
 			for(let objectName in initialValues) {
-				this._externalStorage.updateValue(objectName, initialValues[objectName]);
+				this._externalStorage.updateValue(objectName, this.resolveSourcedData(initialValues[objectName]));
 			}
 		}
 	}
