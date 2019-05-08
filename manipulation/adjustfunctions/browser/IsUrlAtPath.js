@@ -47,7 +47,6 @@ export default class IsUrlAtPath extends AdjustFunction {
 		url = Wprr.utils.url.getCleanUrl(url);
 		path = Wprr.utils.url.getCleanUrl(path);
 		
-		console.log(url, path);
 		if(url === path) {
 			result = "at";
 		}

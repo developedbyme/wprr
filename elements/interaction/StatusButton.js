@@ -56,7 +56,7 @@ export default class StatusButton extends ManipulationBaseObject {
 			doneChild = React.createElement(Wprr.CommandButton, {"commands": commands}, doneChild);
 		}
 		
-		let errorOriginalChild = this._getChildForSection("done", children);
+		let errorOriginalChild = this._getChildForSection("error", children);
 		let errorChild = errorOriginalChild ? errorOriginalChild : waitingOriginalChild;
 		let activeOnError = this.getSourcedPropWithDefault("activeOnError", true);
 		if(activeOnError) {
