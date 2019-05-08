@@ -35,4 +35,92 @@ export default class KeyValueGenerator {
 		
 		return newKeyValueGenerator;
 	}
+	
+	static normalizeOptions(aOptions) {
+		let returnArray = new Array();
+		
+		if(!aOptions) {
+			console.error("Options not set.", this);
+			
+			return returnArray;
+		}
+		
+		let options = aOptions;
+		
+		if(Array.isArray(options)) {
+			let currentArray = options;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentObject = currentArray[i];
+				
+				if(currentObject === null || currentObject === undefined) {
+					console.error("Option is null.", i, currentArray);
+					continue;
+				}
+				else if(typeof(currentObject) === "object") {
+					
+					let encodedData = {"key": currentObject["value"], "value": currentObject["value"], "label": currentObject["label"]};
+					if(currentObject["additionalData"]) {
+						encodedData["additionalData"] = currentObject["additionalData"];
+					}
+					
+					returnArray.push(encodedData);
+				}
+				else {
+					returnArray.push({"key": currentObject, "value": currentObject, "label": currentObject});
+				}
+			}
+		}
+		else {
+			for(let objectName in options) {
+				returnArray.push({"key": objectName, "value": objectName, "label": options[objectName]});
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static normalizeArrayOrObject(aOptions) {
+		let returnArray = new Array();
+		
+		if(!aOptions) {
+			console.error("Options not set.", this);
+			
+			return returnArray;
+		}
+		
+		let options = aOptions;
+		
+		if(Array.isArray(options)) {
+			let currentArray = options;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentObject = currentArray[i];
+				
+				if(currentObject === null || currentObject === undefined) {
+					console.error("Option is null.", i, currentArray);
+					continue;
+				}
+				else if(typeof(currentObject) === "object") {
+					
+					let encodedData = {"key": currentObject["key"], "value": currentObject["value"], "label": currentObject["value"]};
+					if(currentObject["additionalData"]) {
+						encodedData["additionalData"] = currentObject["additionalData"];
+					}
+					
+					returnArray.push(encodedData);
+				}
+				else {
+					returnArray.push({"key": currentObject, "value": currentObject, "label": currentObject});
+				}
+			}
+		}
+		else {
+			for(let objectName in options) {
+				returnArray.push({"key": objectName, "value": options[objectName], "label": options[objectName]});
+			}
+		}
+		
+		return returnArray;
+	}
 }

@@ -20,6 +20,7 @@ export {default as TermPathName} from "wprr/elements/text/TermPathName";
 export {default as LanguageName} from "wprr/elements/text/LanguageName";
 export {default as ContentsAndInjectedComponents} from "wprr/elements/text/ContentsAndInjectedComponents";
 export {default as TranslationOrId} from "wprr/elements/text/TranslationOrId";
+export {default as TextWithReplacements} from "wprr/elements/text/TextWithReplacements";
 
 export {default as RefGroup} from "wprr/reference/RefGroup";
 export {default as EditableProps} from "wprr/manipulation/EditableProps";
