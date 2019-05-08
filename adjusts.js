@@ -35,6 +35,7 @@ import MapPropertyInArray from "wprr/manipulation/adjustfunctions/logic/MapPrope
 import LabelFromOptions from "wprr/manipulation/adjustfunctions/text/LabelFromOptions";
 import AdditionalDataFromOptions from "wprr/manipulation/adjustfunctions/text/AdditionalDataFromOptions";
 import ApplySortChain from "wprr/manipulation/adjustfunctions/logic/ApplySortChain";
+import IsUrlAtPath from "wprr/manipulation/adjustfunctions/browser/IsUrlAtPath";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -84,7 +85,8 @@ let labelFromOptions = LabelFromOptions.create;
 export {labelFromOptions};
 let additionalDataFromOptions = AdditionalDataFromOptions.create;
 export {additionalDataFromOptions};
-
+let isUrlAtPath = IsUrlAtPath.create;
+export {isUrlAtPath};
 
 let filterProps = FilterProps.create;
 export {filterProps};

@@ -11,6 +11,7 @@ import EditPostEncodeFunctions from "wprr/wp/admin/EditPostEncodeFunctions";
 import WpUrlFunctions from "wprr/wp/WpUrlFunctions";
 import WprrUrlFunctions from "wprr/wp/WprrUrlFunctions";
 import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
+import UrlFunctions from "wprr/utils/UrlFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -21,6 +22,7 @@ export {CommandPerformer as commandPerformer};
 export {FilterPartFunctions as filterPartFunctions};
 export {BlockInjectionFunctions as blockInjection};
 export {EditPostEncodeFunctions as editPostEncode};
+export {UrlFunctions as url};
 export {WpUrlFunctions as wpUrl};
 export {WprrUrlFunctions as wprrUrl};
 export {ReactChildFunctions as reactChildren};
