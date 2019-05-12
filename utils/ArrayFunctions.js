@@ -98,18 +98,29 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
-	static getItemBy(aField, aIdentifier, aArray) {
+	static getItemIndexBy(aField, aIdentifier, aArray) {
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			let currentValue = objectPath.get(currentArray[i], aField);
 			if(currentValue == aIdentifier) {
-				return currentItem;
+				return i;
 			}
 		}
 		
 		console.warn("No item with field " + aField + " matching " + aIdentifier, aArray);
+		return -1;
+	}
+	
+	static getItemBy(aField, aIdentifier, aArray) {
+		
+		let index = ArrayFunctions.getItemIndexBy(aField, aIdentifier, aArray);
+		
+		if(index >= 0) {
+			return aArray[index];
+		}
+		
 		return null;
 	}
 	
