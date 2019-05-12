@@ -187,7 +187,6 @@ export default class FilterPartFunctions  {
 	static filterInDateRange(aCurrentArray, aOriginalArray) {
 		let returnArray = new Array();
 		
-		console.log(this.getInput("startDate"), this.getInput("endDate"), this);
 		let startDate = FilterPartFunctions._formatValue(this.getInput("startDate"), "date");
 		let endDate = FilterPartFunctions._formatValue(this.getInput("endDate"), "date");
 		let field = this.getInput("field");
@@ -221,6 +220,42 @@ export default class FilterPartFunctions  {
 		newFilterPart.inputs.setInput("startDate", aStartDate);
 		newFilterPart.inputs.setInput("endDate", aEndDate);
 		newFilterPart.inputs.setInput("field", aField);
+		
+		return newFilterPart;
+	}
+	
+	static compareField(aCurrentArray, aOriginalArray) {
+		let returnArray = new Array();
+		
+		let valueFormat = this.getInput("valueFormat");
+		let matchValue = FilterPartFunctions._formatValue(this.getInput("compareValue"), valueFormat);
+		let field = this.getInput("field");
+		
+		let compareType = this.getInput("compareType");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let currentValue = FilterPartFunctions._formatValue(objectPath.get(currentItem, field), valueFormat);
+			
+			let passes = FilterPartFunctions._compare(currentValue, matchValue, compareType);
+			
+			if(passes) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createCompareField(aField, aCompareValue, aCompareType = "=", aValueFormat = "string", aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.compareNumericField, aActive);
+		
+		newFilterPart.inputs.setInput("field", aField);
+		newFilterPart.inputs.setInput("compareValue", aCompareValue);
+		newFilterPart.inputs.setInput("compareType", aCompareType);
+		newFilterPart.inputs.setInput("valueFormat", aValueFormat);
 		
 		return newFilterPart;
 	}
