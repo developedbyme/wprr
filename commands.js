@@ -23,6 +23,7 @@ import ConfirmCommand from "wprr/commands/browser/ConfirmCommand";
 import OptionsStepCommand from "wprr/commands/basic/OptionsStepCommand";
 import GetValueCommand from "wprr/commands/basic/GetValueCommand";
 import AddValueToArrayCommand from "wprr/commands/basic/AddValueToArrayCommand";
+import ConsoleLogCommand from "wprr/commands/debug/ConsoleLogCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -53,7 +54,8 @@ let alert = AlertCommand.create;
 let showOverlay = ShowOverlayCommand.create;
 let closeCurrentOverlay = CloseCurrentOverlayCommand.create;
 let confirm = ConfirmCommand.create;
-export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert, showOverlay, closeCurrentOverlay, confirm};
+let consoleLog = ConsoleLogCommand.create;
+export {reload, navigate, forceUpdate, reactRouterNavigate, scrollTo, submitForm, alert, showOverlay, closeCurrentOverlay, confirm, consoleLog};
 
 let preventDefault = PreventDefaultCommand.create;
 let stopPropagation = StopPropagationCommand.create;
