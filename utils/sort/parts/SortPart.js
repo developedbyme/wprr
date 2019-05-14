@@ -39,8 +39,8 @@ export default class SortPart  {
 	_performSortItem(aA, aB) {
 		
 		let formatFunction = this.getInput("formatFunction");
-		aA = formatFunction(aA);
-		aB = formatFunction(aB);
+		aA = formatFunction.call(this, aA);
+		aB = formatFunction.call(this, aB);
 		
 		if(aA < aB) {
 			return -1;
@@ -50,6 +50,12 @@ export default class SortPart  {
 		}
 		
 		return 0;
+	}
+	
+	setInput(aName, aValue) {
+		this.inputs.setInput(aName, aValue);
+		
+		return this;
 	}
 	
 	getInput(aName) {
