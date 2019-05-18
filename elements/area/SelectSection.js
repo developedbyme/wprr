@@ -1,5 +1,6 @@
 import React from "react";
 import {Fragment} from "react";
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -19,7 +20,21 @@ export default class SelectSection extends ManipulationBaseObject {
 		//console.log("wprr/elements/area/SelectSection::_isSectionActive");
 		//console.log(aSection, aActiveSection);
 		
-		return (aActiveSection.indexOf(aSection) !== -1);
+		if(!aSection) {
+			return false;
+		}
+		
+		let sectionNames = Wprr.utils.array.arrayOrSeparatedString(aSection);
+		let currentArray = sectionNames;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentSection = currentArray[i];
+			if(aActiveSection.indexOf(currentSection) !== -1) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -61,6 +76,8 @@ export default class SelectSection extends ManipulationBaseObject {
 		
 		let mainProps = this._getMainElementProps();
 		
+		let hasActive = false;
+		let defaultChild = null;
 		let activeChildren = new Array();
 		let currentArray = availableChildren;
 		let currentArrayLength = currentArray.length;
@@ -69,17 +86,30 @@ export default class SelectSection extends ManipulationBaseObject {
 			
 			if(this._isSectionActive(currentChild.props["data-section-name"], selectedSections)) {
 				activeChildren.push(this._performClone(currentChild, mainProps));
+				hasActive = true;
 			}
 			else if(this._isSectionActive(currentChild.props.sectionName, selectedSections)) {
 				activeChildren.push(this._performClone(currentChild, mainProps));
+				hasActive = true;
+			}
+			
+			if(!hasActive && !defaultChild) {
+				if(currentChild.props["data-default-section"] === "true" || currentChild.props["data-default-section"] == true) {
+					defaultChild = currentChild;
+				}
 			}
 		}
 		
 		if(activeChildren.length === 0) {
-			if(!this._canBeEmpty && !this.props.canBeEmpty) {
-				console.warn("Object doesn't have any active children.");
+			if(defaultChild) {
+				activeChildren.push(this._performClone(defaultChild, mainProps));
 			}
-			return null;
+			else {
+				if(!this._canBeEmpty && !this.props.canBeEmpty) {
+					console.warn("Object doesn't have any active children.");
+				}
+				return null;
+			}
 		}
 		if(activeChildren.length > 1) {
 			if(this._canHaveMultipleChildren) {
