@@ -80,6 +80,16 @@ export default class WprrUrlFunctions {
 		return returnUrl;
 	}
 	
+	static getGlobalItemUrl(aType, aParameters = null) {
+		
+		let returnUrl = this.getBasePath(this.getBasePath());
+		
+		returnUrl += "global/" + aType;
+		returnUrl = WprrUrlFunctions._addParametersString(returnUrl, WprrUrlFunctions._getParametersString(aParameters));
+		
+		return returnUrl;
+	}
+	
 	static getTermsUrl(aTaxonomy) {
 		let returnUrl = this.getBasePath(this.getBasePath());
 		
