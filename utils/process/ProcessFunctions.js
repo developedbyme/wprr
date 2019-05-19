@@ -31,7 +31,7 @@ export default class ProcessFunctions {
 		if(aStatusSource) {
 			newChain.addCommandStep(pathGenerator.addAndGet("setLoadedStatus"), Wprr.commands.setValue(aStatusSource, aStatusName, 1));
 		}
-		//METODO: add command to complete the chain
+		newChain.addCommandStep(pathGenerator.addAndGet("completeChain"), Wprr.commands.callFunction(newChain, newChain.done), false, true);
 		
 		//Error
 		newChain.addEmptyStep(pathGenerator.gotoMarker("loading").addAndGet("error"), true, false);
