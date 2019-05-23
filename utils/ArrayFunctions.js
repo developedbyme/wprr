@@ -124,6 +124,23 @@ export default class ArrayFunctions {
 		return null;
 	}
 	
+	static getItemsBy(aField, aIdentifier, aArray) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let currentValue = objectPath.get(currentArray[i], aField);
+			if(currentValue == aIdentifier) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
 	static mapField(aArray, aField) {
 		let returnArray = new Array();
 		
@@ -134,6 +151,47 @@ export default class ArrayFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static removeDuplicates(aArray) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentValue = currentArray[i];
+			if(returnArray.indexOf(currentValue) === -1) {
+				returnArray.push(currentValue);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static removeValues(aArray, aRemoveValues) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentValue = currentArray[i];
+			if(aRemoveValues.indexOf(currentValue) === -1) {
+				returnArray.push(currentValue);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static castToFloat(aArray) {
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			currentArray[i] = parseFloat(currentArray[i]);
+		}
+		
+		return aArray;
 	}
 	
 	static arrayFromSingleOrMultiple(aArrayOrItem) {

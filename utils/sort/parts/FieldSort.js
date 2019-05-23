@@ -25,9 +25,14 @@ export default class FieldSort extends SortPart {
 		
 		let field = this.getInput("field");
 		let formatFunction = this.getInput("formatFunction");
-		//MENOTE: should be overridden
-		let aValue = formatFunction(objectPath.get(aA, field));
-		let bValue = formatFunction(objectPath.get(aB, field));
+		
+		if(field) {
+			aA = objectPath.get(aA, field);
+			aB = objectPath.get(aB, field);
+		}
+		
+		let aValue = formatFunction(aA);
+		let bValue = formatFunction(aB);
 		
 		if(aValue < bValue) {
 			return -1;
@@ -44,6 +49,16 @@ export default class FieldSort extends SortPart {
 		
 		newFieldSort.inputs.setInputWithoutNull("field", aField);
 		newFieldSort.inputs.setInputWithoutNull("formatFunction", aFormatFunction);
+		newFieldSort.inputs.setInputWithoutNull("active", aActive);
+		
+		return newFieldSort;
+	}
+	
+	static createNumeric(aField, aActive = null) {
+		let newFieldSort = new FieldSort();
+		
+		newFieldSort.inputs.setInputWithoutNull("field", aField);
+		newFieldSort.inputs.setInputWithoutNull("formatFunction", SortPart.format_number);
 		newFieldSort.inputs.setInputWithoutNull("active", aActive);
 		
 		return newFieldSort;

@@ -107,4 +107,22 @@ export default class SortPart  {
 		
 		return newSortPart;
 	}
+	
+	static createNumeric(aSortFunction = null, aActive = null) {
+		let newSortPart = new SortPart();
+		
+		newSortPart.inputs.setInputWithoutNull("sortFunction", aSortFunction);
+		newSortPart.inputs.setInputWithoutNull("formatFunction", SortPart.format_number);
+		newSortPart.inputs.setInputWithoutNull("active", aActive);
+		
+		return newSortPart;
+	}
+	
+	static format_number(aValue) {
+		let returnValue = 1*aValue;
+		if(isNaN(returnValue)) {
+			returnValue = 0;
+		}
+		return returnValue;
+	}
 }
