@@ -165,20 +165,28 @@ export default class CustomSelection extends ManipulationBaseObject {
 			Wprr.sourceReference("customSelection/filterOptions")
 		);
 		
+		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReference("customSelection/loop"), defaultLoop], this, "element")},
+			React.createElement(Wprr.InsertElement, {})
+		);
+		
 		if(filter) {
-			defaultLoop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.applyFilterChain(Wprr.sourceReference("options"), filter, "options")},
+			loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.applyFilterChain(Wprr.sourceReference("options"), filter, "options")},
 				React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": Wprr.sourceProp("options")}},
-					defaultLoop
+					loop
 				)
 			);
 		}
 		
-		let loop = this.getFirstValidSource(Wprr.sourceProp("loop"), Wprr.sourceReference("customSelection/loop"), defaultLoop);
-		
 		let loopPlacement = React.createElement(Wprr.MarkupPlacement, {"placement": "main"}, loop);
 		let buttonPlacement = React.createElement(Wprr.MarkupPlacement, {"placement": "button"}, button);
 		
-		let returnObject = React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": options, "valueName": valueName, "value": value}},
+		let returnObject = React.createElement(Wprr.ReferenceInjection, {"injectData": {
+			"options": options,
+			"valueName": valueName,
+			"value": value,
+			"customSelection/option": defaultLoopItem,
+			"customSelection/optionSpacing": defaultLoopItemSpacing,
+		}},
 			React.createElement(Wprr.EditableProps, {"editableProps": "open", "open": false}, 
 				React.createElement(DropdownSelection, {"markup": markup}, buttonPlacement, loopPlacement)
 			)

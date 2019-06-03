@@ -29,6 +29,9 @@ export default class ArrayFunctions {
 			return aData;
 		}
 		else if(typeof(aData) === "string") {
+			if(aData === "") {
+				return [];
+			}
 			return ArrayFunctions.trimArray(aData.split(aSeparator));
 		}
 		

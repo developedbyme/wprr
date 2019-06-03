@@ -1,5 +1,6 @@
 import Wprr from "wprr/Wprr";
 import React from "react";
+import ReactDOM from 'react-dom';
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -8,6 +9,12 @@ export default class TermSelection extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
+	}
+	
+	getValue() {
+		let currentNode = ReactDOM.findDOMNode(this);
+		
+		return currentNode.options[currentNode.selectedIndex].value;
 	}
 	
 	_getChildrenToClone() {

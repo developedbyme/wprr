@@ -17,6 +17,16 @@ export default class FilterChain extends FilterPart {
 		
 	};
 	
+	addPart(aPart) {
+		let parts = this.inputs.getInput("filters");
+		
+		parts.push(aPart);
+		
+		this.inputs.setInput("filters", parts);
+		
+		return this;
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		
