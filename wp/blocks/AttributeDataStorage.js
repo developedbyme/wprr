@@ -45,9 +45,11 @@ export default class AttributeDataStorage {
 			path = this._pathPrefix + "." + path;
 		}
 		
-		let currentAttributes = this._currentState;
+		let currentAttributes = JSON.parse(JSON.stringify(this._currentState));
 		objectPath.set(currentAttributes, path, aValue);
 		console.log(currentAttributes);
+		
+		this._currentState = currentAttributes;
 		
 		this._setAttribute(currentAttributes);
 		

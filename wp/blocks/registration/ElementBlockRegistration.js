@@ -102,14 +102,11 @@ export default class ElementBlockRegistration {
 	}
 	
 	getRegistrationData() {
-		
-		console.log(this._registrationData);
-		
 		return this._registrationData;
 	}
 	
 	edit(aProps) {
-		console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
+		//console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
 		
 		let referenceHolder = new ReferenceHolder();
 		let externalStorage = new AttributeDataStorage();
@@ -123,7 +120,7 @@ export default class ElementBlockRegistration {
 		referenceHolder.addObject(blocksPrefix + "setAttributes", aProps.setAttributes);
 		referenceHolder.addObject(blocksPrefix + "externalStorage", externalStorage);
 		
-		console.log(wprrAdminData);
+		//console.log(wprrAdminData);
 		
 		referenceHolder.addObject("redux/store", this._store);
 		referenceHolder.addObject("redux/store/mRouterController", this._storeController);
