@@ -1,3 +1,4 @@
+import Wprr from "wprr/Wprr";
 import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
@@ -16,10 +17,10 @@ export default class FlexRow extends WprrBaseObject {
 	_getChildren() {
 		//console.log("wprr/elements/area/grid/FlexRow::_getChildren");
 		
-		var children = this.props.dynamicChildren ? this.getSourcedProp("dynamicChildren") : this.props.children;
+		let children = this.props.dynamicChildren ? this.getSourcedProp("dynamicChildren") : this.props.children;
 		
 		if(children) {
-			var returnArray = Array.isArray(children) ? children : [children];
+			let returnArray = Array.isArray(children) ? children : [children];
 			return returnArray;
 		}
 		
@@ -28,9 +29,13 @@ export default class FlexRow extends WprrBaseObject {
 	
 	_getItemClassName(aChild, aKeyIndex) {
 		
-		var returnString = "flex-row-item";
-		if(this.props.itemClasses && this.props.itemClasses[aKeyIndex]) {
-			returnString += " " + this.props.itemClasses[aKeyIndex];
+		let returnString = "flex-row-item";
+		let itemClasses = this.getSourcedProp("itemClasses");
+		if(itemClasses) {
+			itemClasses = Wprr.utils.array.arrayOrSeparatedString(itemClasses);
+			if(itemClasses[aKeyIndex]) {
+				returnString += " " + itemClasses[aKeyIndex];
+			}
 		}
 		
 		return returnString;
@@ -42,15 +47,15 @@ export default class FlexRow extends WprrBaseObject {
 	
 	_getFlexItems() {
 		
-		var returnArray = new Array();
+		let returnArray = new Array();
 		
 		let spacingMarkup = this.getSourcedProp("spacingMarkup");
 		
-		var currentArray = this._getChildren();
+		let currentArray = this._getChildren();
 		if(currentArray) {
-			var currentArrayLength = currentArray.length;
-			for(var i = 0; i < currentArrayLength; i++) {
-				var currentChild = currentArray[i];
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentChild = currentArray[i];
 				returnArray.push(this._getFlexItem(currentChild, i));
 				if(i < currentArrayLength-1 && spacingMarkup) {
 					returnArray.push(React.createElement(React.Fragment, {"key": "spacing-" + i}, spacingMarkup));
