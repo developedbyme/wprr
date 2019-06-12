@@ -203,4 +203,78 @@ export default class ArrayFunctions {
 		}
 		return [aArrayOrItem];
 	}
+	
+	static getUnselectedItems(aSelectedItems, aAllItems) {
+		let returnItems = new Array();
+		
+		let currentArray = aAllItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			if(aSelectedItems.indexOf(currentItem) === -1) {
+				returnItems.push(currentItem);
+			}
+		}
+		
+		return returnItems;
+	}
+	
+	static selectAndMapObjectFields(aArray, aFieldConversions) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let renamedObject = new Object();
+			for(let objectName in aFieldConversions) {
+				let currentValue = objectPath.get(currentItem, objectName);
+				objectPath.set(renamedObject, aFieldConversions[objectName], currentValue);
+			}
+			returnArray.push(renamedObject);
+		}
+		
+		return returnArray;
+	}
+	
+	static mergeFields(aArray, aField, aAdditionFields, aSeparator = " ") {
+		
+		let currentArray2 = ArrayFunctions.arrayOrSeparatedString(aAdditionFields);
+		let currentArray2Length = currentArray2.length;
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let newValue = objectPath.get(currentItem, aField);
+			for(let j = 0; j < currentArray2Length; j++) {
+				let currentValue = objectPath.get(currentItem, currentArray2[j]);
+				if(currentValue && currentValue !== "") {
+					newValue += aSeparator + currentValue;
+				}
+				objectPath.del(currentItem, currentArray2[j]);
+			}
+			objectPath.set(currentItem, aField, newValue);
+		}
+		
+		return aArray;
+	}
+	
+	static convertValueInField(aArray, aField, aConversions, aNoMatchValue = null) {
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let oldValue = objectPath.get(currentItem, aField);
+			let newValue = objectPath.get(aConversions, oldValue);
+			if(newValue === undefined) {
+				newValue = aNoMatchValue;
+			}
+			objectPath.set(currentItem, aField, newValue);
+		}
+		
+		return aArray;
+	}
 }

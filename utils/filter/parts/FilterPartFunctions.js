@@ -1,4 +1,4 @@
-import wprr from "wprr/Wprr";
+import Wprr from "wprr/Wprr";
 import objectPath from "object-path";
 import moment from "moment";
 

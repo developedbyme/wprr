@@ -45,7 +45,7 @@ export default class FilterChain extends FilterPart {
 	}
 	
 	filter(aArray, aPerformingElement, aProps = null) {
-		let originalArray = [].concat(aArray);
+		let originalArray = aArray;
 		let currentArray = [].concat(originalArray);
 		
 		this.setPerformingElement(aPerformingElement, aProps);
