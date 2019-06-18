@@ -121,4 +121,12 @@ export default class WprrUrlFunctions {
 		
 		return returnUrl;
 	}
+	
+	static getEditUrl(aId) {
+		let returnUrl = this.getBasePath(this.getBasePath());
+		
+		returnUrl += "admin/post/" + aId + "/edit";
+		
+		return returnUrl;
+	}
 }
