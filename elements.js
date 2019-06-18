@@ -113,3 +113,5 @@ export {default as MultipleObjectsEditor} from "wprr/elements/create/MultipleObj
 
 export {default as MultipleRenderObject} from "wprr/elements/abstract/MultipleRenderObject";
 export {default as Part} from "wprr/elements/abstract/Part";
+
+export {default as EditorWithoutSettings} from "wprr/wp/blocks/EditorWithoutSettings";
