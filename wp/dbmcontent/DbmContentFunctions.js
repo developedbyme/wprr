@@ -7,6 +7,10 @@ export default class DbmContentFunctions  {
 	static getRelationIds(aPostData, aRelationType) {
 		let idsArray = aPostData.getAddOnsData("dbmContent.relations." + aRelationType);
 		
+		if(!idsArray) {
+			return [];
+		}
+		
 		return idsArray;
 	}
 	
