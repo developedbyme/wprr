@@ -90,6 +90,22 @@ export default class MultipleRenderObject extends WprrBaseObject {
 		return returnElement;
 	}
 	
+	createPartElement(aPart, aType = null, aAdditionalProps = null) {
+		let newProps = new Object();
+		newProps['part'] = aPart;
+		if(aType) {
+			newProps['type'] = aType;
+		}
+		newProps['owner'] = this;
+		if(aAdditionalProps) {
+			for(let objectName in aAdditionalProps) {
+				newProps[objectName] = aAdditionalProps[objectName]
+			}
+		}
+		
+		return React.createElement(Part, newProps);
+	}
+	
 	_renderMainElement() {
 		
 		return React.createElement(Part, {"part": "main", "owner": this}, this.props.children);

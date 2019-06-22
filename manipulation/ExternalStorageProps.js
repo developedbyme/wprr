@@ -13,12 +13,14 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 	}
 	
 	externalDataChange() {
-		console.log("wprr/manipulation/ExternalStorageProps::externalDataChange");
+		//console.log("wprr/manipulation/ExternalStorageProps::externalDataChange");
 		
 		this._updateState();
 	}
 	
 	_updateState() {
+		//console.log("wprr/manipulation/ExternalStorageProps::_updateState");
+		
 		let externalStorage = this.getSourcedProp("externalStorage");
 		let currentArray = this._getPropNames();
 		
@@ -59,7 +61,7 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 		if(externalStorage) {
 			externalStorage.addOwner(this);
 			let currentArray = this._getPropNames();
-		
+			
 			if(currentArray) {
 				let currentArrayLength = currentArray.length;
 				for(let i = 0; i < currentArrayLength; i++) {

@@ -7,6 +7,7 @@ import * as utils from "wprr/utils";
 import * as creators from "wprr/creators";
 import * as adjusts from "wprr/adjusts";
 import * as qualifications from "wprr/qualifications";
+import * as wp from "wprr/wp";
 
 let BaseObject = elements.WprrBaseObject;
 let DataLoader = elements.WprrDataLoader;
@@ -32,40 +33,12 @@ let AddProps = elements.ManipulationBaseObject;
 	}
 }
 
-//Commands
-{
-	for(let objectName in commands) {
-		Wprr.addCommand(objectName, commands[objectName]);
-	}
-}
-
-//Utils
-{
-	for(let objectName in utils) {
-		Wprr.addUtil(objectName, utils[objectName]);
-	}
-}
-
-//Creators
-{
-	for(let objectName in creators) {
-		Wprr.addCreator(objectName, creators[objectName]);
-	}
-}
-
-//Adjusts
-{
-	for(let objectName in adjusts) {
-		Wprr.addAdjust(objectName, adjusts[objectName]);
-	}
-}
-
-//Qualifications
-{
-	for(let objectName in qualifications) {
-		Wprr.addQualification(objectName, qualifications[objectName]);
-	}
-}
+Wprr.addAllItems("commands", commands);
+Wprr.addAllItems("utils", utils);
+Wprr.addAllItems("creators", creators);
+Wprr.addAllItems("adjusts", adjusts);
+Wprr.addAllItems("qualifications", qualifications);
+Wprr.addAllItems("wp", wp);
 
 export default Wprr;
 export * from "wprr/elements";
@@ -75,3 +48,4 @@ export {utils as utils};
 export {creators as creators};
 export {adjusts as adjusts};
 export {qualifications as qualifications};
+export {wp as wp};

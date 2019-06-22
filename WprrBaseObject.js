@@ -119,7 +119,11 @@ export default class WprrBaseObject extends React.Component {
 		return this.getFirstValidSourceInArray(aArguments);
 	}
 	
-	getFirstValidSourceInArray(aSources) {
+	getFirstValidSourceIfExists(...aArguments) {
+		return this.getFirstValidSourceInArray(aArguments, false);
+	}
+	
+	getFirstValidSourceInArray(aSources, aWarnIfNoResult = true) {
 		let currentArray = aSources;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -130,7 +134,9 @@ export default class WprrBaseObject extends React.Component {
 			}
 		}
 		
-		console.warn("No sourced resolved", aSources, this);
+		if(aWarnIfNoResult) {
+			console.warn("No sourced resolved", aSources, this);
+		}
 		return null;
 	}
 	
@@ -138,7 +144,11 @@ export default class WprrBaseObject extends React.Component {
 		//console.log("wprr/WprrBaseObject::resolveSourcedData");
 		//console.log(aData);
 		
-		if(aData && aData.getSource) {
+		if(aData && aData.getSourceInStateChange) {
+			return aData.getSourceInStateChange(this, {"props": this.getProps(), "state": this.state});
+		}
+		else if(aData && aData.getSource) {
+			console.warn("Source can't handle state change.", aData, this);
 			return aData.getSource(this);
 		}
 		

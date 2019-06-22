@@ -117,6 +117,12 @@ export default class Wprr {
 		Wprr.qualifications[aName] = aCreateFunction;
 	}
 	
+	static addAllItems(aPrefix, aObjects) {
+		for(let objectName in aObjects) {
+			objectPath.set(Wprr, aPrefix + "." + objectName, aObjects[objectName]);
+		}
+	}
+	
 	static source(aType, aData, aDeepPath = null) {
 		if(aDeepPath !== null) {
 			return SourceDataWithPath.create(aType, aData, aDeepPath);
@@ -128,8 +134,16 @@ export default class Wprr {
 		return Wprr.source("reference", aPath, aDeepPath);
 	}
 	
+	static sourceReferenceIfExists(aPath, aDeepPath = null) {
+		return Wprr.source("referenceIfExists", aPath, aDeepPath);
+	}
+	
 	static sourceProp(aPath, aDeepPath = null) {
 		return Wprr.source("prop", aPath, aDeepPath);
+	}
+	
+	static sourcePropWithDots(aPath, aDeepPath = null) {
+		return Wprr.source("propWithDots", aPath, aDeepPath);
 	}
 	
 	static sourceText(aPath) {

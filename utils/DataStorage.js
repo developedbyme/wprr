@@ -26,6 +26,9 @@ export default class DataStorage {
 	}
 	
 	removeOwner(aOwner) {
+		//console.log("wprr/utils/DataStorage::removeOwner");
+		//console.log(aOwner);
+		
 		let currentIndex = this._owners.indexOf(aOwner);
 		if(currentIndex !== -1) {
 			this._owners.splice(currentIndex, 1);
@@ -33,7 +36,8 @@ export default class DataStorage {
 	}
 	
 	_updateOwners() {
-		
+		//console.log("wprr/utils/DataStorage::_updateOwners");
+		//console.log(this._owners);
 		//METODO: need this to be safe for removing or adding owners in the middle of an update
 		
 		let currentArray = this._owners;

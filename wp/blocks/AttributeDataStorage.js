@@ -1,26 +1,19 @@
 import objectPath from "object-path";
 
+import DataStorage from "wprr/utils/DataStorage";
+
 // import AttributeDataStorage from "wprr/wp/blocks/AttributeDataStorage";
-export default class AttributeDataStorage {
+export default class AttributeDataStorage extends DataStorage {
 	
 	constructor() {
+		
+		super();
 		
 		this._pathPrefix = null;
 		this._currentState = null;
 		this._setAttribute = null;
 		
-		this._owners = new Array();
-	}
-	
-	addOwner(aOwner) {
-		this._owners.push(aOwner);
-	}
-	
-	removeOwner(aOwner) {
-		let currentIndex = this._owners.indexOf(aOwner);
-		if(currentIndex !== -1) {
-			this._owners.splice(currentIndex, 1);
-		}
+		this._debugId = Math.random();
 	}
 	
 	setupAttributes(aAttributes, aSetAttributeFunction) {
@@ -53,11 +46,14 @@ export default class AttributeDataStorage {
 		
 		this._setAttribute(currentAttributes);
 		
+		this._updateOwners();
+		
 		return this;
 	}
 	
 	getValue(aName) {
 		//console.log("wprr/wp/blocks/AttributeDataStorage::getValue");
+		//console.log(aName);
 		
 		let path = aName;
 		if(this._pathPrefix) {

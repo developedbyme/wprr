@@ -39,6 +39,8 @@ export default class ElementBlockRegistration {
 		this._store = this._createReduxStore(wprrAdminData);
 		this._storeController.setStore(this._store);
 		this._storeController.setUser(wprrAdminData.userData);
+		
+		this._referenceHolders = new Object();
 	}
 	
 	_addReducers() {
@@ -105,28 +107,42 @@ export default class ElementBlockRegistration {
 		return this._registrationData;
 	}
 	
-	edit(aProps) {
-		//console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
-		
-		let referenceHolder = new ReferenceHolder();
-		let externalStorage = new AttributeDataStorage();
-		
-		externalStorage.setupAttributes(aProps.attributes, aProps.setAttributes);
-		externalStorage.setPathPrefix("componentData");
+	getReferenceHolderForBlock(aClientId, aAttributes, aSetAttributes) {
 		
 		let blocksPrefix = "wprr/wpBlockEditor/";
 		
+		if(!this._referenceHolders[aClientId]) {
+			let referenceHolder = new ReferenceHolder();
+			let externalStorage = new AttributeDataStorage();
+			
+			referenceHolder.addObject(blocksPrefix + "externalStorage", externalStorage);
+			
+			referenceHolder.addObject("redux/store", this._store);
+			referenceHolder.addObject("redux/store/mRouterController", this._storeController);
+			referenceHolder.addObject("redux/store/wprrController", this._storeController);
+			
+			referenceHolder.addObject("wprr/textManager", this._textManager);
+			
+			this._referenceHolders[aClientId] = referenceHolder;
+		}
+		return this._referenceHolders[aClientId];
+	}
+	
+	edit(aProps) {
+		//console.log("wprr/wp/blocks/registration/ElementBlockRegistration::edit");
+		//console.log(aProps, this);
+		
+		let clientId = aProps.clientId;
+		let blocksPrefix = "wprr/wpBlockEditor/";
+		
+		let referenceHolder = this.getReferenceHolderForBlock(clientId, aProps.attributes, aProps.setAttributes);
+		
+		let externalStorage = referenceHolder.getObject(blocksPrefix + "externalStorage");
+		externalStorage.setupAttributes(aProps.attributes, aProps.setAttributes);
+		externalStorage.setPathPrefix("componentData");
+		
 		referenceHolder.addObject(blocksPrefix + "attributes", aProps.attributes);
 		referenceHolder.addObject(blocksPrefix + "setAttributes", aProps.setAttributes);
-		referenceHolder.addObject(blocksPrefix + "externalStorage", externalStorage);
-		
-		//console.log(wprrAdminData);
-		
-		referenceHolder.addObject("redux/store", this._store);
-		referenceHolder.addObject("redux/store/mRouterController", this._storeController);
-		referenceHolder.addObject("redux/store/wprrController", this._storeController);
-		
-		referenceHolder.addObject("wprr/textManager", this._textManager);
 		
 		return React.createElement(ReferenceExporter, {"references": referenceHolder, "attributes": aProps.attributes}, this._element);
 	}
