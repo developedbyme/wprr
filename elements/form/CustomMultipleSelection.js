@@ -123,7 +123,7 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 				"className"
 			)},
 				React.createElement("div", {},
-					Wprr.text(Wprr.sourceProp("text"))
+					Wprr.text(Wprr.sourceReference("value"))
 				)
 			)
 		);

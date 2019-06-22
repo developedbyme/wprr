@@ -177,6 +177,7 @@ export default class EditPostForm extends WprrBaseObject {
 		
 		let editId = this.getSourcedProp("id");
 		let postType = this.getSourcedPropWithDefault("postType", "post");
+		
 		let encodings = this.getSourcedPropWithDefault("encodings", "editFields");
 		
 		let mode = editId ? "edit" : "create";
@@ -194,9 +195,15 @@ export default class EditPostForm extends WprrBaseObject {
 		);
 		
 		if(editId) {
+			let additionalSelections = this.getSourcedProp("additionalSelections");
+			let selection = "idSelection";
+			if(additionalSelections) {
+				selection += "," + additionalSelections;
+			}
+			
 			mainElement = React.createElement(Wprr.DataLoader,
 				{
-					"loadData": {"postData": "wprr/v1/range-item/" + postType + "/idSelection/" + encodings + "?ids=" + editId},
+					"loadData": {"postData": "wprr/v1/range-item/" + postType + "/" + selection +"/" + encodings + "?ids=" + editId},
 					"loadedCommands": Wprr.commands.callFunction(this, this.setupPostData, [Wprr.source("event", "raw", "postData")])
 				},
 				mainElement

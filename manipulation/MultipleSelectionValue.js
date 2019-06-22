@@ -32,6 +32,10 @@ export default class MultipleSelectionValue extends ManipulationBaseObject {
 		if(externalStorage) {
 			
 			let currentArray = externalStorage.getValue(fieldName);
+			if(!currentArray) {
+				currentArray = new Array();
+			}
+			
 			if(aValue) {
 				currentArray.push(value);
 			}
@@ -53,8 +57,12 @@ export default class MultipleSelectionValue extends ManipulationBaseObject {
 		
 		if(externalStorage) {
 			let currentArray = externalStorage.getValue(fieldName);
-			let index = currentArray.indexOf(value);
-			let newState = (index !== -1);
+			let newState = false;
+			if(currentArray) {
+				let index = currentArray.indexOf(value);
+				newState = (index !== -1);
+			}
+			
 			if(newState !== this.state["selected"]) {
 				this.setState({"selected": newState});
 			}
