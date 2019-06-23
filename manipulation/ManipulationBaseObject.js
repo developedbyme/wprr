@@ -53,11 +53,15 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 	
 	_getMainElementProps() {
 		//console.log("wprr/manipulation/ManipulationBaseObject::_getMainElementProps");
-		var returnObject = super._getMainElementProps();
+		let returnObject = super._getMainElementProps();
 
-		for(var objectName in this.props) {
+		for(let objectName in this.props) {
 			if(objectName === "className") {
 				//MENOTE: className is copied in _getMainElementProps
+				continue;
+			}
+			if(objectName === "children") {
+				//MENOTE: children should not be passed on
 				continue;
 			}
 			if(this._propsThatShouldNotCopy.indexOf(objectName) !== -1) {
