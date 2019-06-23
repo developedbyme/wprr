@@ -52,7 +52,7 @@ export default class RichTextEditor extends MultipleRenderObject {
 					"onChange": Wprr.commands.callFunction(this, this._contentChanged, [Wprr.source("event", "raw", "0")])
 				}
 			},
-			React.createElement(RichText, {"tagName": "p"})
+			React.createElement(RichText, {"tagName": "p", "value": value})
 		);
 	}
 	
