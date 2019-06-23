@@ -97,28 +97,6 @@ export default class ImageSelection extends MultipleRenderObject {
 		let valueName = this.getSourcedProp("valueName");
 		let value = this.getFirstValidSourceIfExists(Wprr.sourceProp("value"), Wprr.sourcePropWithDots(valueName));
 		
-		console.log(value);
-		
-		//
-		
-		/*
-					<Wprr.EditableProps editableProps={"image"} externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-						<Wprr.HasData check={Wprr.sourceProp("image")}>
-							<Wprr.Image className="image background-cover full-size" src={Wprr.sourceProp("image")} />
-							<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._selectImage)}>
-								<div className="button">Ändra bild</div>
-							</Wprr.CommandButton>
-						</Wprr.HasData>
-						<Wprr.HasData check={Wprr.sourceProp("image")} checkType="invert/default">
-							<Wprr.FlexRow className="justify-center vertically-center-items full-size">
-								<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._selectImage)}>
-									<div className="button">Välj bild</div>
-								</Wprr.CommandButton>
-							</Wprr.FlexRow>
-						</Wprr.HasData>
-					</Wprr.EditableProps>
-		*/
-		
 		let mainElement = this.createPartElement("main");
 		
 		if(!value) {
