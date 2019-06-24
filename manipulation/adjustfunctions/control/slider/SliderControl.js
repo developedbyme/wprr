@@ -176,8 +176,8 @@ export default class SliderControl extends ControlFunction {
 		let isStarted = (this._intervalId !== -1);
 		
 		if(isStarted) {
-			this._stopInterval();
-			this._startInterval();
+			this.stopInterval();
+			this.startInterval();
 		}
 	}
 	
