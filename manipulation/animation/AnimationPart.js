@@ -90,8 +90,10 @@ export default class AnimationPart extends ManipulationBaseObject {
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/manipulation/animation/AnimationPart::updateAnimation");
 		
-		//MEDEBUG: 
 		aReturnObject["style"] = this.state["animationStyles"];
+		for(let objectName in this.state["animationProps"]) {
+			aReturnObject[objectName] = this.state["animationProps"][objectName];
+		}
 		
 		return aReturnObject;
 	}

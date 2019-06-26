@@ -15,6 +15,8 @@ export default class DataStorage {
 	
 	setData(aData) {
 		this._data = aData;
+		
+		return this;
 	}
 	
 	getData() {
@@ -23,6 +25,8 @@ export default class DataStorage {
 	
 	addOwner(aOwner) {
 		this._owners.push(aOwner);
+		
+		return this;
 	}
 	
 	removeOwner(aOwner) {
@@ -33,6 +37,8 @@ export default class DataStorage {
 		if(currentIndex !== -1) {
 			this._owners.splice(currentIndex, 1);
 		}
+		
+		return this;
 	}
 	
 	_updateOwners() {
