@@ -5,6 +5,7 @@ export {default as CommandButton} from "wprr/elements/interaction/CommandButton"
 export {default as EventCommands} from "wprr/elements/interaction/EventCommands";
 export {default as CallbackCommands} from "wprr/elements/interaction/CallbackCommands";
 export {default as ClickOutsideTrigger} from "wprr/elements/interaction/ClickOutsideTrigger";
+export {default as OnScreenCommands} from "wprr/elements/interaction/OnScreenCommands";
 
 export {default as WprrDataLoader} from "wprr/manipulation/loader/WprrDataLoader";
 export {default as PartRenderFunction} from "wprr/elements/create/PartRenderFunction";
