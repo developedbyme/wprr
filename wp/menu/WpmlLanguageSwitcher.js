@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -22,6 +23,8 @@ export default class WpmlLanguageSwitcher extends ManipulationBaseObject {
 	_removeUsedProps(aReturnObject) {
 		
 		delete aReturnObject["translated"];
+		delete aReturnObject["itemSpacingMarkup"];
+		delete aReturnObject["itemMarkup"];
 		
 		return aReturnObject;
 	}
@@ -37,17 +40,24 @@ export default class WpmlLanguageSwitcher extends ManipulationBaseObject {
 		let translated = this.getSourcedPropWithDefault("translated", false);
 		let nameField = translated ? "translatedName" : "name";
 		
-		let itemMarkup = React.createElement(Link, {"href": SourceDataWithPath.create("reference", "loop/item", "homeUrl"), "className": SourceData.create("combine", ["language-link", " ", SourceDataWithPath.create("reference", "loop/item", "code")])},
+		let itemMarkup = React.createElement(Link, {"href": SourceDataWithPath.create("reference", "loop/item", "pageUrl"), "className": SourceData.create("combine", ["language-link", " ", SourceDataWithPath.create("reference", "loop/item", "code")])},
 			React.createElement(Image, {"overrideMainElementType": "img", "src": SourceDataWithPath.create("reference", "loop/item", "flagUrl"), "className": "language-flag"}),
+			" ",
 			React.createElement("span", {"className": "language-name"},
 				React.createElement(SourcedText, {"text": SourceDataWithPath.create("reference", "loop/item", nameField)})
 			)
 		);
 		
-		let defaultLoop = MarkupLoop.create(null, itemMarkup);
+		let spacing = this.getSourcedProp("itemSpacingMarkup");
 		
-		return [React.createElement(WprrDataLoader, {"loadData": {"input": "wprr/v1/global/wpml/languages"}},
-			React.createElement(Loop, {"loop": defaultLoop}, children)
+		let defaultLoop = MarkupLoop.create(null, Wprr.sourceReference("itemMarkup"), spacing);
+		
+		return [React.createElement(WprrDataLoader, {"loadData": {"input": "wprr/v1/global/wpml/languages?page=" + encodeURIComponent(document.location.href)}},
+			React.createElement(Wprr.ReferenceInjection, {"injectData": {
+				"itemMarkup": itemMarkup
+			}},
+				React.createElement(Loop, {"loop": defaultLoop}, children)
+			)
 		)];
 	}
 }
