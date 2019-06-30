@@ -3,6 +3,7 @@ import React from "react";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 // import Checkbox from "wprr/elements/form/Checkbox";
 export default class Checkbox extends WprrBaseObject {
@@ -19,8 +20,16 @@ export default class Checkbox extends WprrBaseObject {
 		//console.log("wprr/elements/form/Checkbox::_callback_change");
 		
 		let valueName = this.getSourcedProp("valueName");
+		let newValue = this.getSourcedProp("value");
+		let checked = aEvent.target.checked;
 		
-		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.checked, {"value": this.getSourcedProp("value")});
+		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.checked, {"value": newValue});
+		
+		let commands = this.getSourcedProp("changeCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, checked, this);
+		}
 	}
 	
 	validate(aType) {

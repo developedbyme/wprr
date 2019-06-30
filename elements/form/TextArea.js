@@ -3,6 +3,7 @@ import React from "react";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
+import CommandPerformer from "wprr/commands/CommandPerformer";
 
 // import TextArea from "wprr/elements/form/TextArea";
 export default class TextArea extends WprrBaseObject {
@@ -20,7 +21,15 @@ export default class TextArea extends WprrBaseObject {
 		//console.log(aEvent);
 		//console.log(aEvent.target.value);
 		
-		this.getReferences().getObject("value/" + this.props.valueName).updateValue(this.props.valueName, aEvent.target.value);
+		let newValue = aEvent.target.value;
+		
+		this.getReferences().getObject("value/" + this.props.valueName).updateValue(this.props.valueName, newValue);
+		
+		let commands = this.getSourcedProp("changeCommands");
+		
+		if(commands) {
+			CommandPerformer.perform(commands, newValue, this);
+		}
 	}
 	
 	_getMainElementProps() {
