@@ -127,7 +127,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		let loopInjectionsMarkup = this.getFirstValidSource(
 			Wprr.source("prop", "loopInjectionsMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/loopInjectionsMarkup"),
-			Wprr.InjectChildren
+			React.createElement(Wprr.InjectChildren)
 		);
 		
 		let loop = React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(value, loopItemMarkup, loopItemSpacingMarkup), "loopName": "array"}, loopInjectionsMarkup);
@@ -167,11 +167,13 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		
 		children = children.concat(this._getChildrenToClone());
 		
-		return React.createElement(Wprr.ReferenceInjection, {"injectData": injectData},
+		let returnElement = React.createElement(Wprr.ReferenceInjection, {"injectData": injectData},
 			React.createElement(Wprr.UseMarkup, {"markup": markup},
 				children
 			)
 		);
+		
+		return returnElement;
 	}
 	
 	static makeSelfContained(aElement, aValue = "") {

@@ -74,6 +74,13 @@ export default class Loop extends Adjust {
 		injectData["loop/" + loopName + "allItems"] = input;
 		injectData["loop/" + loopName + "length"] = loopLength;
 		
+		if(clonedElementes === undefined || (clonedElementes && clonedElementes.type === undefined)) {
+			console.error("Loop has undefined children");
+			clonedElementes = React.createElement("div", {className: "react-error"},
+				React.createElement("div", {}, "Loop has undefined children")
+			);
+		} 
+		
 		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElementes);
 	}
 }
