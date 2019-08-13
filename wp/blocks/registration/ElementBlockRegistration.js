@@ -122,6 +122,7 @@ export default class ElementBlockRegistration {
 			referenceHolder.addObject("redux/store/wprrController", this._storeController);
 			
 			referenceHolder.addObject("wprr/textManager", this._textManager);
+			referenceHolder.addObject("wprr/adminData", wprrAdminData);
 			
 			this._referenceHolders[aClientId] = referenceHolder;
 		}

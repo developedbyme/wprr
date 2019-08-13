@@ -1,4 +1,5 @@
 import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 //import ArrayFunctions from "wprr/utils/ArrayFunctions";
 export default class ArrayFunctions {
@@ -276,5 +277,13 @@ export default class ArrayFunctions {
 		}
 		
 		return aArray;
+	}
+	
+	static filterOnField(aArray, aField, aCompareValue, aCompareType = "==", aValueFormat = "string") {
+		let fieldFilter = Wprr.utils.FilterChain.create([
+			Wprr.utils.filterPartFunctions.createCompareField(aField, aCompareValue, aCompareType, aValueFormat)
+		]);
+		
+		return fieldFilter.filter(aArray);
 	}
 }

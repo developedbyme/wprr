@@ -94,7 +94,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 }
 
-DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: "button"},
+DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: "button,beforeList,afterList"},
 	React.createElement(ClickOutsideTrigger, {triggerName: "close", active: SourceData.create("reference", "dropdownSelection/open")},
 		React.createElement("div", {className: "absolute-container"},
 			React.createElement(ToggleButton, {valueName: "dropdownSelection/open", value: SourceData.create("reference", "dropdownSelection/open")},
@@ -102,7 +102,9 @@ DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: 
 			),
 			React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
 				React.createElement(OpenCloseExpandableArea, {"open": SourceData.create("reference", "dropdownSelection/open")},
-					React.createElement(MarkupChildren, {"placement": "rest"})
+					React.createElement(MarkupChildren, {"placement": "beforeList"}),
+					React.createElement(MarkupChildren, {"placement": "rest"}),
+					React.createElement(MarkupChildren, {"placement": "afterList"})
 				)
 			)
 		)

@@ -60,6 +60,7 @@ export {default as StatusGroup} from "wprr/reference/StatusGroup";
 export {default as StatusSection} from "wprr/elements/area/selectsections/StatusSection";
 export {default as StatusButton} from "wprr/elements/interaction/StatusButton";
 export {default as CustomMultipleSelection} from "wprr/elements/form/CustomMultipleSelection";
+export {default as InjectChildren} from "wprr/manipulation/InjectChildren";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

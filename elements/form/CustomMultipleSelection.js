@@ -165,10 +165,14 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 			"custom-selection-menu custom-selection-menu-padding"
 		);
 		
-		let defaultLoop = React.createElement("div", {"className": selectionMenuClasses}, React.createElement(Wprr.Loop, {
-			"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("selectionElements/loopItem")}), loopItemSpacing),
-			"className": "custom-selection-menu-item custom-selection-menu-item-padding"
-		}));
+		let defaultLoop = React.createElement("div", {"className": selectionMenuClasses},
+			React.createElement(Wprr.InsertElement, {"element": this.getFirstValidSource(Wprr.sourceProp("beforeLoopElement"), Wprr.sourceReference("multipleSelection/beforeLoopElement")), "canBeEmpty": true}),
+			React.createElement(Wprr.Loop, {
+				"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("selectionElements/loopItem")}), loopItemSpacing),
+				"className": "custom-selection-menu-item custom-selection-menu-item-padding"
+			}),
+			React.createElement(Wprr.InsertElement, {"element": this.getFirstValidSource(Wprr.sourceProp("afterLoopElement"), Wprr.sourceReference("multipleSelection/afterLoopElement")), "canBeEmpty": true})
+		);
 		
 		let filter = this.getFirstValidSource(
 			Wprr.sourceProp("filterOptions"),
