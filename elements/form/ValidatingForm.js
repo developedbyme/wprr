@@ -41,6 +41,7 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	_handleSubmit(aEvent) {
+		//console.log("wprr/elements/form/ValidatingForm::addValidation");
 		
 		let submitCommands = this.getSourcedProp("submitCommands");
 		if(submitCommands) {
@@ -124,7 +125,10 @@ export default class ValidatingForm extends WprrBaseObject {
 			aEvent.preventDefault();
 		}
 		else {
-			this._handleSubmit(aEvent);
+			let handleResult = this._handleSubmit(aEvent);
+			if(handleResult) {
+				aEvent.preventDefault();
+			}
 		}
 	}
 	
@@ -136,8 +140,7 @@ export default class ValidatingForm extends WprrBaseObject {
 	}
 	
 	getFormData() {
-		
-		console.log(FormData);
+		//console.log("wprr/elements/form/ValidatingForm::getFormData");
 		
 		return new FormData(this.getMainElement());
 	}
