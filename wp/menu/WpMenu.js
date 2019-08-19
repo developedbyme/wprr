@@ -25,6 +25,10 @@ export default class WpMenu extends ManipulationBaseObject {
 		
 		let menuLocation = this.getSourcedProp("menuLocation");
 		
+		if(!menuLocation) {
+			console.error("No menuLocation set for menu.", this);
+		}
+		
 		let children = super._getChildrenToClone();
 		
 		if(children.length === 0) {

@@ -26,6 +26,7 @@ export {UrlFunctions as url};
 export {WpUrlFunctions as wpUrl};
 export {WprrUrlFunctions as wprrUrl};
 export {ReactChildFunctions as reactChildren};
+export {ProgrammingLanguageFunctions as programmingLanguage};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";

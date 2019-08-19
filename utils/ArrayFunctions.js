@@ -286,4 +286,25 @@ export default class ArrayFunctions {
 		
 		return fieldFilter.filter(aArray);
 	}
+	
+	static getPathsInObject(aObject, aReturnArray = [], aSeparator = "/", aPrefix = "", aRecursionLimit = 256) {
+		for(let objectName in aObject) {
+			let currentData = aObject[objectName];
+			
+			if(typeof(currentData) !== 'object' && currentData.constructor !== Object) {
+				aReturnArray.push({"key": aPrefix + objectName, "value": currentData});
+			}
+			else {
+				let newRecursionLimit = (aRecursionLimit > 0) ? aRecursionLimit-- : aRecursionLimit;
+				if(newRecursionLimit === -1 || newRecursionLimit > 0) {
+					ArrayFunctions.getPathsInObject(currentData, aReturnArray, aSeparator, aPrefix + objectName + aSeparator, newRecursionLimit);
+				}
+				else {
+					console.log("Part of object ignored due to recursion limit");
+				}
+			}
+		}
+		
+		return aReturnArray;
+	}
 }

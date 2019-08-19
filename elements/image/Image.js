@@ -53,6 +53,8 @@ export default class Image extends WprrBaseObject {
 		let returnObject = super._getMainElementProps();
 		let elementType = this._getMainElementType();
 		
+		let fullPath = null;
+		
 		let imageSource = this.getSourcedProp("src");
 		let sourceLocation = this.getSourcedProp("location");
 		if(!sourceLocation) {
@@ -62,9 +64,15 @@ export default class Image extends WprrBaseObject {
 			}
 		}
 		
-		this._urlResolver.setBasePaths({"default": this.getReference("wprr/paths/" + sourceLocation)});
+		if(imageSource) {
+			this._urlResolver.setBasePaths({"default": this.getReference("wprr/paths/" + sourceLocation)});
 		
-		let fullPath = this._urlResolver.resolveUrl(imageSource, "default");
+			fullPath = this._urlResolver.resolveUrl(imageSource, "default");
+		}
+		else {
+			console.warn("No src set for image.", this);
+		}
+		
 		
 		if(elementType === "img") {
 			returnObject["src"] = fullPath;
