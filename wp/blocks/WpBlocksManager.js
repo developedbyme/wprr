@@ -1,3 +1,5 @@
+import React from "react";
+import Wprr from "wprr/Wprr";
 import objectPath from "object-path";
 
 import ElementBlockRegistration from "wprr/wp/blocks/registration/ElementBlockRegistration";
@@ -19,6 +21,19 @@ export default class WpBlocksManager {
 	
 	addBlockRegistration(aName, aRegistrationObject) {
 		this._blockRegistrations[aName] = aRegistrationObject;
+		
+		return this;
+	}
+	
+	registerBlocksFromModule(aBlocks, aIcon = "marker", aCategory = "common") {
+		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
+		let currentArray = mappedBlocks;
+		let currentArrayLength = currentArray.length;
+	
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = currentArray[i];
+			this.createElementBlockRegistration(React.createElement(currentObject.value, {}), currentObject.key, aIcon = "marker", aCategory = "common");
+		}
 		
 		return this;
 	}
