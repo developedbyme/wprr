@@ -31,8 +31,8 @@ export default class FieldSort extends SortPart {
 			aB = objectPath.get(aB, field);
 		}
 		
-		let aValue = formatFunction(aA);
-		let bValue = formatFunction(aB);
+		let aValue = formatFunction.call(this, aA);
+		let bValue = formatFunction.call(this, aB);
 		
 		if(aValue < bValue) {
 			return -1;
@@ -59,6 +59,17 @@ export default class FieldSort extends SortPart {
 		
 		newFieldSort.inputs.setInputWithoutNull("field", aField);
 		newFieldSort.inputs.setInputWithoutNull("formatFunction", SortPart.format_number);
+		newFieldSort.inputs.setInputWithoutNull("active", aActive);
+		
+		return newFieldSort;
+	}
+	
+	static createAccordingToOrder(aField, aOrder, aActive = null) {
+		let newFieldSort = new FieldSort();
+		
+		newFieldSort.inputs.setInputWithoutNull("field", aField);
+		newFieldSort.inputs.setInputWithoutNull("order", aOrder);
+		newFieldSort.inputs.setInputWithoutNull("formatFunction", newFieldSort.format_accordingToOrder);
 		newFieldSort.inputs.setInputWithoutNull("active", aActive);
 		
 		return newFieldSort;

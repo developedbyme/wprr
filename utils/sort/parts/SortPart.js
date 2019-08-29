@@ -98,6 +98,17 @@ export default class SortPart  {
 		return this;
 	}
 	
+	format_accordingToOrder(aValue) {
+		
+		let order = this.getInput("order");
+		
+		let sortIndex = order.indexOf(aValue);
+		if(sortIndex === -1) {
+			sortIndex = order.length;
+		}
+		return sortIndex;
+	}
+	
 	static create(aSortFunction = null, aFormatFunction = null, aActive = null) {
 		let newSortPart = new SortPart();
 		

@@ -33,6 +33,11 @@ export default class TermSelection extends ManipulationBaseObject {
 		let translationsPath = this.getSourcedProp("translationsPath");
 		adjusts.push(Wprr.adjusts.optionsFromHierarchyTerms(Wprr.sourceProp("input"), null, translationsPath));
 		
+		let filterAdjust = this.getSourcedProp("filterAdjust");
+		if(filterAdjust) {
+			adjusts.push(filterAdjust);
+		}
+		
 		let sortAdjust = this.getSourcedProp("sortAdjust");
 		if(sortAdjust) {
 			adjusts.push(sortAdjust);
