@@ -38,6 +38,7 @@ import ApplySortChain from "wprr/manipulation/adjustfunctions/logic/ApplySortCha
 import IsUrlAtPath from "wprr/manipulation/adjustfunctions/browser/IsUrlAtPath";
 import JoinArray from "wprr/manipulation/adjustfunctions/text/JoinArray";
 import ClosestIndex from "wprr/manipulation/adjustfunctions/logic/ClosestIndex";
+import AnyOf from "wprr/manipulation/adjustfunctions/logic/AnyOf";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -93,7 +94,8 @@ let joinArray = JoinArray.create;
 export {joinArray};
 let closestIndex = ClosestIndex.create;
 export {closestIndex};
-
+let anyOf = AnyOf.create;
+export {anyOf};
 
 let filterProps = FilterProps.create;
 export {filterProps};
