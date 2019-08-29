@@ -43,6 +43,10 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		let statePropsObject = {"state": this.state, "props": aProps};
 		
 		let valueName = this.getSourcedPropInStateChange("valueName", statePropsObject);
+		let active = this.getSourcedPropInStateChange("active", statePropsObject);
+		if(active === undefined || active === null) {
+			active = true;
+		}
 		
 		let checkValue = null;
 		if(aProps.check) {
@@ -68,47 +72,53 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		//console.log(checkValue);
 		
 		let newValid = this.state["valid"];
-		if(aType === "focus") {
-			if(this.state["valid"] === -1) {
-				newValid = 0;
-			}
+		if(!active) {
+			newValid = ValidationBaseObject.NOT_VALIDATED;
 		}
-		else if(aType === "blur") {
-			let validateOnBlur = this.getSourcedPropInStateChange("validateOnBlur", statePropsObject);
-			if(validateOnBlur) {
+		else {
+			if(aType === "focus") {
+				if(this.state["valid"] === -1) {
+					newValid = 0;
+				}
+			}
+			else if(aType === "blur") {
+				let validateOnBlur = this.getSourcedPropInStateChange("validateOnBlur", statePropsObject);
+				if(validateOnBlur) {
+					newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
+				}
+			
+				if(validateOnBlur === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
+					newValid = 0;
+				}
+			
+				if(alsoValidate) {
+					//METODO: support arrays
+					alsoValidate.validate(aType);
+				}
+			}
+			else if(aType === "change") {
+				let validateOnChange = this.getSourcedPropInStateChange("validateOnChange", statePropsObject);
+				if(validateOnChange) {
+					newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
+				}
+			
+				if(validateOnChange === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
+					newValid = 0;
+				}
+			
+				if(alsoValidate) {
+					//METODO: support arrays
+					alsoValidate.validate(aType);
+				}
+			}
+			else if(aType === "submit") {
 				newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
-			}
-			
-			if(validateOnBlur === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
-				newValid = 0;
-			}
-			
-			if(alsoValidate) {
-				//METODO: support arrays
-				alsoValidate.validate(aType);
+				if(newValid === -1) {
+					console.log(checkValue + " is not valid for field " + valueName + ".", this);
+				}
 			}
 		}
-		else if(aType === "change") {
-			let validateOnChange = this.getSourcedPropInStateChange("validateOnChange", statePropsObject);
-			if(validateOnChange) {
-				newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
-			}
-			
-			if(validateOnChange === ValidationBaseObject.VALIDATE_ONLY_TRUE && newValid === -1) {
-				newValid = 0;
-			}
-			
-			if(alsoValidate) {
-				//METODO: support arrays
-				alsoValidate.validate(aType);
-			}
-		}
-		else if(aType === "submit") {
-			newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
-			if(newValid === -1) {
-				console.log(checkValue + " is not valid for field " + valueName + ".", this);
-			}
-		}
+		
 		
 		if(newValid !== this.state["valid"]) {
 			this.setState({"valid": newValid});
@@ -126,6 +136,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		delete aReturnObject["validateOnChange"];
 		delete aReturnObject["validateOnBlur"];
 		delete aReturnObject["alsoValidate"];
+		delete aReturnObject["active"];
 		
 		return aReturnObject;
 	}
