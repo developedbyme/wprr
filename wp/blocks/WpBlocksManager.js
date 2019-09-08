@@ -3,6 +3,7 @@ import Wprr from "wprr/Wprr";
 import objectPath from "object-path";
 
 import ElementBlockRegistration from "wprr/wp/blocks/registration/ElementBlockRegistration";
+import ElementPluginRegistration from "wprr/wp/blocks/registration/ElementPluginRegistration";
 import ProgrammingLanguageFunctions from "wprr/wp/ProgrammingLanguageFunctions";
 
 // import WpBlocksManager from "wprr/wp/blocks/WpBlocksManager";
@@ -12,6 +13,7 @@ export default class WpBlocksManager {
 		//console.log("wprr/wp/blocks/WpBlocksManager::constructor");
 		
 		this._blockRegistrations = new Object();
+		this._pluginRegistrations = new Object();
 		this._prefix = "not-set";
 	}
 	
@@ -21,6 +23,12 @@ export default class WpBlocksManager {
 	
 	addBlockRegistration(aName, aRegistrationObject) {
 		this._blockRegistrations[aName] = aRegistrationObject;
+		
+		return this;
+	}
+	
+	addPluginRegistration(aName, aRegistrationObject) {
+		this._pluginRegistrations[aName] = aRegistrationObject;
 		
 		return this;
 	}
@@ -55,14 +63,54 @@ export default class WpBlocksManager {
 		return newElementBlockRegistration;
 	}
 	
+	createElementPluginRegistration(aElement, aName, aIcon = "admin-generic") {
+		let newElementPluginRegistration = new ElementPluginRegistration();
+		
+		let slugId = this._prefix + "-" + ProgrammingLanguageFunctions.convertToWpSlug(aName);
+		console.log(">>>>>>", slugId);
+		
+		newElementPluginRegistration.setupRegistration(slugId, aName, aIcon);
+		newElementPluginRegistration.setElement(aElement);
+		this.addPluginRegistration(slugId, newElementPluginRegistration);
+		
+		return newElementPluginRegistration;
+	}
+	
 	registerBlocks() {
-		if(wp && wp.blocks) {
+		let blocks = objectPath.get(wp, "blocks");
+		
+		if(blocks) {
 			for(let objectName in this._blockRegistrations) {
-				wp.blocks.registerBlockType(objectName, this._blockRegistrations[objectName].getRegistrationData());
+				blocks.registerBlockType(objectName, this._blockRegistrations[objectName].getRegistrationData());
 			}
 		}
 		else {
 			console.error("No wp.blocks. Can't register blocks");
 		}
+		
+		return this;
+	}
+	
+	registerPlugins() {
+		
+		let plugins = objectPath.get(wp, "plugins");
+		
+		if(plugins) {
+			for(let objectName in this._pluginRegistrations) {
+				plugins.registerPlugin(objectName, this._pluginRegistrations[objectName].getRegistrationData());
+			}
+		}
+		else {
+			console.error("No wp.plugins. Can't register plugins");
+		}
+		
+		return this;
+	}
+	
+	registerAll() {
+		this.registerBlocks();
+		this.registerPlugins();
+		
+		return this;
 	}
 }
