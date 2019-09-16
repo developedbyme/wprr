@@ -30,6 +30,8 @@ export default class Checkbox extends WprrBaseObject {
 		if(commands) {
 			CommandPerformer.perform(commands, checked, this);
 		}
+		
+		this._validate("focus");
 	}
 	
 	validate(aType) {

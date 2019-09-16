@@ -43,7 +43,7 @@ export default class TermSelection extends ManipulationBaseObject {
 			adjusts.push(sortAdjust);
 		}
 		
-		let text = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), this.translate("Choose term"));
+		let text = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose term"));
 		//METODO: get initial values
 		adjusts.push(Wprr.adjusts.addToArray(Wprr.sourceProp("options"), [{"value": 0, "label": text}], true, "options"));
 		

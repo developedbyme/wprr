@@ -5,7 +5,7 @@ import ArrayFunctions from "wprr/utils/ArrayFunctions";
 // import WpTermFunctions from "wprr/wp/WpTermFunctions";
 export default class WpTermFunctions {
 	
-	static getTermBy(aField, aIdentifier, aTerms) {
+	static getTermIfExistsBy(aField, aIdentifier, aTerms) {
 		let currentArray = aTerms;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -14,9 +14,16 @@ export default class WpTermFunctions {
 				return currentTerm;
 			}
 		}
-		console.warn("No term with " + aField + " " + aIdentifier + " exists.", aTerms);
 		
 		return null;
+	}
+	
+	static getTermBy(aField, aIdentifier, aTerms) {
+		
+		let returnValue = WpTermFunctions.getTermIfExistsBy(aField, aIdentifier, aTerms);
+		console.warn("No term with " + aField + " " + aIdentifier + " exists.", aTerms);
+		
+		return returnValue;
 	}
 	
 	static getTermById(aId, aTerms) {

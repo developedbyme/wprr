@@ -14,34 +14,34 @@ export default class AddValueToArrayCommand extends BaseCommand {
 	constructor() {
 		super();
 		
-		this.setInput("element", null);
+		this.setInput("dataStorage", null);
 		this.setInput("valueName", null);
 		this.setInput("value", null);
 	}
 	
 	perform() {
 		
-		let element = this.getInput("element");
+		let dataStorage = this.getInput("dataStorage");
 		let valueName = this.getInput("valueName");
 		let value = this.getInput("value");
 		
-		if(element) {
-			if(element.addValueToArray) {
-				element.addValueToArray(valueName, value);
+		if(dataStorage) {
+			if(dataStorage.addValueToArray) {
+				dataStorage.addValueToArray(valueName, value);
 			}
 			else {
-				console.error("Element doesn't have an updateValue function, can't set value " + valueName + " to " + value, element, this);
+				console.error("Data storage doesn't have an addValueToArray function, can't set value " + valueName + " to " + value, dataStorage, this);
 			}
 		}
 		else {
-			console.error("Element is not set, can't set value " + valueName + " to " + value, this);
+			console.error("Data storage is not set, can't set value " + valueName + " to " + value, this);
 		}
 	}
 	
-	static create(aElement = null, aValueName = null, aValue = null) {
+	static create(aDataStorage = null, aValueName = null, aValue = null) {
 		let newAddValueToArrayCommand = new AddValueToArrayCommand();
 		
-		newAddValueToArrayCommand.setInputWithoutNull("element", aElement);
+		newAddValueToArrayCommand.setInputWithoutNull("dataStorage", aDataStorage);
 		newAddValueToArrayCommand.setInputWithoutNull("valueName", aValueName);
 		newAddValueToArrayCommand.setInputWithoutNull("value", aValue);
 		

@@ -72,8 +72,6 @@ export default class EditPostDataStorage extends DataStorage {
 		
 		wp.data.dispatch("core/editor").editPost(updateObject);
 		
-		this._setAttribute(currentAttributes);
-		
 		this._updateOwners();
 		
 		return this;

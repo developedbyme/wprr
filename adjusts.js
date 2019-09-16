@@ -39,6 +39,7 @@ import IsUrlAtPath from "wprr/manipulation/adjustfunctions/browser/IsUrlAtPath";
 import JoinArray from "wprr/manipulation/adjustfunctions/text/JoinArray";
 import ClosestIndex from "wprr/manipulation/adjustfunctions/logic/ClosestIndex";
 import AnyOf from "wprr/manipulation/adjustfunctions/logic/AnyOf";
+import OptionsFromTaxonomies from "wprr/manipulation/adjustfunctions/wp/OptionsFromTaxonomies";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -96,6 +97,9 @@ let closestIndex = ClosestIndex.create;
 export {closestIndex};
 let anyOf = AnyOf.create;
 export {anyOf};
+let optionsFromTaxonomies = OptionsFromTaxonomies.create;
+export {optionsFromTaxonomies};
+
 
 let filterProps = FilterProps.create;
 export {filterProps};

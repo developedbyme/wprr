@@ -79,6 +79,18 @@ export default class DataStorage {
 		return this;
 	}
 	
+	removeValueFromArray(aName, aValue) {
+		
+		let currentArray = [].concat(this.getValue(aName));
+		let index = currentArray.indexOf(aValue);
+		if(index >= 0) {
+			currentArray.splice(index, 1);
+			this.updateValue(aName, currentArray);
+		}
+		
+		return this;
+	}
+	
 	getValueForPath(aPath) {
 		switch(aPath) {
 			case "getValue":

@@ -18,6 +18,7 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 	}
 	
 	externalDataChange() {
+		//console.log("wprr/manipulation/ReduxGlobalVariables::externalDataChange");
 		this._updateState();
 	}
 	
@@ -33,6 +34,7 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 				let currentName = currentArray[i];
 			
 				let currentValue = this._externalStorage.getValue(currentName);
+				//console.log(">>xx>>", currentName, currentValue);
 				if(currentValue !== null && currentValue !== undefined) {
 					if(this.state[currentName] !== currentValue) {
 						newState[currentName] = currentValue;
