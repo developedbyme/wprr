@@ -100,7 +100,9 @@ export default class PostRangePathSelector extends WprrBaseObject {
 		//METODO: these needs to be loaded
 		let typeOptions = [
 			{"value": prefix + "/any/" + selectors + "/" + encoders, "label": "Any type"},
-			{"value": prefix + "/post/" + selectors + "/" + encoders, "label": "Posts"}
+			{"value": prefix + "/post/" + selectors + "/" + encoders, "label": "Posts"},
+			{"value": prefix + "/page/" + selectors + "/" + encoders, "label": "Pages"},
+			{"value": prefix + "/post,page/" + selectors + "/" + encoders, "label": "Posts and pages"},
 		];
 		
 		let orderOptions = [
