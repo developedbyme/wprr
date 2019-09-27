@@ -25,6 +25,7 @@ import GetValueCommand from "wprr/commands/basic/GetValueCommand";
 import AddValueToArrayCommand from "wprr/commands/basic/AddValueToArrayCommand";
 import ConsoleLogCommand from "wprr/commands/debug/ConsoleLogCommand";
 import RemoveValueFromArrayCommand from "wprr/commands/basic/RemoveValueFromArrayCommand";
+import StepValueCommand from "wprr/commands/basic/StepValueCommand";
 
 let callFunction = CallFunctionCommand.create;
 let callFunctionName = CallFunctionCommand.createWithFunctionName;
@@ -35,6 +36,7 @@ let postJson = LoadUrlCommand.createJsonPost;
 export {getJson, postJson};
 
 let setValue = SetValueCommand.create;
+let stepValue = StepValueCommand.create;
 let toggleValue = ToggleValueCommand.create;
 let performSelectedCommands = PerformSelectedCommands.create;
 let setStateValue = SetStateValueCommand.create;
@@ -44,7 +46,7 @@ let getValue = GetValueCommand.create;
 let addValueToArray = AddValueToArrayCommand.create;
 let removeValueFromArray = RemoveValueFromArrayCommand.create;
 
-export {setValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray};
+export {setValue, stepValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;

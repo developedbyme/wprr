@@ -6,6 +6,14 @@ import ArrayFunctions from "wprr/utils/ArrayFunctions";
 export default class WpTermFunctions {
 	
 	static getTermIfExistsBy(aField, aIdentifier, aTerms) {
+		
+		if(aField === "slugPath") {
+			return WpTermFunctions.getTermBySlugPath(aIdentifier, aTerms);
+		}
+		else if(aField === "id") {
+			aField = parseInt(aField, 10);
+		}
+		
 		let currentArray = aTerms;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -50,7 +58,6 @@ export default class WpTermFunctions {
 				return returnArray;
 			}
 			returnArray.unshift(currentTerm);
-			console.log(currentTerm);
 			currentId = currentTerm["parentId"];
 		}
 		

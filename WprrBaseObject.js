@@ -179,6 +179,10 @@ export default class WprrBaseObject extends React.Component {
 		return this.resolveSourcedDataInStateChange(props[aPropName], aNewPropsAndState);
 	}
 	
+	getSourcedPropInAdjust(aPropName, aProps) {
+		return this.getSourcedPropInStateChange(aPropName, {"state": this.state, "props": aProps});
+	}
+	
 	translate(aText) {
 		let textManager = this.getReference("wprr/textManager");
 		return textManager.translateText(this.resolveSourcedData(aText));

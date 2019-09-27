@@ -129,4 +129,20 @@ export default class WprrUrlFunctions {
 		
 		return returnUrl;
 	}
+	
+	static getCreateUrl(aPostType) {
+		let returnUrl = this.getBasePath(this.getBasePath());
+		
+		returnUrl += "admin/" + aPostType + "/create";
+		
+		return returnUrl;
+	}
+	
+	static getBathcEditUrl(aPostType) {
+		let returnUrl = this.getBasePath(this.getBasePath());
+		
+		returnUrl += "admin/batch/edit";
+		
+		return returnUrl;
+	}
 }

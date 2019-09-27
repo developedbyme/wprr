@@ -73,5 +73,19 @@ export default class ChangeData  {
 		changeValue['taxonomy'] = aTaxonomy;
 		
 		this.addChange(ChangeDataFunctions.createChangeData(aChangeType, changeValue));
+		
+		return this;
+	}
+	
+	setRelation(aTerm, aPath, aField = "id") {
+		
+		let changeValue = new Object();
+		changeValue['value'] = aTerm;
+		changeValue['path'] = aPath;
+		changeValue['field'] = aField;
+		
+		this.addChange(ChangeDataFunctions.createChangeData("dbm/relation", changeValue));
+		
+		return this;
 	}
 }

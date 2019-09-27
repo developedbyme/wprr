@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -12,17 +13,24 @@ import FlexRow from "wprr/elements/area/grid/FlexRow";
 import SourceData from "wprr/reference/SourceData";
 import DateDisplay from "wprr/elements/text/DateDisplay";
 import TriggerButton from "wprr/elements/interaction/TriggerButton";
+import CommandButton from "wprr/elements/interaction/CommandButton";
 
 import Adjust from "wprr/manipulation/Adjust";
 import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
+import SetValueCommand from "wprr/commands/basic/SetValueCommand";
 
 //import Calendar from "wprr/elements/create/Calendar";
 export default class Calendar extends WprrBaseObject {
 	
-	constructor(props) {
-		super(props);
+	constructor(aProps) {
+		super(aProps);
+	}
+	
+	getValue() {
+		let valueName = this.getSourcedProp("valueName");
+		let value = this.getSourcedPropWithDefault("value", Wprr.source("propWithDots", valueName));
 		
-		
+		return value;
 	}
 	
 	_renderMainElement() {
@@ -30,9 +38,20 @@ export default class Calendar extends WprrBaseObject {
 		
 		let defaultToday = moment();
 		
-		let today = moment(this.getSourcedPropWithDefault("today", defaultToday.format("Y-MM-DD")));
-		let monthToRender = moment(this.getSourcedPropWithDefault("date", today.format("Y-MM-[01]")));
+		let valueName = this.getSourcedProp("valueName");
+		let value = this.getValue();
+		let parsedValue = moment(value, 'YYYY-MM-DD', true);
 		
+		let today = moment(this.getSourcedPropWithDefault("today", defaultToday.format("Y-MM-DD")));
+		let month = this.getSourcedProp("month");
+		if(!month || month === "") {
+			month = parsedValue.isValid() ? parsedValue.format("Y-MM-[01]") : today.format("Y-MM-[01]");
+		}
+		else {
+			month = moment(month).format("Y-MM-[01]");
+		}
+		
+		let monthToRender = moment(month);
 		let monthToRenderComparisonString = monthToRender.format("YMM");
 		
 		let startWeekDay = monthToRender.isoWeekday();
@@ -92,19 +111,36 @@ export default class Calendar extends WprrBaseObject {
 		}
 		
 		let injectData = new Object();
+		injectData["calendar/selectedDate"] = value;
 		injectData["calendar/today"] = today.format("Y-MM-DD");
 		injectData["calendar/month"] = monthToRender.format("Y-MM");
 		
 		injectData["calendar/rowMarkup"] = this.getSourcedPropWithDefault("rowMarkup", Calendar.DEFAULT_ROW_MARKUP);
 		injectData["calendar/cellMarkup"] = this.getSourcedPropWithDefault("cellMarkup", Calendar.DEFAULT_CELL_MARKUP);
 		
-		injectData["calendar/triggerName"] = this.getSourcedPropWithDefault("triggerName", "date");
+		injectData["calendar/valueName"] = valueName;
 		
-		return <wrapper>
-			<ReferenceInjection injectData={injectData}>
-				<Loop input={weekDataArray} contentCreator={Calendar._contentCreator_row} spacingContentCreator={SourceData.create("reference", "calendar/rowSpacingContentCreator")}/>
-			</ReferenceInjection>
-		</wrapper>;
+		let selectCommands = new Array();
+		if(valueName) {
+			selectCommands.push(SetValueCommand.create(
+				Wprr.sourceReference(Wprr.source("combine", ["value/", Wprr.sourceReference("calendar/valueName")])),
+				Wprr.sourceReference("calendar/valueName"),
+				Wprr.sourceReference("calendar/day/date")
+			));
+		}
+		
+		let changeCommands = this.getSourcedProp("changeCommands");
+		if(changeCommands) {
+			selectCommands = selectCommands.concat(changeCommands);
+		}
+		
+		injectData["calendar/selectCommands"] = selectCommands;
+		
+		return React.createElement("wrapper", {},
+			React.createElement(ReferenceInjection, {"injectData": injectData},
+				React.createElement(Loop, {"input": weekDataArray, "contentCreator": Calendar._contentCreator_row, "spacingContentCreator": Wprr.sourceReference("calendar/rowSpacingContentCreator")})
+			)
+		);
 	}
 	
 	static _contentCreator_row(aData, aKeyIndex, aReferences, aReturnArray) {
@@ -113,9 +149,9 @@ export default class Calendar extends WprrBaseObject {
 		injectData["calendar/week/rawData"] = aData;
 		injectData["calendar/week/days"] = aData.days;
 		
-		let returnObject = <ReferenceInjection key={"row-" + aKeyIndex} injectData={injectData}>
-			<UseMarkup markup={SourceData.create("reference", "calendar/rowMarkup")} />
-		</ReferenceInjection>;
+		let returnObject = React.createElement(ReferenceInjection, {"key": "row-" + aKeyIndex, "injectData": injectData},
+			React.createElement(UseMarkup, {"markup": Wprr.sourceReference("calendar/rowMarkup")})
+		);
 		
 		aReturnArray.push(returnObject);
 	}
@@ -128,9 +164,9 @@ export default class Calendar extends WprrBaseObject {
 		injectData["calendar/day/relativeDirection"] = aData.relativeDirection;
 		injectData["calendar/day/relativeMonthDirection"] = aData.relativeMonthDirection;
 		
-		let returnObject = <ReferenceInjection key={"row-" + aKeyIndex} injectData={injectData}>
-			<UseMarkup markup={SourceData.create("reference", "calendar/cellMarkup")} />
-		</ReferenceInjection>;
+		let returnObject = React.createElement(ReferenceInjection, {"key": "row-" + aKeyIndex, "injectData": injectData},
+			React.createElement(UseMarkup, {"markup": Wprr.sourceReference("calendar/cellMarkup")})
+		);
 		
 		aReturnArray.push(returnObject);
 	}
@@ -151,28 +187,32 @@ export default class Calendar extends WprrBaseObject {
 	}
 }
 
-Calendar.DEFAULT_ROW_MARKUP = <Markup>
-	<Loop input={SourceData.create("reference", "calendar/week/days")} contentCreator={Calendar._contentCreator_cell}>
-		<FlexRow className="calendar-week" />
-	</Loop>
-</Markup>;
+Calendar.DEFAULT_ROW_MARKUP = React.createElement(Markup, {},
+	React.createElement(Loop, {"input": Wprr.sourceReference("calendar/week/days"), "contentCreator": Calendar._contentCreator_cell},
+		React.createElement(FlexRow, {"className": "calendar-week"})
+	)
+);
 
-Calendar.DEFAULT_CELL_MARKUP = <Markup>
-	<TriggerButton triggerName={SourceData.create("reference", "calendar/triggerName")} triggerData={SourceData.create("reference", "calendar/day/date")}>
-		<Adjust adjust={[
-			ClassFromProp.createWithSource(SourceData.create("reference", "calendar/day/relativeDirection"), [
+Calendar.DEFAULT_CELL_MARKUP = React.createElement(Markup, {},
+	React.createElement(CommandButton, {"commands": 
+		Wprr.sourceReference("calendar/selectCommands")
+	},
+		React.createElement(Adjust, {"adjust": [
+			ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeDirection"), [
 				{"key": 0, "value": "today"},
 				{"key": -1, "value": "past"},
 				{"key": 1, "value": "future"}]
 			),
-			ClassFromProp.createWithSource(SourceData.create("reference", "calendar/day/relativeMonthDirection"), [
+			ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeMonthDirection"), [
 				{"key": 0, "value": "current-month"},
 				{"key": -1, "value": "other-month past-month"},
 				{"key": 1, "value": "other-month future-month"}]
 			),
 			Calendar._adjust_isSelectedDate
-		]}>
-			<div className="calendar-day"><DateDisplay date={SourceData.create("reference", "calendar/day/date")} format="D" /></div>
-		</Adjust>
-	</TriggerButton>
-</Markup>;
+		]},
+			React.createElement("div", {"className": "calendar-day"},
+				React.createElement(DateDisplay, {"date": Wprr.sourceReference("calendar/day/date"), "format": "D"})
+			)
+		)
+	)
+);

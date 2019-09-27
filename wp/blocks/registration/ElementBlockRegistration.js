@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import ReferenceExporter from "wprr/reference/ReferenceExporter";
 import ReferenceHolder from "wprr/reference/ReferenceHolder";
 import AttributeDataStorage from "wprr/wp/blocks/AttributeDataStorage";
+import EditPostDataStorage from "wprr/wp/blocks/EditPostDataStorage";
 
 import TextManager from "wprr/textmanager/TextManager";
 import StoreController from "wprr/store/StoreController";
@@ -116,6 +117,10 @@ export default class ElementBlockRegistration {
 			let externalStorage = new AttributeDataStorage();
 			
 			referenceHolder.addObject(blocksPrefix + "externalStorage", externalStorage);
+			
+			let editPostExternalStorage = EditPostDataStorage.create();
+			
+			referenceHolder.addObject("wprr/editPost/externalStorage", editPostExternalStorage);
 			
 			referenceHolder.addObject("redux/store", this._store);
 			referenceHolder.addObject("redux/store/mRouterController", this._storeController);
