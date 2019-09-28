@@ -77,6 +77,13 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	toggleTerm(aActive, aTerm, aTaxonomy, aField = "id") {
+		
+		let changeType = aActive ? "addTerms" : "removeTerms";
+		
+		this.setTerms([aTerm], aTaxonomy, aField, changeType);
+	}
+	
 	setRelation(aTerm, aPath, aField = "id") {
 		
 		let changeValue = new Object();
