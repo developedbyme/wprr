@@ -11,7 +11,7 @@ export default class WpTermFunctions {
 			return WpTermFunctions.getTermBySlugPath(aIdentifier, aTerms);
 		}
 		else if(aField === "id") {
-			aField = parseInt(aField, 10);
+			aIdentifier = parseInt(aIdentifier, 10);
 		}
 		
 		let currentArray = aTerms;
