@@ -62,6 +62,8 @@ export {default as StatusButton} from "wprr/elements/interaction/StatusButton";
 export {default as CustomMultipleSelection} from "wprr/elements/form/CustomMultipleSelection";
 export {default as InjectChildren} from "wprr/manipulation/InjectChildren";
 export {default as Calendar} from "wprr/elements/create/Calendar";
+export {default as WidthProgressBar} from "wprr/elements/progress/WidthProgressBar";
+export {default as CustomRadioButton} from "wprr/elements/form/CustomRadioButton";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
