@@ -138,11 +138,15 @@ export default class WprrUrlFunctions {
 		return returnUrl;
 	}
 	
-	static getBathcEditUrl(aPostType) {
+	static getBatchEditUrl() {
 		let returnUrl = this.getBasePath(this.getBasePath());
 		
-		returnUrl += "admin/batch/edit";
+		returnUrl += "admin/batch/edit-posts";
 		
 		return returnUrl;
+	}
+	
+	static getBathcEditUrl() {
+		return WprrUrlFunctions.getBatchEditUrl();
 	}
 }
