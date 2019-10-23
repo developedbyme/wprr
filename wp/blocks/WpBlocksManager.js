@@ -46,6 +46,17 @@ export default class WpBlocksManager {
 		return this;
 	}
 	
+	getBlockRegistration(aName) {
+		let returnObject = this._blockRegistrations[aName];
+		
+		if(!returnObject) {
+			console.error("No block named " + aName + " exists", this);
+			return null;
+		}
+		
+		return returnObject;
+	}
+	
 	createElementBlockRegistration(aElement, aName, aIcon = "marker", aCategory = "common") {
 		
 		let newElementBlockRegistration = new ElementBlockRegistration();

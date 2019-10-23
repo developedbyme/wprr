@@ -19,6 +19,7 @@ export default class OptionsFromHierarchyTerms extends AdjustFunction {
 		this.setInput("prefix", "- ");
 		this.setInput("outputName", "options");
 		this.setInput("translationPath", null);
+		this.setInput("valueField", "id");
 		
 	}
 	
@@ -34,7 +35,7 @@ export default class OptionsFromHierarchyTerms extends AdjustFunction {
 		delete aProps["outputName"];
 	}
 	
-	_getOptionsForTerms(aTerms, aCurrentPrefix, aRecursivePrefix, aParentSlugPath, aTranslationPath, aTextManager, aReturnArray) {
+	_getOptionsForTerms(aTerms, aCurrentPrefix, aRecursivePrefix, aParentSlugPath, aValueField, aTranslationPath, aTextManager, aReturnArray) {
 		let currentArray = aTerms;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -48,8 +49,8 @@ export default class OptionsFromHierarchyTerms extends AdjustFunction {
 				}
 			}
 			
-			aReturnArray.push({"value": currentHierarchTerm.term["id"], "label": aCurrentPrefix + currentName, "slugPath": aParentSlugPath + currentHierarchTerm.term["slug"]});
-			this._getOptionsForTerms(currentHierarchTerm.children, aCurrentPrefix+aRecursivePrefix, aRecursivePrefix, aParentSlugPath + currentHierarchTerm.term["slug"] + "/", aTranslationPath, aTextManager, aReturnArray)
+			aReturnArray.push({"value": currentHierarchTerm.term[aValueField], "label": aCurrentPrefix + currentName, "slugPath": aParentSlugPath + currentHierarchTerm.term["slug"]});
+			this._getOptionsForTerms(currentHierarchTerm.children, aCurrentPrefix+aRecursivePrefix, aRecursivePrefix, aParentSlugPath + currentHierarchTerm.term["slug"] + "/", aValueField, aTranslationPath, aTextManager, aReturnArray)
 		}
 	}
 	
@@ -68,6 +69,7 @@ export default class OptionsFromHierarchyTerms extends AdjustFunction {
 		let outputName = this.getInput("outputName", aData, aManipulationObject);
 		let prefix = this.getInput("prefix", aData, aManipulationObject);
 		let translationPath = this.getInput("translationPath", aData, aManipulationObject);
+		let valueField = this.getInput("valueField", aData, aManipulationObject);
 		
 		this.removeUsedProps(aData);
 		
@@ -78,7 +80,7 @@ export default class OptionsFromHierarchyTerms extends AdjustFunction {
 			textManager = aManipulationObject.getReferenceIfExists("wprr/textManager")
 		}
 		
-		this._getOptionsForTerms(terms, "", prefix, "", translationPath, textManager, returnArray);
+		this._getOptionsForTerms(terms, "", prefix, "", valueField, translationPath, textManager, returnArray);
 		
 		aData[outputName] = returnArray;
 		

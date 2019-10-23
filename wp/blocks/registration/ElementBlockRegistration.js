@@ -21,6 +21,7 @@ export default class ElementBlockRegistration {
 		this._registrationData["attributes"] = new Object();
 		
 		this._componentName = null;
+		this._saveContentInnerElement = null;
 		
 		/*
 		this._registrationData["getEditWrapperProps"] = function( attributes ) {
@@ -96,6 +97,17 @@ export default class ElementBlockRegistration {
 		return this;
 	}
 	
+	enableInnerBlocks(aEnable = true) {
+		if(aEnable) {
+			this._saveContentInnerElement = React.createElement(wp.editor.InnerBlocks.Content, {});
+		}
+		else {
+			this._saveContentInnerElement = null;
+		}
+		
+		return this;
+	}
+	
 	addAttribute(aName, aType = "string") {
 		this._registrationData["attributes"][aName] = {
 			"type": aType,
@@ -162,6 +174,6 @@ export default class ElementBlockRegistration {
 			componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
 		}
 		
-		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentData});
+		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentData}, this._saveContentInnerElement);
 	}
 }

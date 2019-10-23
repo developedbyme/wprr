@@ -30,8 +30,10 @@ export default class TermSelection extends ManipulationBaseObject {
 			adjusts.push(Wprr.adjusts.selectTermsSubtree(Wprr.sourceProp("input"), subtree, "input"));
 		}
 		
+		let valueField = this.getSourcedPropWithDefault("valueField", "id");
+		
 		let translationsPath = this.getSourcedProp("translationsPath");
-		adjusts.push(Wprr.adjusts.optionsFromHierarchyTerms(Wprr.sourceProp("input"), null, translationsPath));
+		adjusts.push(Wprr.adjusts.optionsFromHierarchyTerms(Wprr.sourceProp("input"), null, translationsPath).setInput("valueField", valueField));
 		
 		let filterAdjust = this.getSourcedProp("filterAdjust");
 		if(filterAdjust) {

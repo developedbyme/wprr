@@ -7,6 +7,11 @@ export default class WpTermFunctions {
 	
 	static getTermIfExistsBy(aField, aIdentifier, aTerms) {
 		
+		if(!Array.isArray(aTerms)) {
+			console.warn("Terms is not an array.", aTerms);
+			return null;
+		}
+		
 		if(aField === "slugPath") {
 			return WpTermFunctions.getTermBySlugPath(aIdentifier, aTerms);
 		}
