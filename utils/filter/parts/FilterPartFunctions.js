@@ -39,6 +39,47 @@ export default class FilterPartFunctions  {
 		return newFilterPart;
 	}
 	
+	static matchFieldInArray(aCurrentArray, aOriginalArray) {
+		//console.log("wprr/utils/filter/parts/FilterPartFunctions::matchFieldInArray");
+		
+		let returnArray = new Array();
+		
+		let matchValue = this.getInput("compareValue");
+		let arrayField = this.getInput("arrayField");
+		let field = this.getInput("field");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentArray2 = objectPath.get(currentItem, arrayField);
+			if(currentArray2) {
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					
+					let currentArrayItem = currentArray2[j];
+					if(objectPath.get(currentArrayItem, field) === matchValue) {
+						returnArray.push(currentItem);
+						break;
+					}
+				}
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createMatchFieldInArray(aArrayField, aField, aCompareValue, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.matchFieldInArray, aActive);
+		
+		newFilterPart.inputs.setInput("arrayField", aArrayField);
+		newFilterPart.inputs.setInput("field", aField);
+		newFilterPart.inputs.setInput("compareValue", aCompareValue);
+		
+		return newFilterPart;
+	}
+	
 	static _compare(aA, aB, aCompareType) {
 		switch(aCompareType) {
 			case "<":
