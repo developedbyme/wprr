@@ -54,4 +54,25 @@ export default class ProgrammingLanguageFunctions {
 		
 		return currentArray.join("-");
 	};
+	
+	static convertFromCamelCase(aText) {
+		
+		let length = aText.length;
+		if(length === 0) {
+			return "";
+		}
+		
+		let returnString = aText[0];
+		let upperCaseRegExp = new RegExp("[A-Z]", "");
+		
+		for(let i = 1; i < length; i++) { //MENOTE: first character is handled outside of loop
+			let currentCharacter = aText[i];
+			if(upperCaseRegExp.test(currentCharacter)) {
+				returnString += " ";
+			}
+			returnString += currentCharacter;
+		}
+		
+		return returnString;
+	}
 }
