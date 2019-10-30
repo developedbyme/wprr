@@ -23,6 +23,8 @@ export default class ImageSelection extends MultipleRenderObject {
 		this._callback_imageSelectedBound = this._callback_imageSelected.bind(this);
 		
 		this._addMainElementClassName("image-selection");
+		
+		this.state["undoData"] = null;
 	}
 	
 	getExternalStorage() {
@@ -36,6 +38,17 @@ export default class ImageSelection extends MultipleRenderObject {
 	
 	_selectImage() {
 		this.frame.open();
+	}
+	
+	_removeImage() {
+		let valueName = this.getSourcedProp("valueName");
+		this.setState({"undoData": this.getExternalStorage().getValue(valueName)});
+		this.getExternalStorage().updateValue(valueName, null);
+	}
+	
+	_undoRemoval() {
+		let valueName = this.getSourcedProp("valueName");
+		this.getExternalStorage().updateValue(valueName, this.state["undoData"]);
 	}
 	
 	_callback_imageSelected() {
@@ -77,15 +90,29 @@ export default class ImageSelection extends MultipleRenderObject {
 		return React.createElement(React.Fragment, {},
 			React.createElement(Wprr.HasData, {"check": value},
 				React.createElement(Wprr.Image, {"className": "image preview-image background-cover", "src": Wprr.sourceProp("image", "url"), "image": value}),
-				React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._selectImage)},
-					React.createElement("div", {"className": "button"},
-						Wprr.translateText("Change image")
+				React.createElement(Wprr.FlexRow, {"className": "small-item-spacing"},
+					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._selectImage)},
+						React.createElement("div", {"className": "button"},
+							Wprr.translateText("Change")
+						)
+					),
+					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._removeImage)},
+						React.createElement("div", {"className": "button"},
+							Wprr.translateText("Remove")
+						)
 					)
 				)
 			),
 			React.createElement(Wprr.HasData, {"check": value, "checkType": "invert/default"},
-				React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._selectImage)},
-					React.createElement("div", {"className": "button"}, Wprr.translateText("Choose image"))
+				React.createElement(Wprr.FlexRow, {"className": "small-item-spacing"},
+					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._selectImage)},
+						React.createElement("div", {"className": "button"}, Wprr.translateText("Choose image"))
+					),
+					React.createElement(Wprr.HasData, {"check": this.state["undoData"]},
+						React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._undoRemoval)},
+							React.createElement("div", {}, Wprr.translateText("Undo"))
+						)
+					)
 				)
 			),
 		);

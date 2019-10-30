@@ -33,7 +33,7 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 				let currentName = currentArray[i];
 			
 				let currentValue = externalStorage.getValue(currentName);
-				if(currentValue !== null && currentValue !== undefined) {
+				if(currentValue !== undefined) {
 					if(this.state[currentName] !== currentValue) {
 						newState[currentName] = currentValue;
 						hasChange = true;
