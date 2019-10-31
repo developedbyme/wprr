@@ -75,6 +75,11 @@ export default class OptionsFromRange extends AdjustFunction {
 		
 		let returnArray = new Array();
 		
+		if(!range) {
+			console.error("Range is not set",  this);
+			return returnArray;
+		}
+		
 		let currentArray = range;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
