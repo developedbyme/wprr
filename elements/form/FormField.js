@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -110,12 +111,23 @@ export default class FormField extends WprrBaseObject {
 		
 		returnObject["id"] = this.getSourcedProp("id");
 		returnObject["name"] = this.getSourcedProp("name");
-		returnObject["type"] = this.getSourcedProp("type");
+		
+		let type = this.getSourcedProp("type");
+		
+		returnObject["type"] = type;
 		returnObject["placeholder"] = this.getSourcedProp("placeholder");
 		
 		let valueName = this.getSourcedProp("valueName");
 		
-		returnObject["value"] = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		
+		if(value && type === "datetime-local") {
+			let valueMoment = moment(value);
+			if(valueMoment.isValid()) {
+				value = valueMoment.format("Y-MM-DDTHH:mm:ss");
+			}
+		}
+		returnObject["value"] = value;
 		
 		returnObject["onChange"] = this._callback_changeBound;
 		returnObject["onBlur"] = this._callback_blurBound;
