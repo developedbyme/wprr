@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import SourceData from "wprr/reference/SourceData";
 
@@ -56,6 +57,10 @@ export default class WprrBaseObject extends React.Component {
 		this._namedRefs[aName] = newRef;
 		
 		return newRef;
+	}
+	
+	getRefSource(aName) {
+		return Wprr.source("command", Wprr.commands.callFunction(this, this.getRef, [aName]));
 	}
 	
 	setState(aNewState) {
