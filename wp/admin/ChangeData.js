@@ -59,6 +59,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	trash() {
+		this.createChange("trash", null);
+		
+		return this;
+	}
+	
 	setMeta(aField, aValue, aChangeType = "meta") {
 		
 		let changeValue = ChangeDataFunctions.createFieldData(aField, aValue);
