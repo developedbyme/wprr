@@ -16,7 +16,6 @@
     "js-cookie": "^2.2.1",
     "moment": "^2.24.0",
     "object-path": "^0.11.4",
-    "query-string": "^6.8.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-redux": "^7.1.1",
@@ -30,5 +29,8 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "wprr": "file:./"
+  },
+  "peerDependencies": {
+    "query-string": ">=5.1.1"
   }
 }
