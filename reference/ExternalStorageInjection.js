@@ -23,6 +23,7 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 		//console.log("wprr/reference/ExternalStorageInjection::_removeUsedProps");
 		
 		delete aReturnObject["storageName"];
+		delete aReturnObject["initialExternalStorage"];
 		delete aReturnObject["initialValues"];
 		
 		return aReturnObject;
@@ -30,6 +31,11 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 	
 	_prepareInitialRender() {
 		super._prepareInitialRender();
+		
+		let initialExternalStorage = this.getSourcedProp("initialExternalStorage");
+		if(initialExternalStorage) {
+			this._externalStorage = initialExternalStorage;
+		}
 		
 		let initialValues = this.getSourcedProp("initialValues");
 		if(initialValues) {
