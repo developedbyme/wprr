@@ -1,4 +1,5 @@
 import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 // import PostData from "wprr/wp/postdata/PostData";
 export default class PostData {
@@ -77,6 +78,12 @@ export default class PostData {
 	
 	getSingleMetaData(aField) {
 		return this.getFirstObjectInArray(this.getMetaData(aField));
+	}
+	
+	getLanguageLink(aLanguageCode) {
+		let languageItem = Wprr.utils.array.getItemBy("language", aLanguageCode, this._data.languages);
+		
+		return objectPath.get(languageItem, "post");
 	}
 	
 	getAcfData() {
