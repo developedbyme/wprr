@@ -73,7 +73,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		//METODO: make it work with direct injection
 		
-		return React.createElement("div", {ref: this._refCollector.getCallbackFunction(aId)},
+		return React.createElement("div", {"key": "inject-" + aId, "ref": this._refCollector.getCallbackFunction(aId)},
 			React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)})
 		);
 	}
@@ -212,7 +212,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		return React.createElement("wrapper", {},
 			containers,
-			React.createElement("div", {className: "wprr-inject-components"},
+			React.createElement("div", {"key": "injected-components", "className": "wprr-inject-components"},
 				this._renderInjectComponents
 			)
 		);
