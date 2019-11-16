@@ -40,6 +40,7 @@ import JoinArray from "wprr/manipulation/adjustfunctions/text/JoinArray";
 import ClosestIndex from "wprr/manipulation/adjustfunctions/logic/ClosestIndex";
 import AnyOf from "wprr/manipulation/adjustfunctions/logic/AnyOf";
 import OptionsFromTaxonomies from "wprr/manipulation/adjustfunctions/wp/OptionsFromTaxonomies";
+import Combine from "wprr/manipulation/adjustfunctions/logic/Combine";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -99,6 +100,8 @@ let anyOf = AnyOf.create;
 export {anyOf};
 let optionsFromTaxonomies = OptionsFromTaxonomies.create;
 export {optionsFromTaxonomies};
+let combine = Combine.create;
+export {combine};
 
 
 let filterProps = FilterProps.create;

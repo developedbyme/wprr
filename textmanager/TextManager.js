@@ -8,7 +8,7 @@ export default class TextManager {
 	constructor() {
 		//console.log("wprr/textmanager/TextManager::constructor");
 		
-		this._data = null;
+		this._data = new Object();
 		this._translationMap = new Object();
 		
 		//METODO: only use this in development mode

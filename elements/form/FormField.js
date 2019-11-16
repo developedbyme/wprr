@@ -127,7 +127,10 @@ export default class FormField extends WprrBaseObject {
 				value = valueMoment.format("Y-MM-DDTHH:mm:ss");
 			}
 		}
-		returnObject["value"] = value;
+		
+		if(type !== "file") {
+			returnObject["value"] = value;
+		}
 		
 		returnObject["onChange"] = this._callback_changeBound;
 		returnObject["onBlur"] = this._callback_blurBound;
