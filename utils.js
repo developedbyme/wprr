@@ -12,11 +12,13 @@ import WpUrlFunctions from "wprr/wp/WpUrlFunctions";
 import WprrUrlFunctions from "wprr/wp/WprrUrlFunctions";
 import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
 import UrlFunctions from "wprr/utils/UrlFunctions";
+import ObjectFunctions from "wprr/utils/ObjectFunctions";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
 export {DbmContentFunctions as dbmContent};
 export {ArrayFunctions as array};
+export {ObjectFunctions as object};
 export {ApplyAnimation as applyAnimation};
 export {CommandPerformer as commandPerformer};
 export {FilterPartFunctions as filterPartFunctions};
