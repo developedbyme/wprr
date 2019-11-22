@@ -41,6 +41,9 @@ import ClosestIndex from "wprr/manipulation/adjustfunctions/logic/ClosestIndex";
 import AnyOf from "wprr/manipulation/adjustfunctions/logic/AnyOf";
 import OptionsFromTaxonomies from "wprr/manipulation/adjustfunctions/wp/OptionsFromTaxonomies";
 import Combine from "wprr/manipulation/adjustfunctions/logic/Combine";
+import SelectItemsInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemsInArray";
+import StartOfArrayAsText from "wprr/manipulation/adjustfunctions/text/StartOfArrayAsText";
+import MapArray from "wprr/manipulation/adjustfunctions/logic/MapArray";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -78,6 +81,8 @@ let sortArray = SortArray.create;
 export {sortArray};
 let selectItemInArray = SelectItemInArray.create;
 export {selectItemInArray};
+let selectItemsInArray = SelectItemsInArray.create;
+export {selectItemsInArray};
 let switchValue = SwitchValue.create;
 export {switchValue};
 let applyFilterChain = ApplyFilterChain.create;
@@ -102,7 +107,10 @@ let optionsFromTaxonomies = OptionsFromTaxonomies.create;
 export {optionsFromTaxonomies};
 let combine = Combine.create;
 export {combine};
-
+let startOfArrayAsText = StartOfArrayAsText.create;
+export {startOfArrayAsText};
+let mapArray = MapArray.create;
+export {mapArray};
 
 let filterProps = FilterProps.create;
 export {filterProps};
