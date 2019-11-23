@@ -102,7 +102,7 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
-	static getItemIndexBy(aField, aIdentifier, aArray) {
+	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -113,8 +113,17 @@ export default class ArrayFunctions {
 			}
 		}
 		
-		console.warn("No item with field " + aField + " matching " + aIdentifier, aArray);
 		return -1;
+	}
+	
+	static getItemIndexBy(aField, aIdentifier, aArray) {
+		let returnValue = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray);
+		
+		if(returnValue === -1) {
+			console.warn("No item with field " + aField + " matching " + aIdentifier, aArray);
+		}
+		
+		return returnValue;
 	}
 	
 	static getItemBy(aField, aIdentifier, aArray) {

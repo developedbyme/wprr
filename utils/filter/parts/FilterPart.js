@@ -39,6 +39,7 @@ export default class FilterPart  {
 		//console.log("wprr/utils/filter/parts/FilterPart::_performFilter");
 		
 		//MENOTE: should be overridden
+		console.error("_performFilter should have been overridden, either in the class or at runtime.", this);
 		
 		return aCurrentArray;
 	}

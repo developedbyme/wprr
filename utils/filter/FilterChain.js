@@ -27,6 +27,19 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addFunction(aFunction) {
+		
+		if(!aFunction) {
+			console.error("Function is not set", this);
+		}
+		
+		let newPart = FilterPart.create(aFunction);
+		
+		this.addPart(newPart);
+		
+		return this;
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		
@@ -45,6 +58,8 @@ export default class FilterChain extends FilterPart {
 	}
 	
 	filter(aArray, aPerformingElement, aProps = null) {
+		//console.log("wprr/utils/filter/FilterChain::filter");
+		
 		let originalArray = aArray;
 		let currentArray = [].concat(originalArray);
 		
