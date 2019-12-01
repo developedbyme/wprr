@@ -102,6 +102,10 @@ export default class SourceData {
 		
 		const references = aFromObject ? aFromObject.getReferences() : {};
 		
+		if(aPath instanceof SourceData) {
+			aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+		}
+		
 		switch(aType) {
 			case "prop":
 				{
@@ -144,10 +148,6 @@ export default class SourceData {
 				}
 			case "text":
 				{
-					//METODO: make this a general solution to resolve until all parts have been resolved
-					if(aPath instanceof SourceData) {
-						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
-					}
 					return references.getObject("wprr/textManager").getText(aPath);
 				}
 			case "translation":
@@ -204,10 +204,6 @@ export default class SourceData {
 				}
 			case "reference":
 				{
-					//METODO: make this a general solution to resolve until all parts have been resolved
-					if(aPath instanceof SourceData) {
-						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
-					}
 					return references.getObject(aPath);
 				}
 			case "referenceIfExists":
@@ -271,16 +267,10 @@ export default class SourceData {
 					return returnArray;
 				}
 			case "staticSource":
-				if(aPath instanceof SourceData) {
-					return aPath.getSourceInStateChange(aFromObject, aPropsAndState);
-				}
 				return aPath;
 			case "command":
 				{
 					let command = aPath;
-					if(command instanceof SourceData) {
-						command = command.getSourceInStateChange(aFromObject, aPropsAndState);
-					}
 					command.setTriggerElement(aFromObject);
 					return command.perform();
 				}
