@@ -316,4 +316,40 @@ export default class ArrayFunctions {
 		
 		return aReturnArray;
 	}
+	
+	static groupArray(aArray, aField, aGroupPrefix = "") {
+		let groupNames = new Array();
+		let groups = new Object();
+		
+		{
+			let currentArray = aArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				let currentGroup = aGroupPrefix + objectPath.get(currentItem, aField);
+				if(!groups[currentGroup]) {
+					groups[currentGroup] = new Array();
+					groupNames.push(currentGroup);
+				}
+				groups[currentGroup].push(currentItem);
+			}
+		}
+		
+		let returnArray = new Array();
+		
+		{
+			let currentArray = groupNames;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let groupName = currentArray[i];
+				let returnItem = new Object()
+				returnItem["key"] = groupName;
+				returnItem["value"] = groups[groupName];
+				
+				returnArray.push(returnItem);
+			}
+		}
+		
+		return returnArray;
+	}
 }
