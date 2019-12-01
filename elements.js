@@ -39,6 +39,7 @@ export {default as OpenCloseExpandableArea} from "wprr/elements/area/OpenCloseEx
 export {default as OnOffArea} from "wprr/elements/area/OnOffArea";
 export {default as SortableTable} from "wprr/elements/area/table/SortableTable";
 export {default as NativeElementArea} from "wprr/elements/area/NativeElementArea";
+export {default as HtmlArea} from "wprr/elements/area/HtmlArea";
 export {default as SelectSection} from "wprr/elements/area/SelectSection";
 export {default as ReduxGlobalVariables} from "wprr/manipulation/ReduxGlobalVariables";
 export {default as CookieData} from "wprr/manipulation/CookieData";

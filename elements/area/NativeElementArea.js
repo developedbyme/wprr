@@ -18,8 +18,13 @@ export default class NativeElementArea extends WprrBaseObject {
 	}
 	
 	_updateRender() {
-		let commands = this.getSourcedProp("renderCommands");
 		
+		let nativeElementClassName = this.getSourcedProp("nativeElementClassName");
+		if(nativeElementClassName) {
+			this._element.className = nativeElementClassName;
+		}
+		
+		let commands = this.getSourcedProp("renderCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, this._element, this);
 		}
