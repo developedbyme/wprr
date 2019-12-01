@@ -106,13 +106,13 @@ export default class SelectSection extends ManipulationBaseObject {
 			}
 			else {
 				if(!this._canBeEmpty && !this.props.canBeEmpty) {
-					console.warn("Object doesn't have any active children.");
+					console.warn("Object doesn't have any active children.", this);
 				}
 				return null;
 			}
 		}
 		if(activeChildren.length > 1) {
-			if(this._canHaveMultipleChildren) {
+			if(this._canHaveMultipleChildren || this.getSourcedProp("canHaveMultipleChildren")) {
 				return React.createElement(React.Fragment, {}, activeChildren);
 			}
 			
