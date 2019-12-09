@@ -39,10 +39,22 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		
 		let injectData = this._getInjectData();
 		
+		if(!injectData) {
+			console.warn("No injectData prop set for injection.", this);
+			return;
+		}
+		
+		let hasData = false;
+		
 		for(let objectName in injectData) {
 			let sourcedData = this.resolveSourcedData(injectData[objectName]);
+			hasData = true;
 			
 			this._references.addObject(objectName, sourcedData);
+		}
+		
+		if(!hasData) {
+			console.warn("Injection doesn't have any fields set.", this);
 		}
 	}
 	
