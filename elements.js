@@ -10,6 +10,8 @@ export {default as OnScreenCommands} from "wprr/elements/interaction/OnScreenCom
 export {default as WprrDataLoader} from "wprr/manipulation/loader/WprrDataLoader";
 export {default as PartRenderFunction} from "wprr/elements/create/PartRenderFunction";
 export {default as ReferenceInjection} from "wprr/reference/ReferenceInjection";
+export {default as ReferenceExporter} from "wprr/reference/ReferenceExporter";
+export {default as ReferenceRoot} from "wprr/reference/ReferenceRoot";
 export {default as AddContextReference} from "wprr/reference/AddContextReference";
 
 export {default as SourcedText} from "wprr/elements/text/SourcedText";
