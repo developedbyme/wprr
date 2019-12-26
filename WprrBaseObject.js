@@ -12,6 +12,8 @@ import UrlResolver from "wprr/utils/UrlResolver";
 export default class WprrBaseObject extends React.Component {
 	
 	constructor(aProps) {
+		//console.log("WprrBaseObject::constructor");
+		
 		super(aProps);
 		
 		this.state = new Object();
@@ -118,6 +120,30 @@ export default class WprrBaseObject extends React.Component {
 			return props[aPropName];
 		}
 		return aDefaultValue;
+	}
+	
+	getInput(aPropNameOrSource) {
+		//console.log("WprrBaseObject::getInput");
+		//console.log(aPropNameOrSource);
+		
+		if(typeof(aPropNameOrSource) === 'string') {
+			return this.getSourcedProp(aPropNameOrSource);
+		}
+		return this.resolveSourcedData(aPropNameOrSource);
+	}
+	
+	getFirstInput(...aArguments) {
+		let currentArray = aArguments;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentInput = currentArray[i];
+			let resolvedValue = this.getInput(currentInput);
+			if(resolvedValue !== null && resolvedValue !== undefined) {
+				return resolvedValue;
+			}
+		}
+		
+		return null;
 	}
 	
 	getFirstValidSource(...aArguments) {
