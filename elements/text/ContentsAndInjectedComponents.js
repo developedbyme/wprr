@@ -109,7 +109,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 				injectComponentData["container"] = currentElement;
 			
 				let type = currentElement.getAttribute("data-wprr-component");
-				let data = null;
+				let data = new Object();
 				let dataString = currentElement.getAttribute("data-wprr-component-data");
 			
 				try {
