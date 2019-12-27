@@ -2,6 +2,7 @@ import React from "react";
 import Wprr from "wprr/Wprr";
 
 import SourceData from "wprr/reference/SourceData";
+import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import WprrContext from "wprr/reference/WprrContext";
 
@@ -80,8 +81,15 @@ export default class WprrBaseObject extends React.Component {
 		return this.getContext().references;
 	}
 	
-	getReference(aPath) {
-		return this.getContext().references.getObject(aPath);
+	getReference(aPath, aDeepPath = null) {
+		
+		let theReference = this.getContext().references.getObject(aPath);
+		
+		if(aDeepPath) {
+			return SourceDataWithPath.getDeepPathValue(theReference, aDeepPath);
+		}
+		
+		return theReference;
 	}
 	
 	getWprrUrl(aPath, aBaseLocation = "rest") {

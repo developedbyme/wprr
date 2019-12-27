@@ -27,7 +27,7 @@ export default class SourceDataWithPath extends SourceData {
 		return this;
 	}
 	
-	getDeepPathValue(aData, aPath) {
+	static getDeepPathValue(aData, aPath) {
 		if(aData && aData.hasObjectPathHandling && aData.hasObjectPathHandling()) {
 			return aData.getValueForPath(aPath);
 		}
@@ -44,7 +44,7 @@ export default class SourceDataWithPath extends SourceData {
 			deepPath = deepPath.getSource(aFromObject);
 		}
 		
-		let returnData = this.getDeepPathValue(sourceData, deepPath);
+		let returnData = SourceDataWithPath.getDeepPathValue(sourceData, deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSource(aFromObject);
@@ -62,7 +62,7 @@ export default class SourceDataWithPath extends SourceData {
 			deepPath = deepPath.getSourceInStateChange(aFromObject, aNewPropsAndState);
 		}
 		
-		let returnData = this.getDeepPathValue(sourceData, deepPath);
+		let returnData = SourceDataWithPath.getDeepPathValue(sourceData, deepPath);
 		
 		if(returnData instanceof SourceData) {
 			returnData = returnData.getSourceInStateChange(aFromObject, aNewPropsAndState);
