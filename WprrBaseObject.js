@@ -146,6 +146,24 @@ export default class WprrBaseObject extends React.Component {
 		return null;
 	}
 	
+	getFirstInputWithDefault(...aArguments) {
+		let currentArray = aArguments;
+		let currentArrayLength = currentArray.length-1; //MENOTE: skip last item as it is the default
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentInput = currentArray[i];
+			let resolvedValue = this.getInput(currentInput);
+			if(resolvedValue !== null && resolvedValue !== undefined) {
+				return resolvedValue;
+			}
+		}
+		
+		if(currentArray.length > 0) {
+			return currentArray[currentArrayLength];
+		}
+		
+		return null;
+	}
+	
 	getFirstValidSource(...aArguments) {
 		return this.getFirstValidSourceInArray(aArguments);
 	}
