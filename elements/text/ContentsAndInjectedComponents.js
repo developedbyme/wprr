@@ -97,6 +97,11 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentElement = currentArray[i];
+				
+				if(!temporaryElement.contains(currentElement)) {
+					//MENOTE: element has been removed for being inside of another component
+					continue;
+				}
 			
 				let injectComponentData = new Object();
 				let id = "inject-" + this._injectComponents.length;
@@ -111,6 +116,13 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 					if(dataString != null) {
 						data = JSON.parse(dataString);
 					}
+					
+					data["innerMarkup"] = currentElement.innerHTML;
+					
+					if(data["innerMarkup"] && data["innerMarkup"] !== "") {
+						currentElement.innerHTML = "";
+					}
+					
 					this._renderInjectComponents.push(this._createInjectComponent(id, type, data));
 				}
 				catch(theError) {
