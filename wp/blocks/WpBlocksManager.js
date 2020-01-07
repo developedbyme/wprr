@@ -33,14 +33,15 @@ export default class WpBlocksManager {
 		return this;
 	}
 	
-	registerBlocksFromModule(aBlocks, aIcon = "marker", aCategory = "common") {
+	registerBlocksFromModule(aBlocks, aIcon = "marker", aCategory = "auto") {
 		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
 		let currentArray = mappedBlocks;
 		let currentArrayLength = currentArray.length;
 	
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentObject = currentArray[i];
-			this.createElementBlockRegistration(React.createElement(currentObject.value, {}), currentObject.key, aIcon = "marker", aCategory = "common");
+			
+			this.createElementBlockRegistration(React.createElement(currentObject.value, {}), currentObject.key, aIcon, aCategory);
 		}
 		
 		return this;
@@ -57,11 +58,34 @@ export default class WpBlocksManager {
 		return returnObject;
 	}
 	
-	createElementBlockRegistration(aElement, aName, aIcon = "marker", aCategory = "common") {
+	createElementBlockRegistration(aElement, aName, aIcon = "marker", aCategory = "auto") {
 		
 		let newElementBlockRegistration = new ElementBlockRegistration();
 		
-		newElementBlockRegistration.setupRegistration(aName, aIcon, aCategory);
+		
+		let tempArray = aName.split("/");
+		let name = tempArray.pop();
+		if(tempArray.length > 0) {
+			let path = tempArray.join("/");
+			name += " (" + path + ")";
+			
+			if(aCategory === "auto") {
+				aCategory = path;
+				
+				let categories = wp.blocks.getCategories();
+				
+				if(!Wprr.utils.array.getItemBy("slug", path, categories)) {
+					categories.push({"slug": aCategory, "title": aCategory, "icon": null});
+					wp.blocks.setCategories(categories);
+				}
+			}
+		}
+		
+		if(aCategory === "auto") {
+			aCategory = "common";
+		}
+		
+		newElementBlockRegistration.setupRegistration(name, aIcon, aCategory);
 		newElementBlockRegistration.setElement(aElement);
 		
 		let camelCaseId = ProgrammingLanguageFunctions.convertToCamelCase(aName);
