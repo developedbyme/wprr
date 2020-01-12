@@ -57,8 +57,10 @@ export default class Table extends WprrBaseObject {
 		let headerRowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "headerRowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/headerRowItem"),
-			React.createElement("th", {},
-				React.createElement(SourcedText, {"text": Wprr.source("firstInput", [Wprr.sourceReference("loop/cell/item", "label"), Wprr.sourceReference("loop/cell/item", "key")])})
+			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type")])},
+				React.createElement("th", {},
+					React.createElement(SourcedText, {"text": Wprr.source("firstInput", [Wprr.sourceReference("loop/cell/item", "label"), Wprr.sourceReference("loop/cell/item", "key")])})
+				)
 			)
 		);
 		
@@ -69,17 +71,19 @@ export default class Table extends WprrBaseObject {
 		let rowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "rowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/rowItem"),
-			React.createElement("td", {},
-				React.createElement(
-					Adjust,
-					{
-						"adjust": [
-							Table._adjust_getContentSources,
-							GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
-						],
-						"defaultElement": defaultRowItemContentElement
-					},
-					React.createElement(InsertElement, {})
+			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type")])},
+				React.createElement("td", {},
+					React.createElement(
+						Adjust,
+						{
+							"adjust": [
+								Table._adjust_getContentSources,
+								GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
+							],
+							"defaultElement": defaultRowItemContentElement
+						},
+						React.createElement(InsertElement, {})
+					)
 				)
 			)
 		);
