@@ -1,5 +1,6 @@
 import React from 'react';
 import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -49,11 +50,19 @@ export default class Table extends WprrBaseObject {
 		let columns = this.getSourcedProp("columns");
 		let rows = this.getSourcedProp("rows");
 		
+		console.log(">>>>>>>>>>><<", columns);
+		
+		if(typeof(columns) === "string") {
+			columns = Wprr.utils.array.convertValueToObjectInArray(Wprr.utils.array.arrayOrSeparatedString(columns), "key");
+		}
+		
+		console.log(columns);
+		
 		let headerRowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "headerRowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/headerRowItem"),
 			React.createElement("th", {},
-				React.createElement(SourcedText, {"text": SourceDataWithPath.create("reference", "loop/cell/item", "label")})
+				React.createElement(SourcedText, {"text": Wprr.source("firstInput", [Wprr.sourceReference("loop/cell/item", "label"), Wprr.sourceReference("loop/cell/item", "key")])})
 			)
 		);
 		

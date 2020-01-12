@@ -352,4 +352,19 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static convertValueToObjectInArray(aArray, aFieldName = "key") {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = new Object();
+			currentObject[aFieldName] = currentArray[i];
+			returnArray.push(currentObject);
+		}
+		
+		return returnArray;
+	}
 }

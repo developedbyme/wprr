@@ -3,6 +3,7 @@
 import objectPath from "object-path";
 
 import AcfFunctions from "wprr/wp/AcfFunctions";
+import ArrayFunctions from "wprr/utils/ArrayFunctions";
 
 // import SourceData from "wprr/reference/SourceData";
 export default class SourceData {
@@ -276,6 +277,33 @@ export default class SourceData {
 				}
 			case "commandElement":
 				return aFromObject;
+			case "firstInput":
+				{
+					let currentArray = ArrayFunctions.arrayOrSeparatedString(aPath);
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let currentInput = currentArray[i];
+						let resolvedValue = null;
+						
+						if(typeof(currentInput) === 'string') {
+							resolvedValue = SourceData.getSource("prop", currentInput, aFromObject, aPropsAndState);
+						}
+						else if(currentInput instanceof SourceData) {
+							resolvedValue = currentInput.getSourceInStateChange(aFromObject, aPropsAndState);
+						}
+						else {
+							resolvedValue = currentInput;
+						}
+						
+						if(resolvedValue !== null && resolvedValue !== undefined) {
+							return resolvedValue;
+						}
+					}
+					
+					return null;
+				}
+				
+				return returnString;
 			default:
 				console.error("Unknown type " + aType);
 				break;
