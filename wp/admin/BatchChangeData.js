@@ -30,4 +30,16 @@ export default class BatchChangeData  {
 		
 		return newChangeData;
 	}
+	
+	createSharedItemsChange(aIds) {
+		let newChangeData = new ChangeData();
+		
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this._items.push({"id": currentArray[i], "changeData": newChangeData});
+		}
+		
+		return newChangeData;
+	}
 }
