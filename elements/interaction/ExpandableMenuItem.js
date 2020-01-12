@@ -32,7 +32,7 @@ export default class ExpandableMenuItem extends WprrBaseObject {
 		);
 		let linkMarkup = this.getFirstInputWithDefault("linkMarkup", Wprr.sourceReference("menuItem/linkMarkup"), defaultLinkMarkup);
 		
-		let defaultExpandButtonContentMarkup = React.createElement(Wprr.FlexRow, {"className": "full-size centered-cell-holder"},
+		let defaultExpandButtonContentMarkup = React.createElement(Wprr.FlexRow, {"className": "full-size centered-cell-holder cursor-pointer"},
 			React.createElement(Wprr.Image, {"src": "arrow-down.svg", "location": "images", "className": "background-contain"})
 		);
 		let expandButtonContentMarkup = this.getFirstInputWithDefault("expandButtonContentMarkup", Wprr.sourceReference("menuItem/expandButtonContentMarkup"), defaultExpandButtonContentMarkup);
@@ -45,7 +45,7 @@ export default class ExpandableMenuItem extends WprrBaseObject {
 		let expandButtonMarkup = this.getFirstInputWithDefault("expandButtonMarkup", Wprr.sourceReference("menuItem/expandButtonMarkup"), defaultExpandButtonMarkup);
 		
 		let defaultExpandLayoutMarkup = React.createElement(Wprr.ExternalStorageInjection, {"initialValues": {"open": false}},
-			React.createElement(Wprr.FlexRow, {"className": "justify-between", "itemClasses": "flex-resize,flex-no-resize"},
+			React.createElement(Wprr.FlexRow, {"className": "justify-between", "itemClasses": "flex-resize,flex-no-resize menu-item-expand-button-cell"},
 				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("menuItem/linkMarkup")}),
 				React.createElement(Wprr.EditableProps, {"editableProps": "open", "externalStorage": Wprr.sourceReference("externalStorage")},
 					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("menuItem/expandButtonMarkup")})

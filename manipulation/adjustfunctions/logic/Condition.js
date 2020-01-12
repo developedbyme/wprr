@@ -1,6 +1,7 @@
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
+import ConditionEvaluation from "wprr/utils/logic/ConditionEvaluation";
 
 //import Condition from "wprr/manipulation/adjustfunctions/logic/Condition";
 /**
@@ -52,42 +53,7 @@ export default class Condition extends AdjustFunction {
 		
 		this.removeUsedProps(aData);
 		
-		let returnValue = false;
-		switch(condition) {
-			case "==":
-				returnValue = (input1 == input2);
-				break;
-			case "===":
-				returnValue = (input1 === input2);
-				break;
-			case ">=":
-				returnValue = (input1 >= input2);
-				break;
-			case ">":
-				returnValue = (input1 > input2);
-				break;
-			case "<=":
-				returnValue = (input1 <= input2);
-				break;
-			case "<":
-				returnValue = (input1 < input2);
-				break;
-			case "!=":
-				returnValue = (input1 != input2);
-				break;
-			case "!=":
-				returnValue = (input1 !== input2);
-				break;
-			case "&&":
-				returnValue = (input1 && input2);
-				break;
-			case "||":
-				returnValue = (input1 || input2);
-				break;
-			default:
-				console.error("Unknown operation " + condition, this);
-				break;
-		}
+		let returnValue = ConditionEvaluation.evaluateCondition(input1, condition, input2);
 		
 		aData[outputName] = returnValue;
 		

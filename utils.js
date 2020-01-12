@@ -13,6 +13,7 @@ import WprrUrlFunctions from "wprr/wp/WprrUrlFunctions";
 import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
 import UrlFunctions from "wprr/utils/UrlFunctions";
 import ObjectFunctions from "wprr/utils/ObjectFunctions";
+import ConditionEvaluation from "wprr/utils/logic/ConditionEvaluation";
 
 export {WpTermFunctions as wpTerms};
 export {ValidationFunctions as validations};
@@ -29,6 +30,7 @@ export {WpUrlFunctions as wpUrl};
 export {WprrUrlFunctions as wprrUrl};
 export {ReactChildFunctions as reactChildren};
 export {ProgrammingLanguageFunctions as programmingLanguage};
+export {ConditionEvaluation as conditionEvaluation};
 
 export {default as JsonLoader} from "wprr/utils/loading/JsonLoader";
 export {default as TextLoader} from "wprr/utils/loading/TextLoader";

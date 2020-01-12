@@ -44,6 +44,7 @@ import Combine from "wprr/manipulation/adjustfunctions/logic/Combine";
 import SelectItemsInArray from "wprr/manipulation/adjustfunctions/logic/SelectItemsInArray";
 import StartOfArrayAsText from "wprr/manipulation/adjustfunctions/text/StartOfArrayAsText";
 import MapArray from "wprr/manipulation/adjustfunctions/logic/MapArray";
+import ClassFromComparison from "wprr/manipulation/adjustfunctions/css/ClassFromComparison";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -63,6 +64,8 @@ let classFromProp = ClassFromProp.create;
 export {classFromProp};
 let classFromValue = ClassFromProp.createWithSource;
 export {classFromValue};
+let classFromComparison = ClassFromComparison.create;
+export {classFromComparison};
 let resolveSources = ResolveSources.create;
 export {resolveSources};
 let markupLoop = MarkupLoop.create;
