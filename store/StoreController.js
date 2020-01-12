@@ -103,8 +103,7 @@ export default class StoreController {
 	}
 	
 	invalidateAllSubPaths(aPath) {
-		console.log("wprr/store/StoreController::invalidateAllSubPaths");
-		console.log(aPath);
+		//console.log("wprr/store/StoreController::invalidateAllSubPaths");
 		
 		for(let path in this._loaders) {
 			if(path.indexOf(aPath) === 0) {

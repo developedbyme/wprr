@@ -50,13 +50,9 @@ export default class Table extends WprrBaseObject {
 		let columns = this.getSourcedProp("columns");
 		let rows = this.getSourcedProp("rows");
 		
-		console.log(">>>>>>>>>>><<", columns);
-		
 		if(typeof(columns) === "string") {
 			columns = Wprr.utils.array.convertValueToObjectInArray(Wprr.utils.array.arrayOrSeparatedString(columns), "key");
 		}
-		
-		console.log(columns);
 		
 		let headerRowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "headerRowItemMarkup"),
@@ -67,24 +63,29 @@ export default class Table extends WprrBaseObject {
 		);
 		
 		let defaultRowItemContentElement = React.createElement(Adjust, {"adjust": Table._adjust_getRowItemContent},
-			React.createElement(SourcedText, {"text": SourceDataWithPath.create("reference", "loop/cell/item", "label"), "format": "html"})
+			React.createElement(SourcedText, {"text": "(Not set)", "format": "html"})
 		);
 		
 		let rowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "rowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/rowItem"),
 			React.createElement("td", {},
-				React.createElement(Adjust, {"adjust": [
-					Table._adjust_getContentSources,
-					GetFirstResolvingSource.create(SourceData.create("prop", "sources"), this, "element")
-				], "defaultElement": defaultRowItemContentElement},
+				React.createElement(
+					Adjust,
+					{
+						"adjust": [
+							Table._adjust_getContentSources,
+							GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
+						],
+						"defaultElement": defaultRowItemContentElement
+					},
 					React.createElement(InsertElement, {})
 				)
 			)
 		);
 		
 		let rowMarkup = this.getFirstValidSource(
-			SourceData.create("prop", "rowMarkup"),
+			Wprr.sourceProp("rowMarkup"),
 			SourceData.create("referenceIfExists", "table/row"),
 			React.createElement("tr", {},
 				React.createElement(Loop, {"loop": MarkupLoop.create(columns, rowItemMarkup), "loopName": "cell"})
@@ -140,6 +141,7 @@ export default class Table extends WprrBaseObject {
 		let key = objectPath.get(cellData, "key");
 		
 		let data = objectPath.get(rowData, key);
+		
 		if(data) {
 			aProps["text"] = data;
 		}

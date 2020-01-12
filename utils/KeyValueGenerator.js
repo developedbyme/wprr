@@ -1,4 +1,5 @@
 import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 // import KeyValueGenerator from "wprr/utils/KeyValueGenerator";
 export default class KeyValueGenerator {
@@ -8,20 +9,42 @@ export default class KeyValueGenerator {
 		this._values = new Array();
 	}
 	
-	addKeyValue(aKey, aValue) {
-		this._values.push({"key": aKey, "value": aValue});
+	createNewObject(aKey, aAdditionalParameters = null) {
+		let returnObject;
+		if(aAdditionalParameters) {
+			returnObject = Wprr.utils.object.copyViaJson(aAdditionalParameters);
+		}
+		else {
+			returnObject = new Object();
+		}
+		
+		returnObject["key"] = aKey;
+		this._values.push(returnObject);
+		
+		return returnObject;
+	}
+	
+	addKeyValue(aKey, aValue, aAdditionalParameters = null) {
+		
+		let newObject = this.createNewObject(aKey, aAdditionalParameters);
+		newObject["value"] = aValue;
 		
 		return this;
 	}
 	
-	addKeyLabel(aKey, aLabel) {
-		this._values.push({"key": aKey, "label": aLabel});
+	addKeyLabel(aKey, aLabel, aAdditionalParameters = null) {
+		
+		let newObject = this.createNewObject(aKey, aAdditionalParameters);
+		newObject["label"] = aLabel;
 		
 		return this;
 	}
 	
-	addKeyValueLabel(aKey, aValue, aLabel) {
-		this._values.push({"key": aKey, "value": aValue, "label": aLabel});
+	addKeyValueLabel(aKey, aValue, aLabel, aAdditionalParameters = null) {
+		
+		let newObject = this.createNewObject(aKey, aAdditionalParameters);
+		newObject["value"] = aValue;
+		newObject["label"] = aLabel;
 		
 		return this;
 	}
