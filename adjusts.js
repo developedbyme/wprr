@@ -45,6 +45,7 @@ import SelectItemsInArray from "wprr/manipulation/adjustfunctions/logic/SelectIt
 import StartOfArrayAsText from "wprr/manipulation/adjustfunctions/text/StartOfArrayAsText";
 import MapArray from "wprr/manipulation/adjustfunctions/logic/MapArray";
 import ClassFromComparison from "wprr/manipulation/adjustfunctions/css/ClassFromComparison";
+import AlternatingMarkupLoop from "wprr/manipulation/adjustfunctions/loop/AlternatingMarkupLoop";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -70,6 +71,8 @@ let resolveSources = ResolveSources.create;
 export {resolveSources};
 let markupLoop = MarkupLoop.create;
 export {markupLoop};
+let alternatingMarkupLoop = AlternatingMarkupLoop.create;
+export {alternatingMarkupLoop};
 let optionsFromTerms = OptionsFromTerms.create;
 export {optionsFromTerms};
 let optionsFromRange = OptionsFromRange.create;

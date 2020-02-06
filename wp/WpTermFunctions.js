@@ -132,6 +132,27 @@ export default class WpTermFunctions {
 		return currentTerms;
 	}
 	
+	static getTermFromHierarchTermsBy(aBy, aIdentifier, aHierarchTerms) {
+		let currentTerms = aHierarchTerms;
+		
+		let currentArray = aHierarchTerms;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentPathPart = currentArray[i];
+			let currentTerm = currentArray[i];
+			
+			if(currentTerm.term[aBy] === aIdentifier) {
+				return currentTerm.term;
+			}
+			let subterm = WpTermFunctions.getTermFromHierarchTermsBy(aBy, aIdentifier, currentTerm.children);
+			if(subterm) {
+				return subterm;
+			}
+		}
+		
+		return null;
+	}
+	
 	static getSubtreeFromHierarchTerms(aPath, aHierarchTerms) {
 		
 		let currentTerms = aHierarchTerms;
