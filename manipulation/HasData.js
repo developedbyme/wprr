@@ -52,7 +52,8 @@ export default class HasData extends ManipulationBaseObject {
 				}
 				break;
 			case "equal":
-				if(aData && aData == compareValue) {
+				console.log(aData == compareValue, aData, compareValue);
+				if(aData == compareValue) {
 					return true;
 				}
 				break;
