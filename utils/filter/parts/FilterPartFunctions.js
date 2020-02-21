@@ -43,6 +43,7 @@ export default class FilterPartFunctions  {
 		//console.log("wprr/utils/filter/parts/FilterPartFunctions::matchFieldInArray");
 		
 		let returnArray = new Array();
+		let ignoredArray = new Array();
 		
 		let matchValue = this.getInput("compareValue");
 		let arrayField = this.getInput("arrayField");
@@ -65,6 +66,13 @@ export default class FilterPartFunctions  {
 					}
 				}
 			}
+			
+			ignoredArray.push(currentItem);
+		}
+		
+		let invert = this.getInput("invert");
+		if(invert) {
+			return ignoredArray;
 		}
 		
 		return returnArray;

@@ -62,3 +62,6 @@ export {default as SortChain} from "wprr/utils/sort/SortChain";
 export {default as SortPart} from "wprr/utils/sort/parts/SortPart";
 export {default as FieldSort} from "wprr/utils/sort/parts/FieldSort";
 export {default as ArrayFieldSort} from "wprr/utils/sort/parts/ArrayFieldSort";
+
+import * as wp from "wprr/wp";
+export {wp as wp};
