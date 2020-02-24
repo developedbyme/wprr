@@ -71,6 +71,7 @@ export {default as CustomRadioButton} from "wprr/elements/form/CustomRadioButton
 export {default as RangeSelection} from "wprr/elements/form/wp/RangeSelection";
 export {default as ExpandableMenuItem} from "wprr/elements/interaction/ExpandableMenuItem";
 export {default as InternalMessageGroupInjection} from "wprr/manipulation/InternalMessageGroupInjection";
+export {default as OnOffButton} from "wprr/elements/interaction/OnOffButton";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
