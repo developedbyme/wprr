@@ -34,7 +34,9 @@ export default class WpTermFunctions {
 	static getTermBy(aField, aIdentifier, aTerms) {
 		
 		let returnValue = WpTermFunctions.getTermIfExistsBy(aField, aIdentifier, aTerms);
-		console.warn("No term with " + aField + " " + aIdentifier + " exists.", aTerms);
+		if(!returnValue) {
+			console.warn("No term with " + aField + " " + aIdentifier + " exists.", aTerms);
+		}
 		
 		return returnValue;
 	}

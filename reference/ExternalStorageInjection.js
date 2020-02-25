@@ -5,6 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 import DataStorage from "wprr/utils/DataStorage";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+
 //import ExternalStorageInjection from "wprr/reference/ExternalStorageInjection";
 export default class ExternalStorageInjection extends ManipulationBaseObject {
 
@@ -25,8 +27,18 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 		delete aReturnObject["storageName"];
 		delete aReturnObject["initialExternalStorage"];
 		delete aReturnObject["initialValues"];
+		delete aReturnObject["changeCommands"];
 		
 		return aReturnObject;
+	}
+	
+	externalDataChange() {
+		console.log("ExternalStorageInjection::externalDataChange");
+		
+		let commands = this.getSourcedProp("changeCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, this._externalStorage.getData(), this);
+		}
 	}
 	
 	_prepareInitialRender() {
@@ -42,6 +54,14 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 			for(let objectName in initialValues) {
 				this._externalStorage.updateValue(objectName, this.resolveSourcedData(initialValues[objectName]));
 			}
+		}
+		
+		this._externalStorage.addOwner(this);
+	}
+	
+	componentWillUnmount() {
+		if(this._externalStorage) {
+			this._externalStorage.removeOwner(this);
 		}
 	}
 	

@@ -47,7 +47,11 @@ export default class TermSelection extends ManipulationBaseObject {
 		
 		let text = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose"));
 		//METODO: get initial values
-		adjusts.push(Wprr.adjusts.addToArray(Wprr.sourceProp("options"), [{"value": 0, "label": text}], true, "options"));
+		
+		let skipNoSelection = this.getSourcedProp("skipNoSelection");
+		if(!skipNoSelection) {
+			adjusts.push(Wprr.adjusts.addToArray(Wprr.sourceProp("options"), [{"value": 0, "label": text}], true, "options"));
+		}
 		
 		let children = super._getChildrenToClone();
 		if(children.length === 0) {
