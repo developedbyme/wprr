@@ -313,6 +313,14 @@ export default class PostData {
 		return null;
 	}
 	
+	getSingleRelation(aRelationType) {
+		return Wprr.utils.dbmContent.getSingleRelation(this, aRelationType);
+	}
+	
+	hasSpecificRelation(aRelationType) {
+		return Wprr.utils.dbmContent.hasSpecificRelation(this, aRelationType);
+	}
+	
 	static create(aData) {
 		var newPostData = new PostData();
 		
