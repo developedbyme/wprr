@@ -14,6 +14,7 @@ export default class TranslationOrId extends SourcedText {
 		let id = this.getSourcedProp("id");
 		let prefix = this.getSourcedProp("prefix");
 		let suffix = this.getSourcedProp("suffix");
+		let defaultText = this.getSourcedProp("defaultText");
 		
 		let fullPath = id;
 		if(prefix) {
@@ -23,8 +24,12 @@ export default class TranslationOrId extends SourcedText {
 			fullPath = fullPath + "." + suffix;
 		}
 		
+		if(!defaultText) {
+			defaultText = id;
+		}
+		
 		let textManager = this.getReference("wprr/textManager");
-		let translatedText = textManager.getTextOrId(fullPath, id);
+		let translatedText = textManager.getTextOrId(fullPath, defaultText);
 		
 		return translatedText;
 	}

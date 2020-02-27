@@ -7,6 +7,7 @@ import Adjust from "wprr/manipulation/Adjust";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 import SourcedText from "wprr/elements/text/SourcedText";
 import WpTermFunctions from "wprr/wp/WpTermFunctions";
+import TranslationOrId from "wprr/elements/text/TranslationOrId";
 
 //import TermName from "wprr/elements/text/TermName";
 export default class TermName extends WprrBaseObject {
@@ -20,10 +21,19 @@ export default class TermName extends WprrBaseObject {
 		let taxonomy = this.getSourcedPropWithDefault("taxonomy", "category");
 		let field = this.getSourcedPropWithDefault("field", "id");
 		let termId = this.getSourcedProp("termId");
+		let translationsPath = this.getSourcedProp("translationsPath");
+		
+		let textElement;
+		if(translationsPath) {
+			textElement = React.createElement(TranslationOrId, {"prefix": translationsPath, "id": SourceDataWithPath.create("prop", "term", "slug"), "defaultText": SourceDataWithPath.create("prop", "term", "name")});
+		}
+		else {
+			textElement = React.createElement(SourcedText, {"text": SourceDataWithPath.create("prop", "term", "name")});
+		}
 		
 		return React.createElement(WprrDataLoader, {"loadData": {"terms": "wprr/v1/taxonomy/" + taxonomy +"/terms"}},
 			React.createElement(Adjust, {"adjust": TermName._adjust_selectTerm, "termId": termId, "field": field},
-				React.createElement(SourcedText, {"text": SourceDataWithPath.create("prop", "term", "name")})
+				textElement
 			)
 		);
 	}

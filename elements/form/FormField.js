@@ -10,8 +10,8 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 // import FormField from "wprr/elements/form/FormField";
 export default class FormField extends WprrBaseObject {
 
-	constructor( props ) {
-		super( props );
+	constructor(aProps) {
+		super(aProps);
 		
 		this._mainElementType = "input";
 		

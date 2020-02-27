@@ -5,6 +5,8 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
 import DropdownSelection from "wprr/elements/form/DropdownSelection";
 
+import SourceData from "wprr/reference/SourceData";
+
 // import CustomSelection from "wprr/elements/form/CustomSelection";
 export default class CustomSelection extends ManipulationBaseObject {
 
@@ -96,7 +98,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let options = this._normalizeOptions(this.getSourcedProp("options"));
 		let valueName = this.getSourcedProp("valueName");
-		let value = this.getSourcedPropWithDefault("value", Wprr.sourceProp(this.getSourcedProp("valueName")));
+		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", this.getSourcedProp("valueName")));
 		
 		let children = super._getChildrenToClone();
 		
@@ -104,13 +106,13 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let markup = this.getFirstValidSource(
 			Wprr.sourceProp("markup"),
-			Wprr.sourceReference("customSelection/markup"),
+			Wprr.sourceReferenceIfExists("customSelection/markup"),
 			defaultMarkup
 		);
 		
 		let buttonClasses = this.getFirstValidSource(
 			Wprr.sourceProp("buttonClasses"),
-			Wprr.sourceReference("customSelection/buttonClasses"),
+			Wprr.sourceReferenceIfExists("customSelection/buttonClasses"),
 			"custom-selection custom-selection-padding"
 		);
 		
@@ -126,7 +128,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let optionContentItem = this.getFirstValidSource(
 			Wprr.sourceProp("optionContentMarkup"),
-			Wprr.sourceReference("customSelection/optionContent"),
+			Wprr.sourceReferenceIfExists("customSelection/optionContent"),
 			React.createElement("div", {"className": "custom-selection-option custom-selection-option-padding cursor-pointer"}, Wprr.text(Wprr.sourceReference("loop/item", "label")))
 		);
 		
@@ -140,18 +142,18 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let defaultLoopItem = this.getFirstValidSource(
 			Wprr.sourceProp("optionMarkup"),
-			Wprr.sourceReference("customSelection/option"),
+			Wprr.sourceReferenceIfExists("customSelection/option"),
 			loopItemMarkup
 		);
 		let defaultLoopItemSpacing = this.getFirstValidSource(
 			Wprr.sourceProp("optionSpacingMarkup"),
-			Wprr.sourceReference("customSelection/optionSpacing"),
+			Wprr.sourceReferenceIfExists("customSelection/optionSpacing"),
 			React.createElement(React.Fragment)
 		);
 		
 		let selectionMenuClasses = this.getFirstValidSource(
 			Wprr.sourceProp("selectionMenuClasses"),
-			Wprr.sourceReference("customSelection/selectionMenuClasses"),
+			Wprr.sourceReferenceIfExists("customSelection/selectionMenuClasses"),
 			"custom-selection-menu custom-selection-menu-padding"
 		);
 		
@@ -162,10 +164,10 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let filter = this.getFirstValidSource(
 			Wprr.sourceProp("filterOptions"),
-			Wprr.sourceReference("customSelection/filterOptions")
+			Wprr.sourceReferenceIfExists("customSelection/filterOptions")
 		);
 		
-		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReference("customSelection/loop"), defaultLoop], this, "element")},
+		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReferenceIfExists("customSelection/loop"), defaultLoop], this, "element")},
 			React.createElement(Wprr.InsertElement, {})
 		);
 		
