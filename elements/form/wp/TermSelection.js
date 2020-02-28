@@ -9,6 +9,15 @@ export default class TermSelection extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
+		
+		this._propsThatShouldNotCopy.push("taxonomy");
+		this._propsThatShouldNotCopy.push("subtree");
+		this._propsThatShouldNotCopy.push("valueField");
+		this._propsThatShouldNotCopy.push("translationsPath");
+		this._propsThatShouldNotCopy.push("filterAdjust");
+		this._propsThatShouldNotCopy.push("sortAdjust");
+		this._propsThatShouldNotCopy.push("noSelectionLabel");
+		this._propsThatShouldNotCopy.push("skipNoSelection");
 	}
 	
 	getValue() {
