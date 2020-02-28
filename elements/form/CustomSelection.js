@@ -162,17 +162,30 @@ export default class CustomSelection extends ManipulationBaseObject {
 			"className": "custom-selection-menu-item custom-selection-menu-item-padding"
 		}));
 		
+		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReferenceIfExists("customSelection/loop"), defaultLoop], this, "element")},
+			React.createElement(Wprr.InsertElement, {})
+		);
+		
 		let filter = this.getFirstValidSource(
 			Wprr.sourceProp("filterOptions"),
 			Wprr.sourceReferenceIfExists("customSelection/filterOptions")
 		);
 		
-		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReferenceIfExists("customSelection/loop"), defaultLoop], this, "element")},
-			React.createElement(Wprr.InsertElement, {})
+		let sort = this.getFirstValidSource(
+			Wprr.sourceProp("sortOptions"),
+			Wprr.sourceReferenceIfExists("customSelection/sortOptions")
 		);
 		
-		if(filter) {
-			loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.applyFilterChain(Wprr.sourceReference("options"), filter, "options")},
+		if(filter || sort) {
+			let adjustments = [];
+			if(filter) {
+				adjustments.push(Wprr.adjusts.applyFilterChain(Wprr.sourceProp("options"), filter, "options"))
+			}
+			if(sort) {
+				adjustments.push(Wprr.adjusts.applySortChain(Wprr.sourceProp("options"), sort, "options"))
+			}
+			
+			loop = React.createElement(Wprr.Adjust, {"adjust": adjustments, "options": Wprr.sourceReference("options")},
 				React.createElement(Wprr.ReferenceInjection, {"injectData": {"options": Wprr.sourceProp("options")}},
 					loop
 				)
