@@ -16,12 +16,18 @@ export default class DateDisplay extends SourcedText {
 		let input = this.getSourcedProp("date");
 		let inputType = this.getSourcedProp("inputType");
 		let format = this.getSourcedProp("format");
+		let locale = this.getSourcedProp("locale");
 		
 		if(inputType === "php") {
 			input = 1000*input;
 		}
 		
-		let returnText = DateDisplay.momentFunction(input).format(format);
+		let moment = DateDisplay.momentFunction(input);
+		if(locale) {
+			moment = moment.clone().locale(locale);
+		}
+		
+		let returnText = moment.format(format);
 		
 		return returnText;
 	}
