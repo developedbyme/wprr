@@ -23,6 +23,19 @@ export default class ObjectFunctions {
 		return aObject;
 	}
 	
+	static selectFields(aObject, aFields) {
+		let fields = Wprr.utils.array.arrayOrSeparatedString(aFields);
+		
+		let returnArray = new Array();
+		let currentArray = fields;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray.push(objectPath.get(aObject, currentArray[i]));
+		}
+		
+		return returnArray;
+	}
+	
 	static copyViaJson(aObject) {
 		return JSON.parse(JSON.stringify(aObject));
 	}

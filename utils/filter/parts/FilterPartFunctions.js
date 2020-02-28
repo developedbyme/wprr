@@ -165,6 +165,7 @@ export default class FilterPartFunctions  {
 	
 	static matchInArray(aCurrentArray, aOriginalArray) {
 		let returnArray = new Array();
+		let ignoredArray = new Array();
 		
 		let matchValues = this.getInput("compareValues");
 		let field = this.getInput("field");
@@ -182,6 +183,14 @@ export default class FilterPartFunctions  {
 			if(matchValues.indexOf(currentValue) !== -1) {
 				returnArray.push(currentItem);
 			}
+			else {
+				ignoredArray.push(currentItem);
+			}
+		}
+		
+		let invert = this.getInput("invert");
+		if(invert) {
+			return ignoredArray;
 		}
 		
 		return returnArray;

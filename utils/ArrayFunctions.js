@@ -367,4 +367,21 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static renameValue(aArray, aInputValue, aOutputValue) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let value = currentArray[i];
+			if(value === aInputValue) {
+				value = aOutputValue;
+			}
+			
+			returnArray.push(value);
+		}
+		
+		return returnArray;
+	}
 }
