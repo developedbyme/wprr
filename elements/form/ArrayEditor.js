@@ -105,6 +105,17 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			Wprr.text(Wprr.sourceReference("loop/array/item"))
 		];
 		
+		let removeButton = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(removeButtonSources, this, "element")},
+			React.createElement(Wprr.InsertElement, {})
+		);
+		
+		let minLength = this.getFirstInput("minLength", Wprr.sourceReferenceIfExists("arrayEditor/minLength"));
+		if(minLength) {
+			removeButton = React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("arrayEditor/numberOfItems"), "checkType": "greaterThan", "compareValue": minLength},
+				removeButton
+			);
+		}
+		
 		let loopItemMarkup = this.getFirstValidSource(
 			Wprr.source("prop", "loopItemMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/loopItemMarkup"),
@@ -112,9 +123,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(editItemFormSources, this, "element")},
 					React.createElement(Wprr.InsertElement, {})
 				),
-				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(removeButtonSources, this, "element")},
-					React.createElement(Wprr.InsertElement, {})
-				)
+				removeButton
 			)
 		);
 		
@@ -156,12 +165,21 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			"arrayEditor/addButton": addButton
 		};
 		
+		let insertButton = React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("arrayEditor/addButton")});
+		
+		let maxLength = this.getFirstInput("maxLength", Wprr.sourceReferenceIfExists("arrayEditor/maxLength"));
+		if(maxLength) {
+			insertButton = React.createElement(Wprr.HasData, {"check": maxLength, "checkType": "greaterThan", "compareValue": Wprr.sourceReference("arrayEditor/numberOfItems")},
+				insertButton
+			);
+		}
+		
 		let children = [
 			React.createElement(Wprr.MarkupPlacement, {"placement": "loop"},
 				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("arrayEditor/loop")})
 			),
 			React.createElement(Wprr.MarkupPlacement, {"placement": "addButton"},
-				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("arrayEditor/addButton")})
+				insertButton	
 			),
 		];
 		
