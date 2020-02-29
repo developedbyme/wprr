@@ -33,7 +33,7 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 	}
 	
 	externalDataChange() {
-		console.log("ExternalStorageInjection::externalDataChange");
+		//console.log("ExternalStorageInjection::externalDataChange");
 		
 		let commands = this.getSourcedProp("changeCommands");
 		if(commands) {

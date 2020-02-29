@@ -313,6 +313,10 @@ export default class PostData {
 		return null;
 	}
 	
+	getRelations(aRelationType) {
+		return Wprr.utils.dbmContent.getRelations(this, aRelationType);
+	}
+	
 	getSingleRelation(aRelationType) {
 		return Wprr.utils.dbmContent.getSingleRelation(this, aRelationType);
 	}
