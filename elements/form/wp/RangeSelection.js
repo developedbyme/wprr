@@ -38,7 +38,7 @@ export default class RangeSelection extends ManipulationBaseObject {
 		let valueField = this.getSourcedPropWithDefault("valueField", null);
 		let labelField = this.getSourcedPropWithDefault("labelField", null);
 		
-		adjusts.push(Wprr.adjusts.optionsFromRange(Wprr.sourceProp("range")).setInputWithoutNull("valueField", valueField).setInputWithoutNull("labelField", labelField));
+		adjusts.push(Wprr.adjusts.optionsFromRange(Wprr.sourceProp("range")).setInputWithoutNull("keyField", valueField).setInputWithoutNull("labelField", labelField));
 		
 		let filterAdjust = this.getSourcedProp("filterAdjust");
 		if(filterAdjust) {
