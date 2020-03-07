@@ -1,3 +1,5 @@
+import objectPath from "object-path";
+
 import ChangeDataFunctions from "wprr/wp/admin/ChangeDataFunctions";
 
 // import ChangeData from "wprr/wp/admin/ChangeData";
@@ -6,18 +8,36 @@ export default class ChangeData  {
 	constructor() {
 		this._title = "";
 		this._changes = new Array();
+		this._settings = new Object();
 	}
 	
 	getCreateData() {
-		return ChangeDataFunctions.createCreateData(this._title, this._changes);
+		let returnData = ChangeDataFunctions.createCreateData(this._title, this._changes);
+		this._addSettingsToData(this._settings, returnData);
+		return returnData;
 	}
 	
 	getEditData() {
-		return ChangeDataFunctions.createEditData(this._changes);
+		let returnData = ChangeDataFunctions.createEditData(this._changes);
+		this._addSettingsToData(this._settings, returnData);
+		return returnData;
+	}
+	
+	_addSettingsToData(aSettings, aReturnObject) {
+		for(let objectName in aSettings) {
+			aReturnObject[objectName] = aSettings[objectName];
+		}
+		return aReturnObject;
 	}
 	
 	getChanges() {
 		return this._changes;
+	}
+	
+	addSetting(aName, aValue) {
+		objectPath.set(this._settings, aName, aValue);
+		
+		return this;
 	}
 	
 	addChanges(aChanges) {
