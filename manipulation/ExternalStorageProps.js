@@ -1,4 +1,5 @@
 import React from 'react';
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -21,7 +22,7 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 	_updateState() {
 		//console.log("wprr/manipulation/ExternalStorageProps::_updateState");
 		
-		let externalStorage = this.getSourcedProp("externalStorage");
+		let externalStorage = this.getFirstInput("externalStorage", Wprr.sourceReference("externalStorage"));
 		let currentArray = this._getPropNames();
 		
 		let newState = {};
