@@ -317,4 +317,48 @@ export default class FilterPartFunctions  {
 		
 		return newFilterPart;
 	}
+	
+	static fieldsSearch(aCurrentArray, aOriginalArray) {
+		let returnArray = new Array();
+		
+		let currentArray2 = this.getInput("fields");
+		let currentArray2Length = currentArray2.length;
+		let searchValue = this.getInput("searchValue");
+		
+		if(!searchValue) {
+			return returnArray.concat(aCurrentArray);
+		}
+		
+		searchValue = (""+searchValue).toLowerCase();
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let passes = false;
+			for(let j = 0; j < currentArray2Length; j++) {
+				let fieldValue = (""+objectPath.get(currentItem, currentArray2[j])).toLowerCase();
+				if(fieldValue.indexOf(searchValue) !== -1) {
+					passes = true;
+					break;
+				}
+			}
+			
+			if(passes) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createFieldsSearch(aFields, aSearchValue, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.fieldsSearch, aActive);
+		
+		newFilterPart.inputs.setInput("fields", aFields);
+		newFilterPart.inputs.setInput("searchValue", aSearchValue);
+		
+		return newFilterPart;
+	}
 }

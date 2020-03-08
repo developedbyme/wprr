@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import FilterPart from "wprr/utils/filter/parts/FilterPart";
 
 // import FilterChain from "wprr/utils/filter/FilterChain";
@@ -40,6 +42,12 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addFieldsSearch(aFields, aSearchValue, aActive = null) {
+		this.addPart(Wprr.utils.filterPartFunctions.createFieldsSearch(aFields, aSearchValue, aActive));
+		
+		return this;
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		
@@ -66,6 +74,12 @@ export default class FilterChain extends FilterPart {
 		this.setPerformingElement(aPerformingElement, aProps);
 		
 		return this.applyFilter(currentArray, originalArray);
+	}
+	
+	getApplyAdjustFunction(aInput, aOutputName) {
+		let adjustFunction = Wprr.adjusts.applyFilterChain(aInput, this, aOutputName);
+		
+		return adjustFunction;
 	}
 	
 	static create(aFilterParts = null, aActive = null) {
