@@ -24,6 +24,8 @@ export default class Calendar extends WprrBaseObject {
 	
 	constructor(aProps) {
 		super(aProps);
+		
+		this._addMainElementClassName("calendar");
 	}
 	
 	getValue() {
@@ -120,6 +122,9 @@ export default class Calendar extends WprrBaseObject {
 		
 		injectData["calendar/valueName"] = valueName;
 		
+		injectData["calendar/firstSelectableDate"] = this.getFirstInputWithDefault("firstSelectableDate", Wprr.sourceReferenceIfExists("calendar/firstSelectableDate"), null);
+		injectData["calendar/lastSelectableDate"] = this.getFirstInputWithDefault("lastSelectableDate", Wprr.sourceReferenceIfExists("calendar/lastSelectableDate"), null);
+		
 		let selectCommands = new Array();
 		if(valueName) {
 			selectCommands.push(SetValueCommand.create(
@@ -175,13 +180,28 @@ export default class Calendar extends WprrBaseObject {
 		//console.log("wprr/elements/create/Calendar::_adjust_isSelectedDate");
 		//console.log(aManipulationObject.getReference("calendar/day/date"), aManipulationObject.getReference("calendar/selectedDate"), aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate"))
 		
-		if(aManipulationObject.getReference("calendar/day/date") === aManipulationObject.getReference("calendar/selectedDate")) {
-			if(!aReturnObject["className"]) {
-				aReturnObject["className"] = "";
-			}
-			
+		if(!aReturnObject["className"]) {
+			aReturnObject["className"] = "";
+		}
+		
+		let currentDate = aManipulationObject.getReference("calendar/day/date");
+		if(currentDate === aManipulationObject.getReference("calendar/selectedDate")) {
 			aReturnObject["className"] += " selected";
 		}
+		
+		let selectable = true;
+		let firstSelectableDate = aManipulationObject.getReferenceIfExists("calendar/firstSelectableDate");
+		let lastSelectableDate = aManipulationObject.getReferenceIfExists("calendar/lastSelectableDate");
+		
+		console.log(currentDate, firstSelectableDate);
+		if(firstSelectableDate && currentDate < firstSelectableDate) {
+			selectable = false;
+		}
+		else if(lastSelectableDate && currentDate > lastSelectableDate) {
+			selectable = false;
+		}
+		
+		aReturnObject["className"] += " " + (selectable ? "selectable" : "unselectable");
 		
 		return aReturnObject;
 	}
@@ -189,7 +209,7 @@ export default class Calendar extends WprrBaseObject {
 
 Calendar.DEFAULT_ROW_MARKUP = React.createElement(Markup, {},
 	React.createElement(Loop, {"input": Wprr.sourceReference("calendar/week/days"), "contentCreator": Calendar._contentCreator_cell},
-		React.createElement(FlexRow, {"className": "calendar-week"})
+		React.createElement(FlexRow, {"className": "calendar-week uniform-item"})
 	)
 );
 
