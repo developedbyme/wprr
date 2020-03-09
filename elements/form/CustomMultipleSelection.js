@@ -12,6 +12,13 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 		super(aProps);
 	}
 	
+	getValue() {
+		let valueName = this.getSourcedProp("valueName");
+		let value = this.getSourcedPropWithDefault("value", Wprr.sourceProp(this.getSourcedProp("valueName")));
+		
+		return [].concat(value);
+	}
+	
 	_changed(aNewValue) {
 		console.log("wprr/elements/form/CustomMultipleSelection::_changed");
 		console.log(aNewValue);
@@ -110,6 +117,13 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 			defaultMarkup
 		);
 		
+		let noSelectionLabel = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose"));
+		let selectedItemLoopItem = React.createElement("span", {},
+			React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("loop/item"), Wprr.sourceReference("options"))]},
+				Wprr.text(null)
+			)
+		);
+		
 		let button = this.getFirstValidSource(
 			Wprr.sourceProp("buttonMarkup"),
 			Wprr.sourceReference("multipleSelection/button"),
@@ -123,7 +137,12 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 				"className"
 			)},
 				React.createElement("div", {},
-					Wprr.text(Wprr.sourceReference("value"))
+					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("value"), "checkType": "notEmpty"},
+						React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("value"), selectedItemLoopItem, React.createElement("span", {}, ", "))})
+					),
+					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("value"), "checkType": "invert/notEmpty"},
+						Wprr.text(noSelectionLabel)
+					)
 				)
 			)
 		);

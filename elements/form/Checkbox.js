@@ -34,6 +34,14 @@ export default class Checkbox extends WprrBaseObject {
 		this._validate("focus");
 	}
 	
+	getValue() {
+		let valueName = this.getSourcedProp("valueName");
+		let value = this.getSourcedPropWithDefault("value", true);
+		let checked = this.getSourcedPropWithDefault("checked", SourceData.create("propWithDots", valueName));
+		
+		return checked ? value : !value;
+	}
+	
 	validate(aType) {
 		return this._validate(aType);
 	}
@@ -56,7 +64,7 @@ export default class Checkbox extends WprrBaseObject {
 		returnObject["name"] = this.getSourcedProp("name");
 		returnObject["type"] = "checkbox";
 		
-		returnObject["value"] = this.getSourcedProp("value");
+		returnObject["value"] = this.getSourcedPropWithDefault("value", true);
 		returnObject["checked"] = this.getSourcedPropWithDefault("checked", SourceData.create("propWithDots", valueName));
 		returnObject["onChange"] = this._callback_changeBound;
 		
