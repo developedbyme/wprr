@@ -61,6 +61,11 @@ export default class HasData extends ManipulationBaseObject {
 					return true;
 				}
 				break;
+			case "exists":
+				if(aData !== null && aData !== undefined) {
+					return true;
+				}
+				break;
 			default:
 				console.warn("Unknown check type " + aType + ". Using default.");
 			case "default":
