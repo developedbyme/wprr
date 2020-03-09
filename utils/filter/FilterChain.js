@@ -48,6 +48,12 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addMatchField(aField, aCompareValue, aActive = null) {
+		this.addPart(Wprr.utils.filterPartFunctions.createMatchField(aField, aCompareValue, aActive));
+		
+		return this;
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		
