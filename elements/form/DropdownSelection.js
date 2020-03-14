@@ -15,6 +15,7 @@ import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
 import UseMarkup from "wprr/markup/UseMarkup";
 import MarkupPlacement from "wprr/markup/MarkupPlacement";
+import ExternalStorageProps from "wprr/manipulation/ExternalStorageProps";
 
 // import DropdownSelection from "wprr/elements/form/DropdownSelection";
 export default class DropdownSelection extends WprrBaseObject {
@@ -66,7 +67,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/DropdownSelection::_renderMainElement");
 		
-		let markup = this.getSourcedPropWithDefault("markup", DropdownSelection.DEFAULT_MARKUP);
+		let markup = this.getFirstInput("markup", Wprr.source("command", Wprr.commands.callFunction(DropdownSelection, DropdownSelection.getDefaultMarkup)));
 		
 		let name = this.getFirstInput("name");
 		let value = this.getFirstInput("value", SourceData.create("prop", this.getSourcedProp("valueName")));
@@ -109,23 +110,29 @@ export default class DropdownSelection extends WprrBaseObject {
 			aOpen
 		);
 	}
-}
-
-DropdownSelection.DEFAULT_MARKUP = React.createElement(Markup, {usedPlacements: "button,beforeList,afterList"},
-	React.createElement(Wprr.ClickOutsideTrigger, {triggerName: "close", active: SourceData.create("reference", "dropdownSelection/open")},
-		React.createElement("div", {className: "absolute-container"},
-			React.createElement(ToggleButton, {valueName: "dropdownSelection/open", value: SourceData.create("reference", "dropdownSelection/open")},
-				React.createElement(Wprr.MarkupChildren, {placement: "button"})
-			),
-			React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
-				React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
-					React.createElement(Wprr.OpenCloseExpandableArea, {"open": SourceData.create("reference", "dropdownSelection/open")},
-						React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
-						React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
-						React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+	
+	static getDefaultMarkup() {
+		if(DropdownSelection.DEFAULT_MARKUP) {
+			return DropdownSelection.DEFAULT_MARKUP;
+		}
+		
+		DropdownSelection.DEFAULT_MARKUP = React.createElement(Wprr.Markup, {usedPlacements: "button,beforeList,afterList"},
+			React.createElement(Wprr.ClickOutsideTrigger, {triggerName: "close", active: SourceData.create("reference", "dropdownSelection/open")},
+				React.createElement("div", {className: "absolute-container"},
+					React.createElement(ToggleButton, {valueName: "dropdownSelection/open", value: SourceData.create("reference", "dropdownSelection/open")},
+						React.createElement(Wprr.MarkupChildren, {placement: "button"})
+					),
+					React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
+						React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
+							React.createElement(Wprr.OpenCloseExpandableArea, {"open": SourceData.create("reference", "dropdownSelection/open")},
+								React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
+								React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
+								React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+							)
+						)
 					)
 				)
 			)
-		)
-	)
-);
+		);
+	}
+}
