@@ -1,4 +1,5 @@
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
+import SourceData from "wprr/reference/SourceData";
 
 //import DynamicKey from "wprr/manipulation/adjustfunctions/DynamicKey";
 /**
@@ -39,6 +40,12 @@ export default class DynamicKey extends AdjustFunction {
 	 */
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/DynamicKey::adjust");
+		
+		if(this._dynamicKeyName instanceof SourceData) {
+			aData["key"] = this.resolveSource(this._dynamicKeyName, aData, aManipulationObject);
+			
+			return aData;
+		}
 		
 		let key = this.resolveSource(aData[this._dynamicKeyName], aData, aManipulationObject);
 		delete aData[this._dynamicKeyName];

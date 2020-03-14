@@ -72,36 +72,47 @@ export default class Table extends WprrBaseObject {
 			SourceData.create("prop", "rowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/rowItem"),
 			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type")])},
-				React.createElement("td", {},
-					React.createElement(
-						Adjust,
-						{
-							"adjust": [
-								Table._adjust_getContentSources,
-								GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
-							],
-							"defaultElement": defaultRowItemContentElement
-						},
-						React.createElement(InsertElement, {})
+				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey(Wprr.sourceReference("loop/cell/item", "key"))},
+					React.createElement("td", {},
+						React.createElement(
+							Adjust,
+							{
+								"adjust": [
+									Table._adjust_getContentSources,
+									GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
+								],
+								"defaultElement": defaultRowItemContentElement
+							},
+							React.createElement(InsertElement, {})
+						)
 					)
 				)
 			)
 		);
 		
+		let defaultRowItemLoop = MarkupLoop.create(columns, rowItemMarkup);
+		defaultRowItemLoop.setInputWithoutNull("keyField", this.getFirstInputWithDefault("cellKeyField", null));
+		
 		let rowMarkup = this.getFirstValidSource(
 			Wprr.sourceProp("rowMarkup"),
 			SourceData.create("referenceIfExists", "table/row"),
 			React.createElement("tr", {},
-				React.createElement(Loop, {"loop": MarkupLoop.create(columns, rowItemMarkup), "loopName": "cell"})
+				React.createElement(Loop, {"loop": defaultRowItemLoop, "loopName": "cell"})
 			)
 		);
+		
+		let defaultHeaderRowItemLoop = MarkupLoop.create(columns, headerRowItemMarkup);
+		defaultHeaderRowItemLoop.setInputWithoutNull("keyField", this.getFirstInputWithDefault("cellKeyField", null));
+		
+		let defaultRowLoop = MarkupLoop.create(rows, rowMarkup);
+		defaultRowLoop.setInputWithoutNull("keyField", this.getFirstInputWithDefault("rowKeyField", null));
 		
 		return React.createElement("wrapper", {},
 			React.createElement(UseMarkup, {"markup": markup},
 				React.createElement(MarkupPlacement, {"placement": "header"},
-					React.createElement(Loop, {"loop": MarkupLoop.create(columns, headerRowItemMarkup), "loopName": "cell"})
+					React.createElement(Loop, {"loop": defaultHeaderRowItemLoop, "loopName": "cell"})
 				),
-				React.createElement(Loop, {"loop": MarkupLoop.create(rows, rowMarkup), "loopName": "row"})
+				React.createElement(Loop, {"loop": defaultRowLoop, "loopName": "row"})
 			)
 		);
 	}

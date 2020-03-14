@@ -1,5 +1,7 @@
 import React from "react";
 
+import objectPath from "object-path";
+
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
@@ -26,6 +28,8 @@ export default class MarkupLoop extends AdjustFunction {
 		this.spacingMarkup = SourceData.create("prop", "spacingMarkup");
 		this.noItemsMarkup = SourceData.create("prop", "noItemsMarkup");
 		this.outputName = "dynamicChildren";
+		
+		this.setInput("keyField", null);
 		
 	}
 	
@@ -94,6 +98,8 @@ export default class MarkupLoop extends AdjustFunction {
 		let dataArray = this.resolveSource(this.data, aData, aManipulationObject);
 		let outputName = this.outputName;
 		
+		let keyField = this.getInput("keyField");
+		
 		if(!markup) {
 			console.error("Loop doesn't have any markup.", this);
 			
@@ -116,19 +122,27 @@ export default class MarkupLoop extends AdjustFunction {
 			if(currentArrayLength > 0) {
 				for(let i = 0; i < currentArrayLength; i++) {
 					let currentData = currentArray[i];
-				
+					
+					let keyIndex = i;
+					if(keyField) {
+						let customKeyIndex = objectPath.get(currentData, keyField);
+						if(customKeyIndex !== null && customKeyIndex !== undefined) {
+							keyIndex = customKeyIndex;
+						}
+					}
+					
 					if(spacingMarkup != null && i !== 0) {
 						let spacingInjectData = new Object();
 						spacingInjectData["loop/" + loopName + "spacingIndex"] = i;
 						
-						returnArray.push(React.createElement(ReferenceInjection, {"key": "spacing-" + i, "injectData": spacingInjectData}, spacingMarkup));
+						returnArray.push(React.createElement(ReferenceInjection, {"key": "spacing-" + keyIndex, "injectData": spacingInjectData}, spacingMarkup));
 					}
 					
 					let loopInjectData = new Object();
 					loopInjectData["loop/" + loopName + "index"] = i;
 					loopInjectData["loop/" + loopName + "indexName"] = itemPrefix + i;
 					loopInjectData["loop/" + loopName + "item"] = currentData;
-					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + i, "injectData": loopInjectData}, markup));
+					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + keyIndex, "injectData": loopInjectData}, markup));
 				}
 			}
 			else {
