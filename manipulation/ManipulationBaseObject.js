@@ -25,7 +25,6 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		let prop = aProps[aPropName];
 		
 		if(prop instanceof SourceData) {
-			console.log(">>", prop);
 			if(!prop.shouldCleanup()) {
 				return;
 			}
