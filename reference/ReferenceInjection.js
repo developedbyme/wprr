@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -14,6 +15,11 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		super(aProps);
 		
 		this._references = new ReferenceHolder();
+		this._createInjectionObject();
+	}
+	
+	_createInjectionObject() {
+		this._injectionObject = {"value": {"references": this._references}};
 	}
 	
 	getReferences() {
@@ -58,10 +64,12 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		}
 	}
 	
-	_renderMainElement() {
-		let clonedElements = super._renderMainElement();
+	_renderClonedElement() {
+		if(Wprr.development_updateFullTreeOnInjection) {
+			this._createInjectionObject();
+		}
 		
-		return React.createElement(WprrContext.Provider, {"value": {"references": this._references}}, clonedElements);
+		return React.createElement(WprrContext.Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
 	}
 	
 	static createReactElement(aData, aChildOrChildren) {

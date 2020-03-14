@@ -84,6 +84,7 @@ export {default as ScrollActivatedItem} from "wprr/manipulation/measure/ScrollAc
 export {default as ScrollPosition} from "wprr/manipulation/measure/ScrollPosition";
 export {default as StepController} from "wprr/manipulation/StepController";
 export {default as Table} from "wprr/elements/area/table/Table";
+export {default as IgnoreUpdates} from "wprr/manipulation/IgnoreUpdates";
 
 export {default as DeepDistribution} from "wprr/manipulation/distribution/DeepDistribution";
 export {default as DistributionTarget} from "wprr/manipulation/distribution/DistributionTarget";

@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
