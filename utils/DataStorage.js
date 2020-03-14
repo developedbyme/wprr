@@ -58,8 +58,12 @@ export default class DataStorage {
 	
 	updateValue(aName, aValue) {
 		//console.log("wprr/utils/DataStorage::updateValue");
-		objectPath.set(this._data, aName, aValue);
-		this._updateOwners();
+		let oldValue = this.getValue(aName);
+		
+		if(JSON.stringify(aValue) !== JSON.stringify(oldValue)) {
+			objectPath.set(this._data, aName, aValue);
+			this._updateOwners();
+		}
 		
 		return this;
 	}

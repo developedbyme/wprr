@@ -31,7 +31,7 @@ export default class MultipleSelectionValue extends ManipulationBaseObject {
 		
 		if(externalStorage) {
 			
-			let currentArray = externalStorage.getValue(fieldName);
+			let currentArray = [].concat(externalStorage.getValue(fieldName));
 			if(!currentArray) {
 				currentArray = new Array();
 			}
