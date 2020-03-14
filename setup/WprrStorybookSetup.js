@@ -63,6 +63,7 @@ export default class WprrStorybookSetup {
 	
 	setDefaultPath(aPath) {
 		this._defaultPath = aPath;
+		this._injectionData["wprr/paths/rest"] = aPath;
 		
 		return this;
 	}
