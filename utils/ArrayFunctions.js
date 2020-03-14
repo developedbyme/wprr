@@ -1,6 +1,8 @@
 import objectPath from "object-path";
 import Wprr from "wprr/Wprr";
 
+import moment from "moment";
+
 //import ArrayFunctions from "wprr/utils/ArrayFunctions";
 export default class ArrayFunctions {
 	
@@ -97,6 +99,27 @@ export default class ArrayFunctions {
 		
 		for(let i = aStartValue; i <= aEndValue; i += aStepValue) {
 			returnArray.push(i);
+		}
+		
+		return returnArray;
+	}
+	
+	static createDateRange(aStartDate, aEndDate, aStepValue = 1, aFormat = "Y-MM-DD") {
+		
+		let currentDate = moment(aStartDate);
+		let endDate = moment(aEndDate);
+		
+		let returnArray = new Array();
+		
+		let debugCounter = 0;
+		while(currentDate <= endDate) {
+			if(debugCounter++ > 1000) {
+				console.error("Loop ran for too long");
+				break;
+			}
+			
+			returnArray.push(currentDate.format(aFormat));
+			currentDate.add(aStepValue, "day");
 		}
 		
 		return returnArray;
