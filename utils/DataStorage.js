@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import objectPath from "object-path";
 
 // import DataStorage from "wprr/utils/DataStorage";
@@ -60,7 +62,7 @@ export default class DataStorage {
 		//console.log("wprr/utils/DataStorage::updateValue");
 		let oldValue = this.getValue(aName);
 		
-		if(JSON.stringify(aValue) !== JSON.stringify(oldValue)) {
+		if(JSON.stringify(aValue) !== JSON.stringify(oldValue) || Wprr.development_skipDataStorageComparison) {
 			objectPath.set(this._data, aName, aValue);
 			this._updateOwners();
 		}
