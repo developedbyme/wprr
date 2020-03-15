@@ -14,11 +14,13 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		
 	}
 	
-	componentWillMount() {
+	componentDidMount() {
 		let validationController = this.getReference("validation/form");
 		if(validationController) {
 			validationController.addValidation(this);
 		}
+		
+		super.componentDidMount();
 	}
 	
 	componentWillUnmount() {
@@ -26,6 +28,8 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		if(validationController) {
 			validationController.removeValidation(this);
 		}
+		
+		super.componentWillUnmount();
 	}
 	
 	componentWillReceiveProps(aNextProps) {
