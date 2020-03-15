@@ -193,7 +193,6 @@ export default class Calendar extends WprrBaseObject {
 		let firstSelectableDate = aManipulationObject.getReferenceIfExists("calendar/firstSelectableDate");
 		let lastSelectableDate = aManipulationObject.getReferenceIfExists("calendar/lastSelectableDate");
 		
-		console.log(currentDate, firstSelectableDate);
 		if(firstSelectableDate && currentDate < firstSelectableDate) {
 			selectable = false;
 		}
