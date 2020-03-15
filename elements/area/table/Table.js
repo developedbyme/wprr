@@ -59,7 +59,17 @@ export default class Table extends WprrBaseObject {
 			SourceData.create("referenceIfExists", "table/headerRowItem"),
 			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type")])},
 				React.createElement("th", {},
-					React.createElement(SourcedText, {"text": Wprr.source("firstInput", [Wprr.sourceReference("loop/cell/item", "label"), Wprr.sourceReference("loop/cell/item", "key")])})
+					React.createElement(
+						Adjust,
+						{
+							"adjust": [
+								Table._adjust_getHeaderContentSources,
+								GetFirstResolvingSource.create(Wprr.sourceProp("sources"), this, "element")
+							],
+							"defaultElement": React.createElement(SourcedText, {"text": Wprr.source("firstInput", [Wprr.sourceReference("loop/cell/item", "label"), Wprr.sourceReference("loop/cell/item", "key")])})
+						},
+						React.createElement(InsertElement, {})
+					)
 				)
 			)
 		);
@@ -115,6 +125,38 @@ export default class Table extends WprrBaseObject {
 				React.createElement(Loop, {"loop": defaultRowLoop, "loopName": "row"})
 			)
 		);
+	}
+	
+	static _adjust_getHeaderContentSources(aProps, aElement) {
+		//console.log("wprr/elements/area/table/Table::_adjust_getHeaderContentSources");
+		
+		let rowData = aElement.getReference("loop/row/item");
+		let cellData = aElement.getReference("loop/cell/item");
+		
+		let sources = new Array();
+		
+		let key = objectPath.get(cellData, "key");
+		let type = objectPath.get(cellData, "type");
+		
+		let referencePrefix = "table/";
+		
+		sources.push(SourceData.create("prop", "header/rowItemContent/key/" + key));
+		sources.push(SourceData.create("referenceIfExists", referencePrefix + "header/rowItemContent/key/" + key));
+		
+		if(type) {
+			sources.push(SourceData.create("prop", "header/rowItemContent/type/" + type));
+			sources.push(SourceData.create("referenceIfExists", referencePrefix + "header/rowItemContent/type/" + type));
+		}
+		
+		sources.push(SourceData.create("prop", "header/rowItemContent/default"));
+		sources.push(SourceData.create("referenceIfExists", referencePrefix + "header/rowItemContent/default"));
+		
+		sources.push(aProps["defaultElement"]);
+		
+		delete aProps["defaultElement"];
+		aProps["sources"] = sources;
+		
+		return aProps;
 	}
 	
 	static _adjust_getContentSources(aProps, aElement) {
