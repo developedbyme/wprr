@@ -10,6 +10,44 @@ export default class Markup extends ManipulationBaseObject {
 
 	constructor(props) {
 		super(props);
+		
+		this._referenceUpdaters = new Array();
+	}
+	
+	addReferenceUpdater(aObject) {
+		this._referenceUpdaters.push(aObject);
+	}
+	
+	removeReferenceUpdater(aObject) {
+		let isFound = false;
+		
+		let currentArray = this._referenceUpdaters;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentArray[i] === aObject) {
+				currentArray.splice(i, 1);
+				i--;
+				currentArrayLength--;
+				isFound = true;
+			}
+		}
+		
+		if(!isFound) {
+			console.error("Object not added. Can't remove.", this);
+		}
+	}
+	
+	componentDidUpdate() {
+		console.log("Markup::componentDidUpdate");
+		
+		let currentArray = this._referenceUpdaters;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			currentItem.checkForReferences();
+		}
+		
+		super.componentDidUpdate();
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -65,7 +103,8 @@ export default class Markup extends ManipulationBaseObject {
 		
 		let injectData = {
 			"markupUsedPlacements": this._getUsedPlacements(),
-			"markupChildren": this._getMarkupChildren()
+			"markupChildren": this._getMarkupChildren(),
+			"markup/referenceUpdater": this
 		};
 		
 		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElements);

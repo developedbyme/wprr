@@ -11,6 +11,30 @@ export default class MarkupChildren extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
+		
+		this.state["referenceUpdate"] = 1;
+	}
+	
+	checkForReferences() {
+		this.setState({"referenceUpdate": this.state["referenceUpdate"]+1})
+	}
+	
+	componentDidMount() {
+		let controller = this.getReference("markup/referenceUpdater");
+		if(controller) {
+			controller.addReferenceUpdater(this);
+		}
+		
+		super.componentDidMount();
+	}
+	
+	componentWillUnmount() {
+		let controller = this.getReference("markup/referenceUpdater");
+		if(controller) {
+			controller.addReferenceUpdater(this);
+		}
+		
+		super.componentWillUnmount();
 	}
 	
 	_manipulateProps(aReturnObject) {
@@ -169,7 +193,8 @@ export default class MarkupChildren extends ManipulationBaseObject {
 	}
 	
 	_createClonedElement() {
-		//console.log("wprr/markup/MarkupChildren::_createClonedElement");
+		console.log("wprr/markup/MarkupChildren::_createClonedElement");
+		console.log(this);
 		
 		var injectionType = this.getSourcedProp("injectionType");
 		
