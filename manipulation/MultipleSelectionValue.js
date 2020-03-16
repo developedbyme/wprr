@@ -1,4 +1,5 @@
 import React from 'react';
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -25,15 +26,16 @@ export default class MultipleSelectionValue extends ManipulationBaseObject {
 	_updateExternalStorage(aValue) {
 		//console.log("wprr/manipulation/MultipleSelectionValue::_updateExternalStorage");
 		
-		let externalStorage = this.getSourcedProp("externalStorage");
+		let externalStorage = this.getFirstInput("externalStorage", Wprr.sourceReference("externalStorage"));
 		let fieldName = this.getSourcedPropWithDefault("fieldName", "selection");
 		let value = this.getSourcedProp("value");
 		
 		if(externalStorage) {
 			
-			let currentArray = [].concat(externalStorage.getValue(fieldName));
-			if(!currentArray) {
-				currentArray = new Array();
+			let startValue = externalStorage.getValue(fieldName);
+			let currentArray = [];
+			if(Array.isArray(startValue)) {
+				currentArray = [].concat(startValue);
 			}
 			
 			if(aValue) {

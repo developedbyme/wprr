@@ -38,7 +38,7 @@ export default class Markup extends ManipulationBaseObject {
 	}
 	
 	componentDidUpdate() {
-		console.log("Markup::componentDidUpdate");
+		//console.log("Markup::componentDidUpdate");
 		
 		let currentArray = this._referenceUpdaters;
 		let currentArrayLength = currentArray.length;

@@ -193,8 +193,8 @@ export default class MarkupChildren extends ManipulationBaseObject {
 	}
 	
 	_createClonedElement() {
-		console.log("wprr/markup/MarkupChildren::_createClonedElement");
-		console.log(this);
+		//console.log("wprr/markup/MarkupChildren::_createClonedElement");
+		//console.log(this);
 		
 		var injectionType = this.getSourcedProp("injectionType");
 		

@@ -16,7 +16,11 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 		let valueName = this.getSourcedProp("valueName");
 		let value = this.getSourcedPropWithDefault("value", Wprr.sourceProp(this.getSourcedProp("valueName")));
 		
-		return [].concat(value);
+		if(Array.isArray(value)) {
+			return [].concat(value);
+		}
+		
+		return [];
 	}
 	
 	_changed(aNewValue) {

@@ -17,6 +17,7 @@ export default class ClassFromProp extends AdjustFunction {
 		
 		this.setInput("prop", SourceData.create("prop", "notSet"));
 		this.setInput("options", new Array());
+		this.setInput("canBeEmpty", false);
 	}
 	
 	/**
@@ -91,7 +92,7 @@ export default class ClassFromProp extends AdjustFunction {
 			}
 		}
 		
-		if(!isFound) {
+		if(!isFound && !this.getInput("canBeEmpty", aData, aManipulationObject)) {
 			console.warn("No option for value " + currentData + ". No classes added.", this);
 		}
 		
