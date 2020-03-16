@@ -1,5 +1,7 @@
 import Wprr from "wprr/Wprr";
 
+import objectPath from "object-path";
+
 import TextManager from "wprr/textmanager/TextManager";
 import StoreController from "wprr/store/StoreController";
 
@@ -14,11 +16,21 @@ export default class WprrStorybookSetup {
 		this._store = null;
 		this._storeController = new StoreController();
 		this._textManager = new TextManager();
+		this._postData = new Wprr.utils.PostData();
+		this._postData.setData({
+			"meta": {
+				
+			},
+			"terms": {
+				
+			}
+		})
 		
 		this._injectionData = new Object();
 		
 		this._injectionData["wprr/textManager"] = this._textManager;
 		this._injectionData["redux/store/wprrController"] = this._storeController;
+		this._injectionData["wprr/postData"] = this._postData;
 		
 		this._defaultPath = null;
 	}
@@ -72,6 +84,12 @@ export default class WprrStorybookSetup {
 		
 		this._injectionData["wprr/paths/" + aLocationName] = aPath;
 		this._injectionData["wprr/defaultImageLocation"] = aLocationName;
+		
+		return this;
+	}
+	
+	addPostMeta(aName, aValue) {
+		objectPath.set(this._postData.getData(), "meta." + aName, aValue);
 		
 		return this;
 	}
