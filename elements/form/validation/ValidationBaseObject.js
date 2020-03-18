@@ -15,7 +15,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 	}
 	
 	componentDidMount() {
-		let validationController = this.getReference("validation/form");
+		let validationController = this.getReferenceIfExists("validation/form");
 		if(validationController) {
 			validationController.addValidation(this);
 		}
@@ -24,7 +24,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 	}
 	
 	componentWillUnmount() {
-		let validationController = this.getReference("validation/form");
+		let validationController = this.getReferenceIfExists("validation/form");
 		if(validationController) {
 			validationController.removeValidation(this);
 		}

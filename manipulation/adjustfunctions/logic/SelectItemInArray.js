@@ -23,6 +23,7 @@ export default class SelectItemInArray extends AdjustFunction {
 		this.setInput("item", SourceData.create("prop", "item"));
 		this.setInput("field", "id");
 		this.setInput("outputField", null);
+		this.setInput("canBeMissing", false);
 		this.setInput("outputName", "output");
 		
 	}
@@ -53,11 +54,12 @@ export default class SelectItemInArray extends AdjustFunction {
 		let item = this.getInput("item", aData, aManipulationObject);
 		let field = this.getInput("field", aData, aManipulationObject);
 		let outputField = this.getInput("outputField", aData, aManipulationObject);
+		let canBeMissing = this.getInput("canBeMissing", aData, aManipulationObject);
 		let outputName = this.getInput("outputName", aData, aManipulationObject);
 		
 		this.removeUsedProps(aData);
 		
-		let returnObject = ArrayFunctions.getItemBy(field, item, range);
+		let returnObject = canBeMissing ? ArrayFunctions.getItemByIfExists(field, item, range) : ArrayFunctions.getItemBy(field, item, range);
 		if(outputField !== null) {
 			aData[outputName] = objectPath.get(returnObject, outputField);
 		}

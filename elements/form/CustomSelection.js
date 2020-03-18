@@ -140,18 +140,18 @@ export default class CustomSelection extends ManipulationBaseObject {
 			]
 		}, optionContentItem);
 		
-		let defaultLoopItem = this.getFirstValidSource(
+		let defaultLoopItem = this.getFirstInput(
 			Wprr.sourceProp("optionMarkup"),
 			Wprr.sourceReferenceIfExists("customSelection/option"),
 			loopItemMarkup
 		);
-		let defaultLoopItemSpacing = this.getFirstValidSource(
+		let defaultLoopItemSpacing = this.getFirstInput(
 			Wprr.sourceProp("optionSpacingMarkup"),
 			Wprr.sourceReferenceIfExists("customSelection/optionSpacing"),
 			React.createElement(React.Fragment)
 		);
 		
-		let selectionMenuClasses = this.getFirstValidSource(
+		let selectionMenuClasses = this.getFirstInputWithDefault(
 			Wprr.sourceProp("selectionMenuClasses"),
 			Wprr.sourceReferenceIfExists("customSelection/selectionMenuClasses"),
 			"custom-selection-menu custom-selection-menu-padding"
@@ -166,12 +166,12 @@ export default class CustomSelection extends ManipulationBaseObject {
 			React.createElement(Wprr.InsertElement, {})
 		);
 		
-		let filter = this.getFirstValidSource(
+		let filter = this.getFirstInput(
 			Wprr.sourceProp("filterOptions"),
 			Wprr.sourceReferenceIfExists("customSelection/filterOptions")
 		);
 		
-		let sort = this.getFirstValidSource(
+		let sort = this.getFirstInput(
 			Wprr.sourceProp("sortOptions"),
 			Wprr.sourceReferenceIfExists("customSelection/sortOptions")
 		);

@@ -160,6 +160,17 @@ export default class ArrayFunctions {
 		return null;
 	}
 	
+	static getItemByIfExists(aField, aIdentifier, aArray) {
+		
+		let index = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray);
+		
+		if(index >= 0) {
+			return aArray[index];
+		}
+		
+		return null;
+	}
+	
 	static getItemsBy(aField, aIdentifier, aArray) {
 		
 		let returnArray = new Array();

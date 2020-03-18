@@ -201,6 +201,7 @@ export default class FilterPartFunctions  {
 		
 		newFilterPart.inputs.setInput("field", aField);
 		newFilterPart.inputs.setInput("compareValues", aCompareValues);
+		newFilterPart.inputs.setInput("valueFormat", "none");
 		
 		return newFilterPart;
 	}
@@ -238,6 +239,7 @@ export default class FilterPartFunctions  {
 		
 		newFilterPart.inputs.setInput("ignoreValues", aIgnoreValues);
 		newFilterPart.inputs.setInput("field", aField);
+		newFilterPart.inputs.setInput("valueFormat", "none");
 		
 		return newFilterPart;
 	}

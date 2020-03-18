@@ -76,8 +76,10 @@ export default class TextManager {
 				
 				return translatedText;
 			}
-			console.warn("Translation doesn't exist for text " + aText);
-			this.addUntranslatedText(textId, aText);
+			if(!this._untranslatedTexts[textId]) {
+				console.warn("Translation doesn't exist for text " + aText);
+				this.addUntranslatedText(textId, aText);
+			}
 		}
 		
 		if(this._debugUseZzLanguage) {
@@ -106,8 +108,12 @@ export default class TextManager {
 			return this._translationMap[aText];
 		}
 		
-		console.warn("Translation is not mapped for text " + aText);
-		this.addUnmappedText(this._convertToCamelCase(aText), aText);
+		let mappingId = this._convertToCamelCase(aText);
+		if(!this._unmappedTexts[mappingId]) {
+			console.warn("Translation is not mapped for text " + aText);
+			this.addUnmappedText(mappingId, aText);
+		}
+		
 		return null;
 	}
 	

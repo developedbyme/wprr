@@ -143,7 +143,7 @@ export default class Calendar extends WprrBaseObject {
 		
 		return React.createElement("wrapper", {},
 			React.createElement(ReferenceInjection, {"injectData": injectData, "key": month},
-				React.createElement(Loop, {"input": weekDataArray, "contentCreator": Calendar._contentCreator_row, "spacingContentCreator": Wprr.sourceReference("calendar/rowSpacingContentCreator")})
+				React.createElement(Loop, {"input": weekDataArray, "contentCreator": Calendar._contentCreator_row, "spacingContentCreator": Wprr.sourceReferenceIfExists("calendar/rowSpacingContentCreator")})
 			)
 		);
 	}
