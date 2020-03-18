@@ -63,10 +63,10 @@ export default class EditableProps extends ManipulationBaseObject {
 		}
 	}
 	
-	componentWillMount() {
-		//console.log("wprr/manipulation/EditableProps::componentWillMount");
+	_prepareInitialRender() {
+		//console.log("wprr/manipulation/EditableProps::_prepareInitialRender");
 		
-		//METODO: this function is depreciated by react
+		super._prepareInitialRender();
 		
 		let externalStorage = this.getSourcedProp("externalStorage");
 		

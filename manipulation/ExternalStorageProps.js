@@ -52,10 +52,10 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 		}
 	}
 	
-	componentWillMount() {
-		//console.log("wprr/manipulation/ExternalStorageProps::componentWillMount");
+	_prepareInitialRender() {
+		//console.log("wprr/manipulation/ExternalStorageProps::_prepareInitialRender");
 		
-		//METODO: this function is depreciated by react
+		super._prepareInitialRender();
 		
 		let externalStorage = this.getSourcedProp("externalStorage");
 		

@@ -71,17 +71,28 @@ export default class MultipleSelectionValue extends ManipulationBaseObject {
 		}
 	}
 	
-	componentWillMount() {
-		//console.log("wprr/manipulation/MultipleSelectionValue::componentWillMount");
+	_prepareInitialRender() {
+		//console.log("wprr/manipulation/MultipleSelectionValue::_prepareInitialRender");
 		
-		//METODO: this function is depreciated by react
+		super._prepareInitialRender();
 		
 		let externalStorage = this.getSourcedProp("externalStorage");
 		let fieldName = this.getSourcedPropWithDefault("fieldName", "selection");
 		
 		if(externalStorage) {
 			externalStorage.addOwner(this);
-			this._updateState();
+			
+			let fieldName = this.getSourcedPropWithDefault("fieldName", "selection");
+			let value = this.getSourcedProp("value");
+			
+			let currentArray = externalStorage.getValue(fieldName);
+			let newState = false;
+			if(currentArray) {
+				let index = currentArray.indexOf(value);
+				newState = (index !== -1);
+			}
+			
+			this.state["selected"] = newState;
 		}
 	}
 	

@@ -49,10 +49,10 @@ export default class ReduxGlobalVariables extends ManipulationBaseObject {
 		}
 	}
 	
-	componentWillMount() {
+	_prepareInitialRender() {
 		//console.log("wprr/manipulation/ReduxGlobalVariables::componentWillMount");
 		
-		//METODO: this function is depreciated by react
+		super._prepareInitialRender();
 		
 		let propExternalStorage = this.getSourcedProp("externalStorage");
 		if(propExternalStorage) {
