@@ -142,7 +142,13 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 			)},
 				React.createElement("div", {},
 					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("value"), "checkType": "notEmpty"},
-						React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("value"), selectedItemLoopItem, React.createElement("span", {}, ", "))})
+						React.createElement(Wprr.Adjust, {"adjust": [
+							Wprr.adjusts.selectItemsInArray(options, Wprr.sourceReference("value"), "value", "selectedOptions"),
+							Wprr.adjusts.mapPropertyInArray(Wprr.sourceProp("selectedOptions"), "label", "selectedLabels"),
+							Wprr.adjusts.startOfArrayAsText(Wprr.sourceProp("selectedLabels"), 3)
+						]},
+							Wprr.text(null)
+						)
 					),
 					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("value"), "checkType": "invert/notEmpty"},
 						Wprr.text(noSelectionLabel)
@@ -219,7 +225,7 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 		
 		let injectData = {
 			"options": options,
-			"value": Wprr.sourceProp(valueName),
+			"value": Wprr.source("propWithDots", valueName),
 			"valueName": valueName,
 			"selectionElements/optionsLoop": loop,
 			"selectionElements/loopItem": loopItem,
