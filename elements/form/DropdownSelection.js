@@ -112,27 +112,27 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	static getDefaultMarkup() {
-		if(DropdownSelection.DEFAULT_MARKUP) {
-			return DropdownSelection.DEFAULT_MARKUP;
-		}
-		
-		DropdownSelection.DEFAULT_MARKUP = React.createElement(Wprr.Markup, {usedPlacements: "button,beforeList,afterList"},
-			React.createElement(Wprr.ClickOutsideTrigger, {triggerName: "close", active: Wprr.sourceReference("dropdownSelection/open")},
-				React.createElement("div", {className: "absolute-container"},
-					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.toggleValue(Wprr.sourceReference("value/dropdownSelection/open"), "dropdownSelection/open", Wprr.sourceReference("dropdownSelectionExternalStorage", "open"))},
-						React.createElement(Wprr.MarkupChildren, {placement: "button"})
-					),
-					React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
-						React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
-							React.createElement(Wprr.OpenCloseExpandableArea, {},
-								React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
-								React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
-								React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+		if(!DropdownSelection.DEFAULT_MARKUP) {
+			DropdownSelection.DEFAULT_MARKUP = React.createElement(Wprr.Markup, {usedPlacements: "button,beforeList,afterList"},
+				React.createElement(Wprr.ClickOutsideTrigger, {triggerName: "close", active: Wprr.sourceReference("dropdownSelection/open")},
+					React.createElement("div", {className: "absolute-container"},
+						React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.toggleValue(Wprr.sourceReference("value/dropdownSelection/open"), "dropdownSelection/open", Wprr.sourceReference("dropdownSelectionExternalStorage", "open"))},
+							React.createElement(Wprr.MarkupChildren, {placement: "button"})
+						),
+						React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
+							React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
+								React.createElement(Wprr.OpenCloseExpandableArea, {},
+									React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
+									React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
+									React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+								)
 							)
 						)
 					)
 				)
-			)
-		);
+			);
+		}
+		
+		return DropdownSelection.DEFAULT_MARKUP;
 	}
 }
