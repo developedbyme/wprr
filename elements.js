@@ -122,6 +122,7 @@ export {default as StaticFileLoader} from "wprr/manipulation/loader/StaticFileLo
 
 export {default as AddTextsToTextManager} from "wprr/textmanager/AddTextsToTextManager";
 export {default as AddTranslationMapToTextManager} from "wprr/textmanager/AddTranslationMapToTextManager";
+export {default as TranslationSetup} from "wprr/textmanager/TranslationSetup";
 
 export {default as DbmJsonTranslationsEditor} from "wprr/elements/dbmcontent/DbmJsonTranslationsEditor";
 export {default as MultipleObjectsEditor} from "wprr/elements/create/MultipleObjectsEditor";

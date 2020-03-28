@@ -59,7 +59,13 @@ export default class ModuleCreatorBaseObject {
 	 * @return	self
 	 */
 	setClass(aClass) {
-		this._mainComponent = React.createElement(aClass, {});
+		this.setMainComponent(React.createElement(aClass, {}));
+		
+		return this;
+	}
+	
+	setMainComponent(aElement) {
+		this._mainComponent = aElement;
 		
 		return this;
 	}

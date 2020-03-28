@@ -32,4 +32,11 @@ export default class PageModuleCreator extends ModuleCreatorBaseObject {
 		
 		return newPageModuleCreator;
 	}
+	
+	static createWithElement(aElement) {
+		var newPageModuleCreator = new PageModuleCreator();
+		newPageModuleCreator.setMainComponent(aElement);
+		
+		return newPageModuleCreator;
+	}
 }
