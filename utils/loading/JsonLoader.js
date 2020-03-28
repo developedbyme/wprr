@@ -29,6 +29,10 @@ export default class JsonLoader {
 		}
 	}
 	
+	getUrl() {
+		return this._url;
+	}
+	
 	getStatus() {
 		return this._status;
 	}

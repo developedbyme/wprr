@@ -13,8 +13,6 @@ export default class StoreController {
 		
 		this._nextTransactionId = 0;
 		
-		this._loadingPaths = new Array();
-		this._paths = new Array();
 		this._loaders = new Object();
 		
 		this._store = null;
@@ -28,6 +26,33 @@ export default class StoreController {
 		//this.apiFormat = "wprr";
 		
 		this._urlResolvers = new MultipleUrlResolver();
+	}
+	
+	loadingIsDone() {
+		let hasLoader = false;
+		let allDone = true;
+		
+		for(let objectName in this._loaders) {
+			hasLoader = true;
+			let currentLoader = this._loaders[objectName];
+			if(currentLoader.getStatus() !== 1) {
+				allDone = false;
+				break;
+			}
+		}
+		
+		return (hasLoader && allDone)
+	}
+	
+	getPaths() {
+		
+		let returnArray = new Array();
+		
+		for(let objectName in this._loaders) {
+			returnArray.push(objectName);
+		}
+		
+		return returnArray;
 	}
 	
 	getUrlResolvers() {
@@ -54,14 +79,6 @@ export default class StoreController {
 	
 	setUser(aUserData) {
 		this._userData = aUserData;
-	}
-	
-	getPaths() {
-		return this._paths;
-	}
-	
-	getLoadingPaths() {
-		return this._loadingPaths;
 	}
 	
 	_performDispatch(aType, aPath, aData) {
@@ -97,6 +114,12 @@ export default class StoreController {
 		return loader;
 	}
 	
+	addLoader(aPath, aLoader) {
+		this._loaders[aPath] = aLoader;
+		
+		return this;
+	}
+	
 	getLoaderByRelativePath(aPath, aLocation = "default") {
 		let absolutePath = this.getAbsolutePath("M-ROUTER-API-DATA", aPath, aLocation);
 		return this.getLoader(absolutePath);
@@ -128,52 +151,17 @@ export default class StoreController {
 		return loader;
 	}
 	
-	/*
-	_post(aPath, aData) {
-		var currentState = this._store.getState();
-		var nonce = currentState.settings.nonce;
-		
-		var headers = new Object();
-		headers["Content-Type"] = "application/json";
-		
-		if(nonce) {
-			headers["X-WP-Nonce"] = nonce;
-		}
-		
-		var loadPromise = fetch(aPath, {method: "POST", body: JSON.stringify(aData), "credentials": "include", "headers": headers});
-		return loadPromise;
-	}
-	
-	_encodeLoadedData(aResponse) {
-		//console.log("wprr/store/StoreController::_encodeLoadedData");
-		
-		var returnObject = aResponse.json();
-		
-		return returnObject;
-	}
-	*/
-	
-	_removeLoadingPath(aPath) {
-		var currentIndex = this._loadingPaths.indexOf(aPath);
-		if(currentIndex !== -1) {
-			this._loadingPaths.splice(currentIndex, 1);
-		}
-		//console.log(this._loadingPaths);
-	}
-	
 	_dataLoaded(aPath, aData) {
 		//console.log("wprr/store/StoreController::_dataLoaded");
 		//console.log(aPath, aData);
 		
 		this._performDispatch(StoreController.LOADED, aPath, aData);
-		this._removeLoadingPath(aPath);
 	}
 	
 	_loadingError(aPath, aError) {
 		//console.log("wprr/store/StoreController::_loadingError");
 		
 		this._performDispatch(StoreController.ERROR_LOADING, aPath, aError);
-		this._removeLoadingPath(aPath);
 	}
 	
 	_performRequest(aPath) {

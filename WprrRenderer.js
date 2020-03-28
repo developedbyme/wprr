@@ -1,7 +1,11 @@
+import Wprr from "wprr/Wprr";
+
 //import WprrRenderer from "wprr/WprrRenderer";
 export default class WprrRenderer  {
 
 	constructor() {
+		
+		this._pathCheckRegExps = new Array();
 		
 		this._seoRenderPath = null;
 		this._seoPath = null;
@@ -27,11 +31,16 @@ export default class WprrRenderer  {
 		return this;
 	}
 	
-	setupInitialLoad(aInitialLoadPath, aPermalink) {
+	setupInitialLoad(aInitialLoadPath, aPermalink, aBasePath = null) {
 		this._initialLoadPath = aInitialLoadPath;
 		
 		this._permalink = aPermalink;
-		this._shouldSaveInitialLoad = true
+		
+		if(aBasePath) {
+			this._pathCheckRegExps.push(new RegExp(aBasePath.split(".").join("\\.") + ".*"));
+		}
+		
+		this._shouldSaveInitialLoad = true;
 	}
 	
 	setupSeoRender(aRenderPath, aPath, aKey) {
@@ -45,7 +54,10 @@ export default class WprrRenderer  {
 	}
 	
 	_checkForRender() {
-		if(this._storeController.getLoadingPaths().length > 0) {
+		
+		let isDone = this._storeController.loadingIsDone();
+		
+		if(!isDone) {
 			this._timeoutId = setTimeout(this._checkForRenderBound, 1);
 		}
 		else {
@@ -53,34 +65,50 @@ export default class WprrRenderer  {
 			if(this._shouldSaveInitialLoad) {
 				let paths = this._storeController.getPaths();
 				
-				let loadPromise = fetch(this._initialLoadPath, {
-					"method": "POST",
-					"body": JSON.stringify({"paths": paths, "permalink": this._permalink}),
-					"credentials": "include", 
-					"headers": {
-						'Content-Type': 'application/json'
+				let currentArray2 = this._pathCheckRegExps;
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					
+				}
+				
+				let validPaths = new Array();
+				
+				let currentArray = paths;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentPath = currentArray[i];
+					
+					let isValid = true;
+					for(let j = 0; j < currentArray2Length; j++) {
+						if(!currentArray2[j].test(currentPath)) {
+							isValid = false;
+							break;
+						}
 					}
-				});
+					
+					if(isValid) {
+						validPaths.push(currentPath);
+					}
+				}
+				
+				let loader = new Wprr.utils.JsonLoader();
+				loader.setupJsonPost(this._initialLoadPath, {"paths": validPaths, "permalink": this._permalink});
+				loader.load();
 			}
 			
 			
 			if(this._shouldSaveSeoRender) {
 				let seoRender = this._rootNode.innerHTML;
 				
-				let loadPromise = fetch(this._seoRenderPath, {
-					"method": "POST",
-					"body": JSON.stringify({"path": this._seoPath, "key": this._seoKey, "seoRender": seoRender}),
-					"credentials": "include", 
-					"headers": {
-						'Content-Type': 'application/json'
-					}
-				});
+				let loader = new Wprr.utils.JsonLoader();
+				loader.setupJsonPost(this._seoRenderPath, {"path": this._seoPath, "key": this._seoKey, "seoRender": seoRender});
+				loader.load();
 			}
 		}
 	}
 	
 	startCheckingForRender() {
-		console.log("oa/mrouter/WprrRenderer::startCheckingForRender");
+		console.log("WprrRenderer::startCheckingForRender");
 		
 		this._timeoutId = setTimeout(this._checkForRenderBound, 1);
 	}

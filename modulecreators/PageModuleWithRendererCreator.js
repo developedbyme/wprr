@@ -13,7 +13,7 @@ export default class PageModuleWithRendererCreator extends PageModuleCreator {
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.PageModuleWithRendererCreator::constructor");
+		//console.log("PageModuleWithRendererCreator::constructor");
 		
 		super();
 		
@@ -21,6 +21,7 @@ export default class PageModuleWithRendererCreator extends PageModuleCreator {
 	}
 	
 	_configureRenderer(aHolderNode, aData) {
+		//console.log("PageModuleWithRendererCreator::_configureRenderer");
 		let startCheckForRender = false;
 		
 		this._renderer.setup(this._storeController, aHolderNode);
