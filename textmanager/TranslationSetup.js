@@ -24,21 +24,19 @@ export default class TranslationSetup extends WprrBaseObject {
 		
 		let props = this.getProps();
 		
-		return <Wprr.DataLoader 
-			skipLanguageParameter={true}
-			apiFormat="raw"
-			loadData={{
-				"baseLanguage": path + "/" + fileName.split("{language}").join(baseLanguage),
-				"language": path + "/" + fileName.split("{language}").join(language),
-			}}
-		>
-			<AddTranslationMapToTextManager texts={Wprr.sourceProp("baseLanguage")} path={textPath}>
-				<AddTextsToTextManager texts={Wprr.sourceProp("language")} path={textPath}>
-					<div>
-						{props.children}
-					</div>
-				</AddTextsToTextManager>
-			</AddTranslationMapToTextManager>
-		</Wprr.DataLoader>
+		return React.createElement(Wprr.DataLoader, { 
+				skipLanguageParameter: true,
+				apiFormat: "raw",
+				loadData: {
+					"baseLanguage": path + "/" + fileName.split("{language}").join(baseLanguage),
+					"language": path + "/" + fileName.split("{language}").join(language),
+				}
+			},
+			React.createElement(AddTranslationMapToTextManager, {texts: Wprr.sourceProp("baseLanguage"), path: textPath},
+				React.createElement(AddTextsToTextManager, {texts: Wprr.sourceProp("language"), path: textPath},
+					React.createElement(Wprr.Adjust, {adjust: Wprr.adjusts.filterProps([])}, props.children)
+				)
+			)
+		);
 	}
 }
