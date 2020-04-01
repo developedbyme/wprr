@@ -26,6 +26,7 @@ export {default as ContentsAndInjectedComponents} from "wprr/elements/text/Conte
 export {default as TranslationOrId} from "wprr/elements/text/TranslationOrId";
 export {default as TextWithReplacements} from "wprr/elements/text/TextWithReplacements";
 export {default as NumberDisplay} from "wprr/elements/text/NumberDisplay";
+export {default as AmountDependingText} from "wprr/elements/text/AmountDependingText";
 
 export {default as RefGroup} from "wprr/reference/RefGroup";
 export {default as EditableProps} from "wprr/manipulation/EditableProps";

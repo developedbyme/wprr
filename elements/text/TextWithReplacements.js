@@ -10,13 +10,29 @@ export default class TextWithReplacements extends SourcedText {
 		super(props);
 	}
 	
-	_getText() {
-		
-		let text = this.getSourcedProp("text");
-		
+	getReplacements() {
 		let replacements = this.getSourcedProp("replacements");
 		if(replacements) {
 			replacements = Wprr.utils.KeyValueGenerator.normalizeArrayOrObject(replacements);
+			
+			return replacements;
+		}
+		
+		return new Array();
+	}
+	
+	_getRawText() {
+		let text = this.getSourcedProp("text");
+		
+		return text;
+	}
+	
+	_getText() {
+		
+		let text = this._getRawText();
+		
+		let replacements = this.getReplacements();
+		if(replacements) {
 			let currentArray = replacements;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
