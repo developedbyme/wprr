@@ -21,12 +21,13 @@ export default class TermPathName extends WprrBaseObject {
 		let termId = this.getSourcedProp("termId");
 		let separator = this.getSourcedPropWithDefault("separator", Wprr.text(" / "));
 		let skipTopLevels = this.getSourcedPropWithDefault("skipTopLevels", 0);
+		let translationsPath = this.getSourcedProp("translationsPath");
 		
 		return React.createElement(WprrDataLoader, {loadData: {"terms": "wprr/v1/taxonomy/" + taxonomy +"/terms"}},
 			React.createElement(Adjust, {adjust: TermPathName._adjust_selectTerms, termId: termId, skipTopLevels: skipTopLevels},
 				React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(
 					Wprr.sourceProp("terms"),
-					React.createElement(SourcedText, {text: Wprr.sourceReference("loop/item", "name")}),
+					React.createElement(Wprr.TermName, {termId: Wprr.sourceReference("loop/item", "id"), "taxonomy": taxonomy, "translationsPath": translationsPath}),
 					separator
 				)})
 			)

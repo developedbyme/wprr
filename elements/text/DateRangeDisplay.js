@@ -17,14 +17,15 @@ export default class DateRangeDisplay extends SourcedText {
 		let endDate = this.getSourcedProp("endDate");
 		let inputType = this.getSourcedProp("inputType");
 		let format = this.getSourcedProp("format");
+		let locale = this.getFirstInputWithDefault("locale", "en");
 		
 		if(inputType === "php") {
 			startDate = 1000*startDate;
 			endDate = 1000*endDate;
 		}
 		
-		let startDateText = DateRangeDisplay.momentFunction(startDate).format(format);
-		let endDateText = DateRangeDisplay.momentFunction(endDate).format(format);
+		let startDateText = DateRangeDisplay.momentFunction(startDate).locale(locale).format(format);
+		let endDateText = DateRangeDisplay.momentFunction(endDate).locale(locale).format(format);
 		
 		let startArray = startDateText.split(" ");
 		let endArray = endDateText.split(" ");
