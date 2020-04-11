@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import SourcedText from "wprr/elements/text/SourcedText";
 
@@ -16,7 +17,7 @@ export default class DateDisplay extends SourcedText {
 		let input = this.getSourcedProp("date");
 		let inputType = this.getSourcedProp("inputType");
 		let format = this.getSourcedProp("format");
-		let locale = this.getSourcedProp("locale");
+		let locale = this.getFirstInput("locale", Wprr.sourceReferenceIfExists("locale"), Wprr.sourceReferenceIfExists("wprr/postData", "language"), Wprr.sourceReferenceIfExists("wprr/pageData", "queryData.language"));
 		
 		if(inputType === "php") {
 			input = 1000*input;

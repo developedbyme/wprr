@@ -8,13 +8,62 @@ export default class TimelineField {
 		this._messageGroup = null;
 		
 		this.key = null;
-		this.value = null;
-		this.changes = [];
+		this._value = null;
+		this._changes = new Array();
+		this._translations = new Object();
 		
-		this.type = null;
-		this.status = null;
+		this._type = null;
+		this._status = null;
 		
-		this.settings = new Object();
+		this._settings = new Object();
+		
+		this._externalStorage = null;
+	}
+	
+	connectToEditStorage(aExternalStorage) {
+		console.log("TimelineField::connectToEditStorage");
+		console.log(aExternalStorage);
+		
+		this._externalStorage = aExternalStorage;
+		this._externalStorage.addOwner(this);
+		
+		this._externalStorage.updateValue("saved.value", this._value);
+		this._externalStorage.updateValue("value", this._value);
+		
+		this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
+		this._externalStorage.updateValue("translations", Wprr.utils.object.copyViaJson(this._translations));
+		
+		this._externalStorage.updateValue("saved.timeline", Wprr.utils.object.copyViaJson(this._changes));
+		this._externalStorage.updateValue("timeline", Wprr.utils.object.copyViaJson(this._changes));
+		
+		this._externalStorage.updateValue("uiState.status", "normal");
+		
+		return this;
+	}
+	
+	_updateExternalStorage(aName, aValue) {
+		//console.log("TimelineField::_updateExternalStorage");
+		
+		if(this._externalStorage) {
+			this._externalStorage.updateValue(aName, aValue);
+		}
+	}
+	
+	externalDataChange() {
+		console.log("TimelineField::externalDataChange");
+		
+		let value = this._externalStorage.getValue("value");
+		if(value !== undefined) {
+			this._value = value;
+		}
+		let timeline = this._externalStorage.getValue("timeline");
+		if(timeline) {
+			this._changes = timeline;
+		}
+		let translations = this._externalStorage.getValue("translations");
+		if(translations) {
+			this._translations = translations;
+		}
 	}
 	
 	setMessageGroup(aMessageGroup) {
@@ -24,9 +73,19 @@ export default class TimelineField {
 	}
 	
 	setValue(aValue) {
-		this.value = aValue;
+		this._value = aValue;
 		
 		return this;
+	}
+	
+	updateValue(aValue) {
+		this.setValue(aValue);
+		
+		return this;
+	}
+	
+	getValue() {
+		return this._value;
 	}
 	
 	setupChanges(aPastChanges, aFutureChanges) {
@@ -39,17 +98,25 @@ export default class TimelineField {
 			changes = changes.concat(aFutureChanges);
 		}
 		
-		this.changes = changes;
+		this._changes = changes;
 		
 		return this;
 	}
 	
 	setupField(aKey, aType, aStatus, aSettings) {
 		this.key = aKey;
-		this.type = aType;
-		this.status = aStatus;
+		this._type = aType;
+		this._status = aStatus;
 		
-		this.settings = aSettings; //METODO: copy object
+		if(aSettings) {
+			this._settings = Wprr.utils.object.copyViaJson(aSettings);
+		}
+		
+		return this;
+	}
+	
+	setupTranslations(aTranslations) {
+		this._translations = Wprr.utils.object.copyViaJson(aSettings);
 		
 		return this;
 	}
@@ -59,5 +126,4 @@ export default class TimelineField {
 		
 		return this;
 	}
-	
 }

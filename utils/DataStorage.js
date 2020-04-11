@@ -2,6 +2,8 @@ import Wprr from "wprr/Wprr";
 
 import objectPath from "object-path";
 
+import DataStorageConnection from "wprr/utils/DataStorageConnection";
+
 // import DataStorage from "wprr/utils/DataStorage";
 export default class DataStorage {
 	
@@ -103,8 +105,19 @@ export default class DataStorage {
 				return this.getValue;
 			case "updateValue":
 				return this.updateValue;
+			case "createConnection":
+				return this.createConnection;
 		}
 		
 		return this.getValue(aPath);
+	}
+	
+	createConnection(aPrefix = null, aSuffix = null) {
+		let newDataStorageConnection = new DataStorageConnection();
+		
+		newDataStorageConnection.setDataStorage(this);
+		newDataStorageConnection.setup(aPrefix, aSuffix);
+		
+		return newDataStorageConnection;
 	}
 }

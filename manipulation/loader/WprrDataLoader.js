@@ -18,8 +18,8 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		this.state["status"] = 0;
 		
 		this._loadingGroup = new LoadingGroup();
-		this._loadingGroup.addStatusCommand(SetStateValueCommand.create(this, "status", SourceData.create("event", "raw")));
 		this._loadingGroup.addStatusCommand(CallFunctionCommand.create(this, this._runStatusCommands, [SourceData.create("event", "raw")]));
+		this._loadingGroup.addStatusCommand(SetStateValueCommand.create(this, "status", SourceData.create("event", "raw")));
 		
 		this._propsThatShouldNotCopy.push("loadData");
 		this._propsThatShouldNotCopy.push("loadingElement");

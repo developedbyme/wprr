@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import SourcedText from "wprr/elements/text/SourcedText";
 
@@ -17,7 +18,7 @@ export default class DateRangeDisplay extends SourcedText {
 		let endDate = this.getSourcedProp("endDate");
 		let inputType = this.getSourcedProp("inputType");
 		let format = this.getSourcedProp("format");
-		let locale = this.getFirstInputWithDefault("locale", "en");
+		let locale = this.getFirstInputWithDefault("locale", Wprr.sourceReferenceIfExists("locale"), Wprr.sourceReferenceIfExists("wprr/postData", "language"), Wprr.sourceReferenceIfExists("wprr/pageData", "queryData.language"), "en");
 		
 		if(inputType === "php") {
 			startDate = 1000*startDate;

@@ -244,6 +244,42 @@ export default class FilterPartFunctions  {
 		return newFilterPart;
 	}
 	
+	static filterOutObjectProperties(aCurrentArray, aOriginalArray) {
+		console.log("filterOutObjectProperties");
+		console.log(this);
+		
+		let returnArray = new Array();
+		
+		let theObject = this.getInput("object");
+		let field = this.getInput("field");
+		
+		let currentArray = aCurrentArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentValue = currentItem;
+			if(field) {
+				currentValue = objectPath.get(currentItem, field);
+			}
+			
+			if(!theObject || theObject[currentValue] === undefined) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static createFilterOutObjectProperties(aObject, aField = null, aActive = null) {
+		let newFilterPart = FilterPart.create(FilterPartFunctions.filterOutObjectProperties, aActive);
+		
+		newFilterPart.inputs.setInput("object", aObject);
+		newFilterPart.inputs.setInput("field", aField);
+		
+		return newFilterPart;
+	}
+	
 	static filterInDateRange(aCurrentArray, aOriginalArray) {
 		let returnArray = new Array();
 		

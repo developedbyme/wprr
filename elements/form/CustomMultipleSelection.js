@@ -122,11 +122,6 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 		);
 		
 		let noSelectionLabel = this.getFirstInput(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose"));
-		let selectedItemLoopItem = React.createElement("span", {},
-			React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("loop/item"), Wprr.sourceReference("options"))]},
-				Wprr.text(null)
-			)
-		);
 		
 		let button = this.getFirstInput(
 			Wprr.sourceProp("buttonMarkup"),

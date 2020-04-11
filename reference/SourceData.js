@@ -176,6 +176,8 @@ export default class SourceData {
 							return dataObject.getPermalink();
 						case "image":
 							return dataObject.getImage();
+						case "language":
+							return dataObject.getDataValue("language");
 						default:
 							console.error("Unknown postData type " + aPath);
 							break;

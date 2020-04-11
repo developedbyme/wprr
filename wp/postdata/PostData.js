@@ -23,6 +23,15 @@ export default class PostData {
 		return objectPath.get(this._data, aField);
 	}
 	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
+	getValueForPath(aPath) {
+		console.log("wprr/wp/postdata/PostData::getValueForPath");
+		return this.getDataValue(aPath);
+	}
+	
 	getId() {
 		//console.log("wprr/wp/postdata/PostData::getId");
 		//console.log(this._data);
