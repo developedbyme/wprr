@@ -1,6 +1,7 @@
 import Wprr from "wprr/Wprr";
 
 import SourceData from "wprr/reference/SourceData";
+import UrlResolver from "wprr/utils/UrlResolver";
 
 import objectPath from "object-path";
 
@@ -11,6 +12,8 @@ export default class LinkGroup {
 		this._inputs = new Object();
 		this._links = new Object();
 		this._postsMap = new Object();
+		
+		this._urlResolver = new UrlResolver();
 	}
 	
 	/**
@@ -144,12 +147,17 @@ export default class LinkGroup {
 	}
 	
 	resolvePart(aPart, aFromPath) {
-		console.log("resolvePart");
-		console.log(aPart);
+		//console.log("resolvePart");
+		//console.log(aPart);
 		let type = aPart.type;
 		switch(type) {
 			case "internal":
-				return null; //METODO
+				this._urlResolver.setupBaseUrl("", aFromPath);
+				let newPath = this._urlResolver.getAbsolutePath(aPart.value).substring(1);
+				if(newPath[newPath.length-1] === "/") {
+					newPath = newPath.substring(0, newPath.length-1);
+				}
+				return this.getLink(newPath);
 			case "postUrl":
 				return objectPath.get(this._postsMap, "post" + aPart.value + ".permalink");
 			case "variable":
