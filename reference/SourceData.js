@@ -18,6 +18,7 @@ export default class SourceData {
 		this._type = null;
 		this._path = null;
 		this._debug_lastEvaluatedValue = null;
+		this._additionalInput = null;
 		
 		this._shouldCleanup = true;
 	}
@@ -26,6 +27,15 @@ export default class SourceData {
 		
 		this._type = aType;
 		this._path = aPath;
+		
+		return this;
+	}
+	
+	setAdditionalInput(aData) {
+		//console.log("setAdditionalInput");
+		//console.log(aData);
+		
+		this._additionalInput = aData;
 		
 		return this;
 	}

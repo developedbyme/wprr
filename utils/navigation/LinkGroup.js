@@ -10,6 +10,7 @@ export default class LinkGroup {
 	
 	constructor() {
 		this._inputs = new Object();
+		this._temporaryInputs = null;
 		this._links = new Object();
 		this._postsMap = new Object();
 		
@@ -41,8 +42,8 @@ export default class LinkGroup {
 	 * @return	BaseCommand	self
 	 */
 	setInput(aName, aValue) {
-		console.log("setInput");
-		console.log(aName, aValue);
+		//console.log("setInput");
+		//console.log(aName, aValue);
 		
 		this._inputs[aName] = aValue;
 		
@@ -75,6 +76,11 @@ export default class LinkGroup {
 	 */
 	getInput(aName) {
 		if(this._inputs[aName] === undefined) {
+			
+			if(this._temporaryInputs && this._temporaryInputs[aName] !== undefined) {
+				return this.resolveSource(this._temporaryInputs[aName]);
+			}
+			
 			console.warn("Input " + aName + " doesn't exist.", this);
 			return null;
 		}
@@ -97,7 +103,7 @@ export default class LinkGroup {
 			let props = this._triggerElement ? this._triggerElement.props : {};
 			let state = this._triggerElement ? this._triggerElement.state : {};
 			
-			let changePropsAndStateObject = {"props": props, "state": state, "event": this._eventData};
+			let changePropsAndStateObject = {"props": props, "state": state, "event": null};
 			
 			return aData.getSourceInStateChange(this._triggerElement, changePropsAndStateObject);
 		}
@@ -106,8 +112,8 @@ export default class LinkGroup {
 	}
 	
 	addLinks(aLinks, aParent = "") {
-		console.log("LinkGroup::setLinks");
-		console.log(aLinks);
+		//console.log("LinkGroup::setLinks");
+		//console.log(aLinks);
 		
 		let currentArray = aLinks;
 		let currentArrayLength = currentArray.length;
@@ -130,8 +136,8 @@ export default class LinkGroup {
 	}
 	
 	setLinks(aLinksData) {
-		console.log("LinkGroup::setLinks");
-		console.log(aLinksData);
+		//console.log("LinkGroup::setLinks");
+		//console.log(aLinksData);
 		
 		let currentArray = aLinksData;
 		let currentArrayLength = currentArray.length;
@@ -140,8 +146,6 @@ export default class LinkGroup {
 			this.addLinks(currentData.links);
 			this.addPostsMap(currentData.postsMap);
 		}
-		
-		console.log(this._links);
 		
 		return this;
 	}
@@ -207,8 +211,8 @@ export default class LinkGroup {
 	}
 	
 	getLink(aPath) {
-		console.log("LinkGroup::getLink");
-		console.log(aPath, this);
+		//console.log("LinkGroup::getLink");
+		//console.log(aPath, this);
 		
 		let currentLink = this._links[aPath];
 		if(!currentLink) {
@@ -217,7 +221,6 @@ export default class LinkGroup {
 		}
 		
 		let link = this.resolveLink(currentLink, aPath);
-		console.log(link);
 		
 		return link;
 	}
@@ -233,5 +236,9 @@ export default class LinkGroup {
 		}
 		
 		return this.getLink(aPath);
+	}
+	
+	setAdditionalDataBeforePath(aData) {
+		this._temporaryInputs = aData;
 	}
 }
