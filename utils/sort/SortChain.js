@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import SortPart from "wprr/utils/sort/parts/SortPart";
 
 // import SortChain from "wprr/utils/sort/SortChain";
@@ -60,6 +62,12 @@ export default class SortChain extends SortPart {
 		let parts = this.getInput("parts");
 		parts.push(aPart);
 		this.inputs.getInput("parts", parts);
+		
+		return this;
+	}
+	
+	addFieldSort(aField, aFormatFunction = null, aActive = null) {
+		this.addPart(Wprr.utils.FieldSort.create(aField, aFormatFunction, aActive));
 		
 		return this;
 	}

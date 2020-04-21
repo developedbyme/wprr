@@ -13,8 +13,8 @@ export default class InternalMessageGroup {
 	}
 	
 	setup(aData) {
-		console.log("InternalMessageGroup::setup");
-		console.log(aData);
+		//console.log("InternalMessageGroup::setup");
+		//console.log(aData);
 		
 		this.setId(aData["id"]);
 		if(aData["fields"]) {
@@ -29,13 +29,12 @@ export default class InternalMessageGroup {
 	}
 	
 	connectToEditStorage(aExternalStorage) {
-		console.log("InternalMessageGroup::connectToEditStorage");
-		console.log(aExternalStorage);
+		//console.log("InternalMessageGroup::connectToEditStorage");
+		//console.log(aExternalStorage);
 		
 		let id = this.getId();
-		let prefix = "item" + id + ".fields.";
+		let prefix = "items.item" + id + ".fields.";
 		
-		console.log(this._fields);
 		for(let objectName in this._fields) {
 			let field = this._fields[objectName];
 			
@@ -85,7 +84,9 @@ export default class InternalMessageGroup {
 			newField.setMessageGroup(this);
 			newField.setupField(key, objectPath.get(currentFieldData["type"], "slug"), objectPath.get(currentFieldData["status"], "slug"), currentFieldData.settings);
 			newField.setValue(currentFieldData["value"]);
-			//METODO: setup translations
+			if(currentFieldData["translations"]) {
+				newField.setTranslations(currentFieldData["translations"]);
+			}
 			if(currentFieldData["pastChanges"] || currentFieldData["futureChanges"]) {
 				newField.setupChanges(currentFieldData["pastChanges"], currentFieldData["futureChanges"]);
 			}

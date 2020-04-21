@@ -74,6 +74,7 @@ export {default as RangeSelection} from "wprr/elements/form/wp/RangeSelection";
 export {default as ExpandableMenuItem} from "wprr/elements/interaction/ExpandableMenuItem";
 export {default as InternalMessageGroupInjection} from "wprr/manipulation/InternalMessageGroupInjection";
 export {default as OnOffButton} from "wprr/elements/interaction/OnOffButton";
+export {default as LinkGroupInjection} from "wprr/manipulation/navigation/LinkGroupInjection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

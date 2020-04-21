@@ -80,7 +80,12 @@ export default class DataStorage {
 	
 	addValueToArray(aName, aValue) {
 		
-		let currentArray = [].concat(this.getValue(aName));
+		let currentValue = this.getValue(aName);
+		if(!currentValue) {
+			currentValue = new Array();
+		}
+		
+		let currentArray = [].concat(currentValue);
 		currentArray.push(aValue);
 		this.updateValue(aName, currentArray);
 		

@@ -27,8 +27,8 @@ export default class TimelineField {
 		this._externalStorage = aExternalStorage;
 		this._externalStorage.addOwner(this);
 		
-		this._externalStorage.updateValue("saved.value", this._value);
-		this._externalStorage.updateValue("value", this._value);
+		this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
+		this._externalStorage.updateValue("value", Wprr.utils.object.copyViaJson(this._value));
 		
 		this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
 		this._externalStorage.updateValue("translations", Wprr.utils.object.copyViaJson(this._translations));
@@ -74,6 +74,15 @@ export default class TimelineField {
 	
 	setValue(aValue) {
 		this._value = aValue;
+		this._updateExternalStorage("value", aValue);
+		
+		return this;
+	}
+	
+	setTranslations(aTranslations) {
+		let copiedObject = Wprr.utils.object.copyViaJson(aTranslations);
+		this._translations = copiedObject;
+		this._updateExternalStorage("translations", copiedObject);
 		
 		return this;
 	}

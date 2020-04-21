@@ -23,6 +23,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 	}
 	
 	getReferences() {
+		//METODO: using a reference with the same name causing problems
 		return this._references;
 	}
 	
