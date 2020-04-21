@@ -18,6 +18,7 @@ export default class NumberDisplay extends SourcedText {
 		let input = this.getSourcedProp("number");
 
 		let format = this.getSourcedProp("format");
+		let numberOfDecimals = this.getFirstInputWithDefault("numberOfDecimals", 2);
 		
 		let flooredNumber = Math.floor(input);
 		let decimals = input-flooredNumber;
@@ -39,6 +40,17 @@ export default class NumberDisplay extends SourcedText {
 			if(length > currentDivider["position"]) {
 				returnString = returnString.substring(0, length-currentDivider["position"]) + currentDivider["character"] + returnString.substring(length-currentDivider["position"]);
 			}
+		}
+		
+		let decimalsText = ".";
+		if(decimals && numberOfDecimals > 0) {
+			let value = Math.round((1+decimals)*Math.pow(10, numberOfDecimals));
+			let valueString = (""+value).substring(1);
+			decimalsText += valueString;
+		}
+		
+		if(decimalsText.length > 1) {
+			returnString += decimalsText;
 		}
 		
 		return returnString;
