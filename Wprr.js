@@ -154,6 +154,10 @@ export default class Wprr {
 		return Wprr.source("translation", aText);
 	}
 	
+	static sourceQueryString(aName) {
+		return Wprr.source("queryString", aName);
+	}
+	
 	static sourceRef(aPath) {
 		return Wprr.sourceReference("refs/" + aPath);
 	}

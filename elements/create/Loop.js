@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import Adjust from "wprr/manipulation/Adjust";
 
@@ -82,5 +83,9 @@ export default class Loop extends Adjust {
 		} 
 		
 		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElementes);
+	}
+	
+	static createMarkupLoop(aArray, aItemMarkup, aSpacingMarkup = null, aChildren = null) {
+		return React.createElement(Loop, {"loop": Wprr.adjusts.markupLoop(aArray, aItemMarkup, aSpacingMarkup)}, aChildren);
 	}
 }

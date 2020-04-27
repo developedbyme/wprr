@@ -35,6 +35,7 @@ export default class ModuleCreatorBaseObject {
 		this._mainComponent = null;
 		this._store = null;
 		this._strictMode = false;
+		this._usedMulitpleTimes = false;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
@@ -152,8 +153,8 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_configureModule(aHolderNode, aData, aModuleData) {
-		//console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
-		//console.log(aHolderNode, aData, aModuleData);
+		console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
+		console.log(aHolderNode, aData, aModuleData);
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
@@ -231,6 +232,13 @@ export default class ModuleCreatorBaseObject {
 	createModule(aHolderNode, aData, aModuleData, aAddMode = ModuleCreatorBaseObject.RENDER) {
 		//console.log("oa.ModuleCreatorBaseObject::createModule");
 		//console.log(aHolderNode, aData);
+		
+		if(this._usedMulitpleTimes) {
+			//METODO: look over this
+			this._referenceHolder = new ReferenceHolder();
+			this._storeController = new StoreController();
+			this._siteStorage = new DataStorage();
+		}
 		
 		this._configureModule(aHolderNode, aData, aModuleData);
 		

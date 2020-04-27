@@ -47,6 +47,7 @@ import MapArray from "wprr/manipulation/adjustfunctions/logic/MapArray";
 import ClassFromComparison from "wprr/manipulation/adjustfunctions/css/ClassFromComparison";
 import AlternatingMarkupLoop from "wprr/manipulation/adjustfunctions/loop/AlternatingMarkupLoop";
 import ObjectPropertiesMarkupLoop from "wprr/manipulation/adjustfunctions/loop/ObjectPropertiesMarkupLoop";
+import LimitTextLength from "wprr/manipulation/adjustfunctions/text/LimitTextLength";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -120,6 +121,8 @@ let startOfArrayAsText = StartOfArrayAsText.create;
 export {startOfArrayAsText};
 let mapArray = MapArray.create;
 export {mapArray};
+let limitTextLength = LimitTextLength.create;
+export {limitTextLength};
 
 let filterProps = FilterProps.create;
 export {filterProps};

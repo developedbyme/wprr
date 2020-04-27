@@ -13,7 +13,7 @@ export default class RemoveProps extends AdjustFunction {
 		
 		super();
 		
-		this._propNames = null;
+		this.setInput("propNames", new Array());
 	}
 	
 	/**
@@ -24,7 +24,7 @@ export default class RemoveProps extends AdjustFunction {
 	 * @return	RemoveProps	self
 	 */
 	setNames(aNames) {
-		this._propNames = aNames;
+		this.setInput("propNames", aNames);
 		
 		return this;
 	}
@@ -43,12 +43,13 @@ export default class RemoveProps extends AdjustFunction {
 		let returnObject = aData;
 		
 		let currentArray;
-		if(this._propNames) {
-			if(this._propNames instanceof Array) {
-				currentArray = this._propNames;
+		let propNames = this.getInput("propNames", aData, aManipulationObject);
+		if(propNames) {
+			if(propNames instanceof Array) {
+				currentArray = propNames;
 			}
 			else {
-				currentArray = this._propNames.split(",");
+				currentArray = propNames.split(",");
 			}
 			
 			let currentArrayLength = currentArray.length;

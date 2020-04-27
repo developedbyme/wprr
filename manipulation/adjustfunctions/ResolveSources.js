@@ -13,7 +13,8 @@ export default class ResolveSources extends AdjustFunction {
 		
 		super();
 		
-		this._propNames = [];
+		this.setInput("propNames", new Array());
+		
 	}
 	
 	/**
@@ -24,7 +25,8 @@ export default class ResolveSources extends AdjustFunction {
 	 * @return	ResolveSources	self
 	 */
 	addPropNames(aPropNames) {
-		this._propNames = aPropNames;
+		
+		this.setInput("propNames", aPropNames);
 		
 		return this;
 	}
@@ -40,7 +42,7 @@ export default class ResolveSources extends AdjustFunction {
 	adjust(aData, aManipulationObject) {
 		//console.log("wprr/manipulation/adjustfunctions/ResolveSources::adjust");
 		
-		let currentArray = this._propNames;
+		let currentArray = this.getInput("propNames", aData, aManipulationObject);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentName = currentArray[i];

@@ -1,6 +1,7 @@
 "use strict";
 
 import objectPath from "object-path";
+import queryString from "query-string";
 
 import AcfFunctions from "wprr/wp/AcfFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
@@ -174,6 +175,8 @@ export default class SourceData {
 				{
 					let dataObject = references.getObject("wprr/postData");
 					switch(aPath) {
+						case "id":
+							return dataObject.getId();
 						case "rawData":
 							return dataObject._data;
 						case "title":
@@ -314,8 +317,12 @@ export default class SourceData {
 					
 					return null;
 				}
+			case "queryString":
+				{
+					let parsedQueryString = queryString.parse(location.search);
+					return objectPath.get(parsedQueryString, aPath);
+				}
 				
-				return returnString;
 			default:
 				console.error("Unknown type " + aType);
 				break;
