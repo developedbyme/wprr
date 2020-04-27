@@ -70,8 +70,8 @@ export default class InternalMessageGroup {
 	}
 	
 	setupFields(aFieldsData) {
-		console.log("InternalMessageGroup::setupFields");
-		console.log(aFieldsData);
+		//console.log("InternalMessageGroup::setupFields");
+		//console.log(aFieldsData);
 		
 		let currentArray = aFieldsData;
 		let currentArrayLength = currentArray.length;

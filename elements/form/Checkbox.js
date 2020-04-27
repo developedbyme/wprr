@@ -23,7 +23,10 @@ export default class Checkbox extends WprrBaseObject {
 		let newValue = this.getSourcedProp("value");
 		let checked = aEvent.target.checked;
 		
-		this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.checked, {"value": newValue});
+		let valueUpdater = this.getReference("value/" + valueName);
+		if(valueUpdater) {
+			valueUpdater.updateValue(valueName, aEvent.target.checked, {"value": newValue});
+		}
 		
 		let commands = this.getSourcedProp("changeCommands");
 		

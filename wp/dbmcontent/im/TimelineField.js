@@ -21,8 +21,8 @@ export default class TimelineField {
 	}
 	
 	connectToEditStorage(aExternalStorage) {
-		console.log("TimelineField::connectToEditStorage");
-		console.log(aExternalStorage);
+		//console.log("TimelineField::connectToEditStorage");
+		//console.log(aExternalStorage);
 		
 		this._externalStorage = aExternalStorage;
 		this._externalStorage.addOwner(this);
@@ -50,7 +50,7 @@ export default class TimelineField {
 	}
 	
 	externalDataChange() {
-		console.log("TimelineField::externalDataChange");
+		//console.log("TimelineField::externalDataChange");
 		
 		let value = this._externalStorage.getValue("value");
 		if(value !== undefined) {
