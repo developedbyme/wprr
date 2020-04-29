@@ -11,6 +11,7 @@ export default class LinkGroup {
 	constructor() {
 		this._inputs = new Object();
 		this._temporaryInputs = null;
+		this._resolveFromObject = null;
 		this._links = new Object();
 		this._postsMap = new Object();
 		
@@ -100,12 +101,12 @@ export default class LinkGroup {
 		
 		if(aData instanceof SourceData) {
 			
-			let props = this._triggerElement ? this._triggerElement.props : {};
-			let state = this._triggerElement ? this._triggerElement.state : {};
+			let props = this._resolveFromObject ? this._resolveFromObject.props : {};
+			let state = this._resolveFromObject ? this._resolveFromObject.state : {};
 			
 			let changePropsAndStateObject = {"props": props, "state": state, "event": null};
 			
-			return aData.getSourceInStateChange(this._triggerElement, changePropsAndStateObject);
+			return aData.getSourceInStateChange(this._resolveFromObject, changePropsAndStateObject);
 		}
 		
 		return aData;
@@ -238,7 +239,8 @@ export default class LinkGroup {
 		return this.getLink(aPath);
 	}
 	
-	setAdditionalDataBeforePath(aData) {
+	setAdditionalDataBeforePath(aData, aFromObject) {
 		this._temporaryInputs = aData;
+		this._resolveFromObject = aFromObject;
 	}
 }

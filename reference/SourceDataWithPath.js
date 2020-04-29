@@ -34,7 +34,7 @@ export default class SourceDataWithPath extends SourceData {
 				if(aAdditionalInput instanceof SourceData) {
 					aAdditionalInput = aAdditionalInput.getSource(aFromObject);
 				}
-				aData.setAdditionalDataBeforePath(aAdditionalInput);
+				aData.setAdditionalDataBeforePath(aAdditionalInput, aFromObject);
 			}
 			return aData.getValueForPath(aPath);
 		}
