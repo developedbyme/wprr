@@ -387,6 +387,42 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static groupArrayByFunction(aArray, aFunction, aGroupPrefix = "") {
+		let groupNames = new Array();
+		let groups = new Object();
+		
+		{
+			let currentArray = aArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				let currentGroup = aGroupPrefix + aFunction(currentItem, i, currentArray);
+				if(!groups[currentGroup]) {
+					groups[currentGroup] = new Array();
+					groupNames.push(currentGroup);
+				}
+				groups[currentGroup].push(currentItem);
+			}
+		}
+		
+		let returnArray = new Array();
+		
+		{
+			let currentArray = groupNames;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let groupName = currentArray[i];
+				let returnItem = new Object()
+				returnItem["key"] = groupName;
+				returnItem["value"] = groups[groupName];
+				
+				returnArray.push(returnItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
 	static convertValueToObjectInArray(aArray, aFieldName = "key") {
 		
 		let returnArray = new Array();
@@ -417,5 +453,91 @@ export default class ArrayFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static _selectAllDeepValuesRecursive(aPathArray, aObject, aResolvedPath, aReturnArray) {
+		//console.log("_selectAllDeepValuesRecursive");
+		//console.log(aPathArray, aObject, aResolvedPath, aReturnArray);
+		
+		let newResolvedPath = [].concat(aResolvedPath);
+		newResolvedPath.push(aObject);
+		
+		if(aPathArray.length > 0 && aObject !== null && aObject !== undefined) {
+			let newPaths = [].concat(aPathArray);
+			let nextStep = newPaths.shift();
+			let nextObject = objectPath.get(aObject, nextStep);
+			
+			if(Array.isArray(nextObject)) {
+				let currentArray = nextObject;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					ArrayFunctions._selectAllDeepValuesRecursive(newPaths, currentArray[i], newResolvedPath, aReturnArray);
+				}
+			}
+			else {
+				ArrayFunctions._selectAllDeepValuesRecursive(newPaths, nextObject, newResolvedPath, aReturnArray);
+			}
+		}
+		else {
+			aReturnArray.push({"value": aObject, "path": newResolvedPath});
+		}
+	}
+	
+	static selectAllDeepValues(aPath, aObject) {
+		let returnArray = new Array();
+		let pathArray = ArrayFunctions.arrayOrSeparatedString(aPath, ".");
+		
+		if(Array.isArray(aObject)) {
+			let currentArray = aObject;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				this._selectAllDeepValuesRecursive(pathArray, aObject[i], [], returnArray);
+			}
+		}
+		else {
+			this._selectAllDeepValuesRecursive(pathArray, aObject, [], returnArray);
+		}
+		
+		return returnArray;
+	}
+	
+	static sum(aArray) {
+		let returnValue = 0;
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentValue = currentArray[i];
+			if(isNaN(currentValue)) {
+				console.error("NaN value in array", i, currentArray);
+				continue;
+			}
+			returnValue += currentValue;
+		}
+		
+		return returnValue;
+	}
+	
+	static getBestItem(aArray, aCompareFunction, aQualifyFunction = null) {
+		let bestItem = null;
+		
+		let qualifiedItems = aArray;
+		if(aQualifyFunction) {
+			let groups = ArrayFunctions.groupArrayByFunction(aArray, aQualifyFunction);
+			qualifiedItems = objectPath.get(ArrayFunctions.getItemByIfExists("key", "true", groups), "value", []);
+		}
+		
+		if(qualifiedItems.length > 0) {
+			bestItem = qualifiedItems[0];
+			let currentArray = qualifiedItems;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				if(aCompareFunction(currentArray[i], bestItem)) {
+					bestItem = currentArray[i];
+				}
+			}
+		}
+		
+		return bestItem;
 	}
 }
