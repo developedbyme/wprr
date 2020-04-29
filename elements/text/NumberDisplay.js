@@ -15,13 +15,17 @@ export default class NumberDisplay extends SourcedText {
 	
 	_getText() {
 		
-		let input = this.getSourcedProp("number");
+		let input = this.getFirstInput("number");
 
-		let format = this.getSourcedProp("format");
+		let format = this.getFirstInputWithDefault("format", "# ### ###");
 		let numberOfDecimals = this.getFirstInputWithDefault("numberOfDecimals", 2);
 		
-		let flooredNumber = Math.floor(input);
-		let decimals = input-flooredNumber;
+		return NumberDisplay.formatNumber(input, format, numberOfDecimals);
+	}
+	
+	static formatNumber(aNumber, aFormat = "# ### ###", aNumberOfDecimals = 2) {
+		let flooredNumber = Math.floor(aNumber);
+		let decimals = aNumber-flooredNumber;
 		
 		let workNumber = flooredNumber;
 		
@@ -43,8 +47,8 @@ export default class NumberDisplay extends SourcedText {
 		}
 		
 		let decimalsText = ".";
-		if(decimals && numberOfDecimals > 0) {
-			let value = Math.round((1+decimals)*Math.pow(10, numberOfDecimals));
+		if(decimals && aNumberOfDecimals > 0) {
+			let value = Math.round((1+decimals)*Math.pow(10, aNumberOfDecimals));
 			let valueString = (""+value).substring(1);
 			decimalsText += valueString;
 		}
