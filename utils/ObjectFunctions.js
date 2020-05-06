@@ -39,4 +39,23 @@ export default class ObjectFunctions {
 	static copyViaJson(aObject) {
 		return JSON.parse(JSON.stringify(aObject));
 	}
+	
+	static sumMerge(aObjectsArray) {
+		let returnObject = new Object();
+		
+		let currentArray = aObjectsArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = currentArray[i];
+			for(let objectName in currentObject) {
+				if(!returnObject[objectName]) {
+					returnObject[objectName] = currentObject[objectName];
+				}
+				else {
+					returnObject[objectName] += currentObject[objectName];
+				}
+			}
+		}
+		return returnObject;
+	}
 }

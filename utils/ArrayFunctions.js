@@ -85,7 +85,9 @@ export default class ArrayFunctions {
 					newObject[objectName2] = currentEntry[objectName2];
 				}
 			}
-			newObject[aKeyField] = objectName.substring(aKeyPrefix.length, objectName.length);
+			if(aKeyField) {
+				newObject[aKeyField] = objectName.substring(aKeyPrefix.length, objectName.length);
+			}
 			
 			returnArray.push(newObject);
 		}
