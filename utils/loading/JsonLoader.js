@@ -209,7 +209,9 @@ export default class JsonLoader {
 				return response.json();
 			}
 			else {
-				throw(new Error("Server response: " + response.status + " " + response.statusText));
+				return response.text().then(function(aText) {
+					throw(new Error("Server response: " + response.status + " " + response.statusText + " (" + response.type + "): " + aText));
+				})
 			}
 		})
 		.then( (data) => {
