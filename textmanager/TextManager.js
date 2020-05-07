@@ -63,6 +63,23 @@ export default class TextManager {
 		return returnText;
 	}
 	
+	getFirstExistingText(aPaths, aDefaultText) {
+		//console.log(aPaths);
+		
+		let currentArray = aPaths;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let returnText = objectPath.get(this._data, currentArray[i]);
+			if(returnText !== undefined) {
+				return returnText;
+			}
+		}
+		
+		this.addUntranslatedText(currentArray[currentArrayLength-1], aDefaultText);
+		
+		return aDefaultText;
+	}
+	
 	translateText(aText) {
 		let textId = this.getTranslationId(aText);
 		

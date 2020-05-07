@@ -162,6 +162,14 @@ export default class Wprr {
 		return Wprr.sourceReference("refs/" + aPath);
 	}
 	
+	static sourceFunction(aThisObject, aFunctionOrName, aArguments = null) {
+		return Wprr.source("command", Wprr.commands.callFunction(aThisObject, aFunctionOrName, aArguments));
+	}
+	
+	static sourceStatic(aObject, aDeepPath = null) {
+		return Wprr.source("static", aObject, aDeepPath);
+	}
+	
 	static text(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}

@@ -359,7 +359,7 @@ export default class FilterPartFunctions  {
 	static fieldsSearch(aCurrentArray, aOriginalArray) {
 		let returnArray = new Array();
 		
-		let currentArray2 = this.getInput("fields");
+		let currentArray2 = Wprr.utils.array.arrayOrSeparatedString(this.getInput("fields"));
 		let currentArray2Length = currentArray2.length;
 		let searchValue = this.getInput("searchValue");
 		

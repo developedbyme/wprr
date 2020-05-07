@@ -29,6 +29,20 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	removePart(aPart) {
+		let parts = this.inputs.getInput("filters");
+		
+		let index = parts.indexOf(aPart);
+		if(index >= 0) {
+			parts.splice(index, 1);
+		
+			this.inputs.setInput("filters", parts);
+		}
+		
+		
+		return this;
+	}
+	
 	addFunction(aFunction) {
 		
 		if(!aFunction) {

@@ -58,4 +58,14 @@ export default class ObjectFunctions {
 		}
 		return returnObject;
 	}
+	
+	static identifyProperty(aObject, aValue) {
+		for(let objectName in aObject) {
+			if(aObject[objectName] === aValue) {
+				return objectName;
+			}
+		}
+		//METODO: add warning
+		return null;
+	}
 }

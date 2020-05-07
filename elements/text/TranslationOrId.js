@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import SourcedText from "wprr/elements/text/SourcedText";
 
@@ -14,22 +15,28 @@ export default class TranslationOrId extends SourcedText {
 		let id = this.getSourcedProp("id");
 		let prefix = this.getSourcedProp("prefix");
 		let suffix = this.getSourcedProp("suffix");
-		let defaultText = this.getSourcedProp("defaultText");
+		let defaultText = this.getFirstInput("defaultText", "id");
 		
 		let fullPath = id;
-		if(prefix) {
-			fullPath = prefix + "." + fullPath;
-		}
 		if(suffix) {
 			fullPath = fullPath + "." + suffix;
 		}
 		
-		if(!defaultText) {
-			defaultText = id;
+		let paths = [];
+		if(prefix) {
+			let currentArray = Wprr.utils.array.arrayOrSeparatedString(prefix);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				paths.push(currentArray[i] + "." + fullPath);
+			}
+			
+		}
+		else {
+			paths.push(fullPath);
 		}
 		
 		let textManager = this.getReference("wprr/textManager");
-		let translatedText = textManager.getTextOrId(fullPath, defaultText);
+		let translatedText = textManager.getFirstExistingText(paths, defaultText);
 		
 		return translatedText;
 	}

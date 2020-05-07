@@ -52,6 +52,7 @@ export {default as KeyValueGenerator} from "wprr/utils/KeyValueGenerator";
 export {default as PathGenerator} from "wprr/utils/PathGenerator";
 export {default as ReferenceHolder} from "wprr/reference/ReferenceHolder";
 export {default as LinkGroup} from "wprr/utils/navigation/LinkGroup";
+export {default as DataStorageListConnection} from "wprr/utils/DataStorageListConnection";
 
 import * as process from "wprr/utils/process";
 export {process as process};
