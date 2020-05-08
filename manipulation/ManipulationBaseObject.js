@@ -175,6 +175,10 @@ export default class ManipulationBaseObject extends WprrBaseObject {
 		this._clonedElement = this._renderClonedElement();
 	}
 	
+	_replaceWrapper(aElement) {
+		return aElement;
+	}
+	
 	_renderMainElement() {
 		this._createClonedElement();
 		return this._clonedElement;

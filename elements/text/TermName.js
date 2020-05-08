@@ -16,6 +16,16 @@ export default class TermName extends WprrBaseObject {
 		super(aProps);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		
+		super._removeUsedProps(aReturnObject);
+		
+		delete aReturnObject["taxonomy"];
+		delete aReturnObject["field"];
+		delete aReturnObject["termId"];
+		delete aReturnObject["translationsPath"];
+	}
+	
 	_renderMainElement() {
 		
 		let taxonomy = this.getSourcedPropWithDefault("taxonomy", "category");

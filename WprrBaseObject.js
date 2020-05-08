@@ -32,6 +32,10 @@ export default class WprrBaseObject extends React.Component {
 		this._namedRefs = new Object();
 	}
 	
+	useElementReplacement() {
+		return true;
+	}
+	
 	getProps() {
 		return this.props;
 	}
@@ -285,6 +289,14 @@ export default class WprrBaseObject extends React.Component {
 		return this._mainElementType;
 	}
 	
+	_overrideElementType(aDefaultType) {
+		let overrideType = this.getSourcedProp("overrideMainElementType");
+		if(overrideType) {
+			return overrideType;
+		}
+		return aDefaultType;
+	}
+	
 	_getMainElementClassNames() {
 		let returnArray = new Array();
 		
@@ -337,6 +349,44 @@ export default class WprrBaseObject extends React.Component {
 		}
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		//MENOTE: should be overridden
+	}
+	
+	_copyAllProps(aReturnObject) {
+		let props = this.getProps();
+		
+		for(let objectName in props) {
+			switch(objectName) {
+				case "overrideMainElementType":
+				case "didMountCommands":
+				case "didUpdateCommands":
+				case "willUnmountCommands":
+				case "prepareRenderCommands":
+				case "prepareInitialRenderCommands":
+					//MENOTE: these should not copy
+					break;
+				case "children":
+				case "className":
+					//MENOTE: merged in other places: _getMainElementClassNames for className and _replaceWrapper children
+					break;
+				case "style":
+					let currentStyleObject = props[objectName];
+					let newStyleObject = new Object();
+					for(let styleProperty in currentStyleObject) {
+						newStyleObject[styleProperty] = currentStyleObject[styleProperty];
+					}
+					
+					aReturnObject[objectName] = newStyleObject;
+					break;
+				default:
+					aReturnObject[objectName] = props[objectName];
+			}
+		}
+		
+		this._removeUsedProps(aReturnObject);
+	}
+	
 	_getMainElementProps() {
 		let returnObject = new Object();
 		
@@ -349,6 +399,56 @@ export default class WprrBaseObject extends React.Component {
 		this._copyPassthroughProps(returnObject);
 		
 		return returnObject;
+	}
+	
+	_getAllMainElementProps() {
+		let returnObject = new Object();
+		
+		let classNames = this._getMainElementClassNames();
+		
+		if(classNames.length > 0) {
+			returnObject["className"] = classNames.join(" ");
+		}
+		
+		this._copyAllProps(returnObject);
+		
+		return returnObject;
+	}
+	
+	_mergeInObjectElementProps(aReturnObject, aPropsToMergeIn) {
+		for(let objectName in aPropsToMergeIn) {
+			switch(objectName) {
+				case "children":
+					//MENOTE: handled in _replaceWrapper
+					break;
+				case "className":
+					if(!aReturnObject[objectName]) {
+						aReturnObject[objectName] = "";
+					}
+					else {
+						aReturnObject[objectName] += " ";
+					}
+					aReturnObject[objectName] += aPropsToMergeIn[objectName];
+					break;
+				case "style":
+					if(!aReturnObject[objectName]) {
+						aReturnObject[objectName] = new Object();
+					}
+					let currentStyleObject = aPropsToMergeIn[objectName];
+					let newStyleObject = aReturnObject[objectName];
+					for(let styleProperty in currentStyleObject) {
+						if(newStyleObject[objectName] === undefined) {
+							newStyleObject[styleProperty] = currentStyleObject[styleProperty];
+						}
+					}
+					break;
+				default:
+					if(aReturnObject[objectName] === undefined) {
+						aReturnObject[objectName] = aPropsToMergeIn[objectName];
+					}
+					break;
+			}
+		}
 	}
 	
 	shouldComponentUpdate(aNextProps, aNextStates) {
@@ -461,23 +561,60 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_replaceWrapper(aElement) {
-		if(aElement && aElement.type === "wrapper") {
-			let mainElementProps = this._getMainElementProps();
-			mainElementProps["ref"] = this._elementRef;
+		if(aElement) {
+			if(aElement.type === "wrapper") {
+				let mainElementProps = this._getMainElementProps();
+				mainElementProps["ref"] = this._elementRef;
 			
-			let renderArguments = [this._getMainElementType(), mainElementProps];
+				let renderArguments = [this._getMainElementType(), mainElementProps];
 			
-			if(aElement.props.children) {
-				if(Array.isArray(aElement.props.children)) {
-					renderArguments = renderArguments.concat(aElement.props.children);
+				if(aElement.props.children) {
+					if(Array.isArray(aElement.props.children)) {
+						renderArguments = renderArguments.concat(aElement.props.children);
+					}
+					else {
+						renderArguments.push(aElement.props.children);
+					}
 				}
-				else {
-					renderArguments.push(aElement.props.children);
-				}
+			
+				return React.createElement.apply(React, renderArguments);
 			}
 			
-			return React.createElement.apply(React, renderArguments);
+			if(aElement.type) {
+				if(aElement.type !== React.Fragment && this.useElementReplacement()) {
+					
+					let mainElementProps;
+					
+					if(typeof(aElement.type) === "string") {
+						mainElementProps = this._getMainElementProps();
+						this._mergeInObjectElementProps(mainElementProps, aElement.props);
+					}
+					else {
+						mainElementProps = this._getAllMainElementProps();
+						this._mergeInObjectElementProps(mainElementProps, aElement.props);
+					}
+					
+					let elementType = this._overrideElementType(aElement.type);
+					let renderArguments = [elementType, mainElementProps];
+					
+					if(aElement.props.children) {
+						if(Array.isArray(aElement.props.children)) {
+							renderArguments = renderArguments.concat(aElement.props.children);
+						}
+						else {
+							renderArguments.push(aElement.props.children);
+						}
+					}
+					
+					if(!mainElementProps["ref"]) {
+						mainElementProps["ref"] = this._elementRef;
+					}
+					
+					return React.createElement.apply(React, renderArguments);
+				}
+			}
 		}
+		
 		
 		return aElement;
 	}

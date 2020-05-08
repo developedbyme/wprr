@@ -7,30 +7,35 @@ export default class Link extends WprrBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
-		
-		this._mainElementType = "a";
 	}
 	
-	_copyPassthroughProps(aReturnObject) {
+	_removeUsedProps(aReturnObject) {
 		
-		super._copyPassthroughProps(aReturnObject);
+		super._removeUsedProps(aReturnObject);
 		
-		let href = this.getSourcedProp("href");
-		if(href) {
-			let prefix = this.getSourcedProp("prefix");
-			if(prefix) {
-				href = prefix + href;
-			}
-			aReturnObject["href"] = href;
-		}
-		
-		let target = this.getSourcedProp("target");
-		if(target) {
-			aReturnObject["target"] = target;
-		}
+		delete aReturnObject["href"];
+		delete aReturnObject["prefix"];
+		delete aReturnObject["target"];
 	}
 	
 	_renderMainElement() {
-		return React.createElement("wrapper", {}, this.props.children);
+		
+		let newProps = new Object();
+		
+		let href = this.getFirstInput("href");
+		if(href) {
+			let prefix = this.getFirstInput("prefix");
+			if(prefix) {
+				href = prefix + href;
+			}
+			newProps["href"] = href;
+		}
+		
+		let target = this.getFirstInput("target");
+		if(target) {
+			newProps["target"] = target;
+		}
+		
+		return React.createElement("a", newProps, this.props.children);
 	}
 }

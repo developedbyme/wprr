@@ -17,3 +17,4 @@ let dbmContentSelectionArea = DbmContentSelectionAreaCreator.create;
 export {dbmContentSelectionArea};
 let switchableArea = SwitchableAreaCreator.create;
 export {switchableArea};
+export {SwitchableAreaCreator};

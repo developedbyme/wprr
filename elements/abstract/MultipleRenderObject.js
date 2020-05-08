@@ -14,6 +14,10 @@ export default class MultipleRenderObject extends WprrBaseObject {
 		this._activePart = "initial";
 	}
 	
+	useElementReplacement() {
+		return false;
+	}
+	
 	getProps() {
 		return this.getActivePart().props;
 	}
@@ -79,6 +83,7 @@ export default class MultipleRenderObject extends WprrBaseObject {
 		let returnElement = null;
 		try {
 			let renderFunction = this.getRenderFunction(aType);
+			
 			returnElement = this._replaceWrapper(renderFunction.call(this, aElement, this));
 		}
 		catch(theError) {

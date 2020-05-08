@@ -68,4 +68,10 @@ export default class ObjectFunctions {
 		//METODO: add warning
 		return null;
 	}
+	
+	static copyProperties(aFromObject, aToObject) {
+		for(let objectName in aFromObject) {
+			aToObject[styleProperty] = aFromObject[objectName];
+		}
+	}
 }
