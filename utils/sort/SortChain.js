@@ -66,6 +66,19 @@ export default class SortChain extends SortPart {
 		return this;
 	}
 	
+	removePart(aPart) {
+		let parts = this.inputs.getInput("parts");
+		
+		let index = parts.indexOf(aPart);
+		if(index >= 0) {
+			parts.splice(index, 1);
+		
+			this.inputs.setInput("parts", parts);
+		}
+		
+		return this;
+	}
+	
 	addFieldSort(aField, aFormatFunction = null, aActive = null) {
 		this.addPart(Wprr.utils.FieldSort.create(aField, aFormatFunction, aActive));
 		

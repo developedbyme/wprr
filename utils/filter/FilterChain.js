@@ -39,7 +39,6 @@ export default class FilterChain extends FilterPart {
 			this.inputs.setInput("filters", parts);
 		}
 		
-		
 		return this;
 	}
 	
