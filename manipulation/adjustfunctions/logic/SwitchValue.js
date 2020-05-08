@@ -19,6 +19,7 @@ export default class SwitchValue extends AdjustFunction {
 		
 		this.setInput("input", SourceData.create("prop", "input"));
 		this.setInput("options", SourceData.create("prop", "options"));
+		this.setInput("defaultValue", null);
 		this.setInput("outputName", "output");
 		
 	}
@@ -60,6 +61,10 @@ export default class SwitchValue extends AdjustFunction {
 			if(currentOption.key === input) {
 				returnValue = currentOption.value;
 			}
+		}
+		
+		if(!returnValue) {
+			returnValue = this.getInput("defaultValue", aData, aManipulationObject);
 		}
 		
 		aData[outputName] = returnValue;
