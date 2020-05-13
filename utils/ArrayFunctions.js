@@ -158,20 +158,6 @@ export default class ArrayFunctions {
 		return -1;
 	}
 	
-	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
-		let currentArray = aArray;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentItem = currentArray[i];
-			let currentValue = objectPath.get(currentArray[i], aField);
-			if(currentValue == aIdentifier) {
-				return i;
-			}
-		}
-		
-		return -1;
-	}
-	
 	static getItemIndexBy(aField, aIdentifier, aArray) {
 		let returnValue = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray);
 		
@@ -595,5 +581,36 @@ export default class ArrayFunctions {
 		}
 		
 		return bestItem;
+	}
+	
+	static addUniqueItemBy(aField, aItem, aArray) {
+		let fieldData = objectPath.get(aItem, aField);
+		let index = ArrayFunctions.getItemIndexByIfExists(aField, fieldData, aArray);
+		if(index === -1) {
+			aArray.push(aItem);
+		}
+	}
+	
+	static addUniqueItemsBy(aField, aItems, aArray) {
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			ArrayFunctions.addUniqueItemBy(aField, currentArray[i], aArray);
+		}
+	}
+	
+	static removeBy(aField, aValue, aArray) {
+		let index = ArrayFunctions.getItemIndexByIfExists(aField, aValue, aArray);
+		if(index >= 0) {
+			aArray.splice(index, 1);
+		}
+	}
+	
+	static removeItemsBy(aField, aItems, aArray) {
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			ArrayFunctions.removeBy(aField, objectPath.get(currentArray[i], aField), aArray);
+		}
 	}
 }

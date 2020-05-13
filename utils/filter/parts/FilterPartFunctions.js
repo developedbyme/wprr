@@ -106,6 +106,10 @@ export default class FilterPartFunctions  {
 				return (aA !== aB);
 			case "!=":
 				return (aA != aB);
+			case "inArray":
+				return (aB.indexOf(aA) !== -1);
+			case "arrayContains":
+				return (aA.indexOf(aB) !== -1);
 			default:
 				console.error("Unknown comparison " + aCompareType);
 		}
