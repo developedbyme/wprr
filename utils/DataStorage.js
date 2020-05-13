@@ -3,6 +3,7 @@ import Wprr from "wprr/Wprr";
 import objectPath from "object-path";
 
 import DataStorageConnection from "wprr/utils/DataStorageConnection";
+import DataStorageChangeCommands from "wprr/utils/DataStorageChangeCommands";
 
 // import DataStorage from "wprr/utils/DataStorage";
 export default class DataStorage {
@@ -11,6 +12,7 @@ export default class DataStorage {
 		this.setData(new Object());
 		
 		this._owners = new Array();
+		this._enableUpdates = true;
 	}
 	
 	hasObjectPathHandling() {
@@ -45,10 +47,30 @@ export default class DataStorage {
 		return this;
 	}
 	
+	disableUpdates() {
+		this._enableUpdates = false;
+		
+		return this;
+	}
+	
+	enableUpdates(aUpdateOwners = false) {
+		this._enableUpdates = true;
+		
+		if(aUpdateOwners) {
+			this._updateOwners();
+		}
+		
+		return this;
+	}
+	
 	_updateOwners() {
 		//console.log("wprr/utils/DataStorage::_updateOwners");
 		//console.log(this._owners);
 		//METODO: need this to be safe for removing or adding owners in the middle of an update
+		
+		if(!this._enableUpdates) {
+			return;
+		}
 		
 		let currentArray = this._owners;
 		let currentArrayLength = currentArray.length;
@@ -124,5 +146,15 @@ export default class DataStorage {
 		newDataStorageConnection.setup(aPrefix, aSuffix);
 		
 		return newDataStorageConnection;
+	}
+	
+	createChangeCommands(aValueNames, aPerformingObject, aCommands = null) {
+		let newDataStorageChangeCommands = new DataStorageChangeCommands();
+		
+		newDataStorageChangeCommands.setDataStorage(this);
+		newDataStorageChangeCommands.setup(aValueNames, aPerformingObject);
+		newDataStorageChangeCommands.setCommands(aCommands);
+		
+		return newDataStorageChangeCommands;
 	}
 }

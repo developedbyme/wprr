@@ -77,6 +77,7 @@ export {default as OnOffButton} from "wprr/elements/interaction/OnOffButton";
 export {default as LinkGroupInjection} from "wprr/manipulation/navigation/LinkGroupInjection";
 export {default as CustomCheckbox} from "wprr/elements/form/CustomCheckbox";
 export {default as DragArea} from "wprr/elements/interaction/DragArea";
+export {default as PathRouter} from "wprr/elements/area/PathRouter";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

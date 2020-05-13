@@ -71,7 +71,7 @@ export default class ObjectFunctions {
 	
 	static copyProperties(aFromObject, aToObject) {
 		for(let objectName in aFromObject) {
-			aToObject[styleProperty] = aFromObject[objectName];
+			aToObject[objectName] = aFromObject[objectName];
 		}
 	}
 }

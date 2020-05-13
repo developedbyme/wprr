@@ -9,6 +9,10 @@ export default class PartRenderFunction extends WprrBaseObject {
 		super(props);
 	}
 	
+	useElementReplacement() {
+		return false;
+	}
+	
 	_renderMainElement() {
 		//console.log("wprr/elements/create/PartRenderFunction::_renderMainElement");
 		

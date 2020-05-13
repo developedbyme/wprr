@@ -63,6 +63,14 @@ export default class DataStorageConnection {
 		return this._dataStorage.getValue(this.getFullName(aName));
 	}
 	
+	getData() {
+		if(!this._prefix) {
+			return this._dataStorage.getData();
+		}
+		let prefixPath = this._prefix.substring(0, this._prefix.length-1);
+		return this._dataStorage.getValue(prefixPath);
+	}
+	
 	addValueToArray(aName, aValue) {
 		
 		this._dataStorage.addValueToArray(this.getFullName(aName), aValue);

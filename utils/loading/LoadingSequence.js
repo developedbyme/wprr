@@ -194,6 +194,18 @@ export default class LoadingSequence {
 		
 		this._checkForFurtherLoad();
 	}
+	
+	getAllData() {
+		let returnArray = new Array();
+		let currentArray = this._loaders;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentLoader = currentArray[i];
+			returnArray.push(currentLoader.getData());
+		}
+		
+		return returnArray;
+	}
 }
 
 LoadingSequence.DEFAULT_NUMBER_OF_CONCURRENT_LOADERS = 5;

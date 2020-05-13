@@ -127,6 +127,37 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static getAllItemsBy(aField, aIdentifier, aArray) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let currentValue = objectPath.get(currentArray[i], aField);
+			if(currentValue == aIdentifier) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let currentValue = objectPath.get(currentArray[i], aField);
+			if(currentValue == aIdentifier) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
+	
 	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
@@ -521,6 +552,29 @@ export default class ArrayFunctions {
 	}
 	
 	static getBestItem(aArray, aCompareFunction, aQualifyFunction = null) {
+		let bestItem = null;
+		
+		let qualifiedItems = aArray;
+		if(aQualifyFunction) {
+			let groups = ArrayFunctions.groupArrayByFunction(aArray, aQualifyFunction);
+			qualifiedItems = objectPath.get(ArrayFunctions.getItemByIfExists("key", "true", groups), "value", []);
+		}
+		
+		if(qualifiedItems.length > 0) {
+			bestItem = qualifiedItems[0];
+			let currentArray = qualifiedItems;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				if(aCompareFunction(currentArray[i], bestItem)) {
+					bestItem = currentArray[i];
+				}
+			}
+		}
+		
+		return bestItem;
+	}
+	
+	static getBestItemByScore(aArray, aCompareFunction, aQualifyFunction = null) {
 		let bestItem = null;
 		
 		let qualifiedItems = aArray;

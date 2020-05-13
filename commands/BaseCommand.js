@@ -116,4 +116,8 @@ export default class BaseCommand {
 	perform() {
 		//METODO: should be overridden
 	}
+	
+	toJSON() {
+		return "<command can't be serialized>";
+	}
 }
