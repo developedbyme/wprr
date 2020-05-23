@@ -16,7 +16,7 @@ export default class EditableProps extends ManipulationBaseObject {
 	}
 	
 	externalDataChange() {
-		console.log("wprr/manipulation/EditableProps::externalDataChange");
+		//console.log("wprr/manipulation/EditableProps::externalDataChange");
 		
 		this._updateState();
 	}
@@ -99,7 +99,7 @@ export default class EditableProps extends ManipulationBaseObject {
 	}
 	
 	_getEditablePropNames() {
-		let editableProps = this.getSourcedProp("editableProps");
+		let editableProps = this.getFirstInput("props", "editableProps");
 		
 		if(editableProps) {
 			let currentArray;
@@ -182,7 +182,7 @@ export default class EditableProps extends ManipulationBaseObject {
 	_manipulateProps(aReturnObject) {
 		//console.log("wprr/manipulation/EditableProps::_manipulateProps");
 		
-		var editableProps = this.getSourcedProp("editableProps");
+		var editableProps = this.getFirstInput("props", "editableProps");
 		
 		if(editableProps) {
 			var currentArray;
@@ -219,7 +219,7 @@ export default class EditableProps extends ManipulationBaseObject {
 		
 		let injectData = {};
 		
-		var editableProps = this.getSourcedProp("editableProps");
+		var editableProps = this.getFirstInput("props", "editableProps");
 		
 		if(editableProps) {
 			var currentArray;

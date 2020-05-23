@@ -146,4 +146,22 @@ export default class KeyValueGenerator {
 		
 		return returnArray;
 	}
+	
+	static tranlatedList(aOptions, aTextManager, aTranslationPath) {
+		let returnArray = new Array();
+		let currentArray = Wprr.utils.array.arrayOrSeparatedString(aOptions);
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			let textPath = currentId;
+			if(aTranslationPath) {
+				textPath = aTranslationPath + "." + textPath;
+			}
+			
+			let label = aTextManager.getTextOrId(textPath, currentId);
+			returnArray.push({"key": currentId, "value": currentId, "label": label});
+		}
+		
+		return returnArray;
+	}
 }

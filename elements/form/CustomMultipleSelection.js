@@ -122,6 +122,7 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 		);
 		
 		let noSelectionLabel = this.getFirstInput(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose"));
+		let allLabel = this.getFirstInput(Wprr.sourceProp("allLabel"), Wprr.sourceTranslation("All")); //METODO: check if all are selected
 		
 		let button = this.getFirstInput(
 			Wprr.sourceProp("buttonMarkup"),

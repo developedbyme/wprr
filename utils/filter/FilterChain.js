@@ -79,6 +79,12 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addFilterOutValues(aIgnoreValues, aField = null, aActive = null) {
+		this.addPart(Wprr.utils.filterPartFunctions.createFilterOutValues(aIgnoreValues, aField, aActive));
+		
+		return this;
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		

@@ -12,6 +12,15 @@ export default class Part extends WprrBaseObject {
 		
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		
+		super._removeUsedProps(aReturnObject);
+		
+		delete aReturnObject["owner"];
+		delete aReturnObject["part"];
+		delete aReturnObject["type"];
+	}
+	
 	_renderMainElement() {
 		
 		let owner = this.getSourcedProp("owner");

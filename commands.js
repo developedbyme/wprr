@@ -25,6 +25,7 @@ import GetValueCommand from "wprr/commands/basic/GetValueCommand";
 import AddValueToArrayCommand from "wprr/commands/basic/AddValueToArrayCommand";
 import ConsoleLogCommand from "wprr/commands/debug/ConsoleLogCommand";
 import RemoveValueFromArrayCommand from "wprr/commands/basic/RemoveValueFromArrayCommand";
+import RemoveIndexFromArrayCommand from "wprr/commands/basic/RemoveIndexFromArrayCommand";
 import StepValueCommand from "wprr/commands/basic/StepValueCommand";
 
 let callFunction = CallFunctionCommand.create;
@@ -45,8 +46,9 @@ let optionsStep = OptionsStepCommand.create;
 let getValue = GetValueCommand.create;
 let addValueToArray = AddValueToArrayCommand.create;
 let removeValueFromArray = RemoveValueFromArrayCommand.create;
+let removeIndexFromArray = RemoveIndexFromArrayCommand.create;
 
-export {setValue, stepValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray};
+export {setValue, stepValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray, removeIndexFromArray};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;

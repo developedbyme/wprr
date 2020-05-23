@@ -15,7 +15,7 @@ export default class SortPart  {
 		this.inputs.setInput("active", true);
 		this.inputs.setInput("sortFunction", this._performSortItem);
 		this.inputs.setInput("formatFunction", this._formatValue);
-		this.inputs.setInput("orderMultipler", 1);
+		this.inputs.setInput("orderMultiplier", 1);
 		
 		this._performingElement = null;
 		this._props = null;
@@ -63,13 +63,13 @@ export default class SortPart  {
 	}
 	
 	applySort(aA, aB) {
-		console.log("wprr/utils/sort/parts/SortPart::applyFilter");
+		//console.log("wprr/utils/sort/parts/SortPart::applyFilter");
 		
 		let active = this.getInput("active");
 		if(active) {
 			let sortFunction = this.getInput("sortFunction");
-			let orderMultipler = this.getInput("orderMultipler");
-			return orderMultipler*sortFunction.call(this, aA, aB);
+			let orderMultiplier = this.getInput("orderMultiplier");
+			return orderMultiplier*sortFunction.call(this, aA, aB);
 		}
 		return 0;
 	}
@@ -85,10 +85,10 @@ export default class SortPart  {
 	setOrder(aOrder) {
 		switch(aOrder) {
 			case "asc":
-				this.inputs.setInput("orderMultipler", 1);
+				this.inputs.setInput("orderMultiplier", 1);
 				break;
 			case "desc":
-				this.inputs.setInput("orderMultipler", -1);
+				this.inputs.setInput("orderMultiplier", -1);
 				break;
 			default:
 				console.warn("Unknown order " + aOrder, this);
@@ -127,6 +127,10 @@ export default class SortPart  {
 		newSortPart.inputs.setInputWithoutNull("active", aActive);
 		
 		return newSortPart;
+	}
+	
+	static format_none(aValue) {
+		return aValue;
 	}
 	
 	static format_number(aValue) {

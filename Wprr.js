@@ -162,8 +162,8 @@ export default class Wprr {
 		return Wprr.sourceReference("refs/" + aPath);
 	}
 	
-	static sourceFunction(aThisObject, aFunctionOrName, aArguments = null) {
-		return Wprr.source("command", Wprr.commands.callFunction(aThisObject, aFunctionOrName, aArguments));
+	static sourceFunction(aThisObject, aFunctionOrName, aArguments = null, aDeepPath = null) {
+		return Wprr.source("command", Wprr.commands.callFunction(aThisObject, aFunctionOrName, aArguments), aDeepPath);
 	}
 	
 	static sourceStatic(aObject, aDeepPath = null) {

@@ -14,6 +14,18 @@ export default class LanguageName extends WprrBaseObject {
 		super(aProps);
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		
+		super._removeUsedProps(aReturnObject);
+		
+		delete aReturnObject["languageCode"];
+		delete aReturnObject["useTranslatedName"];
+		delete aReturnObject["name"];
+		delete aReturnObject["translatedName"];
+		
+		return aReturnObject;
+	}
+	
 	_renderMainElement() {
 		
 		let languageCode = this.getSourcedProp("languageCode");
