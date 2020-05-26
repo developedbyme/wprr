@@ -97,6 +97,15 @@ export default class InternalMessageGroup {
 		return this;
 	}
 	
+	getFieldNames() {
+		let returnArray = new Array();
+		for(let objectName in this._fields) {
+			returnArray.push(objectName);
+		}
+		
+		return returnArray;
+	}
+	
 	saveAllFields() {
 		//METODO
 	}
