@@ -120,11 +120,13 @@ export default class DropdownSelection extends WprrBaseObject {
 							React.createElement(Wprr.MarkupChildren, {placement: "button"})
 						),
 						React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
-							React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
-								React.createElement(Wprr.OpenCloseExpandableArea, {},
-									React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
-									React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
-									React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+							React.createElement(Wprr.PortalledItem, {},
+								React.createElement(Wprr.ExternalStorageProps, {"props": "open", "externalStorage": Wprr.sourceReference("dropdownSelectionExternalStorage")},
+									React.createElement(Wprr.OpenCloseExpandableArea, {},
+										React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
+										React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),
+										React.createElement(Wprr.MarkupChildren, {"placement": "afterList"})
+									)
 								)
 							)
 						)
