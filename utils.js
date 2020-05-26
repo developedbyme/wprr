@@ -54,6 +54,7 @@ export {default as ReferenceHolder} from "wprr/reference/ReferenceHolder";
 export {default as LinkGroup} from "wprr/utils/navigation/LinkGroup";
 export {default as DataStorageListConnection} from "wprr/utils/DataStorageListConnection";
 export {default as DataStorageChangeCommands} from "wprr/utils/DataStorageChangeCommands";
+export {default as DataStorageConnection} from "wprr/utils/DataStorageConnection";
 
 import * as process from "wprr/utils/process";
 export {process as process};

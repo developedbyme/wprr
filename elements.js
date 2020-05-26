@@ -79,6 +79,7 @@ export {default as CustomCheckbox} from "wprr/elements/form/CustomCheckbox";
 export {default as DragArea} from "wprr/elements/interaction/DragArea";
 export {default as PathRouter} from "wprr/elements/area/PathRouter";
 export {default as PortalledItem} from "wprr/elements/abstract/PortalledItem";
+export {default as ExternalStorageConnectionInjection} from "wprr/reference/ExternalStorageConnectionInjection";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
