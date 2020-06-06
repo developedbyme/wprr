@@ -111,8 +111,9 @@ export default class SourceData {
 	
 	static getSource(aType, aPath, aFromObject, aPropsAndState) {
 		//console.log("wprr/reference/SourceData::getSource");
+		//console.log(aFromObject);
 		
-		const references = aFromObject ? aFromObject.getReferences() : {};
+		const references = (aFromObject && aFromObject.getReferences) ? aFromObject.getReferences() : {};
 		
 		if(aPath instanceof SourceData) {
 			aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);

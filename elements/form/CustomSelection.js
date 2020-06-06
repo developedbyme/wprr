@@ -157,9 +157,10 @@ export default class CustomSelection extends ManipulationBaseObject {
 			"custom-selection-menu custom-selection-menu-padding"
 		);
 		
+		//"className": "custom-selection-menu-item custom-selection-menu-item-padding"
+		
 		let defaultLoop = React.createElement("div", {"className": selectionMenuClasses}, React.createElement(Wprr.Loop, {
-			"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), defaultLoopItem, defaultLoopItemSpacing),
-			"className": "custom-selection-menu-item custom-selection-menu-item-padding"
+			"loop": Wprr.adjusts.markupLoop(Wprr.sourceReference("options"), defaultLoopItem, defaultLoopItemSpacing)
 		}));
 		
 		let loop = React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource([Wprr.sourceProp("loop"), Wprr.sourceReferenceIfExists("customSelection/loop"), defaultLoop], this, "element")},

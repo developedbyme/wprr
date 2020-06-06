@@ -15,7 +15,7 @@ export default class StartOfArrayAsText extends AdjustFunction {
 		
 		super();
 		
-		this.setInput("input", SourceData.create("prop", "input"));
+		this.setInput("array", SourceData.create("prop", "input"));
 		this.setInput("maxNumberOfItems", 4);
 		this.setInput("outputName", "text");
 		

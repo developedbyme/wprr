@@ -167,7 +167,7 @@ export default class Wprr {
 	}
 	
 	static sourceStatic(aObject, aDeepPath = null) {
-		return Wprr.source("static", aObject, aDeepPath);
+		return Wprr.source("staticSource", aObject, aDeepPath);
 	}
 	
 	static text(aText, aFormat = "text") {

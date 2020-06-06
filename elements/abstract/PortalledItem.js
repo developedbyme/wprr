@@ -26,6 +26,7 @@ export default class PortalledItem extends WprrBaseObject {
 		super._removeUsedProps(aReturnObject);
 		
 		delete aReturnObject["parentElement"];
+		delete aReturnObject["overlayClassName"];
 	}
 	
 	_updatePosition() {
@@ -81,6 +82,8 @@ export default class PortalledItem extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let parentElement = this.getFirstInputWithDefault("parentElement", document.querySelector("body"));
+		let overlayClassName = this.getFirstInputWithDefault("overlayClassName", "");
+		overlayClassName += " position-absolute";
 		
 		let props = this.getProps();
 		
@@ -92,7 +95,7 @@ export default class PortalledItem extends WprrBaseObject {
 				],
 				"style": Wprr.sourceFunction(this, this._getStyle, [Wprr.sourceProp("x"), Wprr.sourceProp("y"), Wprr.sourceProp("width")])
 			},
-				React.createElement("div", {"className": "position-absolute"},
+				React.createElement("div", {"className": overlayClassName},
 					props.children
 				)
 			)

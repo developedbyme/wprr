@@ -119,7 +119,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		let loopItemMarkup = this.getFirstValidSource(
 			Wprr.source("prop", "loopItemMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/loopItemMarkup"),
-			React.createElement(Wprr.FlexRow, {"className": "justify-between small-item-spacing", "itemClasses": ["flex-resize", "flex-no-resize"]},
+			React.createElement(Wprr.FlexRow, {"className": "justify-between small-item-spacing flex-no-wrap", "itemClasses": ["flex-resize", "flex-no-resize"]},
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(editItemFormSources, this, "element")},
 					React.createElement(Wprr.InsertElement, {})
 				),

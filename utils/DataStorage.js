@@ -74,6 +74,7 @@ export default class DataStorage {
 		
 		let currentArray = this._owners;
 		let currentArrayLength = currentArray.length;
+		
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
 			if(currentOwner) { //METODO: improve this to have a safe array
