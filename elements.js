@@ -1,3 +1,5 @@
+export * from "./elements/index.js";
+
 export {default as WprrBaseObject} from "wprr/WprrBaseObject";
 
 export {default as Link} from "wprr/elements/interaction/Link";
