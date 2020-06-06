@@ -3,6 +3,9 @@ import React from "react";
 
 import objectPath from "object-path";
 
+import CommandPerformer from "wprr/commands/CommandPerformer";
+import InputDataHolder from "wprr/utils/InputDataHolder";
+
 export default class InternalMessageGroup {
 	
 	constructor() {
@@ -10,6 +13,8 @@ export default class InternalMessageGroup {
 		this._id = 0;
 		this._fields = new Object();
 		this._messages = new Array();
+		
+		this._commands = InputDataHolder.create();
 	}
 	
 	setup(aData) {
@@ -41,6 +46,17 @@ export default class InternalMessageGroup {
 			let connection = aExternalStorage.createConnection(prefix + objectName);
 			field.connectToEditStorage(connection);
 		}
+		
+		return this;
+	}
+	
+	addCommand(aName, aCommand) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		//METODO: we just assumes that it is an array
+		this._commands.getRawInput(aName).push(aCommand);
 		
 		return this;
 	}
@@ -106,6 +122,38 @@ export default class InternalMessageGroup {
 		return returnArray;
 	}
 	
+	hasUnsavedChanges() {
+		
+		for(let objectName in this._fields) {
+			if(this._fields[objectName].hasUnsavedChange()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	getFieldsToSave() {
+		
+		let returnArray = new Array();
+		
+		for(let objectName in this._fields) {
+			let field = this._fields[objectName];
+			if(field.hasUnsavedChange()) {
+				returnArray.push(field);
+			}
+		}
+		
+		return returnArray;
+	}
+	
+	fieldChanged(aField) {
+		let commandName = "fieldChange";
+		if(this._commands.hasInput(commandName)) {
+			CommandPerformer.perform(this._commands.getInput(commandName, {}, this), aField, this);
+		}
+	}
+	
 	saveAllFields() {
 		//METODO
 	}
@@ -132,5 +180,9 @@ export default class InternalMessageGroup {
 		}
 		
 		return this.getFieldValue(aPath);
+	}
+	
+	toJSON() {
+		return "[InternalMessageGroup id=" + this._id + "]";
 	}
 }

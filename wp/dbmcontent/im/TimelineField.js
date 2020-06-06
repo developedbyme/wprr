@@ -49,9 +49,58 @@ export default class TimelineField {
 		}
 	}
 	
+	flagAsSaving() {
+		if(this._externalStorage) {
+			this._externalStorage.updateValue("uiState.status", "saving");
+		}
+	}
+	
+	updateSavedValues() {
+		
+		if(this._externalStorage) {
+			this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
+			this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
+			this._externalStorage.updateValue("saved.timeline", Wprr.utils.object.copyViaJson(this._changes));
+		}
+		
+		this.flagAsSaved();
+	}
+	
+	flagAsSaved() {
+		if(this._externalStorage) {
+			this._externalStorage.updateValue("uiState.status", "normal");
+			this._externalStorage.updateValue("uiState.workMode", "display");
+		}
+	}
+	
+	hasUnsavedChange() {
+		if(this._externalStorage) {
+			let savedValue = this._externalStorage.getValue("saved.value");
+			//let savedTimeline = this._externalStorage.getValue("timeline");
+			//let savedTranslations = this._externalStorage.getValue("translations");
+			
+			if(JSON.stringify(this._value) !== JSON.stringify(savedValue)) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		console.warn("No external storage, can't compare changes", this);
+		return true;
+	}
+	
+	getSaveData(aComment = null) {
+		let changeData = new Wprr.utils.ChangeData();
+		changeData.createChange("dbmtc/setField", {"field": this.key, "value": this._value, "comment": aComment});
+		
+		return changeData;
+	}
+	
 	externalDataChange() {
 		//console.log("TimelineField::externalDataChange");
 		
+		let lastValue = this._value;
 		let value = this._externalStorage.getValue("value");
 		if(value !== undefined) {
 			this._value = value;
@@ -63,6 +112,12 @@ export default class TimelineField {
 		let translations = this._externalStorage.getValue("translations");
 		if(translations) {
 			this._translations = translations;
+		}
+		
+		if(JSON.stringify(lastValue) !== JSON.stringify(value)) {
+			if(this._messageGroup) {
+				this._messageGroup.fieldChanged(this);
+			}
 		}
 	}
 	
