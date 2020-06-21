@@ -1,11 +1,13 @@
 import React from "react";
+import ReactDOM from "react-dom";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import ContentCreatorSingleItem from "wprr/elements/create/ContentCreatorSingleItem";
 import SourceData from "wprr/reference/SourceData";
 
-import RefCollector from "wprr/utils/RefCollector";
+import CommandPerformer from "wprr/commands/CommandPerformer";
+import InjectExistingElements from "wprr/elements/area/InjectExistingElements";
 
 //import ContentsAndInjectedComponents from "wprr/elements/text/ContentsAndInjectedComponents";
 export default class ContentsAndInjectedComponents extends WprrBaseObject {
@@ -23,59 +25,34 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		this._readMorePosition = -1;
 		this.state["showReadMore"] = false;
-		
-		this._refCollector = new RefCollector();
-	}
-	
-	_addContentToGroups() {
-		{
-			let currentArray = this._groups;
-			let currentArrayLength = currentArray.length;
-			if(this._readMorePosition !== -1 && !this.state["showReadMore"]) {
-				currentArrayLength = Math.min(this._readMorePosition, currentArrayLength);
-			}
-		
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentGroup = currentArray[i];
-				let currentContainer = this._refCollector.getRef(currentGroup["id"]);
-				let currentArray2 = currentGroup["children"];
-				let currentArray2Length = currentArray2.length;
-				for(var j = 0; j < currentArray2Length; j++) {
-					let currentElement = currentArray2[j];
-					currentContainer.appendChild(currentElement);
-				}
-			}
-		}
-		
-		{
-			let currentArray = this._injectComponents;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let injectionData = currentArray[i];
-				injectionData["container"].appendChild(this._refCollector.getRef(injectionData["id"]));
-			}
-		}
-	}
-	
-	componentDidMount() {
-		//console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidMount");
-		
-		this._addContentToGroups();
-	}
-	
-	componentDidUpdate() {
-		//console.log("wprr/elements/text/ContentsAndInjectedComponents::componentDidUpdate");
-		
-		this._addContentToGroups();
 	}
 	
 	_createInjectComponent(aId, aType, aData) {
 		
 		//METODO: make it work with direct injection
 		
-		return React.createElement("div", {"key": "inject-" + aId, "ref": this._refCollector.getCallbackFunction(aId)},
+		return React.createElement("div", {"key": "inject-" + aId},
 			React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)})
 		);
+	}
+	
+	_createContainer(aElements) {
+		
+		let generateContainerCommand = this.getFirstInput("generateContainerCommand");
+		
+		let containerId = "container-" + this._containers.length;
+		
+		if(generateContainerCommand) {
+			CommandPerformer.performCommand(generateContainerCommand, {"containers": this._containers, "containerId": containerId}, this);
+		}
+		else {
+			let richTextClassName = this.getSourcedPropWithDefault("richTextClassName", "wp-rich-text-formatting");
+			let textGroupClassName = this.getSourcedPropWithDefault("textGroupClassName", "post-content centered-content-text");
+		
+			this._containers.push(
+				React.createElement(InjectExistingElements, {"key": containerId, "className": textGroupClassName, "nativeElementClassName": richTextClassName, "elements": aElements})
+			);
+		}
 	}
 	
 	_createContent() {
@@ -123,24 +100,20 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 						currentElement.innerHTML = "";
 					}
 					
-					this._renderInjectComponents.push(this._createInjectComponent(id, type, data));
+					let injectedComponenet = this._createInjectComponent(id, type, data);
+					//this._renderInjectComponents.push(injectedComponenet);
+					
+					let portal = ReactDOM.createPortal(injectedComponenet, currentElement);
+					this._renderInjectComponents.push(portal);
 				}
 				catch(theError) {
 					console.error("Error when creating injected component");
 					console.log(dataString);
-					this._renderInjectComponents.push(React.createElement("div", {ref: this._refCollector.getCallbackFunction(id)}, "Error when creating injected component: " + theError.message + "<br />" + theError.stack ));
 				}
-			
-			
-				this._injectComponents.push(injectComponentData);
 			}
 		}
 		
-		
 		let currentElements = new Array();
-		
-		let richTextClassName = this.getSourcedPropWithDefault("richTextClassName", "wp-rich-text-formatting");
-		let textGroupClassName = this.getSourcedPropWithDefault("textGroupClassName", "post-content centered-content-text");
 		
 		{
 			let currentArray = temporaryElement.children;
@@ -150,18 +123,14 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 			
 				if(currentElement.nodeType === 1 && currentElement.getAttribute("data-expanded-content") == "1") {
 					if(currentElements.length > 0) {
-						this._containers.push(
-							React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
-								React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
-							)
-						);
-						this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
-					
+						this._createContainer(currentElements);
+						
 						currentElements = new Array();
 					}
-				
-					this._containers.push(React.createElement("div", {key: "container-" + this._containers.length, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)}));
-					this._groups.push({"id": "group-" + this._groups.length, "children": [currentElement]});
+					
+					this._containers.push(
+						React.createElement(InjectExistingElements, {"elements": [currentElement]})
+					);
 				}
 				else {
 					currentElements.push(currentElement);
@@ -177,16 +146,11 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 								injectComponentData["container"] = currentElement;
 								this._renderInjectComponents.push(this._createInjectComponent(id, "readMoreButton", {"controller": this}));
 								this._injectComponents.push(injectComponentData);
-							
-								this._containers.push(
-									React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
-										React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
-									)
-								);
-								this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
-				
+								
+								this._createContainer(currentElements);
+								
 								currentElements = new Array();
-							
+								
 								this._readMorePosition = this._groups.length;
 							}
 						}
@@ -196,12 +160,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		}
 		
 		if(currentElements.length > 0) {
-			this._containers.push(
-				React.createElement("div", {key: "container-" + this._containers.length, className: textGroupClassName},
-					React.createElement("div", {className: richTextClassName, ref: this._refCollector.getCallbackFunction("group-" + this._groups.length)})
-				)
-			);
-			this._groups.push({"id": "group-" + this._groups.length, "children": currentElements});
+			this._createContainer(currentElements);
 		}
 		
 		if(this._readMorePosition === -1) {
