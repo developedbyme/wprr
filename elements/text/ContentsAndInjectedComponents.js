@@ -31,9 +31,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		//METODO: make it work with direct injection
 		
-		return React.createElement("div", {"key": "inject-" + aId},
-			React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)})
-		);
+		return React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)});
 	}
 	
 	_createContainer(aElements) {
