@@ -39,18 +39,24 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		let generateContainerCommand = this.getFirstInput("generateContainerCommand");
 		
 		let containerId = "container-" + this._containers.length;
+		let childElement = null;
 		
 		if(generateContainerCommand) {
-			CommandPerformer.performCommand(generateContainerCommand, {"containers": this._containers, "containerId": containerId}, this);
+			childElement = CommandPerformer.performCommand(generateContainerCommand, aElements, this);
+			if(!childElement) {
+				//METODO: add warning
+			}
 		}
-		else {
+		
+		if(!childElement) {
 			let richTextClassName = this.getSourcedPropWithDefault("richTextClassName", "wp-rich-text-formatting");
 			let textGroupClassName = this.getSourcedPropWithDefault("textGroupClassName", "post-content centered-content-text");
-		
-			this._containers.push(
-				React.createElement(InjectExistingElements, {"key": containerId, "className": textGroupClassName, "nativeElementClassName": richTextClassName, "elements": aElements})
-			);
+			
+			childElement = React.createElement(InjectExistingElements, {"className": textGroupClassName, "nativeElementClassName": richTextClassName, "elements": aElements});
 		}
+		
+		
+		this._containers.push(React.createElement(React.Fragment, {"key": containerId}, childElement));
 	}
 	
 	_createContent() {
@@ -99,7 +105,6 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 					}
 					
 					let injectedComponenet = this._createInjectComponent(id, type, data);
-					//this._renderInjectComponents.push(injectedComponenet);
 					
 					let portal = ReactDOM.createPortal(injectedComponenet, currentElement);
 					this._renderInjectComponents.push(portal);
@@ -128,7 +133,9 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 					
 					let containerId = "container-" + this._containers.length;
 					this._containers.push(
-						React.createElement(InjectExistingElements, {"key": containerId, "elements": [currentElement]})
+						React.createElement(React.Fragment, {"key": containerId},
+							React.createElement(InjectExistingElements, {"elements": [currentElement]})
+						)
 					);
 				}
 				else {
