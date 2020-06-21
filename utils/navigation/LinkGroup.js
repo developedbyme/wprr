@@ -203,7 +203,7 @@ export default class LinkGroup {
 				let currentPart = currentArray[i];
 				let keyword = currentPart["fieldId"];
 				let value = this.resolvePart(currentPart, aFromPath);
-				parametersString = parametersString.split("{" + keyword + "}").join(keyword + "=" + value);
+				parametersString = parametersString.split("{" + keyword + "}").join(keyword + "=" + encodeURIComponent(value));
 			}
 			urlString += "?" + parametersString;
 		}

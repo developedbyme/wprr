@@ -145,6 +145,12 @@ export default class ArrayFunctions {
 	}
 	
 	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
+		
+		if(!Array.isArray(aArray)) {
+			console.warn("No array provided", aArray);
+			return -1;
+		}
+		
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
@@ -612,5 +618,18 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			ArrayFunctions.removeBy(aField, objectPath.get(currentArray[i], aField), aArray);
 		}
+	}
+	
+	static prefixItems(aItems, aPrefix) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray.push(aPrefix + "" + currentArray[i]);
+		}
+		
+		return returnArray;
 	}
 }

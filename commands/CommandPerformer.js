@@ -26,16 +26,16 @@ export default class CommandPerformer {
 	
 	static performCommand(aCommand, aData, aTriggerElement) {
 		if(CommandPerformer.CATCH_ERRORS) {
-			CommandPerformer.safePerformCommand(aCommand, aData, aTriggerElement);
+			return CommandPerformer.safePerformCommand(aCommand, aData, aTriggerElement);
 		}
 		else {
-			CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
+			return CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
 		}
 	}
 	
 	static safePerformCommand(aCommand, aData, aTriggerElement) {
 		try {
-			CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
+			return CommandPerformer.unsafePerformCommand(aCommand, aData, aTriggerElement);
 		}
 		catch(theError) {
 			console.error("Command had an error.", aCommand, aData, aTriggerElement);
@@ -47,7 +47,7 @@ export default class CommandPerformer {
 		aCommand.setTriggerElement(aTriggerElement);
 		aCommand.setEventData(aData);
 		
-		aCommand.perform();
+		return aCommand.perform();
 	}
 }
 

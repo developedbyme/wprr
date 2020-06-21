@@ -137,6 +137,8 @@ export default class FormField extends WprrBaseObject {
 		returnObject["onFocus"] = this._callback_focusBound;
 		
 		returnObject["autoFocus"] = this.getSourcedProp("autoFocus");
+		returnObject["maxLength"] = this.getSourcedProp("maxLength");
+		returnObject["autoComplete"] = this.getSourcedProp("autoComplete");
 		
 		return returnObject;
 	}

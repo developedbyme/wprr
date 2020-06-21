@@ -85,6 +85,13 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addDateRangeFilter(aStartDate, aEndDate, aField = null, aActive = null) {
+		this.addPart(Wprr.utils.filterPartFunctions.createInDateRange(aStartDate, aEndDate, aField, aActive));
+		
+		return this;
+		
+	}
+	
 	_performFilter(aCurrentArray, aOriginalArray) {
 		//console.log("wprr/utils/filter/FilterChain::_performFilter");
 		

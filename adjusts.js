@@ -48,6 +48,7 @@ import ClassFromComparison from "wprr/manipulation/adjustfunctions/css/ClassFrom
 import AlternatingMarkupLoop from "wprr/manipulation/adjustfunctions/loop/AlternatingMarkupLoop";
 import ObjectPropertiesMarkupLoop from "wprr/manipulation/adjustfunctions/loop/ObjectPropertiesMarkupLoop";
 import LimitTextLength from "wprr/manipulation/adjustfunctions/text/LimitTextLength";
+import StyleFromWidth from "wprr/manipulation/adjustfunctions/css/StyleFromWidth";
 
 let createHierarchyTerms = CreateHierarchyTerms.create;
 export {createHierarchyTerms};
@@ -149,6 +150,8 @@ let ratio = Ratio.create;
 export {ratio};
 let styleFromHeight = StyleFromHeight.create;
 export {styleFromHeight};
+let styleFromWidth = StyleFromWidth.create;
+export {styleFromWidth};
 let styleFromSize = StyleFromSize.create;
 export {styleFromSize};
 

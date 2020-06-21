@@ -152,6 +152,10 @@ export default class TimelineField {
 		return this._value;
 	}
 	
+	getType() {
+		return this._type;
+	}
+	
 	setupChanges(aPastChanges, aFutureChanges) {
 		let changes = new Array();
 		if(aPastChanges) {

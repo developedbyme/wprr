@@ -59,6 +59,20 @@ export default class KeyValueGenerator {
 		return newKeyValueGenerator;
 	}
 	
+	static convertArrayToOptions(aArray, aValueField, aLabelField) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = currentArray[i];
+			let encodedData = {"key": currentObject[aValueField], "value": currentObject[aValueField], "label": currentObject[aLabelField], "item": currentObject};
+			returnArray.push(encodedData);
+		}
+		
+		return returnArray;
+	}
+	
 	static normalizeOptions(aOptions) {
 		let returnArray = new Array();
 		
