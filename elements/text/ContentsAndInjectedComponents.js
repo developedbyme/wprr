@@ -126,8 +126,9 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 						currentElements = new Array();
 					}
 					
+					let containerId = "container-" + this._containers.length;
 					this._containers.push(
-						React.createElement(InjectExistingElements, {"elements": [currentElement]})
+						React.createElement(InjectExistingElements, {"key": containerId, "elements": [currentElement]})
 					);
 				}
 				else {
