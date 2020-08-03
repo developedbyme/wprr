@@ -11,6 +11,7 @@ export default class TimelineField {
 		this._value = null;
 		this._changes = new Array();
 		this._translations = new Object();
+		this._lastValue = null;
 		
 		this._type = null;
 		this._status = null;
@@ -114,10 +115,12 @@ export default class TimelineField {
 			this._translations = translations;
 		}
 		
-		if(JSON.stringify(lastValue) !== JSON.stringify(value)) {
+		let stringValue = JSON.stringify(value);
+		if(this._lastValue !== stringValue) {
 			if(this._messageGroup) {
 				this._messageGroup.fieldChanged(this);
 			}
+			this._lastValue = stringValue;
 		}
 	}
 	

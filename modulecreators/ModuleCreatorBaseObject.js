@@ -102,15 +102,15 @@ export default class ModuleCreatorBaseObject {
 			//METODO: clean this up
 			initialState = {
 				"mRouter": {
-					"currentPage": aConfigurationData.paths.current,
-					"data": aConfigurationData.initialMRouterData.data,
-					"apiData": aConfigurationData.initialMRouterData.apiData
+					"currentPage": objectPath.get(aConfigurationData, "paths.current"),
+					"data": objectPath.get(aConfigurationData, "initialMRouterData.data"),
+					"apiData": objectPath.get(aConfigurationData, "initialMRouterData.apiData")
 				},
 				"settings": {
-					"homeUrl": aConfigurationData.paths.home,
-					"sitePath": aConfigurationData.paths.site,
-					"themePath": aConfigurationData.paths.theme,
-					"wpApiUrlBase": aConfigurationData.paths.rest
+					"homeUrl": objectPath.get(aConfigurationData, "paths.home"),
+					"sitePath": objectPath.get(aConfigurationData, "paths.site"),
+					"themePath": objectPath.get(aConfigurationData, "paths.theme"),
+					"wpApiUrlBase": objectPath.get(aConfigurationData, "paths.rest")
 				}
 			};
 		}

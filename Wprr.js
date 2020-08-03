@@ -177,6 +177,40 @@ export default class Wprr {
 	static translateText(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": Wprr.sourceTranslation(aText), "format": aFormat});
 	}
+	
+	static objectPath(aObject, aPath) {
+		//console.log("objectPath");
+		
+		let currentObject = aObject;
+		
+		if(aPath.length === 0) {
+			return currentObject;
+		}
+		
+		let currentArray = aPath.split(".");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentObject === null || currentObject === undefined) {
+				break;
+			}
+			if(currentObject.getValueForPath) {
+				return currentObject.getValueForPath(currentArray.join("."));
+			}
+			else {
+				let currentPathPart = currentArray.shift();
+				
+				let partAsInt = parseInt(currentPathPart, 10);
+				if(partAsInt.toString() === currentPathPart) {
+					currentObject = currentObject[partAsInt];
+				}
+				else {
+					currentObject = currentObject[currentPathPart];
+				}
+			}
+		}
+		
+		return currentObject;
+	}
 }
 
 Wprr.commands = new Object();

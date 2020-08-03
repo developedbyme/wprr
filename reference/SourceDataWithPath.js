@@ -1,4 +1,5 @@
 "use strict";
+import Wprr from "wprr/Wprr";
 
 import objectPath from "object-path";
 const objectPathWithInheritedProps = objectPath.create({includeInheritedProps: true});
@@ -39,7 +40,7 @@ export default class SourceDataWithPath extends SourceData {
 			return aData.getValueForPath(aPath);
 		}
 		
-		let returnData = objectPathWithInheritedProps.get(aData, aPath);
+		let returnData = Wprr.objectPath(aData, aPath);
 		
 		return returnData;
 	}
