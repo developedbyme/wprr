@@ -1,4 +1,3 @@
-import objectPath from "object-path";
 import Wprr from "wprr/Wprr";
 
 // import KeyValueGenerator from "wprr/utils/KeyValueGenerator";
@@ -49,8 +48,22 @@ export default class KeyValueGenerator {
 		return this;
 	}
 	
+	addItems(aItemArrays) {
+		let currentArray = aItemArrays;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this._values.push(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
 	getAsArray() {
 		return this._values;
+	}
+	
+	getIndexForKey(aKey) {
+		return Wprr.utils.array.getItemIndexByIfExists("key", aKey, this._values);
 	}
 	
 	static create() {

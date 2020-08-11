@@ -15,8 +15,10 @@ export default class ArrayFunctions {
 				let currentArrayLength = currentArray.length;
 				for(let i = 0; i < currentArrayLength; i++) {
 					let currentString = currentArray[i];
-				
-					currentArray[i] = currentString.trim();
+					
+					if(typeof(currentString) === "string") {
+						currentArray[i] = currentString.trim();
+					}
 				}
 			}
 		}
@@ -135,7 +137,7 @@ export default class ArrayFunctions {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			let currentValue = objectPath.get(currentArray[i], aField);
+			let currentValue = Wprr.objectPath(currentArray[i], aField);
 			if(currentValue == aIdentifier) {
 				returnArray.push(currentItem);
 			}
@@ -155,7 +157,7 @@ export default class ArrayFunctions {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			let currentValue = objectPath.get(currentArray[i], aField);
+			let currentValue = Wprr.objectPath(currentArray[i], aField);
 			if(currentValue == aIdentifier) {
 				return i;
 			}
@@ -204,7 +206,7 @@ export default class ArrayFunctions {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			let currentValue = objectPath.get(currentArray[i], aField);
+			let currentValue = Wprr.objectPath(currentArray[i], aField);
 			if(currentValue == aIdentifier) {
 				returnArray.push(currentItem);
 			}
@@ -214,12 +216,18 @@ export default class ArrayFunctions {
 	}
 	
 	static mapField(aArray, aField) {
+		
+		if(!aArray) {
+			console.error("No array provided");
+			return [];
+		}
+		
 		let returnArray = new Array();
 		
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			returnArray.push(objectPath.get(currentArray[i], aField));
+			returnArray.push(Wprr.objectPath(currentArray[i], aField));
 		}
 		
 		return returnArray;
@@ -297,7 +305,7 @@ export default class ArrayFunctions {
 			let currentItem = currentArray[i];
 			let renamedObject = new Object();
 			for(let objectName in aFieldConversions) {
-				let currentValue = objectPath.get(currentItem, objectName);
+				let currentValue = Wprr.objectPath(currentItem, objectName);
 				objectPath.set(renamedObject, aFieldConversions[objectName], currentValue);
 			}
 			returnArray.push(renamedObject);
@@ -318,7 +326,7 @@ export default class ArrayFunctions {
 			
 			let newValue = objectPath.get(currentItem, aField);
 			for(let j = 0; j < currentArray2Length; j++) {
-				let currentValue = objectPath.get(currentItem, currentArray2[j]);
+				let currentValue = Wprr.objectPath(currentItem, currentArray2[j]);
 				if(currentValue && currentValue !== "") {
 					newValue += aSeparator + currentValue;
 				}
@@ -336,8 +344,8 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			
-			let oldValue = objectPath.get(currentItem, aField);
-			let newValue = objectPath.get(aConversions, oldValue);
+			let oldValue = Wprr.objectPath(currentItem, aField);
+			let newValue = Wprr.objectPath(aConversions, oldValue);
 			if(newValue === undefined) {
 				newValue = aNoMatchValue;
 			}
@@ -385,7 +393,7 @@ export default class ArrayFunctions {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentItem = currentArray[i];
-				let currentGroup = aGroupPrefix + objectPath.get(currentItem, aField);
+				let currentGroup = aGroupPrefix + Wprr.objectPath(currentItem, aField);
 				if(!groups[currentGroup]) {
 					groups[currentGroup] = new Array();
 					groupNames.push(currentGroup);
@@ -631,5 +639,17 @@ export default class ArrayFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static hasAnyValue(aArray) {
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentArray[i] !== undefined) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 }

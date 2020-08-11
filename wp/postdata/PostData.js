@@ -28,7 +28,7 @@ export default class PostData {
 	}
 	
 	getValueForPath(aPath) {
-		console.log("wprr/wp/postdata/PostData::getValueForPath");
+		//console.log("wprr/wp/postdata/PostData::getValueForPath");
 		return this.getDataValue(aPath);
 	}
 	

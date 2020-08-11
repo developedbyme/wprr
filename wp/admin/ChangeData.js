@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import objectPath from "object-path";
 
 import ChangeDataFunctions from "wprr/wp/admin/ChangeDataFunctions";
@@ -9,6 +11,15 @@ export default class ChangeData  {
 		this._title = "";
 		this._changes = new Array();
 		this._settings = new Object();
+	}
+	
+	clone() {
+		let newChangeData = new ChangeData();
+		newChangeData._title = this._title;
+		newChangeData._changes = Wprr.utils.object.copyViaJson(this._changes);
+		newChangeData._settings = Wprr.utils.object.copyViaJson(this._settings);
+		
+		return newChangeData;
 	}
 	
 	getCreateData() {

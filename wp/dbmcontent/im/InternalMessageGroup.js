@@ -75,6 +75,18 @@ export default class InternalMessageGroup {
 		return this._fields[aName];
 	}
 	
+	updateField(aName, aValue) {
+		let field = this.getField(aName);
+		if(!field) {
+			console.error("No field named " + aName + ", can't set value", aValue);
+			return this;
+		}
+		
+		field.setValue(aValue);
+		
+		return this;
+	}
+	
 	getFieldValue(aName) {
 		
 		let field = this.getField(aName);
@@ -167,8 +179,8 @@ export default class InternalMessageGroup {
 	}
 	
 	getValueForPath(aPath) {
-		console.log("InternalMessageGroup::getValueForPath");
-		console.log(aPath);
+		//console.log("InternalMessageGroup::getValueForPath");
+		//console.log(aPath);
 		
 		switch(aPath) {
 			case "id":

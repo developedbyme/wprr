@@ -57,7 +57,7 @@ export default class Table extends WprrBaseObject {
 		let headerRowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "headerRowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/headerRowItem"),
-			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type"), " ", Wprr.sourceReference("table/header/cell/classNames")])},
+			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReferenceIfExists("loop/cell/item", "type"), " ", Wprr.sourceReferenceIfExists("table/header/cell/classNames")])},
 				React.createElement("th", {},
 					React.createElement(
 						Adjust,
@@ -81,7 +81,7 @@ export default class Table extends WprrBaseObject {
 		let rowItemMarkup = this.getFirstValidSource(
 			SourceData.create("prop", "rowItemMarkup"),
 			SourceData.create("referenceIfExists", "table/rowItem"),
-			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type"), " ", Wprr.sourceReference("table/cell/classNames")])},
+			React.createElement(Wprr.AddProps, {"className": Wprr.source("combine", ["field-key-", Wprr.sourceReference("loop/cell/item", "key"), " ", "field-type-", Wprr.sourceReference("loop/cell/item", "type"), " ", Wprr.sourceReferenceIfExists("table/cell/classNames")])},
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey(Wprr.sourceReference("loop/cell/item", "key"))},
 					React.createElement("td", {},
 						React.createElement(
@@ -130,7 +130,7 @@ export default class Table extends WprrBaseObject {
 	static _adjust_getHeaderContentSources(aProps, aElement) {
 		//console.log("wprr/elements/area/table/Table::_adjust_getHeaderContentSources");
 		
-		let rowData = aElement.getReference("loop/row/item");
+		let rowData = aElement.getReferenceIfExists("loop/row/item");
 		let cellData = aElement.getReference("loop/cell/item");
 		
 		let sources = new Array();

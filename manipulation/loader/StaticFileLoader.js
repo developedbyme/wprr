@@ -19,8 +19,8 @@ export default class StaticFileLoader extends ManipulationBaseObject {
 		this._promise_loadingErrorBound = this._promise_loadingError.bind(this);
 	}
 	
-	componentWillMount() {
-		//console.log("wprr/manipulation/loader/StaticFileLoader::componentWillMount");
+	componentDidMount() {
+		//console.log("wprr/manipulation/loader/StaticFileLoader::componentDidMount");
 		
 		//METODO: this function is depreciated by react
 		

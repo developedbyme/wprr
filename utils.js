@@ -62,6 +62,9 @@ export {process as process};
 import * as data from "wprr/utils/data";
 export {data as data};
 
+import * as loading from "wprr/utils/loading";
+export {loading as loading};
+
 export {default as FilterChain} from "wprr/utils/filter/FilterChain";
 export {default as InputDataHolder} from "wprr/utils/InputDataHolder";
 export {default as FilterPart} from "wprr/utils/filter/parts/FilterPart";

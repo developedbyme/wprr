@@ -67,7 +67,7 @@ export default class TermSelection extends ManipulationBaseObject {
 			children = null;
 		}
 		
-		let selection = this.getFirstValidSource(Wprr.sourceProp("selection"), children, Wprr.sourceReference("termSelection/selection"), React.createElement(Wprr.Selection, {}));
+		let selection = this.getFirstValidSource(Wprr.sourceProp("selection"), children, Wprr.sourceReferenceIfExists("termSelection/selection"), React.createElement(Wprr.Selection, {}));
 		
 		return [
 			React.createElement(Wprr.DataLoader, {"loadData": {"terms": "wprr/v1/taxonomy/" + taxonomy + "/terms"}},

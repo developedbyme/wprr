@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import objectPath from "object-path";
 
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
@@ -69,6 +71,10 @@ export default class WpTermFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static getChildren(aId, aTerms) {
+		return Wprr.utils.array.getAllItemsBy("parentId", aId, aTerms);
 	}
 	
 	static getHierarchTerms(aTerms) {
