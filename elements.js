@@ -83,6 +83,7 @@ export {default as PathRouter} from "wprr/elements/area/PathRouter";
 export {default as PortalledItem} from "wprr/elements/abstract/PortalledItem";
 export {default as ExternalStorageConnectionInjection} from "wprr/reference/ExternalStorageConnectionInjection";
 export {default as InjectExistingElements} from "wprr/elements/area/InjectExistingElements";
+export {default as SteppedNavigation} from "wprr/elements/form/SteppedNavigation";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
