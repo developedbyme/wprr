@@ -138,4 +138,11 @@ export default class ChangeData  {
 		
 		return this;
 	}
+	
+	setDataField(aField, aValue, aComment = null) {
+		
+		this.createChange("dbmtc/setField", {"field": aField, "value": aValue, "comment": aComment});
+		
+		return this;
+	}
 }
