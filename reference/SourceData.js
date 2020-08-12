@@ -285,6 +285,14 @@ export default class SourceData {
 				}
 			case "staticSource":
 				return aPath;
+			case "fromObject":
+				{
+					let returnData = aPath;
+					if(returnData instanceof SourceData) {
+						returnData = returnData.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return returnData;
+				}
 			case "command":
 				{
 					let command = aPath;

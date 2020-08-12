@@ -154,7 +154,7 @@ export default class Wprr {
 	}
 	
 	static sourcePropFrom(aObject, aPropName, aDeepPath = null) {
-		return Wprr.source("staticSource", Wprr.sourceFunction(null, getPropFromObject, [aObject, aPropName]), aDeepPath);
+		return Wprr.source("fromObject", Wprr.sourceFunction(null, getPropFromObject, [aObject, aPropName]), aDeepPath);
 	}
 	
 	static sourceText(aPath) {
