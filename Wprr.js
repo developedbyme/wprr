@@ -170,6 +170,14 @@ export default class Wprr {
 		return Wprr.source("staticSource", aObject, aDeepPath);
 	}
 	
+	static sourceFirst(...aSources) {
+		return Wprr.source("firstInput", aSources);
+	}
+	
+	static sourceCombine(...aParts) {
+		return Wprr.source("combine", aParts);
+	}
+	
 	static text(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
 	}
