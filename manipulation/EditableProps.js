@@ -11,6 +11,7 @@ export default class EditableProps extends ManipulationBaseObject {
 	constructor(aProps) {
 		super(aProps);
 		
+		this._propsThatShouldNotCopy.push("props");
 		this._propsThatShouldNotCopy.push("editableProps");
 		this._propsThatShouldNotCopy.push("externalStorage");
 	}
