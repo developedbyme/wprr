@@ -14,6 +14,14 @@ export default class PathRouter extends WprrBaseObject {
 		this._externalStorage = new Wprr.utils.DataStorage();
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		
+		super._removeUsedProps(aReturnObject);
+		
+		delete aReturnObject["path"];
+		delete aReturnObject["routes"];
+	}
+	
 	getRoute(aPath, aRoutes) {
 		let currentArray = aRoutes;
 		let currentArrayLength = currentArray.length;
@@ -45,7 +53,6 @@ export default class PathRouter extends WprrBaseObject {
 		let routes = this.getFirstInput("routes");
 		
 		let currentRoute = this.getRoute(path, routes);
-		console.log(">>>>>>", currentRoute);
 		
 		this._externalStorage.updateValue("path", path);
 		
