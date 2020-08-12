@@ -16,6 +16,13 @@ import AppModuleWithRenderCreator from "wprr/modulecreators/AppModuleWithRenderC
 
 import TWEEN from "@tweenjs/tween.js";
 
+let getPropFromObject = function(aObject, aProp) {
+	if(aObject && aObject.props) {
+		return aObject.props[aProp];
+	}
+	return null;
+}
+
 //import Wprr from "wprr/Wprr";
 export default class Wprr {
 	
@@ -144,6 +151,10 @@ export default class Wprr {
 	
 	static sourcePropWithDots(aPath, aDeepPath = null) {
 		return Wprr.source("propWithDots", aPath, aDeepPath);
+	}
+	
+	static sourcePropFrom(aObject, aPropName, aDeepPath = null) {
+		return Wprr.source("staticSource", Wprr.sourceFunction(null, getPropFromObject, [aObject, aPropName]), aDeepPath);
 	}
 	
 	static sourceText(aPath) {
