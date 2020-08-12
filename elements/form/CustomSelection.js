@@ -120,8 +120,13 @@ export default class CustomSelection extends ManipulationBaseObject {
 			Wprr.sourceProp("buttonMarkup"),
 			Wprr.sourceReference("customSelection/button"),
 			React.createElement("div", {"className": buttonClasses},
-				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"))]},
-					Wprr.text(Wprr.sourceProp("text"))
+				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"), "label")]},
+					React.createElement(Wprr.HasData, {"check": Wprr.sourceProp("label")},
+						Wprr.text(Wprr.sourceProp("label"))
+					),
+					React.createElement(Wprr.HasData, {"check": Wprr.sourceProp("label"), "checkType": "invert/default"},
+						Wprr.text(Wprr.sourceFirst(Wprr.sourcePropFrom(this, "noSelectionLabel"), Wprr.sourceTranslation("Select")))
+					)
 				)
 			)
 		);
