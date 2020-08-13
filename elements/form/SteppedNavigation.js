@@ -137,7 +137,7 @@ export default class SteppedNavigation extends WprrBaseObject {
 				"layout": layout,
 				"loop": React.createElement(Wprr.ExternalStorageProps, {"props": "currentStep,numberOfSteps", "externalStorage": Wprr.sourceReference("steppedNavigation/externalStorage")},
 					Wprr.Loop.createMarkupLoop(
-						Wprr.utils.array.createRange(Wprr.sourceProp("currentStep"), Wprr.sourceProp("numberOfSteps")),
+						Wprr.sourceFunction(Wprr.utils.array, "createRange", [Wprr.sourceProp("currentStep"), Wprr.sourceProp("numberOfSteps")]),
 						Wprr.sourceFirst(
 							Wprr.sourceReferenceIfExists("steppedNavigation/elements/pagerItem"),
 							Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "pagerItem")
