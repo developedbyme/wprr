@@ -87,7 +87,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			Wprr.source("prop", "removeButtonMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/removeButtonMarkup"),
 			React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(Wprr.sourceReference("trigger/removeItem"), "removeItem", [Wprr.sourceReference("loop/array/index")])},
-				React.createElement("div", {"className": "button remove-button"}, "Remove")
+				React.createElement("div", {"className": "button edit-button edit-button-padding remove-button"}, "Remove")
 			)
 		];
 		
@@ -95,7 +95,9 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			Wprr.source("prop", "createButtonMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/createButtonMarkup"),
 			React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(Wprr.sourceReference("trigger/createItem"), "createItem", [])},
-				React.createElement("div", {"className": "button add-button"}, "Add")
+				React.createElement(Wprr.FlexRow, {},
+					React.createElement("div", {"className": "button edit-button edit-button-padding add-button"}, "Add")
+				)
 			)
 		];
 		
@@ -119,7 +121,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		let loopItemMarkup = this.getFirstValidSource(
 			Wprr.source("prop", "loopItemMarkup"),
 			Wprr.source("referenceIfExists", "arrayEditor/loopItemMarkup"),
-			React.createElement(Wprr.FlexRow, {"className": "justify-between small-item-spacing flex-no-wrap", "itemClasses": ["flex-resize", "flex-no-resize"]},
+			React.createElement(Wprr.FlexRow, {"className": "justify-between small-item-spacing flex-no-wrap vertically-center-items", "itemClasses": ["flex-resize", "flex-no-resize"]},
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(editItemFormSources, this, "element")},
 					React.createElement(Wprr.InsertElement, {})
 				),
@@ -178,6 +180,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			React.createElement(Wprr.MarkupPlacement, {"placement": "loop"},
 				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("arrayEditor/loop")})
 			),
+			React.createElement("div", {"className": "spacing small"}),
 			React.createElement(Wprr.MarkupPlacement, {"placement": "addButton"},
 				insertButton	
 			),
