@@ -85,6 +85,12 @@ export default class SortChain extends SortPart {
 		return this;
 	}
 	
+	getApplyAdjustFunction(aInput, aOutputName) {
+		let adjustFunction = Wprr.adjusts.applySortChain(aInput, this, aOutputName);
+		
+		return adjustFunction;
+	}
+	
 	static create(aParts = null, aActive = null) {
 		let newSortChain = new SortChain();
 		
