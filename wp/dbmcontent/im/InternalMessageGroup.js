@@ -191,7 +191,11 @@ export default class InternalMessageGroup {
 				return this.getFieldValue;
 		}
 		
-		return this.getFieldValue(aPath);
+		let tempArray = ("" + aPath).split(".");
+		let firstPart = tempArray.shift();
+		let restParts = tempArray.join(".");
+		
+		return Wprr.objectPath(this.getFieldValue(firstPart), restParts);
 	}
 	
 	toJSON() {

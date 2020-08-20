@@ -39,7 +39,7 @@ export default class MultiTypeItemsGroup {
 	
 	getValueForPath(aPath) {
 		
-		let tempArray = aPath.split(".");
+		let tempArray = (""+aPath).split(".");
 		let firstPart = tempArray.shift();
 		let restParts = tempArray.join(".");
 		

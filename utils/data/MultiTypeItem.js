@@ -45,7 +45,7 @@ export default class MultiTypeItem {
 	
 	getValueForPath(aPath) {
 		
-		let tempArray = aPath.split(".");
+		let tempArray = ("" + aPath).split(".");
 		let firstPart = tempArray.shift();
 		let restParts = tempArray.join(".");
 		
@@ -54,6 +54,7 @@ export default class MultiTypeItem {
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		
+		console.log("<>>>>>>>", this.getType(firstPart), restParts);
 		return Wprr.objectPath(this.getType(firstPart), restParts);
 	}
 	
