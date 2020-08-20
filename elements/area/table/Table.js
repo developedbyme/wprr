@@ -30,7 +30,7 @@ export default class Table extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		//console.log("wprr/elements/area/table/Table::_renderMainElement");
+		console.log("wprr/elements/area/table/Table::_renderMainElement");
 		
 		let markup = this.getFirstValidSource(
 			SourceData.create("prop", "markup"),
@@ -107,7 +107,9 @@ export default class Table extends WprrBaseObject {
 			Wprr.sourceProp("rowMarkup"),
 			SourceData.create("referenceIfExists", "table/row"),
 			React.createElement("tr", {},
-				React.createElement(Loop, {"loop": defaultRowItemLoop, "loopName": "cell"})
+				React.createElement(Wprr.UpdateCheck, {"checksum": false},
+					React.createElement(Loop, {"loop": defaultRowItemLoop, "loopName": "cell"})
+				)
 			)
 		);
 		

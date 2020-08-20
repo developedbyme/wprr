@@ -31,6 +31,7 @@ export default class MarkupLoop extends AdjustFunction {
 		
 		this.setInput("keyField", null);
 		
+		this._cachedItems = new Array();
 	}
 	
 	/**
@@ -78,6 +79,36 @@ export default class MarkupLoop extends AdjustFunction {
 		delete aProps["noItemsMarkup"];
 	}
 	
+	_getElementForItem(aIndex, aData, aSettings) {
+		
+		if(this._cachedItems[aIndex]) {
+			if(this._cachedItems[aIndex]["data"] === aData) {
+				//console.log("Cache hit");
+				return this._cachedItems[aIndex]["element"];
+			}
+		}
+		
+		let keyIndex = aIndex;
+		if(aSettings.keyField) {
+			let customKeyIndex = objectPath.get(aData, aSettings.keyField);
+			if(customKeyIndex !== null && customKeyIndex !== undefined) {
+				keyIndex = customKeyIndex;
+			}
+		}
+		
+		let loopInjectData = new Object();
+		let loopName = aSettings.loopName;
+		loopInjectData["loop/" + loopName + "index"] = aIndex;
+		loopInjectData["loop/" + loopName + "indexName"] = aSettings.itemPrefix + aIndex;
+		loopInjectData["loop/" + loopName + "item"] = aData;
+		
+		let element = React.createElement(ReferenceInjection, {"key": "item-" + keyIndex, "injectData": loopInjectData}, aSettings.markup);
+		
+		this._cachedItems[aIndex] = {"data": aData, "element": element};
+		
+		return element;
+	}
+	
 	/**
 	 * Sets the class based on the prop.
 	 *
@@ -100,6 +131,8 @@ export default class MarkupLoop extends AdjustFunction {
 		
 		let keyField = this.getInput("keyField");
 		
+		
+		
 		if(!markup) {
 			console.error("Loop doesn't have any markup.", this);
 			
@@ -112,6 +145,13 @@ export default class MarkupLoop extends AdjustFunction {
 		let loopName = aManipulationObject.getSourcedPropWithDefault("loopName", "");
 		if(loopName !== "") {
 			loopName += "/";
+		}
+		
+		let settings = {
+			"markup": markup,
+			"itemPrefix": itemPrefix,
+			"keyField": keyField,
+			"loopName": loopName
 		}
 		
 		let currentArray = dataArray;
@@ -138,11 +178,8 @@ export default class MarkupLoop extends AdjustFunction {
 						returnArray.push(React.createElement(ReferenceInjection, {"key": "spacing-" + keyIndex, "injectData": spacingInjectData}, spacingMarkup));
 					}
 					
-					let loopInjectData = new Object();
-					loopInjectData["loop/" + loopName + "index"] = i;
-					loopInjectData["loop/" + loopName + "indexName"] = itemPrefix + i;
-					loopInjectData["loop/" + loopName + "item"] = currentData;
-					returnArray.push(React.createElement(ReferenceInjection, {"key": "item-" + keyIndex, "injectData": loopInjectData}, markup));
+					let element = this._getElementForItem(i, currentData, settings);
+					returnArray.push(element);
 				}
 			}
 			else {

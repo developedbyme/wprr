@@ -1,3 +1,4 @@
+import Wprr from "wprr/Wprr";
 import React from "react";
 import ReactDOM from 'react-dom';
 
@@ -170,6 +171,12 @@ export default class Selection extends WprrBaseObject {
 			}
 		}
 		
-		return React.createElement("wrapper", {}, optionElements);
+		let checksum = Wprr.utils.array.mapField(options, "value");
+		
+		return React.createElement("wrapper", {}, 
+			React.createElement(Wprr.UpdateCheck, {"checksum": checksum},
+				optionElements
+			)
+		);
 	}
 }
