@@ -84,6 +84,8 @@ export {default as PortalledItem} from "wprr/elements/abstract/PortalledItem";
 export {default as ExternalStorageConnectionInjection} from "wprr/reference/ExternalStorageConnectionInjection";
 export {default as InjectExistingElements} from "wprr/elements/area/InjectExistingElements";
 export {default as SteppedNavigation} from "wprr/elements/form/SteppedNavigation";
+export {default as UpdateCheck} from "wprr/elements/abstract/UpdateCheck";
+export {default as Layout} from "wprr/elements/layout/Layout";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
