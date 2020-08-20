@@ -1,9 +1,13 @@
 import objectPath from "object-path";
 
+import AbstractDataStorage from "wprr/utils/AbstractDataStorage";
+
 // import ReduxDataStorage from "wprr/utils/ReduxDataStorage";
-export default class ReduxDataStorage {
+export default class ReduxDataStorage extends AbstractDataStorage {
 	
 	constructor() {
+		
+		super();
 		
 		this._pathPrefix = null;
 		this._storeController = null;

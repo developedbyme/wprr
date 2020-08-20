@@ -2,10 +2,15 @@ import Wprr from "wprr/Wprr";
 
 import objectPath from "object-path";
 
+import AbstractDataStorage from "wprr/utils/AbstractDataStorage";
+
 // import DataStorageConnection from "wprr/utils/DataStorageConnection";
-export default class DataStorageConnection {
+export default class DataStorageConnection extends AbstractDataStorage {
 	
 	constructor() {
+		
+		super();
+		
 		this._prefix = "";
 		this._suffix = "";
 		

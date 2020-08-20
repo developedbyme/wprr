@@ -5,6 +5,7 @@ import queryString from "query-string";
 
 import AcfFunctions from "wprr/wp/AcfFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
+import AbstractDataStorage from "wprr/utils/AbstractDataStorage";
 
 // import SourceData from "wprr/reference/SourceData";
 export default class SourceData {
@@ -22,6 +23,46 @@ export default class SourceData {
 		this._additionalInput = null;
 		
 		this._shouldCleanup = true;
+		
+		this._owners = new Array();
+		this._subscriptions = new Array();
+	}
+	
+	addOwner(aOwner) {
+		this._owners.push(aOwner);
+		this._addSubscriptionsForOwner(aOwner);
+		
+		return this;
+	}
+	
+	_addSubscriptionsForOwner(aOwner) {
+		let resolvedSource = this._sourceFunction(this._type, this._path, aOwner, aOwner);
+		
+		if(!objectPath.get(this._additionalInput, "skipSubscriptions")) {
+			if(resolvedSource instanceof AbstractDataStorage) {
+				let dataStorage = resolvedSource;
+				dataStorage.addOwner(this);
+				this._subscriptions.push(dataStorage);
+			}
+		}
+	}
+	
+	removeOwner(aOwner) {
+		let index = this._owners.indexOf(aOwner);
+		if(index > 0) {
+			this._owners.splice(index, 1);
+		}
+		
+		return  this;
+	}
+	
+	externalDataChange() {
+		let currentArray = this._owners;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentOwner = currentArray[i];
+			currentOwner.updateForSourceChange();
+		}
 	}
 	
 	setup(aType, aPath) {

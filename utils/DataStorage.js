@@ -2,13 +2,18 @@ import Wprr from "wprr/Wprr";
 
 import objectPath from "object-path";
 
+import AbstractDataStorage from "wprr/utils/AbstractDataStorage";
+
 import DataStorageConnection from "wprr/utils/DataStorageConnection";
 import DataStorageChangeCommands from "wprr/utils/DataStorageChangeCommands";
 
 // import DataStorage from "wprr/utils/DataStorage";
-export default class DataStorage {
+export default class DataStorage extends AbstractDataStorage {
 	
 	constructor() {
+		
+		super();
+		
 		this.setData(new Object());
 		
 		this._owners = new Array();
@@ -87,10 +92,17 @@ export default class DataStorage {
 		//console.log("wprr/utils/DataStorage::updateValue");
 		let oldValue = this.getValue(aName);
 		
-		if(JSON.stringify(aValue) !== JSON.stringify(oldValue) || Wprr.development_skipDataStorageComparison) {
+		try {
+			if(JSON.stringify(aValue) !== JSON.stringify(oldValue) || Wprr.development_skipDataStorageComparison) {
+				objectPath.set(this._data, aName, aValue);
+				this._updateOwners();
+			}
+		}
+		catch(theError) {
 			objectPath.set(this._data, aName, aValue);
 			this._updateOwners();
 		}
+		
 		
 		return this;
 	}

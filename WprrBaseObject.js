@@ -30,6 +30,77 @@ export default class WprrBaseObject extends React.Component {
 		this._elementRef = React.createRef();
 		
 		this._namedRefs = new Object();
+		
+		this._registeredSources = new Object();
+		this._sourceChangeIndex = 0;
+	}
+	
+	_updateSourceRegistration() {
+		
+		if(Wprr.settings_enableSourceRegistration) {
+			let props = this.props;
+			let newSources = new Array();
+			let oldSources = this._registeredSources;
+			let registeredSources = new Object();
+			for(let objectName in props) {
+				let currentProp = props[objectName];
+				if(currentProp instanceof SourceData) {
+					registeredSources[objectName] = currentProp;
+					if(oldSources[objectName] === registeredSources[objectName]) {
+						delete oldSources[objectName];
+					}
+					else {
+						newSources.push(currentProp);
+					}
+				}
+			}
+		
+			this._registeredSources = registeredSources;
+			this._addSources(newSources);
+			this._removeSourcesFromObject(oldSources);
+		}
+		
+		return this;
+	}
+	
+	_addSources(aSources) {
+		let currentArray = aSources;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentSource = currentArray[i];
+			currentSource.addOwner(this);
+		}
+		
+		return this;
+	}
+	
+	_removeSourcesFromObject(aSources) {
+		for(let objectName in aSources) {
+			let currentSource = aSources[objectName];
+			currentSource.removeOwner(this);
+		}
+		
+		return this;
+	}
+	
+	_removeAllSources() {
+		
+		this._removeSourcesFromObject(this._registeredSources);
+		this._registeredSources = new Object();
+		
+		return this;
+	}
+	
+	updateForSourceChange() {
+		
+		let currentIndex = this.state["wprrSourceUpdateIndex"];
+		let nextIndex = this._sourceChangeIndex+1;
+		if(nextIndex !== currentIndex) {
+			this._sourceChangeIndex = nextIndex;
+			this.setState({"wprrSourceUpdateIndex": nextIndex});
+		}
+		
+		return this;
 	}
 	
 	useElementReplacement() {
@@ -495,6 +566,8 @@ export default class WprrBaseObject extends React.Component {
 	componentDidMount() {
 		//console.log("wprr/WprrBaseObject.componentDidMount");
 		
+		this._updateSourceRegistration();
+		
 		let commands = this.getSourcedProp("didMountCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, null, this);
@@ -504,6 +577,8 @@ export default class WprrBaseObject extends React.Component {
 	componentDidUpdate() {
 		//console.log("wprr/WprrBaseObject.componentDidUpdate");
 		
+		this._updateSourceRegistration();
+		
 		let commands = this.getSourcedProp("didUpdateCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, null, this);
@@ -512,6 +587,8 @@ export default class WprrBaseObject extends React.Component {
 
 	componentWillUnmount() {
 		//console.log("wprr/WprrBaseObject.componentWillUnmount");
+		
+		this._removeAllSources();
 		
 		let commands = this.getSourcedProp("willUnmountCommands");
 		if(commands) {

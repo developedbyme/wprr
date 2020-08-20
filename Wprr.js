@@ -237,3 +237,5 @@ Wprr.creators = new Object();
 Wprr.utils = new Object();
 Wprr.adjusts = new Object();
 Wprr.qualifications = new Object();
+
+Wprr.settings_enableSourceRegistration = true;
