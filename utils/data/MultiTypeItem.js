@@ -1,11 +1,16 @@
 import Wprr from "wprr/Wprr";
 
+import MultiTypeItemLinks from "wprr/utils/data/MultiTypeItemLinks";
+import SelectLink from "wprr/utils/data/SelectLink";
+
 // import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 export default class MultiTypeItem {
 	
 	constructor() {
 		this._id = null;
 		this._types = new Object();
+		
+		this._group = null;
 	}
 	
 	get id() {
@@ -16,6 +21,16 @@ export default class MultiTypeItem {
 		this._id = aId;
 		
 		return this._id;
+	}
+	
+	get group() {
+		return this._group;
+	}
+	
+	setGroup(aGroup) {
+		this._group = aGroup;
+		
+		return this;
 	}
 	
 	getType(aType) {
@@ -31,6 +46,39 @@ export default class MultiTypeItem {
 	
 	addType(aType, aData) {
 		this._types[aType] = aData;
+		
+		if(aData && aData.setItemConnection) {
+			this.connectData(aData);
+		}
+		
+		return this;
+	}
+	
+	getLinks(aType) {
+		if(!this._types[aType]) {
+			let newLinks = new MultiTypeItemLinks();
+			this.addType(aType, newLinks);
+		}
+		
+		return this._types[aType];
+	}
+	
+	addLinkedData(aType, aData) {
+		this._types[aType] = aData;
+		
+		return this;
+	}
+	
+	addSelectLink(aType, aLinksType, aSelectBy = "id", aItemPath = null) {
+		let newSelectLink = new SelectLink();
+		newSelectLink.setup(aLinksType, aSelectBy, aItemPath);
+		this.addType(aType, newSelectLink);
+		
+		return this;
+	}
+	
+	connectData(aData) {
+		aData.setItemConnection(this);
 		
 		return this;
 	}
@@ -51,6 +99,7 @@ export default class MultiTypeItem {
 		
 		switch(firstPart) {
 			case "id":
+			case "group":
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		

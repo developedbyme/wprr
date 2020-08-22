@@ -1,9 +1,13 @@
 import Wprr from "wprr/Wprr";
 import React from "react";
 
-export default class TimelineField {
+import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+
+export default class TimelineField extends MultiTypeItemConnection {
 	
 	constructor() {
+		
+		super();
 		
 		this._messageGroup = null;
 		
@@ -19,6 +23,15 @@ export default class TimelineField {
 		this._settings = new Object();
 		
 		this._externalStorage = null;
+	}
+	
+	setupEditStorage() {
+		let editStrorage = new Wprr.utils.DataStorage();
+		
+		this.item.addType("editStorage", editStrorage);
+		this.connectToEditStorage(editStrorage);
+		
+		return this;
 	}
 	
 	connectToEditStorage(aExternalStorage) {

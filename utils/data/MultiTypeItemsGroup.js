@@ -8,6 +8,9 @@ export default class MultiTypeItemsGroup {
 	constructor() {
 		this._prefix = "item";
 		this._items = new Object();
+		
+		this._internalPrefix = "-internal";
+		this._nextInternalId = 0;
 	}
 	
 	get prefix() {
@@ -27,7 +30,7 @@ export default class MultiTypeItemsGroup {
 		let nameWithPrefix = this._prefix + aId;
 		
 		if(!this._items[nameWithPrefix]) {
-			this._items[nameWithPrefix] = MultiTypeItem.create(aId);
+			this._items[nameWithPrefix] = MultiTypeItem.create(aId).setGroup(this);
 		}
 		
 		return this._items[nameWithPrefix];
@@ -38,6 +41,8 @@ export default class MultiTypeItemsGroup {
 	}
 	
 	getValueForPath(aPath) {
+		//console.log("getValueForPath");
+		//console.log(aPath);
 		
 		let tempArray = (""+aPath).split(".");
 		let firstPart = tempArray.shift();
@@ -49,5 +54,12 @@ export default class MultiTypeItemsGroup {
 		}
 		
 		return Wprr.objectPath(this.getItem(firstPart), restParts);
+	}
+	
+	generateNextInternalId() {
+		let nextId = this._nextInternalId;
+		this._nextInternalId++;
+		
+		return this._internalPrefix + nextId;
 	}
 }

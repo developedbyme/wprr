@@ -43,7 +43,7 @@ export default class MultipleUrlResolver {
 		if(this._basePaths && this._basePaths[aRealtiveTo] != undefined) {
 			return this._basePaths[aRealtiveTo].getAbsolutePath(aPath);
 		}
-		console.warn("Resulver doesn't have any base for " + aRealtiveTo, this);
+		console.warn("Resolver doesn't have any base for " + aRealtiveTo, this);
 		return aPath;
 	}
 	

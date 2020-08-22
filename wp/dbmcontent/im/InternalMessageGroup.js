@@ -3,15 +3,18 @@ import React from "react";
 
 import objectPath from "object-path";
 
+import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import InputDataHolder from "wprr/utils/InputDataHolder";
 
-export default class InternalMessageGroup {
+export default class InternalMessageGroup extends MultiTypeItemConnection {
 	
 	constructor() {
 		
+		super();
+		
 		this._id = 0;
-		this._fields = new Object();
 		this._messages = new Array();
 		
 		this._commands = InputDataHolder.create();
@@ -33,6 +36,18 @@ export default class InternalMessageGroup {
 		return this;
 	}
 	
+	setupFieldEditStorages() {
+		let currentArray = this.getFields();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let field = currentArray[i];
+			
+			field.setupEditStorage();
+		}
+		
+		return this;
+	}
+	
 	connectToEditStorage(aExternalStorage) {
 		//console.log("InternalMessageGroup::connectToEditStorage");
 		//console.log(aExternalStorage);
@@ -40,10 +55,12 @@ export default class InternalMessageGroup {
 		let id = this.getId();
 		let prefix = "items.item" + id + ".fields.";
 		
-		for(let objectName in this._fields) {
-			let field = this._fields[objectName];
+		let currentArray = this.getFields();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let field = currentArray[i];
 			
-			let connection = aExternalStorage.createConnection(prefix + objectName);
+			let connection = aExternalStorage.createConnection(prefix + field.key);
 			field.connectToEditStorage(connection);
 		}
 		
@@ -72,7 +89,10 @@ export default class InternalMessageGroup {
 	}
 	
 	getField(aName) {
-		return this._fields[aName];
+		
+		let fields = this.getFields();
+		
+		return Wprr.utils.array.getItemBy("key", aName, fields);
 	}
 	
 	updateField(aName, aValue) {
@@ -101,11 +121,20 @@ export default class InternalMessageGroup {
 		//console.log("InternalMessageGroup::setupFields");
 		//console.log(aFieldsData);
 		
+		let group = this.item.group;
+		let fieldLinks = this.item.getLinks("fields");
+		let fieldSelect = this.item.addSelectLink("fieldByName", "fields", "field.key");
+		console.log("fieldLinks>", fieldLinks, fieldSelect);
+		
 		let currentArray = aFieldsData;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentFieldData = currentArray[i];
 			let newField = new Wprr.utils.wp.dbmcontent.im.TimelineField();
+			
+			let item = fieldLinks.createItem(group.generateNextInternalId());
+			item.addType("field", newField);
+			item.addType("parentItem", this.item);
 			
 			let key = currentFieldData["key"];
 			
@@ -118,26 +147,30 @@ export default class InternalMessageGroup {
 			if(currentFieldData["pastChanges"] || currentFieldData["futureChanges"]) {
 				newField.setupChanges(currentFieldData["pastChanges"], currentFieldData["futureChanges"]);
 			}
-			
-			this._fields[key] = newField;
 		}
+		
+		console.log("fieldLinks>", fieldLinks);
 		
 		return this;
 	}
 	
+	getFields() {
+		return this.item.getType("fields").getAsType("field");
+	}
+	
 	getFieldNames() {
-		let returnArray = new Array();
-		for(let objectName in this._fields) {
-			returnArray.push(objectName);
-		}
 		
-		return returnArray;
+		let fields = this.getFields();
+		
+		return Wprr.utils.array.mapField(fields, "key");
 	}
 	
 	hasUnsavedChanges() {
 		
-		for(let objectName in this._fields) {
-			if(this._fields[objectName].hasUnsavedChange()) {
+		let currentArray = this.getFields();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentArray[i].hasUnsavedChange()) {
 				return true;
 			}
 		}
@@ -149,8 +182,10 @@ export default class InternalMessageGroup {
 		
 		let returnArray = new Array();
 		
-		for(let objectName in this._fields) {
-			let field = this._fields[objectName];
+		let currentArray = this.getFields();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let field = currentArray[i];
 			if(field.hasUnsavedChange()) {
 				returnArray.push(field);
 			}

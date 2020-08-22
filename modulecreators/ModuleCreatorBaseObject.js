@@ -44,10 +44,19 @@ export default class ModuleCreatorBaseObject {
 		this._textManager = new TextManager();
 		
 		this._siteStorage = new DataStorage();
+		
+		this._project = null;
 	}
 	
 	setWprrInstance(aWprrInstance) {
 		this._wprrInstance = aWprrInstance;
+		
+		return this;
+	}
+	
+	setProject(aProject) {
+		
+		this._project = aProject;
 		
 		return this;
 	}
@@ -159,6 +168,10 @@ export default class ModuleCreatorBaseObject {
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
 		this._configureReferences(aData, aModuleData);
+		
+		if(this._project) {
+			this._project.setMainReferences(this._referenceHolder);
+		}
 		
 		let paths = aData.paths;
 		if(paths) {

@@ -8,6 +8,7 @@ import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import SourcedText from "wprr/elements/text/SourcedText";
+import Project from "wprr/utils/project/Project";
 
 import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
 import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRendererCreator";
@@ -28,6 +29,7 @@ export default class Wprr {
 	
 	constructor() {
 		this._moduleCreators = new Object();
+		this._projects = new Object();
 		
 		if(window && window.requestAnimationFrame) {
 			function animate(time) {
@@ -98,6 +100,16 @@ export default class Wprr {
 		else {
 			console.error("No module named " + aName, this);
 		}
+	}
+	
+	getProject(aName) {
+		if(!this._projects[aName]) {
+			let newProject = new Project();
+			newProject.setName(aName);
+			this._projects[aName] = newProject;
+		}
+		
+		return this._projects[aName];
 	}
 	
 	static addClass(aName, aClass) {
@@ -202,6 +214,7 @@ export default class Wprr {
 		
 		let currentObject = aObject;
 		
+		aPath += "";
 		if(aPath.length === 0) {
 			return currentObject;
 		}

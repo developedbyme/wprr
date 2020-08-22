@@ -86,6 +86,10 @@ export {default as InjectExistingElements} from "wprr/elements/area/InjectExisti
 export {default as SteppedNavigation} from "wprr/elements/form/SteppedNavigation";
 export {default as UpdateCheck} from "wprr/elements/abstract/UpdateCheck";
 export {default as Layout} from "wprr/elements/layout/Layout";
+export {default as AddReference} from "wprr/reference/AddReference";
+export {default as SelectItem} from "wprr/reference/SelectItem";
+export {default as RelatedItem} from "wprr/reference/RelatedItem";
+export {default as SelectField} from "wprr/reference/SelectField";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
