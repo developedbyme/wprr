@@ -14,30 +14,66 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
 		
 		this._editStorage.updateValue("allIds", []);
-		
+		this._editStorage.updateValue("filteredIds", []);
+		this._editStorage.updateValue("operation", "none");
 		this._editStorage.updateValue("searchText", "");
 		this._editStorage.updateValue("saveAll.hasChanges", false);
 		this._editStorage.updateValue("saveAll.status", "normal");
 		this._editStorage.updateValue("creatingStatus", "none");
+		this._editStorage.updateValue("searchFields", []);
 		
 		this._dataType = "dbm_data";
 		this._encoders = "privateTitle,status,fields";
 		
 		this._addChangeData = null;
 		
+		this._editStorage.createChangeCommands("allIds,searchText,filters,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
+		
+		this._filterChain =  Wprr.utils.FilterChain.create();
+		
+		this._dynamicFilterChain =  Wprr.utils.FilterChain.create();
+		this._filterChain.addPart(this._dynamicFilterChain);
+		this._dynamicFiltersList = new Wprr.utils.DataStorageListConnection().setDataStorage(this._editStorage).setup("filters", "filter");
+		
+		this._searchFilterParts = this._filterChain.addFieldsSearch(
+			Wprr.sourceStatic(this._editStorage, "searchFields"),
+			Wprr.sourceStatic(this._editStorage, "searchText"),
+			Wprr.sourceStatic(this._editStorage, "searchText")
+		);
+		
 		this._updateSaveAllStatusCommand = Wprr.commands.callFunction(this, this._updateSaveAllStatus);
+	}
+	
+	setSearchFields(aFields) {
+		this._editStorage.updateValue("searchFields", aFields);
+		
+		return this;
+	}
+	
+	_filterItems() {
+		let ids = this._editStorage.getValue("allIds");
+		let items = this._items.getItems(ids);
+		console.log(items, this._editStorage.getValue("searchText"));
+		
+		items = this._filterChain.filter(items, null);
+		
+		let filteredIds = Wprr.utils.array.mapField(items, "id");
+		
+		console.log(items, filteredIds, this._filterChain);
+		
+		this._editStorage.updateValue("filteredIds", filteredIds);
 	}
 	
 	setupFromData(aData) {
 		let currentArray = aData;
 		let currentArrayLength = currentArray.length;
 		
+		//this._editStorage.disableUpdates();
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentData = currentArray[i];
 			this.addItemData(currentData);
 		}
-		
-		console.log(">>>>>>>", this, aData);
+		//this._editStorage.enableUpdates();
 		
 		return this;
 	}

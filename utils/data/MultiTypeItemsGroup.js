@@ -36,6 +36,19 @@ export default class MultiTypeItemsGroup {
 		return this._items[nameWithPrefix];
 	}
 	
+	getItems(aIds) {
+		let returnArray = new Array();
+		
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			returnArray.push(this.getItem(currentId));
+		}
+		
+		return returnArray;
+	}
+	
 	hasObjectPathHandling() {
 		return true;
 	}

@@ -124,7 +124,6 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 		let group = this.item.group;
 		let fieldLinks = this.item.getLinks("fields");
 		let fieldSelect = this.item.addSelectLink("fieldByName", "fields", "field.key");
-		console.log("fieldLinks>", fieldLinks, fieldSelect);
 		
 		let currentArray = aFieldsData;
 		let currentArrayLength = currentArray.length;
@@ -148,8 +147,6 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 				newField.setupChanges(currentFieldData["pastChanges"], currentFieldData["futureChanges"]);
 			}
 		}
-		
-		console.log("fieldLinks>", fieldLinks);
 		
 		return this;
 	}

@@ -117,9 +117,14 @@ export default class InputDataHolder  {
 		
 		if(aData instanceof SourceData) {
 			
-			let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state};
+			if(aManipulationObject) {
+				let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state};
 			
-			return aManipulationObject.resolveSourcedDataInStateChange(aData, changePropsAndStateObject);
+				return aManipulationObject.resolveSourcedDataInStateChange(aData, changePropsAndStateObject);
+			}
+			else {
+				return aData.getSource(null);
+			}
 		}
 		
 		return aData;
