@@ -30,6 +30,10 @@ export default class SelectItem extends WprrBaseObject {
 		
 		let injectData = new Object();
 		
+		console.log(">>>");
+		console.log(this._defaultAs, this._defaultFrom);
+		console.log(this.getFirstInput("id"));
+		
 		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = this.getFirstInput(
 			Wprr.sourceStatic(
 				this.getFirstInput("from", Wprr.sourceReference(this._defaultFrom)),

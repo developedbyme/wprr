@@ -23,7 +23,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("searchFields", []);
 		
 		this._dataType = "dbm_data";
-		this._encoders = "privateTitle,status,fields";
+		this._encoders = "privateTitle,status,fields,editObjectRelations";
 		
 		this._addChangeData = null;
 		
@@ -78,6 +78,22 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return this;
 	}
 	
+	ensureRelationExists(aData) {
+		let currentId = aData["id"];
+		let item = this._items.getItem(currentId);
+		if(!item.hasType(currentId)) {
+			let newRelation = new Wprr.utils.wp.dbmcontent.relation.Relation();
+			newRelation.setup(aData);
+			item.addType("relation", newRelation);
+			item.addType("editStorage", new Wprr.utils.DataStorage());
+			item.addType("data", aData);
+			item.addSingleLink("from", aData["fromId"]);
+			item.addSingleLink("to", aData["toId"]);
+		}
+		
+		return item;
+	}
+	
 	addItemData(aData) {
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
@@ -97,6 +113,77 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		allIds.push(currentId);
 		this._editStorage.updateValue("allIds", allIds);
 		
+		if(aData["relations"]) {
+			let relationsStorage = new Wprr.utils.DataStorage();
+			item.addType("relations", relationsStorage);
+			item.addType("relationEditors", new Wprr.utils.wp.dbmcontent.relation.Relation());
+			
+			let outgoing = new Object();
+			{
+				let addToObject = outgoing;
+				let directionType = "toTypes";
+				let currentArray = aData["relations"]["outgoing"];
+				
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentRelationData = currentArray[i];
+					let currentRelationId = currentRelationData["id"];
+					let item = this.ensureRelationExists(currentRelationData);
+					
+					let connectionType = currentRelationData["connectionType"];
+					if(!addToObject[connectionType]) {
+						addToObject[connectionType] = new Object();
+					}
+					let currentConnectionObject = addToObject[connectionType];
+					
+					let currentArray2 = currentRelationData[directionType];
+					let currentArray2Length = currentArray2.length;
+					for(let j = 0; j < currentArray2Length; j++) {
+						let currentType = currentArray2[j];
+						if(!currentConnectionObject[currentType]) {
+							currentConnectionObject[currentType] = new Array();
+						}
+						currentConnectionObject[currentType].push(currentRelationId);
+					}
+				}
+			}
+			
+			relationsStorage.updateValue("outgoing", outgoing);
+			
+			let incoming = new Object();
+			{
+				let addToObject = incoming;
+				let directionType = "fromTypes";
+				let currentArray = aData["relations"]["incoming"];
+				
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentRelationData = currentArray[i];
+					let currentRelationId = currentRelationData["id"];
+					let item = this.ensureRelationExists(currentRelationData);
+					
+					let connectionType = currentRelationData["connectionType"];
+					if(!addToObject[connectionType]) {
+						addToObject[connectionType] = new Object();
+					}
+					let currentConnectionObject = addToObject[connectionType];
+					
+					let currentArray2 = currentRelationData[directionType];
+					let currentArray2Length = currentArray2.length;
+					for(let j = 0; j < currentArray2Length; j++) {
+						let currentType = currentArray2[j];
+						if(!currentConnectionObject[currentType]) {
+							currentConnectionObject[currentType] = new Array();
+						}
+						currentConnectionObject[currentType].push(currentRelationId);
+					}
+				}
+			}
+			
+			relationsStorage.updateValue("incoming", incoming);
+			
+			console.log(relationsStorage);
+		}
 		//METODO: setup object relation and status editor
 		
 		return item;

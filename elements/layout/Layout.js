@@ -127,7 +127,7 @@ export default class Layout extends WprrBaseObject {
 			}
 			
 			if(defaultSlotChildren.length > 0) {
-				objectPath.set(this._slots, currentGroup["defaultSlot"], defaultSlotChildren);
+				objectPath.set(this._slots, "defaultSlot", defaultSlotChildren);
 			}
 		}
 		

@@ -2,6 +2,7 @@ import Wprr from "wprr/Wprr";
 
 import MultiTypeItemLinks from "wprr/utils/data/MultiTypeItemLinks";
 import SelectLink from "wprr/utils/data/SelectLink";
+import SingleLink from "wprr/utils/data/SingleLink";
 
 // import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 export default class MultiTypeItem {
@@ -77,6 +78,14 @@ export default class MultiTypeItem {
 		return this;
 	}
 	
+	addSingleLink(aType, aId) {
+		let newSingleLink = new SingleLink();
+		newSingleLink.setId(aId);
+		this.addType(aType, newSingleLink);
+		
+		return newSingleLink;
+	}
+	
 	connectData(aData) {
 		aData.setItemConnection(this);
 		
@@ -103,7 +112,6 @@ export default class MultiTypeItem {
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		
-		console.log("<>>>>>>>", this.getType(firstPart), restParts);
 		return Wprr.objectPath(this.getType(firstPart), restParts);
 	}
 	

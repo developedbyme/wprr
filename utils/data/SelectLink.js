@@ -22,14 +22,12 @@ export default class SelectLink extends MultiTypeItemConnection {
 	}
 	
 	getLink(aName) {
-		console.log("getLink");
-		console.log(aName);
+		//console.log("getLink");
+		//console.log(aName);
 		
 		let links = this.item.getLinks(this._linksName).items;
-		console.log(this._linksName, links);
 		
 		let selectedLink = Wprr.utils.array.getItemBy(this._selectBy, aName, links);
-		console.log(selectedLink, this._selectBy, aName);
 		
 		if(this._itemPath) {
 			Wprr.objectPath(selectedLink, this._itemPath);
