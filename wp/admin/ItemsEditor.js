@@ -91,6 +91,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		item.addType("editStorage", new Wprr.utils.DataStorage());
 		item.addType("data", aData);
 		
+		internalMessageGroup.setupFieldEditStorages();
+		
 		let allIds = [].concat(this._editStorage.getValue("allIds"));
 		allIds.push(currentId);
 		this._editStorage.updateValue("allIds", allIds);
@@ -196,5 +198,39 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		console.log("saveAll");
 		
 		//METODO:
+	}
+	
+	saveField(aFieldItem, aComment = null) {
+		console.log("saveField");
+		console.log(aFieldItem);
+		
+		let changeData = new Wprr.utils.ChangeData();
+		let loader = this._getLoader();
+		
+		let groupId = aFieldItem.getType("parentItem").getType("messageGroup").getId();
+		let field = aFieldItem.getType("field");
+		let editStorage = aFieldItem.getType("editStorage");
+		let fieldName = field.key;
+		let value = field.getValue();
+		
+		changeData.setDataField(fieldName, value, aComment);
+		
+		loader.setupJsonPost(this.project.getWprrUrl(Wprr.utils.wprrUrl.getEditUrl(groupId)), changeData.getEditData());
+		
+		loader.addSuccessCommand(Wprr.commands.setValue(editStorage, "saved.value", value));
+		
+		let statusName = "uiState.status";
+		loader.addSuccessCommand(Wprr.commands.setValue(editStorage, statusName, "normal"));
+		loader.addErrorCommand(Wprr.commands.setValue(editStorage, statusName, "normal"));
+		
+		let workModeName = "uiState.workMode";
+		loader.addSuccessCommand(Wprr.commands.setValue(editStorage, workModeName, "display"));
+		loader.addErrorCommand(Wprr.commands.setValue(editStorage, workModeName, "display"));
+		
+		editStorage.updateValue(statusName, "saving");
+		
+		loader.load();
+		
+		return this;
 	}
 }
