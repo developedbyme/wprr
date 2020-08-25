@@ -54,7 +54,10 @@ export default class DataStorageChangeCommands {
 		//console.log("DataStorageChangeCommands::externalDataChange");
 		
 		let performingObject = this.inputs.getRawInput("performingObject");
-		let valueNames = this.inputs.getInput("valueNames", performingObject.props, performingObject);
+		
+		let props = performingObject ? performingObject.props : {};
+		
+		let valueNames = this.inputs.getInput("valueNames", props, performingObject);
 		
 		let dataObject = new Object();
 		
@@ -70,7 +73,7 @@ export default class DataStorageChangeCommands {
 		let currentHash = JSON.stringify(dataObject);
 		if(this._lastExceutedHash !== currentHash) {
 			this._lastExceutedHash = currentHash;
-			let commands = this.inputs.getInput("commands", performingObject.props, performingObject);
+			let commands = this.inputs.getInput("commands", props, performingObject);
 			Wprr.utils.commandPerformer.perform(commands, dataObject, performingObject);
 		}
 	}

@@ -30,16 +30,21 @@ export default class SelectItem extends WprrBaseObject {
 		
 		let injectData = new Object();
 		
-		console.log(">>>");
-		console.log(this._defaultAs, this._defaultFrom);
-		console.log(this.getFirstInput("id"));
+		let fromObject = this.getFirstInput("from", Wprr.sourceReference(this._defaultFrom));
+		let id = this.getFirstInput("id");
 		
-		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = this.getFirstInput(
-			Wprr.sourceStatic(
-				this.getFirstInput("from", Wprr.sourceReference(this._defaultFrom)),
-				this.getFirstInput("id")
-			)
+		let itemSource = Wprr.sourceStatic(
+			fromObject,
+			id
 		);
+		
+		let item = this.getFirstInput(itemSource);
+		
+		if(!item) {
+			console.warn("No item with id " + id + " from", fromObject);
+		}
+		
+		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = item;
 		
 		return React.createElement(ReferenceInjection, {"injectData": injectData}, children);
 	}

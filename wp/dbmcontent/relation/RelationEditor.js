@@ -22,5 +22,15 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this._direction = aDirection;
 		this._connectionType = aConnectionType;
 		this._objectType = aObjectType;
+		
+		return this;
+	}
+	
+	get path() {
+		return this._direction + "." + this._connectionType + "." + this._objectType;
+	}
+	
+	get externalStorage() {
+		return this.item.getType("relations");
 	}
 }

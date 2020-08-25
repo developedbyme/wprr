@@ -5,6 +5,8 @@ import objectPath from "object-path";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
+import RelationEditor from "./RelationEditor";
+
 //import RelationEditors from "./RelationEditors";
 export default class RelationEditors extends MultiTypeItemConnection {
 	
@@ -17,6 +19,9 @@ export default class RelationEditors extends MultiTypeItemConnection {
 	}
 	
 	getEditor(aDirection, aConnectionType, aObjectType) {
+		//console.log("getEditor");
+		//console.log(aDirection, aConnectionType, aObjectType);
+		
 		let currentEditor = objectPath.get(this._editors, [aDirection, aConnectionType, aObjectType]);
 		if(currentEditor) {
 			return currentEditor;
@@ -45,7 +50,11 @@ export default class RelationEditors extends MultiTypeItemConnection {
 				let restParts = tempArray.join(".");
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
+		let connectionType = tempArray.shift();
+		let objectType = tempArray.shift();
 		
-		return Wprr.objectPath(this._editors, aPath);
+		let restParts = tempArray.join(".");
+		
+		return Wprr.objectPath(this.getEditor(firstPart, connectionType, objectType), restParts);
 	}
 }

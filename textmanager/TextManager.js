@@ -33,7 +33,7 @@ export default class TextManager {
 		let returnText = objectPath.get(this._data, aPath);
 		
 		if(returnText == undefined) {
-			console.warn("No text for path " + aPath);
+			//console.warn("No text for path " + aPath);
 			this.addUntranslatedTextId(aPath);
 			return null;
 		}
@@ -49,7 +49,7 @@ export default class TextManager {
 		let returnText = objectPath.get(this._data, aPath);
 		if(returnText == undefined) {
 			//METODO: should this be added to both
-			console.warn("No text for path " + aPath + ". Using id.");
+			//console.warn("No text for path " + aPath + ". Using id.");
 			
 			this.addUntranslatedText(aPath, aId);
 			
@@ -94,7 +94,7 @@ export default class TextManager {
 				return translatedText;
 			}
 			if(!this._untranslatedTexts[textId]) {
-				console.warn("Translation doesn't exist for text " + aText);
+				//console.warn("Translation doesn't exist for text " + aText);
 				this.addUntranslatedText(textId, aText);
 			}
 		}
@@ -127,7 +127,7 @@ export default class TextManager {
 		
 		let mappingId = this._convertToCamelCase(aText);
 		if(!this._unmappedTexts[mappingId]) {
-			console.warn("Translation is not mapped for text " + aText);
+			//console.warn("Translation is not mapped for text " + aText);
 			this.addUnmappedText(mappingId, aText);
 		}
 		

@@ -85,10 +85,10 @@ export default class OverlayArea extends WprrBaseObject {
 		if(lockHtmlScroll) {
 			let overlays = this.getSourcedProp("overlays");
 			if(overlays.length > 0) {
-				document.documentElement.classList.add("no-html-scoll");
+				document.documentElement.classList.add("no-html-scroll");
 			}
 			else {
-				document.documentElement.classList.remove("no-html-scoll");
+				document.documentElement.classList.remove("no-html-scroll");
 			}
 		}
 	}

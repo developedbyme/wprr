@@ -53,13 +53,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	_filterItems() {
 		let ids = this._editStorage.getValue("allIds");
 		let items = this._items.getItems(ids);
-		console.log(items, this._editStorage.getValue("searchText"));
 		
 		items = this._filterChain.filter(items, null);
 		
 		let filteredIds = Wprr.utils.array.mapField(items, "id");
-		
-		console.log(items, filteredIds, this._filterChain);
 		
 		this._editStorage.updateValue("filteredIds", filteredIds);
 	}
@@ -116,7 +113,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		if(aData["relations"]) {
 			let relationsStorage = new Wprr.utils.DataStorage();
 			item.addType("relations", relationsStorage);
-			item.addType("relationEditors", new Wprr.utils.wp.dbmcontent.relation.Relation());
+			
+			let relationEditors = new Wprr.utils.wp.dbmcontent.relation.RelationEditors();
+			item.addType("relationEditors", relationEditors);
 			
 			let outgoing = new Object();
 			{
@@ -181,8 +180,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 			
 			relationsStorage.updateValue("incoming", incoming);
-			
-			console.log(relationsStorage);
 		}
 		//METODO: setup object relation and status editor
 		
@@ -260,7 +257,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_updateSaveAllStatus() {
-		console.log("_updateSaveAllStatus");
+		//console.log("_updateSaveAllStatus");
 	
 		let hasChanges = false;
 		let currentArray = this._editStorage.getValue("allIds");
@@ -272,8 +269,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				break;
 			}
 		}
-	
-		console.log("hasChanges", hasChanges);
+		
 		this._editStorage.updateValue("saveAll.hasChanges", hasChanges);
 	}
 	

@@ -5,3 +5,4 @@ export {default as MultiTypeItemConnection} from "./MultiTypeItemConnection";
 export {default as SelectLink} from "./SelectLink";
 export {default as TableData} from "./TableData";
 export {default as XlsxImporter} from "./XlsxImporter";
+export {default as ItemsLoader} from "./ItemsLoader";
