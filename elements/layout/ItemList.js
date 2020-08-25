@@ -32,6 +32,7 @@ export default class ItemList extends Layout {
 						aSlots.source("spacing", null)
 					).setInput("keyField", [])
 				}
+				sourceUpdates={Wprr.sourceReference("itemList/externalStorage", "slot.ids")}
 			>
 				{aSlots.slot("insertElements", <Wprr.InjectChildren />)}
 			</Wprr.Loop>

@@ -20,6 +20,8 @@ export default class ItemsLoader extends ProjectRelatedItem {
 		this._externalStorage.createChangeCommands("url", null, Wprr.commands.callFunction(this, this._updateUrl));
 		
 		this._dataTypeName = "data";
+		
+		this._setupCommands = new Array();
 	}
 	
 	get url() {
@@ -52,6 +54,18 @@ export default class ItemsLoader extends ProjectRelatedItem {
 	
 	get externalStorage() {
 		return this._externalStorage;
+	}
+	
+	addSetupCommand(aCommand) {
+		this._setupCommands.push(aCommand);
+		
+		return this;
+	}
+	
+	addSetupFunction(aThisObject, aFunction) {
+		this.addSetupCommand(Wprr.commands.callFunction(aThisObject, aFunction, [Wprr.source("event", "raw", "item"), Wprr.source("event", "raw", "data")]));
+		
+		return this;
 	}
 	
 	_updateUrl() {
@@ -101,7 +115,9 @@ export default class ItemsLoader extends ProjectRelatedItem {
 			}
 		}
 		
-		//METODO: trigger setup command
+		if(this._setupCommands) {
+			Wprr.utils.CommandPerformer.perform(this._setupCommands, {"item": item, "data": aData}, this);
+		}
 		
 		return this;
 	}

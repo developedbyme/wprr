@@ -57,6 +57,8 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	componentDidMount() {
 		//console.log("wprr/interaction/OpenCloseExpandableArea::componentDidMount");
 		
+		super.componentDidMount();
+		
 		this._updateHeight();
 		
 		window.addEventListener("resize", this._callback_sizeChangedBound, false);
@@ -64,6 +66,8 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	
 	componentDidUpdate() {
 		//console.log("wprr/interaction/OpenCloseExpandableArea::componentDidUpdate");
+		
+		super.componentDidUpdate();
 		
 		this._updateHeight();
 		
@@ -84,6 +88,8 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	
 	componentWillUnmount() {
 		//console.log("wprr/interaction/OpenCloseExpandableArea::componentWillUnmount");
+		
+		super.componentWillUnmount();
 		
 		window.removeEventListener("resize", this._callback_sizeChangedBound, false);
 	}
