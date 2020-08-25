@@ -43,6 +43,23 @@ export default class WprrBaseObject extends React.Component {
 			let oldSources = this._registeredSources;
 			let registeredSources = new Object();
 			for(let objectName in props) {
+				if(objectName === "sourceUpdates") {
+					let currentArray = Wprr.utils.array.singleOrArray();
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let name = "sourceUpdates_" + i;
+						let currentUpdateProp = currentArray[i];
+						
+						registeredSources[name] = currentUpdateProp;
+						if(oldSources[name] === registeredSources[name]) {
+							delete oldSources[name];
+						}
+						else {
+							newSources.push(currentUpdateProp);
+						}
+					}
+				}
+				
 				let currentProp = props[objectName];
 				if(currentProp instanceof SourceData) {
 					registeredSources[objectName] = currentProp;

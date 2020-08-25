@@ -44,6 +44,17 @@ export default class ArrayFunctions {
 		return [];
 	}
 	
+	static singleOrArray(aData) {
+		if(aData === null || aData === undefined) {
+			return [];
+		}
+		else if(aData instanceof Array) {
+			return aData;
+		}
+		
+		return [aData];
+	}
+	
 	static numericArrayOrSeparatedString(aData, aSeparator = ",", aTrim = 3) {
 		let returnArray = new Array();
 		let currentArray = ArrayFunctions.arrayOrSeparatedString(aData, aSeparator, aTrim);
