@@ -57,4 +57,11 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		
 		return Wprr.objectPath(this.getEditor(firstPart, connectionType, objectType), restParts);
 	}
+	
+	hasUnsavedChanges() {
+		
+		//METODO
+		
+		return false;
+	}
 }

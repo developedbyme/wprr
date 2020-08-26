@@ -2,6 +2,7 @@ import React from 'react';
 import Wprr from "wprr/Wprr";
 
 import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
+import PostEditor from "wprr/wp/admin/PostEditor";
 
 //import ItemsEditor from "wprr/wp/admin/ItemsEditor";
 export default class ItemsEditor extends ProjectRelatedItem {
@@ -9,6 +10,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	constructor() {
 		
 		super();
+		
+		this._settings = {
+			"postFields": []
+		}
 		
 		this._editStorage = new Wprr.utils.DataStorage();
 		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
@@ -42,6 +47,16 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		);
 		
 		this._updateSaveAllStatusCommand = Wprr.commands.callFunction(this, this._updateSaveAllStatus);
+		
+		this.addPostField("status", "status");
+		
+		console.log(this);
+	}
+	
+	addPostField(aName, aSaveType = "meta", aChangeGenerator = null) {
+		this._settings["postFields"].push({"field": aName, "saveType": aSaveType, "changeGenerator": aChangeGenerator});
+		
+		return this;
 	}
 	
 	setSearchFields(aFields) {
@@ -95,8 +110,11 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
 		
+		let saveItems = new Array();
+		
 		let internalMessageGroup = new Wprr.utils.wp.dbmcontent.im.InternalMessageGroup();
 		item.addType("messageGroup", internalMessageGroup);
+		saveItems.push(internalMessageGroup);
 		
 		internalMessageGroup.setup(aData);
 		internalMessageGroup.addCommand("fieldChange", this._updateSaveAllStatusCommand);
@@ -106,16 +124,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		internalMessageGroup.setupFieldEditStorages();
 		
-		let allIds = [].concat(this._editStorage.getValue("allIds"));
-		allIds.push(currentId);
-		this._editStorage.updateValue("allIds", allIds);
-		
 		if(aData["relations"]) {
 			let relationsStorage = new Wprr.utils.DataStorage();
 			item.addType("relations", relationsStorage);
 			
 			let relationEditors = new Wprr.utils.wp.dbmcontent.relation.RelationEditors();
 			item.addType("relationEditors", relationEditors);
+			saveItems.push(relationEditors);
 			
 			let outgoing = new Object();
 			{
@@ -181,7 +196,26 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			
 			relationsStorage.updateValue("incoming", incoming);
 		}
-		//METODO: setup object relation and status editor
+		
+		let postEditor = new PostEditor();
+		item.addType("postEditor", postEditor);
+		saveItems.push(postEditor);
+		
+		{
+			let currentArray = this._settings["postFields"];
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentSettings = currentArray[i];
+				let fieldName = currentSettings["field"];
+				postEditor.addField(fieldName, aData[fieldName], currentSettings["saveType"], currentSettings["changeGenerator"]);
+			}
+		}
+		
+		item.addType("saveItems", saveItems);
+		
+		let allIds = [].concat(this._editStorage.getValue("allIds"));
+		allIds.push(currentId);
+		this._editStorage.updateValue("allIds", allIds);
 		
 		return item;
 	}
@@ -263,10 +297,15 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		let currentArray = this._editStorage.getValue("allIds");
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let currentGroup = this._items.getItem(currentArray[i]).getType("messageGroup");
-			if(currentGroup.hasUnsavedChanges()) {
-				hasChanges = true;
-				break;
+			let saveItems = this._items.getItem(currentArray[i]).getType("saveItems");
+			let currentArray2 = saveItems;
+			let currentArray2Length = currentArray2.length;
+			for(let j = 0; j < currentArray2Length; j++) {
+				let currentSaveItem = currentArray2[j];
+				if(currentSaveItem.hasUnsavedChanges()) {
+					hasChanges = true;
+					break;
+				}
 			}
 		}
 		
