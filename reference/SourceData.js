@@ -1,4 +1,5 @@
 "use strict";
+import Wprr from "wprr/Wprr";
 
 import objectPath from "object-path";
 import queryString from "query-string";
@@ -20,6 +21,8 @@ export default class SourceData {
 		this._type = null;
 		this._path = null;
 		this._debug_lastEvaluatedValue = null;
+		this._debug = false;
+		
 		this._additionalInput = null;
 		
 		this._shouldCleanup = true;
@@ -103,6 +106,10 @@ export default class SourceData {
 		
 		this._debug_lastEvaluatedValue = returnValue;
 		
+		if(this._debug) {
+			debugger;
+		}
+		
 		return returnValue;
 	}
 	
@@ -111,6 +118,10 @@ export default class SourceData {
 		let returnValue = this._sourceFunction(this._type, this._path, aFromObject, aNewPropsAndState);
 		
 		this._debug_lastEvaluatedValue = returnValue;
+		
+		if(this._debug) {
+			debugger;
+		}
 		
 		return returnValue;
 	}
@@ -131,6 +142,15 @@ export default class SourceData {
 			}
 			delete aProps[propName];
 		}
+	}
+	
+	deeper(aPath) {
+		
+		if(Array.isArray(aPath)) {
+			aPath = Wprr.sourceCombine(aPath);
+		}
+		
+		return Wprr.sourceStatic(this, aPath);
 	}
 	
 	static create(aType, aPath) {

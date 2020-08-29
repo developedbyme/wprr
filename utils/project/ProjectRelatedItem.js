@@ -12,13 +12,13 @@ export default class ProjectRelatedItem {
 	}
 	
 	set project(aValue) {
-		this._project = aValue;
+		this.setProject(aValue);
 		
-		return aValue
+		return aValue;
 	}
 	
 	setProject(aProject) {
-		this.project = aProject;
+		this._project = aProject;
 		
 		return this;
 	}

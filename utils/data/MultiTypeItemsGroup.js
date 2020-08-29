@@ -1,11 +1,15 @@
 import Wprr from "wprr/Wprr";
 
 import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
+import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
 
 // import MultiTypeItemsGroup from "wprr/utils/data/MultiTypeItemsGroup";
-export default class MultiTypeItemsGroup {
+export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	
 	constructor() {
+		
+		super();
+		
 		this._prefix = "item";
 		this._items = new Object();
 		

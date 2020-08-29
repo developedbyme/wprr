@@ -38,6 +38,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 			
 			let newValue = editStorage.getValue(fieldName);
 			let oldValue = editStorage.getValue("saved." + fieldName);
+			console.log(newValue, oldValue);
 			if(JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
 				return true;
 			}
@@ -80,8 +81,6 @@ export default class PostEditor extends MultiTypeItemConnection {
 		if(JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
 			this._addFieldChange(this.getFieldSettings(aFieldName), newValue, aSaveData);
 		}
-		
-		return null;
 	}
 	
 	getSaveDataForField(aFieldName) {
@@ -102,5 +101,17 @@ export default class PostEditor extends MultiTypeItemConnection {
 		}
 		
 		return saveData;
+	}
+	
+	getSaveDatas() {
+		
+		if(!this.hasUnsavedChanges()) {
+			return [];
+		}
+		
+		let returnData = this.getSaveData();
+		console.log(">", returnData);
+		
+		return [returnData];
 	}
 }

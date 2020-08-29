@@ -28,6 +28,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("searchFields", []);
 		
 		this._dataType = "dbm_data";
+		this._objectType = null;
 		this._encoders = "privateTitle,status,fields,editObjectRelations";
 		
 		this._addChangeData = null;
@@ -51,6 +52,14 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this.addPostField("status", "status");
 		
 		console.log(this);
+	}
+	
+	setProject(aProject) {
+		super.setProject(aProject);
+		
+		this._items.setProject(aProject);
+		
+		return this;
 	}
 	
 	addPostField(aName, aSaveType = "meta", aChangeGenerator = null) {
@@ -93,11 +102,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	ensureRelationExists(aData) {
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
-		if(!item.hasType(currentId)) {
+		if(!item.hasType("relation")) {
 			let newRelation = new Wprr.utils.wp.dbmcontent.relation.Relation();
 			newRelation.setup(aData);
 			item.addType("relation", newRelation);
-			item.addType("editStorage", new Wprr.utils.DataStorage());
+			let editStorage = new Wprr.utils.DataStorage();
+			item.addType("editStorage", editStorage);
+			newRelation.connectToEditStorage(editStorage);
 			item.addType("data", aData);
 			item.addSingleLink("from", aData["fromId"]);
 			item.addSingleLink("to", aData["toId"]);
@@ -195,6 +206,18 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 			
 			relationsStorage.updateValue("incoming", incoming);
+			
+			//MEDEBUG:
+			/*
+			if(aData["id"] === 64822) {
+				if(this._objectType === "question") {
+					let editor = relationEditors.getEditor("outgoing", "in", "question-set");
+					console.log(editor);
+			
+					editor.add(64846);
+				}
+			}
+			*/
 		}
 		
 		let postEditor = new PostEditor();
@@ -221,6 +244,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	setupCreation(aType, aInGroup = null) {
+		
+		this._objectType = aType;
+		
 		this._addChangeData = new Wprr.utils.ChangeData();
 		this._addChangeData.setTitle("New " + aType);
 		this._addChangeData.setTerm(aType, "dbm_type", "slugPath");
@@ -319,7 +345,61 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	saveAll() {
 		console.log("saveAll");
 		
-		//METODO:
+		let saveDatas = new Array();
+		
+		{
+			let currentArray = this._editStorage.getValue("allIds");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let saveItems = this._items.getItem(currentArray[i]).getType("saveItems");
+				let currentArray2 = saveItems;
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					let currentSaveItem = currentArray2[j];
+					console.log(currentSaveItem);
+					let currentSaveDatas = currentSaveItem.getSaveDatas();
+					console.log(currentSaveDatas);
+				
+					saveDatas = saveDatas.concat(currentSaveDatas);
+				}
+			}
+		}
+		
+		let startCommands = new Array();
+		let loadingSequence = new Wprr.utils.LoadingSequence();
+		let groups = Wprr.utils.array.groupArray(saveDatas, "id");
+		{
+			let currentArray = groups;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentGroup = currentArray[i];
+				let loader = this._getLoader();
+				
+				let changeData = new Wprr.utils.ChangeData();
+				
+				let currentArray2 = currentGroup["value"];
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					let currentSaveData = currentArray2[j];
+					
+					startCommands = startCommands.concat(currentSaveData.startCommands);
+					loader.addSuccessCommands(currentSaveData.savedCommands);
+					loader.addErrorCommands(currentSaveData.errorCommands);
+					
+					changeData.addChanges(currentSaveData.changes.getChanges());
+				}
+				
+				loader.setupJsonPost(this.project.getWprrUrl(Wprr.utils.wprrUrl.getEditUrl(currentGroup["key"])), changeData.getEditData());
+				loadingSequence.addLoader(loader);
+			}
+		}
+		
+		//METODO: set status
+		Wprr.utils.CommandPerformer.perform(startCommands, null, this);
+		
+		loadingSequence.addCommand("loaded", Wprr.commands.callFunction(this, this._updateSaveAllStatus));
+		
+		loadingSequence.load();
 	}
 	
 	saveField(aFieldItem, aComment = null) {

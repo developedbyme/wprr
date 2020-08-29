@@ -19,7 +19,7 @@ export default class DateDisplay extends SourcedText {
 		let format = this.getSourcedProp("format");
 		let locale = this.getFirstInput("locale", Wprr.sourceReferenceIfExists("locale"), Wprr.sourceReferenceIfExists("wprr/postData", "language"), Wprr.sourceReferenceIfExists("wprr/pageData", "queryData.language"));
 		
-		if(inputType === "php") {
+		if(inputType === "php" || inputType === "unix") {
 			input = 1000*input;
 		}
 		

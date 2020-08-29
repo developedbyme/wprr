@@ -120,8 +120,28 @@ export default class JsonLoader {
 		return this;
 	}
 	
+	addSuccessCommands(aCommands) {
+		let currentArray = aCommands;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this.addSuccessCommand(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
 	addErrorCommand(aCommand) {
 		this.addCommand(aCommand, "error");
+		
+		return this;
+	}
+	
+	addErrorCommands(aCommands) {
+		let currentArray = aCommands;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this.addErrorCommand(currentArray[i]);
+		}
 		
 		return this;
 	}

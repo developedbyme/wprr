@@ -58,10 +58,53 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		return Wprr.objectPath(this.getEditor(firstPart, connectionType, objectType), restParts);
 	}
 	
+	_getAllEditors() {
+		
+		//METODO: cache the result
+		
+		let returnArray = new Array();
+		
+		for(let objectName in this._editors) {
+			let direction = this._editors[objectName];
+			for(let objectName in direction) {
+				let connnection = direction[objectName];
+				for(let objectName in connnection) {
+					let currentEditor = connnection[objectName];
+					returnArray.push(currentEditor);
+				}
+			}
+		}
+		
+		return returnArray;
+	}
+	
 	hasUnsavedChanges() {
 		
-		//METODO
+		let currentArray = this._getAllEditors();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentEditor = currentArray[i];
+			if(currentEditor.hasUnsavedChanges()) {
+				return true;
+			}
+		}
 		
 		return false;
+	}
+	
+	getSaveDatas() {
+		
+		let returnArray = new Array();
+		
+		let currentArray = this._getAllEditors();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentEditor = currentArray[i];
+			if(currentEditor.hasUnsavedChanges()) {
+				currentEditor.addSaveDatas(returnArray);
+			}
+		}
+		
+		return returnArray;
 	}
 }

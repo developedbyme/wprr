@@ -11,6 +11,7 @@ export default class SaveData {
 		this._changes = new ChangeData();
 		this._startCommands = new Array();
 		this._savedCommands = new Array();
+		this._errorCommands = new Array();
 		this._id = null;
 	}
 	
@@ -28,6 +29,10 @@ export default class SaveData {
 	
 	get savedCommands() {
 		return this._savedCommands;
+	}
+	
+	get errorCommands() {
+		return this._errorCommands;
 	}
 	
 	setId(aId) {

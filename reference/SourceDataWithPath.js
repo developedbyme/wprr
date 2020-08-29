@@ -29,6 +29,9 @@ export default class SourceDataWithPath extends SourceData {
 	}
 	
 	static getDeepPathValue(aData, aPath, aAdditionalInput, aFromObject) {
+		
+		let returnData = null;
+		
 		if(aData && aData.hasObjectPathHandling && aData.hasObjectPathHandling()) {
 			
 			if(aAdditionalInput && aData.setAdditionalDataBeforePath) {
@@ -37,10 +40,13 @@ export default class SourceDataWithPath extends SourceData {
 				}
 				aData.setAdditionalDataBeforePath(aAdditionalInput, aFromObject);
 			}
-			return aData.getValueForPath(aPath);
+			returnData = aData.getValueForPath(aPath);
+		}
+		else {
+			returnData = Wprr.objectPath(aData, aPath);
 		}
 		
-		let returnData = Wprr.objectPath(aData, aPath);
+		
 		
 		return returnData;
 	}
@@ -60,6 +66,10 @@ export default class SourceDataWithPath extends SourceData {
 		
 		this._debug_lastEvaluatedDeepValue = returnData;
 		
+		if(this._debug) {
+			debugger;
+		}
+		
 		return returnData;
 	}
 	
@@ -77,6 +87,10 @@ export default class SourceDataWithPath extends SourceData {
 		}
 		
 		this._debug_lastEvaluatedDeepValue = returnData;
+		
+		if(this._debug) {
+			debugger;
+		}
 		
 		return returnData;
 	}

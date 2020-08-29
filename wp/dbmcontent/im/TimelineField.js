@@ -210,4 +210,21 @@ export default class TimelineField extends MultiTypeItemConnection {
 		
 		return this;
 	}
+	
+	addToSaveData(aSaveData) {
+		
+		if(this.hasUnsavedChange()) {
+			aSaveData.changes.setDataField(this.key, this._value);
+		
+			aSaveData.addUpdateSavedFieldCommand("value", this._externalStorage);
+		
+			let statusName = "uiState.status";
+			aSaveData.startCommands.push(Wprr.commands.setValue(this._externalStorage, statusName, "saving"));
+			aSaveData.savedCommands.push(Wprr.commands.setValue(this._externalStorage, statusName, "normal"));
+			aSaveData.errorCommands.push(Wprr.commands.setValue(this._externalStorage, statusName, "normal"));
+		
+			let workModeName = "uiState.workMode";
+			aSaveData.savedCommands.push(Wprr.commands.setValue(this._externalStorage, workModeName, "display"));
+		}
+	}
 }

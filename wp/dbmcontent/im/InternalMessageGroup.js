@@ -230,6 +230,28 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 		return Wprr.objectPath(this.getFieldValue(firstPart), restParts);
 	}
 	
+	getSaveData() {
+		let saveData = Wprr.wp.admin.SaveData.create(this.item.id);
+		
+		let currentArray = this.getFieldsToSave();
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentField = currentArray[i];
+			currentField.addToSaveData(saveData);
+		}
+		
+		return saveData;
+	}
+	
+	getSaveDatas() {
+		
+		if(!this.hasUnsavedChanges()) {
+			return [];
+		}
+		
+		return [this.getSaveData()];
+	}
+	
 	toJSON() {
 		return "[InternalMessageGroup id=" + this._id + "]";
 	}
