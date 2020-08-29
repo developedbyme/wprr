@@ -42,6 +42,14 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		return this.item.getType("relations");
 	}
 	
+	get objectType() {
+		return this._objectType;
+	}
+	
+	get shortDirectionName() {
+		return (this._direction === "outgoing") ? "out" : "in";
+	}
+	
 	_getLoader(aId, aMakePrivate = false) {
 		console.log("RelationEditor::_getLoader");
 		console.log(this);
@@ -119,13 +127,18 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		this.endAll(currentTime);
 		
-		let loader = this._getLoader(aId);
-		this._addUpdateCommand(loader, aId);
+		if(aId > 0) {
+			let loader = this._getLoader(aId);
+			this._addUpdateCommand(loader, aId);
 		
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
+			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
+			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
 		
-		loader.load();
+			loader.load();
+		}
+		else {
+			this._updateActiveRelations();
+		}
 	}
 	
 	_setStartTimeAfterCreation(aId, aTimestamp) {
