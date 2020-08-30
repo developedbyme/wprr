@@ -54,8 +54,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	mapFromIds(aIds, aPath) {
-		console.log("mapFromIds");
-		console.log(aIds, aPath);
+		//console.log("mapFromIds");
+		//console.log(aIds, aPath);
 		let items = this.getItems(aIds);
 		
 		return Wprr.utils.array.mapField(items, aPath);

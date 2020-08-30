@@ -33,7 +33,7 @@ export default class SortPart  {
 	}
 	
 	_formatValue(aValue) {
-		return aValue
+		return aValue;
 	}
 	
 	_performSortItem(aA, aB) {
@@ -99,13 +99,19 @@ export default class SortPart  {
 	}
 	
 	format_accordingToOrder(aValue) {
+		//console.log("format_accordingToOrder");
+		//console.log(aValue);
 		
 		let order = this.getInput("order");
 		
-		let sortIndex = order.indexOf(aValue);
-		if(sortIndex === -1) {
-			sortIndex = order.length;
+		let sortIndex = -1;
+		if(order) {
+			sortIndex = order.indexOf(aValue);
+			if(sortIndex === -1) {
+				sortIndex = order.length;
+			}
 		}
+		
 		return sortIndex;
 	}
 	
@@ -124,6 +130,16 @@ export default class SortPart  {
 		
 		newSortPart.inputs.setInputWithoutNull("sortFunction", aSortFunction);
 		newSortPart.inputs.setInputWithoutNull("formatFunction", SortPart.format_number);
+		newSortPart.inputs.setInputWithoutNull("active", aActive);
+		
+		return newSortPart;
+	}
+	
+	static createAccordingToOrder(aOrder, aActive = null) {
+		let newSortPart = new SortPart();
+		
+		newSortPart.inputs.setInputWithoutNull("order", aOrder);
+		newSortPart.inputs.setInputWithoutNull("formatFunction", newSortPart.format_accordingToOrder);
 		newSortPart.inputs.setInputWithoutNull("active", aActive);
 		
 		return newSortPart;

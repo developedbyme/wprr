@@ -21,11 +21,14 @@ export default class Adjust extends ManipulationBaseObject {
 	}
 	
 	_adjust(aAdjust, aReturnObject) {
+		//console.log("wprr/manipulation/Adjust::_adjust");
+		//console.log(aAdjust, this, aReturnObject);
+		
 		if(aAdjust instanceof AdjustFunction) {
-			return aAdjust.adjust(aReturnObject, this);
+			aReturnObject = aAdjust.adjust(aReturnObject, this);
 		}
 		else if(typeof(aAdjust) === "function") {
-			return aAdjust(aReturnObject, this);
+			aReturnObject = aAdjust(aReturnObject, this);
 		}
 		else {
 			console.error("Unknown type for adjust.", aAdjust, this);

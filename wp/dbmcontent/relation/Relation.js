@@ -118,9 +118,9 @@ export default class Relation extends MultiTypeItemConnection {
 	}
 	
 	isActiveAt(aTimestamp) {
-		console.log("isActiveAt");
+		//console.log("isActiveAt");
 		
-		console.log(aTimestamp, this._startAt, this._endAt);
+		//console.log(aTimestamp, this._startAt, this._endAt);
 		if((this._endAt === -1 || this._endAt > aTimestamp) && (this._startAt === -1 || this._startAt <= aTimestamp)) {
 			return true;
 		}

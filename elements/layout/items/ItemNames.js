@@ -42,8 +42,8 @@ export default class ItemNames extends Layout {
 	}
 	
 	static getItemNames(aIds, aItems, aNamePath = "data.title") {
-		console.log("ItemNames::getItemNames");
-		console.log(aIds);
+		//console.log("ItemNames::getItemNames");
+		//console.log(aIds);
 		
 		let items = aItems.getItems(aIds);
 		return Wprr.utils.array.mapField(items, aNamePath);

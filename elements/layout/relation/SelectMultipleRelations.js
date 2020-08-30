@@ -21,6 +21,14 @@ export default class SelectMultipleRelations extends Layout {
 		this._layoutName = "selectMultipleRelations";
 	}
 	
+	_getRoutes() {
+		return [
+			{"test": ".*", "type": "manageExistingRelations", "data": {}, "children": [
+				{"test": "add", "type": "addRelation", "data": {}, "children": []},
+			]}
+		];
+	}
+	
 	_getLayout(aSlots) {
 		
 		let editorSource = aSlots.prop("editor", Wprr.sourceReference("editor"));
@@ -28,11 +36,7 @@ export default class SelectMultipleRelations extends Layout {
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		let activeIds = externalStorageSource.deeper(activatePathSource);
 		
-		let routes = [
-			{"test": ".*", "type": "manageExistingRelations", "data": {}, "children": [
-				{"test": "add", "type": "addRelation", "data": {}, "children": []},
-			]}
-		];
+		let routes = this._getRoutes();
 		
 		//METODO: get direction from editor
 		

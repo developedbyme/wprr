@@ -15,6 +15,10 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		this._orderNames = new Array();
 	}
 	
+	get externalStorage() {
+		return this.item.getType("orderStorage");
+	}
+	
 	addOrder(aName, aInitialItems = null) {
 		if(this._orderNames.indexOf(aName) !== -1) {
 			console.warn("Order " + aName + " already exists");
@@ -31,9 +35,80 @@ export default class OrderEditor extends MultiTypeItemConnection {
 			}
 		}
 		
+		this._orderNames.push(aName);
+		
 		let editStorage = this.item.getType("orderStorage");
 		editStorage.updateValue(aName, storeArray);
 		editStorage.updateValue("saved." + aName, storeArray.concat([]));
+	}
+	
+	ensureOrderExists(aName) {
+		if(this._orderNames.indexOf(aName) === -1) {
+			
+			this._orderNames.push(aName);
+			
+			let editStorage = this.item.getType("orderStorage");
+			editStorage.updateValue(aName, []);
+			editStorage.updateValue("saved." + aName, []);
+		}
+		
+		return this;
+	}
+	
+	setOrder(aName, aItems) {
+		//console.log("setOrder");
+		//console.log(aName, aItems);
+		
+		this.ensureOrderExists(aName);
+		
+		let editStorage = this.item.getType("orderStorage");
+		editStorage.updateValue(aName, [].concat(aItems));
+		
+		return this;
+	}
+	
+	moveUp(aName, aItem) {
+		//console.log("moveUp");
+		
+		this.ensureOrderExists(aName);
+		
+		let editStorage = this.item.getType("orderStorage");
+		let items = [].concat(editStorage.getValue(aName));
+		
+		let index = items.indexOf(aItem);
+		if(index !== -1) {
+			if(index > 0) {
+				let temp = items[index-1];
+				items[index-1] = aItem;
+				items[index] = temp;
+			}
+		}
+		
+		editStorage.updateValue(aName, items);
+		
+		return this;
+	}
+	
+	moveDown(aName, aItem) {
+		//console.log("moveDown");
+		
+		this.ensureOrderExists(aName);
+		
+		let editStorage = this.item.getType("orderStorage");
+		let items = [].concat(editStorage.getValue(aName));
+		
+		let index = items.indexOf(aItem);
+		if(index !== -1) {
+			if(index < items.length-1) {
+				let temp = items[index+1];
+				items[index+1] = aItem;
+				items[index] = temp;
+			}
+		}
+		
+		editStorage.updateValue(aName, items);
+		
+		return this;
 	}
 	
 	hasUnsavedChanges() {

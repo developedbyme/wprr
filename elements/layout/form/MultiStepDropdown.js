@@ -24,9 +24,6 @@ export default class MultiStepDropdown extends Layout {
 		let routes = aSlots.prop("routes", [{"test": ".*", "type": "notSet", "data": {}}]);
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(Wprr.sourceProp("type"), aSlots.prop("areaClasses", {}), "none");
 		
-		console.log("vwve>>>>", switchableArea)
-		
-		
 		return <div className="multi-step-dropdown">
 			{Wprr.DropdownSelection.createSelfContained(
 				aSlots.slot("button", <Wprr.layout.form.DropdownButton className="cursor-pointer">

@@ -165,8 +165,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	_setStatusAfterCreation(aId, aStatus) {
 		let currentRelation = this.item.group.getItem(aId).getType("relation");
 		currentRelation.setStatus(aStatus);
-		
-		console.log(this.item.getType("relationEditors").hasUnsavedChanges(), this.item.getType("relationEditors").getSaveDatas());
 	}
 	
 	endAll(aTimestamp) {
@@ -207,7 +205,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentId = currentArray[i];
 				let currentRelation = this.item.group.getItem(currentId).getType("relation");
-				console.log(">>>>", currentRelation.hasUnsavedChanges());
 				if(currentRelation.hasUnsavedChanges()) {
 					let saveData = currentRelation.getSaveData();
 					aReturnArray.push(saveData);
@@ -217,7 +214,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_updateActiveRelations() {
-		console.log("_updateActiveRelations");
+		//console.log("_updateActiveRelations");
 		
 		let activeArray = new Array();
 		
@@ -237,7 +234,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			}
 		}
 		
-		console.log(activeArray);
 		this.externalStorage.updateValue(this.activePath, activeArray);
 	}
 }
