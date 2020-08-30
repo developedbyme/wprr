@@ -3,6 +3,7 @@ import Wprr from "wprr/Wprr";
 
 import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
 import PostEditor from "wprr/wp/admin/PostEditor";
+import OrderEditor from "wprr/wp/admin/OrderEditor";
 
 //import ItemsEditor from "wprr/wp/admin/ItemsEditor";
 export default class ItemsEditor extends ProjectRelatedItem {
@@ -97,6 +98,22 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		//this._editStorage.enableUpdates();
 		
 		return this;
+	}
+	
+	addNames(aItems) {
+		console.log("addNames");
+		console.log(aItems);
+		
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentData = currentArray[i];
+			let currentId = currentData["id"];
+			let item = this._items.getItem(currentId);
+			if(!item.hasType("data")) {
+				item.addType("data", currentData);
+			}
+		}
 	}
 	
 	ensureRelationExists(aData) {
@@ -233,6 +250,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				postEditor.addField(fieldName, aData[fieldName], currentSettings["saveType"], currentSettings["changeGenerator"]);
 			}
 		}
+		
+		item.addType("orderStorage", new Wprr.utils.DataStorage());
+		let orderEditor = new OrderEditor();
+		item.addType("orderEditor", orderEditor);
+		saveItems.push(orderEditor);
+		
+		//METODO: setup orders
 		
 		item.addType("saveItems", saveItems);
 		

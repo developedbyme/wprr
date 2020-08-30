@@ -20,7 +20,7 @@ export default class Layout extends WprrBaseObject {
 		
 		this._externalStorage = new Wprr.utils.DataStorage();
 		this._exposedProps = new Array();
-		this._slots = new Object();
+		
 	}
 	
 	addExposedProps(...aNames) {
@@ -96,10 +96,13 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	_prepareRender() {
+		
+		let slots = new Object();
+		
 		{
 			let defaults = this._externalStorage.getValue("defaults");
 			for(let objectName in defaults) {
-				objectPath.set(this._slots, objectName, this.getFirstInput("slot_" + objectName, Wprr.sourceProp("slots", objectName)));
+				objectPath.set(slots, objectName, this.getFirstInput("slot_" + objectName, Wprr.sourceProp("slots", objectName)));
 			}
 		}
 		
@@ -118,16 +121,16 @@ export default class Layout extends WprrBaseObject {
 				}
 				else {
 					if(currentGroup["value"].length === 1 && false) {
-						objectPath.set(this._slots, currentGroup["key"], currentGroup["value"][0]);
+						objectPath.set(slots, currentGroup["key"], currentGroup["value"][0]);
 					}
 					else {
-						objectPath.set(this._slots, currentGroup["key"], currentGroup["value"]);
+						objectPath.set(slots, currentGroup["key"], currentGroup["value"]);
 					}
 				}
 			}
 			
 			if(defaultSlotChildren.length > 0) {
-				objectPath.set(this._slots, "defaultSlot", defaultSlotChildren);
+				objectPath.set(slots, "defaultSlot", defaultSlotChildren);
 			}
 		}
 		
@@ -137,11 +140,12 @@ export default class Layout extends WprrBaseObject {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentName = currentArray[i];
 				
-				objectPath.set(this._slots, currentName, this.getFirstInput(Wprr.sourcePropWithDots(currentName)));
+				let currentValue = this.getFirstInput(Wprr.sourcePropWithDots(currentName));
+				objectPath.set(slots, currentName, currentValue);
 			}
 		}
 		
-		this._externalStorage.updateValue("slots", this._slots);
+		this._externalStorage.updateValue("slots", slots);
 		
 		super._prepareRender();
 	}

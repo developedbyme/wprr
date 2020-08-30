@@ -116,8 +116,13 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		console.log("RelationEditor::add");
 		console.log(aId);
 		
+		let currentTime = moment().unix();
+		
 		let loader = this._getLoader(aId);
 		this._addUpdateCommand(loader, aId);
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
 		
 		loader.load();
 	}
@@ -130,15 +135,26 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		if(aId > 0) {
 			let loader = this._getLoader(aId);
 			this._addUpdateCommand(loader, aId);
-		
+			
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
-		
+			
 			loader.load();
 		}
 		else {
 			this._updateActiveRelations();
 		}
+	}
+	
+	endRelationNow(aId) {
+		let currentTime = moment().unix();
+		
+		let currentRelation = this.item.group.getItem(aId).getType("relation");
+		if(currentRelation) {
+			currentRelation.endIfActive(currentTime);
+		}
+		
+		this._updateActiveRelations();
 	}
 	
 	_setStartTimeAfterCreation(aId, aTimestamp) {

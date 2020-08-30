@@ -115,4 +115,14 @@ export default class SwitchableAreaCreator  {
 		
 		return newSwitchableAreaCreator;
 	}
+	
+	static getReactElementsForDynamicClasses(aInput, aClasses, aDefaultTemplateName) {
+		return React.createElement(
+			Wprr.Adjust,
+			{"adjust": Wprr.adjusts.switchValue(aInput, Wprr.sourceFunction(Wprr.utils.KeyValueGenerator, "normalizeArrayOrObject", [aClasses]), "selectedClass").setInput("defaultValue", aDefaultTemplateName)},
+			React.createElement(
+				Wprr.InsertElement, {"element": Wprr.sourceFunction(React, React.createElement, [Wprr.sourceProp("selectedClass")])}
+			)
+		);
+	}
 }

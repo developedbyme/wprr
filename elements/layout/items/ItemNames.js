@@ -34,7 +34,7 @@ export default class ItemNames extends Layout {
 						)
 					)
 				]}
-				sourceUpdates={Wprr.sourceReference("itemNames/externalStorage", "slot.ids")}
+				sourceUpdates={Wprr.sourceReference("itemNames/externalStorage", "slots.ids")}
 			>
 				{Wprr.text(null)}
 			</Wprr.Adjust>

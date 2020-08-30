@@ -36,12 +36,12 @@ export default class SelectSingleRelation extends Layout {
 		return <div className="select-single-relation">
 			<Wprr.RangeSelection
 				range={rangePath}
-				sourceUpdates={activeIds}
 			>
 				{aSlots.default(
 					<Wprr.Selection
 						selection={toIdSource}
 						changeCommands={Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.source("event", "raw")])}
+						sourceUpdates={activeIds}
 					/>
 				)}
 			</Wprr.RangeSelection>

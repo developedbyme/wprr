@@ -42,9 +42,12 @@ export default class WprrBaseObject extends React.Component {
 			let newSources = new Array();
 			let oldSources = this._registeredSources;
 			let registeredSources = new Object();
+			
+			let updateSources = new Array();
+			
 			for(let objectName in props) {
 				if(objectName === "sourceUpdates") {
-					let currentArray = Wprr.utils.array.singleOrArray();
+					let currentArray = Wprr.utils.array.singleOrArray(props[objectName]);
 					let currentArrayLength = currentArray.length;
 					for(let i = 0; i < currentArrayLength; i++) {
 						let name = "sourceUpdates_" + i;
@@ -56,6 +59,9 @@ export default class WprrBaseObject extends React.Component {
 						}
 						else {
 							newSources.push(currentUpdateProp);
+							if(currentUpdateProp instanceof SourceData) {
+								updateSources.push(currentUpdateProp);
+							}
 						}
 					}
 				}
@@ -75,6 +81,14 @@ export default class WprrBaseObject extends React.Component {
 			this._registeredSources = registeredSources;
 			this._addSources(newSources);
 			this._removeSourcesFromObject(oldSources);
+			
+			{
+				let currentArray = updateSources;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					currentArray[i].getSource(this);
+				}
+			}
 		}
 		
 		return this;
@@ -439,6 +453,10 @@ export default class WprrBaseObject extends React.Component {
 	
 	_removeUsedProps(aReturnObject) {
 		//MENOTE: should be overridden
+		
+		delete aReturnObject["sourceUpdates"];
+		
+		return aReturnObject;
 	}
 	
 	_copyAllProps(aReturnObject) {

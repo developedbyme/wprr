@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -39,6 +40,22 @@ export default class InsertElement extends ManipulationBaseObject {
 			)];
 		}
 		
-		return [insertedElement];
+		let returnArray = Wprr.utils.array.singleOrArray(insertedElement);
+		
+		{
+			let currentArray = returnArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentElement = currentArray[i];
+				if(currentElement.type === undefined) {
+					console.error("Element type is undefined. Can't insert.", currentElement, this);
+					return [React.createElement("div", {},
+						React.createElement("div", {"className": "react-error wprr-error"}, "Element type is undefined. Can't insert.")
+					)];
+				}
+			}
+		}
+		
+		return returnArray;
 	}
 }
