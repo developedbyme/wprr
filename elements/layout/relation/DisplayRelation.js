@@ -21,42 +21,55 @@ export default class DisplayRelation extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="object-relation">
-			<div className="flex-row pixel-item-spacing vertically-center-items">
-				{aSlots.slot("idCell", <div className="flex-row-item">
-					<div className="standard-flag standard-flag-padding id-flag">{Wprr.text(Wprr.sourceReference("item", "id"))}</div>
-				</div>)}
-				{aSlots.slot("fromCell", <div className="flex-row-item">
-					<Wprr.RelatedItem id="from.linkedItem">
-						<div>{Wprr.text(Wprr.sourceReference("item", "data.title"))}</div>
-					</Wprr.RelatedItem>
-				</div>)}
-				{aSlots.slot("arrow", <div className="flex-row-item">
-					<div>-&gt;</div>
-				</div>)}
-				{aSlots.slot("toCell", <div className="flex-row-item">
-					<Wprr.RelatedItem id="to.linkedItem">
-						<div>{Wprr.text(Wprr.sourceReference("item", "data.title"))}</div>
-					</Wprr.RelatedItem>
-				</div>)}
-				{aSlots.slot("statusCell", <Wprr.HasData check={Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "status")} checkType="equal" compareValue="draft">
-					<div className="flex-row-item">
-						<div className="standard-flag standard-flag-padding status-flag draft">
-							Draft
-						</div>
-					</div>
-				</Wprr.HasData>)}
-				{aSlots.slot("startFlagCell", <Wprr.HasData check={Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "startAt")} checkType="positiveValue">
-					<div className="flex-row-item">
-						<div className="standard-flag standard-flag-padding start-at-flag">Start: <Wprr.DateDisplay date={Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "startAt")} format="Y-MM-DD HH:mm:ss" inputType="php" /></div>
-					</div>
-				</Wprr.HasData>)}
-				{aSlots.slot("endFlagCell", <Wprr.HasData check={Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "endAt")} checkType="positiveValue">
-					<div className="flex-row-item">
-						<div className="standard-flag standard-flag-padding end-at-flag">End: <Wprr.DateDisplay date={Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "endAt")} format="Y-MM-DD HH:mm:ss" inputType="php" /></div>
-					</div>
-				</Wprr.HasData>)}
-			</div>
-		</div>;
+		return 
+React.createElement("div", {
+  className: "object-relation"
+}, React.createElement("div", {
+  className: "flex-row pixel-item-spacing vertically-center-items"
+}, aSlots.slot("idCell", React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement("div", {
+  className: "standard-flag standard-flag-padding id-flag"
+}, Wprr.text(Wprr.sourceReference("item", "id"))))), aSlots.slot("fromCell", React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement(Wprr.RelatedItem, {
+  id: "from.linkedItem"
+}, React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))))), aSlots.slot("arrow", React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement("div", null, "->"))), aSlots.slot("toCell", React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement(Wprr.RelatedItem, {
+  id: "to.linkedItem"
+}, React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))))), aSlots.slot("statusCell", React.createElement(Wprr.HasData, {
+  check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "status"),
+  checkType: "equal",
+  compareValue: "draft"
+}, React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement("div", {
+  className: "standard-flag standard-flag-padding status-flag draft"
+}, "Draft")))), aSlots.slot("startFlagCell", React.createElement(Wprr.HasData, {
+  check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "startAt"),
+  checkType: "positiveValue"
+}, React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement("div", {
+  className: "standard-flag standard-flag-padding start-at-flag"
+}, "Start: ", React.createElement(Wprr.DateDisplay, {
+  date: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "startAt"),
+  format: "Y-MM-DD HH:mm:ss",
+  inputType: "php"
+}))))), aSlots.slot("endFlagCell", React.createElement(Wprr.HasData, {
+  check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "endAt"),
+  checkType: "positiveValue"
+}, React.createElement("div", {
+  className: "flex-row-item"
+}, React.createElement("div", {
+  className: "standard-flag standard-flag-padding end-at-flag"
+}, "End: ", React.createElement(Wprr.DateDisplay, {
+  date: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "endAt"),
+  format: "Y-MM-DD HH:mm:ss",
+  inputType: "php"
+})))))));
 	}
 }

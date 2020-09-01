@@ -24,26 +24,24 @@ export default class MultiStepDropdown extends Layout {
 		let routes = aSlots.prop("routes", [{"test": ".*", "type": "notSet", "data": {}}]);
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(Wprr.sourceProp("type"), aSlots.prop("areaClasses", {}), "none");
 		
-		return <div className="multi-step-dropdown">
-			{Wprr.DropdownSelection.createSelfContained(
-				aSlots.slot("button", <Wprr.layout.form.DropdownButton className="cursor-pointer">
-					{aSlots.slot("buttonContent", <Wprr.InsertElement element={Wprr.sourceReference("dropdownButton/externalStorage", "defaults.defaultSlot")} />)}
-				</Wprr.layout.form.DropdownButton>),
-				aSlots.slot("overlay",
-					<div className="custom-selection-menu">
-						{aSlots.slot("pathRouter", 
-							<Wprr.EditableProps editableProps="path" path="">
-								<Wprr.PathRouter routes={routes}>
-									<Wprr.ExternalStorageProps props="type" externalStorage={Wprr.sourceReference("pathRouter/externalStorage")}>
-										{aSlots.default(switchableArea)}
-									</Wprr.ExternalStorageProps>
-								</Wprr.PathRouter>
-							</Wprr.EditableProps>
-						)}
-					</div>
-				),
-				{"className": aSlots.prop("containerClassName", "custom-dropdown")}
-			)}
-		</div>;
+		return React.createElement("div", {
+  className: "multi-step-dropdown"
+}, Wprr.DropdownSelection.createSelfContained(aSlots.slot("button", React.createElement(Wprr.layout.form.DropdownButton, {
+  className: "cursor-pointer"
+}, aSlots.slot("buttonContent", React.createElement(Wprr.InsertElement, {
+  element: Wprr.sourceReference("dropdownButton/externalStorage", "defaults.defaultSlot")
+})))), aSlots.slot("overlay", React.createElement("div", {
+  className: "custom-selection-menu"
+}, aSlots.slot("pathRouter", React.createElement(Wprr.EditableProps, {
+  editableProps: "path",
+  path: ""
+}, React.createElement(Wprr.PathRouter, {
+  routes: routes
+}, React.createElement(Wprr.ExternalStorageProps, {
+  props: "type",
+  externalStorage: Wprr.sourceReference("pathRouter/externalStorage")
+}, aSlots.default(switchableArea))))))), {
+  "className": aSlots.prop("containerClassName", "custom-dropdown")
+}));
 	}
 }

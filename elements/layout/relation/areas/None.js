@@ -22,8 +22,8 @@ export default class None extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="none">
-			{Wprr.translateText("No areas for current type")}
-		</div>;
+		return React.createElement("div", {
+  className: "none"
+}, Wprr.translateText("No areas for current type"));
 	}
 }

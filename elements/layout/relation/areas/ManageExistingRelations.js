@@ -27,29 +27,33 @@ export default class ManageExistingRelations extends Layout {
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		let activeIds = externalStorageSource.deeper(activatePathSource);
 		
-		return <div className="manage-existing-relations custom-selection-menu-padding content-text-small">
-			<Wprr.layout.ItemList ids={activeIds}>
-				<Wprr.FlexRow className="small-item-spacing" itemClasses="flex-resize,flex-no-resize">
-					<Wprr.layout.relation.DisplayRelation>
-						<div data-slot="idCell" />
-						<div data-slot="arrow" />
-						<div data-slot="fromCell" />
-						<div data-slot="startFlagCell" />
-						<div data-slot="endFlagCell" />
-					</Wprr.layout.relation.DisplayRelation>
-					<Wprr.CommandButton commands={[
-						Wprr.commands.callFunction(editorSource, "endRelationNow", [Wprr.sourceReference("item", "id")])
-					]}>
-						<div className="edit-button edit-button-padding pointer-cursor">{Wprr.translateText("Remove")}</div>
-					</Wprr.CommandButton>
-				</Wprr.FlexRow>
-			</Wprr.layout.ItemList>
-			<div className="spacing small" />
-			<Wprr.FlexRow>
-				<Wprr.CommandButton commands={Wprr.commands.setValue(Wprr.sourceReference("value/path"), "path", "add")}>
-					<div className="edit-button edit-button-padding cursor-pointer">{Wprr.translateText("Add")}</div>
-				</Wprr.CommandButton>
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", {
+  className: "manage-existing-relations custom-selection-menu-padding content-text-small"
+}, React.createElement(Wprr.layout.ItemList, {
+  ids: activeIds
+}, React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing",
+  itemClasses: "flex-resize,flex-no-resize"
+}, React.createElement(Wprr.layout.relation.DisplayRelation, null, React.createElement("div", {
+  "data-slot": "idCell"
+}), React.createElement("div", {
+  "data-slot": "arrow"
+}), React.createElement("div", {
+  "data-slot": "fromCell"
+}), React.createElement("div", {
+  "data-slot": "startFlagCell"
+}), React.createElement("div", {
+  "data-slot": "endFlagCell"
+})), React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.callFunction(editorSource, "endRelationNow", [Wprr.sourceReference("item", "id")])]
+}, React.createElement("div", {
+  className: "edit-button edit-button-padding pointer-cursor"
+}, Wprr.translateText("Remove"))))), React.createElement("div", {
+  className: "spacing small"
+}), React.createElement(Wprr.FlexRow, null, React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.setValue(Wprr.sourceReference("value/path"), "path", "add")
+}, React.createElement("div", {
+  className: "edit-button edit-button-padding cursor-pointer"
+}, Wprr.translateText("Add")))));
 	}
 }

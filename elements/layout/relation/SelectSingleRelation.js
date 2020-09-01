@@ -33,18 +33,14 @@ export default class SelectSingleRelation extends Layout {
 		let objectType = aSlots.prop("objectType", editorSource.deeper("objectType"));
 		let rangePath = aSlots.prop("rangePath", Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
 		
-		return <div className="select-single-relation">
-			<Wprr.RangeSelection
-				range={rangePath}
-			>
-				{aSlots.default(
-					<Wprr.Selection
-						selection={toIdSource}
-						changeCommands={Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.source("event", "raw")])}
-						sourceUpdates={activeIds}
-					/>
-				)}
-			</Wprr.RangeSelection>
-		</div>;
+		return React.createElement("div", {
+  className: "select-single-relation"
+}, React.createElement(Wprr.RangeSelection, {
+  range: rangePath
+}, aSlots.default( React.createElement(Wprr.Selection, {
+  selection: toIdSource,
+  changeCommands: Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.source("event", "raw")]),
+  sourceUpdates: activeIds
+}))));
 	}
 }

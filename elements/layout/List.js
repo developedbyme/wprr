@@ -21,18 +21,10 @@ export default class List extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="list">
-			<Wprr.Loop
-				loop={
-					Wprr.adjusts.markupLoop(
-						aSlots.prop("items", []),
-						aSlots.source("defaultSlot", <div>No list item set</div>),
-						aSlots.source("spacing", null)
-					).setInput("keyField", [])
-				}
-			>
-				{aSlots.slot("insertElements", <Wprr.InjectChildren />)}
-			</Wprr.Loop>
-		</div>;
+		return React.createElement("div", {
+  className: "list"
+}, React.createElement(Wprr.Loop, {
+  loop: Wprr.adjusts.markupLoop(aSlots.prop("items", []), aSlots.source("defaultSlot", React.createElement("div", null, "No list item set")), aSlots.source("spacing", null)).setInput("keyField", [])
+}, aSlots.slot("insertElements", React.createElement(Wprr.InjectChildren, null))));
 	}
 }

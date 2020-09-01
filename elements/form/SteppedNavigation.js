@@ -74,33 +74,35 @@ export default class SteppedNavigation extends WprrBaseObject {
 	
 	static getSharedMarkup() {
 		if(!SteppedNavigation._SHARED_MARKUP) {
-			let activeButton = <Wprr.CommandButton commands={Wprr.sourceFirst(
-				Wprr.sourcePropFrom(Wprr.sourceReference("steppedNavigation"), "nextCommands"),
-				Wprr.sourceReferenceIfExists("steppedNavigation/nextCommands"),
-				Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "nextCommands")
-			)}>
-				<div className="icon-button-round large">
-					<Wprr.Image src="arrow-right-white.svg" className="background-contain icon-button-round-image" />
-				</div>
-			</Wprr.CommandButton>;
+			let activeButton = React.createElement(Wprr.CommandButton,
+				{"commands": Wprr.sourceFirst(
+					Wprr.sourcePropFrom(Wprr.sourceReference("steppedNavigation"), "nextCommands"),
+					Wprr.sourceReferenceIfExists("steppedNavigation/nextCommands"),
+					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "nextCommands")
+				)},
+				React.createElement("div", {"className": "icon-button-round large"},
+					React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain icon-button-round-image"})
+				)
+			);
 		
-			let inactiveButton = <div className="icon-button-round large disabled">
-				<Wprr.Image src="arrow-right-white.svg" className="background-contain icon-button-round-image" />
-			</div>;
+			let inactiveButton = React.createElement("div", {"className": "icon-button-round large disabled"},
+				React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain icon-button-round-image"})
+			);
 		
-			let activeBackButton = <Wprr.CommandButton commands={Wprr.sourceFirst(
-				Wprr.sourcePropFrom(Wprr.sourceReference("steppedNavigation"), "previousCommands"),
-				Wprr.sourceReferenceIfExists("steppedNavigation/previousCommands"),
-				Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "previousCommands")
-			)}>
-				<div className="icon-button-round outlined">
-					<Wprr.Image src="arrow-left-standard.svg" className="background-contain icon-button-round-image" />
-				</div>
-			</Wprr.CommandButton>;
+			let activeBackButton = React.createElement(Wprr.CommandButton,
+				{"commands": Wprr.sourceFirst(
+					Wprr.sourcePropFrom(Wprr.sourceReference("steppedNavigation"), "previousCommands"),
+					Wprr.sourceReferenceIfExists("steppedNavigation/previousCommands"),
+					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "previousCommands")
+				)},
+				React.createElement("div", {"className": "icon-button-round outlined"},
+					React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain icon-button-round-image"})
+				)
+			);
 		
-			let inactiveBackButton = <div className="icon-button-round outlined disabled">
-				<Wprr.Image src="arrow-left-standard.svg" className="background-contain icon-button-round-image" />
-			</div>;
+			let inactiveBackButton = React.createElement("div", {"className": "icon-button-round outlined disabled"},
+				React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain icon-button-round-image"})
+			);
 		
 			let layout = React.createElement(Wprr.FlexRow, {className: "justify-between small-item-spacing vertically-center-items", itemClasses: "width-50,flex-no-resize,width-50"},
 				React.createElement(Wprr.FlexRow, {className: "justify-between"},
@@ -149,8 +151,8 @@ export default class SteppedNavigation extends WprrBaseObject {
 						)})
 					)
 				),
-				"pagerItem": <div className="pager-circle" />,
-				"pagerHolder": <Wprr.FlexRow className="micro-item-spacing" />,
+				"pagerItem": React.createElement("div", {className: "pager-circle"}),
+				"pagerHolder": React.createElement(Wprr.FlexRow, {className: "micro-item-spacing"}),
 				"previousCommands": Wprr.commands.callFunction(window.history, "back"),
 				"nextCommands": Wprr.commands.submitForm()
 			};

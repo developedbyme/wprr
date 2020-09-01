@@ -21,21 +21,13 @@ export default class ItemList extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="list">
-			<Wprr.Loop
-				loop={
-					Wprr.adjusts.markupLoop(
-						aSlots.prop("ids", []),
-						aSlots.source("itemInjection", <Wprr.SelectItem id={Wprr.sourceReference("loop/item")}>
-							{aSlots.default(<div>No list item set</div>)}
-						</Wprr.SelectItem>),
-						aSlots.source("spacing", null)
-					).setInput("keyField", [])
-				}
-				sourceUpdates={Wprr.sourceReference("itemList/externalStorage", "slots.ids")}
-			>
-				{aSlots.slot("insertElements", <Wprr.InjectChildren />)}
-			</Wprr.Loop>
-		</div>;
+		return React.createElement("div", {
+  className: "list"
+}, React.createElement(Wprr.Loop, {
+  loop: Wprr.adjusts.markupLoop(aSlots.prop("ids", []), aSlots.source("itemInjection", React.createElement(Wprr.SelectItem, {
+    id: Wprr.sourceReference("loop/item")
+  }, aSlots.default( React.createElement("div", null, "No list item set")))), aSlots.source("spacing", null)).setInput("keyField", []),
+  sourceUpdates: Wprr.sourceReference("itemList/externalStorage", "slots.ids")
+}, aSlots.slot("insertElements", React.createElement(Wprr.InjectChildren, null))));
 	}
 }

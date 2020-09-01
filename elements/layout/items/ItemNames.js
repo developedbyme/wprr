@@ -21,24 +21,12 @@ export default class ItemNames extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <span className="items-names">
-			<Wprr.Adjust
-				adjust={[
-					Wprr.adjusts.startOfArrayAsText(
-						Wprr.sourceFunction(
-							ItemNames, ItemNames.getItemNames, [
-								aSlots.prop("ids", []),
-								aSlots.prop("items", Wprr.sourceReference("items")),
-								aSlots.prop("namePath", "data.title")
-							]
-						)
-					)
-				]}
-				sourceUpdates={Wprr.sourceReference("itemNames/externalStorage", "slots.ids")}
-			>
-				{Wprr.text(null)}
-			</Wprr.Adjust>
-		</span>;
+		return React.createElement("span", {
+  className: "items-names"
+}, React.createElement(Wprr.Adjust, {
+  adjust: [Wprr.adjusts.startOfArrayAsText(Wprr.sourceFunction(ItemNames, ItemNames.getItemNames, [aSlots.prop("ids", []), aSlots.prop("items", Wprr.sourceReference("items")), aSlots.prop("namePath", "data.title")]))],
+  sourceUpdates: Wprr.sourceReference("itemNames/externalStorage", "slots.ids")
+}, Wprr.text(null)));
 	}
 	
 	static getItemNames(aIds, aItems, aNamePath = "data.title") {
