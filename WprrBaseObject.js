@@ -440,7 +440,7 @@ export default class WprrBaseObject extends React.Component {
 			if(objectName === "style") {
 				
 				//MENOTE: getting the prop as an object means that it is read only
-				let currentStyleObject = props[objectName];
+				let currentStyleObject = this.resolveSourcedData(props[objectName]);
 				let newStyleObject = new Object();
 				for(let styleProperty in currentStyleObject) {
 					newStyleObject[styleProperty] = currentStyleObject[styleProperty];
