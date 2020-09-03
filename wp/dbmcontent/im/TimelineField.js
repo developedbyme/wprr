@@ -25,6 +25,22 @@ export default class TimelineField extends MultiTypeItemConnection {
 		this._externalStorage = null;
 	}
 	
+	get type() {
+		return this._type;
+	}
+	
+	get value() {
+		return this._value;
+	}
+	
+	get status() {
+		return this._status;
+	}
+	
+	get externalStorage() {
+		return this._externalStorage;
+	}
+	
 	setupEditStorage() {
 		let editStrorage = new Wprr.utils.DataStorage();
 		
@@ -41,14 +57,15 @@ export default class TimelineField extends MultiTypeItemConnection {
 		this._externalStorage = aExternalStorage;
 		this._externalStorage.addOwner(this);
 		
-		this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
+		this._lastValue = JSON.stringify(this._value);
 		this._externalStorage.updateValue("value", Wprr.utils.object.copyViaJson(this._value));
+		this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
 		
-		this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
 		this._externalStorage.updateValue("translations", Wprr.utils.object.copyViaJson(this._translations));
+		this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
 		
-		this._externalStorage.updateValue("saved.timeline", Wprr.utils.object.copyViaJson(this._changes));
 		this._externalStorage.updateValue("timeline", Wprr.utils.object.copyViaJson(this._changes));
+		this._externalStorage.updateValue("saved.timeline", Wprr.utils.object.copyViaJson(this._changes));
 		
 		this._externalStorage.updateValue("uiState.status", "normal");
 		
@@ -129,7 +146,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 		}
 		
 		let stringValue = JSON.stringify(value);
-		if(this._lastValue !== stringValue) {
+		if(value !== undefined && this._lastValue !== stringValue) {
 			if(this._messageGroup) {
 				this._messageGroup.fieldChanged(this);
 			}

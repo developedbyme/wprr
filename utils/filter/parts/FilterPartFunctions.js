@@ -380,7 +380,8 @@ export default class FilterPartFunctions  {
 			
 			let passes = false;
 			for(let j = 0; j < currentArray2Length; j++) {
-				let fieldValue = (""+objectPath.get(currentItem, currentArray2[j])).toLowerCase();
+				let rawFieldValue = Wprr.objectPath(currentItem, currentArray2[j]);
+				let fieldValue = (""+rawFieldValue).toLowerCase();
 				if(fieldValue.indexOf(searchValue) !== -1) {
 					passes = true;
 					break;

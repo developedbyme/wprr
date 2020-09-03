@@ -341,7 +341,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_updateSaveAllStatus() {
-		//console.log("_updateSaveAllStatus");
+		console.log("_updateSaveAllStatus");
 	
 		let hasChanges = false;
 		let currentArray = this._editStorage.getValue("allIds");
@@ -356,6 +356,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 					hasChanges = true;
 					break;
 				}
+			}
+			if(hasChanges) {
+				break;
 			}
 		}
 		
