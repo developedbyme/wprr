@@ -55,6 +55,14 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		console.log(this);
 	}
 	
+	get editStorage() {
+		return this._editStorage;
+	}
+	
+	get items() {
+		return this._items;
+	}
+	
 	setProject(aProject) {
 		super.setProject(aProject);
 		
@@ -284,14 +292,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	
 	start() {
 		//METODO: add listener for navigation
-	}
-	
-	get editStorage() {
-		return this._editStorage;
-	}
-	
-	get items() {
-		return this._items;
 	}
 	
 	_getLoader() {
