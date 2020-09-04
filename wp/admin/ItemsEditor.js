@@ -27,6 +27,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("saveAll.status", "normal");
 		this._editStorage.updateValue("creatingStatus", "none");
 		this._editStorage.updateValue("searchFields", []);
+		this._editStorage.updateValue("selection", []);
 		
 		this._dataType = "dbm_data";
 		this._objectType = null;
@@ -461,5 +462,14 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		loader.load();
 		
 		return this;
+	}
+	
+	selectAll() {
+		let ids = this._editStorage.getValue("filteredIds");
+		this._editStorage.updateValue("selection", [].concat(ids));
+	}
+	
+	selectNone() {
+		this._editStorage.updateValue("selection", []);
 	}
 }
