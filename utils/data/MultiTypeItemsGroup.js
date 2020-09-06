@@ -87,4 +87,64 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		
 		return this._internalPrefix + nextId;
 	}
+	
+	addTerms(aTerms, aTaxonomy) {
+		console.log("addTerms");
+		console.log(aTerms, aTaxonomy);
+		
+		let allIds = new Array();
+		let topLevel = new Array();
+		let children = new Object();
+		
+		let currentArray = aTerms;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentTerm = currentArray[i];
+			let currentId = currentTerm["id"];
+			let itemId = "term" + currentId;
+			
+			allIds.push(itemId);
+			
+			let item = this.getItem(itemId);
+			item.addType("data", currentTerm);
+			item.addType("slug", currentTerm["slug"]);
+			item.addType("name", currentTerm["name"]);
+			
+			//METODO: add child by path
+			
+			let parentId = currentTerm["parentId"]
+			if(parentId) {
+				let parentItemId = "term" + parentId;
+				item.addSingleLink("parent", parentItemId);
+				
+				if(!children[parentItemId]) {
+					children[parentItemId] = new Array();
+				}
+				
+				children[parentItemId].push(itemId);
+			}
+			else {
+				topLevel.push(itemId);
+			}
+		}
+		
+		for(let objectName in children) {
+			let currentItem = this.getItem(objectName);
+			let currentChildrenLinks = currentItem.getLinks("children");
+			currentChildrenLinks.addItems(children[objectName]);
+		}
+		
+		let taxonomyItemName = "taxonomy-" + aTaxonomy;
+		let taxonomyItem = this.getItem(taxonomyItemName);
+		
+		let allLinks = taxonomyItem.getLinks("all");
+		allLinks.addItems(allIds);
+		
+		let topLevelLinks = taxonomyItem.getLinks("topLevel");
+		topLevelLinks.addItems(topLevel);
+		
+		taxonomyItem.addSelectLink("termBySlug", "all", "slug");
+		taxonomyItem.addSelectLink("topLevelTermBySlug", "topLevel", "slug");
+		
+	}
 }

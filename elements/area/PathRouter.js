@@ -50,7 +50,9 @@ export default class PathRouter extends WprrBaseObject {
 		super._prepareRender();
 		
 		let path = this.getFirstInput("path");
-		let routes = this.getFirstInput("routes");
+		let routes = Wprr.utils.array.singleOrArray(this.getFirstInput("routes"));
+		
+		console.log(">>>>>>>>>", routes);
 		
 		let currentRoute = this.getRoute(path, routes);
 		

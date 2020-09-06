@@ -33,6 +33,27 @@ export default class TimelineField extends MultiTypeItemConnection {
 		return this._value;
 	}
 	
+	get asTerm() {
+		//console.log("asTerm");
+		
+		if(!this._value) {
+			return this._value;
+		}
+		
+		if(Number.isInteger(this._value)) {
+			let termName = "term" + this._value;
+			return this.item.group.getItem(termName);
+		}
+		else {
+			let taxonomy = "dbm_relation"; //METODO: set taxonomy based on type
+			let taxonomyItem = this.item.group.getItem("taxonomy-" + taxonomy);
+			
+			let returnObject = Wprr.objectPath(taxonomyItem, "termBySlug." + this._value);
+			return returnObject;
+		}
+		
+	}
+	
 	get status() {
 		return this._status;
 	}

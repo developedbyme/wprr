@@ -134,6 +134,7 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 			let item = fieldLinks.createItem(group.generateNextInternalId());
 			item.addType("field", newField);
 			item.addType("parentItem", this.item);
+			item.addType("data", currentFieldData);
 			
 			let key = currentFieldData["key"];
 			

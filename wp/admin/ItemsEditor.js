@@ -64,6 +64,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return this._items;
 	}
 	
+	get dynamicFiltersList() {
+		return this._dynamicFiltersList;
+	}
+	
 	setProject(aProject) {
 		super.setProject(aProject);
 		
@@ -82,6 +86,35 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("searchFields", aFields);
 		
 		return this;
+	}
+	
+	addFilter(aFilterPart, aData = null) {
+		let newId = this._dynamicFiltersList.createConnection();
+		let connection = this._dynamicFiltersList.getConnection(newId);
+		
+		if(aData) {
+			for(let objectName in aData) {
+				connection.updateValue(objectName, Wprr.utils.object.copyViaJson(aData[objectName]));
+			}
+		}
+		
+		aFilterPart.setInput("connection", connection);
+		
+		this._dynamicFilterChain.addPart(aFilterPart);
+		this._dynamicFiltersList.addItemWithId(aFilterPart, newId);
+		
+		return newId;
+	}
+	
+	removeFilter(aId) {
+		//console.log("removeFilter");
+		//console.log(aId);
+		
+		let item = this._dynamicFiltersList.getItem(aId);
+		this._dynamicFiltersList.removeItemById(aId);
+		
+		this._dynamicFilterChain.removePart(item);
+		
 	}
 	
 	_filterItems() {

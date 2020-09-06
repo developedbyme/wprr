@@ -21,6 +21,16 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addItems(aIds) {
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this.addItem(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
 	createItem(aId) {
 		let item = this.item.group.getItem(aId);
 		this.addItem(aId);

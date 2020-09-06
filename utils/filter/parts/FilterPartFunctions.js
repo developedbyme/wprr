@@ -22,7 +22,7 @@ export default class FilterPartFunctions  {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			if(objectPath.get(currentItem, field) === matchValue) {
+			if(Wprr.objectPath(currentItem, field) === matchValue) {
 				returnArray.push(currentItem);
 			}
 		}
@@ -54,13 +54,13 @@ export default class FilterPartFunctions  {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			
-			let currentArray2 = objectPath.get(currentItem, arrayField);
+			let currentArray2 = Wprr.objectPath(currentItem, arrayField);
 			if(currentArray2) {
 				let currentArray2Length = currentArray2.length;
 				for(let j = 0; j < currentArray2Length; j++) {
 					
 					let currentArrayItem = currentArray2[j];
-					if(objectPath.get(currentArrayItem, field) === matchValue) {
+					if(Wprr.objectPath(currentArrayItem, field) === matchValue) {
 						returnArray.push(currentItem);
 						break;
 					}
@@ -145,7 +145,7 @@ export default class FilterPartFunctions  {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			let currentValue = 1*objectPath.get(currentItem, field);
+			let currentValue = 1*Wprr.objectPath(currentItem, field);
 			
 			let passes = FilterPartFunctions._compare(currentValue, matchValue, compareType);
 			
@@ -180,7 +180,7 @@ export default class FilterPartFunctions  {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			
-			let currentValue = objectPath.get(currentItem, field);
+			let currentValue = Wprr.objectPath(currentItem, field);
 			if(valueFormat) {
 				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
 			}
@@ -224,7 +224,7 @@ export default class FilterPartFunctions  {
 			
 			let currentValue = currentItem;
 			if(field) {
-				currentValue = objectPath.get(currentItem, field);
+				currentValue = Wprr.objectPath(currentItem, field);
 			}
 			if(valueFormat) {
 				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
@@ -264,7 +264,7 @@ export default class FilterPartFunctions  {
 			
 			let currentValue = currentItem;
 			if(field) {
-				currentValue = objectPath.get(currentItem, field);
+				currentValue = Wprr.objectPath(currentItem, field);
 			}
 			
 			if(!theObject || theObject[currentValue] === undefined) {
@@ -299,7 +299,7 @@ export default class FilterPartFunctions  {
 			
 			let currentValue = currentItem;
 			if(field) {
-				currentValue = objectPath.get(currentItem, field);
+				currentValue = Wprr.objectPath(currentItem, field);
 			}
 			if(valueFormat) {
 				currentValue = FilterPartFunctions._formatValue(currentValue, valueFormat);
@@ -325,6 +325,8 @@ export default class FilterPartFunctions  {
 	}
 	
 	static compareField(aCurrentArray, aOriginalArray) {
+		//console.log("compareField");
+		
 		let returnArray = new Array();
 		
 		let valueFormat = this.getInput("valueFormat");
@@ -337,7 +339,7 @@ export default class FilterPartFunctions  {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			let currentValue = FilterPartFunctions._formatValue(objectPath.get(currentItem, field), valueFormat);
+			let currentValue = FilterPartFunctions._formatValue(Wprr.objectPath(currentItem, field), valueFormat);
 			
 			let passes = FilterPartFunctions._compare(currentValue, matchValue, compareType);
 			
@@ -381,6 +383,7 @@ export default class FilterPartFunctions  {
 			let passes = false;
 			for(let j = 0; j < currentArray2Length; j++) {
 				let rawFieldValue = Wprr.objectPath(currentItem, currentArray2[j]);
+				console.log(rawFieldValue, currentItem, currentArray2[j]);
 				let fieldValue = (""+rawFieldValue).toLowerCase();
 				if(fieldValue.indexOf(searchValue) !== -1) {
 					passes = true;
