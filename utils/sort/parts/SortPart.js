@@ -25,7 +25,12 @@ export default class SortPart  {
 	setPerformingElement(aElement, aProps = null) {
 		this._performingElement = aElement;
 		if(aProps === null) {
-			aProps = aElement.props;
+			if(aElement && aElement.props) {
+				aProps = aElement.props;
+			}
+			else {
+				aProps = {};
+			}
 		}
 		this._props = aProps;
 		

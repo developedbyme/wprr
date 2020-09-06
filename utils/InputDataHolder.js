@@ -81,7 +81,7 @@ export default class InputDataHolder  {
 	 *
 	 * @return	*	The value of the input
 	 */
-	getInput(aName, aProps, aManipulationObject) {
+	getInput(aName, aProps = null, aManipulationObject = null) {
 		if(this._values[aName] === undefined) {
 			console.warn("Input " + aName + " doesn't exist.", this);
 			return null;
@@ -111,19 +111,19 @@ export default class InputDataHolder  {
 	 * @param	aProps				Object			The object with the current props.
 	 * @param	aManipulationObject	WprrBaseObject	The manipulation object that is performing the adjustment. Used to resolve sourcing.
 	 */
-	resolveSource(aData, aProps, aManipulationObject) {
+	resolveSource(aData, aProps = null, aManipulationObject = null) {
 		//console.log("wprr/manipulation/adjustfunctions/AdjustFunction::resolveSource");
 		//console.log(aData, aProps, aManipulationObject);
 		
 		if(aData instanceof SourceData) {
 			
 			if(aManipulationObject) {
-				let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state};
+				let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state, "input": this};
 			
 				return aManipulationObject.resolveSourcedDataInStateChange(aData, changePropsAndStateObject);
 			}
 			else {
-				return aData.getSource(null);
+				return aData.getSourceInStateChange(null, {"props": null, "state": null, "input": this});
 			}
 		}
 		

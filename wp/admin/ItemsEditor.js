@@ -28,6 +28,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("creatingStatus", "none");
 		this._editStorage.updateValue("searchFields", []);
 		this._editStorage.updateValue("selection", []);
+		this._editStorage.updateValue("filters", new Array());
+		this._editStorage.updateValue("sortOrder", new Array());
 		
 		this._dataType = "dbm_data";
 		this._objectType = null;
@@ -35,13 +37,16 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._addChangeData = null;
 		
-		this._editStorage.createChangeCommands("allIds,searchText,filters,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
+		this._editStorage.createChangeCommands("allIds,searchText,filters,sortOrder,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
 		
 		this._filterChain =  Wprr.utils.FilterChain.create();
 		
-		this._dynamicFilterChain =  Wprr.utils.FilterChain.create();
+		this._dynamicFilterChain =  Wprr.utils.FilterChain.create(Wprr.sourceFunction(this, this._getFilterParts));
 		this._filterChain.addPart(this._dynamicFilterChain);
 		this._dynamicFiltersList = new Wprr.utils.DataStorageListConnection().setDataStorage(this._editStorage).setup("filters", "filter");
+		
+		this._sortChain = Wprr.utils.SortChain.create(Wprr.sourceFunction(this, this._getSortParts));
+		this._sortList = new Wprr.utils.DataStorageListConnection().setDataStorage(this._editStorage).setup("sortOrder", "sort");
 		
 		this._searchFilterParts = this._filterChain.addFieldsSearch(
 			Wprr.sourceStatic(this._editStorage, "searchFields"),
@@ -66,6 +71,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	
 	get dynamicFiltersList() {
 		return this._dynamicFiltersList;
+	}
+	
+	get sortList() {
+		return this._sortList;
 	}
 	
 	setProject(aProject) {
@@ -100,7 +109,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		aFilterPart.setInput("connection", connection);
 		
-		this._dynamicFilterChain.addPart(aFilterPart);
 		this._dynamicFiltersList.addItemWithId(aFilterPart, newId);
 		
 		return newId;
@@ -110,11 +118,48 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		//console.log("removeFilter");
 		//console.log(aId);
 		
-		let item = this._dynamicFiltersList.getItem(aId);
 		this._dynamicFiltersList.removeItemById(aId);
 		
-		this._dynamicFilterChain.removePart(item);
+		return this;
+	}
+	
+	_getFilterParts() {
 		
+		let list = this._dynamicFiltersList.collectList();
+		let parts = Wprr.utils.array.mapField(list, "item");
+		
+		return parts;
+	}
+	
+	addSorting(aSortPart, aData = null) {
+		let newId = this._sortList.createConnection();
+		let connection = this._sortList.getConnection(newId);
+		
+		if(aData) {
+			for(let objectName in aData) {
+				connection.updateValue(objectName, Wprr.utils.object.copyViaJson(aData[objectName]));
+			}
+		}
+		
+		aSortPart.setInput("connection", connection);
+		
+		this._sortList.addItemWithId(aSortPart, newId);
+		
+		return newId;
+	}
+	
+	removeSorting(aId) {
+		this._sortList.removeItemById(aId);
+		
+		return this;
+	}
+	
+	_getSortParts() {
+		
+		let list = this._sortList.collectList();
+		let parts = Wprr.utils.array.mapField(list, "item");
+		
+		return parts;
 	}
 	
 	_filterItems() {
@@ -122,6 +167,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		let items = this._items.getItems(ids);
 		
 		items = this._filterChain.filter(items, null);
+		this._sortChain.sort(items, null);
 		
 		let filteredIds = Wprr.utils.array.mapField(items, "id");
 		

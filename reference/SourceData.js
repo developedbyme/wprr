@@ -392,7 +392,11 @@ export default class SourceData {
 					let parsedQueryString = queryString.parse(location.search);
 					return objectPath.get(parsedQueryString, aPath);
 				}
-				
+			case "input":
+				{
+					let returnValue = aPropsAndState.input.getInput(aPath, objectPath.get(aPropsAndState, "props"), aFromObject);
+					return returnValue;
+				}
 			default:
 				console.error("Unknown type " + aType);
 				break;

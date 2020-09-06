@@ -23,6 +23,10 @@ export default class DataStorageListConnection {
 		this.items = new Object();
 	}
 	
+	get externalStorage() {
+		return this._dataStorage;
+	}
+	
 	setDataStorage(aDataStorage) {
 		this._dataStorage = aDataStorage;
 		
@@ -177,6 +181,19 @@ export default class DataStorageListConnection {
 	collectList() {
 		let returnArray = new Array();
 		
+		let list = this._dataStorage.getValue(this._listName);
+		if(list) {
+			let currentArray = list;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentId = currentArray[i];
+				let item = this.getItem(currentId);
+				let connection = this.getConnection(currentId);
+				let currentData = {"currentId": currentId, "item": item, "data": connection.getData()};
+				returnArray.push(currentData);
+			}
+		}
+		
 		return returnArray;
 	}
 	
@@ -188,8 +205,9 @@ export default class DataStorageListConnection {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentId = currentArray[i];
+			let item = this.getItem(currentId);
 			let connection = this.getConnection(currentId);
-			let currentData = {"data": connection.getData()};
+			let currentData = {"currentId": currentId, "item": item, "data": connection.getData()};
 			
 			let children = this._dataStorage.getValue(this._hierarchyName + "." + currentId);
 			if(children) {
