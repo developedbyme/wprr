@@ -39,9 +39,9 @@ export default class MultiStepDropdown extends Layout {
 						}))
 					)
 				),
-				aSlots.slot("overlay", React.createElement("div",
+				aSlots.slot("overlay", React.createElement(Wprr.BaseObject,
 					{
-						className: "custom-selection-menu"
+						className: aSlots.prop("overlayClassName", "custom-selection-menu")
 					},
 					aSlots.slot("pathRouter", React.createElement(Wprr.EditableProps,
 						{
