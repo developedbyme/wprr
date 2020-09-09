@@ -21,34 +21,44 @@ export default class DisplayRelation extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return 
-React.createElement("div", {
-  className: "object-relation"
-}, React.createElement("div", {
-  className: "flex-row pixel-item-spacing vertically-center-items"
-}, aSlots.slot("idCell", React.createElement("div", {
-  className: "flex-row-item"
-}, React.createElement("div", {
-  className: "standard-flag standard-flag-padding id-flag"
-}, Wprr.text(Wprr.sourceReference("item", "id"))))), aSlots.slot("fromCell", React.createElement("div", {
-  className: "flex-row-item"
-}, React.createElement(Wprr.RelatedItem, {
-  id: "from.linkedItem"
-}, React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))))), aSlots.slot("arrow", React.createElement("div", {
-  className: "flex-row-item"
-}, React.createElement("div", null, "->"))), aSlots.slot("toCell", React.createElement("div", {
-  className: "flex-row-item"
-}, React.createElement(Wprr.RelatedItem, {
-  id: "to.linkedItem"
-}, React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))))), aSlots.slot("statusCell", React.createElement(Wprr.HasData, {
-  check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "status"),
-  checkType: "equal",
-  compareValue: "draft"
-}, React.createElement("div", {
-  className: "flex-row-item"
-}, React.createElement("div", {
-  className: "standard-flag standard-flag-padding status-flag draft"
-}, "Draft")))), aSlots.slot("startFlagCell", React.createElement(Wprr.HasData, {
+		return React.createElement("div", {className: "object-relation"},
+			React.createElement("div", {className: "flex-row pixel-item-spacing vertically-center-items"},
+				aSlots.slot("idCell",
+					React.createElement("div", {className: "flex-row-item"},
+						React.createElement("div", {className: "standard-flag standard-flag-padding id-flag"},
+							Wprr.text(Wprr.sourceReference("item", "id"))
+						)
+					)
+				),
+				aSlots.slot("fromCell", 
+					React.createElement("div", {className: "flex-row-item"},
+						React.createElement(Wprr.RelatedItem, {id: "from.linkedItem"},
+							React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))
+						)
+					)
+				),
+				aSlots.slot("arrow",
+					React.createElement("div", {className: "flex-row-item"},
+						React.createElement("div", null, "->")
+					)
+				),
+				aSlots.slot("toCell",
+					React.createElement("div", {className: "flex-row-item"},
+						React.createElement(Wprr.RelatedItem, {id: "to.linkedItem"},
+							React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))
+						)
+					)
+				),
+				aSlots.slot("statusCell",
+					React.createElement(Wprr.HasData, {check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "status"), checkType: "equal", compareValue: "draft"},
+						React.createElement("div", {className: "flex-row-item"},
+							React.createElement("div", {className: "standard-flag standard-flag-padding status-flag draft"},
+								"Draft"
+							)
+						)
+					)
+				),
+				aSlots.slot("startFlagCell", React.createElement(Wprr.HasData, {
   check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "startAt"),
   checkType: "positiveValue"
 }, React.createElement("div", {

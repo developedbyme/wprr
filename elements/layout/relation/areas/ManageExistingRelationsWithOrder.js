@@ -36,8 +36,7 @@ export default class ManageExistingRelationsWithOrder extends Layout {
 		
 		sortChain.addAccordingToOrderSort(order);
 		
-		return 
-React.createElement("div", {
+		return React.createElement("div", {
   className: "manage-existing-relations custom-selection-menu-padding content-text-small"
 }, React.createElement(Wprr.Adjust, {
   adjust: sortChain.getApplyAdjustFunction(activeIds, "sortedIds"),
