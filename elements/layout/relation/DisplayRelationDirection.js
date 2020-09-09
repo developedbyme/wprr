@@ -5,18 +5,18 @@ import Wprr from "wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-// import DisplayRelation from "./DisplayRelation";
-export default class DisplayRelation extends Layout {
+// import DisplayRelationDirection from "./DisplayRelationDirection";
+export default class DisplayRelationDirection extends Layout {
 
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("DisplayRelation::constructor");
+		//console.log("DisplayRelationDirection::constructor");
 
 		super();
 		
-		this._layoutName = "displayRelation";
+		this._layoutName = "displayRelationDirection";
 	}
 	
 	_getLayout(aSlots) {
@@ -32,21 +32,9 @@ export default class DisplayRelation extends Layout {
 						)
 					)
 				),
-				aSlots.slot("fromCell", 
+				aSlots.slot("nameCell", 
 					React.createElement("div", {className: "flex-row-item"},
-						React.createElement(Wprr.RelatedItem, {id: "from.linkedItem"},
-							React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))
-						)
-					)
-				),
-				aSlots.slot("arrow",
-					React.createElement("div", {className: "flex-row-item"},
-						React.createElement("div", null, "->")
-					)
-				),
-				aSlots.slot("toCell",
-					React.createElement("div", {className: "flex-row-item"},
-						React.createElement(Wprr.RelatedItem, {id: "to.linkedItem"},
+						React.createElement(Wprr.RelatedItem, {id: Wprr.sourceCombine(aSlots.prop("directionIdName", "to"), ".linkedItem")},
 							React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "data.title")))
 						)
 					)

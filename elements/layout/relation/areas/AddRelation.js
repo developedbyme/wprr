@@ -25,9 +25,6 @@ export default class AddRelation extends Layout {
 		let editorSource = aSlots.prop("editor", Wprr.sourceReference("editor"));
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
-		let activeIds = externalStorageSource.deeper(activatePathSource);
-		let activeId = activeIds.deeper("0");
-		let toIdSource = editorSource.deeper("item.group").deeper(activeId).deeper(aSlots.prop("direction", "to")).deeper("id");
 		
 		let dataType = aSlots.prop("dataType", "dbm_data");
 		let includedStatuses = aSlots.prop("includedStatuses", "drafts,privates");
