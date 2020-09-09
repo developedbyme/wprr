@@ -16,6 +16,7 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		
 		this._editors = new Object();
 		
+		this._commands = Wprr.utils.InputDataHolder.create();
 	}
 	
 	getEditor(aDirection, aConnectionType, aObjectType) {
@@ -31,9 +32,22 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		newRelationEditor.setItemConnection(this.item);
 		newRelationEditor.setup(aDirection, aConnectionType, aObjectType);
 		
+		newRelationEditor.addCommand("changed", Wprr.commands.callFunction(this, this._changed));
+		
 		objectPath.set(this._editors, [aDirection, aConnectionType, aObjectType], newRelationEditor);
 		
 		return newRelationEditor;
+	}
+	
+	addCommand(aName, aCommand) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		//METODO: we just assumes that it is an array
+		this._commands.getRawInput(aName).push(aCommand);
+		
+		return this;
 	}
 	
 	hasObjectPathHandling() {
@@ -106,5 +120,14 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		}
 		
 		return returnArray;
+	}
+	
+	_changed() {
+		console.log("_changed");
+		
+		let commandName = "changed";
+		if(this._commands.hasInput(commandName)) {
+			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);
+		}
 	}
 }

@@ -247,6 +247,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			let relationEditors = new Wprr.utils.wp.dbmcontent.relation.RelationEditors();
 			item.addType("relationEditors", relationEditors);
 			saveItems.push(relationEditors);
+			relationEditors.addCommand("changed", this._updateSaveAllStatusCommand);
 			
 			let outgoing = new Object();
 			{

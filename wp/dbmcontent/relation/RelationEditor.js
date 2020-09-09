@@ -17,6 +17,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this._connectionType = null;
 		this._objectType = null;
 		
+		this._commands = Wprr.utils.InputDataHolder.create();
+		
 	}
 	
 	setup(aDirection, aConnectionType, aObjectType) {
@@ -25,7 +27,19 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this._objectType = aObjectType;
 		
 		this.externalStorage.createChangeCommands(this.path, this, Wprr.commands.callFunction(this, this._updateActiveRelations));
+		this.externalStorage.createChangeCommands(this.path, this, Wprr.commands.callFunction(this, this._changed));
 		this._updateActiveRelations();
+		
+		return this;
+	}
+	
+	addCommand(aName, aCommand) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		//METODO: we just assumes that it is an array
+		this._commands.getRawInput(aName).push(aCommand);
 		
 		return this;
 	}
@@ -94,15 +108,13 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	
 	_relationAdded(aId, aFromId, aToId) {
 		console.log("RelationEditor::_relationAdded");
-		console.log(aId, aToId);
+		//console.log(aId, aToId);
 		
 		aId = 1*aId;
 		
 		this._setupRelation(aId, aFromId, aToId);
 		
 		this.externalStorage.addValueToArray(this.path, aId);
-		
-		console.log(this.externalStorage.getValue(this.path));
 	}
 	
 	_addUpdateCommand(aLoader, aId) {
@@ -127,6 +139,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._changed, []));
 		
 		loader.load();
 	}
@@ -231,7 +244,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentItem = currentArray[i];
 				let currentRelation = currentItem.getType("relation");
-				console.log(currentRelation, currentTime);
 				if(currentRelation.isActiveAt(currentTime)) {
 					activeArray.push(currentItem.id);
 				}
@@ -239,5 +251,13 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		}
 		
 		this.externalStorage.updateValue(this.activePath, activeArray);
+	}
+	
+	_changed() {
+		console.log("_changed");
+		let commandName = "changed";
+		if(this._commands.hasInput(commandName)) {
+			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);
+		}
 	}
 }
