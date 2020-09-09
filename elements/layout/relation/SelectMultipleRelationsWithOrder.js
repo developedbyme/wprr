@@ -35,17 +35,16 @@ export default class SelectMultipleRelationsWithOrder extends Layout {
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		let activeIds = externalStorageSource.deeper(activatePathSource);
+		let idSource = Wprr.sourceCombine(editorSource.deeper("directionIdName"), ".id");
 		
 		let orderId = aSlots.prop("orderId", "none");
 		
 		let routes = this._getRoutes();
 		
-		//METODO: get direction from editor
-		
 		return React.createElement("div", {className: "select-multiple-relations"},
 			React.createElement(Wprr.AddReference, {data: orderId, as: "orderId"}, 
 				React.createElement(Wprr.layout.form.MultiStepDropdown, {routes: routes, areaClasses: areas},
-					React.createElement(Wprr.layout.items.ItemNames, {ids: Wprr.sourceFunction(editorSource.deeper("item.group"), "mapFromIds", [activeIds, "to.id"]), "data-slot": "buttonContent", sourceUpdates: activeIds})
+					React.createElement(Wprr.layout.items.ItemNames, {ids: Wprr.sourceFunction(editorSource.deeper("item.group"), "mapFromIds", [activeIds, idSource]), "data-slot": "buttonContent", sourceUpdates: activeIds})
 				)
 			)
 		);

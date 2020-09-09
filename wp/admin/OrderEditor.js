@@ -119,8 +119,7 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		let currentArray = this._orderNames;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let currentField = currentArray[i];
-			let fieldName = currentField["field"];
+			let fieldName = currentArray[i];
 			
 			let newValue = editStorage.getValue(fieldName);
 			let oldValue = editStorage.getValue("saved." + fieldName);
@@ -134,11 +133,18 @@ export default class OrderEditor extends MultiTypeItemConnection {
 	
 	getSaveData() {
 		let saveData = Wprr.wp.admin.SaveData.create(this.item.id);
+		
+		let editStorage = this.item.getType("orderStorage");
+		
 		let currentArray = this._orderNames;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let currentField = currentArray[i];
+			let fieldName = currentArray[i];
 			
+			console.log(fieldName, editStorage.getValue(fieldName));
+			
+			saveData.changes.createChange("dbm/order", {"value": editStorage.getValue(fieldName), "forType": fieldName});
+			saveData.addUpdateSavedFieldCommand(fieldName, editStorage);
 		}
 		
 		return saveData;

@@ -50,6 +50,10 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		return (this._direction === "outgoing") ? "out" : "in";
 	}
 	
+	get directionIdName() {
+		return (this._direction === "outgoing") ? "to" : "from";
+	}
+	
 	_getLoader(aId, aMakePrivate = false) {
 		console.log("RelationEditor::_getLoader");
 		console.log(this);

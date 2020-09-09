@@ -344,7 +344,15 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		item.addType("orderEditor", orderEditor);
 		saveItems.push(orderEditor);
 		
-		//METODO: setup orders
+		let orders = Wprr.objectPath(aData, "relations.orders");
+		if(orders) {
+			let currentArray = orders;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentOrder = currentArray[i];
+				orderEditor.addOrder(currentOrder["forType"], currentOrder["order"]);
+			}
+		}
 		
 		item.addType("saveItems", saveItems);
 		
