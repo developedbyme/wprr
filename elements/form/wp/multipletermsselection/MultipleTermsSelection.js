@@ -6,8 +6,8 @@ import * as Parts from "./parts/parts.js";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
-// import TermSelection from "wprr/elements/form/wp/TermSelection";
-export default class TermSelection extends ManipulationBaseObject {
+// import MultipleTermsSelection from "wprr/elements/form/wp/MultipleTermsSelection";
+export default class MultipleTermsSelection extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
@@ -29,7 +29,7 @@ export default class TermSelection extends ManipulationBaseObject {
 	}
 	
 	_getChildrenToClone() {
-		//console.log("TermSelection::_createClonedElement");
+		//console.log("MultipleTermsSelection::_createClonedElement");
 		
 		let taxonomy = this.getSourcedProp("taxonomy");
 		let adjusts = new Array();
@@ -61,7 +61,7 @@ export default class TermSelection extends ManipulationBaseObject {
 		}
 		
 		let defaultElement = React.createElement(Parts.TermLoop);
-		let selection = this.getFirstValidSource(Wprr.sourceProp("selection"), children, Wprr.sourceReference("multipleTermsSelection/selection"), defaultElement);
+		let selection = this.getFirstValidSource(Wprr.sourceProp("selection"), children, Wprr.sourceReferenceIfExists("multipleTermsSelection/selection"), defaultElement);
 		
 		let externalStorage = this.getFirstInput("externalStorage");
 		
