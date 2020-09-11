@@ -39,6 +39,8 @@ export default class Wprr {
 
 			window.requestAnimationFrame(animate);
 		}
+		
+		this.staticFunctions = Wprr;
 	}
 	
 	addGlobalReference(aGlobalObject) {
@@ -199,6 +201,10 @@ export default class Wprr {
 	
 	static sourceCombine(...aParts) {
 		return Wprr.source("combine", aParts);
+	}
+	
+	static isSource(aVariable) {
+		return (aVariable instanceof SourceData);
 	}
 	
 	static text(aText, aFormat = "text") {

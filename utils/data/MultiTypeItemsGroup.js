@@ -40,6 +40,10 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this._items[nameWithPrefix];
 	}
 	
+	getTerm(aId) {
+		return this.getItem("term" + aId);
+	}
+	
 	getItems(aIds) {
 		let returnArray = new Array();
 		

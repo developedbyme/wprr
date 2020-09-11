@@ -358,6 +358,7 @@ export default class SourceData {
 				{
 					let command = aPath;
 					command.setTriggerElement(aFromObject);
+					command.setEventData(objectPath.get(aPropsAndState, "event"));
 					return command.perform();
 				}
 			case "commandElement":

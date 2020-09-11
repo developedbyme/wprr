@@ -325,6 +325,32 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static convertFields(aArray, aFieldConversions, aFromObject = null) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			let renamedObject = new Object();
+			for(let objectName in aFieldConversions) {
+				let currentValue;
+				let path = aFieldConversions[objectName];
+				if(Wprr.isSource(path)) {
+					currentValue = path.getSourceInStateChange(aFromObject, {"event": {"item": currentItem}});
+				}
+				else {
+					currentValue = Wprr.objectPath(currentItem, path);
+				}
+				
+				objectPath.set(renamedObject, objectName, currentValue);
+			}
+			returnArray.push(renamedObject);
+		}
+		
+		return returnArray;
+	}
+	
 	static mergeFields(aArray, aField, aAdditionFields, aSeparator = " ") {
 		
 		let currentArray2 = ArrayFunctions.arrayOrSeparatedString(aAdditionFields);

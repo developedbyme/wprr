@@ -75,4 +75,17 @@ export default class ProgrammingLanguageFunctions {
 		
 		return returnString;
 	}
+	
+	static convertHyphensToCamelCase(aText) {
+		let length = aText.length;
+		if(length === 0) {
+			return "";
+		}
+		
+		let textWithoutHyphens = aText.split("-").join(" ");
+		
+		let returnValue = ProgrammingLanguageFunctions.convertToCamelCase(textWithoutHyphens);
+		console.log(returnValue);
+		return returnValue;
+	}
 }

@@ -2,6 +2,8 @@ import Wprr from "wprr/Wprr";
 
 import KeyValueGenerator from "wprr/utils/KeyValueGenerator";
 
+import objectPath from "object-path";
+
 // import TableData from "wprr/utils/data/TableData";
 export default class TableData {
 	
@@ -43,9 +45,13 @@ export default class TableData {
 	}
 	
 	addColumnMeta(aColumnId, aKey, aData) {
-		objectPath.set(this._metaData, ["column", aColumnId, aKey], aData);
+		objectPath.set(this._metaData, "column." + aColumnId + "." + aKey, aData);
 		
 		return this;
+	}
+	
+	getColumnMeta(aColumnId, aKey) {
+		return objectPath.get(this._metaData, "column." + aColumnId + "." + aKey);
 	}
 	
 	updateColumnId(aIndex, aNewId) {
@@ -65,6 +71,16 @@ export default class TableData {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			this.addRow(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
+	addRowsFromObjects(aRows) {
+		let currentArray = aRows;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this.addRow(this.getRowFromObject(currentArray[i]));
 		}
 		
 		return this;
