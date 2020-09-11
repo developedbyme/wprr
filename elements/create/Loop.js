@@ -86,6 +86,6 @@ export default class Loop extends Adjust {
 	}
 	
 	static createMarkupLoop(aArray, aItemMarkup, aSpacingMarkup = null, aChildren = null) {
-		return React.createElement(Loop, {"loop": Wprr.adjusts.markupLoop(aArray, aItemMarkup, aSpacingMarkup)}, aChildren);
+		return React.createElement(Loop, {"loop": Wprr.adjusts.markupLoop(aArray, aItemMarkup, aSpacingMarkup), "sourceUpdates": aArray}, aChildren);
 	}
 }
