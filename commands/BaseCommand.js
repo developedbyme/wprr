@@ -12,6 +12,7 @@ export default class BaseCommand {
 	constructor() {
 		this._triggerElement = null;
 		this._eventData = null;
+		this._inputData = null;
 		this._inputs = new Object();
 	}
 	
@@ -23,6 +24,12 @@ export default class BaseCommand {
 	
 	setEventData(aEventData) {
 		this._eventData = aEventData;
+		
+		return this;
+	}
+	
+	setInputData(aData) {
+		this._inputData = aData;
 		
 		return this;
 	}
@@ -105,7 +112,7 @@ export default class BaseCommand {
 			let props = this._triggerElement ? this._triggerElement.props : {};
 			let state = this._triggerElement ? this._triggerElement.state : {};
 			
-			let changePropsAndStateObject = {"props": props, "state": state, "event": this._eventData};
+			let changePropsAndStateObject = {"props": props, "state": state, "event": this._eventData, "input": this._inputData};
 			
 			return aData.getSourceInStateChange(this._triggerElement, changePropsAndStateObject);
 		}

@@ -359,6 +359,7 @@ export default class SourceData {
 					let command = aPath;
 					command.setTriggerElement(aFromObject);
 					command.setEventData(objectPath.get(aPropsAndState, "event"));
+					command.setInputData(objectPath.get(aPropsAndState, "input"));
 					return command.perform();
 				}
 			case "commandElement":
@@ -395,6 +396,11 @@ export default class SourceData {
 				}
 			case "input":
 				{
+					let input = objectPath.get(aPropsAndState, "input");
+					if(!input || !input.getInput) {
+						console.error("No input available", aPropsAndState);
+						return undefined;
+					}
 					let returnValue = aPropsAndState.input.getInput(aPath, objectPath.get(aPropsAndState, "props"), aFromObject);
 					return returnValue;
 				}
