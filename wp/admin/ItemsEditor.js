@@ -137,7 +137,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		if(aData) {
 			for(let objectName in aData) {
-				connection.updateValue(objectName, Wprr.utils.object.copyViaJson(aData[objectName]));
+				//MEDEBUG: need to move format functions to a central identifier so we don't need them in the storage
+				connection.updateValue(objectName, aData[objectName]);
+				//connection.updateValue(objectName, Wprr.utils.object.copyViaJson(aData[objectName]));
 			}
 		}
 		
