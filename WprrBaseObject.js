@@ -58,8 +58,8 @@ export default class WprrBaseObject extends React.Component {
 							delete oldSources[name];
 						}
 						else {
-							newSources.push(currentUpdateProp);
 							if(currentUpdateProp instanceof SourceData) {
+								newSources.push(currentUpdateProp);
 								updateSources.push(currentUpdateProp);
 							}
 						}
