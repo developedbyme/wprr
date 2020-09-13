@@ -265,7 +265,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 					if(!addToObject[connectionType]) {
 						addToObject[connectionType] = new Object();
 					}
+					
 					let currentConnectionObject = addToObject[connectionType];
+					
+					if(!currentConnectionObject["any"]) {
+						currentConnectionObject["any"] = new Array();
+					}
+					currentConnectionObject["any"].push(currentRelationId);
 					
 					let currentArray2 = currentRelationData[directionType];
 					let currentArray2Length = currentArray2.length;
@@ -297,7 +303,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 					if(!addToObject[connectionType]) {
 						addToObject[connectionType] = new Object();
 					}
+					
 					let currentConnectionObject = addToObject[connectionType];
+					
+					if(!currentConnectionObject["any"]) {
+						currentConnectionObject["any"] = new Array();
+					}
+					currentConnectionObject["any"].push(currentRelationId);
 					
 					let currentArray2 = currentRelationData[directionType];
 					let currentArray2Length = currentArray2.length;

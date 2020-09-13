@@ -108,7 +108,9 @@ export default class WprrBaseObject extends React.Component {
 	_removeSourcesFromObject(aSources) {
 		for(let objectName in aSources) {
 			let currentSource = aSources[objectName];
-			currentSource.removeOwner(this);
+			if(Wprr.isSource(currentSource)) {
+				currentSource.removeOwner(this);
+			}
 		}
 		
 		return this;

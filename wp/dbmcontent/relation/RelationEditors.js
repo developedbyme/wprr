@@ -39,6 +39,26 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		return newRelationEditor;
 	}
 	
+	getEditorForAnyType(aDirection, aConnectionType) {
+		
+		let objectType = "any";
+		
+		let currentEditor = objectPath.get(this._editors, [aDirection, aConnectionType, objectType]);
+		if(currentEditor) {
+			return currentEditor;
+		}
+		
+		let newRelationEditor = new RelationEditor();
+		newRelationEditor.setItemConnection(this.item);
+		newRelationEditor.setup(aDirection, aConnectionType, objectType);
+		
+		newRelationEditor.addCommand("changed", Wprr.commands.callFunction(this, this._changed));
+		
+		objectPath.set(this._editors, [aDirection, aConnectionType, objectType], newRelationEditor);
+		
+		return newRelationEditor;
+	}
+	
 	addCommand(aName, aCommand) {
 		if(!this._commands.hasInput(aName)) {
 			this._commands.setInput(aName, []);
@@ -68,6 +88,10 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		let objectType = tempArray.shift();
 		
 		let restParts = tempArray.join(".");
+		
+		if(objectType === "*" || objectType === "any") {
+			return Wprr.objectPath(this.getEditorForAnyType(firstPart, connectionType), restParts);
+		}
 		
 		return Wprr.objectPath(this.getEditor(firstPart, connectionType, objectType), restParts);
 	}
