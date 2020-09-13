@@ -43,6 +43,10 @@ export default class SortPart  {
 	
 	_performSortItem(aA, aB) {
 		
+		if(aA === undefined || aB === undefined) {
+			console.warn("Undefined value in sort", aA, aB, this);
+		}
+		
 		let formatFunction = this.getInput("formatFunction");
 		aA = formatFunction.call(this, aA);
 		aB = formatFunction.call(this, aB);

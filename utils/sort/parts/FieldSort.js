@@ -1,4 +1,4 @@
-import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 import InputDataHolder from "wprr/utils/InputDataHolder";
 
@@ -26,13 +26,24 @@ export default class FieldSort extends SortPart {
 		let field = this.getInput("field");
 		let formatFunction = this.getInput("formatFunction");
 		
+		let aValue = aA;
+		let bValue = aB;
+		
 		if(field) {
-			aA = objectPath.get(aA, field);
-			aB = objectPath.get(aB, field);
+			aValue = Wprr.objectPath(aValue, field);
+			bValue = Wprr.objectPath(bValue, field);
 		}
 		
-		let aValue = formatFunction.call(this, aA);
-		let bValue = formatFunction.call(this, aB);
+		if(aValue === undefined || bValue === undefined) {
+			console.warn("Undefined value in sort", aValue, bValue, this, aA, aB, field);
+		}
+		
+		console.log(this);
+		
+		aValue = formatFunction.call(this, aValue);
+		bValue = formatFunction.call(this, bValue);
+		
+		console.log(aValue, bValue);
 		
 		if(aValue < bValue) {
 			return -1;
