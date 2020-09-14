@@ -83,29 +83,35 @@ export default class BatchEditItems extends Layout {
 		
 		//METODO: set operations
 		
-		return <div className="centered-block-for-overflow">
-			<Wprr.FlexRow>
-				<Wprr.ReferenceInjection injectData={{"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}}>
-					<Wprr.ExternalStorageInjection initialExternalStorage={this._itemsEditor.editStorage}>
-						<Wprr.layout.items.batch.BatchEditHeader title={aSlots.prop("title", Wprr.sourceTranslation("Edit items"))}>
-							<div data-slot="operations" />
-						</Wprr.layout.items.batch.BatchEditHeader>
-						<div className="spacing standard" />
-						<Wprr.DataLoader
-							loadData={this._loadData}
-							loadedCommands={Wprr.commands.callFunction(this, this._addNames, [Wprr.source("event", "raw")])}
-						>
-							<Wprr.EditableProps editableProps="filteredIds" externalStorage={Wprr.sourceReference("externalStorage")}>
-								<Wprr.layout.ItemList ids={Wprr.sourceProp("filteredIds")} className="item-list">
-									<Wprr.layout.items.batch.FieldsListItem cellTypes={aSlots.prop("cellTypes", {})} />
-								</Wprr.layout.ItemList>
-							</Wprr.EditableProps>
-						</Wprr.DataLoader>
-						<div className="spacing standard" />
-						<Wprr.layout.items.batch.BatchEditFooter />
-					</Wprr.ExternalStorageInjection>
-				</Wprr.ReferenceInjection>
-			</Wprr.FlexRow>
-		</div>;
+		return /*#__PURE__*/ React.createElement("div", {
+  className: "centered-block-for-overflow"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.ReferenceInjection, {
+  injectData: {
+    "items": this._itemsEditor.items,
+    "itemsEditor": this._itemsEditor,
+    "fields": fields
+  }
+}, /*#__PURE__*/React.createElement(Wprr.ExternalStorageInjection, {
+  initialExternalStorage: this._itemsEditor.editStorage
+}, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditHeader, {
+  title: aSlots.prop("title", Wprr.sourceTranslation("Edit items"))
+}, /*#__PURE__*/React.createElement("div", {
+  "data-slot": "operations"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.DataLoader, {
+  loadData: this._loadData,
+  loadedCommands: Wprr.commands.callFunction(this, this._addNames, [Wprr.source("event", "raw")])
+}, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "filteredIds",
+  externalStorage: Wprr.sourceReference("externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: Wprr.sourceProp("filteredIds"),
+  className: "item-list"
+}, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.FieldsListItem, {
+  cellTypes: aSlots.prop("cellTypes", {})
+})))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditFooter, null)))));;
 	}
 }

@@ -15,32 +15,15 @@ export default class BatchEditHeader extends Layout {
 	}
 
 	_getLayout(aSlots) {
-		return <div>
-			<Wprr.FlexRow className="justify-between">
-				{aSlots.slot("left",
-					<div>
-						{aSlots.slot("titleElement",
-							<h2 className="batch-edit-title no-margins">
-								{Wprr.text(aSlots.prop("title", "Edit items"))}
-							</h2>
-						)}
-						{aSlots.slot("operations",
-							<div />
-						)}
-					</div>
-				)}
-				{aSlots.slot("right",
-					<div>
-						{aSlots.slot("searchStorage",
-							<Wprr.EditableProps editableProps={aSlots.prop("searchTextValueName", "searchText")} externalStorage={aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"))}>
-								{aSlots.slot("searchField",
-									<Wprr.FormField valueName={aSlots.useProp("searchTextValueName")} />
-								)}
-							</Wprr.EditableProps>
-						)}
-					</div>
-				)}
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between"
+}, aSlots.slot("left", /*#__PURE__*/React.createElement("div", null, aSlots.slot("titleElement", /*#__PURE__*/React.createElement("h2", {
+  className: "batch-edit-title no-margins"
+}, Wprr.text(aSlots.prop("title", "Edit items")))), aSlots.slot("operations", /*#__PURE__*/React.createElement("div", null)))), aSlots.slot("right", /*#__PURE__*/React.createElement("div", null, aSlots.slot("searchStorage", /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: aSlots.prop("searchTextValueName", "searchText"),
+  externalStorage: aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"))
+}, aSlots.slot("searchField", /*#__PURE__*/React.createElement(Wprr.FormField, {
+  valueName: aSlots.useProp("searchTextValueName")
+}))))))));
 	}
 }

@@ -21,17 +21,16 @@ export default class FieldListItem extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="standard-row standard-row-padding fit-content-width">
-			<div className="flex-row small-item-spacing">
-				{aSlots.slot("fieldsExternalStorage", 
-					<Wprr.ExternalStorageProps props="activeFields" externalStorage={aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"))}>
-						{Wprr.Loop.createMarkupLoop(
-							aSlots.prop("fields", Wprr.sourceProp("activeFields")),
-							aSlots.default(<Wprr.layout.items.batch.FieldCellItem cellId={Wprr.sourceReference("loop/item")} cellTypes={aSlots.prop("cellTypes", {})} />)
-						)}
-					</Wprr.ExternalStorageProps>
-				)}
-			</div>
-		</div>;
+		return React.createElement("div", {
+  className: "standard-row standard-row-padding fit-content-width"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "flex-row small-item-spacing"
+}, aSlots.slot("fieldsExternalStorage", /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
+  props: "activeFields",
+  externalStorage: aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"))
+}, Wprr.Loop.createMarkupLoop(aSlots.prop("fields", Wprr.sourceProp("activeFields")), aSlots.default( /*#__PURE__*/React.createElement(Wprr.layout.items.batch.FieldCellItem, {
+  cellId: Wprr.sourceReference("loop/item"),
+  cellTypes: aSlots.prop("cellTypes", {})
+})))))));
 	}
 }
