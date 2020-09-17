@@ -26,7 +26,11 @@ export default class BlockInjectionFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentObject = currentArray[i];
 			let blockName = Wprr.utils.programmingLanguage.convertToCamelCase(currentObject.key);
-			Wprr.utils.blockInjection.addBlock(blockName, React.createElement(currentObject.value, {}), aReferenceHolder);
+			
+			let element = React.createElement(currentObject.value, {});
+			let elementWithInjection = React.createElement(Wprr.layout.BlockLoader, {}, element);
+			
+			Wprr.utils.blockInjection.addBlock(blockName, elementWithInjection, aReferenceHolder);
 		}
 	}
 }

@@ -203,6 +203,41 @@ export default class Wprr {
 		return Wprr.source("combine", aParts);
 	}
 	
+	static sourceCopy(aValue, aDeepPath = null) {
+		return this.sourceFunction(Wprr.utils.object, Wprr.utils.object.copyViaJson, [aValue], aDeepPath);
+	}
+	
+	static sourceEvent(aDeepPath = null) {
+		return Wprr.source("event", "raw", aDeepPath);
+	}
+	
+	static sourceFromJson(aObject) {
+		
+		if(typeof(aObject) !== "object") {
+			return aObject;
+		}
+		
+		let type = aObject["type"];
+		let path = aObject["path"];
+		let deepPath = aObject["deepPath"];
+		
+		if(type === "combine") {
+			let newPathArray = new Array();
+			
+			let currentArray = path;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentPathPart = currentArray[i];
+				
+				newPathArray.push(Wprr.sourceFromJson(currentPathPart));
+			}
+			
+			path = newPathArray;
+		}
+		
+		return Wprr.source(type, path, deepPath);
+	}
+	
 	static isSource(aVariable) {
 		return (aVariable instanceof SourceData);
 	}

@@ -47,6 +47,38 @@ export default class WpBlocksManager {
 		return this;
 	}
 	
+	registerBlocksFromClientModule(aBlocks, aIcon = "marker", aCategory = "auto") {
+		console.log("registerBlocksFromClientModule");
+		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
+		let currentArray = mappedBlocks;
+		let currentArrayLength = currentArray.length;
+	
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = currentArray[i];
+			
+			let currentClass = currentObject.value;
+			console.log(currentObject);
+			
+			let element = null;
+			if(currentClass.getWpAdminEditor) {
+				element = currentClass.getWpAdminEditor();
+				if(!element) {
+					console.warn("Class has getWpAdminEditor function, but didn't return any element");
+				}
+			}
+			
+			if(!element) {
+				element = React.createElement(Wprr.layout.admin.WpBlockEditor, {}); //METODO: better editor
+			}
+			
+			let preview = React.createElement(currentClass, {});
+			
+			this.createElementBlockRegistration(element, currentObject.key, aIcon, aCategory, preview);
+		}
+		
+		return this;
+	}
+	
 	getBlockRegistration(aName) {
 		let returnObject = this._blockRegistrations[aName];
 		
@@ -58,15 +90,17 @@ export default class WpBlocksManager {
 		return returnObject;
 	}
 	
-	createElementBlockRegistration(aElement, aName, aIcon = "marker", aCategory = "auto") {
+	createElementBlockRegistration(aElement, aName, aIcon = "marker", aCategory = "auto", aPreview = null) {
 		
 		let newElementBlockRegistration = new ElementBlockRegistration();
 		
 		
 		let tempArray = aName.split("/");
 		let name = tempArray.pop();
+		let editorName = name;
+		let path = "";
 		if(tempArray.length > 0) {
-			let path = tempArray.join("/");
+			path = tempArray.join("/");
 			name += " (" + path + ")";
 			
 			if(aCategory === "auto") {
@@ -81,12 +115,14 @@ export default class WpBlocksManager {
 			}
 		}
 		
+		let elementWithInjection = React.createElement(Wprr.ReferenceInjection, {"injectData": {"editorName": editorName, "editorPath": path, "editorPreview": aPreview}}, aElement);
+		
 		if(aCategory === "auto") {
 			aCategory = "common";
 		}
 		
 		newElementBlockRegistration.setupRegistration(name, aIcon, aCategory);
-		newElementBlockRegistration.setElement(aElement);
+		newElementBlockRegistration.setElement(elementWithInjection);
 		
 		let camelCaseId = ProgrammingLanguageFunctions.convertToCamelCase(aName);
 		let slugId = ProgrammingLanguageFunctions.convertToWpSlug(aName);
