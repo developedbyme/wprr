@@ -22,28 +22,15 @@ export default class MoreOptionsDropdown extends Layout {
 	_getLayout(aSlots) {
 		
 		
-		return React.createElement("div",
-			{
-				className: "more-options-dropdown"
-			},
+		return React.createElement("div", {className: "more-options-dropdown"},
 			Wprr.DropdownSelection.createSelfContained(
 				aSlots.slot("button",
-					React.createElement(Wprr.Image,
-						{
-							className: aSlots.prop("iconClasses", "icon standard-icon background-contain cursor-pointer"),
-							src: aSlots.prop("iconPath", "icons/more.svg")
-						}
-					)
+					React.createElement(Wprr.Image, {className: aSlots.prop("iconClasses", "icon standard-icon background-contain cursor-pointer"), src: aSlots.prop("iconPath", "icons/more.svg")})
 				),
-				aSlots.slot("overlay", React.createElement("div",
-					{
-						className: "custom-selection-menu"
-					},
+				aSlots.slot("overlay", React.createElement("div", {className: "custom-selection-menu"},
 					aSlots.default(React.createElement("div", {}, "No content set")
 				))),
-				{
-					"className": aSlots.prop("containerClassName", "custom-dropdown dropdown-from-right")
-				}
+				{"className": aSlots.prop("containerClassName", "custom-dropdown dropdown-from-right")}
 			)
 		);
 	}
