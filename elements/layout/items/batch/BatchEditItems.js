@@ -26,7 +26,7 @@ export default class BatchEditItems extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		let projectName = this.getFirstInput("projectName");
+		let projectName = this.getFirstInput("projectName", Wprr.sourceReference("wprr/projectName"));
 		let dataType = this.getFirstInput("dataType");
 		console.log(">>>>>", projectName, dataType);
 		
