@@ -109,7 +109,7 @@ export default class BatchEditItems extends Layout {
   ids: Wprr.sourceProp("filteredIds"),
   className: "item-list"
 }, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.FieldsListItem, {
-  cellTypes: aSlots.prop("cellTypes", {})
+  cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)
 })))), /*#__PURE__*/React.createElement("div", {
   className: "spacing standard"
 }), /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditFooter, null)))));;
