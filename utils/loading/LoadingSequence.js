@@ -54,6 +54,19 @@ export default class LoadingSequence {
 		return this;
 	}
 	
+	addCommands(aName, aCommands) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		let commands = this._commands.getRawInput(aName);
+		//METODO: we just assumes that it is an array
+		commands = commands.concat(aCommands);
+		this._commands.setInput(aName, commands);
+		
+		return this;
+	}
+	
 	getProgress() {
 		return this._loadedLoaders.length/this._loaders.length;
 	}
@@ -191,6 +204,11 @@ export default class LoadingSequence {
 	
 	load() {
 		//console.log("wprr/utils/loading/LoadingSequence::load");
+		
+		let commandName = "start";
+		if(this._commands.hasInput(commandName)) {
+			CommandPerformer.perform(this._commands.getInput(commandName, this.props, this), null, this);
+		}
 		
 		this._checkForFurtherLoad();
 	}

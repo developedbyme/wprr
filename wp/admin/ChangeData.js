@@ -145,4 +145,16 @@ export default class ChangeData  {
 		
 		return this;
 	}
+	
+	addIncomingRelation(aPostId, aType, aMakePrivate = true) {
+		this.createChange("dbm/addIncomingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate});
+		
+		return this;
+	}
+	
+	addOutgoingRelation(aPostId, aType, aMakePrivate = true) {
+		this.createChange("dbm/addOutgoingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate});
+		
+		return this;
+	}
 }

@@ -77,10 +77,20 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return this._sortList;
 	}
 	
+	get addChangeData() {
+		return this._addChangeData;
+	}
+	
 	setProject(aProject) {
 		super.setProject(aProject);
 		
 		this._items.setProject(aProject);
+		
+		return this;
+	}
+	
+	setItemsGroup(aItemsGroup) {
+		this._items = aItemsGroup;
 		
 		return this;
 	}
@@ -468,17 +478,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage.updateValue("saveAll.hasChanges", hasChanges);
 	}
 	
-	getSaveLoaders() {
-		//METODO
-	}
-	
-	saveAll() {
-		console.log("saveAll");
+	getSaveLoaders(aItems) {
+		aItems = Wprr.utils.array.singleOrArray(aItems);
 		
 		let saveDatas = new Array();
 		
 		{
-			let currentArray = this._editStorage.getValue("allIds");
+			let currentArray = aItems;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let saveItems = this._items.getItem(currentArray[i]).getType("saveItems");
@@ -524,11 +530,23 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 		}
 		
-		//METODO: set status
-		Wprr.utils.CommandPerformer.perform(startCommands, null, this);
-		
+		loadingSequence.addCommands("start", startCommands);
 		loadingSequence.addCommand("loaded", Wprr.commands.callFunction(this, this._updateSaveAllStatus));
 		
+		return loadingSequence;
+	}
+	
+	getSaveAllLoaders() {
+		console.log("getSaveAllLoaders");
+		
+		let loadingSequence = this.getSaveLoaders(this._editStorage.getValue("allIds"));
+		return loadingSequence;
+	}
+	
+	saveAll() {
+		console.log("saveAll");
+		
+		let loadingSequence = this.getSaveAllLoaders();
 		loadingSequence.load();
 	}
 	
