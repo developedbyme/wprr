@@ -19,6 +19,35 @@ export default class WpBlockEditor extends Layout {
 		this._layoutName = "wpBlockEditor";
 	}
 	
+	_prepareInitialRender() {
+		
+		super._prepareInitialRender();
+		
+		let externalStorage = this.getFirstInput(Wprr.sourceReference("wprr/wpBlockEditor/externalStorage"));
+		
+		let dataSettings = this.getFirstInput("dataSettings");
+		
+		if(dataSettings) {
+			
+			let names = new Array();
+			
+			let currentArray = Wprr.utils.KeyValueGenerator.normalizeArrayOrObject(dataSettings);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				let currentName = currentItem["key"];
+				names.push(currentName);
+				
+				let savedValue = externalStorage.getValue("blockLoadData." + currentName);
+				if(!savedValue) {
+					externalStorage.updateValue("blockLoadData." + currentName, Wprr.utils.object.copyViaJson(currentItem["value"]));
+				}
+			}
+		}
+		
+		//METODO: use names to show list of settings
+	}
+	
 	_getLayout(aSlots) {
 		
 		let settingsSource = Wprr.sourceReference("editorViewSettings");

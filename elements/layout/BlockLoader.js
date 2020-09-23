@@ -84,6 +84,8 @@ export default class BlockLoader extends Layout {
 	_getLoadData() {
 		let loadData = this.getFirstInput("loadData", Wprr.sourceReference("blockData", "blockLoadData"));
 		
+		console.log(">>>>>>>>", loadData);
+		
 		/*
 		loadData = {
 			"relations": {

@@ -32,9 +32,17 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 		super.componentWillUnmount();
 	}
 	
+	removeInvalidStateOnChange() {
+		let validationController = this.getReferenceIfExists("validation/form");
+		if(validationController) {
+			validationController.removeInvalidStateOnChange();
+		}
+	}
+	
 	componentWillReceiveProps(aNextProps) {
 		//console.log("wprr/elements/form/validation/ValidationBaseObject::componentWillReceiveProps");
 		this._validateWithProps("change", aNextProps);
+		this.removeInvalidStateOnChange();
 	}
 	
 	validate(aType) {

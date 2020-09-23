@@ -18,3 +18,6 @@ export {interaction};
 
 import * as admin from "./admin";
 export {admin};
+
+import * as list from "./list/index.js";
+export {list};

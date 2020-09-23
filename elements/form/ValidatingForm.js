@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
+import Wprr from "wprr/Wprr";
 require('formdata-polyfill');
 
 import WprrBaseObject from "wprr/WprrBaseObject";
@@ -15,8 +16,14 @@ export default class ValidatingForm extends WprrBaseObject {
 		
 		this._elementsToValidate = new Array();
 		this._mainElementType = "form";
+		this._externalStorage = new Wprr.utils.DataStorage();
+		this._externalStorage.updateValue("validationStatus", "notValidated");
 		
 		this._callback_submitBound = this._callback_submit.bind(this);
+	}
+	
+	removeInvalidStateOnChange() {
+		this._externalStorage.updateValue("validationStatus", "notValidated");
 	}
 	
 	trigger(aName, aValue) {
@@ -106,12 +113,15 @@ export default class ValidatingForm extends WprrBaseObject {
 			if(commands) {
 				CommandPerformer.perform(commands, null, this);
 			}
+			this._externalStorage.updateValue("validationStatus", "valid");
 		}
 		else {
 			let commands = this.getSourcedProp("invalidCommands");
 			if(commands) {
 				CommandPerformer.perform(commands, invalidFields, this);
 			}
+			
+			this._externalStorage.updateValue("validationStatus", "invalid");
 		}
 		
 		return returnValue;
@@ -169,7 +179,7 @@ export default class ValidatingForm extends WprrBaseObject {
 		//console.log("wprr/elements/form/ValidatingForm::_renderMainElement");
 		
 		return React.createElement("wrapper", {}, 
-			React.createElement(ReferenceInjection, {"injectData": {"validation/form": this, "trigger/form/submit": this}},
+			React.createElement(ReferenceInjection, {"injectData": {"validation/form": this, "validation/externalStorage": this._externalStorage, "trigger/form/submit": this}},
 				React.createElement("div", {}, 
 					this.props.children
 				)
