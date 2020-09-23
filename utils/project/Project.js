@@ -9,6 +9,14 @@ export default class Project {
 		this._mainReferences = null;
 	}
 	
+	get name() {
+		return this._name;
+	}
+	
+	get mainReferences() {
+		return this._mainReferences;
+	}
+	
 	setName(aName) {
 		this._name = aName;
 		

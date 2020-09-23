@@ -148,6 +148,7 @@ export default class ModuleCreatorBaseObject {
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
+		
 		this._storeController.setUser(aData.userData);
 		
 		this._referenceHolder.addObject("redux/store", this._store);
@@ -171,6 +172,7 @@ export default class ModuleCreatorBaseObject {
 		
 		if(this._project) {
 			this._project.setMainReferences(this._referenceHolder);
+			this._referenceHolder.addObject("wprr/projectName", this._project.name);
 		}
 		
 		let paths = aData.paths;
