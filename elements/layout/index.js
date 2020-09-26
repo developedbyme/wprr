@@ -21,3 +21,6 @@ export {admin};
 
 import * as list from "./list/index.js";
 export {list};
+
+import * as area from "./area/index.js";
+export {area};

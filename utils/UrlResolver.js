@@ -83,14 +83,19 @@ export default class UrlResolver  {
 		}
 		
 		if(aPath === "") {
-			return this._basePath + "/" + this._folderNamesArray.join("/");
+			let returnPath = (this._basePath) ? this._basePath + "/" : "";
+			return returnPath + this._folderNamesArray.join("/");
 		}
 		
 		if(aPath.indexOf("/") === 0) {
 			//MENOTE: aPath is relative to base of url
-			if(this._basePath.indexOf("://") > -1) {
+			if(!this._basePath) {
+				return aPath.substring(1, aPath.length);
+			}
+			else if(this._basePath.indexOf("://") > -1) {
 				return this._basePath + aPath;
-			} else {
+			}
+			else {
 				return aPath;
 			}
 		}
@@ -112,7 +117,7 @@ export default class UrlResolver  {
 				finalPath = finalPath.substring(3, finalPath.length);
 			}
 		}
-		let returnPath = this._basePath + "/";
+		let returnPath = (this._basePath) ? this._basePath + "/" : "";
 		if(this._folderNamesArray.length > 0) {
 			let currentArray = this._folderNamesArray;
 			for(let i = 0;i < endNr; i++) {
