@@ -80,7 +80,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 		
 		this._lastValue = JSON.stringify(this._value);
 		
-		if(this._value) {
+		if(this._value !== undefined) {
 			this._externalStorage.updateValue("value", Wprr.utils.object.copyViaJson(this._value));
 			this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
 		}
