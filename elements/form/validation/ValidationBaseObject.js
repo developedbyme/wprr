@@ -34,7 +34,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 	
 	removeInvalidStateOnChange() {
 		let validationController = this.getReferenceIfExists("validation/form");
-		if(validationController) {
+		if(validationController && validationController.removeInvalidStateOnChange) {
 			validationController.removeInvalidStateOnChange();
 		}
 	}

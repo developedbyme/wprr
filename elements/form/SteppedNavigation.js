@@ -80,13 +80,13 @@ export default class SteppedNavigation extends WprrBaseObject {
 					Wprr.sourceReferenceIfExists("steppedNavigation/nextCommands"),
 					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "nextCommands")
 				)},
-				React.createElement("div", {"className": "icon-button-round large"},
-					React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain icon-button-round-image"})
+				React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding cursor-pointer"},
+					React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain full-size"})
 				)
 			);
 		
-			let inactiveButton = React.createElement("div", {"className": "icon-button-round large disabled"},
-				React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain icon-button-round-image"})
+			let inactiveButton = React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding disabled"},
+				React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain full-size"})
 			);
 		
 			let activeBackButton = React.createElement(Wprr.CommandButton,
@@ -95,13 +95,13 @@ export default class SteppedNavigation extends WprrBaseObject {
 					Wprr.sourceReferenceIfExists("steppedNavigation/previousCommands"),
 					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "previousCommands")
 				)},
-				React.createElement("div", {"className": "icon-button-round outlined"},
-					React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain icon-button-round-image"})
+				React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined cursor-pointer"},
+					React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain full-size"})
 				)
 			);
 		
-			let inactiveBackButton = React.createElement("div", {"className": "icon-button-round outlined disabled"},
-				React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain icon-button-round-image"})
+			let inactiveBackButton = React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined disabled"},
+				React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain full-size"})
 			);
 		
 			let layout = React.createElement(Wprr.FlexRow, {className: "justify-between small-item-spacing vertically-center-items", itemClasses: "width-50,flex-no-resize,width-50"},
@@ -151,7 +151,7 @@ export default class SteppedNavigation extends WprrBaseObject {
 						)})
 					)
 				),
-				"pagerItem": React.createElement("div", {className: "pager-circle"}),
+				"pagerItem": React.createElement("div", {className: "pager-circle stepped-navigation-step-indicator"}),
 				"pagerHolder": React.createElement(Wprr.FlexRow, {className: "micro-item-spacing"}),
 				"previousCommands": Wprr.commands.callFunction(window.history, "back"),
 				"nextCommands": Wprr.commands.submitForm()

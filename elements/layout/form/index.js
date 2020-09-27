@@ -5,6 +5,7 @@ export {default as MultiStepDropdownNavigationBar} from "./MultiStepDropdownNavi
 export {default as DateSelection} from "./DateSelection";
 export {default as FieldWithLabel} from "./FieldWithLabel";
 export {default as BigSelectionBox} from "./BigSelectionBox";
+export {default as OptionsBar} from "./OptionsBar";
 
 import * as validation from "./validation/index.js";
 export {validation};

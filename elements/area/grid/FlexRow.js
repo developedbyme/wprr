@@ -42,7 +42,10 @@ export default class FlexRow extends WprrBaseObject {
 	}
 	
 	_getFlexItem(aChild, aKeyIndex) {
-		return React.createElement("div", {"key": "flex-item-"+aKeyIndex, className: this._getItemClassName(aChild, aKeyIndex)}, aChild);
+		
+		let itemHolderType = this.getFirstInputWithDefault("itemHolderType", "div");
+		
+		return React.createElement(itemHolderType, {"key": "flex-item-"+aKeyIndex, className: this._getItemClassName(aChild, aKeyIndex)}, aChild);
 	}
 	
 	_getFlexItems() {
