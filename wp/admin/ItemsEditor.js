@@ -307,6 +307,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			let relationsStorage = new Wprr.utils.DataStorage();
 			item.addType("relations", relationsStorage);
 			
+			item.addType("singleRelation", new Wprr.utils.wp.dbmcontent.relation.SingleRelation());
+			
 			let relationEditors = new Wprr.utils.wp.dbmcontent.relation.RelationEditors();
 			item.addType("relationEditors", relationEditors);
 			saveItems.push(relationEditors);
