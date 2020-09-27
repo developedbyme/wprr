@@ -48,6 +48,15 @@ export default class Project {
 		return loader;
 	}
 	
+	getEditLoader(aId) {
+		let loader = new Wprr.utils.loading.EditLoader();
+		
+		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getEditUrl(aId)));
+		this.addUserCredentialsToLoader(loader);
+		
+		return loader;
+	}
+	
 	getSharedLoader(aUrl) {
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		

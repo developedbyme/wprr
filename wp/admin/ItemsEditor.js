@@ -58,6 +58,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this.addPostField("status", "status");
 		
+		this._commands = Wprr.utils.InputDataHolder.create();
+		
 		console.log(this);
 	}
 	
@@ -79,6 +81,34 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	
 	get addChangeData() {
 		return this._addChangeData;
+	}
+	
+	get commands() {
+		return this._commands;
+	}
+	
+	addCommand(aName, aCommand) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		//METODO: we just assumes that it is an array
+		this._commands.getRawInput(aName).push(aCommand);
+		
+		return this;
+	}
+	
+	addCommands(aName, aCommands) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		let commands = this._commands.getRawInput(aName);
+		//METODO: we just assumes that it is an array
+		commands = commands.concat(aCommands);
+		this._commands.setInput(aName, commands);
+		
+		return this;
 	}
 	
 	setProject(aProject) {
@@ -234,7 +264,28 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return item;
 	}
 	
+	addItems(aDatas) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aDatas;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray.push(this.addItemData(currentArray[i]));
+		}
+		
+		return returnArray;
+	}
+	
 	addItemData(aData) {
+		console.log("addItemData");
+		console.log(aData);
+		
+		if(!aData) {
+			console.error("No data provided", aData);
+			return null;
+		}
+		
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
 		
@@ -380,6 +431,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		}
 		
 		item.addType("saveItems", saveItems);
+		
+		{
+			let commandName = "setupItem";
+			if(this._commands.hasInput(commandName)) {
+				Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, null, this), item, this);
+			}
+		}
 		
 		let allIds = [].concat(this._editStorage.getValue("allIds"));
 		allIds.push(currentId);

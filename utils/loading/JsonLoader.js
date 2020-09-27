@@ -206,6 +206,12 @@ export default class JsonLoader {
 		return this;
 	}
 	
+	_prepareLoad() {
+		this.runCommandGroup("prepareLoad", null);
+		
+		return this;
+	}
+	
 	load() {
 		
 		if(this._status === JsonLoader.STATUS_NOT_STARTED) {
@@ -218,10 +224,14 @@ export default class JsonLoader {
 			return this;
 		}
 		
+		this._prepareLoad();
+		
 		let sendParameters =  {"credentials": this._credentials, "method": this._method, headers: this._headers};
 		if(this._method !== "GET" && this._method !== "HEAD") {
 			sendParameters["body"] = this._body;
 		}
+		
+		this.runCommandGroup("start", null);
 		
 		fetch(this._url, sendParameters)
 		.then( (response) => {

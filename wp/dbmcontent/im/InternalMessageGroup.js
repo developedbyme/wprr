@@ -153,7 +153,12 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 	}
 	
 	getFields() {
-		return this.item.getType("fields").getAsType("field");
+		let fieldsItem = this.item.getType("fields");
+		if(!fieldsItem) {
+			//METODO: warning message
+			return [];
+		}
+		return fieldsItem.getAsType("field");
 	}
 	
 	getFieldNames() {
