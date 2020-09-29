@@ -92,43 +92,78 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this._internalPrefix + nextId;
 	}
 	
+	_setSlugPathForItem(aItem) {
+		//console.log("_setSlugPathForItem");
+		//console.log(aItem);
+		
+		let parent = Wprr.objectPath(aItem, "parent.linkedItem");
+		if(parent) {
+			if(!parent.hasType("slugPath")) {
+				this._setSlugPathForItem(parent);
+			}
+			aItem.addType("slugPath", parent.getType("slug") + "/" + aItem.getType("slug"));
+		}
+		else {
+			aItem.addType("slugPath", aItem.getType("slug"));
+		}
+	}
+	
 	addTerms(aTerms, aTaxonomy) {
-		console.log("addTerms");
-		console.log(aTerms, aTaxonomy);
+		//console.log("addTerms");
+		//console.log(aTerms, aTaxonomy);
 		
 		let allIds = new Array();
+		let allItems = new Array();
 		let topLevel = new Array();
 		let children = new Object();
 		
-		let currentArray = aTerms;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentTerm = currentArray[i];
-			let currentId = currentTerm["id"];
-			let itemId = "term" + currentId;
+		let taxonomyItemName = "taxonomy-" + aTaxonomy;
+		
+		{
+			let currentArray = aTerms;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTerm = currentArray[i];
+				let currentId = currentTerm["id"];
+				let itemId = "term" + currentId;
 			
-			allIds.push(itemId);
+				allIds.push(itemId);
 			
-			let item = this.getItem(itemId);
-			item.addType("data", currentTerm);
-			item.addType("slug", currentTerm["slug"]);
-			item.addType("name", currentTerm["name"]);
+				let item = this.getItem(itemId);
+				allItems.push(item);
+				item.addType("data", currentTerm);
+				item.addType("slug", currentTerm["slug"]);
+				item.addType("name", currentTerm["name"]);
+				item.addSelectLink("childBySlug", "children", "slug");
+				item.addSingleLink("taxonomy", taxonomyItemName);
 			
-			//METODO: add child by path
+				//METODO: add child by path
 			
-			let parentId = currentTerm["parentId"]
-			if(parentId) {
-				let parentItemId = "term" + parentId;
-				item.addSingleLink("parent", parentItemId);
+				let parentId = currentTerm["parentId"]
+				if(parentId) {
+					let parentItemId = "term" + parentId;
+					item.addSingleLink("parent", parentItemId);
 				
-				if(!children[parentItemId]) {
-					children[parentItemId] = new Array();
+					if(!children[parentItemId]) {
+						children[parentItemId] = new Array();
+					}
+				
+					children[parentItemId].push(itemId);
 				}
-				
-				children[parentItemId].push(itemId);
+				else {
+					topLevel.push(itemId);
+				}
 			}
-			else {
-				topLevel.push(itemId);
+		}
+		
+		{
+			let currentArray = allItems;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				if(!currentItem.hasType("slugPath")) {
+					this._setSlugPathForItem(currentItem);
+				}
 			}
 		}
 		
@@ -138,8 +173,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 			currentChildrenLinks.addItems(children[objectName]);
 		}
 		
-		let taxonomyItemName = "taxonomy-" + aTaxonomy;
 		let taxonomyItem = this.getItem(taxonomyItemName);
+		taxonomyItem.addType("systemName", aTaxonomy);
 		
 		let allLinks = taxonomyItem.getLinks("all");
 		allLinks.addItems(allIds);
@@ -148,6 +183,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		topLevelLinks.addItems(topLevel);
 		
 		taxonomyItem.addSelectLink("termBySlug", "all", "slug");
+		taxonomyItem.addSelectLink("termBySlugPath", "all", "slugPath");
 		taxonomyItem.addSelectLink("topLevelTermBySlug", "topLevel", "slug");
 		
 	}

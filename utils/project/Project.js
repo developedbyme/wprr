@@ -48,11 +48,32 @@ export default class Project {
 		return loader;
 	}
 	
+	getCreateLoader(aPostType = "dbm_data", aDataType = "none", aCreationMethod = "draft", aTitle = "New item") {
+		let loader = new Wprr.utils.loading.EditLoader();
+		
+		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getCreateUrl(aPostType)));
+		loader.changeData.setTitle(aTitle);
+		loader.changeData.addSetting("dataType", aDataType);
+		loader.changeData.addSetting("creationMethod", aCreationMethod);
+		this.addUserCredentialsToLoader(loader);
+		
+		return loader;
+	}
+	
 	getEditLoader(aId) {
 		let loader = new Wprr.utils.loading.EditLoader();
 		
 		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getEditUrl(aId)));
 		this.addUserCredentialsToLoader(loader);
+		
+		return loader;
+	}
+	
+	getActionLoader(aActionName) {
+		let loader = this.getLoader();
+		
+		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getActionUrl(aActionName)));
+		loader.setMethod("POST");
 		
 		return loader;
 	}
@@ -71,6 +92,14 @@ export default class Project {
 		}
 		
 		return aLoader;
+	}
+	
+	setUserData(aData) {
+		let storeController = this._mainReferences.getObject("redux/store/wprrController");
+		this._mainReferences.addObject("wprr/userData", aData);
+		storeController.setUser(aData);
+		
+		return this;
 	}
 	
 	getCurrentLanguage() {

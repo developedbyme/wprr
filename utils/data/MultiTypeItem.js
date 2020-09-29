@@ -28,6 +28,22 @@ export default class MultiTypeItem {
 		return this._group;
 	}
 	
+	get cache() {
+		if(!this.hasType("cache")) {
+			this.addType("cache", new Wprr.utils.DataStorage());
+		}
+		
+		return this.getType("cache");
+	}
+	
+	get settings() {
+		if(!this.hasType("settings")) {
+			this.addType("settings", new Wprr.utils.DataStorage());
+		}
+		
+		return this.getType("settings");
+	}
+	
 	setGroup(aGroup) {
 		this._group = aGroup;
 		
@@ -96,6 +112,16 @@ export default class MultiTypeItem {
 		return (this._types[aType] !== undefined);
 	}
 	
+	hasSetting(aName) {
+		return Wprr.objectPath(this.settings, aName) !== undefined;
+	}
+	
+	addSetting(aName, aValue) {
+		this.settings.updateValue(aName, aValue);
+		
+		return this;
+	}
+	
 	hasObjectPathHandling() {
 		return true;
 	}
@@ -109,6 +135,8 @@ export default class MultiTypeItem {
 		switch(firstPart) {
 			case "id":
 			case "group":
+			case "cache":
+			case "settings":
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		

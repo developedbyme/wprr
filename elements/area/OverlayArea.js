@@ -112,7 +112,7 @@ export default class OverlayArea extends WprrBaseObject {
 		}).bind(this);
 		let localTriggerObject = {"trigger": triggerFunction};
 		
-		let injectData = {"overlay/id": overlayId, "trigger/closeCurrentOverlay": localTriggerObject};
+		let injectData = {"overlay/id": overlayId, "trigger/closeCurrentOverlay": localTriggerObject, "closeCurrentOverlay": triggerFunction};
 		
 		let returnElement = React.createElement(ReferenceInjection, {key: "overlay-" + overlayId, injectData: injectData},
 			aOverlayData.content

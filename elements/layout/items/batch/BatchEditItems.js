@@ -59,8 +59,19 @@ export default class BatchEditItems extends Layout {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentName = currentArray[i];
-				console.log(">", currentName, aData[currentName]);
 				this._itemsEditor.addNames(aData[currentName]);
+			}
+		}
+	}
+	
+	_addTerms(aData) {
+		let taxonomiesToLoad = this.getFirstInput("taxonomiesToLoad");
+		if(taxonomiesToLoad) {
+			let currentArray = Wprr.utils.array.arrayOrSeparatedString(taxonomiesToLoad);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentName = currentArray[i];
+				this._itemsEditor.items.addTerms(aData[currentName], currentName);
 			}
 		}
 	}
@@ -79,7 +90,15 @@ export default class BatchEditItems extends Layout {
 			}
 		}
 		
-		//METODO: add terms to load
+		let taxonomiesToLoad = this.getFirstInput("taxonomiesToLoad");
+		if(taxonomiesToLoad) {
+			let currentArray = Wprr.utils.array.arrayOrSeparatedString(taxonomiesToLoad);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentName = currentArray[i];
+				this._loadData[currentName] = "wprr/v1/taxonomy/" + currentName + "/terms";
+			}
+		}
 		
 		//METODO: set operations
 		
@@ -91,7 +110,10 @@ export default class BatchEditItems extends Layout {
 							React.createElement("div", {"data-slot": "operations"})
 						),
 						React.createElement("div", {className: "spacing standard"}),
-						React.createElement(Wprr.DataLoader, {loadData: this._loadData, loadedCommands: Wprr.commands.callFunction(this, this._addNames, [Wprr.source("event", "raw")])},
+						React.createElement(Wprr.DataLoader, {loadData: this._loadData, loadedCommands: [
+							Wprr.commands.callFunction(this, this._addNames, [Wprr.source("event", "raw")]),
+							Wprr.commands.callFunction(this, this._addTerms, [Wprr.source("event", "raw")])
+						]},
 							React.createElement(Wprr.EditableProps, {editableProps: "filteredIds", externalStorage: Wprr.sourceReference("externalStorage")},
 								React.createElement(Wprr.layout.ItemList, {ids: Wprr.sourceProp("filteredIds"), className: "item-list"},
 									React.createElement(Wprr.layout.items.batch.FieldsListItem, {cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)})
