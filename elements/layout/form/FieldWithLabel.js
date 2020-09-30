@@ -13,7 +13,7 @@ export default class FieldWithLabel extends Layout {
 	 */
 	constructor() {
 		//console.log("FieldWithLabel::constructor");
-
+		
 		super();
 		
 		this._layoutName = "fieldWithLabel";
