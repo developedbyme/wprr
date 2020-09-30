@@ -110,7 +110,7 @@ export default class DataStorage extends AbstractDataStorage {
 	getValue(aName) {
 		//console.log("wprr/utils/DataStorage::getValue");
 		
-		return objectPath.get(this._data, aName);
+		return Wprr.objectPath(this._data, aName);
 	}
 	
 	addValueToArray(aName, aValue) {

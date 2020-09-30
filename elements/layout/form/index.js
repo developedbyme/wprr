@@ -7,6 +7,7 @@ export {default as FieldWithLabel} from "./FieldWithLabel";
 export {default as BigSelectionBox} from "./BigSelectionBox";
 export {default as OptionsBar} from "./OptionsBar";
 export {default as BigSelections} from "./BigSelections";
+export {default as LabelledArea} from "./LabelledArea";
 
 import * as validation from "./validation/index.js";
 export {validation};

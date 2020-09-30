@@ -60,6 +60,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._commands = Wprr.utils.InputDataHolder.create();
 		
+		this._items.additionalLoader.addCommand(Wprr.commands.callFunction(this, this._setupItem, [Wprr.sourceEvent("item"), Wprr.sourceEvent("data")]), "setup");
+		
 		console.log(this);
 	}
 	
@@ -277,17 +279,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return returnArray;
 	}
 	
-	addItemData(aData) {
-		console.log("addItemData");
-		console.log(aData);
+	_setupItem(aItem, aData) {
 		
-		if(!aData) {
-			console.error("No data provided", aData);
-			return null;
-		}
-		
-		let currentId = aData["id"];
-		let item = this._items.getItem(currentId);
+		let item = aItem;
 		
 		let saveItems = new Array();
 		
@@ -308,6 +302,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			item.addType("relations", relationsStorage);
 			
 			item.addType("singleRelation", new Wprr.utils.wp.dbmcontent.relation.SingleRelation());
+			item.addType("multipleRelations", new Wprr.utils.wp.dbmcontent.relation.MultipleRelations());
 			
 			let relationEditors = new Wprr.utils.wp.dbmcontent.relation.RelationEditors();
 			item.addType("relationEditors", relationEditors);
@@ -389,18 +384,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 			
 			relationsStorage.updateValue("incoming", incoming);
-			
-			//MEDEBUG:
-			/*
-			if(aData["id"] === 64822) {
-				if(this._objectType === "question") {
-					let editor = relationEditors.getEditor("outgoing", "in", "question-set");
-					console.log(editor);
-			
-					editor.add(64846);
-				}
-			}
-			*/
 		}
 		
 		let postEditor = new PostEditor();
@@ -440,6 +423,21 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, null, this), item, this);
 			}
 		}
+	}
+	
+	addItemData(aData) {
+		console.log("addItemData");
+		console.log(aData);
+		
+		if(!aData) {
+			console.error("No data provided", aData);
+			return null;
+		}
+		
+		let currentId = aData["id"];
+		let item = this._items.getItem(currentId);
+		
+		this._setupItem(item, aData);
 		
 		let allIds = [].concat(this._editStorage.getValue("allIds"));
 		allIds.push(currentId);

@@ -59,7 +59,8 @@ export default class ValidationFunctions {
 			return false;
 		}
 		
-		let re = new RegExp("^\\+[1-9]{1,3} ?[0-9\\.\\-\\ ]{3,}$");
+		let re = new RegExp("^\\+[1-9]{1,3} ?[0-9\\.\\-\\ \\(\\)]{3,}$");
+		
 		return re.test(aCheckValue.toLowerCase());
 	}
 	

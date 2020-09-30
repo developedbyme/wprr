@@ -2,6 +2,7 @@ import Wprr from "wprr/Wprr";
 
 import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
+import AdditionalLoader from "wprr/utils/data/AdditionalLoader";
 
 // import MultiTypeItemsGroup from "wprr/utils/data/MultiTypeItemsGroup";
 export default class MultiTypeItemsGroup extends ProjectRelatedItem {
@@ -15,6 +16,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		
 		this._internalPrefix = "-internal";
 		this._nextInternalId = 0;
+		
+		this._additionalLoader = null;
 	}
 	
 	get prefix() {
@@ -25,6 +28,26 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		this._prefix = aValue;
 		
 		return this._prefix;
+	}
+	
+	get additionalLoader() {
+		if(!this._additionalLoader) {
+			this._additionalLoader = new AdditionalLoader();
+			this._additionalLoader.setProject(this.project);
+			this._additionalLoader.setItems(this);
+		}
+		
+		return this._additionalLoader;
+	}
+	
+	setProject(aProject) {
+		super.setProject(aProject);
+		
+		if(this._additionalLoader) {
+			this._additionalLoader.setProject(this.project);
+		}
+		
+		return this;
 	}
 	
 	getItem(aId) {
@@ -52,6 +75,63 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentId = currentArray[i];
 			returnArray.push(this.getItem(currentId));
+		}
+		
+		return returnArray;
+	}
+	
+	hasItem(aId) {
+		let nameWithPrefix = this._prefix + aId;
+		return (this._items[nameWithPrefix] !== undefined);
+	}
+	
+	hasItemType(aId, aType) {
+		if(this.hasItem(aId)) {
+			let item = this.getItem(aId);
+			if(item.hasType(aType)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	hasItems(aIds) {
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			if(!this.hasItem(currentId)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	hasItemsWithType(aIds, aType) {
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			if(!this.hasItemType(currentId, aType)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	getIdsWithMissingType(aIds, aType) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			if(!this.hasItemType(currentId, aType)) {
+				returnArray.push(currentId);
+			}
 		}
 		
 		return returnArray;

@@ -263,14 +263,23 @@ export default class Wprr {
 		let currentArray = aPath.split(".");
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
+			let currentPathPart = currentArray[0];
+			
 			if(currentObject === null || currentObject === undefined) {
 				break;
 			}
-			if(currentObject.getValueForPath) {
+			
+			if(currentPathPart === "(every)") {
+				currentArray.shift();
+				let currentItems = Wprr.utils.array.singleOrArray(currentObject);
+				let returnArray = Wprr.utils.array.mapField(currentItems, currentArray.join("."));
+				return returnArray;
+			}
+			else if(currentObject.getValueForPath) {
 				return currentObject.getValueForPath(currentArray.join("."));
 			}
 			else {
-				let currentPathPart = currentArray.shift();
+				currentArray.shift();
 				
 				let partAsInt = parseInt(currentPathPart, 10);
 				if(partAsInt.toString() === currentPathPart) {

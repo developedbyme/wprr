@@ -28,7 +28,6 @@ export default class BatchEditItems extends Layout {
 		
 		let projectName = this.getFirstInput("projectName", Wprr.sourceReference("wprr/projectName"));
 		let dataType = this.getFirstInput("dataType");
-		console.log(">>>>>", projectName, dataType);
 		
 		this._itemsEditor.relateToProject(projectName);
 		this._itemsEditor.setupCreation(dataType);
@@ -50,8 +49,8 @@ export default class BatchEditItems extends Layout {
 	}
 	
 	_addNames(aData) {
-		console.log("_addNames");
-		console.log(aData);
+		//console.log("_addNames");
+		//console.log(aData);
 		
 		let namesToLoad = this.getFirstInput("namesToLoad");
 		if(namesToLoad) {
