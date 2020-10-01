@@ -52,8 +52,13 @@ export default class LoadAdditionalItems extends Layout {
 		
 		let items = this.getReference("items");
 		
-		items.additionalLoader.loadItems(ids);
-		this._updateLoadStatus();
+		if(ids) {
+			items.additionalLoader.loadItems(ids);
+			this._updateLoadStatus();
+		}
+		else {
+			console.error("No ids set", this);
+		}
 	}
 	
 	_getLayout(aSlots) {

@@ -96,7 +96,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	hasItems(aIds) {
-		let currentArray = aIds;
+		let currentArray = Wprr.utils.array.singleOrArray(aIds);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentId = currentArray[i];
@@ -109,7 +109,13 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	hasItemsWithType(aIds, aType) {
-		let currentArray = aIds;
+		
+		if(!aIds) {
+			console.error("Ids are not set", aIds, aType, this);
+			return false;
+		}
+		
+		let currentArray = Wprr.utils.array.singleOrArray(aIds);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentId = currentArray[i];

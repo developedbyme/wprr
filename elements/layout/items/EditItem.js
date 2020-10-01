@@ -105,7 +105,7 @@ export default class EditItem extends Layout {
 					)
 				),
 				React.createElement("div", {className: "spacing standard"}),
-				React.createElement(Wprr.layout.items.SaveAllButton, null)
+				aSlots.slot("saveButton", React.createElement(Wprr.layout.items.SaveAllButton, null))
 			)
 		);
 	}

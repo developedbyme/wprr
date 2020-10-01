@@ -79,7 +79,11 @@ export default class KeyValueGenerator {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentObject = currentArray[i];
-			let encodedData = {"key": currentObject[aValueField], "value": currentObject[aValueField], "label": currentObject[aLabelField], "item": currentObject};
+			
+			let value = Wprr.objectPath(currentObject, aValueField);
+			let label = Wprr.objectPath(currentObject, aLabelField);
+			
+			let encodedData = {"key": value, "value": value, "label": label, "item": currentObject};
 			returnArray.push(encodedData);
 		}
 		

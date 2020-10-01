@@ -23,6 +23,18 @@ export default class Layout extends WprrBaseObject {
 		
 	}
 	
+	_removeUsedProps(aReturnObject) {
+		super._removeUsedProps(aReturnObject);
+		
+		let currentArray = this._exposedProps;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			delete aReturnObject[currentArray[i]];
+		}
+		
+		return aReturnObject;
+	}
+	
 	addExposedProps(...aNames) {
 		let currentArray = aNames;
 		let currentArrayLength = currentArray.length;

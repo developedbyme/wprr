@@ -76,6 +76,11 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		console.log("AdditionalLoader::loadItems");
 		console.log(aIds);
 		
+		if(!aIds) {
+			console.error("No items added", aIds, this);
+			return;
+		}
+		
 		this._queuedItems = this._queuedItems.concat(aIds);
 		this._queueNextLoad();
 	}
@@ -137,10 +142,6 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		console.log(item, aData);
 		
 		this.runCommandGroup("setup", {"item": item, "data": aData});
-		
-		if(this._setupCommands) {
-			Wprr.utils.CommandPerformer.perform(this._setupCommands, {"item": item, "data": aData}, this);
-		}
 		
 		return this;
 	}
