@@ -3,7 +3,7 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class Standard extends WprrBaseObject {
+export default class TextArea extends WprrBaseObject {
 	
 	constructor(aProps) {
 		super(aProps);
@@ -12,7 +12,7 @@ export default class Standard extends WprrBaseObject {
 	_renderMainElement() {
 		
 		return React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},
-			React.createElement(Wprr.FormField, {valueName: "value", className: "standard-field standard-field-padding full-width"})
+			React.createElement(Wprr.TextArea, {valueName: "value", className: "standard-field standard-field-padding full-width"})
 		);
 	}
 }

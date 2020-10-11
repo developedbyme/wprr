@@ -196,7 +196,7 @@ export default class EditPostForm extends WprrBaseObject {
 		
 		if(editId) {
 			let additionalSelections = this.getSourcedProp("additionalSelections");
-			let selection = "idSelection";
+			let selection = this.getFirstInputWithDefault("selection", "idSelection");
 			if(additionalSelections) {
 				selection += "," + additionalSelections;
 			}

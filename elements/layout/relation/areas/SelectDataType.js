@@ -47,7 +47,9 @@ export default class SelectDataType extends Layout {
 			),
 			React.createElement("div", {className: "custom-selection-menu-padding content-text-small"},
 				React.createElement(Wprr.TermSelection, {taxonomy: "dbm_type", skipNoSelection: true, valueField: "slug"},
-					Wprr.Loop.createMarkupLoop(Wprr.sourceProp("options"), loopItem)
+					React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.addToArray(Wprr.sourceProp("options"), [{"value": "any", "label": "Any"}], true, "options")}, 
+						Wprr.Loop.createMarkupLoop(Wprr.sourceProp("options"), loopItem)
+					)
 				)
 			)
 		);

@@ -34,7 +34,6 @@ export default class EditItem extends Layout {
 		
 		let item = this.getFirstInput("item", Wprr.sourceReference("item"));
 		
-		console.log(">>>>>>>>>>>>>>>>>>", item, this._itemsEditor);
 		this._itemsEditor.addItemData(item);
 		
 		let additionalItems = this.getFirstInputWithDefault("additionalItems", Wprr.sourceStatic(item, "additionalItems"), []);

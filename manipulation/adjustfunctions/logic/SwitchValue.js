@@ -19,6 +19,7 @@ export default class SwitchValue extends AdjustFunction {
 		
 		this.setInput("input", SourceData.create("prop", "input"));
 		this.setInput("options", SourceData.create("prop", "options"));
+		this.setInput("defaultKey", null);
 		this.setInput("defaultValue", null);
 		this.setInput("outputName", "output");
 		
@@ -49,9 +50,11 @@ export default class SwitchValue extends AdjustFunction {
 		let input = this.getInput("input", aData, aManipulationObject);
 		let options = this.getInput("options", aData, aManipulationObject);
 		let outputName = this.getInput("outputName", aData, aManipulationObject);
+		let defaultKey = this.getInput("defaultKey", aData, aManipulationObject);
 		
 		this.removeUsedProps(aData);
 		
+		let defaultOption = null;
 		let returnValue = null;
 		
 		let currentArray = options;
@@ -61,6 +64,13 @@ export default class SwitchValue extends AdjustFunction {
 			if(currentOption.key === input) {
 				returnValue = currentOption.value;
 			}
+			if(currentOption.key === defaultKey) {
+				defaultOption = currentOption.value;
+			}
+		}
+		
+		if(!returnValue && defaultOption) {
+			returnValue = defaultOption;
 		}
 		
 		if(!returnValue) {

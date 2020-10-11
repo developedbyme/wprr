@@ -74,4 +74,14 @@ export default class LoadAdditionalItems extends Layout {
 			),
 		);
 	}
+	
+	static createFromRelation(aDirection, aConnectionType, aObjectType, aElement) {
+		
+		let pointerName = (aDirection === "outgoing") ? "to" : "from";
+		let idSource = Wprr.sourceReference("item", "multipleRelations." + aDirection + "." + aConnectionType + "." + aObjectType + ".(every)." + pointerName + ".id");
+		
+		return React.createElement(LoadAdditionalItems, {"ids": idSource},
+			aElement
+		);
+	}
 }
