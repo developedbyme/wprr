@@ -32,11 +32,16 @@ export default class BigSelections extends Layout {
 		let valueSource = externalStorageSource.deeper(valueNameSource);
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		
-		let defaultLoopItem = <Wprr.CommandButton commands={Wprr.commands.setValue(externalStorageSource, valueNameSource, itemValueSource)}>
-			<Wprr.Adjust adjust={Wprr.adjusts.condition(valueSource, itemValueSource, "===", "active", "not-active")} sourceUpdates={valueSource}>
-				<Wprr.layout.form.BigSelectionBox title={Wprr.sourceReference("loop/item", "label")} description={Wprr.sourceReference("loop/item", "description")} className="cursor-pointer" />
-			</Wprr.Adjust>
-		</Wprr.CommandButton>;
+		let defaultLoopItem = React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.setValue(externalStorageSource, valueNameSource, itemValueSource)
+}, /*#__PURE__*/React.createElement(Wprr.Adjust, {
+  adjust: Wprr.adjusts.condition(valueSource, itemValueSource, "===", "active", "not-active"),
+  sourceUpdates: valueSource
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.BigSelectionBox, {
+  title: Wprr.sourceReference("loop/item", "label"),
+  description: Wprr.sourceReference("loop/item", "description"),
+  className: "cursor-pointer"
+})));
 		
 		let loopItem = aSlots.slot("loopItem", defaultLoopItem);
 		let spacing = aSlots.slot("spacing", React.createElement("div", {"className": "spacing small"}));

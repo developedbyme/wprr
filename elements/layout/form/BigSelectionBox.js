@@ -30,13 +30,18 @@ export default class BigSelectionBox extends Layout {
 			return React.createElement("div", {className: "standard-box big-box-padding"},
 				React.createElement(Wprr.FlexRow, {className: "small-item-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize"},
 					aSlots.slot("select",
-						<Wprr.Adjust adjust={Wprr.adjusts.classFromComparison(aSlots.prop("active", false), true, "===", "active")} sourceUpdates={Wprr.sourceReference("bigSelectionBox/externalStorage", "slots.active")}>
-							<div className="checkmark-circle checkmark-circle-padding">
-								<Wprr.HasData check={aSlots.useProp("active")} sourceUpdates={Wprr.sourceReference("bigSelectionBox/externalStorage", "slots.active")}>
-									<Wprr.Image className="background-contain icon full-size" src="checkmark-bold-white.svg" />
-								</Wprr.HasData>
-							</div>
-						</Wprr.Adjust>
+		React.createElement(Wprr.Adjust, {
+		  adjust: Wprr.adjusts.classFromComparison(aSlots.prop("active", false), true, "===", "active"),
+		  sourceUpdates: Wprr.sourceReference("bigSelectionBox/externalStorage", "slots.active")
+		}, /*#__PURE__*/React.createElement("div", {
+		  className: "checkmark-circle checkmark-circle-padding"
+		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: aSlots.useProp("active"),
+		  sourceUpdates: Wprr.sourceReference("bigSelectionBox/externalStorage", "slots.active")
+		}, /*#__PURE__*/React.createElement(Wprr.Image, {
+		  className: "background-contain icon full-size",
+		  src: "checkmark-bold-white.svg"
+		}))))
 					),
 					aSlots.default(
 						React.createElement("div", {},

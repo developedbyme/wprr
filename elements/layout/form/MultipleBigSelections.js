@@ -32,15 +32,20 @@ export default class MultipleBigSelections extends Layout {
 		let valueSource = externalStorageSource.deeper(valueNameSource);
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		
-		let defaultLoopItem = <Wprr.MultipleSelectionValue fieldName={valueNameSource} value={itemValueSource} externalStorage={externalStorageSource}>
-			<Wprr.CommandButton commands={Wprr.commands.toggleValue(Wprr.sourceReference("value/selected"), "selected", Wprr.sourceProp("selected"))}>
-				<Wprr.Adjust adjust={Wprr.adjusts.condition(Wprr.sourceProp("selected"), true, "===", "active", "not-active")} sourceUpdates={valueSource}>
-				
-						<Wprr.layout.form.BigSelectionBox title={Wprr.sourceReference("loop/item", "label")} description={Wprr.sourceReference("loop/item", "description")} className="cursor-pointer" />
-				
-				</Wprr.Adjust>
-			</Wprr.CommandButton>
-		</Wprr.MultipleSelectionValue>;
+		let defaultLoopItem = React.createElement(Wprr.MultipleSelectionValue, {
+  fieldName: valueNameSource,
+  value: itemValueSource,
+  externalStorage: externalStorageSource
+}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.toggleValue(Wprr.sourceReference("value/selected"), "selected", Wprr.sourceProp("selected"))
+}, /*#__PURE__*/React.createElement(Wprr.Adjust, {
+  adjust: Wprr.adjusts.condition(Wprr.sourceProp("selected"), true, "===", "active", "not-active"),
+  sourceUpdates: valueSource
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.BigSelectionBox, {
+  title: Wprr.sourceReference("loop/item", "label"),
+  description: Wprr.sourceReference("loop/item", "description"),
+  className: "cursor-pointer"
+}))));
 		
 		let loopItem = aSlots.slot("loopItem", defaultLoopItem);
 		let spacing = aSlots.slot("spacing", React.createElement("div", {"className": "spacing small"}));

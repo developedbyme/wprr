@@ -32,13 +32,14 @@ export default class OptionsBar extends Layout {
 		let valueSource = externalStorageSource.deeper(valueNameSource);
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		
-		let defaultLoopItem = <Wprr.CommandButton commands={Wprr.commands.setValue(externalStorageSource, valueNameSource, itemValueSource)}>
-			<Wprr.Adjust adjust={Wprr.adjusts.classFromComparison(valueSource, itemValueSource, "===", "active", "not-active")} sourceUpdates={valueSource}>
-				<div className="option options-bar-padding text-align-center cursor-pointer flex-resize">
-					{Wprr.text(Wprr.sourceReference("loop/item", "label"))}
-				</div>
-			</Wprr.Adjust>
-		</Wprr.CommandButton>;
+		let defaultLoopItem = React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.setValue(externalStorageSource, valueNameSource, itemValueSource)
+}, /*#__PURE__*/React.createElement(Wprr.Adjust, {
+  adjust: Wprr.adjusts.classFromComparison(valueSource, itemValueSource, "===", "active", "not-active"),
+  sourceUpdates: valueSource
+}, /*#__PURE__*/React.createElement("div", {
+  className: "option options-bar-padding text-align-center cursor-pointer flex-resize"
+}, Wprr.text(Wprr.sourceReference("loop/item", "label")))));
 		
 		let loopItem = aSlots.slot("loopItem", defaultLoopItem);
 		let spacing = aSlots.slot("spacing", React.createElement("div", {"className": "vertical-spacer-line flex-no-resize"}));
