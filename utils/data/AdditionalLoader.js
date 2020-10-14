@@ -16,7 +16,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		this._commandGroups = new Object();
 		
 		this._dataTypeName = "data";
-		this._url = "wprr/v1/range/any/privates,drafts,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={ids}";
+		this._url = "wprr/v1/range/any/privates,draftsIfAllowed,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={ids}";
 		
 		this._isLoading = false;
 		this._startQueueBound = this._startQueue.bind(this);

@@ -157,4 +157,36 @@ export default class ChangeData  {
 		
 		return this;
 	}
+	
+	replaceIncomingRelation(aPostId, aType, aObjectType) {
+		this.createChange("dbm/replaceIncomingRelation", {"relationType": aType, "objectType": aObjectType, "value": aPostId});
+		
+		return this;
+	}
+	
+	setIncomingRelations(aPostIds, aType, aObjectType) {
+		this.createChange("dbm/endIncomingRelations", {"relationType": aType, "objectType": aObjectType});
+		
+		let currentArray = Wprr.utils.array.singleOrArray(aPostIds);
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			this.createChange("dbm/addIncomingRelation", {"relationType": aType, "value": currentId, "makePrivate": true});
+		}
+		
+		return this;
+	}
+	
+	setOutgoingRelations(aPostIds, aType, aObjectType) {
+		this.createChange("dbm/endOutgoingRelations", {"relationType": aType, "objectType": aObjectType});
+		
+		let currentArray = Wprr.utils.array.singleOrArray(aPostIds);
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			this.createChange("dbm/addOutgoingRelation", {"relationType": aType, "value": currentId, "makePrivate": true});
+		}
+		
+		return this;
+	}
 }

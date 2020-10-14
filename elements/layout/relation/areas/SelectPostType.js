@@ -32,6 +32,7 @@ export default class SelectPostType extends Layout {
 			"dbm_area": "Areas",
 			"dbm_additional": "Additional pages",
 			"dbm_data": "Data",
+			"product": "Product",
 			"any": "Any"
 		};
 		
