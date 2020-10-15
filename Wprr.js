@@ -30,6 +30,7 @@ export default class Wprr {
 	constructor() {
 		this._moduleCreators = new Object();
 		this._projects = new Object();
+		this._scripts = new Object();
 		
 		if(window && window.requestAnimationFrame) {
 			function animate(time) {
@@ -292,6 +293,24 @@ export default class Wprr {
 		}
 		
 		return currentObject;
+	}
+	
+	loadScript(aPath, aCommands) {
+		if(!this._scripts[aPath]) {
+			let newLoader = new Wprr.utils.loading.ScriptLoader();
+			newLoader.setUrl(aPath);
+			this._scripts[aPath] = newLoader;
+		}
+		
+		let scriptLoader = this._scripts[aPath];
+		
+		if(scriptLoader.hasCompleted()) {
+			scriptLoader.runCommands(aCommands);
+		}
+		else {
+			scriptLoader.addSuccessCommand(aCommands);
+			scriptLoader.load();
+		}
 	}
 }
 
