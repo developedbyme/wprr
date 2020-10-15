@@ -10,6 +10,7 @@
   "author": "mattias@developedbyme.com",
   "license": "MIT",
   "dependencies": {
+    "@tinymce/tinymce-react": "^3.8.0",
     "@tweenjs/tween.js": "^18.5.0",
     "document-offset": "^1.0.4",
     "file-saver": "^2.0.2",
