@@ -17,10 +17,18 @@ export default class PostEditor extends MultiTypeItemConnection {
 	
 	addField(aName, aValue, aSaveType = "meta", aChangeGenerator = null) {
 		
+		//METODO: check if field is already added
+		
 		this._changeFields.push({"field": aName, "saveType": aSaveType, "changeGenerator": aChangeGenerator});
 		
 		this.item.getType("editStorage").updateValue(aName, aValue);
 		this.item.getType("editStorage").updateValue("saved." + aName, aValue);
+		
+		return this;
+	}
+	
+	updateField(aName, aValue) {
+		this.item.getType("editStorage").updateValue(aName, aValue);
 		
 		return this;
 	}

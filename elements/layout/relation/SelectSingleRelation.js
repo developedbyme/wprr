@@ -29,18 +29,18 @@ export default class SelectSingleRelation extends Layout {
 		let toIdSource = editorSource.deeper("item.group").deeper(activeId).deeper(aSlots.prop("direction", "to")).deeper("id");
 		
 		let dataType = aSlots.prop("dataType", "dbm_data");
-		let includedStatuses = aSlots.prop("includedStatuses", "drafts,privates");
+		let includedStatuses = aSlots.prop("includedStatuses", "draftsIfAllowed,privates");
 		let objectType = aSlots.prop("objectType", editorSource.deeper("objectType"));
 		let rangePath = aSlots.prop("rangePath", Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
 		
-		return React.createElement("div", {
-  className: "select-single-relation"
-}, React.createElement(Wprr.RangeSelection, {
-  range: rangePath
-}, aSlots.default( React.createElement(Wprr.Selection, {
-  selection: toIdSource,
-  changeCommands: Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.source("event", "raw")]),
-  sourceUpdates: activeIds
-}))));
+		let skipNoSelection = aSlots.prop("skipNoSelection", false);
+		
+		return React.createElement("div", {className: "select-single-relation"},
+			React.createElement(Wprr.RangeSelection, {range: rangePath, skipNoSelection: skipNoSelection},
+				aSlots.default(
+					React.createElement(Wprr.Selection, {selection: toIdSource, changeCommands: Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.source("event", "raw")]), sourceUpdates: activeIds})
+				)
+			)
+		);
 	}
 }

@@ -9,6 +9,7 @@ export {default as OptionsBar} from "./OptionsBar";
 export {default as BigSelections} from "./BigSelections";
 export {default as MultipleBigSelections} from "./MultipleBigSelections";
 export {default as LabelledArea} from "./LabelledArea";
+export {default as CheckmarkCircle} from "./CheckmarkCircle";
 
 import * as validation from "./validation/index.js";
 export {validation};

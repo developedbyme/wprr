@@ -446,13 +446,18 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return item;
 	}
 	
-	setupCreation(aType, aInGroup = null) {
+	setupCreation(aType, aInGroup = null, aCreationMethod = null) {
 		
 		this._objectType = aType;
 		
 		this._addChangeData = new Wprr.utils.ChangeData();
 		this._addChangeData.setTitle("New " + aType);
-		this._addChangeData.setTerm(aType, "dbm_type", "slugPath");
+		this._addChangeData.setTerm(aType, "dbm_type", "slugPath", "addTerms");
+		
+		this._addChangeData.addSetting("dataType", aType);
+		if(aCreationMethod) {
+			this._addChangeData.addSetting("creationMethod", aCreationMethod);
+		}
 		
 		if(aInGroup) {
 			this._addChangeData.setField("dbm/inAdminGrouping", aInGroup);

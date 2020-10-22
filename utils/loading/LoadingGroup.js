@@ -67,6 +67,8 @@ export default class LoadingGroup {
 			let currentLoader = currentArray[i];
 			currentLoader.load();
 		}
+		
+		this.updateStatus();
 	}
 	
 	getData(aPath) {

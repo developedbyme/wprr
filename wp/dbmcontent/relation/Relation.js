@@ -128,6 +128,10 @@ export default class Relation extends MultiTypeItemConnection {
 		return false;
 	}
 	
+	isActiveNow() {
+		return this.isActiveAt(moment().unix());
+	}
+	
 	hasUnsavedChanges() {
 		
 		if(this._externalStorage.getValue("startAt") !== this._externalStorage.getValue("saved.startAt")) {

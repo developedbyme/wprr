@@ -26,7 +26,7 @@ export default class LoadAdditionalItems extends Layout {
 	
 	_updateLoadStatus() {
 		console.log("LoadAdditionalItems::_updateLoadStatus");
-		let ids = this.getFirstInput("ids");
+		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
 		let items = this.getReference("items");
 		
 		let isLoaded = items.hasItemsWithType(ids, "data");
@@ -48,7 +48,7 @@ export default class LoadAdditionalItems extends Layout {
 		console.log("LoadAdditionalItems::_prepareRender");
 		super._prepareRender();
 		
-		let ids = this.getFirstInput("ids");
+		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
 		
 		let items = this.getReference("items");
 		

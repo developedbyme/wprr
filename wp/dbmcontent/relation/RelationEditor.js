@@ -128,6 +128,20 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		return aLoader;
 	}
 	
+	hasActiveRelationToItem(aId) {
+		let currentArray = this.externalStorage.getValue(this.activePath);
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentRelationId = currentArray[i];
+			let currentRelation = this.item.group.getItem(currentRelationId);
+			if(Wprr.objectPath(currentRelation, this.directionIdName + ".id") === aId) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	add(aId) {
 		console.log("RelationEditor::add");
 		console.log(aId);

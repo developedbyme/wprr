@@ -19,9 +19,19 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		//console.log("getEditor");
 		//console.log(aDirection, aConnectionType, aObjectType);
 		
+		console.log(">>", this.item.getType("relations"));
 		let relations = this.item.getType("relations").getValue(aDirection + "." + aConnectionType + "." + aObjectType);
-		if(relations.length > 0) {
-			return this.item.group.getItem(relations[0]);
+		if(relations && relations.length > 0) {
+			
+			let currentArray = relations;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let item = this.item.group.getItem(relations[i]);
+				let relation = item.getType("relation");
+				if(relation.isActiveNow()) {
+					return item;
+				}
+			}
 		}
 		
 		return null;
@@ -46,7 +56,6 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		
 		let restParts = tempArray.join(".");
 		
-		console.log(this.getRelation(firstPart, connectionType, objectType), restParts);
 		return Wprr.objectPath(this.getRelation(firstPart, connectionType, objectType), restParts);
 	}
 }

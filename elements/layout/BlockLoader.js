@@ -134,6 +134,8 @@ export default class BlockLoader extends Layout {
 				this._loadingGroup.addLoaderByPath(currentArray[i]["value"]);
 			}
 			
+			console.log(this._loadingGroup);
+			
 			this._loadingGroup.load();
 		}
 		else {
