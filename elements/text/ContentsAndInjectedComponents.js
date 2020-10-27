@@ -66,11 +66,28 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		this._containers = new Array();
 		this._injectComponents = new Array();
 		this._renderInjectComponents = new Array();
+		this._scripts = new Array();
 		this._readMorePosition = -1;
 		
 		let temporaryElement = document.createElement("div");
 		
 		temporaryElement.innerHTML = content;
+		
+		{
+			let currentArray = temporaryElement.querySelectorAll("script");
+			let currentArrayLength = currentArray.length;
+			if(currentArrayLength) {
+				document.body.appendChild(temporaryElement);
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentElement = currentArray[i];
+					let currentCode = currentElement.innerHTML;
+					window.temporaryEval = function() {eval(currentCode)};
+					window.temporaryEval();
+					delete window.temporaryEval;
+				}
+				document.body.removeChild(temporaryElement);
+			}
+		}
 		
 		{
 			let componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
