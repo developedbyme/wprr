@@ -59,6 +59,22 @@ export default class ObjectFunctions {
 		return returnObject;
 	}
 	
+	static shallowMerge(...aObjects) {
+		let returnObject = new Object();
+		
+		let currentArray = aObjects;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentObject = currentArray[i];
+			for(let objectName in currentObject) {
+				console.log(objectName);
+				returnObject[objectName] = currentObject[objectName];
+			}
+		}
+		
+		return returnObject;
+	}
+	
 	static identifyProperty(aObject, aValue) {
 		for(let objectName in aObject) {
 			if(aObject[objectName] === aValue) {
