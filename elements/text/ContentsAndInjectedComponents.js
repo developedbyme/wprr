@@ -1,3 +1,4 @@
+import Wprr from "wprr/Wprr";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -60,34 +61,29 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_createContent() {
-		let content = this.getSourcedPropWithDefault("content", SourceData.create("postData", "content"));
+		
+		let content = this.getFirstInput("content");
+		let postId = 0;
+		let parsedContent = null;
+		if(!content) {
+			content = this.getFirstInput(Wprr.source("postData", "content"));
+			postId = this.getFirstInput(Wprr.source("postData", "id"));
+			parsedContent = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/parsedContent/" + postId));
+		}
+		
+		if(!parsedContent) {
+			parsedContent = Wprr.wp.blocks.BlockContentParser.createInBody(content);
+		}
+		
 		
 		this._groups = new Array();
 		this._containers = new Array();
 		this._injectComponents = new Array();
 		this._renderInjectComponents = new Array();
-		this._scripts = new Array();
 		this._readMorePosition = -1;
 		
-		let temporaryElement = document.createElement("div");
+		let temporaryElement = parsedContent.element;
 		
-		temporaryElement.innerHTML = content;
-		
-		{
-			let currentArray = temporaryElement.querySelectorAll("script");
-			let currentArrayLength = currentArray.length;
-			if(currentArrayLength) {
-				document.body.appendChild(temporaryElement);
-				for(let i = 0; i < currentArrayLength; i++) {
-					let currentElement = currentArray[i];
-					let currentCode = currentElement.innerHTML;
-					window.temporaryEval = function() {eval(currentCode)};
-					window.temporaryEval();
-					delete window.temporaryEval;
-				}
-				document.body.removeChild(temporaryElement);
-			}
-		}
 		
 		{
 			let componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
@@ -116,6 +112,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 					}
 					
 					data["innerMarkup"] = currentElement.innerHTML;
+					//METODO: store elements instead of reparsing the html
 					
 					if(data["innerMarkup"] && data["innerMarkup"] !== "") {
 						currentElement.innerHTML = "";

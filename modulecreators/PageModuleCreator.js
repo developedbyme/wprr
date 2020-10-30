@@ -16,7 +16,7 @@ export default class PageModuleCreator extends ModuleCreatorBaseObject {
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.PageModuleCreator::constructor");
+		//console.log("PageModuleCreator::constructor");
 		
 		super();
 	}

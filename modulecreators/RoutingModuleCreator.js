@@ -29,7 +29,7 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.RoutingModuleCreator::constructor");
+		//console.log("RoutingModuleCreator::constructor");
 		
 		super();
 		

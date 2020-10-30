@@ -13,7 +13,7 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.AppModuleWithRenderCreator::constructor");
+		//console.log("AppModuleWithRenderCreator::constructor");
 		
 		super();
 		
@@ -46,7 +46,7 @@ export default class AppModuleWithRenderCreator extends AppModuleCreator {
 	}
 	
 	_configureModule(aHolderNode, aData) {
-		//console.log("oa.AppModuleWithRenderCreator::_configureModule");
+		//console.log("AppModuleWithRenderCreator::_configureModule");
 		//console.log(aHolderNode, aData);
 		
 		super._configureModule(aHolderNode, aData);

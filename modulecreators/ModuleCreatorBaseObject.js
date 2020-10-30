@@ -1,5 +1,6 @@
 "use strict";
 
+import Wprr from "wprr/Wprr";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
@@ -29,7 +30,7 @@ export default class ModuleCreatorBaseObject {
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("oa.ModuleCreatorBaseObject::constructor");
+		//console.log("ModuleCreatorBaseObject::constructor");
 		
 		this._wprrInstance = null;
 		this._mainComponent = null;
@@ -237,6 +238,25 @@ export default class ModuleCreatorBaseObject {
 		return rootObject;
 	}
 	
+	_createDomForContent(aLoadedUrls, aReferenceHolder) {
+		//console.log("_createDomForContent");
+		if(aLoadedUrls) {
+			for(let objectName in aLoadedUrls) {
+				let currentData = aLoadedUrls[objectName];
+				let currentArray = Wprr.objectPath(currentData, "data.posts");
+				if(currentArray) {
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let currentPost = currentArray[i];
+						
+						let contentParser = Wprr.wp.blocks.BlockContentParser.createInBody(currentPost.content);
+						aReferenceHolder.addObject("wprr/parsedContent/" + currentPost.id, contentParser);
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Creates a new module
 	 *
@@ -245,8 +265,8 @@ export default class ModuleCreatorBaseObject {
 	 * aModuleData	Object		The dynamic data for just this module
 	 */
 	createModule(aHolderNode, aData, aModuleData, aAddMode = ModuleCreatorBaseObject.RENDER) {
-		//console.log("oa.ModuleCreatorBaseObject::createModule");
-		//console.log(aHolderNode, aData);
+		console.log("ModuleCreatorBaseObject::createModule");
+		console.log(aHolderNode, aData, aModuleData);
 		
 		if(this._usedMulitpleTimes) {
 			//METODO: look over this
@@ -256,6 +276,7 @@ export default class ModuleCreatorBaseObject {
 		}
 		
 		this._configureModule(aHolderNode, aData, aModuleData);
+		this._createDomForContent(Wprr.objectPath(aData, "initialMRouterData.data"), this._referenceHolder);
 		
 		let rootObject = this._getRootObject(aData);
 		
