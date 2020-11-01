@@ -60,6 +60,24 @@ export default class StepValueCommand extends BaseCommand {
 	}
 	
 	static numbericStep(aValue, aStep, aCommand) {
-		return parseFloat(aValue)+parseFloat(aStep);
+		
+		let currentValue = parseFloat(aValue);
+		if(isNaN(currentValue)) {
+			currentValue = 0;
+		}
+		
+		let returnValue = currentValue+parseFloat(aStep);
+		
+		let minValue = aCommand.getInput("minValue");
+		if(minValue !== null && !isNaN(minValue)) {
+			returnValue = Math.max(returnValue, minValue);
+		}
+		
+		let maxValue = aCommand.getInput("maxValue");
+		if(maxValue !== null && !isNaN(maxValue)) {
+			returnValue = Math.min(returnValue, maxValue);
+		}
+		
+		return returnValue;
 	}
 }

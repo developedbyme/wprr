@@ -45,4 +45,8 @@ export default class CommandButton extends ManipulationBaseObject {
 		
 		return returnObject;
 	}
+	
+	static create(aCommands, aElement) {
+		return React.createElement(CommandButton, {"commands": aCommands}, aElement);
+	}
 }

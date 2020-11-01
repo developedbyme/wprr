@@ -10,6 +10,7 @@ export {default as BigSelections} from "./BigSelections";
 export {default as MultipleBigSelections} from "./MultipleBigSelections";
 export {default as LabelledArea} from "./LabelledArea";
 export {default as CheckmarkCircle} from "./CheckmarkCircle";
+export {default as SteppedNumber} from "./SteppedNumber";
 
 import * as validation from "./validation/index.js";
 export {validation};
