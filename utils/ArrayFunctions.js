@@ -140,7 +140,7 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
-	static getAllItemsBy(aField, aIdentifier, aArray) {
+	static getAllItemsBy(aField, aIdentifier, aArray, aCompareType = "==") {
 		
 		let returnArray = new Array();
 		
@@ -149,7 +149,7 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			let currentValue = Wprr.objectPath(currentArray[i], aField);
-			if(currentValue == aIdentifier) {
+			if(Wprr.utils.filterPartFunctions._compare(currentValue, aIdentifier, aCompareType)) {
 				returnArray.push(currentItem);
 			}
 		}
@@ -157,7 +157,7 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
-	static getItemIndexByIfExists(aField, aIdentifier, aArray) {
+	static getItemIndexByIfExists(aField, aIdentifier, aArray, aCompareType = "==") {
 		
 		if(!Array.isArray(aArray)) {
 			console.warn("No array provided", aArray);
@@ -169,7 +169,7 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			let currentValue = Wprr.objectPath(currentArray[i], aField);
-			if(currentValue == aIdentifier) {
+			if(Wprr.utils.filterPartFunctions._compare(currentValue, aIdentifier, aCompareType)) {
 				return i;
 			}
 		}
@@ -177,30 +177,19 @@ export default class ArrayFunctions {
 		return -1;
 	}
 	
-	static getItemIndexBy(aField, aIdentifier, aArray) {
-		let returnValue = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray);
+	static getItemIndexBy(aField, aIdentifier, aArray, aCompareType = "==") {
+		let returnValue = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray, aCompareType);
 		
 		if(returnValue === -1) {
-			console.warn("No item with field " + aField + " matching " + aIdentifier, aArray);
+			console.warn("No item with field " + aField + " matching " + aIdentifier + "(" + aCompareType + ")", aArray);
 		}
 		
 		return returnValue;
 	}
 	
-	static getItemBy(aField, aIdentifier, aArray) {
+	static getItemBy(aField, aIdentifier, aArray, aCompareType = "==") {
 		
-		let index = ArrayFunctions.getItemIndexBy(aField, aIdentifier, aArray);
-		
-		if(index >= 0) {
-			return aArray[index];
-		}
-		
-		return null;
-	}
-	
-	static getItemByIfExists(aField, aIdentifier, aArray) {
-		
-		let index = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray);
+		let index = ArrayFunctions.getItemIndexBy(aField, aIdentifier, aArray, aCompareType);
 		
 		if(index >= 0) {
 			return aArray[index];
@@ -209,7 +198,18 @@ export default class ArrayFunctions {
 		return null;
 	}
 	
-	static getItemsBy(aField, aIdentifier, aArray) {
+	static getItemByIfExists(aField, aIdentifier, aArray, aCompareType = "==") {
+		
+		let index = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray, aCompareType);
+		
+		if(index >= 0) {
+			return aArray[index];
+		}
+		
+		return null;
+	}
+	
+	static getItemsBy(aField, aIdentifier, aArray, aCompareType = "==") {
 		
 		let returnArray = new Array();
 		
@@ -218,9 +218,27 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			let currentValue = Wprr.objectPath(currentArray[i], aField);
-			if(currentValue == aIdentifier) {
+			
+			if(Wprr.utils.filterPartFunctions._compare(currentValue, aIdentifier, aCompareType)) {
 				returnArray.push(currentItem);
 			}
+		}
+		
+		return returnArray;
+	}
+	
+	static selectItemsBy(aField, aValues, aArray, aCompareType = "==", aSkipNone = true) {
+		let returnArray = new Array();
+		
+		let currentArray = aValues;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentValue = currentArray[i];
+			let selectedValue = ArrayFunctions.getItemBy(aField, currentValue, aArray, aCompareType);
+			if(aSkipNone && (selectedValue === null || selectedValue === undefined)) {
+				continue;
+			}
+			returnArray.push(selectedValue);
 		}
 		
 		return returnArray;
