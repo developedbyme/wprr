@@ -266,6 +266,25 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return item;
 	}
 	
+	ensureUserRelationExists(aData) {
+		let currentId = aData["id"];
+		let item = this._items.getItem(currentId);
+		if(!item.hasType("relation")) {
+			let newRelation = new Wprr.utils.wp.dbmcontent.relation.Relation();
+			newRelation.setup(aData);
+			item.addType("relation", newRelation);
+			let editStorage = new Wprr.utils.DataStorage();
+			item.addType("editStorage", editStorage);
+			newRelation.connectToEditStorage(editStorage);
+			item.addType("data", aData);
+			item.addSingleLink("from", aData["fromId"]);
+			item.addSingleLink("to", "user" + aData["toId"]);
+			item.addType("userId", aData["toId"]);
+		}
+		
+		return item;
+	}
+	
 	addItems(aDatas) {
 		
 		let returnArray = new Array();
@@ -384,6 +403,32 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 			
 			relationsStorage.updateValue("incoming", incoming);
+			
+			let userRelations = new Object();
+			{
+				let addToObject = userRelations;
+				let currentArray = aData["relations"]["userRelations"];
+				
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentRelationData = currentArray[i];
+					let currentRelationId = currentRelationData["id"];
+					let item = this.ensureUserRelationExists(currentRelationData);
+					
+					let connectionType = currentRelationData["connectionType"];
+					if(!addToObject[connectionType]) {
+						addToObject[connectionType] = new Array();
+					}
+					
+					let currentConnectionObject = addToObject[connectionType];
+					currentConnectionObject.push(currentRelationId);
+				}
+			}
+			
+			relationsStorage.updateValue("userRelations", userRelations);
+			
+			
+			console.log(">>>>>", relationsStorage);
 		}
 		
 		let postEditor = new PostEditor();

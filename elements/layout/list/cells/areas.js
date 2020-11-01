@@ -7,3 +7,4 @@ export {default as field} from "./Field";
 export {default as orderedRelations} from "./OrderedRelations";
 export {default as relations} from "./Relations";
 export {default as relationOfAnyType} from "./RelationOfAnyType";
+export {default as singleUserRelation} from "./SingleUserRelation";

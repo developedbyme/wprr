@@ -3,3 +3,4 @@ export {default as RelationEditors} from "./RelationEditors";
 export {default as RelationEditor} from "./RelationEditor";
 export {default as SingleRelation} from "./SingleRelation";
 export {default as MultipleRelations} from "./MultipleRelations";
+export {default as UserRelationEditor} from "./UserRelationEditor";

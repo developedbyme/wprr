@@ -3,12 +3,12 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class Relations extends WprrBaseObject {
+export default class SingleUserRelation extends WprrBaseObject {
 	
 	constructor(aProps) {
 		super(aProps);
 		
-		this._addMainElementClassName("field field-type-relations");
+		this._addMainElementClassName("field field-type-single-user-relation");
 	}
 	
 	_renderMainElement() {
@@ -19,7 +19,7 @@ export default class Relations extends WprrBaseObject {
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
-		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("cellSettings", "relationPath")));
+		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.userRelations.", Wprr.sourceReference("cellSettings", "relationName")));
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"},
@@ -28,9 +28,7 @@ export default class Relations extends WprrBaseObject {
 			React.createElement("div", {className: "spacing micro"}),
 			React.createElement("div", {className: "content-text-small"},
 				React.createElement(Wprr.RelatedItem, {id: editorPath, as: "editor"},
-					React.createElement(Wprr.ExternalStorageProps, {props: activatePathSource, externalStorage: externalStorageSource},
-						React.createElement(Wprr.layout.relation.SelectMultipleRelations, null)
-					)
+					React.createElement(Wprr.layout.relation.SelectSingleUserRelation, {})
 				)
 			)
 		);

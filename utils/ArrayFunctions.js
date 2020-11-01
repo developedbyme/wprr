@@ -169,6 +169,7 @@ export default class ArrayFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
 			let currentValue = Wprr.objectPath(currentArray[i], aField);
+			console.log(currentValue, aIdentifier, aCompareType, Wprr.utils.filterPartFunctions._compare(currentValue, aIdentifier, aCompareType));
 			if(Wprr.utils.filterPartFunctions._compare(currentValue, aIdentifier, aCompareType)) {
 				return i;
 			}

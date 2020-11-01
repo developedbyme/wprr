@@ -6,6 +6,7 @@ import objectPath from "object-path";
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
 import RelationEditor from "./RelationEditor";
+import UserRelationEditor from "./UserRelationEditor";
 
 //import RelationEditors from "./RelationEditors";
 export default class RelationEditors extends MultiTypeItemConnection {
@@ -59,6 +60,23 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		return newRelationEditor;
 	}
 	
+	getUserRelationsEditor(aConnectionType) {
+		let currentEditor = objectPath.get(this._editors, ["userRelations", aConnectionType]);
+		if(currentEditor) {
+			return currentEditor;
+		}
+		
+		let newRelationEditor = new UserRelationEditor();
+		newRelationEditor.setItemConnection(this.item);
+		newRelationEditor.setup(aConnectionType);
+		
+		newRelationEditor.addCommand("changed", Wprr.commands.callFunction(this, this._changed));
+		
+		objectPath.set(this._editors, ["userRelations", aConnectionType], newRelationEditor);
+		
+		return newRelationEditor;
+	}
+	
 	addCommand(aName, aCommand) {
 		if(!this._commands.hasInput(aName)) {
 			this._commands.setInput(aName, []);
@@ -81,10 +99,20 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		
 		switch(firstPart) {
 			case "item":
-				let restParts = tempArray.join(".");
-				return Wprr.objectPath(this[firstPart], restParts);
+				{
+					let restParts = tempArray.join(".");
+					return Wprr.objectPath(this[firstPart], restParts);
+				}
+			case "userRelations":
+				{
+					let connectionType = tempArray.shift();
+					let restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getUserRelationsEditor(connectionType), restParts);
+				}
+				
 		}
 		let connectionType = tempArray.shift();
+		
 		let objectType = tempArray.shift();
 		
 		let restParts = tempArray.join(".");
@@ -102,13 +130,18 @@ export default class RelationEditors extends MultiTypeItemConnection {
 		
 		let returnArray = new Array();
 		
-		for(let objectName in this._editors) {
-			let direction = this._editors[objectName];
+		for(let directionName in this._editors) {
+			let direction = this._editors[directionName];
 			for(let objectName in direction) {
 				let connnection = direction[objectName];
-				for(let objectName in connnection) {
-					let currentEditor = connnection[objectName];
-					returnArray.push(currentEditor);
+				if(directionName === "userRelations") {
+					returnArray.push(connnection);
+				}
+				else {
+					for(let objectName in connnection) {
+						let currentEditor = connnection[objectName];
+						returnArray.push(currentEditor);
+					}
 				}
 			}
 		}
