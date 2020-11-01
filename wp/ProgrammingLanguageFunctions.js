@@ -57,6 +57,10 @@ export default class ProgrammingLanguageFunctions {
 	
 	static convertFromCamelCase(aText) {
 		
+		if(typeof(aText) !== "string") {
+			return null;
+		}
+		
 		let length = aText.length;
 		if(length === 0) {
 			return "";
@@ -77,6 +81,11 @@ export default class ProgrammingLanguageFunctions {
 	}
 	
 	static convertHyphensToCamelCase(aText) {
+		
+		if(typeof(aText) !== "string") {
+			return null;
+		}
+		
 		let length = aText.length;
 		if(length === 0) {
 			return "";
