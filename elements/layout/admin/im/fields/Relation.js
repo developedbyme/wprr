@@ -11,14 +11,17 @@ export default class Relation extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return React.createElement(Wprr.EditableProps, {
-  editableProps: "value",
-  externalStorage: Wprr.sourceReference("field/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.TermSelection, {
-  valueName: "value",
-  className: "standard-field standard-field-padding full-width",
-  taxonomy: "dbm_relation",
-  subtree: Wprr.sourceReference("field", "data.subtree")
-}));
+		let cellSettings = this.getReference("cellSettings");
+		let valueField = cellSettings["useSlug"] ? "slug" : "id";
+		
+		return React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},
+			React.createElement(Wprr.TermSelection, {
+				valueName: "value",
+				className: "standard-field standard-field-padding full-width",
+				taxonomy: "dbm_relation",
+				valueField: valueField,
+				subtree: Wprr.sourceReference("field", "data.subtree")
+			})
+		);
 	}
 }

@@ -27,17 +27,17 @@ export default class Name extends WprrBaseObject {
 			"standard"
 		);
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "label-text-small"
-}, /*#__PURE__*/React.createElement(Wprr.TranslationOrId, {
-  id: fieldId,
-  prefix: "site.messageGroupFields"
-})), /*#__PURE__*/React.createElement("div", {
-  className: "spacing micro"
-}), /*#__PURE__*/React.createElement("div", {
-  className: "content-text-small"
-}, /*#__PURE__*/React.createElement(Wprr.SelectField, {
-  fieldName: fieldId
-}, cellSwitchableArea.getReactElements(), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.SaveFieldOperations, null))));
+		return React.createElement("div", null,
+			React.createElement("div", {className: "label-text-small"},
+				React.createElement(Wprr.TranslationOrId, {id: fieldId, prefix: "site.messageGroupFields"})
+			),
+			React.createElement("div", {className: "spacing micro"}),
+			React.createElement("div", {className: "content-text-small"},
+				React.createElement(Wprr.SelectField, {fieldName: fieldId},
+					cellSwitchableArea.getReactElements(),
+					React.createElement(Wprr.layout.admin.im.SaveFieldOperations, null)
+				)
+			)
+		);
 	}
 }

@@ -6,3 +6,5 @@ export {default as image} from "./Image";
 export {default as date} from "./DateSelection";
 export {default as textArea} from "./TextArea";
 export {default as richText} from "./RichText";
+export {default as address} from "./Address";
+export {default as json} from "./Json";
