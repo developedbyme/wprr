@@ -707,4 +707,16 @@ export default class ArrayFunctions {
 		
 		return false;
 	}
+	
+	static copy(aArray) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray.push(currentArray[i]);
+		}
+		
+		return returnArray;
+	}
 }

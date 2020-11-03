@@ -5,7 +5,6 @@ import ReactDOM from "react-dom";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import ContentCreatorSingleItem from "wprr/elements/create/ContentCreatorSingleItem";
-import SourceData from "wprr/reference/SourceData";
 
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import InjectExistingElements from "wprr/elements/area/InjectExistingElements";
@@ -32,7 +31,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		//METODO: make it work with direct injection
 		
-		return React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: SourceData.create("reference", "contentCreators/inject/" + aType)});
+		return React.createElement(ContentCreatorSingleItem, {data: aData, contentCreator: Wprr.sourceReference("contentCreators/inject/" + aType)});
 	}
 	
 	_createContainer(aElements) {
@@ -63,11 +62,10 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	_createContent() {
 		
 		let content = this.getFirstInput("content");
-		let postId = 0;
-		let parsedContent = null;
-		if(!content) {
+		let parsedContent = this.getFirstInput("parsedContent");
+		if(!content && !parsedContent) {
 			content = this.getFirstInput(Wprr.source("postData", "content"));
-			postId = this.getFirstInput(Wprr.source("postData", "id"));
+			let postId = this.getFirstInput(Wprr.source("postData", "id"));
 			parsedContent = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/parsedContent/" + postId));
 		}
 		
@@ -82,58 +80,32 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		this._renderInjectComponents = new Array();
 		this._readMorePosition = -1;
 		
-		let temporaryElement = parsedContent.element;
-		
-		
 		{
-			let componentObjects = temporaryElement.querySelectorAll("*[data-wprr-component]");
-			let currentArray = componentObjects;
+			let currentArray = parsedContent.componentsData;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
-				let currentElement = currentArray[i];
 				
-				if(!temporaryElement.contains(currentElement)) {
-					//MENOTE: element has been removed for being inside of another component
-					continue;
-				}
-			
+				let currentData = currentArray[i];
+				
 				let injectComponentData = new Object();
 				let id = "inject-" + this._injectComponents.length;
 				injectComponentData["id"] = id;
-				injectComponentData["container"] = currentElement;
+				injectComponentData["container"] = currentData["container"];
 			
-				let type = currentElement.getAttribute("data-wprr-component");
-				let data = new Object();
-				let dataString = currentElement.getAttribute("data-wprr-component-data");
-			
-				try {
-					if(dataString != null) {
-						data = JSON.parse(dataString);
-					}
-					
-					data["innerMarkup"] = currentElement.innerHTML;
-					//METODO: store elements instead of reparsing the html
-					
-					if(data["innerMarkup"] && data["innerMarkup"] !== "") {
-						currentElement.innerHTML = "";
-					}
-					
-					let injectedComponenet = this._createInjectComponent(id, type, data);
-					
-					let portal = ReactDOM.createPortal(injectedComponenet, currentElement);
-					this._renderInjectComponents.push(portal);
-				}
-				catch(theError) {
-					console.error("Error when creating injected component");
-					console.log(dataString);
-				}
+				let type = currentData["type"];
+				let data = currentData["data"];
+				
+				let injectedComponent = this._createInjectComponent(id, type, data);
+				
+				let portal = ReactDOM.createPortal(injectedComponent, currentData["container"]);
+				this._renderInjectComponents.push(portal);
 			}
 		}
 		
 		let currentElements = new Array();
 		
 		{
-			let currentArray = temporaryElement.children;
+			let currentArray = parsedContent.contentElements;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentElement = currentArray[i];

@@ -12,6 +12,7 @@ export default class BlockContentParser {
 		this._content = null;
 		
 		this._contentElements = null;
+		this._componentsData = null;
 	}
 	
 	get element() {
@@ -20,6 +21,10 @@ export default class BlockContentParser {
 	
 	get contentElements() {
 		return this._contentElements;
+	}
+	
+	get componentsData() {
+		return this._componentsData;
 	}
 	
 	setContent(aContent) {
@@ -35,13 +40,24 @@ export default class BlockContentParser {
 	}
 	
 	createElement() {
+		//console.log("BlockContentParser::createElement");
 		if(!this._element) {
 			this._element = this._parseContent();
-			this._contentElements = this._element.children;
+			this._contentElements = Wprr.utils.array.copy(this._element.children);
+			this._componentsData = this._parseComponents();
 			if(this._holderElement) {
 				this._holderElement.appendChild(this._element);
 			}
 			this._runScripts();
+		}
+	}
+	
+	setupExistingElement(aElement) {
+		this._element = aElement;
+		this._contentElements = Wprr.utils.array.copy(this._element.children);
+		this._componentsData = this._parseComponents();
+		if(this._holderElement) {
+			this._holderElement.appendChild(this._element);
 		}
 	}
 	
@@ -51,6 +67,70 @@ export default class BlockContentParser {
 		temporaryElement.innerHTML = this._content;
 		
 		return temporaryElement;
+	}
+	
+	_findComponentElements() {
+		let elements = this._element.querySelectorAll("*[data-wprr-component]");
+		
+		//METODO: filter out subcomponents
+		
+		return elements;
+	}
+	
+	_parseComponents() {
+		let elements = this._findComponentElements();
+		
+		let returnArray = new Array();
+		
+		let currentArray = elements;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentData = this._getComponentData(currentArray[i]);
+			returnArray.push(currentData);
+		}
+		
+		return returnArray;
+	}
+	
+	_getComponentData(aElement) {
+		
+		let returnData = new Object();
+		
+		let type = aElement.getAttribute("data-wprr-component");
+		let data = new Object();
+		let dataString = aElement.getAttribute("data-wprr-component-data");
+		
+		returnData["container"] = aElement;
+		returnData["type"] = type;
+		
+		try {
+			if(dataString != null) {
+				data = JSON.parse(dataString);
+			}
+			
+			returnData["innerElements"] = Wprr.utils.array.copy(aElement.children);
+			let contentString = aElement.innerHTML;
+			data["innerMarkup"] = contentString;
+			
+			let parsedContent = new BlockContentParser();
+			parsedContent.setHolder(this._holderElement);
+			parsedContent.setContent(contentString);
+			parsedContent.setupExistingElement(aElement);
+			returnData["parsedContent"] = parsedContent;
+			
+			if(data["innerMarkup"] && data["innerMarkup"] !== "") {
+				currentElement.innerHTML = "";
+			}
+		}
+		catch(theError) {
+			console.error("Error when creating injected component");
+			console.log(theError);
+			console.log(dataString);
+		}
+		
+		returnData["data"] = data;
+		
+		return returnData;
 	}
 	
 	_runScripts() {
@@ -84,7 +164,7 @@ export default class BlockContentParser {
 		if(aHolderElement) {
 			newBlockContentParser.setHolder(aHolderElement);
 		}
-		newBlockContentParser.createElement()
+		newBlockContentParser.createElement();
 		
 		return newBlockContentParser;
 	}
