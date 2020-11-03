@@ -22,8 +22,6 @@ export default class ImageSelection extends MultipleRenderObject {
 		
 		this._callback_imageSelectedBound = this._callback_imageSelected.bind(this);
 		
-		this._addMainElementClassName("image-selection");
-		
 		this.state["undoData"] = null;
 	}
 	
@@ -132,7 +130,7 @@ export default class ImageSelection extends MultipleRenderObject {
 			mainElement = React.createElement(Wprr.ExternalStorageProps, {"props": valueName, "externalStorage": externalStorage}, mainElement);
 		}
 		
-		return React.createElement("wrapper", {},
+		return React.createElement("div", {"className": "image-selection standard-field standard-field-padding"},
 			mainElement
 		);
 	}

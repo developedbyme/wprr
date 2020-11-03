@@ -94,7 +94,6 @@ export default class ProgrammingLanguageFunctions {
 		let textWithoutHyphens = aText.split("-").join(" ");
 		
 		let returnValue = ProgrammingLanguageFunctions.convertToCamelCase(textWithoutHyphens);
-		console.log(returnValue);
 		return returnValue;
 	}
 }

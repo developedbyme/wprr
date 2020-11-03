@@ -16,12 +16,15 @@ export default class Name extends WprrBaseObject {
 		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
 		
 		let cellSwitchableArea = Wprr.creators.SwitchableAreaCreator.createFromClasses(
-			Wprr.sourceFunction(
-				Wprr.utils.programmingLanguage,
-				"convertHyphensToCamelCase",
-				[
-					Wprr.sourceReference("field", "data.type.slug")
-				]
+			Wprr.sourceFirst(
+				Wprr.sourceReference("cellSettings", "fieldType"),
+				Wprr.sourceFunction(
+					Wprr.utils.programmingLanguage,
+					"convertHyphensToCamelCase",
+					[
+						Wprr.sourceReference("field", "data.type.slug")
+					]
+				)
 			),
 			Wprr.layout.admin.im.fields.areas,
 			"standard"

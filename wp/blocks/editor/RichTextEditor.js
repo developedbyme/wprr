@@ -19,8 +19,6 @@ export default class RichTextEditor extends MultipleRenderObject {
 		super(aProps);
 		
 		this.frame = null;
-		
-		this._addMainElementClassName("rich-text-editor");
 	}
 	
 	getExternalStorage() {
@@ -72,7 +70,7 @@ export default class RichTextEditor extends MultipleRenderObject {
 			mainElement = React.createElement(Wprr.ExternalStorageProps, {"props": valueName, "externalStorage": externalStorage}, mainElement);
 		}
 		
-		return React.createElement("wrapper", {},
+		return React.createElement("div", {"className": "rich-text-editor standard-field standard-field-padding"},
 			mainElement
 		);
 	}

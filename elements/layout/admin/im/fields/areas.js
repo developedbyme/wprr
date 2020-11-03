@@ -8,3 +8,4 @@ export {default as textArea} from "./TextArea";
 export {default as richText} from "./RichText";
 export {default as address} from "./Address";
 export {default as json} from "./Json";
+export {default as weekday} from "./Weekday";

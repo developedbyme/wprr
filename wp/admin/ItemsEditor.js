@@ -409,26 +409,25 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				let addToObject = userRelations;
 				let currentArray = aData["relations"]["userRelations"];
 				
-				let currentArrayLength = currentArray.length;
-				for(let i = 0; i < currentArrayLength; i++) {
-					let currentRelationData = currentArray[i];
-					let currentRelationId = currentRelationData["id"];
-					let item = this.ensureUserRelationExists(currentRelationData);
+				if(currentArray) {
+					let currentArrayLength = currentArray.length;
+					for(let i = 0; i < currentArrayLength; i++) {
+						let currentRelationData = currentArray[i];
+						let currentRelationId = currentRelationData["id"];
+						let item = this.ensureUserRelationExists(currentRelationData);
 					
-					let connectionType = currentRelationData["connectionType"];
-					if(!addToObject[connectionType]) {
-						addToObject[connectionType] = new Array();
+						let connectionType = currentRelationData["connectionType"];
+						if(!addToObject[connectionType]) {
+							addToObject[connectionType] = new Array();
+						}
+					
+						let currentConnectionObject = addToObject[connectionType];
+						currentConnectionObject.push(currentRelationId);
 					}
-					
-					let currentConnectionObject = addToObject[connectionType];
-					currentConnectionObject.push(currentRelationId);
 				}
 			}
 			
 			relationsStorage.updateValue("userRelations", userRelations);
-			
-			
-			console.log(">>>>>", relationsStorage);
 		}
 		
 		let postEditor = new PostEditor();

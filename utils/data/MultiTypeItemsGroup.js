@@ -168,7 +168,6 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		
-		console.log(">>>>>", firstPart, this.getItem(firstPart));
 		return Wprr.objectPath(this.getItem(firstPart), restParts);
 	}
 	

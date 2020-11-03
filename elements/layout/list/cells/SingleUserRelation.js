@@ -12,6 +12,7 @@ export default class SingleUserRelation extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
+		console.log("SingleUserRelation::_renderMainElement");
 		
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
