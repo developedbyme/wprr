@@ -72,9 +72,29 @@ export default class BlockContentParser {
 	_findComponentElements() {
 		let elements = this._element.querySelectorAll("*[data-wprr-component]");
 		
-		//METODO: filter out subcomponents
+		let returnArray = Wprr.utils.array.copy(elements);
+		let itemsToRemove = new Array();
 		
-		return elements;
+		{
+			let currentArray = returnArray;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentElement = currentArray[i];
+			
+				for(let j = 0; j < currentArrayLength; j++) {
+					if(j === i) {
+						continue;
+					}
+					if(currentElement.contains(currentArray[j])) {
+						itemsToRemove.push(currentArray[j]);
+					}
+				}
+			}
+		}
+		
+		returnArray = Wprr.utils.array.removeValues(returnArray, itemsToRemove);
+		
+		return returnArray;
 	}
 	
 	_parseComponents() {
@@ -108,7 +128,7 @@ export default class BlockContentParser {
 				data = JSON.parse(dataString);
 			}
 			
-			returnData["innerElements"] = Wprr.utils.array.copy(aElement.children);
+			data["innerElements"] = Wprr.utils.array.copy(aElement.children);
 			let contentString = aElement.innerHTML;
 			data["innerMarkup"] = contentString;
 			
@@ -116,10 +136,10 @@ export default class BlockContentParser {
 			parsedContent.setHolder(this._holderElement);
 			parsedContent.setContent(contentString);
 			parsedContent.setupExistingElement(aElement);
-			returnData["parsedContent"] = parsedContent;
+			data["parsedContent"] = parsedContent;
 			
 			if(data["innerMarkup"] && data["innerMarkup"] !== "") {
-				currentElement.innerHTML = "";
+				aElement.innerHTML = "";
 			}
 		}
 		catch(theError) {
