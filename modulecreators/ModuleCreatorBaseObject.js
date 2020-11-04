@@ -37,6 +37,7 @@ export default class ModuleCreatorBaseObject {
 		this._store = null;
 		this._strictMode = false;
 		this._usedMulitpleTimes = false;
+		this.parseInitialContent = true;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
@@ -276,7 +277,10 @@ export default class ModuleCreatorBaseObject {
 		}
 		
 		this._configureModule(aHolderNode, aData, aModuleData);
-		this._createDomForContent(Wprr.objectPath(aData, "initialMRouterData.data"), this._referenceHolder);
+		
+		if(this.parseInitialContent && !Wprr.objectPath(aModuleData, "componentData.parsedContent")) {
+			this._createDomForContent(Wprr.objectPath(aData, "initialMRouterData.data"), this._referenceHolder);
+		}
 		
 		let rootObject = this._getRootObject(aData);
 		

@@ -62,6 +62,8 @@ export default class BlockContentParser {
 	}
 	
 	_parseContent() {
+		//console.log("BlockContentParser::_parseContent");
+		
 		let temporaryElement = document.createElement("div");
 		
 		temporaryElement.innerHTML = this._content;
@@ -98,6 +100,8 @@ export default class BlockContentParser {
 	}
 	
 	_parseComponents() {
+		//console.log("BlockContentParser::_parseComponents");
+		
 		let elements = this._findComponentElements();
 		
 		let returnArray = new Array();
