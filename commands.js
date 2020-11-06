@@ -1,5 +1,6 @@
 import CallFunctionCommand from "wprr/commands/basic/CallFunctionCommand";
 import LoadUrlCommand from "wprr/commands/loading/LoadUrlCommand";
+import SetPropertyCommand from "wprr/commands/basic/SetPropertyCommand";
 import SetValueCommand from "wprr/commands/basic/SetValueCommand";
 import ToggleValueCommand from "wprr/commands/basic/ToggleValueCommand";
 import PerformSelectedCommands from "wprr/commands/logic/PerformSelectedCommands";
@@ -36,6 +37,7 @@ let getJson = LoadUrlCommand.createJsonGet;
 let postJson = LoadUrlCommand.createJsonPost;
 export {getJson, postJson};
 
+let setProperty = SetPropertyCommand.create;
 let setValue = SetValueCommand.create;
 let stepValue = StepValueCommand.create;
 let toggleValue = ToggleValueCommand.create;
@@ -48,7 +50,7 @@ let addValueToArray = AddValueToArrayCommand.create;
 let removeValueFromArray = RemoveValueFromArrayCommand.create;
 let removeIndexFromArray = RemoveIndexFromArrayCommand.create;
 
-export {setValue, stepValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray, removeIndexFromArray};
+export {setProperty, setValue, stepValue, toggleValue, performSelectedCommands, setStateValue, trigger, optionsStep, getValue, addValueToArray, removeValueFromArray, removeIndexFromArray};
 
 let reload = ReloadPageCommand.create;
 let navigate = NavigationCommand.create;

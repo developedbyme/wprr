@@ -176,6 +176,10 @@ export default class SourceData {
 		
 		const references = (aFromObject && aFromObject.getReferences) ? aFromObject.getReferences() : {};
 		
+		if(aType === "source") {
+			return aPath;
+		}
+		
 		if(aPath instanceof SourceData) {
 			aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
 		}

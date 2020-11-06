@@ -35,6 +35,10 @@ export default class ValueSourceData extends SourceData {
 		return this._value;
 	}
 	
+	reSource() {
+		return Wprr.source("source", this);
+	}
+	
 	getValue() {
 		return this._value;
 	}
@@ -46,7 +50,7 @@ export default class ValueSourceData extends SourceData {
 	}
 	
 	setValue(aValue) {
-		console.log("setValue");
+		//console.log("setValue");
 		
 		this._value = aValue;
 		this.externalDataChange();
@@ -70,7 +74,7 @@ export default class ValueSourceData extends SourceData {
 	}
 	
 	animateValue(aNewValue, aTime = 0.4, aEasing = null, aDelay = 0) {
-		console.log("animateValue");
+		//console.log("animateValue");
 		this.stopAnimations();
 		
 		if(!aEasing) {
