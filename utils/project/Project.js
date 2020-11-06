@@ -98,6 +98,25 @@ export default class Project {
 		}
 	}
 	
+	getSignupLoader(aData) {
+		let loader = this.getActionLoader("register-user");
+		
+		loader.setJsonPostBody(aData);
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._callback_signupDataLoaded, [Wprr.sourceEvent("data")]));
+		
+		return loader;
+	}
+	
+	_callback_signupDataLoaded(aData) {
+		console.log("_callback_loginDataLoaded");
+		console.log(aData);
+		
+		if(aData.registered) {
+			this.setUserData({"restNonce": aData["restNonce"], "restNonceGeneratedAt": aData["restNonceGeneratedAt"], "roles": aData["roles"], "data": aData["user"]});
+		}
+	}
+	
 	getSharedLoader(aUrl) {
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		
