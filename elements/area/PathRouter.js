@@ -53,7 +53,6 @@ export default class PathRouter extends WprrBaseObject {
 		let routes = Wprr.utils.array.singleOrArray(this.getFirstInput("routes"));
 		
 		let currentRoute = this.getRoute(path, routes);
-		console.log(">>>", path, currentRoute, routes)
 		
 		this._externalStorage.updateValue("path", path);
 		

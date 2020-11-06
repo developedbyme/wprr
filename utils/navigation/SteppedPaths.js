@@ -50,7 +50,18 @@ export default class SteppedPaths {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
-			this.addDirection(currentItem["key"], currentItem["value"], aType);
+			let currentValue = currentItem["value"];
+			if(typeof(currentValue) === "string") {
+				this.addDirection(currentItem["key"], currentValue, aType);
+			}
+			else {
+				let currentArray2 = Wprr.utils.KeyValueGenerator.normalizeArrayOrObject(currentValue);
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					let currentTypeItem = currentArray2[j];
+					this.addDirection(currentItem["key"], currentTypeItem["value"], currentTypeItem["key"]);
+				}
+			}
 		}
 		
 		return this;
@@ -100,6 +111,18 @@ export default class SteppedPaths {
 			
 			let currentPath = this._history[this._history.length-1];
 			this._performSetPath(currentPath);
+		}
+		
+		return this;
+	}
+	
+	changeStep(aType) {
+		let nextStep = this.getStepFrom(this.currentPath, aType);
+		if(nextStep) {
+			this.changePath(nextStep);
+		}
+		else {
+			console.error("No step named " + aType + " from " + this.currentPath, this);
 		}
 		
 		return this;

@@ -78,6 +78,26 @@ export default class Project {
 		return loader;
 	}
 	
+	getLoginLoader(aLogin, aPassword, aRemember = false) {
+		let loader = this.getActionLoader("login");
+		loader.setJsonPostBody({
+			"log": aLogin,
+			"pwd": aPassword,
+			"remember": aRemember,
+		});
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._callback_loginDataLoaded, [Wprr.sourceEvent("data")]));
+		
+		return loader;
+	}
+	
+	_callback_loginDataLoaded(aData) {
+		console.log("_callback_loginDataLoaded");
+		if(aData.authenticated) {
+			this.setUserData({"restNonce": aData["restNonce"], "restNonceGeneratedAt": aData["restNonceGeneratedAt"], "roles": aData["roles"], "data": aData["user"]});
+		}
+	}
+	
 	getSharedLoader(aUrl) {
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		
@@ -100,6 +120,10 @@ export default class Project {
 		storeController.setUser(aData);
 		
 		return this;
+	}
+	
+	getUserData() {
+		return this._mainReferences.getObject("wprr/userData");
 	}
 	
 	getCurrentLanguage() {

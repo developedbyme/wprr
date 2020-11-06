@@ -5,6 +5,7 @@ import objectPath from "object-path";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import SourceData from "wprr/reference/SourceData";
+import ValueSourceData from "wprr/reference/ValueSourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import SourcedText from "wprr/elements/text/SourcedText";
@@ -210,6 +211,10 @@ export default class Wprr {
 	
 	static sourceEvent(aDeepPath = null) {
 		return Wprr.source("event", "raw", aDeepPath);
+	}
+	
+	static sourceValue(aValue) {
+		return ValueSourceData.create(aValue);
 	}
 	
 	static sourceFromJson(aObject) {

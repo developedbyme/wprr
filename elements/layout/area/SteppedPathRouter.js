@@ -44,13 +44,9 @@ export default class SteppedPathRouter extends Layout {
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(Wprr.sourceProp("type"), aSlots.prop("areaClasses", {}), "none");
 		
 		return React.createElement(Wprr.ReferenceInjection, {injectData: {"steppedPaths": this._steppedPaths, "value/path": this._steppedPaths.externalStorage}},
-		React.createElement(Wprr.PathRouter, {
-		  routes: routes,
-		  path: Wprr.sourceReference("steppedPaths", "externalStorage").deeper("path")
-		}, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-		  props: "type",
-		  externalStorage: Wprr.sourceReference("pathRouter/externalStorage")
-		}, switchableArea))
+			React.createElement(Wprr.PathRouter, {routes: routes,	path: Wprr.sourceReference("steppedPaths", "externalStorage").deeper("path")},
+				React.createElement(Wprr.ExternalStorageProps, {props: "type", externalStorage: Wprr.sourceReference("pathRouter/externalStorage")}, switchableArea)
+			)
 		);
 	}
 }

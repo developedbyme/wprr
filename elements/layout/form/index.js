@@ -11,6 +11,7 @@ export {default as MultipleBigSelections} from "./MultipleBigSelections";
 export {default as LabelledArea} from "./LabelledArea";
 export {default as CheckmarkCircle} from "./CheckmarkCircle";
 export {default as SteppedNumber} from "./SteppedNumber";
+export {default as VerificationCode} from "./VerificationCode";
 
 import * as validation from "./validation/index.js";
 export {validation};

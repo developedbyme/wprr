@@ -174,6 +174,7 @@ export default class ModuleCreatorBaseObject {
 		
 		if(this._project) {
 			this._project.setMainReferences(this._referenceHolder);
+			this._referenceHolder.addObject("wprr/project", this._project);
 			this._referenceHolder.addObject("wprr/projectName", this._project.name);
 		}
 		
