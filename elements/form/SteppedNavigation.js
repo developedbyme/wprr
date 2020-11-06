@@ -88,6 +88,10 @@ export default class SteppedNavigation extends WprrBaseObject {
 			let inactiveButton = React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding disabled"},
 				React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain full-size"})
 			);
+			
+			let loadingButton = React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding"},
+				React.createElement(Wprr.Image, {"src": "loader-white.svg", "className": "background-contain full-size"})
+			);
 		
 			let activeBackButton = React.createElement(Wprr.CommandButton,
 				{"commands": Wprr.sourceFirst(
@@ -129,6 +133,7 @@ export default class SteppedNavigation extends WprrBaseObject {
 				"button": {
 					"active": activeButton,
 					"inactive": inactiveButton,
+					"loading": loadingButton,
 					"default": activeButton
 				},
 				"backButton": {
