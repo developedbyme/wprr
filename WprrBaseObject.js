@@ -633,10 +633,34 @@ export default class WprrBaseObject extends React.Component {
 		}
 	}
 	
+	_beforePrepareInitialRender() {
+		//console.log("wprr/WprrBaseObject::_beforePrepareInitialRender");
+		
+		let commands = this.getSourcedProp("prepareInitialRenderCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
+	}
+	
 	_prepareInitialRender() {
 		//console.log("wprr/WprrBaseObject::_prepareInitialRender");
 		
-		let commands = this.getSourcedProp("prepareInitialRenderCommands");
+		//MENOTE: should be overridden
+	}
+	
+	_afterPrepareInitialRender() {
+		//console.log("wprr/WprrBaseObject::_afterPrepareInitialRender");
+		
+		let commands = this.getSourcedProp("afterPrepareInitialRenderCommands");
+		if(commands) {
+			CommandPerformer.perform(commands, null, this);
+		}
+	}
+	
+	_beforePrepareRender() {
+		//console.log("wprr/WprrBaseObject::_beforePrepareRender");
+		
+		let commands = this.getSourcedProp("prepareRenderCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, null, this);
 		}
@@ -645,7 +669,13 @@ export default class WprrBaseObject extends React.Component {
 	_prepareRender() {
 		//console.log("wprr/WprrBaseObject::_prepareRender");
 		
-		let commands = this.getSourcedProp("prepareRenderCommands");
+		//MENOTE: should be overridden
+	}
+	
+	_afterPrepareRender() {
+		//console.log("wprr/WprrBaseObject::_afterPrepareRender");
+		
+		let commands = this.getSourcedProp("afterPrepareRenderCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, null, this);
 		}
@@ -736,12 +766,16 @@ export default class WprrBaseObject extends React.Component {
 	_renderSafe() {
 		
 		this._isRendering = true;
+		let initialRender = !this._hasRendered;
 		
-		if(!this._hasRendered) {
+		if(initialRender) {
+			this._beforePrepareInitialRender();
 			this._prepareInitialRender();
+			this._afterPrepareInitialRender();
 		}
-		
+		this._beforePrepareRender();
 		this._prepareRender();
+		this._afterPrepareRender();
 		
 		let mainElement = this._replaceWrapper(this._renderMainElement(this, this));
 		

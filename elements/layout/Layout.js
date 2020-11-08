@@ -101,10 +101,10 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	_prepareInitialRender() {
+		super._prepareInitialRender();
+		
 		let defaults = this._getDefaults();
 		this._externalStorage.updateValue("defaults", defaults);
-		
-		super._prepareInitialRender();
 	}
 	
 	_prepareRender() {
