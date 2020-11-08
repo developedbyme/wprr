@@ -98,6 +98,16 @@ export default class Project {
 		}
 	}
 	
+	getLogoutLoader() {
+		let loader = this.getActionLoader("logout");
+		
+		loader.setJsonPostBody({});
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this.setUserData, [null]));
+		
+		return loader;
+	}
+	
 	getSignupLoader(aData) {
 		let loader = this.getActionLoader("register-user");
 		
