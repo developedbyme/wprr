@@ -29,8 +29,8 @@ export default class SignInFlow extends Wprr.Layout {
 		
 		return <div className="centered-content-text">
 			<Wprr.ExternalStorageInjection initialValues={{
-				"email": Wprr.sourceFirst(Wprr.sourceQueryString("email"), ""),
-				"phoneNumber": Wprr.sourceFirst(Wprr.sourceQueryString("phoneNumber"), ""),
+				"email": Wprr.sourceFirst(Wprr.sourceQueryString("email"), Wprr.sourceStatic("")),
+				"phoneNumber": Wprr.sourceFirst(Wprr.sourceQueryString("phoneNumber"), Wprr.sourceStatic("")),
 				"defaultPrefix": aSlots.prop("defaultPrefix", "+46"),
 				"password": "",
 				"remember": true,
