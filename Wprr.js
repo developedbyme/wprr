@@ -9,6 +9,7 @@ import ValueSourceData from "wprr/reference/ValueSourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import SourcedText from "wprr/elements/text/SourcedText";
+import TranslationOrId from "wprr/elements/text/TranslationOrId";
 import Project from "wprr/utils/project/Project";
 
 import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
@@ -177,8 +178,12 @@ export default class Wprr {
 		return Wprr.source("text", aPath);
 	}
 	
-	static sourceTranslation(aText) {
-		return Wprr.source("translation", aText);
+	static sourceTranslation(aText, aPath = null) {
+		let source = Wprr.source("translation", aText);
+		if(aPath) {
+			return Wprr.sourceFirst(Wprr.sourceFirst(Wprr.sourceText(aPath), source));
+		}
+		return source
 	}
 	
 	static sourceQueryString(aName) {
@@ -254,6 +259,10 @@ export default class Wprr {
 	
 	static translateText(aText, aFormat = "text") {
 		return React.createElement(SourcedText, {"text": Wprr.sourceTranslation(aText), "format": aFormat});
+	}
+	
+	static idText(aText, aId = null, aFormat = "text") {
+		return React.createElement(TranslationOrId, {"id": aId, "defaultText": Wprr.sourceTranslation(aText), "format": aFormat});
 	}
 	
 	static objectPath(aObject, aPath) {

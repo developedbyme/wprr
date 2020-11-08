@@ -12,9 +12,9 @@ export default class TranslationOrId extends SourcedText {
 	
 	_getText() {
 		
-		let id = this.getSourcedProp("id");
-		let prefix = this.getSourcedProp("prefix");
-		let suffix = this.getSourcedProp("suffix");
+		let id = this.getFirstInput("id");
+		let prefix = this.getFirstInput("prefix");
+		let suffix = this.getFirstInput("suffix");
 		let defaultText = this.getFirstInput("defaultText", "id");
 		
 		let fullPath = id;
