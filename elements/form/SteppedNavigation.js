@@ -80,12 +80,12 @@ export default class SteppedNavigation extends WprrBaseObject {
 					Wprr.sourceReferenceIfExists("steppedNavigation/nextCommands"),
 					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "nextCommands")
 				)},
-				React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding cursor-pointer"},
+				React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding active cursor-pointer"},
 					React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain full-size"})
 				)
 			);
 		
-			let inactiveButton = React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding disabled"},
+			let inactiveButton = React.createElement("div", {"className": "icon-button-round large stepped-navigation-button stepped-navigation-button-padding inactive disabled"},
 				React.createElement(Wprr.Image, {"src": "arrow-right-white.svg", "className": "background-contain full-size"})
 			);
 			
@@ -99,12 +99,12 @@ export default class SteppedNavigation extends WprrBaseObject {
 					Wprr.sourceReferenceIfExists("steppedNavigation/previousCommands"),
 					Wprr.sourceReferenceIfExists("steppedNavigation/defaults", "previousCommands")
 				)},
-				React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined cursor-pointer"},
+				React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined active cursor-pointer"},
 					React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain full-size"})
 				)
 			);
 		
-			let inactiveBackButton = React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined disabled"},
+			let inactiveBackButton = React.createElement("div", {"className": "icon-button-round stepped-navigation-back-button stepped-navigation-back-button-padding outlined inactive disabled"},
 				React.createElement(Wprr.Image, {"src": "arrow-left-standard.svg", "className": "background-contain full-size"})
 			);
 		
