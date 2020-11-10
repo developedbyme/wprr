@@ -93,7 +93,13 @@ export default class WpBlockEditor extends Layout {
 						aSlots.default(React.createElement("div", {}))
 					),
 					React.createElement("div", {"data-section-name": "data"},
-						aSlots.slot("dataElement", React.createElement("div", {}, "No data settings available"))
+						aSlots.slot("dataElement",
+							React.createElement("div", {}, 
+								React.createElement(Wprr.EditableProps, {"props": "blockLoadData", "externalStorage": Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")},
+									React.createElement(Wprr.JsonEditor, {"valueName": "blockLoadData"})
+								)
+							)
+						)
 					)
 				)
 			)

@@ -45,7 +45,7 @@ export default class Address extends WprrBaseObject {
 		return React.createElement("div", {className: "standard-field standard-field-padding full-width"},
 			React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.renameProp(["value"], ["src"])},
-					React.createElement(ReactJson, {"name": null, "onEdit": this._callback_onEditBound, "onAdd": this._callback_onAddBound, "onDelete": this._callback_onDeleteBound})
+					React.createElement(ReactJson, {"name": null, "collapsed": true, "onEdit": this._callback_onEditBound, "onAdd": this._callback_onAddBound, "onDelete": this._callback_onDeleteBound})
 				)
 			)
 		);
