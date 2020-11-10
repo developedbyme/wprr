@@ -1,7 +1,9 @@
 import React from "react";
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
 
-export default class LockedField extends Wprr.Layout {
+import Layout from "wprr/elements/layout/Layout";
+
+export default class LockedField extends Layout {
 	
 	constructor(aProps) {
 		super(aProps);

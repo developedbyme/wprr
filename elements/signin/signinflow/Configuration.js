@@ -1,6 +1,8 @@
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
 
-export default class Configuration extends Wprr.utils.project.ProjectRelatedItem {
+import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
+
+export default class Configuration extends ProjectRelatedItem {
 	
 	constructor() {
 		super();

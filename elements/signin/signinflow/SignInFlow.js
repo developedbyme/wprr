@@ -1,10 +1,12 @@
 import React from "react";
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
+
+import Layout from "wprr/elements/layout/Layout";
 
 import * as areas from "./areas/areas.js";
 import Configuration from "./Configuration";
 
-export default class SignInFlow extends Wprr.Layout {
+export default class SignInFlow extends Layout {
 	
 	constructor(aProps) {
 		super(aProps);
@@ -18,10 +20,7 @@ export default class SignInFlow extends Wprr.Layout {
 		
 		this._configuration.setProject(this.getReference("wprr/project"));
 		
-		let doneCommands = [
-			Wprr.commands.consoleLog("Signed in")
-		];
-		this._configuration.setDoneCommands(doneCommands);
+		this._configuration.setDoneCommands(aSlots.prop("doneCommands", []));
 		
 		let routes = this._configuration.getRoutes();
 		let directions = this._configuration.getDirections();

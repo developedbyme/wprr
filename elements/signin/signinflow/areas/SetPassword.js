@@ -1,9 +1,11 @@
 import React from "react";
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
+
+import Layout from "wprr/elements/layout/Layout";
 
 import LockedField from "../LockedField";
 
-export default class SetPassword extends Wprr.Layout {
+export default class SetPassword extends Layout {
 	
 	constructor(aProps) {
 		super(aProps);
