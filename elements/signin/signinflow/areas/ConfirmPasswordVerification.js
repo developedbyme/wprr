@@ -135,8 +135,8 @@ export default class ConfirmPasswordVerification extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		//METODO: link up validation
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
+		externalStorage.updateValue("verificationCode", "      ");
 		
 		externalStorage.createChangeCommands("verificationCode", this, Wprr.commands.callFunction(this, this._updateForCodeChange));
 		

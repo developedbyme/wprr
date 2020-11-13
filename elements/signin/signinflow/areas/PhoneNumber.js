@@ -80,7 +80,7 @@ export default class Email extends Layout {
 		return <div>
 			<LockedField />
 			<div className="spacing standard" />
-			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Phone number")} valueName="phoneNumber" />
+			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Phone number", "site.phoneNumber")} valueName="phoneNumber" />
 			<div className="spacing standard" />
 			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="inactive" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
 		</div>;

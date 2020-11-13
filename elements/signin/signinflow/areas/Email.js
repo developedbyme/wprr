@@ -74,7 +74,7 @@ export default class Email extends Layout {
 		let nextCommands = Wprr.commands.callFunction(this, this._continue);
 		
 		return <div>
-			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Email")} valueName="email" />
+			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Email", "site.email")} valueName="email" />
 			<div className="spacing standard" />
 			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="inactive" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
 		</div>;

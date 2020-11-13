@@ -135,8 +135,8 @@ export default class ConfirmEmail extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		//METODO: link up validation
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
+		externalStorage.updateValue("verificationCode", "      ");
 		
 		externalStorage.createChangeCommands("verificationCode", this, Wprr.commands.callFunction(this, this._updateForCodeChange));
 		
@@ -154,24 +154,24 @@ export default class ConfirmEmail extends Layout {
 		return <div>
 			<LockedField />
 			<div className="spacing standard" />
-			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Verification")}>
+			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Verification", "site.verification")}>
 			<Wprr.SelectSection selectedSections={this._sendStatus}>
 				<div data-section-name="sending">
 					<div className="signup-verification__waiting-box">
 						<Wprr.FlexRow className="vertically-center-items small-item-spacing">
 							<Wprr.Image className="verified-phone background-contain" src="verified-mobile.svg" />
-							{Wprr.translateText("Sending verification")}
+							{Wprr.idText("Sending verification", "site.sendingVerification")}
 						</Wprr.FlexRow>
 					</div>
 				</div>
 				<div data-section-name="normal">
 					<Wprr.FlexRow className="small-item-spacing justify-between">
 						<div>
-							{Wprr.translateText("We have sent you a verification code")}
+							{Wprr.idText("We have sent you a verification code", "site.sentVerification")}
 						</div>
 						<div>
 							<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._resendEmail)}>
-								<div className="action-link cursor-pointer">{Wprr.translateText("Resend")}</div>
+								<div className="action-link cursor-pointer">{Wprr.idText("Resend", "site.resend")}</div>
 							</Wprr.CommandButton>
 						</div>
 					</Wprr.FlexRow>
@@ -186,7 +186,7 @@ export default class ConfirmEmail extends Layout {
 	                        <Wprr.Image overrideMainElementType="img" className="image checkmark" src="checkmark-white-fat.svg" />
 	                    </div>
 	                    <span>
-							{Wprr.translateText("Email verified")}
+							{Wprr.idText("Email verified", "site.emailVerified")}
 						</span>
 	                </div>
 				</div>

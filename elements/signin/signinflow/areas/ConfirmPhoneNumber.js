@@ -56,7 +56,7 @@ export default class ConfirmEmail extends Layout {
 		
 		loader.setJsonPostBody({
 			"phoneNumber": phoneNumber,
-			"verificationId": this.getReference("externalStorage", "verificationId")
+			"verificationId": this.getReference("externalStorage", "phoneNumberVerificationId")
 		});
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._emailSent, [Wprr.source("event", "raw", "data.verificationId")]));
@@ -70,7 +70,7 @@ export default class ConfirmEmail extends Layout {
 		console.log(aVerificationId);
 		
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
-		externalStorage.updateValue("verificationId", aVerificationId);
+		externalStorage.updateValue("phoneNumberVerificationId", aVerificationId);
 		
 		this._sendStatus.value = "normal";
 	}
@@ -83,7 +83,7 @@ export default class ConfirmEmail extends Layout {
 		
 		let loader = project.getActionLoader("dbmtc/verifyVerification");
 		let phoneNumber = this.getReference("externalStorage", "phoneNumber");
-		let verificationId = this.getReference("externalStorage", "verificationId");
+		let verificationId = this.getReference("externalStorage", "phoneNumberVerificationId");
 		
 		loader.setJsonPostBody({
 			"value": phoneNumber,
@@ -135,8 +135,8 @@ export default class ConfirmEmail extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		//METODO: link up validation
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
+		externalStorage.updateValue("verificationCode", "      ");
 		
 		externalStorage.createChangeCommands("verificationCode", this, Wprr.commands.callFunction(this, this._updateForCodeChange));
 		
@@ -154,26 +154,26 @@ export default class ConfirmEmail extends Layout {
 		return <div>
 			<LockedField />
 			<div className="spacing standard" />
-			<LockedField fieldName="phoneNumber" label={Wprr.sourceTranslation("Phone number")} />
+			<LockedField fieldName="phoneNumber" label={Wprr.sourceTranslation("Phone number", "site.phoneNumber")} />
 			<div className="spacing standard" />
-			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Verification")}>
+			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Verification", "site.verification")}>
 			<Wprr.SelectSection selectedSections={this._sendStatus}>
 				<div data-section-name="sending">
 					<div className="signup-verification__waiting-box">
 						<Wprr.FlexRow className="vertically-center-items small-item-spacing">
 							<Wprr.Image className="verified-phone background-contain" src="verified-mobile.svg" />
-							{Wprr.translateText("Sending verification")}
+							{Wprr.idText("Sending verification", "site.sendingVerification")}
 						</Wprr.FlexRow>
 					</div>
 				</div>
 				<div data-section-name="normal">
 					<Wprr.FlexRow className="small-item-spacing justify-between">
 						<div>
-							{Wprr.translateText("We have sent you a verification code")}
+							{Wprr.idText("We have sent you a verification code", "site.sentVerification")}
 						</div>
 						<div>
 							<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._resendEmail)}>
-								<div className="action-link cursor-pointer">{Wprr.translateText("Resend")}</div>
+								<div className="action-link cursor-pointer">{Wprr.idText("Resend", "site.resend")}</div>
 							</Wprr.CommandButton>
 						</div>
 					</Wprr.FlexRow>
@@ -188,7 +188,7 @@ export default class ConfirmEmail extends Layout {
 	                        <Wprr.Image overrideMainElementType="img" className="image checkmark" src="checkmark-white-fat.svg" />
 	                    </div>
 	                    <span>
-							{Wprr.translateText("Phone number verified")}
+							{Wprr.translateText("Phone number verified", "site.phoneNumberVerified")}
 						</span>
 	                </div>
 				</div>

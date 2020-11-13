@@ -599,6 +599,10 @@ export default class WprrBaseObject extends React.Component {
 		
 		return returnValue;
 	}
+	
+	_performCommands(aCommands, aData = null) {
+		CommandPerformer.perform(aCommands, aData, this);
+	}
 
 	componentDidMount() {
 		//console.log("wprr/WprrBaseObject.componentDidMount");

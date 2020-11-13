@@ -88,6 +88,14 @@ export default class Configuration extends ProjectRelatedItem {
 			}
 		};
 		
+		if(this._prefix && this._prefix.length > 0) {
+			for(let objectName in directions) {
+				let currentObject = directions[objectName];
+				delete directions[objectName];
+				directions[this._prefix + "/" + objectName] = currentObject;
+			}
+		}
+		
 		return directions;
 	}
 	
@@ -97,7 +105,12 @@ export default class Configuration extends ProjectRelatedItem {
 			startScreen = "alreadySignedIn";
 		}
 		
-		return startScreen;
+		let prefix = "";
+		if(this._prefix && this._prefix.length > 0) {
+			prefix = this._prefix + "/";
+		}
+		
+		return prefix + startScreen;
 	}
 	
 	static create(aPrefix = null) {

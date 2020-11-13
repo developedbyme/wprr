@@ -20,7 +20,7 @@ export default class Done extends Layout {
 				<div className="signup-verification__check-circle centered-cell-holder">
 					<Wprr.Image className="checkmark background-contain" src="checkmark-white-fat.svg" />
 				</div>
-				{Wprr.translateText("You are now signed in")}
+				{Wprr.idText("You are now signed in", "site.signedId")}
 			</Wprr.FlexRow>)}
 			<Wprr.BaseObject didMountCommands={commands} />
 		</div>;
