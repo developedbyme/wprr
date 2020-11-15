@@ -233,6 +233,10 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 		let firstPart = tempArray.shift();
 		let restParts = tempArray.join(".");
 		
+		if(firstPart === "item") {
+			return Wprr.objectPath(this.item, restParts);
+		}
+		
 		return Wprr.objectPath(this.getFieldValue(firstPart), restParts);
 	}
 	
