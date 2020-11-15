@@ -60,6 +60,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._commands = Wprr.utils.InputDataHolder.create();
 		
+		this._items.additionalLoader._fieldToCheckFor = "isLoadedForEdit";
 		this._items.additionalLoader.addCommand(Wprr.commands.callFunction(this, this._setupItem, [Wprr.sourceEvent("item"), Wprr.sourceEvent("data")]), "setup");
 		
 		console.log(this);
@@ -232,7 +233,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return this;
 	}
 	
-	addNames(aItems) {
+	addNames(aItems, aRangeName = null) {
 		console.log("addNames");
 		console.log(aItems);
 		
@@ -245,6 +246,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			if(!item.hasType("data")) {
 				item.addType("data", currentData);
 			}
+		}
+		
+		if(aRangeName) {
+			this._items.addRange(aRangeName, aItems);
 		}
 	}
 	
@@ -467,6 +472,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, null, this), item, this);
 			}
 		}
+		
+		item.addType("isLoadedForEdit", true);
 	}
 	
 	addItemData(aData) {

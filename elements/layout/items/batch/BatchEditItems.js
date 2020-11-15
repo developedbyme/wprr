@@ -60,7 +60,7 @@ export default class BatchEditItems extends Layout {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentName = currentArray[i];
-				this._itemsEditor.addNames(aData[currentName]);
+				this._itemsEditor.addNames(aData[currentName], "dbmTypeRange_" + currentName);
 			}
 		}
 	}

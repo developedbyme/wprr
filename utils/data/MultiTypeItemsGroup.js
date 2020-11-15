@@ -273,4 +273,14 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		taxonomyItem.addSelectLink("topLevelTermBySlug", "topLevel", "slug");
 		
 	}
+	
+	addRange(aPath, aItems) {
+		let ids = Wprr.utils.array.mapField(aItems, "id");
+		
+		let currentItem = this.getItem(aPath);
+		currentItem.addType("path", aPath);
+		
+		let allLinks = currentItem.getLinks("all");
+		allLinks.addItems(ids);
+	}
 }

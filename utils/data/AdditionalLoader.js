@@ -16,6 +16,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		this._commandGroups = new Object();
 		
 		this._dataTypeName = "data";
+		this._fieldToCheckFor = "data";
 		this._url = "wprr/v1/range/any/privates,draftsIfAllowed,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={ids}";
 		
 		this._isLoading = false;
@@ -100,7 +101,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		let ids = this._queuedItems;
 		this._queuedItems = new Array();
 		
-		ids = this._items.getIdsWithMissingType(ids, "data");
+		ids = this._items.getIdsWithMissingType(ids, this._fieldToCheckFor);
 		
 		if(ids.length === 0) {
 			this._isLoading = false;

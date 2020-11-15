@@ -224,6 +224,12 @@ export default class LoadingSequence {
 		
 		return returnArray;
 	}
+	
+	static create() {
+		let newLoadingSequence = new LoadingSequence();
+		
+		return newLoadingSequence;
+	}
 }
 
 LoadingSequence.DEFAULT_NUMBER_OF_CONCURRENT_LOADERS = 5;
