@@ -19,6 +19,7 @@ export default class RoutingModuleWithRendererCreator extends RoutingModuleCreat
 		super();
 		
 		this._renderer = new WprrRenderer();
+		this.skipPreloadedData = false;
 	}
 	
 	_configureModule(aHolderNode, aData) {
@@ -39,19 +40,20 @@ export default class RoutingModuleWithRendererCreator extends RoutingModuleCreat
 		let initialLoadPath = aData.paths.rest + "wprr/v1/action/wprr/save-initial-load-cache";
 		this._renderer.setupInitialLoad(initialLoadPath, currentHref, aData.paths.rest);
 		
-		for(let objectName in aData.preloadedData) {
+		if(!this.skipPreloadedData) {
+			for(let objectName in aData.preloadedData) {
 			
-			let currentLoaderData = aData.preloadedData[objectName];
+				let currentLoaderData = aData.preloadedData[objectName];
 			
-			let newLoader = new Wprr.utils.JsonLoader();
-			newLoader.setUrl(objectName);
-			newLoader.setData({"status": "success", "data": currentLoaderData.data});
-			newLoader.setStatus(Wprr.utils.JsonLoader.LOADED);
-			//console.log(currentLoaderData.performance, objectName);
+				let newLoader = new Wprr.utils.JsonLoader();
+				newLoader.setUrl(objectName);
+				newLoader.setData({"status": "success", "data": currentLoaderData.data});
+				newLoader.setStatus(Wprr.utils.JsonLoader.LOADED);
+				//console.log(currentLoaderData.performance, objectName);
 			
-			this._storeController.addLoader(objectName, newLoader); //MEDEBUG: //
+				this._storeController.addLoader(objectName, newLoader); //MEDEBUG: //
+			}
 		}
-		
 		
 		/*
 		var renderData = aData.render;
