@@ -102,6 +102,7 @@ export default class BatchEditItems extends Layout {
 		}
 		
 		let operationSection = aSlots.prop("operationSections", null);
+		let operationOptions = aSlots.prop("operationOptions", null);
 		
 		return React.createElement("div", {className: "centered-block-for-overflow"},
 			React.createElement(Wprr.FlexRow, null,
@@ -109,7 +110,7 @@ export default class BatchEditItems extends Layout {
 					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
 						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items", "site.admin.editItems"))},
 							React.createElement(Wprr.HasData, {"data-slot": "operations", "check": operationSection},
-								React.createElement(Operations, {"sections": operationSection, "operationOptions": aSlots.prop("operationOptions", null)})
+								React.createElement(Operations, {"sections": operationSection, "operationOptions": operationOptions})
 							),
 							React.createElement("div", {"data-slot": "additionalMoreOptions"}, aSlots.slot("additionalMoreOptions", <div />)),
 						),

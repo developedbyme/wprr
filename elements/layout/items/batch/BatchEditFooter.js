@@ -15,26 +15,32 @@ export default class BatchEditFooter extends Layout {
 	}
 
 	_getLayout(aSlots) {
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between"
-}, aSlots.slot("left", /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.callFunction(Wprr.sourceReference("itemsEditor"), "createItem", [])
-}, /*#__PURE__*/React.createElement("div", {
-  className: "standard-button standard-button-padding"
-}, Wprr.translateText("Add"))))), aSlots.slot("right", /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: "saveAll.hasChanges",
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourcePropWithDots("saveAll.hasChanges")
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.callFunction(Wprr.sourceReference("itemsEditor"), "saveAll", [])
-}, /*#__PURE__*/React.createElement("div", {
-  className: "standard-button standard-button-padding"
-}, Wprr.translateText("Save all changes")))), /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourcePropWithDots("saveAll.hasChanges"),
-  checkType: "invert/default"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "standard-button standard-button-padding inactive"
-}, Wprr.translateText("No changes to save")))))));
+		return React.createElement("div", null,
+			React.createElement(Wprr.FlexRow, {className: "justify-between"},
+				aSlots.slot("left",
+					React.createElement("div", null,
+						React.createElement(Wprr.CommandButton, {commands: Wprr.commands.callFunction(Wprr.sourceReference("itemsEditor"), "createItem", [])},
+							React.createElement("div", {className: "standard-button standard-button-padding"}, Wprr.idText("Add", "site.admin.add"))
+						)
+					)
+				),
+				aSlots.slot("right",
+					React.createElement(Wprr.ExternalStorageProps, {props: "saveAll.hasChanges", externalStorage: Wprr.sourceReference("externalStorage")},
+						React.createElement(Wprr.HasData, {check: Wprr.sourcePropWithDots("saveAll.hasChanges")},
+							React.createElement(Wprr.CommandButton, {commands: Wprr.commands.callFunction(Wprr.sourceReference("itemsEditor"), "saveAll", [])},
+								React.createElement("div", {className: "standard-button standard-button-padding"},
+									Wprr.idText("Save all changes", "site.admin.saveAllChanges")
+								)
+							)
+						),
+						React.createElement(Wprr.HasData, {check: Wprr.sourcePropWithDots("saveAll.hasChanges"),checkType: "invert/default"},
+							React.createElement("div", {className: "standard-button standard-button-padding inactive"},
+								Wprr.idText("No changes to save", "site.admin.noChangesToSave")
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 }
