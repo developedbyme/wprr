@@ -5,6 +5,8 @@ import Wprr from "wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
+import Operations from "./Operations";
+
 // import BatchEditItems from "./BatchEditItems";
 export default class BatchEditItems extends Layout {
 
@@ -99,14 +101,17 @@ export default class BatchEditItems extends Layout {
 			}
 		}
 		
-		//METODO: set operations
+		let operationSection = aSlots.prop("operationSections", null);
 		
 		return React.createElement("div", {className: "centered-block-for-overflow"},
 			React.createElement(Wprr.FlexRow, null,
 				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}},
 					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
 						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items", "site.admin.editItems"))},
-							React.createElement("div", {"data-slot": "operations"})
+							React.createElement(Wprr.HasData, {"data-slot": "operations", "check": operationSection},
+								React.createElement(Operations, {"sections": operationSection, "operationOptions": aSlots.prop("operationOptions", null)})
+							),
+							React.createElement("div", {"data-slot": "additionalMoreOptions"}, aSlots.slot("additionalMoreOptions", <div />)),
 						),
 						React.createElement("div", {className: "spacing standard"}),
 						React.createElement(Wprr.DataLoader, {loadData: this._loadData, loadedCommands: [
