@@ -238,6 +238,17 @@ export default class WprrBaseObject extends React.Component {
 		return aDefaultValue;
 	}
 	
+	updateProp(aPropName, aValue) {
+		let props = this.getProps();
+		
+		let currentProp = props[aPropName];
+		if(currentProp && currentProp.getSource && currentProp.updateValue) {
+			currentProp.updateValue(aValue);
+		}
+		
+		return this;
+	}
+	
 	getInput(aPropNameOrSource) {
 		//console.log("WprrBaseObject::getInput");
 		//console.log(aPropNameOrSource);

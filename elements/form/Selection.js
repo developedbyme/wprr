@@ -104,6 +104,8 @@ export default class Selection extends WprrBaseObject {
 		
 		let valueName = this.getSourcedProp("valueName");
 		
+		this.updateProp("value", aEvent.target.value);
+		
 		if(valueName) {
 			this.getReference("value/" + valueName).updateValue(valueName, aEvent.target.value, additionalData);
 		}
