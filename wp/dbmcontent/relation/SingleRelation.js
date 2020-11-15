@@ -19,8 +19,28 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		//console.log("getEditor");
 		//console.log(aDirection, aConnectionType, aObjectType);
 		
-		console.log(">>", this.item.getType("relations"));
 		let relations = this.item.getType("relations").getValue(aDirection + "." + aConnectionType + "." + aObjectType);
+		if(relations && relations.length > 0) {
+			
+			let currentArray = relations;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let item = this.item.group.getItem(relations[i]);
+				let relation = item.getType("relation");
+				if(relation.isActiveNow()) {
+					return item;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	getUserRelation(aConnectionType) {
+		//console.log("getUserRelation");
+		//console.log(aConnectionType);
+		
+		let relations = this.item.getType("relations").getValue("userRelations." + aConnectionType);
 		if(relations && relations.length > 0) {
 			
 			let currentArray = relations;
@@ -52,6 +72,13 @@ export default class SingleRelation extends MultiTypeItemConnection {
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		let connectionType = tempArray.shift();
+		
+		if(firstPart === "userRelations") {
+			let restParts = tempArray.join(".");
+		
+			return Wprr.objectPath(this.getUserRelation(connectionType), restParts);
+		}
+		
 		let objectType = tempArray.shift();
 		
 		let restParts = tempArray.join(".");
