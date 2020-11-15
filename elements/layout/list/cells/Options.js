@@ -37,20 +37,18 @@ export default class Options extends WprrBaseObject {
 		
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
-		return React.createElement("div", null, Wprr.DropdownSelection.createSelfContained( /*#__PURE__*/React.createElement(Wprr.Image, {
-  src: "navigation-menu-horizontal.svg",
-  className: "standard-icon image background-contain",
-  location: "images"
-}), /*#__PURE__*/React.createElement("div", {
-  className: "custom-selection-menu custom-selection-menu-padding"
-}, /*#__PURE__*/React.createElement(Wprr.Link, {
-  href: Wprr.sourceCombine("/wp-admin/post.php?post=", Wprr.sourceReference("item", "id"), "&action=edit")
-}, Wprr.translateText("Edit in WordPress")), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: [Wprr.commands.callFunction(this, this._publishItem, [Wprr.sourceReference("item")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
-}, /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Publish")))), {
-  "className": "icon-dropdown dropdown-from-right"
-}));
+		return React.createElement("div", null, Wprr.DropdownSelection.createSelfContained(
+			React.createElement(Wprr.Image, {src: "navigation-menu-horizontal.svg", className: "standard-icon image background-contain", location: "images"}),
+			React.createElement("div", {className: "custom-selection-menu custom-selection-menu-padding"},
+				React.createElement(Wprr.Link, {href: Wprr.sourceCombine("/wp-admin/post.php?post=", Wprr.sourceReference("item", "id"), "&action=edit")},
+					Wprr.idText("Edit in WordPress", "site.admin.editInWordPress")
+				),
+				React.createElement("div", {className: "spacing small"}),
+				React.createElement(Wprr.CommandButton, {commands: [Wprr.commands.callFunction(this, this._publishItem, [Wprr.sourceReference("item")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]},
+					React.createElement("div", null, Wprr.idText("Publish", "site.admin.publish"))
+				)
+			),
+			{"className": "icon-dropdown dropdown-from-right"}
+		));
 	}
 }

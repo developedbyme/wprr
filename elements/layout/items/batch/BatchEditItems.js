@@ -105,7 +105,7 @@ export default class BatchEditItems extends Layout {
 			React.createElement(Wprr.FlexRow, null,
 				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}},
 					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
-						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items"))},
+						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items", "site.admin.editItems"))},
 							React.createElement("div", {"data-slot": "operations"})
 						),
 						React.createElement("div", {className: "spacing standard"}),
