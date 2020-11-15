@@ -35,7 +35,9 @@ export default class StoreController {
 		for(let objectName in this._loaders) {
 			hasLoader = true;
 			let currentLoader = this._loaders[objectName];
-			if(currentLoader.getStatus() !== 1) {
+			
+			let currentStatus = currentLoader.getStatus();
+			if(currentStatus !== 1 && currentStatus !== -1) {
 				allDone = false;
 				break;
 			}
@@ -49,7 +51,10 @@ export default class StoreController {
 		let returnArray = new Array();
 		
 		for(let objectName in this._loaders) {
-			returnArray.push(objectName);
+			let currentLoader = this._loaders[objectName];
+			if(currentLoader.getStatus() === 1) {
+				returnArray.push(objectName);
+			}
 		}
 		
 		return returnArray;
