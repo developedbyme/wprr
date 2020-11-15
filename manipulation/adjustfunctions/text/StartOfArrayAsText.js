@@ -1,3 +1,5 @@
+import Wprr from "wprr/Wprr";
+
 import AdjustFunction from "wprr/manipulation/adjustfunctions/AdjustFunction";
 
 import SourceData from "wprr/reference/SourceData";
@@ -20,9 +22,9 @@ export default class StartOfArrayAsText extends AdjustFunction {
 		this.setInput("outputName", "text");
 		
 		this.setInput("separatorText", ", ");
-		this.setInput("lastSeparatorText", SourceData.create("translation", "and"));
-		this.setInput("multipleOthersText", SourceData.create("translation", "and %number-of-items% other"));
-		this.setInput("noItemsText", SourceData.create("translation", "no items"));
+		this.setInput("lastSeparatorText", Wprr.sourceTranslation("and", "site.and"));
+		this.setInput("multipleOthersText", Wprr.sourceTranslation("and %number-of-items% other", "site.andNumberOfOthers"));
+		this.setInput("noItemsText", Wprr.sourceTranslation("no items", "site.noItems"));
 	}
 	
 	/**
