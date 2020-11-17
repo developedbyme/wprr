@@ -9,3 +9,5 @@ export {default as relations} from "./Relations";
 export {default as relationOfAnyType} from "./RelationOfAnyType";
 export {default as singleUserRelation} from "./SingleUserRelation";
 export {default as singleRelation} from "./SingleRelation";
+export {default as data} from "./Data";
+export {default as element} from "./Element";
