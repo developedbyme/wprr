@@ -35,6 +35,10 @@ export default class ValueSourceData extends SourceData {
 		return this._value;
 	}
 	
+	_shouldUpdateOwner(aName, aOwner) {
+		return true;
+	}
+	
 	reSource() {
 		return Wprr.source("source", this);
 	}
@@ -51,6 +55,8 @@ export default class ValueSourceData extends SourceData {
 	
 	setValue(aValue) {
 		//console.log("setValue");
+		
+		//METODO: check if value has changed
 		
 		this._value = aValue;
 		this.externalDataChange();

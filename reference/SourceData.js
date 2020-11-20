@@ -59,12 +59,21 @@ export default class SourceData {
 		return  this;
 	}
 	
-	externalDataChange() {
+	_shouldUpdateOwner(aName, aOwner) {
+		//console.log("SourceData::_shouldUpdateOwner", aName, this);
+		return false;
+	}
+	
+	externalDataChange(aName = null) {
+		//console.log("SourceData::externalDataChange", aName);
+		
 		let currentArray = this._owners;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
-			currentOwner.updateForSourceChange();
+			if(this._shouldUpdateOwner(aName, currentOwner)) {
+				currentOwner.updateForSourceChange();
+			}
 		}
 	}
 	
@@ -168,6 +177,18 @@ export default class SourceData {
 		newSourceData.setSourceFunction(aFunction);
 		
 		return newSourceData;
+	}
+	
+	static getPathForOwner(aType, aPath, aFromObject, aPropsAndState) {
+		if(aType === "source") {
+			return aPath;
+		}
+		
+		if(aPath instanceof SourceData) {
+			aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
+		}
+		
+		return aPath;
 	}
 	
 	static getSource(aType, aPath, aFromObject, aPropsAndState) {

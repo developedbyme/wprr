@@ -57,6 +57,8 @@ export default class Loop extends Adjust {
 	}
 	
 	_renderMainElement() {
+		console.log("Loop::_renderMainElement", this);
+		
 		let clonedElementes = super._renderMainElement();
 		let injectData = new Object();
 		

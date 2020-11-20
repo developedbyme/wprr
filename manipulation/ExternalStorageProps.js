@@ -20,7 +20,7 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 	}
 	
 	_updateState() {
-		//console.log("wprr/manipulation/ExternalStorageProps::_updateState");
+		//console.log("ExternalStorageProps::_updateState");
 		
 		let externalStorage = this.getFirstInput("externalStorage", Wprr.sourceReference("externalStorage"));
 		let currentArray = this._getPropNames();
@@ -35,13 +35,17 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 			
 				let currentValue = externalStorage.getValue(currentName);
 				if(currentValue !== undefined) {
-					if(this.state[currentName] !== currentValue) {
-						newState[currentName] = currentValue;
-						hasChange = true;
+					try {
+						if(JSON.stringify(this.state[currentName]) !== JSON.stringify(currentValue)) {
+							newState[currentName] = currentValue;
+							hasChange = true;
+						}
 					}
-					else if(JSON.stringify(this.state[currentName]) === JSON.stringify(currentValue)) {
-						newState[currentName] = currentValue;
-						hasChange = true;
+					catch(theError) {
+						if(this.state[currentName] !== currentValue) {
+							newState[currentName] = currentValue;
+							hasChange = true;
+						}
 					}
 				}
 			}
@@ -133,7 +137,7 @@ export default class ExternalStorageProps extends ManipulationBaseObject {
 	}
 	
 	_manipulateProps(aReturnObject) {
-		//console.log("wprr/manipulation/ExternalStorageProps::_manipulateProps");
+		//console.log("ExternalStorageProps::_manipulateProps", this);
 		
 		let propNames = this._getPropNames();
 		

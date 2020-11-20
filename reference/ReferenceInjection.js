@@ -82,6 +82,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 	}
 	
 	_renderClonedElement() {
+		console.log("ReferenceInjection::_renderClonedElement", this);
 		if(Wprr.development_updateFullTreeOnInjection) {
 			this._createInjectionObject();
 		}

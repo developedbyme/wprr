@@ -26,14 +26,12 @@ export default class FieldCellItem extends Layout {
 		let typeSource = aSlots.prop("fieldType", Wprr.sourceReference("fields", Wprr.sourceCombine(cellIdSource, ".type")));
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(typeSource, aSlots.prop("cellTypes", {}), "standard");
 		
-		return React.createElement(Wprr.AddReference, {
-  data: cellIdSource,
-  as: "cellId"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: settingsSource,
-  as: "cellSettings"
-}, /*#__PURE__*/React.createElement(Wprr.AddProps, {
-  className: Wprr.sourceCombine("flex-row-item flex-no-resize field-", cellIdSource, " wanted-field-type-", typeSource)
-}, switchableArea)));;
+		return React.createElement(Wprr.AddReference, {data: cellIdSource, as: "cellId"},
+			React.createElement(Wprr.AddReference, {data: settingsSource, as: "cellSettings"}, 
+				React.createElement(Wprr.AddProps, {className: Wprr.sourceCombine("flex-row-item flex-no-resize field-", cellIdSource, " wanted-field-type-", typeSource)},
+					switchableArea
+				)
+			)
+		);
 	}
 }

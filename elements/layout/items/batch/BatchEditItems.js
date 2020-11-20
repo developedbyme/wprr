@@ -104,25 +104,31 @@ export default class BatchEditItems extends Layout {
 		let operationSection = aSlots.prop("operationSections", null);
 		let operationOptions = aSlots.prop("operationOptions", null);
 		
-		return React.createElement("div", {className: "centered-block-for-overflow"},
-			React.createElement(Wprr.FlexRow, null,
-				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}},
-					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
+		/*
 						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items", "site.admin.editItems"))},
 							React.createElement(Wprr.HasData, {"data-slot": "operations", "check": operationSection},
 								React.createElement(Operations, {"sections": operationSection, "operationOptions": operationOptions})
 							),
 							React.createElement("div", {"data-slot": "additionalMoreOptions"}, aSlots.slot("additionalMoreOptions", <div />)),
 						),
+		*/
+		
+		/*
+		
+		*/
+		
+		return React.createElement("div", {className: "centered-block-for-overflow"},
+			React.createElement(Wprr.FlexRow, null,
+				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}},
+					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
+						/**/
 						React.createElement("div", {className: "spacing standard"}),
 						React.createElement(Wprr.DataLoader, {loadData: this._loadData, loadedCommands: [
 							Wprr.commands.callFunction(this, this._addNames, [Wprr.source("event", "raw")]),
 							Wprr.commands.callFunction(this, this._addTerms, [Wprr.source("event", "raw")])
 						]},
-							React.createElement(Wprr.EditableProps, {editableProps: "filteredIds", externalStorage: Wprr.sourceReference("externalStorage")},
-								React.createElement(Wprr.layout.ItemList, {ids: Wprr.sourceProp("filteredIds"), className: "item-list"},
-									React.createElement(Wprr.layout.items.batch.FieldsListItem, {cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)})
-								)
+							React.createElement(Wprr.layout.ItemList, {ids: Wprr.sourceReference("externalStorage", "filteredIds"), className: "item-list"},
+								React.createElement(Wprr.layout.items.batch.FieldsListItem, {cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)})
 							)
 						),
 						React.createElement("div", {className: "spacing standard"}),

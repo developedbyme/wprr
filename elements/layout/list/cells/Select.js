@@ -17,18 +17,20 @@ export default class Name extends WprrBaseObject {
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"}),
-			React.createElement("div", {className: "content-text-small"},
-				React.createElement(Wprr.FlexRow, null,
-					React.createElement(Wprr.MultipleSelectionValue, {value: Wprr.sourceReference("item", "id"), externalStorage: Wprr.sourceReference("externalStorage")},
-						React.createElement(Wprr.Checkbox, {valueName: "selected"})
-					),
-					React.createElement("div", null,
-						React.createElement("div", {className: "standard-flag standard-flag-padding id-flag"},
-							Wprr.text(Wprr.sourceReference("item", "id"))
+			React.createElement(Wprr.ScrollActivatedItem, {},
+				React.createElement("div", {className: "content-text-small"},
+					React.createElement(Wprr.FlexRow, null,
+						React.createElement(Wprr.MultipleSelectionValue, {value: Wprr.sourceReference("item", "id"), externalStorage: Wprr.sourceReference("externalStorage")},
+							React.createElement(Wprr.Checkbox, {valueName: "selected"})
 						),
-						React.createElement(Wprr.HasData, {check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "saved.status"), checkType: "equal", compareValue: "draft"},
-							React.createElement("div", {className: "standard-flag standard-flag-padding status-flag draft"},
-								Wprr.idText("Draft", "site.admin.draft")
+						React.createElement("div", null,
+							React.createElement("div", {className: "standard-flag standard-flag-padding id-flag"},
+								Wprr.text(Wprr.sourceReference("item", "id"))
+							),
+							React.createElement(Wprr.HasData, {check: Wprr.sourceStatic(Wprr.sourceReference("item", "editStorage"), "saved.status"), checkType: "equal", compareValue: "draft"},
+								React.createElement("div", {className: "standard-flag standard-flag-padding status-flag draft"},
+									Wprr.idText("Draft", "site.admin.draft")
+								)
 							)
 						)
 					)

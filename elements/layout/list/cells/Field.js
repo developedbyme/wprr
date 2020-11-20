@@ -35,10 +35,12 @@ export default class Name extends WprrBaseObject {
 				React.createElement(Wprr.TranslationOrId, {id: fieldId, prefix: "site.messageGroupFields"})
 			),
 			React.createElement("div", {className: "spacing micro"}),
-			React.createElement("div", {className: "content-text-small"},
-				React.createElement(Wprr.SelectField, {fieldName: fieldId},
-					cellSwitchableArea.getReactElements(),
-					React.createElement(Wprr.layout.admin.im.SaveFieldOperations, null)
+			React.createElement(Wprr.ScrollActivatedItem, {},
+				React.createElement("div", {className: "content-text-small"},
+					React.createElement(Wprr.SelectField, {fieldName: fieldId},
+						cellSwitchableArea.getReactElements(),
+						React.createElement(Wprr.layout.admin.im.SaveFieldOperations, null)
+					)
 				)
 			)
 		);

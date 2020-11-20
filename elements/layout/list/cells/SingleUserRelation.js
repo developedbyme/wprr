@@ -27,9 +27,11 @@ export default class SingleUserRelation extends WprrBaseObject {
 				React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
 			),
 			React.createElement("div", {className: "spacing micro"}),
-			React.createElement("div", {className: "content-text-small"},
-				React.createElement(Wprr.RelatedItem, {id: editorPath, as: "editor"},
-					React.createElement(Wprr.layout.relation.SelectSingleUserRelation, {})
+			React.createElement(Wprr.ScrollActivatedItem, {},
+				React.createElement("div", {className: "content-text-small"},
+					React.createElement(Wprr.RelatedItem, {id: editorPath, as: "editor"},
+						React.createElement(Wprr.layout.relation.SelectSingleUserRelation, {})
+					)
 				)
 			)
 		);

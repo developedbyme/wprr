@@ -21,11 +21,36 @@ export default class SourceDataWithPath extends SourceData {
 		this._debug_lastEvaluatedDeepValue = null;
 	}
 	
+	_shouldUpdateOwner(aName, aOwner) {
+		//console.log("SourceDataWithPath::_shouldUpdateOwner")
+		if(aName) {
+			let pathName = SourceDataWithPath.getDeepPathForOwner(this._deepPath, aOwner);
+			//console.log(this._type, pathName, aName, aOwner, this);
+			if(typeof(pathName) === "string") {
+				let minLength = Math.min(pathName.length, aName.length);
+				if(pathName.substring(0, minLength) !== aName.substring(0, minLength)) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
 	setDeepPath(aPath) {
 		
 		this._deepPath = aPath;
 		
 		return this;
+	}
+	
+	static getDeepPathForOwner(aDeepPath, aOwner) {
+		let deepPath = aDeepPath;
+		if(deepPath instanceof SourceData) {
+			deepPath = deepPath.getSource(aOwner);
+		}
+		
+		return deepPath;
 	}
 	
 	static getDeepPathValue(aData, aPath, aAdditionalInput, aFromObject) {
@@ -45,8 +70,6 @@ export default class SourceDataWithPath extends SourceData {
 		else {
 			returnData = Wprr.objectPath(aData, aPath);
 		}
-		
-		
 		
 		return returnData;
 	}

@@ -28,10 +28,12 @@ export default class Relations extends WprrBaseObject {
 					React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
 				),
 				React.createElement("div", {className: "spacing micro"}),
-				React.createElement("div", {className: "content-text-small"},
-					React.createElement(Wprr.RelatedItem, {id: editorPath, as: "editor"},
-						React.createElement(Wprr.ExternalStorageProps, {props: activatePathSource, externalStorage: externalStorageSource},
-							React.createElement(Wprr.layout.relation.SelectMultipleRelations, null)
+				React.createElement(Wprr.ScrollActivatedItem, {},
+					React.createElement("div", {className: "content-text-small"},
+						React.createElement(Wprr.RelatedItem, {id: editorPath, as: "editor"},
+							React.createElement(Wprr.ExternalStorageProps, {props: activatePathSource, externalStorage: externalStorageSource},
+								React.createElement(Wprr.layout.relation.SelectMultipleRelations, null)
+							)
 						)
 					)
 				)

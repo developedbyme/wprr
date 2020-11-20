@@ -14,7 +14,8 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 		super(aProps);
 		
 		this._externalStorage = new DataStorage();
-		
+		this._injectData = new Object();
+		this._lastStorageName = null;
 	}
 	
 	getExternalStorage() {
@@ -66,14 +67,19 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 	}
 	
 	_renderMainElement() {
+		console.log("ExternalStorageInjection::_renderMainElement");
+		
 		let clonedElements = super._renderMainElement();
 		
 		let storageName = this.getSourcedPropWithDefault("storageName", "externalStorage");
 		
-		let injectData = new Object();
-		injectData[storageName] = this._externalStorage;
+		if(this._lastStorageName) {
+			delete this._injectData[this._lastStorageName];
+		}
+		this._injectData[storageName] = this._externalStorage;
+		this._lastStorageName = storageName;
 		
-		return React.createElement(ReferenceInjection, {"injectData": injectData}, clonedElements);
+		return React.createElement(ReferenceInjection, {"injectData": this._injectData}, clonedElements);
 	}
 	
 	static createReactElement(aStorageName, aChildOrChildren) {

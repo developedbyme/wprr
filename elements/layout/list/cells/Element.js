@@ -20,7 +20,9 @@ export default class Element extends WprrBaseObject {
 				React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
 			),
 			React.createElement("div", {className: "spacing micro"}),
-			React.createElement(Wprr.InsertElement, {element: Wprr.sourceReference("cellSettings", "element")})
+			React.createElement(Wprr.ScrollActivatedItem, {},
+				React.createElement(Wprr.InsertElement, {element: Wprr.sourceReference("cellSettings", "element")})
+			)
 		);
 	}
 }

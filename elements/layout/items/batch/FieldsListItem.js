@@ -5,18 +5,18 @@ import Wprr from "wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-// import FieldListItem from "./FieldListItem";
-export default class FieldListItem extends Layout {
+// import FieldsListItem from "./FieldsListItem";
+export default class FieldsListItem extends Layout {
 
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("FieldListItem::constructor");
+		//console.log("FieldsListItem::constructor");
 
 		super();
 		
-		this._layoutName = "fieldListItem";
+		this._layoutName = "fieldsListItem";
 	}
 	
 	_getLayout(aSlots) {

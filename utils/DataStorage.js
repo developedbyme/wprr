@@ -68,7 +68,7 @@ export default class DataStorage extends AbstractDataStorage {
 		return this;
 	}
 	
-	_updateOwners() {
+	_updateOwners(aName = null) {
 		//console.log("wprr/utils/DataStorage::_updateOwners");
 		//console.log(this._owners);
 		//METODO: need this to be safe for removing or adding owners in the middle of an update
@@ -83,7 +83,7 @@ export default class DataStorage extends AbstractDataStorage {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
 			if(currentOwner) { //METODO: improve this to have a safe array
-				currentOwner.externalDataChange();
+				currentOwner.externalDataChange(aName);
 			}
 		}
 	}
@@ -95,12 +95,12 @@ export default class DataStorage extends AbstractDataStorage {
 		try {
 			if(JSON.stringify(aValue) !== JSON.stringify(oldValue) || Wprr.development_skipDataStorageComparison) {
 				objectPath.set(this._data, aName, aValue);
-				this._updateOwners();
+				this._updateOwners(aName);
 			}
 		}
 		catch(theError) {
 			objectPath.set(this._data, aName, aValue);
-			this._updateOwners();
+			this._updateOwners(aName);
 		}
 		
 		

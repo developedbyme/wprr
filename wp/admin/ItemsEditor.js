@@ -208,6 +208,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_filterItems() {
+		console.log("ItemsEditor::_filterItems");
+		
 		let ids = this._editStorage.getValue("allIds");
 		let items = this._items.getItems(ids);
 		
@@ -215,6 +217,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._sortChain.sort(items, null);
 		
 		let filteredIds = Wprr.utils.array.mapField(items, "id");
+		
+		console.log(filteredIds, this._editStorage.getValue("filteredIds"));
 		
 		this._editStorage.updateValue("filteredIds", filteredIds);
 	}
