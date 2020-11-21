@@ -210,7 +210,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("WprrDataLoader::_renderMainElement");
+		//console.log("WprrDataLoader::_renderMainElement");
 		
 		let status = this._loadingGroup.getStatus();
 		

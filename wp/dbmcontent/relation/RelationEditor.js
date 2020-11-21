@@ -69,8 +69,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_getLoader(aId, aMakePrivate = false) {
-		console.log("RelationEditor::_getLoader");
-		console.log(this);
+		//console.log("RelationEditor::_getLoader");
+		//console.log(this);
 		
 		let loader = this.item.group.project.getLoader();
 		
@@ -80,7 +80,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		changeData.createChange(changeType, {"value": aId, "relationType": this._connectionType, "makePrivate": aMakePrivate});
 		
 		loader.setupJsonPost(this.item.group.project.getWprrUrl(Wprr.utils.wprrUrl.getEditUrl(this.item.id)), changeData.getEditData());
-		console.log(loader);
 		
 		return loader;
 	}
@@ -107,7 +106,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationAdded(aId, aFromId, aToId) {
-		console.log("RelationEditor::_relationAdded");
+		//console.log("RelationEditor::_relationAdded");
 		//console.log(aId, aToId);
 		
 		aId = 1*aId;
@@ -143,8 +142,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	add(aId) {
-		console.log("RelationEditor::add");
-		console.log(aId);
+		//console.log("RelationEditor::add");
+		//console.log(aId);
 		
 		let currentTime = moment().unix();
 		
@@ -268,7 +267,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_changed() {
-		console.log("_changed");
+		//console.log("_changed");
 		let commandName = "changed";
 		if(this._commands.hasInput(commandName)) {
 			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);

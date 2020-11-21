@@ -67,7 +67,7 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("ExternalStorageInjection::_renderMainElement");
+		//console.log("ExternalStorageInjection::_renderMainElement");
 		
 		let clonedElements = super._renderMainElement();
 		

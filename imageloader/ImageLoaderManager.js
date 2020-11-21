@@ -217,10 +217,16 @@ export default class ImageLoaderManager {
 	updateAllUninitiatedImages() {
 		var currentArray = this._uninitiatedImageUpdaters;
 		var currentArrayLength = currentArray.length;
+		
+		let thePageXOffset = window.pageXOffset;
+		let theInnerWidth = window.innerWidth;
+		let thePageYOffset = window.pageYOffset;
+		let theInnerHeight = window.innerHeight;
+		
 		for(var i = 0; i < currentArrayLength; i++) {
 			var currentUpdater = currentArray[i];
 			
-			if(currentUpdater.shouldActivate(window.pageXOffset+window.innerWidth, window.pageYOffset+window.innerHeight, 100)) {
+			if(currentUpdater.shouldActivate(thePageXOffset+theInnerWidth, thePageYOffset+theInnerHeight, 100)) {
 				currentUpdater.update();
 				
 				this._imageUpdaters.push(currentUpdater);
@@ -232,6 +238,25 @@ export default class ImageLoaderManager {
 				currentUpdater.updateRatio();
 			}
 		}
+	}
+	
+	updateUninitiatedImage(aUpdater) {
+		let thePageXOffset = window.pageXOffset;
+		let theInnerWidth = window.innerWidth;
+		let thePageYOffset = window.pageYOffset;
+		let theInnerHeight = window.innerHeight;
+		
+		if(aUpdater.shouldActivate(thePageXOffset+theInnerWidth, thePageYOffset+theInnerHeight, 100)) {
+			aUpdater.update();
+			
+			this._imageUpdaters.push(aUpdater);
+			return true;
+		}
+		else {
+			aUpdater.updateRatio();
+		}
+		
+		return false;
 	}
 	
 	_callback_resize(aEvent) {
@@ -296,7 +321,7 @@ export default class ImageLoaderManager {
 		this._uninitiatedImageUpdaters.push(aUpdater);
 		
 		if(this._isStarted) {
-			this.updateAllUninitiatedImages();
+			//this.updateAllUninitiatedImages();
 		}
 	}
 	

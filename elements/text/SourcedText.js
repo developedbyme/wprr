@@ -36,13 +36,21 @@ export default class SourcedText extends WprrBaseObject {
 	}
 	
 	static escapeString(aText) {
-		if(!SourcedText.tempTextArea) {
-			SourcedText.tempTextArea = document.createElement("textarea");
+		
+		let currentValue = SourcedText._convertedTexts[aText+""];
+		if(currentValue === undefined) {
+			if(!SourcedText.tempTextArea) {
+				SourcedText.tempTextArea = document.createElement("textarea");
+			}
+		
+			SourcedText.tempTextArea.innerHTML = aText;
+			currentValue = SourcedText.tempTextArea.value;
+			SourcedText._convertedTexts[aText+""] = currentValue;
 		}
 		
-		SourcedText.tempTextArea.innerHTML = aText;
-		return SourcedText.tempTextArea.value;
+		return currentValue;
 	}
 }
 
 SourcedText.tempTextArea = null;
+SourcedText._convertedTexts = {};

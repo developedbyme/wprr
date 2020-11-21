@@ -25,7 +25,7 @@ export default class LoadAdditionalItems extends Layout {
 	}
 	
 	_updateLoadStatus() {
-		console.log("LoadAdditionalItems::_updateLoadStatus");
+		//console.log("LoadAdditionalItems::_updateLoadStatus");
 		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
 		let items = this.getReference("items");
 		
@@ -35,7 +35,7 @@ export default class LoadAdditionalItems extends Layout {
 	}
 	
 	_prepareInitialRender() {
-		console.log("LoadAdditionalItems::_prepareInitialRender");
+		//console.log("LoadAdditionalItems::_prepareInitialRender");
 		super._prepareInitialRender();
 		
 		let items = this.getReference("items");
@@ -45,7 +45,7 @@ export default class LoadAdditionalItems extends Layout {
 	}
 	
 	_prepareRender() {
-		console.log("LoadAdditionalItems::_prepareRender");
+		//console.log("LoadAdditionalItems::_prepareRender");
 		super._prepareRender();
 		
 		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);

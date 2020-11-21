@@ -62,8 +62,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._items.additionalLoader._fieldToCheckFor = "isLoadedForEdit";
 		this._items.additionalLoader.addCommand(Wprr.commands.callFunction(this, this._setupItem, [Wprr.sourceEvent("item"), Wprr.sourceEvent("data")]), "setup");
-		
-		console.log(this);
 	}
 	
 	get editStorage() {
@@ -208,7 +206,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_filterItems() {
-		console.log("ItemsEditor::_filterItems");
+		//console.log("ItemsEditor::_filterItems");
 		
 		let ids = this._editStorage.getValue("allIds");
 		let items = this._items.getItems(ids);
@@ -217,8 +215,6 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._sortChain.sort(items, null);
 		
 		let filteredIds = Wprr.utils.array.mapField(items, "id");
-		
-		console.log(filteredIds, this._editStorage.getValue("filteredIds"));
 		
 		this._editStorage.updateValue("filteredIds", filteredIds);
 	}
@@ -238,8 +234,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	addNames(aItems, aRangeName = null) {
-		console.log("addNames");
-		console.log(aItems);
+		//console.log("addNames");
+		//console.log(aItems);
 		
 		let currentArray = aItems;
 		let currentArrayLength = currentArray.length;
@@ -532,7 +528,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	createItem() {
-		console.log("createItem");
+		//console.log("createItem");
 		
 		this._editStorage.updateValue("creatingStatus", "creating");
 		
@@ -548,7 +544,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_itemCreated(aId) {
-		console.log("_itemCreated");
+		//console.log("_itemCreated");
 		
 		let language = this.project.getCurrentLanguage();
 		
@@ -562,17 +558,16 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_addCreatedRow(aData) {
-		console.log("_addCreatedRow");
-		console.log(aData);
+		//console.log("_addCreatedRow");
+		//console.log(aData);
 		
 		this.addItemData(aData);
 		
 		this._editStorage.updateValue("creatingStatus", "none");
-		console.log(this);
 	}
 	
 	_updateSaveAllStatus() {
-		console.log("_updateSaveAllStatus");
+		//console.log("_updateSaveAllStatus");
 	
 		let hasChanges = false;
 		let currentArray = this._editStorage.getValue("allIds");
@@ -655,22 +650,22 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	getSaveAllLoaders() {
-		console.log("getSaveAllLoaders");
+		//console.log("getSaveAllLoaders");
 		
 		let loadingSequence = this.getSaveLoaders(this._editStorage.getValue("allIds"));
 		return loadingSequence;
 	}
 	
 	saveAll() {
-		console.log("saveAll");
+		//console.log("saveAll");
 		
 		let loadingSequence = this.getSaveAllLoaders();
 		loadingSequence.load();
 	}
 	
 	saveField(aFieldItem, aComment = null) {
-		console.log("saveField");
-		console.log(aFieldItem);
+		//console.log("saveField");
+		//console.log(aFieldItem);
 		
 		let changeData = new Wprr.utils.ChangeData();
 		let loader = this._getLoader();

@@ -1,5 +1,7 @@
 "use strict";
 
+import Wprr from "wprr/Wprr";
+
 //import ReferenceHolder from "wprr/reference/ReferenceHolder";
 export default class ReferenceHolder {
 	
@@ -10,6 +12,7 @@ export default class ReferenceHolder {
 		//console.log("wprr/reference/ReferenceHolder::constructor");
 		
 		this._objects = new Object();
+		this._cache = new Object();
 		this._parentReferenceHolder = null;
 		
 		this._debug_id = Math.random();
@@ -31,12 +34,19 @@ export default class ReferenceHolder {
 	getObject(aName) {
 		//console.log("wprr/reference/ReferenceHolder::getObject");
 		
+		if(!Wprr.development_updateFullTreeOnInjection && this._cache[aName] !== undefined) {
+			return this._cache[aName];
+		}
+		
 		if(this._objects[aName] === undefined) {
+			let returnValue = null;
 			if(this._parentReferenceHolder) {
-				return this._parentReferenceHolder.getObject(aName);
+				let returnValue = this._parentReferenceHolder.getObjectIfExists(aName);
+				this._cache[aName] = returnValue;
+				return returnValue;
 			}
 			console.warn("Reference " + aName + " doesn't exist.", this);
-			return null;
+			return returnValue;
 		}
 		
 		return this._objects[aName];
@@ -45,9 +55,15 @@ export default class ReferenceHolder {
 	getObjectIfExists(aName) {
 		//console.log("wprr/reference/ReferenceHolder::getObjectIfExists");
 		
+		if(!Wprr.development_updateFullTreeOnInjection && this._cache[aName] !== undefined) {
+			return this._cache[aName];
+		}
+		
 		if(this._objects[aName] === undefined) {
 			if(this._parentReferenceHolder) {
-				return this._parentReferenceHolder.getObjectIfExists(aName);
+				let returnValue = this._parentReferenceHolder.getObjectIfExists(aName);
+				this._cache[aName] = returnValue;
+				return returnValue;
 			}
 			return null;
 		}

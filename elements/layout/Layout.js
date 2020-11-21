@@ -163,7 +163,7 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("Layout::_renderMainElement", this);
+		//console.log("Layout::_renderMainElement", this);
 		return this._getCachedElement();
 	}
 }

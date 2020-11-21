@@ -92,17 +92,46 @@ export default class DataStorage extends AbstractDataStorage {
 		//console.log("wprr/utils/DataStorage::updateValue");
 		let oldValue = this.getValue(aName);
 		
-		try {
-			if(JSON.stringify(aValue) !== JSON.stringify(oldValue) || Wprr.development_skipDataStorageComparison) {
-				objectPath.set(this._data, aName, aValue);
-				this._updateOwners(aName);
+		let shouldUpdate = false;
+		
+		if(Wprr.development_skipDataStorageComparison) {
+			shouldUpdate = true;
+		}
+		else {
+			let type = typeof(aValue);
+			if(type === "object") {
+				
+				if(!oldValue) {
+					shouldUpdate = true;
+				}
+				else {
+					if(Array.isArray(aValue) && Array.isArray(oldValue) && aValue.length !== oldValue.length) {
+						shouldUpdate = true;
+					}
+					else {
+						console.log(type, aValue, oldValue);
+						try {
+							if(JSON.stringify(aValue) !== JSON.stringify(oldValue)) {
+								shouldUpdate = true;
+							}
+						}
+						catch(theError) {
+							shouldUpdate = true;
+						}
+					}
+				}
+			}
+			else {
+				if(aValue !== oldValue ) {
+					shouldUpdate = true;
+				}
 			}
 		}
-		catch(theError) {
+		
+		if(shouldUpdate) {
 			objectPath.set(this._data, aName, aValue);
 			this._updateOwners(aName);
 		}
-		
 		
 		return this;
 	}

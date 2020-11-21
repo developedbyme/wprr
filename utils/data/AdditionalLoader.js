@@ -74,8 +74,8 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	loadItems(aIds) {
-		console.log("AdditionalLoader::loadItems");
-		console.log(aIds);
+		//console.log("AdditionalLoader::loadItems");
+		//console.log(aIds);
 		
 		if(!aIds) {
 			console.error("No items added", aIds, this);
@@ -87,7 +87,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_queueNextLoad() {
-		console.log("AdditionalLoader::_queueNextLoad");
+		//console.log("AdditionalLoader::_queueNextLoad");
 		
 		if(!this._isLoading && this._queuedItems.length > 0) {
 			this._isLoading = true;
@@ -96,7 +96,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_startQueue() {
-		console.log("AdditionalLoader::_startQueue");
+		//console.log("AdditionalLoader::_startQueue");
 		
 		let ids = this._queuedItems;
 		this._queuedItems = new Array();
@@ -131,7 +131,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_setupItem(aData) {
-		console.log("AdditionalLoader::_setupItem");
+		//console.log("AdditionalLoader::_setupItem");
 		
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
@@ -140,7 +140,6 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 				item.addType(this._dataTypeName, aData);
 			}
 		}
-		console.log(item, aData);
 		
 		this.runCommandGroup("setup", {"item": item, "data": aData});
 		
@@ -155,18 +154,15 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 			this._setupItem(currentArray[i]);
 		}
 		
-		console.log(this._items);
-		
 		return this;
 	}
 	
 	_updateData(aData) {
-		console.log("AdditionalLoader::_updateData");
+		//console.log("AdditionalLoader::_updateData");
 		this._setupItems(aData);
 		
 		this._isLoading = false;
 		
-		console.log(">>>",  this);
 		this.runCommandGroup("loaded", null);
 		this._queueNextLoad();
 		
