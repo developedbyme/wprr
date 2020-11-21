@@ -73,10 +73,14 @@ export default class Email extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = Wprr.commands.callFunction(this, this._continue);
 		
+		//METODO: block submit with enter if not valid
+		
 		return <div>
-			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Email", "site.email")} valueName="email" />
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="inactive" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
+			<Wprr.ValidatingForm submitCommands={nextCommands}>
+				<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Email", "site.email")} valueName="email" />
+				<div className="spacing standard" />
+				<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="inactive" nextState={this._nextState} previousCommands={previousCommands} nextCommands={Wprr.commands.submitForm()} />
+			</Wprr.ValidatingForm>
 		</div>;
 	}
 }
