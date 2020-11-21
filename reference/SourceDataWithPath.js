@@ -44,6 +44,20 @@ export default class SourceDataWithPath extends SourceData {
 		return this;
 	}
 	
+	updateValueFromObject(aValue, aFromObject) {
+		
+		let sourceData = super.getSource(aFromObject);
+		if(sourceData instanceof Wprr.utils.AbstractDataStorage) {
+			let deepPath = this._deepPath;
+			if(deepPath instanceof SourceData) {
+				deepPath = deepPath.getSource(aFromObject);
+			}
+			sourceData.updateValue(deepPath, aValue);
+		}
+		
+		return this;
+	}
+	
 	static getDeepPathForOwner(aDeepPath, aOwner) {
 		let deepPath = aDeepPath;
 		if(deepPath instanceof SourceData) {

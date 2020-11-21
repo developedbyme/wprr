@@ -53,6 +53,12 @@ export default class ValueSourceData extends SourceData {
 		return this;
 	}
 	
+	updateValueFromObject(aValue, aFromObject) {
+		this.updateValue(aValue);
+		
+		return this;
+	}
+	
 	setValue(aValue) {
 		//console.log("setValue");
 		

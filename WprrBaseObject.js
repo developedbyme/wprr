@@ -243,8 +243,8 @@ export default class WprrBaseObject extends React.Component {
 		let props = this.getProps();
 		
 		let currentProp = props[aPropName];
-		if(currentProp && currentProp.getSource && currentProp.updateValue) {
-			currentProp.updateValue(aValue);
+		if(currentProp && currentProp.getSource && currentProp.updateValueFromObject) {
+			currentProp.updateValueFromObject(aValue, this);
 		}
 		
 		return this;

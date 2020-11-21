@@ -37,6 +37,7 @@ export {default as TextLoader} from "wprr/utils/loading/TextLoader";
 export {default as SyncronizedClock} from "wprr/utils/timing/SyncronizedClock";
 export {default as UseMarkupCreator} from "wprr/markup/UseMarkupCreator";
 export {default as WpConditional} from "wprr/routing/qualification/wp/WpConditional";
+export {default as AbstractDataStorage} from "wprr/utils/AbstractDataStorage";
 export {default as DataStorage} from "wprr/utils/DataStorage";
 export {default as UrlDataStorage} from "wprr/utils/UrlDataStorage";
 export {default as RefCollector} from "wprr/utils/RefCollector";
