@@ -68,10 +68,15 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		}
 		else {
 			for(let objectName in injectData) {
-				let sourcedData = this.resolveSourcedData(injectData[objectName]);
+				
+				let value = injectData[objectName];
+				
+				if(!(value instanceof Wprr.utils.ValueSourceData)) {
+					value = this.resolveSourcedData(value);
+				}
 				hasData = true;
 				
-				this._references.addObject(objectName, sourcedData);
+				this._references.addObject(objectName, value);
 			}
 		}
 		

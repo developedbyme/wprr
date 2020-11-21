@@ -52,15 +52,15 @@ export default class WprrBaseObject extends React.Component {
 					for(let i = 0; i < currentArrayLength; i++) {
 						let name = "sourceUpdates_" + i;
 						let currentUpdateProp = currentArray[i];
-						
-						registeredSources[name] = currentUpdateProp;
-						if(oldSources[name] === registeredSources[name]) {
-							delete oldSources[name];
-						}
-						else {
-							if(currentUpdateProp instanceof SourceData) {
-								newSources.push(currentUpdateProp);
-								updateSources.push(currentUpdateProp);
+						if(currentUpdateProp instanceof SourceData) {
+							let updateSource = currentUpdateProp.getUpdateSource(this);
+							registeredSources[name] = updateSource;
+							if(oldSources[name] === registeredSources[name]) {
+								delete oldSources[name];
+							}
+							else {
+								newSources.push(updateSource);
+								updateSources.push(updateSource);
 							}
 						}
 					}
@@ -68,12 +68,13 @@ export default class WprrBaseObject extends React.Component {
 				
 				let currentProp = props[objectName];
 				if(currentProp instanceof SourceData) {
-					registeredSources[objectName] = currentProp;
+					let updateSource = currentProp.getUpdateSource(this);
+					registeredSources[objectName] = updateSource;
 					if(oldSources[objectName] === registeredSources[objectName]) {
 						delete oldSources[objectName];
 					}
 					else {
-						newSources.push(currentProp);
+						newSources.push(updateSource);
 					}
 				}
 			}

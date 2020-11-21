@@ -110,6 +110,20 @@ export default class SourceData {
 		return this._shouldCleanup;
 	}
 	
+	getUpdateSource(aFromObject) {
+		//console.log("getUpdateSource");
+		
+		if(this._type === "reference" || this._type === "referenceIfExists") {
+			let path = SourceData.getPathForOwner(this._type, this._path, aFromObject, aFromObject);
+			let reference = aFromObject.getReferenceIfExists(path);
+			if(reference instanceof SourceData) {
+				return reference;
+			}
+		}
+		
+		return this;
+	}
+	
 	getSource(aFromObject) {
 		let returnValue = this._sourceFunction(this._type, this._path, aFromObject, aFromObject);
 		
@@ -307,14 +321,23 @@ export default class SourceData {
 				}
 			case "reference":
 				{
-					return references.getObject(aPath);
+					let reference = references.getObject(aPath);
+					if(reference instanceof SourceData) {
+						reference = reference.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return reference;
 				}
 			case "referenceIfExists":
 				{
 					if(aPath instanceof SourceData) {
 						aPath = aPath.getSourceInStateChange(aFromObject, aPropsAndState);
 					}
-					return references.getObjectIfExists(aPath);
+					
+					let reference = references.getObjectIfExists(aPath);
+					if(reference instanceof SourceData) {
+						reference = reference.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					return reference;
 				}
 			case "combine":
 				{

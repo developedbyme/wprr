@@ -12,11 +12,21 @@ export default class CustomSelection extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
+		
+		this._selectedValue = Wprr.sourceValue(null);
 	}
 	
 	_changed(aNewValue) {
 		console.log("wprr/elements/form/CustomSelection::_changed");
 		console.log(aNewValue);
+		
+		let valueName = this.getSourcedProp("valueName");
+		
+		this.updateProp("value", aNewValue);
+		
+		if(valueName) {
+			this.getReference("value/" + valueName).updateValue(valueName, aNewValue, null);
+		}
 		
 		let commands = this.getSourcedProp("changeCommands");
 		if(commands) {
@@ -92,13 +102,27 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		return aReturnObject;
 	}
+	
+	getValue() {
+		let valueName = this.getSourcedProp("valueName");
+		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", this.getSourcedProp("valueName")));
+		
+		return value;
+	}
+	
+	_prepareRender() {
+		
+		super._prepareRender();
+		
+		this._selectedValue.setValue(this.getValue());
+	}
 
 	_getChildrenToClone() {
 		//console.log("CustomSelection::_createClonedElement");
 		
 		let options = this._normalizeOptions(this.getSourcedProp("options"));
 		let valueName = this.getSourcedProp("valueName");
-		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", this.getSourcedProp("valueName")));
+		let value = this.getValue();
 		
 		let children = super._getChildrenToClone();
 		
@@ -120,7 +144,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 			Wprr.sourceProp("buttonMarkup"),
 			Wprr.sourceReference("customSelection/button"),
 			React.createElement("div", {"className": buttonClasses},
-				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"), "label")]},
+				React.createElement(Wprr.Adjust, {"adjust": [Wprr.adjusts.labelFromOptions(Wprr.sourceReference("value"), Wprr.sourceReference("options"), "label")], "sourceUpdates": Wprr.sourceReference("value")},
 					React.createElement(Wprr.HasData, {"check": Wprr.sourceProp("label")},
 						Wprr.text(Wprr.sourceProp("label"))
 					),
@@ -139,7 +163,6 @@ export default class CustomSelection extends ManipulationBaseObject {
 		
 		let loopItemMarkup = React.createElement(Wprr.CommandButton, {
 			"commands": [
-				Wprr.commands.setValue(Wprr.sourceReference("value/" + valueName), valueName, Wprr.sourceReference("loop/item", "value")),
 				Wprr.commands.callFunction(this, this._changed, [Wprr.sourceReference("loop/item", "value")]),
 				Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false),
 			]
@@ -204,7 +227,7 @@ export default class CustomSelection extends ManipulationBaseObject {
 		let returnObject = React.createElement(Wprr.ReferenceInjection, {"injectData": {
 			"options": options,
 			"valueName": valueName,
-			"value": value,
+			"value": this._selectedValue,
 			"customSelection/option": defaultLoopItem,
 			"customSelection/optionSpacing": defaultLoopItemSpacing,
 		}},
