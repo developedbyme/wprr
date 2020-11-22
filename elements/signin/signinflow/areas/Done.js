@@ -15,14 +15,17 @@ export default class Done extends Layout {
 		
 		let commands = aSlots.prop("commands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.commands"), []));
 		
-		return <div className="signup-verification__verified-box">
-			{aSlots.default(<Wprr.FlexRow className="vertically-center-items small-item-spacing">
-				<div className="signup-verification__check-circle centered-cell-holder">
-					<Wprr.Image className="checkmark background-contain" src="checkmark-white-fat.svg" />
-				</div>
-				{Wprr.idText("You are now signed in", "site.signedId")}
-			</Wprr.FlexRow>)}
-			<Wprr.BaseObject didMountCommands={commands} />
-		</div>;
+		return React.createElement("div", {
+  className: "signup-verification__verified-box"
+}, aSlots.default( /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "vertically-center-items small-item-spacing"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "signup-verification__check-circle centered-cell-holder"
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  className: "checkmark background-contain",
+  src: "checkmark-white-fat.svg"
+})), Wprr.idText("You are now signed in", "site.signedId"))), /*#__PURE__*/React.createElement(Wprr.BaseObject, {
+  didMountCommands: commands
+}));
 	}
 }

@@ -41,32 +41,35 @@ export default class Email extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "nextStep");
 		
-		return <div>
-			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Continue as", "site.continueAs")}>
-				<div className="standard-box standard-box-padding">
-					<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-no-reisze,flex-resize,flex-no-resize">
-						<Wprr.Image overrideMainElementType="img" src={Wprr.source("combine", ["https://www.gravatar.com/avatar/", Wprr.sourceReference("wprr/userData", "data.gravatarHash"), "?s=64&d=mm&r=g"])} />
-						<div>
-							<div className="signed-in-name">
-								{Wprr.text(Wprr.sourceReference("wprr/userData", "data.firstName"))}
-								{" "}
-								{Wprr.text(Wprr.sourceReference("wprr/userData", "data.lastName"))}
-							</div>
-							<div className="spacing small" />
-							<div className="signed-in-email">
-								{Wprr.text(Wprr.sourceReference("wprr/userData", "data.email"))}
-							</div>
-						</div>
-						<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._logout)}>
-							<div className="action-link secondary cursor-pointer">
-								{Wprr.idText("Change", "site.change")}
-							</div>
-						</Wprr.CommandButton>
-					</Wprr.FlexRow>
-				</div>
-			</Wprr.layout.form.LabelledArea>
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="inactive" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Continue as", "site.continueAs")
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-box standard-box-padding"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing vertically-center-items",
+  itemClasses: "flex-no-reisze,flex-resize,flex-no-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  overrideMainElementType: "img",
+  src: Wprr.source("combine", ["https://www.gravatar.com/avatar/", Wprr.sourceReference("wprr/userData", "data.gravatarHash"), "?s=64&d=mm&r=g"])
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "signed-in-name"
+}, Wprr.text(Wprr.sourceReference("wprr/userData", "data.firstName")), " ", Wprr.text(Wprr.sourceReference("wprr/userData", "data.lastName"))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "signed-in-email"
+}, Wprr.text(Wprr.sourceReference("wprr/userData", "data.email")))), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.callFunction(this, this._logout)
+}, /*#__PURE__*/React.createElement("div", {
+  className: "action-link secondary cursor-pointer"
+}, Wprr.idText("Change", "site.change")))))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
+  currentStep: currentStep,
+  numberOfSteps: numberOfSteps,
+  previousState: "inactive",
+  nextState: this._nextState,
+  previousCommands: previousCommands,
+  nextCommands: nextCommands
+}));
 	}
 }

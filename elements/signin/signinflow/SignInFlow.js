@@ -26,18 +26,23 @@ export default class SignInFlow extends Layout {
 		let directions = this._configuration.getDirections();
 		let startScreen = this._configuration.getStartScreen();
 		
-		return <div className="centered-content-text">
-			<Wprr.ExternalStorageInjection initialValues={{
-				"email": Wprr.sourceFirst(Wprr.sourceQueryString("email"), Wprr.sourceStatic("")),
-				"phoneNumber": Wprr.sourceFirst(Wprr.sourceQueryString("phoneNumber"), Wprr.sourceStatic("")),
-				"defaultPrefix": aSlots.prop("defaultPrefix", "+46"),
-				"password": "",
-				"remember": true,
-				"verificationCode": "      "
-			}}>
-				{aSlots.default(<Wprr.layout.area.SteppedPathRouter routes={routes} directions={directions} areaClasses={areas} initialPath={startScreen} />)}
-			</Wprr.ExternalStorageInjection>
-		</div>;
+		return React.createElement("div", {
+  className: "centered-content-text"
+}, /*#__PURE__*/React.createElement(Wprr.ExternalStorageInjection, {
+  initialValues: {
+    "email": Wprr.sourceFirst(Wprr.sourceQueryString("email"), Wprr.sourceStatic("")),
+    "phoneNumber": Wprr.sourceFirst(Wprr.sourceQueryString("phoneNumber"), Wprr.sourceStatic("")),
+    "defaultPrefix": aSlots.prop("defaultPrefix", "+46"),
+    "password": "",
+    "remember": true,
+    "verificationCode": "      "
+  }
+}, aSlots.default( /*#__PURE__*/React.createElement(Wprr.layout.area.SteppedPathRouter, {
+  routes: routes,
+  directions: directions,
+  areaClasses: areas,
+  initialPath: startScreen
+}))));
 	}
 	
 	static getWpAdminEditor() {
@@ -47,8 +52,8 @@ export default class SignInFlow extends Layout {
 			
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>Settings</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null, "Settings"));
 	}
 }

@@ -85,12 +85,21 @@ export default class SetPassword extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = Wprr.commands.callFunction(this, this._continue);
 		
-		return <div>
-			<LockedField />
-			<div className="spacing standard" />
-			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("New password")} valueName="password" fieldType="password" />
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="active" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(LockedField, null), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  label: Wprr.sourceTranslation("New password"),
+  valueName: "password",
+  fieldType: "password"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
+  currentStep: currentStep,
+  numberOfSteps: numberOfSteps,
+  previousState: "active",
+  nextState: this._nextState,
+  previousCommands: previousCommands,
+  nextCommands: nextCommands
+}));
 	}
 }

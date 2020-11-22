@@ -103,22 +103,31 @@ export default class ConfirmEmail extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = aSlots.prop("nextCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.nextCommands"), Wprr.commands.callFunction(this, this._continue)));
 		
-		return <div>
-			<LockedField />
-			<div className="spacing standard" />
-			{aSlots.default(
-				<div>
-					<Wprr.FlexRow className="small-item-spacing halfs">
-						<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("First name")} valueName="firstName" />
-						<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Last name")} valueName="lastName" />
-					</Wprr.FlexRow>
-					<div className="spacing standard" />
-					<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("New password")} valueName="password" fieldType="password" />
-					{aSlots.slot("additionalFields", <div />)}
-				</div>
-			)}
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="active" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(LockedField, null), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), aSlots.default( /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing halfs"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  label: Wprr.sourceTranslation("First name"),
+  valueName: "firstName"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  label: Wprr.sourceTranslation("Last name"),
+  valueName: "lastName"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  label: Wprr.sourceTranslation("New password"),
+  valueName: "password",
+  fieldType: "password"
+}), aSlots.slot("additionalFields", /*#__PURE__*/React.createElement("div", null)))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
+  currentStep: currentStep,
+  numberOfSteps: numberOfSteps,
+  previousState: "active",
+  nextState: this._nextState,
+  previousCommands: previousCommands,
+  nextCommands: nextCommands
+}));
 	}
 }

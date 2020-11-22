@@ -55,7 +55,7 @@ export default class BatchEditHeader extends Layout {
 												Wprr.text(Wprr.sourceTranslation("Select none", "site.admin.selectNone"))
 											)
 										),
-										aSlots.slot("additionalMoreOptions", <div />)
+										aSlots.slot("additionalMoreOptions", React.createElement("div"))
 									)
 								)
 							)

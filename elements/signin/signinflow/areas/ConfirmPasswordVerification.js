@@ -151,49 +151,56 @@ export default class ConfirmPasswordVerification extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = Wprr.commands.callFunction(this, this._continue);
 		
-		return <div>
-			<LockedField />
-			<div className="spacing standard" />
-			<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Verification")}>
-			<Wprr.SelectSection selectedSections={this._sendStatus}>
-				<div data-section-name="sending">
-					<div className="signup-verification__waiting-box">
-						<Wprr.FlexRow className="vertically-center-items small-item-spacing">
-							<Wprr.Image className="verified-phone background-contain" src="verified-mobile.svg" />
-							{Wprr.translateText("Sending verification")}
-						</Wprr.FlexRow>
-					</div>
-				</div>
-				<div data-section-name="normal">
-					<Wprr.FlexRow className="small-item-spacing justify-between">
-						<div>
-							{Wprr.translateText("We have sent you a verification code")}
-						</div>
-						<div>
-							<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._resendEmail)}>
-								<div className="action-link cursor-pointer">{Wprr.translateText("Resend")}</div>
-							</Wprr.CommandButton>
-						</div>
-					</Wprr.FlexRow>
-					<div className="spacing small" />
-					<Wprr.FlexRow className="justify-center">
-						<Wprr.layout.form.VerificationCode valueName="verificationCode" sourceUpdates={Wprr.sourceReference("externalStorage", "vericationCode")} />
-					</Wprr.FlexRow>
-				</div>
-				<div data-section-name="verified">
-					<div className="signup-verification__verified-box">
-						<Wprr.FlexRow className="vertically-center-items small-item-spacing">
-							<div className="signup-verification__check-circle centered-cell-holder">
-								<Wprr.Image className="checkmark background-contain" src="checkmark-white-fat.svg" />
-							</div>
-							{Wprr.translateText("Verified")}
-						</Wprr.FlexRow>
-					</div>
-				</div>
-			</Wprr.SelectSection>
-			</Wprr.layout.form.LabelledArea>
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="active" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(LockedField, null), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Verification")
+}, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
+  selectedSections: this._sendStatus
+}, /*#__PURE__*/React.createElement("div", {
+  "data-section-name": "sending"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "signup-verification__waiting-box"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "vertically-center-items small-item-spacing"
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  className: "verified-phone background-contain",
+  src: "verified-mobile.svg"
+}), Wprr.translateText("Sending verification")))), /*#__PURE__*/React.createElement("div", {
+  "data-section-name": "normal"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing justify-between"
+}, /*#__PURE__*/React.createElement("div", null, Wprr.translateText("We have sent you a verification code")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.callFunction(this, this._resendEmail)
+}, /*#__PURE__*/React.createElement("div", {
+  className: "action-link cursor-pointer"
+}, Wprr.translateText("Resend"))))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-center"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.VerificationCode, {
+  valueName: "verificationCode",
+  sourceUpdates: Wprr.sourceReference("externalStorage", "vericationCode")
+}))), /*#__PURE__*/React.createElement("div", {
+  "data-section-name": "verified"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "signup-verification__verified-box"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "vertically-center-items small-item-spacing"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "signup-verification__check-circle centered-cell-holder"
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  className: "checkmark background-contain",
+  src: "checkmark-white-fat.svg"
+})), Wprr.translateText("Verified")))))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
+  currentStep: currentStep,
+  numberOfSteps: numberOfSteps,
+  previousState: "active",
+  nextState: this._nextState,
+  previousCommands: previousCommands,
+  nextCommands: nextCommands
+}));
 	}
 }

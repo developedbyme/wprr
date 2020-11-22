@@ -81,28 +81,38 @@ export default class SignIn extends Layout {
 		let previousCommands = aSlots.prop("previousCommands", Wprr.sourceFirst(Wprr.sourceReference("pathRouter/externalStorage", "data.previousCommands"), Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "previousStep")));
 		let nextCommands = Wprr.commands.callFunction(this, this._continue);
 		
-		return <div>
-			<LockedField />
-			<div className="spacing standard" />
-			<Wprr.layout.form.FieldWithLabel label={Wprr.sourceTranslation("Password")} valueName="password" fieldType="password" />
-			<div className="spacing small" />
-			<Wprr.FlexRow className="justify-between">
-				<Wprr.FlexRow className="pixel-item-spacing vertically-center-items">
-					<Wprr.EditableProps props="remember" externalStorage={Wprr.sourceReference("externalStorage")}>
-						<Wprr.Checkbox valueName="remember" />
-					</Wprr.EditableProps>
-					<div className="content-text-small">
-						{Wprr.translateText("Remember me")}
-					</div>
-				</Wprr.FlexRow>
-				<Wprr.CommandButton commands={Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "changeStep", ["resetPassword"])}>
-					<div className="action-link cursor-pointer">
-						{Wprr.translateText("Lost password")}
-					</div>
-				</Wprr.CommandButton>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.SteppedNavigation currentStep={currentStep} numberOfSteps={numberOfSteps} previousState="active" nextState={this._nextState} previousCommands={previousCommands} nextCommands={nextCommands} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(LockedField, null), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  label: Wprr.sourceTranslation("Password"),
+  valueName: "password",
+  fieldType: "password"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "pixel-item-spacing vertically-center-items"
+}, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  props: "remember",
+  externalStorage: Wprr.sourceReference("externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  valueName: "remember"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "content-text-small"
+}, Wprr.translateText("Remember me"))), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.callFunction(Wprr.sourceReference("steppedPaths"), "changeStep", ["resetPassword"])
+}, /*#__PURE__*/React.createElement("div", {
+  className: "action-link cursor-pointer"
+}, Wprr.translateText("Lost password")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
+  currentStep: currentStep,
+  numberOfSteps: numberOfSteps,
+  previousState: "active",
+  nextState: this._nextState,
+  previousCommands: previousCommands,
+  nextCommands: nextCommands
+}));
 	}
 }
