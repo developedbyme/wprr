@@ -34,6 +34,12 @@ export default class BatchEditItems extends Layout {
 		this._itemsEditor.relateToProject(projectName);
 		this._itemsEditor.setupCreation(dataType, null, this.getFirstInput("creationMethod"));
 		
+		let postType = this.getFirstInput("postType");
+		if(postType) {
+			this._itemsEditor._dataType = postType;
+		}
+		
+		
 		this._itemsEditor.setSearchFields(this.getFirstInputWithDefault("searchFields", "fieldByName.text.field.value"));
 		
 		let fields = this.getFirstInput("fields");

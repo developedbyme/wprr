@@ -8,15 +8,20 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	constructor() {
 		super();
 		
-		this._ids = new Array();
+		this._idsSource = Wprr.sourceValue(new Array());
 	}
 	
 	get ids() {
-		return this._ids;
+		return this._idsSource.value;
+	}
+	
+	get idsSource() {
+		return this._idsSource;
 	}
 	
 	addItem(aId) {
-		this._ids.push(aId);
+		this._idsSource.value.push(aId);
+		this._idsSource.externalDataChange();
 		
 		return this;
 	}
@@ -42,7 +47,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		let returnArray = new Array();
 		let group = this.item.group;
 		
-		let currentArray = this._ids;
+		let currentArray = this._idsSource.value;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			returnArray.push(group.getItem(currentArray[i]));
@@ -65,5 +70,13 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		}
 		
 		return returnArray;
+	}
+	
+	removeAll() {
+		let currentArray = this._idsSource.value;
+		currentArray.splice(0, currentArray.length);
+		this._idsSource.externalDataChange();
+		
+		return this;
 	}
 }
