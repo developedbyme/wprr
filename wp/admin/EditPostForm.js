@@ -35,6 +35,11 @@ export default class EditPostForm extends WprrBaseObject {
 		}
 		
 		console.log(this._externalData);
+		
+		let commands = this.getSourcedProp("setupCommands");
+		if(commands) {
+			Wprr.utils.commandPerformer.perform(commands, this._externalData, this);
+		}
 	}
 	
 	_getLoader(aChangeData) {
@@ -146,12 +151,17 @@ export default class EditPostForm extends WprrBaseObject {
 		
 		let commands = this.getSourcedProp("errorCommands");
 		if(commands) {
-			Wprr.utils.commandPerformer.perform(commands, aId, this);
+			Wprr.utils.commandPerformer.perform(commands, null, this);
 		}
 	}
 	
 	publish() {
 		//console.log("wprr/wp/admin/EditPostForm::publish");
+		
+		let commands = this.getSourcedProp("prepareSaveCommands");
+		if(commands) {
+			Wprr.utils.commandPerformer.perform(commands, this._externalData, this);
+		}
 		
 		let changeData = this.getChangeData();
 		changeData.setField("status", "publish");
@@ -164,6 +174,11 @@ export default class EditPostForm extends WprrBaseObject {
 	
 	save() {
 		//console.log("wprr/wp/admin/EditPostForm::save");
+		
+		let commands = this.getSourcedProp("prepareSaveCommands");
+		if(commands) {
+			Wprr.utils.commandPerformer.perform(commands, null, this);
+		}
 		
 		let changeData = this.getChangeData();
 		
