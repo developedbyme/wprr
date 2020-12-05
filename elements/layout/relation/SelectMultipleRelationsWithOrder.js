@@ -44,7 +44,9 @@ export default class SelectMultipleRelationsWithOrder extends Layout {
 		return React.createElement("div", {className: "select-multiple-relations"},
 			React.createElement(Wprr.AddReference, {data: orderId, as: "orderId"}, 
 				React.createElement(Wprr.layout.form.MultiStepDropdown, {routes: routes, areaClasses: areas},
-					React.createElement(Wprr.layout.items.ItemNames, {ids: Wprr.sourceFunction(editorSource.deeper("item.group"), "mapFromIds", [activeIds, idSource]), "data-slot": "buttonContent", sourceUpdates: activeIds})
+					React.createElement(Wprr.layout.items.LoadAdditionalItems, {ids: Wprr.sourceFunction(editorSource.deeper("item.group"), "mapFromIds", [activeIds, idSource]), "data-slot": "buttonContent", sourceUpdates: activeIds},
+						React.createElement(Wprr.layout.items.ItemNames, {ids: Wprr.sourceFunction(editorSource.deeper("item.group"), "mapFromIds", [activeIds, idSource]), sourceUpdates: activeIds})
+					)
 				)
 			)
 		);

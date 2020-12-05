@@ -90,6 +90,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	setStatus(aStatus) {
+		this.setField("status", aStatus);
+		
+		return this;
+	}
+	
 	trash() {
 		this.createChange("trash", null);
 		
@@ -114,8 +120,8 @@ export default class ChangeData  {
 		return this;
 	}
 	
-	setTerm(aTerms, aTaxonomy, aField = "id", aChangeType = "terms") {
-		this.setTerms([aTerms], aTaxonomy, aField, aChangeType);
+	setTerm(aTerm, aTaxonomy, aField = "id", aChangeType = "terms") {
+		this.setTerms([aTerm], aTaxonomy, aField, aChangeType);
 		
 		return this;
 	}
