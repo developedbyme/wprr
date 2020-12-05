@@ -92,7 +92,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 			this._createInjectionObject();
 		}
 		
-		return React.createElement(WprrContext.Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
+		return React.createElement(Wprr.getContext().Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
 	}
 	
 	static createReactElement(aData, aChildOrChildren) {

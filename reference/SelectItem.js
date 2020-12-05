@@ -13,6 +13,8 @@ export default class SelectItem extends WprrBaseObject {
 		
 		this._defaultAs = "item";
 		this._defaultFrom = "items";
+		
+		this._selectedItem = Wprr.sourceValue(null);
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -25,10 +27,7 @@ export default class SelectItem extends WprrBaseObject {
 		return aReturnObject;
 	}
 	
-	_renderMainElement() {
-		let children = this.getProps()["children"];
-		
-		let injectData = new Object();
+	_prepareRender() {
 		
 		let fromObject = this.getFirstInput("from", Wprr.sourceReference(this._defaultFrom));
 		let id = this.getFirstInput("id");
@@ -44,7 +43,14 @@ export default class SelectItem extends WprrBaseObject {
 			console.warn("No item with id " + id + " from", fromObject);
 		}
 		
-		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = item;
+		this._selectedItem.setValue(item);
+	}
+	
+	_renderMainElement() {
+		let children = this.getProps()["children"];
+		
+		let injectData = new Object();
+		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = this._selectedItem;
 		
 		return React.createElement(ReferenceInjection, {"injectData": injectData}, children);
 	}

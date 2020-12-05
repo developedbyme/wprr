@@ -69,11 +69,15 @@ export default class Project {
 		return loader;
 	}
 	
-	getActionLoader(aActionName) {
+	getActionLoader(aActionName, aData = null) {
 		let loader = this.getLoader();
 		
 		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getActionUrl(aActionName)));
 		loader.setMethod("POST");
+		
+		if(aData) {
+			loader.setJsonPostBody(aData);
+		}
 		
 		return loader;
 	}

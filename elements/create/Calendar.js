@@ -117,8 +117,8 @@ export default class Calendar extends WprrBaseObject {
 		injectData["calendar/today"] = today.format("Y-MM-DD");
 		injectData["calendar/month"] = monthToRender.format("Y-MM");
 		
-		injectData["calendar/rowMarkup"] = this.getSourcedPropWithDefault("rowMarkup", Calendar.DEFAULT_ROW_MARKUP);
-		injectData["calendar/cellMarkup"] = this.getSourcedPropWithDefault("cellMarkup", Calendar.DEFAULT_CELL_MARKUP);
+		injectData["calendar/rowMarkup"] = this.getSourcedPropWithDefault("rowMarkup", Calendar.getDefaultRowMarkup());
+		injectData["calendar/cellMarkup"] = this.getSourcedPropWithDefault("cellMarkup", Calendar.getDefaultCellMarkup());
 		
 		injectData["calendar/valueName"] = valueName;
 		
@@ -204,34 +204,49 @@ export default class Calendar extends WprrBaseObject {
 		
 		return aReturnObject;
 	}
+	
+	static getDefaultRowMarkup() {
+		if(!Calendar.DEFAULT_ROW_MARKUP) {
+			Calendar.DEFAULT_ROW_MARKUP = React.createElement(Markup, {},
+				React.createElement(Loop, {"input": Wprr.sourceReference("calendar/week/days"), "contentCreator": Calendar._contentCreator_cell},
+					React.createElement(FlexRow, {"className": "calendar-week uniform-item"})
+				)
+			);
+		}
+		
+		return Calendar.DEFAULT_ROW_MARKUP;
+	}
+	
+	static getDefaultCellMarkup() {
+		if(!Calendar.DEFAULT_CELL_MARKUP) {
+			Calendar.DEFAULT_CELL_MARKUP = React.createElement(Markup, {},
+				React.createElement(CommandButton, {"commands": 
+					Wprr.sourceReference("calendar/selectCommands")
+				},
+					React.createElement(Adjust, {"adjust": [
+						ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeDirection"), [
+							{"key": 0, "value": "today"},
+							{"key": -1, "value": "past"},
+							{"key": 1, "value": "future"}]
+						),
+						ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeMonthDirection"), [
+							{"key": 0, "value": "current-month"},
+							{"key": -1, "value": "other-month past-month"},
+							{"key": 1, "value": "other-month future-month"}]
+						),
+						Calendar._adjust_isSelectedDate
+					]},
+						React.createElement("div", {"className": "calendar-day"},
+							React.createElement(DateDisplay, {"date": Wprr.sourceReference("calendar/day/date"), "format": "D"})
+						)
+					)
+				)
+			);
+		}
+		
+		return Calendar.DEFAULT_CELL_MARKUP;
+	}
 }
 
-Calendar.DEFAULT_ROW_MARKUP = React.createElement(Markup, {},
-	React.createElement(Loop, {"input": Wprr.sourceReference("calendar/week/days"), "contentCreator": Calendar._contentCreator_cell},
-		React.createElement(FlexRow, {"className": "calendar-week uniform-item"})
-	)
-);
-
-Calendar.DEFAULT_CELL_MARKUP = React.createElement(Markup, {},
-	React.createElement(CommandButton, {"commands": 
-		Wprr.sourceReference("calendar/selectCommands")
-	},
-		React.createElement(Adjust, {"adjust": [
-			ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeDirection"), [
-				{"key": 0, "value": "today"},
-				{"key": -1, "value": "past"},
-				{"key": 1, "value": "future"}]
-			),
-			ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeMonthDirection"), [
-				{"key": 0, "value": "current-month"},
-				{"key": -1, "value": "other-month past-month"},
-				{"key": 1, "value": "other-month future-month"}]
-			),
-			Calendar._adjust_isSelectedDate
-		]},
-			React.createElement("div", {"className": "calendar-day"},
-				React.createElement(DateDisplay, {"date": Wprr.sourceReference("calendar/day/date"), "format": "D"})
-			)
-		)
-	)
-);
+Calendar.DEFAULT_ROW_MARKUP = null;
+Calendar.DEFAULT_CELL_MARKUP = null;

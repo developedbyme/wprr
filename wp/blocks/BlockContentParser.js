@@ -164,13 +164,14 @@ export default class BlockContentParser {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentElement = currentArray[i];
 				let currentCode = currentElement.innerHTML;
+				
 				if(currentCode) {
 					window.wprrTemporaryEval = function() {
 						try {
-							eval(currentCode);
+							eval.call(window, currentCode);
 						}
 						catch(theError) {
-							console.error("Error while evealuating script in content");
+							console.error("Error while evaluating script in content");
 							console.error(theError)
 						}
 					};

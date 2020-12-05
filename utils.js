@@ -80,7 +80,12 @@ export {default as SortChain} from "wprr/utils/sort/SortChain";
 export {default as SortPart} from "wprr/utils/sort/parts/SortPart";
 export {default as FieldSort} from "wprr/utils/sort/parts/FieldSort";
 export {default as ArrayFieldSort} from "wprr/utils/sort/parts/ArrayFieldSort";
+export {default as SourceData} from "wprr/reference/SourceData";
+export {default as SourceDataWithPath} from "wprr/reference/SourceDataWithPath";
 export {default as ValueSourceData} from "wprr/reference/ValueSourceData";
+
+import * as modulecreators from "wprr/modulecreators";
+export {modulecreators as modulecreators};
 
 import * as wp from "wprr/wp";
 export {wp as wp};

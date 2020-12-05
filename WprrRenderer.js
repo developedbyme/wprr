@@ -54,15 +54,13 @@ export default class WprrRenderer  {
 	}
 	
 	_checkForRender() {
-		console.log("_checkForRender");
+		//console.log("_checkForRender");
 		let isDone = this._storeController.loadingIsDone();
-		console.log(isDone);
 		
 		if(!isDone) {
 			this._timeoutId = setTimeout(this._checkForRenderBound, 1);
 		}
 		else {
-			console.log(this._shouldSaveInitialLoad);
 			if(this._shouldSaveInitialLoad) {
 				let paths = this._storeController.getPaths();
 				

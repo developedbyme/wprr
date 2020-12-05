@@ -19,11 +19,14 @@ export default class ImageLoaderManager {
 		
 		this._imageUpdaters = new Array();
 		this._uninitiatedImageUpdaters = new Array();
+		this._willUpdateNextFrame = false;
 		
 		this._namedSizes = new Object();
 		
 		this._callback_resizeBound = this._callback_resize.bind(this);
 		this._callback_scrollBound = this._callback_scroll.bind(this);
+		
+		this._callback_requestAnimationFrameBound = this._callback_requestAnimationFrame.bind(this);
 	}
 	
 	setNamedSizes(aNamedSizes) {
@@ -317,11 +320,19 @@ export default class ImageLoaderManager {
 		this.addUpdater(newUpdater);
 	}
 	
+	_callback_requestAnimationFrame() {
+		this._willUpdateNextFrame = false;
+		this.updateAllUninitiatedImages();
+	}
+	
 	addUpdater(aUpdater) {
 		this._uninitiatedImageUpdaters.push(aUpdater);
 		
 		if(this._isStarted) {
-			//this.updateAllUninitiatedImages();
+			if(!this._willUpdateNextFrame) {
+				this._willUpdateNextFrame = true;
+				requestAnimationFrame(this._callback_requestAnimationFrameBound);
+			}
 		}
 	}
 	

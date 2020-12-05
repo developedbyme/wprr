@@ -4,8 +4,6 @@ import Wprr from "wprr/Wprr";
 import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
-import WprrContext from "wprr/reference/WprrContext";
-
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import UrlResolver from "wprr/utils/UrlResolver";
 
@@ -855,4 +853,4 @@ export default class WprrBaseObject extends React.Component {
 
 WprrBaseObject.CATCH_RENDER_ERRORS = true;
 
-WprrBaseObject.contextType = WprrContext;
+WprrBaseObject.contextType = Wprr.getContext();

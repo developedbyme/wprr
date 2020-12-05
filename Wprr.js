@@ -2,20 +2,7 @@ import React from "react";
 
 import objectPath from "object-path";
 
-import WprrBaseObject from "wprr/WprrBaseObject";
-
-import SourceData from "wprr/reference/SourceData";
-import ValueSourceData from "wprr/reference/ValueSourceData";
-import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
-
-import SourcedText from "wprr/elements/text/SourcedText";
-import TranslationOrId from "wprr/elements/text/TranslationOrId";
-import Project from "wprr/utils/project/Project";
-
-import PageModuleCreator from "wprr/modulecreators/PageModuleCreator";
-import PageModuleWithRendererCreator from "wprr/modulecreators/PageModuleWithRendererCreator";
-import AppModuleCreator from "wprr/modulecreators/AppModuleCreator";
-import AppModuleWithRenderCreator from "wprr/modulecreators/AppModuleWithRenderCreator";
+import WprrContext from "wprr/reference/WprrContext";
 
 import TWEEN from "@tweenjs/tween.js";
 
@@ -60,28 +47,28 @@ export default class Wprr {
 	}
 	
 	addPageModule(aName, aModule) {
-		let newModuleCreator = PageModuleCreator.create(aModule);
+		let newModuleCreator = Wprr.utils.modulecreators.PageModuleCreator.create(aModule);
 		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addPageModuleWithRenderer(aName, aModule) {
-		let newModuleCreator = PageModuleWithRendererCreator.create(aModule);
+		let newModuleCreator = Wprr.utils.modulecreators.PageModuleWithRendererCreator.create(aModule);
 		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addAppModule(aName, aModule) {
-		let newModuleCreator = AppModuleCreator.create(aModule);
+		let newModuleCreator = Wprr.utils.modulecreators.AppModuleCreator.create(aModule);
 		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
 	}
 	
 	addAppWithRendererModule(aName, aModule) {
-		let newModuleCreator = AppModuleWithRenderCreator.create(aModule);
+		let newModuleCreator = Wprr.utils.modulecreators.AppModuleWithRenderCreator.create(aModule);
 		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
@@ -109,7 +96,7 @@ export default class Wprr {
 	
 	getProject(aName) {
 		if(!this._projects[aName]) {
-			let newProject = new Project();
+			let newProject = new Wprr.utils.project.Project();
 			newProject.setName(aName);
 			this._projects[aName] = newProject;
 		}
@@ -149,9 +136,9 @@ export default class Wprr {
 	
 	static source(aType, aData, aDeepPath = null) {
 		if(aDeepPath !== null) {
-			return SourceDataWithPath.create(aType, aData, aDeepPath);
+			return Wprr.utils.SourceDataWithPath.create(aType, aData, aDeepPath);
 		}
-		return SourceData.create(aType, aData);
+		return Wprr.utils.SourceData.create(aType, aData);
 	}
 	
 	static sourceReference(aPath, aDeepPath = null) {
@@ -219,7 +206,7 @@ export default class Wprr {
 	}
 	
 	static sourceValue(aValue) {
-		return ValueSourceData.create(aValue);
+		return Wprr.utils.ValueSourceData.create(aValue);
 	}
 	
 	static sourceFromJson(aObject) {
@@ -250,19 +237,19 @@ export default class Wprr {
 	}
 	
 	static isSource(aVariable) {
-		return (aVariable instanceof SourceData);
+		return (aVariable instanceof Wprr.utils.SourceData);
 	}
 	
 	static text(aText, aFormat = "text") {
-		return React.createElement(SourcedText, {"text": aText, "format": aFormat});
+		return React.createElement(Wprr.SourcedText, {"text": aText, "format": aFormat});
 	}
 	
 	static translateText(aText, aFormat = "text") {
-		return React.createElement(SourcedText, {"text": Wprr.sourceTranslation(aText), "format": aFormat});
+		return React.createElement(Wprr.SourcedText, {"text": Wprr.sourceTranslation(aText), "format": aFormat});
 	}
 	
 	static idText(aText, aId = null, aFormat = "text") {
-		return React.createElement(TranslationOrId, {"id": aId, "defaultText": Wprr.sourceTranslation(aText), "format": aFormat});
+		return React.createElement(Wprr.TranslationOrId, {"id": aId, "defaultText": Wprr.sourceTranslation(aText), "format": aFormat});
 	}
 	
 	static objectPath(aObject, aPath) {
@@ -325,6 +312,18 @@ export default class Wprr {
 			scriptLoader.addSuccessCommand(aCommands);
 			scriptLoader.load();
 		}
+	}
+	
+	getContext() {
+		return WprrContext;
+	}
+	
+	static getContext() {
+		if(window.wprr) {
+			return window.wprr.getContext();
+		}
+		
+		return WprrContext;
 	}
 }
 

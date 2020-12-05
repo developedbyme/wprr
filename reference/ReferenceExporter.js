@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -28,6 +29,6 @@ export default class ReferenceExporter extends ManipulationBaseObject {
 		
 		let references = this.getSourcedProp("references");
 		
-		return React.createElement(WprrContext.Provider, {"value": {"references": references}}, clonedElements);
+		return React.createElement(Wprr.getContext().Provider, {"value": {"references": references}}, clonedElements);
 	}
 }
