@@ -1,5 +1,6 @@
 import React from "react";
 import Wprr from "wprr/Wprr";
+import ReactDOM from 'react-dom';
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -11,7 +12,7 @@ export default class DraggableOrder extends WprrBaseObject {
 	constructor(aProps) {
 		super(aProps);
 		
-		this._startCommand = Wprr.commands.callFunction(this, this._dragStart, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index")]);
+		this._startCommand = Wprr.commands.callFunction(this, this._dragStart, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index"), Wprr.source("commandElement")]);
 		this._overCommand = Wprr.commands.callFunction(this, this._dragOver, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index")]);
 		this._endCommand = Wprr.commands.callFunction(this, this._dragEnd, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index")]);
 		
@@ -21,20 +22,19 @@ export default class DraggableOrder extends WprrBaseObject {
 		this._draggedToPosition = Wprr.sourceValue(-1);
 	}
 	
-	getValue() {
-		//console.log("wprr/elements/form/DraggableOrder::getValue");
-		
-		return this.getFirstInput("value");
-	}
-	
-	_dragStart(aEvent, aIndex) {
+	_dragStart(aEvent, aIndex, aElement) {
 		//console.log("_dragStart");
 		//console.log(aEvent, aIndex);
 		
 		this._draggedFromPosition.value = aIndex;
 		this._draggedToPosition.value = aIndex;
 		
+		let currentNode = ReactDOM.findDOMNode(aElement);
+		
 		aEvent.dataTransfer.effectAllowed = "move";
+		aEvent.dataTransfer.setDragImage(currentNode, 0, 0);
+		
+		//METODO: calculate the distance from the start drag to grab at the correct location
 	}
 	
 	_dragOver(aEvent, aIndex) {
@@ -111,12 +111,17 @@ export default class DraggableOrder extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("DraggableOrder::_renderMainElement");
 		
-		let order = this.getFirstInput("order");
-		let value = this.getValue();
+		let dragParent = this.getFirstInputWithDefault("dragParent", "true");
+		if(dragParent === false || dragParent === "false") {
+			dragParent = "false";
+		}
+		else {
+			dragParent = "true";
+		}
 		
 		let itemMarkup = React.createElement(Wprr.EventCommands,
 			{"events": {"onDragStart": this._startCommand, "onDragOver": this._overCommand, "onDragEnd": this._endCommand}},
-			React.createElement("div", {"draggable": "true"},
+			React.createElement("div", {"draggable": dragParent},
 				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("loop/item", "element")})
 			)
 		);

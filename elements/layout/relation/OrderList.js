@@ -42,9 +42,11 @@ export default class OrderList extends Layout {
 					React.createElement(Wprr.Adjust, {adjust: sortChain.getApplyAdjustFunction(activeIds, "sortedIds"), sourceUpdates: [activeIds, order]},
 						React.createElement(Wprr.BaseObject, {didMountCommands: Wprr.commands.callFunction(orderEditorSource, "setOrder", [orderId, Wprr.sourceProp("sortedIds")])/*, didUpdateCommands: Wprr.commands.callFunction(orderEditorSource, "setOrder", [orderId, Wprr.sourceProp("sortedIds")])*/}),
 						React.createElement(Wprr.layout.ItemList, {ids: Wprr.sourceProp("sortedIds")},
-							React.createElement(Wprr.DraggableOrder, {"data-slot": "insertElements", "order": order, "sourceUpdates": [order]}),
+							React.createElement(Wprr.DraggableOrder, {"data-slot": "insertElements", "order": order, "dragParent": false, "sourceUpdates": [order]}),
 							React.createElement(Wprr.FlexRow, {className: "micro-item-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize,flex-no-resize"},
-								React.createElement(Wprr.Image, {"className": "standard-icon background-contain", "src": "icons/change-order.svg"}),
+								React.createElement("div", {"draggable": "true"},
+									React.createElement(Wprr.Image, {"className": "standard-icon background-contain", "src": "icons/change-order.svg"})
+								),
 								aSlots.default(React.createElement(Wprr.layout.relation.DisplayRelationDirection, {"directionIdName": editorSource.deeper("directionIdName")},
 									React.createElement("div", {"data-slot": "idCell"}),
 									React.createElement("div", {"data-slot": "startFlagCell"}),
