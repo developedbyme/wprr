@@ -33,7 +33,8 @@ export default class ItemList extends Layout {
 								)
 							)
 						),
-						aSlots.source("spacing", null)).setInput("keyField", []),
+						aSlots.source("spacing", null)
+					).setInput("keyField", []),
 					sourceUpdates: Wprr.sourceReference("itemList/externalStorage", "slots.ids")
 				},
 				aSlots.slot("insertElements",

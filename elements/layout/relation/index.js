@@ -5,3 +5,4 @@ export {default as SelectMultipleRelationsWithOrder} from "./SelectMultipleRelat
 export {default as SelectSingleRelation} from "./SelectSingleRelation";
 export {default as SelectRelationOfAnyType} from "./SelectRelationOfAnyType";
 export {default as SelectSingleUserRelation} from "./SelectSingleUserRelation";
+export {default as OrderList} from "./OrderList";

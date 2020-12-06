@@ -92,6 +92,7 @@ export {default as AddReference} from "wprr/reference/AddReference";
 export {default as SelectItem} from "wprr/reference/SelectItem";
 export {default as RelatedItem} from "wprr/reference/RelatedItem";
 export {default as SelectField} from "wprr/reference/SelectField";
+export {default as DraggableOrder} from "wprr/elements/form/DraggableOrder";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";
