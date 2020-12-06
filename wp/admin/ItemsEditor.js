@@ -497,6 +497,31 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return item;
 	}
 	
+	enableEditsForItem(aId) {
+		console.log("ItemsEditor::enableEditsForItem");
+		let allIds = [].concat(this._editStorage.getValue("allIds"));
+		
+		if(allIds.indexOf(aId) === -1) {
+			allIds.push(aId);
+			this._editStorage.updateValue("allIds", allIds);
+			
+			this._updateSaveAllStatus();
+		}
+	}
+	
+	disableEditsForItem(aId) {
+		console.log("ItemsEditor::disableEditsForItem");
+		let allIds = [].concat(this._editStorage.getValue("allIds"));
+		
+		let index = allIds.indexOf(aId);
+		if(index !== -1) {
+			allIds.splice(index, 1);
+			this._editStorage.updateValue("allIds", allIds);
+			
+			this._updateSaveAllStatus();
+		}
+	}
+	
 	setupCreation(aType, aInGroup = null, aCreationMethod = null) {
 		
 		this._objectType = aType;
