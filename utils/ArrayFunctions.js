@@ -74,8 +74,8 @@ export default class ArrayFunctions {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentArrayEntry = currentArray[i];
-			let key = aKeyPrefix + objectPath.get(currentArrayEntry, aKeyField);
-			let data = aDataField ? objectPath.get(currentArrayEntry, aDataField) : currentArrayEntry;
+			let key = aKeyPrefix + Wprr.objectPath(currentArrayEntry, aKeyField);
+			let data = aDataField ? Wprr.objectPath(currentArrayEntry, aDataField) : currentArrayEntry;
 			
 			returnObject[key] = data;
 		}
@@ -637,6 +637,8 @@ export default class ArrayFunctions {
 			let groups = ArrayFunctions.groupArrayByFunction(aArray, aQualifyFunction);
 			qualifiedItems = objectPath.get(ArrayFunctions.getItemByIfExists("key", "true", groups), "value", []);
 		}
+		
+		//METODO: this function doesn't actually do any scoring
 		
 		if(qualifiedItems.length > 0) {
 			bestItem = qualifiedItems[0];

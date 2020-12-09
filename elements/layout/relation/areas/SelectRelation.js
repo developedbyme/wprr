@@ -6,18 +6,18 @@ import Wprr from "wprr/Wprr";
 import Layout from "wprr/elements/layout/Layout";
 
 
-// import AddRelation from "./AddRelation";
-export default class AddRelation extends Layout {
+// import SelectRelation from "./SelectRelation";
+export default class SelectRelation extends Layout {
 
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("AddRelation::constructor");
+		//console.log("SelectRelation::constructor");
 
 		super();
 		
-		this._layoutName = "addRelation";
+		this._layoutName = "selectRelation";
 	}
 	
 	_getLayout(aSlots) {
@@ -33,7 +33,7 @@ export default class AddRelation extends Layout {
 		
 		
 		let loopItem = React.createElement(Wprr.CommandButton, {commands: [
-			Wprr.commands.callFunction(editorSource, "add", [Wprr.sourceReference("loop/item", "value")]),
+			Wprr.commands.callFunction(editorSource, "replaceWith", [Wprr.sourceReference("loop/item", "value")]),
 			Wprr.commands.setValue(Wprr.sourceReference("value/path"), "path", Wprr.sourceFunction(this, this._getLevelUpPath, [Wprr.sourceReference("pathRouter/externalStorage").deeper("path")]))
 		]},
 			React.createElement(Wprr.BaseObject, {"className": aSlots.prop("rowClassName", "hover-row cursor-pointer")},
@@ -41,7 +41,7 @@ export default class AddRelation extends Layout {
 			)
 		);
 		
-		return React.createElement("div", {className: "add-relation"},
+		return React.createElement("div", {className: "select-relation"},
 			React.createElement(Wprr.ExternalStorageProps, {props: "path", externalStorage: Wprr.sourceReference("pathRouter/externalStorage")},
 				React.createElement(Wprr.HasData, {check: Wprr.sourceProp("path"), checkType: "notEmpty"},
 					React.createElement(Wprr.CommandButton, {commands: Wprr.commands.setValue(Wprr.sourceReference("value/path"), "path", Wprr.sourceFunction(this, this._getLevelUpPath, [Wprr.sourceProp("path")]))},
