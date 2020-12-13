@@ -12,10 +12,9 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		
 		super();
 		
-		
 	}
 	
-	getRelation(aDirection, aConnectionType, aObjectType) {
+	getRelation(aDirection, aConnectionType, aObjectType, aOnlyActive = true) {
 		//console.log("getEditor");
 		//console.log(aDirection, aConnectionType, aObjectType);
 		
@@ -27,7 +26,7 @@ export default class SingleRelation extends MultiTypeItemConnection {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let item = this.item.group.getItem(relations[i]);
 				let relation = item.getType("relation");
-				if(relation.isActiveNow()) {
+				if(relation.isActiveNow() || !aOnlyActive) {
 					return item;
 				}
 			}
@@ -36,7 +35,7 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		return null;
 	}
 	
-	getUserRelation(aConnectionType) {
+	getUserRelation(aConnectionType, aOnlyActive = true) {
 		//console.log("getUserRelation");
 		//console.log(aConnectionType);
 		
@@ -48,7 +47,7 @@ export default class SingleRelation extends MultiTypeItemConnection {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let item = this.item.group.getItem(relations[i]);
 				let relation = item.getType("relation");
-				if(relation.isActiveNow()) {
+				if(relation.isActiveNow() || !aOnlyActive) {
 					return item;
 				}
 			}
@@ -65,24 +64,29 @@ export default class SingleRelation extends MultiTypeItemConnection {
 		
 		let tempArray = ("" + aPath).split(".");
 		let firstPart = tempArray.shift();
+		let onlyActive = true;
 		
 		switch(firstPart) {
 			case "item":
 				let restParts = tempArray.join(".");
 				return Wprr.objectPath(this[firstPart], restParts);
+			case "includeAll":
+				onlyActive = false;
+				firstPart = tempArray.shift();
+				break;
 		}
 		let connectionType = tempArray.shift();
 		
 		if(firstPart === "userRelations") {
 			let restParts = tempArray.join(".");
 		
-			return Wprr.objectPath(this.getUserRelation(connectionType), restParts);
+			return Wprr.objectPath(this.getUserRelation(connectionType, onlyActive), restParts);
 		}
 		
 		let objectType = tempArray.shift();
 		
 		let restParts = tempArray.join(".");
 		
-		return Wprr.objectPath(this.getRelation(firstPart, connectionType, objectType), restParts);
+		return Wprr.objectPath(this.getRelation(firstPart, connectionType, objectType, onlyActive), restParts);
 	}
 }

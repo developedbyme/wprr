@@ -482,6 +482,10 @@ export default class WprrBaseObject extends React.Component {
 				case "willUnmountCommands":
 				case "prepareRenderCommands":
 				case "prepareInitialRenderCommands":
+				case "beforePrepareInitialRenderCommands":
+				case "afterPrepareInitialRenderCommands":
+				case "beforePrepareRenderCommands":
+				case "afterPrepareRenderCommands":
 					//MENOTE: these should not copy
 					break;
 				case "children":

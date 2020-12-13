@@ -55,85 +55,64 @@ export default class DateSelection extends WprrBaseObject {
 		}
 		
 		let postData = this.getReference("wprr/postData");
-		let language = postData ? postData.getDataValue("language") : "sv";
+		let language = postData ? postData.getDataValue("language") : "en";
 		
 		let buttonClasses = this.getFirstInputWithDefault("cursor-pointer");
 		//date-selection-button date-selection-button-padding
 		
-		return React.createElement("wrapper", null, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "open",
-  open: false
-}, /*#__PURE__*/React.createElement(Wprr.DropdownSelection, {
-  valueName: valueName,
-  name: "date"
-}, /*#__PURE__*/React.createElement(Wprr.MarkupPlacement, {
-  placement: "button"
-}, /*#__PURE__*/React.createElement("div", {
-  className: buttonClasses
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: date.isValid()
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between micro-item-spacing date-selection-spacing vertically-center-items",
-  itemClasses: "flex-no-resize,flex-resize"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "date-selection-number"
-}, /*#__PURE__*/React.createElement(Wprr.DateDisplay, {
-  date: value,
-  format: "D"
-})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "date-selection-month"
-}, /*#__PURE__*/React.createElement(Wprr.DateDisplay, {
-  date: value,
-  format: "MMMM, Y",
-  locale: language
-})), /*#__PURE__*/React.createElement("div", {
-  className: "date-selection-weekday"
-}, /*#__PURE__*/React.createElement(Wprr.DateDisplay, {
-  date: value,
-  format: "dddd",
-  locale: language
-}))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: date.isValid(),
-  checkType: "invert/default"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "date-selection-month"
-}, Wprr.translateText("Välj datum"))))), /*#__PURE__*/React.createElement(Wprr.MarkupPlacement, {
-  placement: "overlay"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "date-selection-overlay date-selection-overlay-padding"
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between"
-}, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "month",
-  externalStorage: this._calendarNavigationExternalStorage
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.stepValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceProp("month"), -1, DateSelection.stepMonth)
-}, /*#__PURE__*/React.createElement("div", {
-  className: "cursor-pointer"
-}, "<"))), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "month",
-  externalStorage: this._calendarNavigationExternalStorage
-}, /*#__PURE__*/React.createElement(Wprr.DateDisplay, {
-  date: Wprr.sourceProp("month"),
-  format: "MMMM, Y",
-  locale: language
-})), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "month",
-  externalStorage: this._calendarNavigationExternalStorage
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.stepValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceProp("month"), 1, DateSelection.stepMonth)
-}, /*#__PURE__*/React.createElement("div", {
-  className: "cursor-pointer"
-}, ">")))), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "month",
-  externalStorage: this._calendarNavigationExternalStorage
-}, /*#__PURE__*/React.createElement(Wprr.Calendar, {
-  valueName: "selection",
-  value: value,
-  changeCommands: [Wprr.commands.setValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceReference("calendar/day/date"))]
-})))))));
+		return React.createElement("wrapper", null,
+			React.createElement(Wprr.EditableProps, {editableProps: "open", open: false},
+				React.createElement(Wprr.DropdownSelection, {valueName: valueName, name: "date"},
+					React.createElement(Wprr.MarkupPlacement, {placement: "button"},
+						React.createElement("div", {className: buttonClasses},
+							React.createElement(Wprr.HasData, {check: date.isValid()},
+								React.createElement(Wprr.FlexRow, {className: "justify-between micro-item-spacing date-selection-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize"},
+									React.createElement("div", {className: "date-selection-number"},
+										React.createElement(Wprr.DateDisplay, {date: value, format: "D"})
+									),
+									React.createElement("div", null,
+										React.createElement("div", {className: "date-selection-month"},
+											React.createElement(Wprr.DateDisplay, {date: value, format: "MMMM, Y", locale: language})
+										),
+										React.createElement("div", {className: "date-selection-weekday"},
+											React.createElement(Wprr.DateDisplay, {date: value, format: "dddd", locale: language})
+										)
+									)
+								)
+							),
+							React.createElement(Wprr.HasData, {check: date.isValid(), checkType: "invert/default"},
+								React.createElement("div", {className: "date-selection-month"},
+									Wprr.idText("Select date", "selectDate")
+								)
+							)
+						)
+					),
+					React.createElement(Wprr.MarkupPlacement, {placement: "overlay"},
+						React.createElement("div", {className: "date-selection-overlay date-selection-overlay-padding"},
+							React.createElement(Wprr.FlexRow, {className: "justify-between"},
+								React.createElement(Wprr.EditableProps, {editableProps: "month", externalStorage: this._calendarNavigationExternalStorage},
+									React.createElement(Wprr.CommandButton, {commands: Wprr.commands.stepValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceProp("month"), -1, DateSelection.stepMonth)},
+										React.createElement("div", {className: "cursor-pointer"}, "<")
+									)
+								),
+								React.createElement(Wprr.EditableProps, {editableProps: "month", externalStorage: this._calendarNavigationExternalStorage},
+									React.createElement(Wprr.DateDisplay, {date: Wprr.sourceProp("month"), format: "MMMM, Y", locale: language})
+								),
+								React.createElement(Wprr.EditableProps, {editableProps: "month", externalStorage: this._calendarNavigationExternalStorage},
+									React.createElement(Wprr.CommandButton, {commands: Wprr.commands.stepValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceProp("month"), 1, DateSelection.stepMonth)},
+										React.createElement("div", {className: "cursor-pointer"}, ">")
+									)
+								)
+							),
+							React.createElement("div", {className: "spacing small"}),
+							React.createElement(Wprr.EditableProps, {editableProps: "month", externalStorage: this._calendarNavigationExternalStorage},
+								React.createElement(Wprr.Calendar, {valueName: "selection", value: value, changeCommands: [Wprr.commands.setValue(Wprr.sourceReference("value/month"), "month", Wprr.sourceReference("calendar/day/date"))]})
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 	
 	static stepMonth(aValue, aStep, aCommand) {

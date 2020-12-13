@@ -30,6 +30,16 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this.externalStorage.createChangeCommands(this.path, this, Wprr.commands.callFunction(this, this._changed));
 		this._updateActiveRelations();
 		
+		let ids = this.externalStorage.getValue(this.path);
+		if(ids) {
+			let currentArray = this.item.group.getItems(ids);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				currentItem.getType("editStorage").createChangeCommands("startAt,saved.startAt,endAt,saved.endAt", this, Wprr.commands.callFunction(this, this._changed));
+			}
+		}
+		
 		return this;
 	}
 	
@@ -96,6 +106,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			let editStorage = new Wprr.utils.DataStorage();
 			item.addType("editStorage", editStorage);
 			newRelation.connectToEditStorage(editStorage);
+			editStorage.createChangeCommands("startAt,saved.startAt,endAt,saved.endAt", this, Wprr.commands.callFunction(this, this._changed));
 			
 			item.addType("data", data);
 			item.addSingleLink("from", aFromId);
@@ -212,6 +223,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	hasUnsavedChanges() {
+		console.log("hasUnsavedChanges");
 		
 		let currentArray = this.externalStorage.getValue(this.path);
 		if(currentArray) {
@@ -267,7 +279,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_changed() {
-		//console.log("_changed");
+		console.log("_changed");
+		
 		let commandName = "changed";
 		if(this._commands.hasInput(commandName)) {
 			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);

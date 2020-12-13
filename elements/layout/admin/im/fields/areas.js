@@ -9,3 +9,4 @@ export {default as richText} from "./RichText";
 export {default as address} from "./Address";
 export {default as json} from "./Json";
 export {default as weekday} from "./Weekday";
+export {default as boolean} from "./Boolean";

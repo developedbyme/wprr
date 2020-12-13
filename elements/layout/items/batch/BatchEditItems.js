@@ -25,14 +25,25 @@ export default class BatchEditItems extends Layout {
 		this._loadData = {};
 	}
 	
+	get itemsEditor() {
+		return this._itemsEditor;
+	}
+	
 	_prepareInitialRender() {
+		console.log("BatchEditItems::_prepareInitialRender");
+		
 		super._prepareInitialRender();
 		
 		let projectName = this.getFirstInput("projectName", Wprr.sourceReference("wprr/projectName"));
-		let dataType = this.getFirstInput("dataType");
+		let dataTypes = [].concat(Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("dataType")));
+		let dataType = dataTypes.shift();
 		
 		this._itemsEditor.relateToProject(projectName);
 		this._itemsEditor.setupCreation(dataType, null, this.getFirstInput("creationMethod"));
+		
+		if(dataTypes.length > 0) {
+			this._itemsEditor.addChangeData.setTerms(dataTypes, "dbm_type", "slugPath", "addTerms");
+		}
 		
 		let postType = this.getFirstInput("postType");
 		if(postType) {

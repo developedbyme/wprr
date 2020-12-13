@@ -3,6 +3,7 @@ export {default as MultiStepDropdown} from "./MultiStepDropdown";
 export {default as MoreOptionsDropdown} from "./MoreOptionsDropdown";
 export {default as MultiStepDropdownNavigationBar} from "./MultiStepDropdownNavigationBar";
 export {default as DateSelection} from "./DateSelection";
+export {default as DateAndTimeSelection} from "./DateAndTimeSelection";
 export {default as FieldWithLabel} from "./FieldWithLabel";
 export {default as BigSelectionBox} from "./BigSelectionBox";
 export {default as OptionsBar} from "./OptionsBar";

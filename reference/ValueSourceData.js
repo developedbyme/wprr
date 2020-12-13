@@ -22,6 +22,7 @@ export default class ValueSourceData extends SourceData {
 		this._sourceFunction = this.getValue;
 		
 		this._callback_onCompleteBound = this._callback_onComplete.bind();
+		this._changeCommands = null;
 	}
 	
 	get value() {
@@ -33,6 +34,15 @@ export default class ValueSourceData extends SourceData {
 		this.setValue(aValue);
 		
 		return this._value;
+	}
+	
+	addChangeCommand(aCommand) {
+		if(!this._changeCommands) {
+			this._changeCommands = new Array();
+		}
+		this._changeCommands.push(aCommand);
+		
+		return this;
 	}
 	
 	_shouldUpdateOwner(aName, aOwner) {
@@ -66,6 +76,10 @@ export default class ValueSourceData extends SourceData {
 		
 		this._value = aValue;
 		this.externalDataChange();
+		
+		if(this._changeCommands) {
+			Wprr.utils.CommandPerformer.perform(this._changeCommands, aValue, null);
+		}
 		
 		return this;
 	}

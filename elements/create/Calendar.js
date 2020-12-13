@@ -17,7 +17,6 @@ import CommandButton from "wprr/elements/interaction/CommandButton";
 
 import Adjust from "wprr/manipulation/Adjust";
 import ClassFromProp from "wprr/manipulation/adjustfunctions/ClassFromProp";
-import SetValueCommand from "wprr/commands/basic/SetValueCommand";
 
 //import Calendar from "wprr/elements/create/Calendar";
 export default class Calendar extends WprrBaseObject {
@@ -26,13 +25,42 @@ export default class Calendar extends WprrBaseObject {
 		super(aProps);
 		
 		this._addMainElementClassName("calendar");
+		
+		this._selectCommand = Wprr.commands.callFunction(this, this.selectDate, Wprr.sourceReference("calendar/day/date"));
+		this._selectedDate = Wprr.sourceValue(null);
 	}
 	
 	getValue() {
-		let valueName = this.getSourcedProp("valueName");
-		let value = this.getSourcedPropWithDefault("value", Wprr.source("propWithDots", valueName));
+		let valueName = this.getFirstInput("valueName");
+		let value = this.getFirstInput("value", Wprr.source("propWithDots", valueName));
 		
 		return value;
+	}
+	
+	selectDate(aDate) {
+		console.log("Calendar::selectDate");
+		
+		this.updateProp("value", aDate);
+		
+		let valueName = this.getFirstInput("valueName");
+		let updater = this.getFirstInput(Wprr.sourceReference("value/" + valueName));
+		if(updater) {
+			updater.updateValue(valueName, aDate);
+		}
+		
+		let changeCommands = this.getFirstInput("changeCommands");
+		if(changeCommands) {
+			this._performCommands(changeCommands, aDate);
+		}
+	}
+	
+	_prepareRender() {
+		
+		super._prepareRender();
+		
+		let value = this.getValue();
+		this._selectedDate.value = value;
+		
 	}
 	
 	_renderMainElement() {
@@ -113,33 +141,17 @@ export default class Calendar extends WprrBaseObject {
 		}
 		
 		let injectData = new Object();
-		injectData["calendar/selectedDate"] = value;
+		injectData["calendar/selectedDate"] = this._selectedDate;
 		injectData["calendar/today"] = today.format("Y-MM-DD");
 		injectData["calendar/month"] = monthToRender.format("Y-MM");
 		
 		injectData["calendar/rowMarkup"] = this.getSourcedPropWithDefault("rowMarkup", Calendar.getDefaultRowMarkup());
 		injectData["calendar/cellMarkup"] = this.getSourcedPropWithDefault("cellMarkup", Calendar.getDefaultCellMarkup());
 		
-		injectData["calendar/valueName"] = valueName;
-		
 		injectData["calendar/firstSelectableDate"] = this.getFirstInputWithDefault("firstSelectableDate", Wprr.sourceReferenceIfExists("calendar/firstSelectableDate"), null);
 		injectData["calendar/lastSelectableDate"] = this.getFirstInputWithDefault("lastSelectableDate", Wprr.sourceReferenceIfExists("calendar/lastSelectableDate"), null);
 		
-		let selectCommands = new Array();
-		if(valueName) {
-			selectCommands.push(SetValueCommand.create(
-				Wprr.sourceReference(Wprr.source("combine", ["value/", Wprr.sourceReference("calendar/valueName")])),
-				Wprr.sourceReference("calendar/valueName"),
-				Wprr.sourceReference("calendar/day/date")
-			));
-		}
-		
-		let changeCommands = this.getSourcedProp("changeCommands");
-		if(changeCommands) {
-			selectCommands = selectCommands.concat(changeCommands);
-		}
-		
-		injectData["calendar/selectCommands"] = selectCommands;
+		injectData["calendar/selectCommands"] = [this._selectCommand];
 		
 		return React.createElement("wrapper", {},
 			React.createElement(ReferenceInjection, {"injectData": injectData, "key": month},
@@ -185,7 +197,7 @@ export default class Calendar extends WprrBaseObject {
 		}
 		
 		let currentDate = aManipulationObject.getReference("calendar/day/date");
-		if(currentDate === aManipulationObject.getReference("calendar/selectedDate")) {
+		if(currentDate === aManipulationObject.getFirstInput(Wprr.sourceReference("calendar/selectedDate"))) {
 			aReturnObject["className"] += " selected";
 		}
 		
@@ -223,19 +235,23 @@ export default class Calendar extends WprrBaseObject {
 				React.createElement(CommandButton, {"commands": 
 					Wprr.sourceReference("calendar/selectCommands")
 				},
-					React.createElement(Adjust, {"adjust": [
-						ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeDirection"), [
-							{"key": 0, "value": "today"},
-							{"key": -1, "value": "past"},
-							{"key": 1, "value": "future"}]
-						),
-						ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeMonthDirection"), [
-							{"key": 0, "value": "current-month"},
-							{"key": -1, "value": "other-month past-month"},
-							{"key": 1, "value": "other-month future-month"}]
-						),
-						Calendar._adjust_isSelectedDate
-					]},
+					React.createElement(Adjust,
+						{
+							"adjust": [
+								ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeDirection"), [
+									{"key": 0, "value": "today"},
+									{"key": -1, "value": "past"},
+									{"key": 1, "value": "future"}]
+								),
+								ClassFromProp.createWithSource(Wprr.sourceReference("calendar/day/relativeMonthDirection"), [
+									{"key": 0, "value": "current-month"},
+									{"key": -1, "value": "other-month past-month"},
+									{"key": 1, "value": "other-month future-month"}]
+								),
+								Calendar._adjust_isSelectedDate
+							],
+							"sourceUpdates": [Wprr.sourceReference("calendar/selectedDate")]
+						},
 						React.createElement("div", {"className": "calendar-day"},
 							React.createElement(DateDisplay, {"date": Wprr.sourceReference("calendar/day/date"), "format": "D"})
 						)

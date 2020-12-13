@@ -22,6 +22,9 @@ export default class DateDisplay extends SourcedText {
 		if(inputType === "php" || inputType === "unix") {
 			input = 1000*input;
 		}
+		else if(inputType === "time") {
+			input = DateDisplay.momentFunction().format("Y-MM-DD") + "T" + input;
+		}
 		
 		let moment = DateDisplay.momentFunction(input);
 		if(locale) {
