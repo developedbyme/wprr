@@ -51,7 +51,7 @@ export default class BatchEditItems extends Layout {
 		}
 		
 		
-		this._itemsEditor.setSearchFields(this.getFirstInputWithDefault("searchFields", "fieldByName.text.field.value"));
+		this._itemsEditor.setSearchFields(this.getFirstInputWithDefault("searchFields", "fieldByName.name.field.value"));
 		
 		let fields = this.getFirstInput("fields");
 		
