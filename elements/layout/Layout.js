@@ -21,6 +21,7 @@ export default class Layout extends WprrBaseObject {
 		this._externalStorage = new Wprr.utils.DataStorage();
 		this._exposedProps = new Array();
 		
+		this._sources = new Object();
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -39,7 +40,9 @@ export default class Layout extends WprrBaseObject {
 		let currentArray = aNames;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			this._exposedProps.push(currentArray[i]);
+			let currentName = currentArray[i];
+			this._exposedProps.push(currentName);
+			this.getSource(currentName);
 		}
 		
 		return this;
@@ -49,7 +52,19 @@ export default class Layout extends WprrBaseObject {
 		return this._layoutName + "/externalStorage";
 	}
 	
+	getSource(aName) {
+		if(!this._sources[aName]) {
+			this._sources[aName] = new Wprr.sourceValue(null);
+		}
+		
+		return this._sources[aName];
+	}
+	
 	getSourceChain(aType) {
+		
+		return this.getSource(aType);
+		
+		/*
 		let returnSource = Wprr.sourceFirst(
 			Wprr.sourceReferenceIfExists(this.getExternalStorageName(), "slots." + aType),
 			Wprr.sourceReferenceIfExists(this._layoutName + "/slots/" + aType),
@@ -57,6 +72,7 @@ export default class Layout extends WprrBaseObject {
 		)
 		
 		return returnSource;
+		*/
 	}
 	
 	getSlot(aType) {
@@ -87,6 +103,10 @@ export default class Layout extends WprrBaseObject {
 		injectData[this._layoutName] = this;
 		injectData[this._layoutName + "/externalStorage"] = this._externalStorage;
 		
+		for(let objectName in this._sources) {
+			injectData[this._layoutName + "/slots/" + objectName] = this._sources[objectName];
+		}
+		
 		return React.createElement(Wprr.ReferenceInjection, {"injectData": injectData}, 
 			this.getSlot("main")
 		);
@@ -107,6 +127,18 @@ export default class Layout extends WprrBaseObject {
 		this._externalStorage.updateValue("defaults", defaults);
 	}
 	
+	_getAdditionalSourcesToRegister() {
+		let returnObject = super._getAdditionalSourcesToRegister();
+		
+		let defaults = this._externalStorage.getValue("defaults");
+		for(let objectName in defaults) {
+			
+			returnObject["defaults_" + objectName] = defaults[objectName];
+		}
+		
+		return returnObject;
+	}
+	
 	_prepareRender() {
 		
 		let slots = new Object();
@@ -114,7 +146,8 @@ export default class Layout extends WprrBaseObject {
 		{
 			let defaults = this._externalStorage.getValue("defaults");
 			for(let objectName in defaults) {
-				objectPath.set(slots, objectName, this.getFirstInput("slot_" + objectName, Wprr.sourceProp("slots", objectName)));
+				let defaultValue = this.resolveSourcedData(defaults[objectName]);
+				objectPath.set(slots, objectName, this.getFirstInputWithDefault("slot_" + objectName, Wprr.sourceProp("slots", objectName), defaultValue));
 			}
 		}
 		
@@ -153,11 +186,20 @@ export default class Layout extends WprrBaseObject {
 				let currentName = currentArray[i];
 				
 				let currentValue = this.getFirstInput(Wprr.sourcePropWithDots(currentName));
-				objectPath.set(slots, currentName, currentValue);
+				if(currentValue !== null || objectPath.get(slots, currentName) === undefined) {
+					objectPath.set(slots, currentName, currentValue);
+				}
 			}
 		}
 		
 		this._externalStorage.updateValue("slots", slots);
+		
+		console.log(slots);
+		for(let objectName in slots) {
+			let currrentSource = this.getSource(objectName);
+			currrentSource.value = slots[objectName];
+			console.log(objectName, currrentSource);
+		}
 		
 		super._prepareRender();
 	}

@@ -33,6 +33,12 @@ export default class WprrBaseObject extends React.Component {
 		this._sourceChangeIndex = 0;
 	}
 	
+	_getAdditionalSourcesToRegister() {
+		let returnObject = new Object();
+		
+		return returnObject;
+	}
+	
 	_updateSourceRegistration() {
 		
 		if(Wprr.settings_enableSourceRegistration) {
@@ -65,6 +71,22 @@ export default class WprrBaseObject extends React.Component {
 				}
 				
 				let currentProp = props[objectName];
+				if(currentProp instanceof SourceData) {
+					let updateSource = currentProp.getUpdateSource(this);
+					registeredSources[objectName] = updateSource;
+					if(oldSources[objectName] === registeredSources[objectName]) {
+						delete oldSources[objectName];
+					}
+					else {
+						newSources.push(updateSource);
+					}
+				}
+			}
+			
+			let additionalSourcesToRegister = this._getAdditionalSourcesToRegister();
+			console.log(">>>>>>>>>>>>>>>>>>", additionalSourcesToRegister);
+			for(let objectName in additionalSourcesToRegister) {
+				let currentProp = additionalSourcesToRegister[objectName];
 				if(currentProp instanceof SourceData) {
 					let updateSource = currentProp.getUpdateSource(this);
 					registeredSources[objectName] = updateSource;

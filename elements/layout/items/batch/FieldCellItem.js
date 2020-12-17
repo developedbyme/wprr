@@ -22,8 +22,8 @@ export default class FieldCellItem extends Layout {
 	_getLayout(aSlots) {
 		
 		let cellIdSource = aSlots.prop("cellId", "standard");
-		let settingsSource = aSlots.prop("settings", Wprr.sourceReference("fields", Wprr.sourceCombine(cellIdSource)));
-		let typeSource = aSlots.prop("fieldType", Wprr.sourceReference("fields", Wprr.sourceCombine(cellIdSource, ".type")));
+		let settingsSource = Wprr.sourceFirst(aSlots.prop("settings", null), Wprr.sourceReference("fields", Wprr.sourceCombine(cellIdSource)));
+		let typeSource = Wprr.sourceFirst(aSlots.prop("fieldType", null), Wprr.sourceReference("fields", Wprr.sourceCombine(cellIdSource, ".type")));
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(typeSource, aSlots.prop("cellTypes", {}), "standard");
 		
 		return React.createElement(Wprr.AddReference, {data: cellIdSource, as: "cellId"},
