@@ -12,9 +12,13 @@ export default class ArrayEditor extends ManipulationBaseObject {
 
 	constructor(aProps) {
 		super(aProps);
+		
+		this._numberOfItems = Wprr.sourceValue(0);
 	}
 	
 	getValue() {
+		console.log("ArrayEditor::getValue");
+		
 		let valueName = this.getSourcedProp("valueName");
 		
 		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
@@ -27,6 +31,8 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			console.error("Value is not an array", this);
 			return [];
 		}
+		
+		console.log(value);
 		
 		return value;
 	}
@@ -55,6 +61,9 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		
 		currentArray.push(aData);
 		this._updateValue(currentArray);
+		
+		this._numberOfItems.value = currentArray.length;
+		this.forceUpdate();
 	}
 	
 	createItem() {
@@ -76,10 +85,12 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		currentArray.splice(aIndex, 1);
 		
 		this._updateValue(currentArray);
+		
+		this._numberOfItems.value = currentArray.length;
 	}
 
 	_renderClonedElement() {
-		//console.log("wprr/elements/form/ArrayEditor::_renderMainElement");
+		console.log("wprr/elements/form/ArrayEditor::_renderMainElement");
 		
 		let value = this.getValue();
 		
@@ -141,13 +152,13 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			React.createElement(Wprr.InjectChildren)
 		);
 		
-		let loop = React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(value, loopItemMarkup, loopItemSpacingMarkup), "loopName": "array"}, loopInjectionsMarkup);
+		let loop = React.createElement(Wprr.Loop, {"loop": Wprr.adjusts.markupLoop(value, loopItemMarkup, loopItemSpacingMarkup), "loopName": "array", sourceUpdates: [this._numberOfItems]}, loopInjectionsMarkup);
 		
 		let markup = this.getFirstValidSource(
 			Wprr.source("prop", "markup"),
 			Wprr.source("referenceIfExists", "arrayEditor/markup"),
 			React.createElement(Wprr.Markup, {"usedPlacements": "loop"},
-				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey("dynamicKey"), "dynamicKey": Wprr.source("combine", ["list-", Wprr.sourceReference("arrayEditor/numberOfItems")])},
+				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.dynamicKey("dynamicKey"), "dynamicKey": Wprr.source("combine", ["list-", Wprr.sourceReference("arrayEditor/numberOfItems")]), sourceUpdates: [this._numberOfItems]},
 					React.createElement(Wprr.MarkupChildren, {"placement": "loop"})
 				),
 				React.createElement(Wprr.MarkupChildren, {"placement": "rest"})
@@ -158,12 +169,14 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			React.createElement(Wprr.InsertElement, {})
 		)
 		
+		this._numberOfItems.value = value.length;
+		
 		let injectData = {
 			"trigger/addItem": this,
 			"trigger/createItem": this,
 			"trigger/removeItem": this,
 			"arrayEditor/loop": loop,
-			"arrayEditor/numberOfItems": value.length,
+			"arrayEditor/numberOfItems": this._numberOfItems,
 			"arrayEditor/addButton": addButton
 		};
 		
@@ -178,7 +191,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		
 		let children = [
 			React.createElement(Wprr.MarkupPlacement, {"placement": "loop"},
-				React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("arrayEditor/loop")})
+				React.createElement(Wprr.InsertElement, {"element": loop})
 			),
 			React.createElement("div", {"className": "spacing small"}),
 			React.createElement(Wprr.MarkupPlacement, {"placement": "addButton"},
