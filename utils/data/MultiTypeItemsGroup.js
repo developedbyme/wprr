@@ -18,6 +18,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		this._nextInternalId = 0;
 		
 		this._additionalLoader = null;
+		this._commands = null;
 	}
 	
 	get prefix() {
@@ -40,12 +41,31 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this._additionalLoader;
 	}
 	
+	get commands() {
+		if(!this._commands) {
+			let commandGroup = new Wprr.utils.CommandGroup();
+			commandGroup.setOwner(this);
+			this._commands = commandGroup;
+		}
+		
+		return this._commands;
+	}
+	
 	setProject(aProject) {
 		super.setProject(aProject);
 		
 		if(this._additionalLoader) {
 			this._additionalLoader.setProject(this.project);
 		}
+		
+		return this;
+	}
+	
+	setupItem(aItem, aSetupType, aData) {
+		console.log("setupItem");
+		console.log(aItem, aSetupType);
+		
+		this.commands.perform("setupItem/" + aSetupType, {"item": aItem, "data": aData, "setupType": aSetupType});
 		
 		return this;
 	}
@@ -272,6 +292,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		taxonomyItem.addSelectLink("termBySlugPath", "all", "slugPath");
 		taxonomyItem.addSelectLink("topLevelTermBySlug", "topLevel", "slug");
 		
+		return this;
 	}
 	
 	addRange(aPath, aItems) {
@@ -282,5 +303,48 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		
 		let allLinks = currentItem.getLinks("all");
 		allLinks.addItems(ids);
+		
+		return this;
+	}
+	
+	setupRangeItems(aItems, aTypes) {
+		console.log("MultiTypeItemsGroup::setupRangeItems");
+		console.log(aItems, aTypes);
+		
+		let currentArray2 = Wprr.utils.array.arrayOrSeparatedString(aTypes);
+		let currentArray2Length = currentArray2.length;
+		
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentData = currentArray[i];
+			let currentId = currentData["id"];
+			
+			let item = this.getItem(currentId);
+			for(let j = 0; j < currentArray2Length; j++) {
+				console.log(item);
+				item.setup(currentArray2[j], currentData);
+			}
+		}
+		
+		return this;
+	}
+	
+	setupItems(aIds, aTypes, aData) {
+		let currentArray2 = Wprr.utils.array.arrayOrSeparatedString(aTypes);
+		let currentArray2Length = currentArray2.length;
+		
+		let currentArray = aIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			
+			let item = this.getItem(currentId);
+			for(let j = 0; j < currentArray2Length; j++) {
+				item.setup(currentArray2[j], aData);
+			}
+		}
+		
+		return this;
 	}
 }

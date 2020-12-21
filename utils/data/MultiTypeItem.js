@@ -50,6 +50,19 @@ export default class MultiTypeItem {
 		return this;
 	}
 	
+	setup(aSetupType, aData) {
+		let statusPath = "setup." + aSetupType + ".done";
+		let settings = this.settings;
+		if(!settings.getValue(statusPath)) {
+			
+			this.group.setupItem(this, aSetupType, aData);
+			
+			settings.updateValue(statusPath, true);
+		}
+		
+		return this;
+	}
+	
 	getType(aType) {
 		//console.log("getType");
 		//console.log(aType);
