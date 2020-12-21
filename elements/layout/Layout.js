@@ -201,11 +201,9 @@ export default class Layout extends WprrBaseObject {
 		
 		this._externalStorage.updateValue("slots", slots);
 		
-		console.log(slots);
 		for(let objectName in slots) {
 			let currrentSource = this.getSource(objectName);
 			currrentSource.value = slots[objectName];
-			console.log(objectName, currrentSource);
 		}
 		
 		super._prepareRender();

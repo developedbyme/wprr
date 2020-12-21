@@ -62,8 +62,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	setupItem(aItem, aSetupType, aData) {
-		console.log("setupItem");
-		console.log(aItem, aSetupType);
+		//console.log("setupItem");
+		//console.log(aItem, aSetupType);
 		
 		this.commands.perform("setupItem/" + aSetupType, {"item": aItem, "data": aData, "setupType": aSetupType});
 		
@@ -308,8 +308,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	setupRangeItems(aItems, aTypes) {
-		console.log("MultiTypeItemsGroup::setupRangeItems");
-		console.log(aItems, aTypes);
+		//console.log("MultiTypeItemsGroup::setupRangeItems");
+		//console.log(aItems, aTypes);
 		
 		let currentArray2 = Wprr.utils.array.arrayOrSeparatedString(aTypes);
 		let currentArray2Length = currentArray2.length;
@@ -322,7 +322,6 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 			
 			let item = this.getItem(currentId);
 			for(let j = 0; j < currentArray2Length; j++) {
-				console.log(item);
 				item.setup(currentArray2[j], currentData);
 			}
 		}
