@@ -1,5 +1,3 @@
-import SourceData from "wprr/reference/SourceData";
-
 //import CommandPerformer from "wprr/commands/CommandPerformer";
 /**
  * Object that performs a set of commands

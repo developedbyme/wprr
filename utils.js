@@ -57,6 +57,7 @@ export {default as DataStorageListConnection} from "wprr/utils/DataStorageListCo
 export {default as DataStorageChangeCommands} from "wprr/utils/DataStorageChangeCommands";
 export {default as DataStorageConnection} from "wprr/utils/DataStorageConnection";
 export {default as CommandPerformer} from "wprr/commands/CommandPerformer";
+export {default as CommandGroup} from "wprr/commands/CommandGroup";
 
 import * as process from "wprr/utils/process";
 export {process as process};
