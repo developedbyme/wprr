@@ -22,14 +22,14 @@ export default class SelectRelation extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		let editorSource = aSlots.prop("editor", Wprr.sourceReference("editor"));
+		let editorSource = Wprr.sourceFirst(aSlots.prop("editor", null), Wprr.sourceReference("editor"));
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
 		let dataType = aSlots.prop("dataType", "dbm_data");
 		let includedStatuses = aSlots.prop("includedStatuses", "drafts,privates");
-		let objectType = aSlots.prop("objectType", editorSource.deeper("objectType"));
-		let rangePath = aSlots.prop("rangePath", Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
+		let objectType = Wprr.sourceFirst(aSlots.prop("objectType", null), editorSource.deeper("objectType"));
+		let rangePath = Wprr.sourceFirst(aSlots.prop("rangePath", null), Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
 		
 		
 		let loopItem = React.createElement(Wprr.CommandButton, {commands: [

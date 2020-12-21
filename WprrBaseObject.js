@@ -84,7 +84,6 @@ export default class WprrBaseObject extends React.Component {
 			}
 			
 			let additionalSourcesToRegister = this._getAdditionalSourcesToRegister();
-			console.log(">>>>>>>>>>>>>>>>>>", additionalSourcesToRegister);
 			for(let objectName in additionalSourcesToRegister) {
 				let currentProp = additionalSourcesToRegister[objectName];
 				if(currentProp instanceof SourceData) {

@@ -30,8 +30,8 @@ export default class SelectSingleRelation extends Layout {
 		
 		let dataType = aSlots.prop("dataType", "dbm_data");
 		let includedStatuses = aSlots.prop("includedStatuses", "draftsIfAllowed,privates");
-		let objectType = aSlots.prop("objectType", editorSource.deeper("objectType"));
-		let rangePath = aSlots.prop("rangePath", Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
+		let objectType = Wprr.sourceFirst(aSlots.prop("objectType", null), editorSource.deeper("objectType"));
+		let rangePath = Wprr.sourceFirst(aSlots.prop("rangePath", null), Wprr.sourceCombine("wprr/v1/range/", dataType, "/", includedStatuses, ",relation/status,privateTitle?type=", objectType));
 		
 		let skipNoSelection = aSlots.prop("skipNoSelection", false);
 		

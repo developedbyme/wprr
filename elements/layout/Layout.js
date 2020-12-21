@@ -104,7 +104,7 @@ export default class Layout extends WprrBaseObject {
 		injectData[this._layoutName + "/externalStorage"] = this._externalStorage;
 		
 		for(let objectName in this._sources) {
-			injectData[this._layoutName + "/slots/" + objectName] = this._sources[objectName];
+			injectData[this._layoutName + "/internalSlots/" + objectName] = this._sources[objectName];
 		}
 		
 		return React.createElement(Wprr.ReferenceInjection, {"injectData": injectData}, 
@@ -147,6 +147,13 @@ export default class Layout extends WprrBaseObject {
 			let defaults = this._externalStorage.getValue("defaults");
 			for(let objectName in defaults) {
 				let defaultValue = this.resolveSourcedData(defaults[objectName]);
+				
+				let referenceValue = this.getFirstInput(Wprr.sourceReferenceIfExists(this._layoutName + "/slots/" + objectName));
+				if(referenceValue !== null) {
+					console.log(">>>>", referenceValue);
+					defaultValue = referenceValue;
+				}
+				
 				objectPath.set(slots, objectName, this.getFirstInputWithDefault("slot_" + objectName, Wprr.sourceProp("slots", objectName), defaultValue));
 			}
 		}
