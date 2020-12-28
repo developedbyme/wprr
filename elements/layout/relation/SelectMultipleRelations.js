@@ -31,7 +31,7 @@ export default class SelectMultipleRelations extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		let editorSource = aSlots.prop("editor", Wprr.sourceReference("editor"));
+		let editorSource = Wprr.sourceFirst(aSlots.prop("editor", null), Wprr.sourceReference("editor"));
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		let activeIds = externalStorageSource.deeper(activatePathSource);
