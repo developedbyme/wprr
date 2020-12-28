@@ -150,7 +150,6 @@ export default class Layout extends WprrBaseObject {
 				
 				let referenceValue = this.getFirstInput(Wprr.sourceReferenceIfExists(this._layoutName + "/slots/" + objectName));
 				if(referenceValue !== null) {
-					console.log(">>>>", referenceValue);
 					defaultValue = referenceValue;
 				}
 				

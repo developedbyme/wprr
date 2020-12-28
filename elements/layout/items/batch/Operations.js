@@ -7,6 +7,8 @@ export default class Operations extends Layout {
 	
 	constructor(aProps) {
 		super(aProps);
+		
+		this._layoutName = "operations";
 	}
 	
 	_getOptions(aOptions, aSections) {
@@ -23,6 +25,7 @@ export default class Operations extends Layout {
 		
 		let sections = aSlots.prop("sections", {});
 		let options = aSlots.prop("options", null);
+		let namePath = aSlots.prop("namePath", "fieldByName.name.field.value.firstName");
 		
 		let externalStorageSource = Wprr.sourceReference("externalStorage");
 		let selectionSource = externalStorageSource.deeper("selection");
@@ -30,37 +33,31 @@ export default class Operations extends Layout {
 		
 		let switchableArea = Wprr.creators.SwitchableAreaCreator.getReactElementsForDynamicClasses(operationSource, sections, "none");
 		
-		return React.createElement("div", {
-  className: "batch-operations"
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "micro-item-spacing"
-}, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "operation",
-  externalStorage: externalStorageSource
-}, /*#__PURE__*/React.createElement(Wprr.CustomSelection, {
-  valueName: "operation",
-  buttonMarkup: aSlots.slot("button", React.createElement(Wprr.layout.form.DropdownButton, {
-    "className": "cursor-pointer batch-operations-text batch-operations-select-title",
-    "text": Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")
-  }, aSlots.slot("buttonContent", React.createElement(Wprr.InsertElement, {
-    element: React.createElement(Wprr.TranslationOrId, {
-      "id": operationSource,
-      "prefix": "site.operations"
-    })
-  })))),
-  optionSpacingMarkup: aSlots.slot("optionSpacing", /*#__PURE__*/React.createElement("div", {
-    className: "spacing small"
-  })),
-  options: Wprr.sourceFunction(this, this._getOptions, [options, sections])
-})), React.createElement(Wprr.HasData, {
-  "check": selectionSource,
-  "checkType": "notEmpty"
-}, React.createElement("div", {
-  "className": "batch-operations-text"
-}, Wprr.idText("for", "site.for"), React.createElement("span", {}, " "), React.createElement(Wprr.layout.items.ItemNames, {
-  ids: selectionSource,
-  sourceUpdates: selectionSource,
-  "namePath": "fieldByName.name.field.value.firstName"
-})))), switchableArea);
+		return React.createElement("div", {className: "batch-operations"},
+			React.createElement(Wprr.FlexRow, {className: "micro-item-spacing"},
+				React.createElement(Wprr.EditableProps, {editableProps: "operation", externalStorage: externalStorageSource},
+					React.createElement(Wprr.CustomSelection,
+						{
+							valueName: "operation",
+							buttonMarkup: aSlots.slot("button", React.createElement(Wprr.layout.form.DropdownButton, {
+								"className": "cursor-pointer batch-operations-text batch-operations-select-title",
+								"text": Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")
+							}, aSlots.slot("buttonContent", React.createElement(Wprr.InsertElement, {
+								element: React.createElement(Wprr.TranslationOrId, {"id": operationSource, "prefix": "site.operations"})
+							})))),
+							optionSpacingMarkup: aSlots.slot("optionSpacing", React.createElement("div", {className: "spacing small"})),
+							options: Wprr.sourceFunction(this, this._getOptions, [options, sections])
+						}
+					)
+				),
+				React.createElement(Wprr.HasData, {"check": selectionSource, "checkType": "notEmpty"},
+					React.createElement("div", {"className": "batch-operations-text"}, Wprr.idText("for", "site.for"),
+						React.createElement("span", {}, " "),
+						React.createElement(Wprr.layout.items.ItemNames, {ids: selectionSource, sourceUpdates: selectionSource, "namePath": namePath})
+					)
+				)
+			),
+			switchableArea
+		);
 	}
 }

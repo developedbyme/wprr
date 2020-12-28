@@ -22,7 +22,7 @@ export default class ItemNames extends Layout {
 	_getLayout(aSlots) {
 		
 		return React.createElement("span", {className: "items-names"},
-			React.createElement(Wprr.Adjust, {adjust: [Wprr.adjusts.startOfArrayAsText(Wprr.sourceFunction(ItemNames, ItemNames.getItemNames, [aSlots.prop("ids", []), aSlots.prop("items", Wprr.sourceReference("items")), aSlots.prop("namePath", "data.title")]))], sourceUpdates: Wprr.sourceReference("itemNames/externalStorage", "slots.ids")},
+			React.createElement(Wprr.Adjust, {adjust: [Wprr.adjusts.startOfArrayAsText(Wprr.sourceFunction(ItemNames, ItemNames.getItemNames, [aSlots.prop("ids", []), Wprr.sourceFirst(aSlots.prop("items", null), Wprr.sourceReference("items")), aSlots.prop("namePath", "data.title")]))], sourceUpdates: Wprr.sourceReference("itemNames/externalStorage", "slots.ids")},
 				Wprr.text(null)
 			)
 		);
@@ -30,7 +30,7 @@ export default class ItemNames extends Layout {
 	
 	static getItemNames(aIds, aItems, aNamePath = "data.title") {
 		//console.log("ItemNames::getItemNames");
-		//console.log(aIds);
+		//console.log(aIds, aItems);
 		
 		let items = aItems.getItems(aIds);
 		return Wprr.utils.array.mapField(items, aNamePath);

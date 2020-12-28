@@ -26,7 +26,9 @@ export default class EditNumberSequences extends Wprr.BaseObject {
 		
 		return <div>
 			<Wprr.AddReference data="private" as="publishStatus">
-				<Wprr.layout.items.batch.BatchEditItems dataType="number-sequence,named-item" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} operationSections={operationSections} />
+				<Wprr.AddReference data="fieldByName.name.field.value" as="operations/slots/namePath">
+					<Wprr.layout.items.batch.BatchEditItems dataType="number-sequence,named-item" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} operationSections={operationSections} />
+				</Wprr.AddReference>
 			</Wprr.AddReference>
 		</div>;
 	}
