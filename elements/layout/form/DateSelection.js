@@ -81,8 +81,8 @@ export default class DateSelection extends WprrBaseObject {
 								)
 							),
 							React.createElement(Wprr.HasData, {check: date.isValid(), checkType: "invert/default"},
-								React.createElement("div", {className: "date-selection-month"},
-									Wprr.idText("Select date", "selectDate")
+								React.createElement("div", {className: "date-selection-month none-selected"},
+									Wprr.idText("Select date", "site.selectDate")
 								)
 							)
 						)
