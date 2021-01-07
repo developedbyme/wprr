@@ -11,8 +11,8 @@ export default class Image extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},
-			React.createElement("div", null, "Image")
+		return React.createElement("div", null,
+			React.createElement(Wprr.layout.admin.im.FileDropField)
 		);
 	}
 }

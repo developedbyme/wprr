@@ -14,7 +14,7 @@ export default class FieldName extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		let fieldName = aSlots.prop("fieldName", Wprr.sourceReference("field", "field.key"));
+		let fieldName = Wprr.sourceFirst(aSlots.prop("fieldName", null), Wprr.sourceReference("field", "field.key"));
 		
 		return React.createElement(Wprr.TranslationOrId, {"id": fieldName, "prefix": aSlots.prop("prefix", "site.messageGroupFields")});
 	}
