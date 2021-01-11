@@ -63,7 +63,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		
 		let content = this.getFirstInput("content");
 		let parsedContent = this.getFirstInput("parsedContent");
-		if(!content && !parsedContent) {
+		if((content === null || content === undefined) && (parsedContent === null || parsedContent === undefined)) {
 			content = this.getFirstInput(Wprr.source("postData", "content"));
 			let postId = this.getFirstInput(Wprr.source("postData", "id"));
 			parsedContent = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/parsedContent/" + postId));
