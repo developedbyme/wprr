@@ -81,8 +81,12 @@ export default class PortalledItem extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
+		let level = this.getFirstInputWithDefault(Wprr.sourceReferenceIfExists("portalLevel"), 0);
+		let newLevel = level+1;
+		
 		let parentElement = this.getFirstInputWithDefault("parentElement", document.querySelector("body"));
 		let overlayClassName = this.getFirstInputWithDefault("overlayClassName", "");
+		overlayClassName += " portal-level-" + newLevel;
 		overlayClassName += " position-absolute";
 		
 		let props = this.getProps();
@@ -95,8 +99,10 @@ export default class PortalledItem extends WprrBaseObject {
 				],
 				"style": Wprr.sourceFunction(this, this._getStyle, [Wprr.sourceProp("x"), Wprr.sourceProp("y"), Wprr.sourceProp("width")])
 			},
-				React.createElement("div", {"className": overlayClassName},
-					props.children
+				React.createElement(Wprr.AddReference, {"data": newLevel, "as": "portalLevel"}, 
+					React.createElement("div", {"className": overlayClassName},
+						props.children
+					)
 				)
 			)
 		);
