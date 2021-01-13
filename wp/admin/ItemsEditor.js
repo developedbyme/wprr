@@ -37,7 +37,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._addChangeData = null;
 		
-		this._editStorage.createChangeCommands("allIds,searchText,filters,sortOrder,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
+		this._editStorage.createChangeCommands("allIds,searchText,filters,filter,sortOrder,sort,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
 		
 		this._filterChain =  Wprr.utils.FilterChain.create();
 		
