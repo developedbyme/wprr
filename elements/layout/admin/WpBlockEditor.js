@@ -19,6 +19,25 @@ export default class WpBlockEditor extends Layout {
 		this._layoutName = "wpBlockEditor";
 	}
 	
+	_resetDataSettings() {
+		let externalStorage = this.getFirstInput(Wprr.sourceReference("wprr/wpBlockEditor/externalStorage"));
+		let dataSettings = this.getFirstInput("dataSettings");
+		
+		if(dataSettings) {
+			
+			externalStorage.updateValue("blockLoadData");
+			
+			let currentArray = Wprr.utils.KeyValueGenerator.normalizeArrayOrObject(dataSettings);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				let currentName = currentItem["key"];
+				
+				externalStorage.updateValue("blockLoadData." + currentName, Wprr.utils.object.copyViaJson(currentItem["value"]));
+			}
+		}
+	}
+	
 	_prepareInitialRender() {
 		
 		super._prepareInitialRender();
@@ -97,6 +116,11 @@ export default class WpBlockEditor extends Layout {
 							React.createElement("div", {}, 
 								React.createElement(Wprr.EditableProps, {"props": "blockLoadData", "externalStorage": Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")},
 									React.createElement(Wprr.JsonEditor, {"valueName": "blockLoadData"})
+								),
+								React.createElement(Wprr.FlexRow, {},
+									React.createElement(Wprr.layout.interaction.Button, {"commands": Wprr.commands.callFunction(this, this._resetDataSettings)},
+										Wprr.translateText("Reset to predefined values")
+									)
 								)
 							)
 						)
