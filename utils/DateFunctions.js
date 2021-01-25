@@ -78,7 +78,6 @@ export default class DateFunctions {
 			isInRange = !isInRange;
 		}
 		
-		console.log(isInRange, currentTime.format("Y-MM-DDTHH:mm:ss"), startTime.format("Y-MM-DDTHH:mm:ss"), endTime.format("Y-MM-DDTHH:mm:ss"));
 		return isInRange;
 	}
 }
