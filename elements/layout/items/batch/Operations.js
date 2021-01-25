@@ -25,7 +25,7 @@ export default class Operations extends Layout {
 		
 		let sections = aSlots.prop("sections", {});
 		let options = aSlots.prop("options", null);
-		let namePath = aSlots.prop("namePath", "fieldByName.name.field.value.firstName");
+		let namePath = aSlots.prop("namePath", "fieldByName.name.field.value");
 		
 		let externalStorageSource = Wprr.sourceReference("externalStorage");
 		let selectionSource = externalStorageSource.deeper("selection");
