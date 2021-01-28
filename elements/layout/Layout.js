@@ -54,7 +54,7 @@ export default class Layout extends WprrBaseObject {
 	
 	getSource(aName) {
 		if(!this._sources[aName]) {
-			this._sources[aName] = new Wprr.sourceValue(null);
+			this._sources[aName] = Wprr.sourceValue(null);
 		}
 		
 		return this._sources[aName];
