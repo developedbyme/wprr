@@ -41,15 +41,13 @@ export default class AddDbmType extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return <div>
-			<Wprr.FlexRow>
-				<Wprr.TermSelection value={this._type} taxonomy="dbm_type" />
-				<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._update)}>
-					<div className="standard-button standard-button-padding">
-						{Wprr.translateText("Add terms")}
-					</div>
-				</Wprr.CommandButton>
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.TermSelection, {
+  value: this._type,
+  taxonomy: "dbm_type"
+}), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.callFunction(this, this._update)
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-button standard-button-padding"
+}, Wprr.translateText("Add terms")))));
 	}
 }
