@@ -48,6 +48,9 @@ export default class ModuleCreatorBaseObject {
 		this._siteStorage = new DataStorage();
 		
 		this._project = null;
+		this._siteNavigation = new Wprr.utils.navigation.SiteNavigation();
+		this._siteNavigation.setUrlFromLocation();
+		//this._siteNavigation.start();
 	}
 	
 	setWprrInstance(aWprrInstance) {
@@ -218,11 +221,13 @@ export default class ModuleCreatorBaseObject {
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
 				React.createElement(RefGroup, {"group": "site"},
-					React.createElement(ReferenceInjection, {"injectData": injectData},
-						this._getMainCompnentWithInjections()
+					React.createElement(Wprr.ReferenceInjection, {"injectData": {"wprr/rawUrl": this._siteNavigation.urlSource}}, 
+						React.createElement(ReferenceInjection, {"injectData": injectData},
+							this._getMainCompnentWithInjections()
+						)
 					)
 				)
-			)	
+			)
 		);
 		
 		if(this._strictMode) {
