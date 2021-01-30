@@ -16,4 +16,15 @@ export default class MultiTypeItemConnection {
 		
 		return this;
 	}
+	
+	createItemGroup(aTypeName = "main", aItemName = "mainItem") {
+		if(this._item) {
+			console.warn("Item is already set for " + this + ". Overwriting.", this);
+		}
+		
+		let newGroup = new Wprr.utils.data.MultiTypeItemsGroup();
+		newGroup.getItem(aItemName).addType(aTypeName, this);
+		
+		return this;
+	}
 }

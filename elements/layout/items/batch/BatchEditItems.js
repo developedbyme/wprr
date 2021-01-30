@@ -21,6 +21,8 @@ export default class BatchEditItems extends Layout {
 		this._layoutName = "batchEditItems";
 		
 		this._itemsEditor = new Wprr.wp.admin.ItemsEditor();
+		this._itemsTable = new Wprr.utils.data.multitypeitems.itemstable.ItemsTable();
+		this._itemsEditor.items.getItem("table").addType("table", this._itemsTable);
 		
 		this._loadData = {};
 	}
@@ -31,6 +33,9 @@ export default class BatchEditItems extends Layout {
 	
 	_prepareInitialRender() {
 		console.log("BatchEditItems::_prepareInitialRender");
+		
+		this._itemsTable.createRowElement();
+		console.log(">", this._itemsTable.item.getType("rowElement"));
 		
 		super._prepareInitialRender();
 		
@@ -62,6 +67,18 @@ export default class BatchEditItems extends Layout {
 		this._itemsEditor.editStorage.updateValue("activeFields", fieldIds);
 		
 		let itemData = this.getFirstInputWithDefault("items", Wprr.sourceReference("items"), []);
+		
+		let cellTypes = this.getSource("cellTypes").value;
+		
+		if(normalizedFields) {
+			let currentArray = normalizedFields;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentData = currentArray[i];
+				let column = this._itemsTable.createColumn(currentData["key"], currentData["value"]["type"], currentData["value"]);
+				column.createElement(cellTypes);
+			}
+		}
 		
 		this._itemsEditor.setupFromData(itemData);
 		this._itemsEditor.start();
@@ -97,6 +114,7 @@ export default class BatchEditItems extends Layout {
 	_getLayout(aSlots) {
 		
 		let fields = this.getFirstInput("fields");
+		aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)
 		
 		let namesToLoad = this.getFirstInput("namesToLoad");
 		if(namesToLoad) {
@@ -121,9 +139,11 @@ export default class BatchEditItems extends Layout {
 		let operationSection = aSlots.prop("operationSections", null);
 		let operationOptions = aSlots.prop("operationOptions", null);
 		
+		let rowElement = this._itemsTable.item.getType("rowElement");
+		
 		return React.createElement("div", {className: "centered-block-for-overflow"},
 			React.createElement(Wprr.FlexRow, null,
-				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields}},
+				React.createElement(Wprr.ReferenceInjection, {injectData: {"items": this._itemsEditor.items, "itemsEditor": this._itemsEditor, "fields": fields, "table": this._itemsTable}},
 					React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._itemsEditor.editStorage},
 						React.createElement(Wprr.layout.items.batch.BatchEditHeader, {title: aSlots.prop("title", Wprr.sourceTranslation("Edit items", "site.admin.editItems"))},
 							React.createElement(Wprr.HasData, {"data-slot": "operations", "check": operationSection},
@@ -137,8 +157,9 @@ export default class BatchEditItems extends Layout {
 							Wprr.commands.callFunction(this, this._addTerms, [Wprr.source("event", "raw")])
 						]},
 							React.createElement(Wprr.layout.ItemList, {ids: Wprr.sourceReference("externalStorage", "filteredIds"), className: "item-list"},
-								React.createElement(Wprr.layout.items.batch.FieldsListItem, {cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)})
-							)
+								/*React.createElement(Wprr.layout.items.batch.FieldsListItem, {cellTypes: aSlots.prop("cellTypes", Wprr.layout.list.cells.areas)}),*/
+								rowElement
+							),
 						),
 						React.createElement("div", {className: "spacing standard"}),
 						React.createElement(Wprr.layout.items.batch.BatchEditFooter, null)

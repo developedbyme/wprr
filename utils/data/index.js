@@ -7,3 +7,6 @@ export {default as TableData} from "./TableData";
 export {default as XlsxImporter} from "./XlsxImporter";
 export {default as XlsxExporter} from "./XlsxExporter";
 export {default as ItemsLoader} from "./ItemsLoader";
+
+import * as multitypeitems from "./multitypeitems";
+export {multitypeitems as multitypeitems};

@@ -125,6 +125,8 @@ export default class Layout extends WprrBaseObject {
 		
 		let defaults = this._getDefaults();
 		this._externalStorage.updateValue("defaults", defaults);
+		
+		this._updateSlots();
 	}
 	
 	_getAdditionalSourcesToRegister() {
@@ -139,8 +141,7 @@ export default class Layout extends WprrBaseObject {
 		return returnObject;
 	}
 	
-	_prepareRender() {
-		
+	_updateSlots() {
 		let slots = new Object();
 		
 		{
@@ -204,6 +205,11 @@ export default class Layout extends WprrBaseObject {
 			let currrentSource = this.getSource(objectName);
 			currrentSource.value = slots[objectName];
 		}
+	}
+	
+	_prepareRender() {
+		
+		this._updateSlots();
 		
 		super._prepareRender();
 	}

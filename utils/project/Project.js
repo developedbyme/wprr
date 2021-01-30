@@ -29,6 +29,10 @@ export default class Project {
 		return this;
 	}
 	
+	getTextManager() {
+		return this._mainReferences.getObject("wprr/textManager");
+	}
+	
 	getWprrUrl(aUrl, aLocation = "rest") {
 		let urlResolver = this._mainReferences.getObject("urlResolver/" + aLocation);
 		

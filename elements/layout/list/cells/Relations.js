@@ -13,6 +13,7 @@ export default class Relations extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		let dataType = this.getFirstInputWithDefault("dataType", Wprr.sourceReference("cellSettings", "dataType"), "dbm_data");
 		
@@ -25,7 +26,7 @@ export default class Relations extends WprrBaseObject {
 		return React.createElement("div", null,
 			React.createElement(Wprr.AddReference, {"data": dataType, "as": "addRelation/slots/dataType"}, 
 				React.createElement("div", {className: "label-text-small"},
-					React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
+					React.createElement(Wprr.TranslationOrId, {id: fieldId, prefix: "site.messageGroupFields"})
 				),
 				React.createElement("div", {className: "spacing micro"}),
 				React.createElement(Wprr.ScrollActivatedItem, {},
