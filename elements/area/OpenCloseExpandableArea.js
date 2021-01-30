@@ -49,9 +49,12 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	
 	_prepareInitialRender() {
 		super._prepareInitialRender();
+		
+		/*
 		if(this.getSourcedProp("open")) {
 			this.setState({"open": true, "envelope": 1});
 		}
+		*/
 	}
 	
 	componentDidMount() {
@@ -61,16 +64,12 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 		
 		this._updateHeight();
 		
+		this._updateState();
+		
 		window.addEventListener("resize", this._callback_sizeChangedBound, false);
 	}
 	
-	componentDidUpdate() {
-		//console.log("wprr/interaction/OpenCloseExpandableArea::componentDidUpdate");
-		
-		super.componentDidUpdate();
-		
-		this._updateHeight();
-		
+	_updateState() {
 		let open = this.getSourcedProp("open");
 		
 		if(open !== this.state["open"]) {
@@ -84,6 +83,16 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 			this.setState({"open": open});
 			this._tween = new TWEEN.Tween(tweenParameters).to({"envelope": newEnvelope}, 1000*0.4).easing(TWEEN.Easing.Quadratic.Out).onUpdate(updateFunction).start();
 		}
+	}
+	
+	componentDidUpdate() {
+		//console.log("wprr/interaction/OpenCloseExpandableArea::componentDidUpdate");
+		
+		super.componentDidUpdate();
+		
+		this._updateHeight();
+		
+		this._updateState();
 	}
 	
 	componentWillUnmount() {
