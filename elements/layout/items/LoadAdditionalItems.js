@@ -18,8 +18,7 @@ export default class LoadAdditionalItems extends Layout {
 		
 		this._layoutName = "loadAdditionalItems";
 		
-		this._externalStorage = new Wprr.utils.DataStorage();
-		this._externalStorage.updateValue("loaded", 0);
+		this._loaded = Wprr.sourceValue(0);
 		
 		this._updateCommand = Wprr.commands.callFunction(this, this._updateLoadStatus);
 	}
@@ -27,20 +26,32 @@ export default class LoadAdditionalItems extends Layout {
 	_updateLoadStatus() {
 		//console.log("LoadAdditionalItems::_updateLoadStatus");
 		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
-		let items = this.getReference("items");
+		let items = this.getAdditionalLoader().items;
 		
 		let isLoaded = items.hasItemsWithType(ids, "data");
 		
-		this._externalStorage.updateValue("loaded", isLoaded ? 1 : 0);
+		this._loaded.value = isLoaded ? 1 : 0;
+	}
+	
+	getAdditionalLoader() {
+		console.log("getAdditionalLoader");
+		
+		let additionalLoader = this.getFirstInput(
+			"loader",
+			Wprr.sourceReference("loadAdditionalItems/slots/loader"),
+			Wprr.sourceReference("items", "additionalLoader")
+		);
+		
+		console.log(additionalLoader, this.getFirstInput(Wprr.sourceReference("items", "additionalLoader")), this.getFirstInput(Wprr.sourceReference("items")));
+		
+		return additionalLoader;
 	}
 	
 	_prepareInitialRender() {
 		//console.log("LoadAdditionalItems::_prepareInitialRender");
 		super._prepareInitialRender();
 		
-		let items = this.getReference("items");
-		
-		items.additionalLoader.addCommand(this._updateCommand, "loaded");
+		this.getAdditionalLoader().addCommand(this._updateCommand, "loaded");
 		//METODO
 	}
 	
@@ -50,10 +61,8 @@ export default class LoadAdditionalItems extends Layout {
 		
 		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
 		
-		let items = this.getReference("items");
-		
 		if(ids) {
-			items.additionalLoader.loadItems(ids);
+			this.getAdditionalLoader().loadItems(ids);
 			this._updateLoadStatus();
 		}
 		else {
@@ -66,11 +75,11 @@ export default class LoadAdditionalItems extends Layout {
 		let isDoneSource = Wprr.sourceStatic(this._externalStorage, "loaded");
 		
 		return React.createElement(React.Fragment, {},
-			React.createElement(Wprr.HasData, {check: isDoneSource},
+			React.createElement(Wprr.HasData, {"check": this._loaded},
 				aSlots.default(React.createElement("div", {}, "No element set"))
 			),
-			React.createElement(Wprr.HasData, {check: isDoneSource, checkType: "invert/default"},
-				aSlots.slot("loader", React.createElement("div", {}, Wprr.translateText("Loading...")))
+			React.createElement(Wprr.HasData, {"check": this._loaded, checkType: "invert/default"},
+				aSlots.slot("loaderDisplay", React.createElement("div", {}, Wprr.translateText("Loading...")))
 			),
 		);
 	}

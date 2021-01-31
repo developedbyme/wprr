@@ -23,7 +23,6 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		this._startQueueBound = this._startQueue.bind(this);
 	}
 	
-	
 	get items() {
 		return this._items;
 	}
@@ -56,6 +55,12 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 				}
 			}
 		}
+		
+		return this;
+	}
+	
+	setUrl(aUrl) {
+		this._url = aUrl;
 		
 		return this;
 	}

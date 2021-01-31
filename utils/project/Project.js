@@ -7,6 +7,8 @@ export default class Project {
 	constructor() {
 		this._name = null;
 		this._mainReferences = null;
+		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
+		this._items.setProject(this);
 	}
 	
 	get name() {
@@ -15,6 +17,10 @@ export default class Project {
 	
 	get mainReferences() {
 		return this._mainReferences;
+	}
+	
+	get items() {
+		return this._items;
 	}
 	
 	setName(aName) {

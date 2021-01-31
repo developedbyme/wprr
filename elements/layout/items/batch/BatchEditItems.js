@@ -32,10 +32,9 @@ export default class BatchEditItems extends Layout {
 	}
 	
 	_prepareInitialRender() {
-		console.log("BatchEditItems::_prepareInitialRender");
+		//console.log("BatchEditItems::_prepareInitialRender");
 		
 		this._itemsTable.createRowElement();
-		console.log(">", this._itemsTable.item.getType("rowElement"));
 		
 		super._prepareInitialRender();
 		

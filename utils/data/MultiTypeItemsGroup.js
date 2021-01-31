@@ -185,6 +185,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		
 		switch(firstPart) {
 			case "prefix":
+			case "additionalLoader":
+			case "commands":
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		

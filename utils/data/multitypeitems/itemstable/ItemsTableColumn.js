@@ -66,8 +66,6 @@ export default class ItemsTableColumn extends MultiTypeItemConnection {
 		);
 		
 		this.item.addType("element", element);
-		
-		console.log(element);
 	}
 	
 	toJSON() {

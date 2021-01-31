@@ -26,6 +26,14 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addUniqueItem(aId) {
+		if(this._idsSource.value.indexOf(aId) === -1) {
+			this.addItem(aId);
+		}
+		
+		return this;
+	}
+	
 	removeItem(aId) {
 		let index = this._idsSource.value.indexOf(aId);
 		if(index > -1) {
