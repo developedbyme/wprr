@@ -26,7 +26,10 @@ export default class SelectSingleRelation extends Layout {
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		let activeIds = externalStorageSource.deeper(activatePathSource);
 		let activeId = activeIds.deeper("0");
-		let toIdSource = editorSource.deeper("item.group").deeper(activeId).deeper(aSlots.prop("direction", "to")).deeper("id");
+		
+		let directionNameSource = Wprr.sourceFirst(aSlots.prop("direction", null), editorSource.deeper("directionIdName"), Wprr.sourceStatic("to"));
+		
+		let toIdSource = editorSource.deeper("item.group").deeper(activeId).deeper(directionNameSource).deeper("id");
 		
 		let dataType = aSlots.prop("dataType", "dbm_data");
 		let includedStatuses = aSlots.prop("includedStatuses", "draftsIfAllowed,privates");
