@@ -28,7 +28,7 @@ export default class LoadAdditionalItems extends Layout {
 		let ids = Wprr.utils.array.removeValues(Wprr.utils.array.singleOrArray(this.getFirstInput("ids")), [null, undefined, 0]);
 		let items = this.getAdditionalLoader().items;
 		
-		let isLoaded = items.hasItemsWithType(ids, "data");
+		let isLoaded = items.hasItemsWithType(ids, this.getAdditionalLoader()._fieldToCheckFor);
 		
 		this._loaded.value = isLoaded ? 1 : 0;
 	}
