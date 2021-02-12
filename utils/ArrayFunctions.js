@@ -277,6 +277,23 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static removeDuplicatesBy(aArray, aField) {
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentValue = currentArray[i];
+			let matchValue = Wprr.objectPath(currentValue, aField);
+			
+			if(ArrayFunctions.getItemIndexBy(aField, matchValue, currentArray) === i) {
+				returnArray.push(currentValue);
+			}
+		}
+		
+		return returnArray;
+	}
+	
 	static removeValues(aArray, aRemoveValues) {
 		let returnArray = new Array();
 		
@@ -411,6 +428,11 @@ export default class ArrayFunctions {
 	}
 	
 	static filterOnField(aArray, aField, aCompareValue, aCompareType = "==", aValueFormat = "string") {
+		
+		if(!aArray) {
+			return [];
+		}
+		
 		let fieldFilter = Wprr.utils.FilterChain.create([
 			Wprr.utils.filterPartFunctions.createCompareField(aField, aCompareValue, aCompareType, aValueFormat)
 		]);
@@ -553,7 +575,7 @@ export default class ArrayFunctions {
 		if(aPathArray.length > 0 && aObject !== null && aObject !== undefined) {
 			let newPaths = [].concat(aPathArray);
 			let nextStep = newPaths.shift();
-			let nextObject = objectPath.get(aObject, nextStep);
+			let nextObject = Wprr.objectPath(aObject, nextStep);
 			
 			if(Array.isArray(nextObject)) {
 				let currentArray = nextObject;
@@ -720,5 +742,19 @@ export default class ArrayFunctions {
 		}
 		
 		return returnArray;
+	}
+	
+	static containsAll(aArray, aItemsThatNeedToBeIncluded) {
+		
+		let currentArray = aItemsThatNeedToBeIncluded;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let selectedItem = currentArray[i];
+			if(aArray.indexOf(selectedItem) === -1) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }

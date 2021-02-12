@@ -49,8 +49,11 @@ export default class ModuleCreatorBaseObject {
 		
 		this._project = null;
 		this._siteNavigation = new Wprr.utils.navigation.SiteNavigation();
-		this._siteNavigation.setUrlFromLocation();
-		//this._siteNavigation.start();
+		
+		
+		this._siteDataLoader = new Wprr.utils.navigation.SiteDataLoader();
+		this._siteNavigation.urlSource.addChangeCommand(Wprr.commands.setProperty(this._siteDataLoader.urlSource.reSource(), "value", this._siteNavigation.urlSource))
+		
 	}
 	
 	setWprrInstance(aWprrInstance) {
@@ -62,6 +65,8 @@ export default class ModuleCreatorBaseObject {
 	setProject(aProject) {
 		
 		this._project = aProject;
+		
+		this._siteDataLoader.setItems(this._project.items);
 		
 		return this;
 	}
@@ -114,10 +119,14 @@ export default class ModuleCreatorBaseObject {
 		}
 		else {
 			//METODO: clean this up
+			
+			let currentUrl = objectPath.get(aConfigurationData, "paths.current");
+			let pageData = objectPath.get(aConfigurationData, "initialMRouterData.data");
+			
 			initialState = {
 				"mRouter": {
-					"currentPage": objectPath.get(aConfigurationData, "paths.current"),
-					"data": objectPath.get(aConfigurationData, "initialMRouterData.data"),
+					"currentPage": currentUrl,
+					"data": pageData,
 					"apiData": objectPath.get(aConfigurationData, "initialMRouterData.apiData")
 				},
 				"settings": {
@@ -127,6 +136,8 @@ export default class ModuleCreatorBaseObject {
 					"wpApiUrlBase": objectPath.get(aConfigurationData, "paths.rest")
 				}
 			};
+			
+			this._siteDataLoader.setupDataForUrl(document.location.href, pageData[currentUrl]["data"]);
 		}
 		
 		let defaultPath = objectPath.get(initialState, "settings.wpApiUrlBase");
@@ -221,7 +232,7 @@ export default class ModuleCreatorBaseObject {
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
 				React.createElement(RefGroup, {"group": "site"},
-					React.createElement(Wprr.ReferenceInjection, {"injectData": {"wprr/rawUrl": this._siteNavigation.urlSource}}, 
+					React.createElement(Wprr.ReferenceInjection, {"injectData": {"wprr/rawUrl": this._siteNavigation.urlSource, "wprr/pageItem": this._siteDataLoader.itemSource}}, 
 						React.createElement(ReferenceInjection, {"injectData": injectData},
 							this._getMainCompnentWithInjections()
 						)
@@ -287,6 +298,9 @@ export default class ModuleCreatorBaseObject {
 		if(this.parseInitialContent && !Wprr.objectPath(aModuleData, "componentData.parsedContent")) {
 			this._createDomForContent(Wprr.objectPath(aData, "initialMRouterData.data"), this._referenceHolder);
 		}
+		
+		this._siteNavigation.setUrlFromLocation();
+		//this._siteNavigation.start();
 		
 		let rootObject = this._getRootObject(aData);
 		

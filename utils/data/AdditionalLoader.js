@@ -12,6 +12,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		
 		this._items = null;
 		this._queuedItems = new Array();
+		this._maxNumberOfItems = 50;
 		
 		this._commandGroups = new Object();
 		
@@ -19,12 +20,20 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		this._fieldToCheckFor = "data";
 		this._url = "wprr/v1/range/any/privates,draftsIfAllowed,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={ids}";
 		
-		this._isLoading = false;
+		this._isLoading = Wprr.sourceValue(false);
 		this._startQueueBound = this._startQueue.bind(this);
 	}
 	
 	get items() {
 		return this._items;
+	}
+	
+	get isLoading() {
+		return this._isLoading.value;
+	}
+	
+	get isLoadingSource() {
+		return this._isLoading;
 	}
 	
 	setItems(aItems) {
@@ -88,14 +97,15 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		}
 		
 		this._queuedItems = this._queuedItems.concat(aIds);
+		
 		this._queueNextLoad();
 	}
 	
 	_queueNextLoad() {
 		//console.log("AdditionalLoader::_queueNextLoad");
 		
-		if(!this._isLoading && this._queuedItems.length > 0) {
-			this._isLoading = true;
+		if(!this._isLoading.value && this._queuedItems.length > 0) {
+			this._isLoading.value = true;
 			window.requestAnimationFrame(this._startQueueBound);
 		}
 	}
@@ -107,10 +117,16 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		this._queuedItems = new Array();
 		
 		ids = this._items.getIdsWithMissingType(ids, this._fieldToCheckFor);
+		let numberOfIds = ids.length;
 		
-		if(ids.length === 0) {
-			this._isLoading = false;
+		if(numberOfIds === 0) {
+			this._isLoading.value = false;
 			return;
+		}
+		
+		if(numberOfIds > this._maxNumberOfItems && this._maxNumberOfItems > 0) {
+			this._queuedItems = ids.splice(this._maxNumberOfItems, numberOfIds-this._maxNumberOfItems);
+			console.log(ids.length, this._queuedItems.join(","));
 		}
 		
 		let url = this._url.split("{ids}").join(ids.join(","));
@@ -166,7 +182,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		//console.log("AdditionalLoader::_updateData");
 		this._setupItems(aData);
 		
-		this._isLoading = false;
+		this._isLoading.value = false;
 		
 		this.runCommandGroup("loaded", null);
 		this._queueNextLoad();

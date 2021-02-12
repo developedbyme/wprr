@@ -68,9 +68,8 @@ export default class SiteNavigation {
 		
 		aEvent.preventDefault();
 		
+		history.pushState({}, "Page", finalUrl.href);
 		this._url.value = finalUrl.href;
-		
-		history.pushState({}, "Page", this._url.value);
 		
 		//METODO: trigger analytics
 		

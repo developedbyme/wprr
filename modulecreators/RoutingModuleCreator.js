@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 
@@ -35,6 +36,10 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		
 		this._routeCreator = RouteCreator.create();
 		
+		this._router = new Wprr.utils.navigation.PageDataRouter();
+		this._router.itemSource.value = null;
+		this._siteDataLoader.itemSource.addChangeCommand(Wprr.commands.setProperty(this._router.itemSource.reSource(), "value", this._siteDataLoader.itemSource))
+		
 		this._header = null;
 		this._footer = null;
 		
@@ -64,17 +69,24 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	createRoute(aQualifier, aReactComponent) {
 		this._routeCreator.createRoute(aQualifier, aReactComponent);
 		
+		this._router.createRoute(aQualifier, aReactComponent);
+		
 		return this;
 	}
 	
 	createPageTemplateRoute(aPageTemplatePath, aReactComponent) {
 		this._routeCreator.createPageTemplateRoute(aPageTemplatePath, aReactComponent);
 		
+		this._router.createPageTemplateRoute(aPageTemplatePath, aReactComponent);
+		
 		return this;
 	}
 	
 	createSingularRouteWithQualifier(aQualifier, aReactComponent) {
+		console.log("createSingularRouteWithQualifier");
 		this._routeCreator.createSingularRouteWithQualifier(aQualifier, aReactComponent);
+		
+		this._router.createSingularRouteWithQualifier(aQualifier, aReactComponent);
 		
 		return this;
 	}
@@ -82,11 +94,15 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	createSingularRoute(aReactComponent) {
 		this._routeCreator.createSingularRoute(aReactComponent);
 		
+		this._router.createSingularRoute(aReactComponent);
+		
 		return this;
 	}
 	
 	createSingularPostTypeRoute(aPostType, aReactComponent) {
 		this._routeCreator.createSingularPostTypeRoute(aPostType, aReactComponent);
+		
+		this._router.createSingularPostTypeRoute(aPostType, aReactComponent);
 		
 		return this;
 	}
@@ -94,11 +110,17 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent) {
 		this._routeCreator.createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent);
 		
+		//METODO
+		console.warn("createSingularHasTaxonomyTermRoute is not supported in new router", aTaxonomy, aTermSlug, aReactComponent);
+		
 		return this;
 	}
 	
 	createArchiveRoute(aReactComponent) {
 		this._routeCreator.createArchiveRoute(aReactComponent);
+		
+		//METODO
+		console.warn("createArchiveRoute is not supported in new router", aReactComponent);
 	}
 	
 	_getMainCompnentWithInjections() {
@@ -107,7 +129,16 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		if(this._header) {
 			childrensArray.push(React.createElement(MarkupPlacement, {"placement": "header"}, this._header));
 		}
+		
 		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, this._routeCreator.getReactElements()));
+		
+		/*
+		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, React.createElement(Wprr.OpenCloseExpandableArea, {"open": Wprr.sourceFunction(this, function(aValue) {return !aValue}, [this._siteDataLoader.loadedSource]), "sourceUpdates": this._siteDataLoader.loadedSource},
+			<div>Loading...</div>
+		)));
+		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, this._router.getReactElement()));
+		*/
+		
 		if(this._footer) {
 			childrensArray.push(React.createElement(MarkupPlacement, {"placement": "footer"}, this._footer));
 		}

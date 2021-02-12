@@ -10,6 +10,8 @@ export default class SlotCreator {
 		
 		this.owner = null;
 		this._defaults = new Object();
+		
+		this._currentGroup = null;
 	}
 	
 	setOwner(aOwner) {
@@ -44,7 +46,7 @@ export default class SlotCreator {
 	}
 	
 	useSource(aName) {
-		return this.owner.getSourceChain(aName);
+		return this.owner.getSource(aName);
 	}
 	
 	useProp(aName) {
@@ -60,6 +62,17 @@ export default class SlotCreator {
 	
 	useSlot(aName) {
 		return this.owner.getSlot(aName);
+	}
+	
+	groupSlot(aPath, aDefaultElement) {
+		
+		this._defaults[aPath] = aDefaultElement;
+		
+		return this.useGroupSlot(aPath);
+	}
+	
+	useGroupSlot(aPath) {
+		return this.owner.getGroupSlot(aPath);
 	}
 	
 	default(aDefaultElement) {

@@ -1,9 +1,6 @@
 import React from "react";
-
+import Wprr from "wprr/Wprr";
 import WprrBaseObject from "wprr/WprrBaseObject";
-
-import ResponsiveProps from "wprr/manipulation/measure/ResponsiveProps";
-import UseMarkup from "wprr/markup/UseMarkup";
 
 //import ResponsiveTemplateFactory from "wprr/elements/layout/ResponsiveTemplateFactory";
 export default class ResponsiveTemplateFactory  {
@@ -24,7 +21,7 @@ export default class ResponsiveTemplateFactory  {
 	addResponsiveTemplate(aTemplate, aMinWidth = null, aMaxWidth = null) {
 		
 		let newResponsiveProp = new Object();
-		newResponsiveProp["props"] = {"markup": aTemplate};
+		newResponsiveProp["props"] = {"element": aTemplate};
 		if(aMinWidth !== null) {
 			newResponsiveProp["minWidth"] = aMinWidth;
 		}
@@ -38,7 +35,7 @@ export default class ResponsiveTemplateFactory  {
 	}
 	
 	getReactElements() {
-		return React.createElement(ResponsiveProps, {"markup": this._defaultTemplate, "mediaQueries": this._responsiveTemplates}, React.createElement(UseMarkup));
+		return React.createElement(Wprr.ResponsiveProps, {"element": this._defaultTemplate, "mediaQueries": this._responsiveTemplates}, React.createElement(Wprr.InsertElement));
 	}
 	
 	static create(aDefaultTemplate = null) {

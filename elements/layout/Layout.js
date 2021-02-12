@@ -61,7 +61,7 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	getSourceChain(aType) {
-		
+		console.warn("Use getSource instead of getSourceChain", this);
 		return this.getSource(aType);
 		
 		/*
@@ -76,7 +76,23 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	getSlot(aType) {
-		return React.createElement(Wprr.InsertElement, {"element": this.getSourceChain(aType)})
+		return React.createElement(Wprr.InsertElement, {"element": this.getSource(aType)})
+	}
+	
+	getGroupSlot(aPath) {
+		
+		let sources = new Array();
+		
+		let currentArray = aPath.split("/");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentPath = currentArray.join("/");
+			
+			sources.push(this.getSource(currentPath));
+			currentArray.shift();
+		}
+		
+		return React.createElement(Wprr.InsertElement, {"element": Wprr.sourceFirst(...sources), "sourceUpdates": sources});
 	}
 	
 	_getLayout(aSlotCreator) {

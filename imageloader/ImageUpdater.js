@@ -49,9 +49,13 @@ export default class ImageUpdater {
 			var currentCrop = currentData["crop"];
 			if(currentCrop === undefined || currentCrop === null) {
 				currentCrop = this._owner.getCropForNamedSize(objectName);
+				if(currentCrop === null) {
+					console.warn("Unknown crop size " + objectName);
+					continue;
+				}
 			}
 			
-			if(currentCrop === undefined ||currentCrop === null || currentCrop === aCrop) {
+			if(currentCrop === undefined || currentCrop === null || currentCrop === aCrop) {
 				var currentWidth = currentData["width"];
 				if(currentWidth >= width && currentWidth < bestWidth) {
 					bestObject = currentData;

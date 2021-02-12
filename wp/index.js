@@ -6,3 +6,6 @@ export {admin as admin};
 
 import * as dbmcontent from "./dbmcontent";
 export {dbmcontent as dbmcontent};
+
+import * as postdata from "./postdata";
+export {postdata as postdata};

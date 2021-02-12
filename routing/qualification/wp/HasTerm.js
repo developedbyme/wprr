@@ -1,4 +1,4 @@
-import objectPath from "object-path";
+import Wprr from "wprr/Wprr";
 
 import Qualification from "wprr/routing/qualification/Qualification";
 
@@ -35,7 +35,11 @@ export default class HasTerm extends Qualification {
 		let matchTerm = this.getInput("matchTerm");
 		let field = this.getInput("field");
 		
-		let terms = objectPath.get(aData, "queriedData.terms." + taxonomy);
+		let terms = Wprr.objectPath(aData, "post.linkedItem.postData.terms." + taxonomy);
+		console.log(">>>>>", terms);
+		if(!terms) {
+			terms = Wprr.objectPath(aData, "queriedData.terms." + taxonomy);
+		}
 		if(terms) {
 			let currentArray = terms;
 			let currentArrayLength = currentArray.length;

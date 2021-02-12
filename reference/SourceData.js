@@ -275,6 +275,10 @@ export default class SourceData {
 			case "postData":
 				{
 					let dataObject = references.getObject("wprr/postData");
+					if(dataObject instanceof SourceData) {
+						dataObject = dataObject.getSourceInStateChange(aFromObject, aPropsAndState);
+					}
+					
 					switch(aPath) {
 						case "id":
 							return dataObject.getId();
