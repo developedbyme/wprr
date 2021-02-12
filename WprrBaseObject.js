@@ -119,7 +119,12 @@ export default class WprrBaseObject extends React.Component {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentSource = currentArray[i];
-			currentSource.addOwner(this);
+			try {
+				currentSource.addOwner(this);
+			}
+			catch(theError) {
+				console.error("Couldn't add source", currentSource, theError);
+			}
 		}
 		
 		return this;
