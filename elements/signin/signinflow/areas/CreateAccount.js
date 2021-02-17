@@ -5,7 +5,7 @@ import Layout from "wprr/elements/layout/Layout";
 
 import LockedField from "../LockedField";
 
-export default class ConfirmEmail extends Layout {
+export default class CreateAccount extends Layout {
 	
 	constructor(aProps) {
 		super(aProps);

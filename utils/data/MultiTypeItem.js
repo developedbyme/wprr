@@ -84,6 +84,27 @@ export default class MultiTypeItem {
 		return this;
 	}
 	
+	setValue(aType, aData) {
+		if(!this.hasType(aType)) {
+			let theSource = Wprr.sourceValue(aData);
+			this.addType(aType, theSource);
+		}
+		
+		this.getType(aType).value = aData;
+		
+		return this;
+	}
+	
+	getValue(aType) {
+		
+		if(!this.hasType(aType)) {
+			let theSource = Wprr.sourceValue(null);
+			this.addType(aType, theSource);
+		}
+		
+		return this.getType(aType).value;
+	}
+	
 	getLinks(aType) {
 		if(!this._types[aType]) {
 			let newLinks = new MultiTypeItemLinks();

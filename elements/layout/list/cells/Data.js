@@ -13,17 +13,18 @@ export default class Data extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
 		return React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
   className: "label-text-small"
 }, /*#__PURE__*/React.createElement(Wprr.TranslationOrId, {
-  id: type,
+  id: fieldId,
   prefix: "site.messageGroupFields"
 })), /*#__PURE__*/React.createElement("div", {
   className: "spacing micro"
 }), /*#__PURE__*/React.createElement("div", {
   className: "content-text-small"
-}, Wprr.text(Wprr.sourceReference("item", "data." + type))));
+}, Wprr.text(Wprr.sourceReference("item", "data." + fieldId))));
 	}
 }

@@ -13,11 +13,12 @@ export default class Element extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"},
-				React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
+				React.createElement(Wprr.TranslationOrId, {id: fieldId, prefix: "site.messageGroupFields"})
 			),
 			React.createElement("div", {className: "spacing micro"}),
 			React.createElement(Wprr.ScrollActivatedItem, {},

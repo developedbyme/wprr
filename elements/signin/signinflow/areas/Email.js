@@ -75,20 +75,21 @@ export default class Email extends Layout {
 		
 		//METODO: block submit with enter if not valid
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ValidatingForm, {
-  submitCommands: nextCommands
-}, /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
-  label: Wprr.sourceTranslation("Email", "site.email"),
-  valueName: "email"
-}), /*#__PURE__*/React.createElement("div", {
-  className: "spacing standard"
-}), /*#__PURE__*/React.createElement(Wprr.SteppedNavigation, {
-  currentStep: currentStep,
-  numberOfSteps: numberOfSteps,
-  previousState: "inactive",
-  nextState: this._nextState,
-  previousCommands: previousCommands,
-  nextCommands: Wprr.commands.submitForm()
-})));
+		return React.createElement("div", null,
+			React.createElement(Wprr.ValidatingForm, {submitCommands: nextCommands},
+				React.createElement(Wprr.layout.form.FieldWithLabel, {label: Wprr.sourceTranslation("Email", "site.email"), valueName: "email"}),
+				React.createElement("div", {className: "spacing standard"}),
+				React.createElement(Wprr.SteppedNavigation,
+					{
+						currentStep: currentStep,
+						numberOfSteps: numberOfSteps,
+						previousState: "inactive",
+						nextState: this._nextState,
+						previousCommands: previousCommands,
+						nextCommands: Wprr.commands.submitForm()
+					}
+				)
+			)
+		);
 	}
 }

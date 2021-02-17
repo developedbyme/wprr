@@ -14,6 +14,7 @@ export default class SingleUserRelation extends WprrBaseObject {
 	_renderMainElement() {
 		console.log("SingleUserRelation::_renderMainElement");
 		
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
 		let editorSource = Wprr.sourceReference("editor");
@@ -24,7 +25,7 @@ export default class SingleUserRelation extends WprrBaseObject {
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"},
-				React.createElement(Wprr.TranslationOrId, {id: type, prefix: "site.messageGroupFields"})
+				React.createElement(Wprr.TranslationOrId, {id: fieldId, prefix: "site.messageGroupFields"})
 			),
 			React.createElement("div", {className: "spacing micro"}),
 			React.createElement(Wprr.ScrollActivatedItem, {},
