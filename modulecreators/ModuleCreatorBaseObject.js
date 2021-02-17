@@ -71,6 +71,14 @@ export default class ModuleCreatorBaseObject {
 		return this;
 	}
 	
+	get siteNavigation() {
+		return this._siteNavigation;
+	}
+	
+	get siteDataLoader() {
+		return this._siteDataLoader;
+	}
+	
 	/**
 	 * Sets the class to use for creating classes
 	 *

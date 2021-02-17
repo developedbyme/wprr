@@ -9,6 +9,10 @@ export default class SiteNavigation {
 		
 		this._handleLinkBound = this._handleLink.bind(this);
 		this._handleNavigationChangeBound = this._handleNavigationChange.bind(this);
+		
+		this._ignoredPaths = new Array();
+		
+		this._ignoredPaths.push(new RegExp("/wp-admin/.*$"));
 	}
 	
 	get url() {
@@ -21,6 +25,19 @@ export default class SiteNavigation {
 	
 	_hasSpecialKey(aEvent) {
 		return aEvent.altKey || aEvent.ctrlKey || aEvent.metaKey || aEvent.shiftKey;
+	}
+	
+	_shouldHandle(aLink) {
+		let currentArray = this._ignoredPaths;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentIgnoredPattern = currentArray[i];
+			if(currentIgnoredPattern.test(aLink)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	_handleLink(aEvent) {
@@ -63,6 +80,9 @@ export default class SiteNavigation {
 		}
 		
 		//METODO: add exclusions
+		if(!this._shouldHandle(finalUrl.href)) {
+			return false;
+		}
 		
 		//console.log(finalUrl);
 		
