@@ -757,4 +757,17 @@ export default class ArrayFunctions {
 		
 		return true;
 	}
+	
+	static makeFlat(aArray) {
+		
+		let  returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			returnArray = returnArray.concat(currentArray[i]);
+		}
+		
+		return returnArray;
+	}
 }

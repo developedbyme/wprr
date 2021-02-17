@@ -124,4 +124,31 @@ export default class ItemsSetup {
 		
 		aItem.addType("title", aData["title"]);
 	}
+	
+	static setupTerms(aItem, aData) {
+		//console.log("setupTerms");
+		//console.log(aItem, aData);
+		
+		let terms = Wprr.objectPath(aData, "terms");
+		for(let taxonomyName in terms) {
+			let currentTerms = terms[taxonomyName];
+			
+			let currentIds = new Array();
+			
+			let currentArray = currentTerms;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTerm = currentArray[i];
+				let currentId = "term" + currentTerm["id"];
+				
+				currentIds.push(currentId);
+				
+				//METODO: set up term if not existing
+			}
+			
+			aItem.getLinks("terms/" + taxonomyName).addItems(currentIds);
+			aItem.addType("activeTerms", new Wprr.utils.data.GetChildTerms());
+		}
+		//aItem.addType("title", aData["title"]);
+	}
 }
