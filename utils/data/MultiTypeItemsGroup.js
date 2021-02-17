@@ -209,7 +209,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 			if(!parent.hasType("slugPath")) {
 				this._setSlugPathForItem(parent);
 			}
-			aItem.addType("slugPath", parent.getType("slug") + "/" + aItem.getType("slug"));
+			aItem.addType("slugPath", parent.getType("slugPath") + "/" + aItem.getType("slug"));
 		}
 		else {
 			aItem.addType("slugPath", aItem.getType("slug"));
