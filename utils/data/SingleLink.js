@@ -8,6 +8,7 @@ export default class SingleLink extends MultiTypeItemConnection {
 	constructor() {
 		super();
 		
+		this._prefix = "group";
 		this._id = null;
 	}
 	
@@ -17,12 +18,24 @@ export default class SingleLink extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	setPrefix(aPrefix) {
+		this._prefix = aPrefix;
+		
+		return this;
+	}
+	
 	get id() {
 		return this._id;
 	}
 	
 	get linkedItem() {
-		return this.item.group.getItem(this._id);
+		
+		let fullPath = this._id;
+		if(this._prefix) {
+			fullPath = this._prefix + "." + this._id;
+		}
+		
+		return Wprr.objectPath(this.item, fullPath);
 	}
 	
 	getAsType(aType) {

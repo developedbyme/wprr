@@ -200,6 +200,11 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this._internalPrefix + nextId;
 	}
 	
+	createInternalItem() {
+		let id = this.generateNextInternalId();
+		return this.getItem(id);
+	}
+	
 	_setSlugPathForItem(aItem) {
 		//console.log("_setSlugPathForItem");
 		//console.log(aItem);
