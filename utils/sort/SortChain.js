@@ -91,6 +91,12 @@ export default class SortChain extends SortPart {
 		return this;
 	}
 	
+	addFieldAccordingToOrderSort(aField, aOrder, aActive = null) {
+		this.addPart(Wprr.utils.FieldSort.createAccordingToOrder(aField, aOrder, aActive));
+		
+		return this;
+	}
+	
 	getApplyAdjustFunction(aInput, aOutputName) {
 		let adjustFunction = Wprr.adjusts.applySortChain(aInput, this, aOutputName);
 		
