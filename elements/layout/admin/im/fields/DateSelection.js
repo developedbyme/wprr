@@ -11,12 +11,8 @@ export default class DateSelection extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return React.createElement(Wprr.EditableProps, {
-  editableProps: "value",
-  externalStorage: Wprr.sourceReference("field/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.layout.form.DateSelection, {
-  valueName: "value",
-  className: "standard-field standard-field-padding full-width"
-}));
+		return React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},
+			React.createElement(Wprr.layout.form.DateSelection, {valueName: "value", className: "standard-field standard-field-padding full-width"})
+		);
 	}
 }

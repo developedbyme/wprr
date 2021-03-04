@@ -27,24 +27,38 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	updateValue(aName, aValue, aAdditionalData) {
+		console.log("updateValue");
+		
 		if(aName === "selection") {
-			this._updateExternalValue(this.getSourcedPropWithDefault("valueName", "value"), aValue);
-			this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+			this.updateValue(aValue);
+			this.close();
 		}
 		else if(aName === "dropdownSelection/open") {
-			this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), aValue);
+			if(aValue) {
+				this.open();
+			}
+			else {
+				this.close();
+			}
 		}
 	}
 	
 	trigger(aName, aValue) {
+		console.log("trigger");
+		
 		if(aName === "setSelection") {
-			this._updateExternalValue(this.getSourcedPropWithDefault("valueName", "value"), aValue);
-			this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+			this.updateValue(aValue);
+			this.close();
 		}
 		if(aName === "close") {
 			console.warn("Call close function directly instead of through trigger");
 			this.close();
 		}
+	}
+	
+	updateValue(aValue) {
+		this.updateProp("value", aValue);
+		this._updateExternalValue(this.getSourcedPropWithDefault("valueName", "value"), aValue);
 	}
 	
 	open() {
@@ -53,8 +67,19 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	close() {
+		console.log("close");
 		this.updateProp("open", false);
 		this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
+	}
+	
+	toggleOpen() {
+		let open = this.getFirstInput("open", Wprr.sourceProp(this.getFirstInput("openValueName")));
+		if(!open) {
+			this.open();
+		}
+		else {
+			this.close();
+		}
 	}
 	
 	_updateExternalValue(aValueName, aValue) {
@@ -71,7 +96,7 @@ export default class DropdownSelection extends WprrBaseObject {
 		
 		super._prepareRender();
 		
-		let open = this.getSourcedPropWithDefault("open", SourceData.create("prop", this.getSourcedProp("openValueName")));
+		let open = this.getFirstInput("open", Wprr.sourceProp(this.getFirstInput("openValueName")));
 		this._externalStorage.updateValue("open", open);
 	}
 
@@ -81,8 +106,8 @@ export default class DropdownSelection extends WprrBaseObject {
 		let markup = this.getFirstInput("markup", Wprr.source("command", Wprr.commands.callFunction(DropdownSelection, DropdownSelection.getDefaultMarkup)));
 		
 		let name = this.getFirstInput("name");
-		let value = this.getFirstInput("value", SourceData.create("prop", this.getSourcedProp("valueName")));
-		let open = this.getFirstInput("open", SourceData.create("prop", this.getSourcedProp("openValueName")));
+		let value = this.getFirstInput("value", Wprr.sourceProp(this.getFirstInput("valueName")));
+		let open = this.getFirstInput("open", Wprr.sourceProp(this.getFirstInput("openValueName")));
 		
 		//METODO: check that button exists
 		
@@ -126,7 +151,7 @@ export default class DropdownSelection extends WprrBaseObject {
 		if(!DropdownSelection.DEFAULT_MARKUP) {
 			DropdownSelection.DEFAULT_MARKUP = React.createElement(Wprr.Markup, {usedPlacements: "button,beforeList,afterList"},
 				React.createElement("div", {className: "absolute-container"},
-					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.toggleValue(Wprr.sourceReference("value/dropdownSelection/open"), "dropdownSelection/open", Wprr.sourceReference("value/dropdownSelection/open", "open"))},
+					React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(Wprr.sourceReference("dropdownSelection"), "toggleOpen")},
 						React.createElement(Wprr.MarkupChildren, {placement: "button"})
 					),
 					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("dropdownSelectionExternalStorage", "open")},

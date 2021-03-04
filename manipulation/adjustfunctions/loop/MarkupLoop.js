@@ -129,7 +129,7 @@ export default class MarkupLoop extends AdjustFunction {
 		let dataArray = this.resolveSource(this.data, aData, aManipulationObject);
 		let outputName = this.outputName;
 		
-		let keyField = this.getInput("keyField");
+		let keyField = this.getInput("keyField", aData, aManipulationObject);
 		
 		
 		

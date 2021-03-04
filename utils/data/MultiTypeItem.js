@@ -3,6 +3,7 @@ import Wprr from "wprr/Wprr";
 import MultiTypeItemLinks from "wprr/utils/data/MultiTypeItemLinks";
 import SelectLink from "wprr/utils/data/SelectLink";
 import SingleLink from "wprr/utils/data/SingleLink";
+import NamedLinks from "wprr/utils/data/NamedLinks";
 
 // import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 export default class MultiTypeItem {
@@ -108,6 +109,15 @@ export default class MultiTypeItem {
 	getLinks(aType) {
 		if(!this._types[aType]) {
 			let newLinks = new MultiTypeItemLinks();
+			this.addType(aType, newLinks);
+		}
+		
+		return this._types[aType];
+	}
+	
+	getNamedLinks(aType) {
+		if(!this._types[aType]) {
+			let newLinks = new NamedLinks();
 			this.addType(aType, newLinks);
 		}
 		

@@ -4,7 +4,7 @@ import React from "react";
 import WprrBaseObject from "wprr/WprrBaseObject";
 import ReactJson from 'react-json-view'
 
-export default class Address extends WprrBaseObject {
+export default class Json extends WprrBaseObject {
 	
 	constructor(aProps) {
 		super(aProps);

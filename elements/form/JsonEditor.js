@@ -19,7 +19,12 @@ export default class JsonEditor extends WprrBaseObject {
 		
 		let valueName = this.getSourcedProp("valueName");
 		
-		this.getReference("value/" + valueName).updateValue(valueName, newValue);
+		this.updateProp("value", newValue);
+		
+		let valueReference = this.getReference("value/" + valueName);
+		if(valueReference) {
+			valueReference.updateValue(valueName, newValue);
+		}
 		
 		let commands = this.getSourcedProp("changeCommands");
 		

@@ -98,7 +98,12 @@ export default class AdjustFunction {
 		
 		if(aData instanceof SourceData) {
 			
-			let changePropsAndStateObject = {"props": aProps, "state": aManipulationObject.state};
+			let currentState = null;
+			if(aManipulationObject) {
+				currentState = aManipulationObject.state;
+			}
+			
+			let changePropsAndStateObject = {"props": aProps, "state": currentState};
 			
 			return aManipulationObject.resolveSourcedDataInStateChange(aData, changePropsAndStateObject);
 		}

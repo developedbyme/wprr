@@ -9,6 +9,39 @@ export default class Configuration extends ProjectRelatedItem {
 		
 		this._prefix = null;
 		this._doneCommands = null;
+		
+		this._navigationItem = null;
+	}
+	
+	setProject(aProject) {
+		super.setProject(aProject);
+		
+		return this;
+	}
+	
+	setup() {
+		
+		if(!this._navigationItem) {
+			this._navigationItem = this.project.items.createInternalItem();
+		}
+		
+		let sectionLinks = this._navigationItem.getNamedLinks("sections");
+		
+		{
+			let currentSectionItem = this.project.items.createInternalItem();
+			sectionLinks.addSingleLink("element", "wprr/signInFlow/alreadySignedIn");
+			sectionLinks.addItem("alreadySignedIn", currentSectionItem);
+			let currentDirections = sectionLinks.getNamedLinks("directions");
+			
+			//METODO
+		}
+		
+		
+		this._navigationItem.addSingleLink("startSection", this._navigationItem.getType("sections").getLinkByName("alreadySignedIn"));
+		
+		//METODO
+		
+		return this;
 	}
 	
 	setPrefix(aPrefix) {

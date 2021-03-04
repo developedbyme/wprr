@@ -19,7 +19,7 @@ export default class BatchEditHeader extends Layout {
 		let externalStorageSource = aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"));
 		
 		return React.createElement("div", null,
-			React.createElement(Wprr.FlexRow, {className: "justify-between"},
+			React.createElement(Wprr.FlexRow, {className: "justify-between", "itemClasses": "flex-resize,flex-no-resize"},
 				aSlots.slot("left",
 					React.createElement("div", null,
 						aSlots.slot("titleElement",

@@ -16,17 +16,20 @@ export default class List extends Layout {
 
 		super();
 		
-		this._layoutName = "itemList";
+		this._layoutName = "list";
 	}
 	
 	_getLayout(aSlots) {
 		
+		let itemsProp = aSlots.prop("items", []);
+		let keyField = aSlots.prop("keyField", []);
+		
 		return React.createElement("div", {className: "list"},
 			React.createElement(Wprr.Loop, {loop: Wprr.adjusts.markupLoop(
-				aSlots.prop("items", []),
+				itemsProp,
 				aSlots.source("defaultSlot", React.createElement("div", null, "No list item set")),
 				aSlots.source("spacing", null)
-			).setInput("keyField", [])},
+			).setInput("keyField", keyField), "sourceUpdates": [itemsProp, keyField]},
 				aSlots.slot("insertElements", React.createElement(Wprr.InjectChildren, null))
 			)
 		);
