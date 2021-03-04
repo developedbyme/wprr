@@ -22,7 +22,7 @@ export default class RichTextEditor extends WprrBaseObject {
 	_callback_setupEditor(aEditor) {
 		console.log("wprr/elements/form/RichTextEditor::_callback_setupEditor");
 		
-		let commands = this.getSourcedProp("setupCommands");
+		let commands = this.getFirstInput("setupCommands");
 		
 		if(commands) {
 			CommandPerformer.perform(commands, aEditor, this);
@@ -36,9 +36,14 @@ export default class RichTextEditor extends WprrBaseObject {
 		
 		let newValue = aText;
 		
-		let valueName = this.getSourcedProp("valueName");
+		this.updateProp("value", aText);
 		
-		this.getReference("value/" + valueName).updateValue(valueName, newValue);
+		let valueName = this.getFirstInputWithDefault("valueName", "value");
+		
+		let valueUpdater = this.getReference("value/" + valueName);
+		if(valueUpdater) {
+			valueUpdater.updateValue(valueName, newValue);
+		}
 		
 		let commands = this.getSourcedProp("changeCommands");
 		
@@ -48,9 +53,13 @@ export default class RichTextEditor extends WprrBaseObject {
 	}
 	
 	getValue() {
-		let valueName = this.getSourcedProp("valueName");
+		console.log("wprr/elements/form/RichTextEditor::getValue");
+		let valueName = this.getFirstInputWithDefault("valueName", "value");
 		
-		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		let value = this.getFirstInput("value", Wprr.source("propWithDots", valueName));
+		
+		console.log(value, this);
+		
 		return value;
 	}
 	
@@ -78,7 +87,9 @@ export default class RichTextEditor extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/RichTextEditor::_renderMainElement");
 		
-		return React.createElement(Editor, {"init": this.editorProperties, "value": this.getValue(), onEditorChange: this._callback_changeBound});
+		let value = this.getValue();
+		
+		return React.createElement(React.Fragment, {}, React.createElement(Editor, {"init": this.editorProperties, "value": value, onEditorChange: this._callback_changeBound}));
 	}
 
 }
