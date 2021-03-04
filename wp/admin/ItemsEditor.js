@@ -313,10 +313,14 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		item.addType("messageGroup", internalMessageGroup);
 		saveItems.push(internalMessageGroup);
 		
+		item.addType("dataChangeCommands", this._updateSaveAllStatusCommand);
+		
 		internalMessageGroup.setup(aData);
 		internalMessageGroup.addCommand("fieldChange", this._updateSaveAllStatusCommand);
 		
-		item.addType("editStorage", new Wprr.utils.DataStorage());
+		let editStorage = new Wprr.utils.DataStorage();
+		
+		item.addType("editStorage", editStorage);
 		item.addType("data", aData);
 		
 		internalMessageGroup.setupFieldEditStorages();

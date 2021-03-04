@@ -24,6 +24,9 @@ export default class PostEditor extends MultiTypeItemConnection {
 		this.item.getType("editStorage").updateValue(aName, aValue);
 		this.item.getType("editStorage").updateValue("saved." + aName, aValue);
 		
+		
+		this.item.getType("editStorage").createChangeCommands([aName, "saved." + aName], null, this.item.getType("dataChangeCommands"))
+		
 		return this;
 	}
 	
