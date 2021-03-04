@@ -37,7 +37,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 	}
 	
 	hasUnsavedChanges() {
-		console.log("hasUnsavedChanges");
+		//console.log("hasUnsavedChanges");
 		
 		let editStorage = this.item.getType("editStorage");
 		
@@ -49,7 +49,6 @@ export default class PostEditor extends MultiTypeItemConnection {
 			
 			let newValue = editStorage.getValue(fieldName);
 			let oldValue = editStorage.getValue("saved." + fieldName);
-			console.log(newValue, oldValue);
 			if(JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
 				return true;
 			}
@@ -63,6 +62,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 	}
 	
 	_addFieldChange(aField, aValue, aSaveData) {
+		console.log("_addFieldChange");
 		
 		let changeData;
 		if(aField["changeGenerator"]) {
@@ -71,7 +71,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 			if(data instanceof SourceData) {
 				let changePropsAndStateObject = {"props": {}, "state": {}, "event": aValue};
 				
-				data = aData.getSourceInStateChange(null, changePropsAndStateObject);
+				data = data.getSourceInStateChange(null, changePropsAndStateObject);
 			}
 			
 			changeData = data;
@@ -79,6 +79,8 @@ export default class PostEditor extends MultiTypeItemConnection {
 		else {
 			changeData = {"value": aValue, "field": aField["field"]};
 		}
+		
+		console.log(changeData);
 		
 		aSaveData.changes.createChange(aField["saveType"], changeData);
 		aSaveData.addUpdateSavedFieldCommand(aField["field"], this.item.getType("editStorage"));
