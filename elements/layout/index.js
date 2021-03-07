@@ -24,3 +24,6 @@ export {list};
 
 import * as area from "./area/index.js";
 export {area};
+
+import * as checkout from "./checkout/index.js";
+export {checkout};
