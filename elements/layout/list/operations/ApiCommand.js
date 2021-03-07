@@ -62,6 +62,7 @@ export default class ApiCommand extends WprrBaseObject {
 		if(aFile) {
 			let loader = new Wprr.utils.loading.LocalFileLoader();
 			loader.setFileReference(aFile);
+			loader.setReadMode("text");
 			
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setPayloadFile, [Wprr.sourceEvent()]));
 			loader.load();
