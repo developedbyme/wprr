@@ -166,8 +166,8 @@ export default class LocalFileLoader {
 		this._fileReader.addEventListener("error", this._callback_errorBound);
 		
 		switch(this._readMode) {
-			case "binaryString":
-				this._fileReader.readAsBinaryString(this._fileReference);
+			case "text":
+				this._fileReader.readAsText(this._fileReference);
 				break;
 			case "dataUrl":
 				this._fileReader.readAsDataURL(this._fileReference);
