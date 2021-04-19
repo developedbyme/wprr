@@ -13,6 +13,7 @@ export default class FileDropField extends WprrBaseObject {
 		this._externalStorage.updateValue("files", []);
 		
 		this._nextInternalId = 0;
+		this._fieldId = Math.round(Math.random()*10000000000);
 	}
 	
 	_getLoader() {
@@ -183,7 +184,7 @@ export default class FileDropField extends WprrBaseObject {
 		
 		let fieldName = this.getFirstInput("fieldName", Wprr.sourceReference("field", "field.key"));
 		
-		let id = fieldName + "-file-field"; //METODO: set this better
+		let id = fieldName + "-file-field-" + this._fieldId; //METODO: set this better
 		
 		let fileItem = React.createElement(Wprr.ExternalStorageConnectionInjection, {
   prefix: Wprr.source("combine", ["files.", Wprr.sourceReference("loop/index")]),
@@ -227,7 +228,7 @@ export default class FileDropField extends WprrBaseObject {
 		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageInjection, {
   initialExternalStorage: this._externalStorage
 }, /*#__PURE__*/React.createElement(Wprr.FormField, {
-  className: "display-none",
+  className: "skip-default display-none",
   type: "file",
   id: id,
   multiple: "multiple",

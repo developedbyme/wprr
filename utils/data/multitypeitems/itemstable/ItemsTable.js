@@ -13,7 +13,6 @@ export default class ItemsTable extends MultiTypeItemConnection {
 	
 	createColumn(aId, aType, aSettings = null) {
 		
-		console.log(">", this.item)
 		let linkId = this.item.group.generateNextInternalId();
 		
 		let column = new Wprr.utils.data.multitypeitems.itemstable.ItemsTableColumn();
@@ -49,11 +48,10 @@ export default class ItemsTable extends MultiTypeItemConnection {
 	}
 	
 	_getColumnElement(aId) {
-		console.log("_getColumnElement");
-		console.log(aId);
+		//console.log("_getColumnElement");
+		//console.log(aId);
 		
 		let column = this.item.group.getItem(aId);
-		console.log(column);
 		
 		if(!column) {
 			return null;
@@ -66,7 +64,7 @@ export default class ItemsTable extends MultiTypeItemConnection {
 		
 		let itemMarkup = React.createElement(Wprr.InsertElement, {"element": Wprr.sourceFunction(this, this._getColumnElement, [Wprr.sourceReference("loop/item")])});
 		
-		let element = Wprr.Loop.createMarkupLoop(this.item.getLinks("activeColumns").idsSource, itemMarkup, null, React.createElement(Wprr.FlexRow, {"className": "small-item-spacing"}));
+		let element = Wprr.Loop.createMarkupLoop(this.item.getLinks("activeColumns").idsSource, itemMarkup, null, React.createElement(Wprr.FlexRow, {"className": "small-item-spacing flex-no-wrap"}));
 		
 		this.item.addType("rowElement", element);
 	}

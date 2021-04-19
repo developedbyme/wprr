@@ -90,6 +90,7 @@ export default class DataStorage extends AbstractDataStorage {
 	
 	updateValue(aName, aValue) {
 		//console.log("wprr/utils/DataStorage::updateValue");
+		//console.log(aName, aValue);
 		let oldValue = this.getValue(aName);
 		
 		let shouldUpdate = false;

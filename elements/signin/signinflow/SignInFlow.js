@@ -38,7 +38,11 @@ export default class SignInFlow extends Layout {
 						"verificationCode": "      "
 					}
 				},
-				aSlots.default(React.createElement(Wprr.layout.area.SteppedPathRouter, {routes: routes, directions: directions, areaClasses: areas, initialPath: startScreen}))
+				React.createElement(Wprr.ReferenceInjection, {"injectData": {"signInFlow/routes": routes, "signInFlow/directions": directions, "signInFlow/areaClasses": areas, "signInFlow/initialPath": startScreen}},
+					aSlots.slot("adjustFlow", 
+						aSlots.default(React.createElement(Wprr.layout.area.SteppedPathRouter, {routes: Wprr.sourceReference("signInFlow/routes"), directions: Wprr.sourceReference("signInFlow/directions"), areaClasses: Wprr.sourceReference("signInFlow/areaClasses"), initialPath: Wprr.sourceReference("signInFlow/initialPath")}))
+					)
+				)
 			)
 		);
 	}

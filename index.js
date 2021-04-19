@@ -9,6 +9,7 @@ import * as adjusts from "wprr/adjusts";
 import * as qualifications from "wprr/qualifications";
 import * as wp from "wprr/wp";
 import * as routing from "wprr/routing";
+import * as core from "wprr/core";
 
 let BaseObject = elements.WprrBaseObject;
 let DataLoader = elements.WprrDataLoader;
@@ -41,6 +42,7 @@ Wprr.addAllItems("adjusts", adjusts);
 Wprr.addAllItems("qualifications", qualifications);
 Wprr.addAllItems("wp", wp);
 Wprr.addAllItems("routing", routing);
+Wprr.addAllItems("core", core);
 
 export default Wprr;
 export * from "wprr/elements";
@@ -52,3 +54,4 @@ export {adjusts as adjusts};
 export {qualifications as qualifications};
 export {wp as wp};
 export {routing as routing};
+export {core as core};

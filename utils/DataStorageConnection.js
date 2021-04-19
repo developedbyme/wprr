@@ -56,6 +56,7 @@ export default class DataStorageConnection extends AbstractDataStorage {
 	
 	updateValue(aName, aValue) {
 		//console.log("wprr/utils/DataStorageConnection::updateValue");
+		//console.log(aName, aValue);
 		
 		this._dataStorage.updateValue(this.getFullName(aName), aValue);
 		

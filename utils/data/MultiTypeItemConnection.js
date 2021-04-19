@@ -1,9 +1,13 @@
 import Wprr from "wprr/Wprr";
 
+import BaseObject from "wprr/core/BaseObject";
+
 // import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
-export default class MultiTypeItemConnection {
+export default class MultiTypeItemConnection extends BaseObject {
 	
 	constructor() {
+		super();
+		
 		this._item = null;
 	}
 	

@@ -27,6 +27,8 @@ export default class BigSelectionBox extends Layout {
 	_getLayout(aSlots) {
 		console.log("BigSelectionBox::_renderMainElement");
 		
+		let descriptionSource = aSlots.prop("description", "");
+		
 			return React.createElement("div", {className: "standard-box big-box-padding"},
 				React.createElement(Wprr.FlexRow, {className: "small-item-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize"},
 					aSlots.slot("select",
@@ -48,9 +50,11 @@ export default class BigSelectionBox extends Layout {
 							React.createElement("h2", {className: "standard-field-label no-margins"},
 								Wprr.text(aSlots.prop("title", ""))
 							),
-							React.createElement("div", {className: "spacing micro"}),
-							React.createElement("div", {className: "small-description"},
-								Wprr.text(aSlots.prop("description", ""))
+							React.createElement(Wprr.HasData, {"check": descriptionSource, "checkType": "notEmpty"},
+								React.createElement("div", {className: "spacing micro"}),
+								React.createElement("div", {className: "small-description no-paragraph-margins-around"},
+									Wprr.text(aSlots.prop("description", ""), "html")
+								)
 							)
 						)
 					)

@@ -3,6 +3,7 @@ export {default as Layout} from "./Layout";
 export {default as GroupedLists} from "./GroupedLists";
 export {default as List} from "./List";
 export {default as BlockLoader} from "./BlockLoader";
+export {default as PageDataSources} from "./PageDataSources";
 
 import * as relation from "./relation";
 export {relation};
@@ -27,3 +28,6 @@ export {area};
 
 import * as checkout from "./checkout/index.js";
 export {checkout};
+
+import * as loader from "./loader/index.js";
+export {loader};

@@ -27,7 +27,7 @@ export default class DropdownButton extends Layout {
 					Wprr.text(aSlots.prop("text", Wprr.sourceTranslation("Select", "site.select")))
 				),
 				aSlots.slot("arrow",
-					React.createElement(Wprr.Image, {className: "background-contain dropdown-arrow", src: aSlots.prop("arrowSrc", "arrow-down.svg")})
+					React.createElement(Wprr.Image, {className: "background-contain dropdown-arrow", src: aSlots.prop("arrowSrc", "arrow-down.svg"), "location": "images"})
 				)
 			)
 		);

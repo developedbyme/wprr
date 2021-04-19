@@ -21,8 +21,8 @@ export default class PriceOverview extends Wprr.BaseObject {
 		let cartUrl = Wprr.utils.wprrUrl.getCartUrl();
 		cartUrl = Wprr.utils.url.addQueryString(cartUrl, "cache", cacheValue);
 		
-		let initialTitle = this.getFirstInput(Wprr.sourceReference("wprr/blockData", "initialTitle"), Wprr.sourceTranslation("Initial payment", "site.cart.initialPaymentTitle"));
-		let subscriptionTitle = this.getFirstInput(Wprr.sourceReference("wprr/blockData", "subscriptionTitle"), Wprr.sourceTranslation("Subscription", "site.cart.subscriptionPaymentTitle"));
+		let initialTitle = this.getFirstInput(Wprr.sourceReference("blockData", "initialTitle"), Wprr.sourceTranslation("Initial payment", "site.cart.initialPaymentTitle"));
+		let subscriptionTitle = this.getFirstInput(Wprr.sourceReference("blockData", "subscriptionTitle"), Wprr.sourceTranslation("Subscription", "site.cart.subscriptionPaymentTitle"));
 		
 		return <div>
 			<Wprr.DataLoader loadData={{"originalCart": cartUrl}}>

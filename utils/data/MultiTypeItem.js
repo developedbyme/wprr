@@ -86,24 +86,22 @@ export default class MultiTypeItem {
 	}
 	
 	setValue(aType, aData) {
-		if(!this.hasType(aType)) {
-			let theSource = Wprr.sourceValue(aData);
-			this.addType(aType, theSource);
-		}
-		
-		this.getType(aType).value = aData;
+		this.getValueSource(aType).value = aData;
 		
 		return this;
 	}
 	
-	getValue(aType) {
-		
+	getValueSource(aType) {
 		if(!this.hasType(aType)) {
 			let theSource = Wprr.sourceValue(null);
 			this.addType(aType, theSource);
 		}
 		
-		return this.getType(aType).value;
+		return this.getType(aType);
+	}
+	
+	getValue(aType) {
+		return this.getValueSource(aType).value;
 	}
 	
 	getLinks(aType) {

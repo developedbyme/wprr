@@ -3,4 +3,10 @@ export {default as EditContentTemplates} from "./editcontenttemplates/EditConten
 export {default as EditContentTemplate} from "./editcontenttemplates/EditContentTemplate";
 export {default as EditTemplatePositions} from "./editcontenttemplates/EditTemplatePositions";
 export {default as EditTypes} from "./edittypes/EditTypes";
+export {default as EditHeroTypes} from "./edittypes/EditHeroTypes";
+export {default as EditHeaderTypes} from "./edittypes/EditHeaderTypes";
+export {default as EditFooterTypes} from "./edittypes/EditFooterTypes";
 export {default as EditNumberSequences} from "./editnumbersequences/EditNumberSequences";
+export {default as EditPages} from "./editpages/EditPages";
+export {default as EditPageSettings} from "./editpages/EditPageSettings";
+export {default as EditLoadedDataSources} from "./editpages/EditLoadedDataSources";

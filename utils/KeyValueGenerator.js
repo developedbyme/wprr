@@ -72,7 +72,7 @@ export default class KeyValueGenerator {
 		return newKeyValueGenerator;
 	}
 	
-	static convertArrayToOptions(aArray, aValueField, aLabelField) {
+	static convertArrayToOptions(aArray, aValueField, aLabelField, aDescriptionField = null) {
 		let returnArray = new Array();
 		
 		let currentArray = aArray;
@@ -84,6 +84,11 @@ export default class KeyValueGenerator {
 			let label = Wprr.objectPath(currentObject, aLabelField);
 			
 			let encodedData = {"key": value, "value": value, "label": label, "item": currentObject};
+			
+			if(aDescriptionField) {
+				let description = Wprr.objectPath(currentObject, aDescriptionField);
+				encodedData["description"] = description;
+			}
 			returnArray.push(encodedData);
 		}
 		

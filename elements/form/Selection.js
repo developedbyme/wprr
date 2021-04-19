@@ -34,7 +34,7 @@ export default class Selection extends WprrBaseObject {
 		returnObject["onFocus"] = this._callback_focusBound;
 		
 		let valueName = this.getSourcedProp("valueName");
-		returnObject["value"] = this.getSourcedPropWithDefault("selection", SourceData.create("propWithDots", valueName));
+		returnObject["value"] = this.getFirstInput("value", "selection", SourceData.create("propWithDots", valueName));
 		
 		return returnObject;
 	}

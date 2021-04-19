@@ -109,6 +109,10 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		if(this.hasItem(aId)) {
 			let item = this.getItem(aId);
 			if(item.hasType(aType)) {
+				let type = item.getType(aType);
+				if(type instanceof Wprr.utils.ValueSourceData) {
+					return (type.value !== false && type.value !== undefined && type.value !== null);
+				}
 				return true;
 			}
 		}

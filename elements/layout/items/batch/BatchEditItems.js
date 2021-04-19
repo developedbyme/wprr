@@ -161,7 +161,7 @@ export default class BatchEditItems extends Layout {
 							),
 						),
 						React.createElement("div", {className: "spacing standard"}),
-						React.createElement(Wprr.layout.items.batch.BatchEditFooter, null)
+						aSlots.slot("footer", React.createElement(Wprr.layout.items.batch.BatchEditFooter, null))
 					)
 				)
 			)

@@ -770,4 +770,22 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static randomize(aArray, aNumberOfMoves = -1) {
+		
+		let length = aArray.length;
+		if(aNumberOfMoves === -1) {
+			aNumberOfMoves = length;
+		}
+		
+		for(let i = 0; i < aNumberOfMoves; i++) {
+			let startIndex = i%length;
+			let endIndex = startIndex+Math.floor(Math.random()*length)%length;
+			
+			let temp = aArray[startIndex];
+			
+			aArray[startIndex] = aArray[endIndex];
+			aArray[endIndex] = temp;
+		}
+	}
 }

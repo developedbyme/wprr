@@ -34,11 +34,12 @@ export default class ReferenceHolder {
 	getObject(aName) {
 		//console.log("wprr/reference/ReferenceHolder::getObject");
 		
-		if(!Wprr.development_updateFullTreeOnInjection && this._cache[aName] !== undefined) {
-			return this._cache[aName];
-		}
-		
 		if(this._objects[aName] === undefined) {
+			
+			if(!Wprr.development_updateFullTreeOnInjection && this._cache[aName] !== undefined) {
+				return this._cache[aName];
+			}
+			
 			let returnValue = null;
 			if(this._parentReferenceHolder) {
 				let returnValue = this._parentReferenceHolder.getObjectIfExists(aName);

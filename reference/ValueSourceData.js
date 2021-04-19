@@ -84,6 +84,76 @@ export default class ValueSourceData extends SourceData {
 		return this;
 	}
 	
+	makeStorable() {
+		console.log("makeStorable");
+		if(!this.sources.storedValue) {
+			this.createSource("storedValue", this.value);
+			this.createSource("changed", false);
+			
+			let changeCommand = Wprr.commands.callFunction(this.reSource(), this._checkForStoreChange);
+			this.addChangeCommand(changeCommand);
+			this.sources.storedValue.addChangeCommand(changeCommand);
+		}
+	}
+	
+	store() {
+		
+		if(this.sources.storedValue) {
+			this.storedValue = this.value;
+		}
+		
+		return this;
+	}
+	
+	_checkForStoreChange() {
+		console.log("_checkForStoreChange");
+		console.log(this);
+		
+		let value = this.value;
+		let storedValue = this.storedValue;
+		let previousChanged = this.changed;
+		
+		let isChanged;
+		
+		if(value !== null && typeof(value) === "object") {
+			try {
+				isChanged = (JSON.stringify(value) !== JSON.stringify(storedValue));
+			}
+			catch(theError) {
+				isChanged = (value !== storedValue);
+			}
+		}
+		else {
+			isChanged = (value !== storedValue);
+		}
+		
+		if(isChanged !== previousChanged) {
+			this.changed = isChanged;
+		}
+	}
+	
+	connectSource(aSource) {
+		console.log("connectSource");
+		console.log(aSource);
+		
+		let connection = new Wprr.utils.SourceConnection();
+		connection.addValueSource(this);
+		connection.addValueSource(aSource);
+		
+		aSource.value = this.value;
+		
+		return connection;
+	}
+	
+	connectExternalStorage(aExternalStorage, aPath) {
+		let connection = new Wprr.utils.SourceConnection();
+		connection.addValueSource(this);
+		
+		connection.addExternalStrorageVariable(aExternalStorage, aPath);
+		
+		return connection;
+	}
+	
 	_callback_onUpdate() {
 		
 	}

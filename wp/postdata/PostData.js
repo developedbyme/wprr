@@ -15,6 +15,10 @@ export default class PostData {
 		return this;
 	}
 	
+	get data() {
+		return this._data;
+	}
+	
 	getData() {
 		return this._data;
 	}

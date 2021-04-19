@@ -24,6 +24,8 @@ export default class List extends Layout {
 		let itemsProp = aSlots.prop("items", []);
 		let keyField = aSlots.prop("keyField", []);
 		
+		let afterListProp = aSlots.prop("afterList", null);
+		
 		return React.createElement("div", {className: "list"},
 			React.createElement(Wprr.Loop, {loop: Wprr.adjusts.markupLoop(
 				itemsProp,
@@ -31,6 +33,9 @@ export default class List extends Layout {
 				aSlots.source("spacing", null)
 			).setInput("keyField", keyField), "sourceUpdates": [itemsProp, keyField]},
 				aSlots.slot("insertElements", React.createElement(Wprr.InjectChildren, null))
+			),
+			React.createElement(Wprr.HasData, {check: afterListProp},
+				aSlots.useSlot("afterList")
 			)
 		);
 	}

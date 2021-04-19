@@ -88,6 +88,32 @@ export default class ArrayEditor extends ManipulationBaseObject {
 		
 		this._numberOfItems.value = currentArray.length;
 	}
+	
+	moveUp(aIndex) {
+		if(aIndex > 0) {
+			let currentArray = [].concat(this.getValue());
+			
+			let currentItem = currentArray[aIndex];
+			currentArray.splice(aIndex, 1);
+			currentArray.splice(aIndex-1, 0, currentItem);
+			
+			this._updateValue(currentArray);
+			this._numberOfItems.value = currentArray.length;
+		}
+	}
+	
+	moveDown(aIndex) {
+		let currentArray = [].concat(this.getValue());
+		if(aIndex < currentArray.length-1) {
+			
+			let currentItem = currentArray[aIndex];
+			currentArray.splice(aIndex, 1);
+			currentArray.splice(aIndex+1, 0, currentItem);
+			
+			this._updateValue(currentArray);
+			this._numberOfItems.value = currentArray.length;
+		}
+	}
 
 	_renderClonedElement() {
 		console.log("wprr/elements/form/ArrayEditor::_renderMainElement");
@@ -136,7 +162,16 @@ export default class ArrayEditor extends ManipulationBaseObject {
 				React.createElement(Wprr.Adjust, {"adjust": Wprr.adjusts.getFirstResolvingSource(editItemFormSources, this, "element")},
 					React.createElement(Wprr.InsertElement, {})
 				),
-				removeButton
+				React.createElement("div", {},
+					React.createElement(Wprr.HasData, {"check": this.getFirstInput("enableMove")},
+						React.createElement(Wprr.layout.interaction.Button, {"text": "up", "commands": Wprr.commands.callFunction(this, this.moveUp, [Wprr.sourceReference("loop/array/index")])}),
+						React.createElement(Wprr.layout.interaction.Button, {"text": "down", "commands": Wprr.commands.callFunction(this, this.moveDown, [Wprr.sourceReference("loop/array/index")])}),
+						React.createElement("div", {className: "spacing small"}),
+					),
+					React.createElement("div", {},
+						removeButton
+					)
+				)
 			)
 		);
 		

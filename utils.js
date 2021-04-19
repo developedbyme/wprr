@@ -70,6 +70,9 @@ export {data as data};
 import * as loading from "wprr/utils/loading";
 export {loading as loading};
 
+import * as image from "wprr/utils/image";
+export {image as image};
+
 import * as navigation from "wprr/utils/navigation";
 export {navigation as navigation};
 
@@ -86,6 +89,7 @@ export {default as ArrayFieldSort} from "wprr/utils/sort/parts/ArrayFieldSort";
 export {default as SourceData} from "wprr/reference/SourceData";
 export {default as SourceDataWithPath} from "wprr/reference/SourceDataWithPath";
 export {default as ValueSourceData} from "wprr/reference/ValueSourceData";
+export {default as SourceConnection} from "wprr/reference/SourceConnection";
 
 import * as modulecreators from "wprr/modulecreators";
 export {modulecreators as modulecreators};

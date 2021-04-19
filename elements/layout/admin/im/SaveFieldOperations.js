@@ -113,7 +113,7 @@ export default class SaveFieldOperations extends WprrBaseObject {
   commands: cancelCommands
 }, /*#__PURE__*/React.createElement("div", {
   className: "small-text-bold cursor-pointer"
-}, Wprr.translateText("Cancel"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
+}, Wprr.idText("Cancel", "site.cancel"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
   props: statusFieldName,
   externalStorage: Wprr.sourceReference("field/externalStorage")
 }, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
@@ -129,6 +129,6 @@ export default class SaveFieldOperations extends WprrBaseObject {
   commands: saveCommands
 }, /*#__PURE__*/React.createElement("div", {
   className: "small-text-bold cursor-pointer"
-}, Wprr.translateText("Save"))))))))))));
+}, Wprr.idText("Save", "site.save"))))))))))));
 	}
 }

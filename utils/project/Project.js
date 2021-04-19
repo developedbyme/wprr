@@ -59,7 +59,7 @@ export default class Project {
 	}
 	
 	getCreateLoader(aPostType = "dbm_data", aDataType = "none", aCreationMethod = "draft", aTitle = "New item") {
-		let loader = new Wprr.utils.loading.EditLoader();
+		let loader = new Wprr.utils.loading.CreateLoader();
 		
 		loader.setUrl(this.getWprrUrl(Wprr.utils.wprrUrl.getCreateUrl(aPostType)));
 		loader.changeData.setTitle(aTitle);

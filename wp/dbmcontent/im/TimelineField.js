@@ -170,6 +170,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 		}
 		
 		let stringValue = JSON.stringify(value);
+		
 		if(value !== undefined && this._lastValue !== stringValue) {
 			if(this._messageGroup) {
 				this._messageGroup.fieldChanged(this);

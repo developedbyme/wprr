@@ -26,7 +26,7 @@ export default class XlsxImporter {
 		let rowData = new Array();
 		
 		let range = XlsxImporter.getRangeFromSheet(aWorksheet);
-		let rowLength = range.e.c;
+		let rowLength = range.e.c+1;
 		
 		let cellAddress = {c: 0, r: aRowIndex};
 		for(let i = 0; i < rowLength; i++) {
@@ -74,7 +74,7 @@ export default class XlsxImporter {
 		
 		let range = XlsxImporter.getRangeFromSheet(worksheet);
 		let rowLength = range.e.r;
-		let rows = XlsxImporter.getRows(worksheet, 1, range.e.r);
+		let rows = XlsxImporter.getRows(worksheet, 1, range.e.r+1);
 		
 		let returnTableData = new TableData();
 		returnTableData.addColumns(headers);

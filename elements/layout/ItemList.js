@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import Wprr from "wprr";
+import Wprr from "wprr/Wprr";
 
 import Layout from "./Layout";
 
@@ -25,7 +25,7 @@ export default class ItemList extends Layout {
 			React.createElement(Wprr.Loop,
 				{
 					loop: Wprr.adjusts.markupLoop(
-						aSlots.prop("ids", []),
+						Wprr.sourceFunction(Wprr.utils.array, "singleOrArray", [aSlots.prop("ids", [])]),
 						aSlots.source("itemInjection",
 							React.createElement(Wprr.SelectItem, {id: Wprr.sourceReference("loop/item")},
 								aSlots.default(

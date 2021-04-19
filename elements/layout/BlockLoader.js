@@ -155,7 +155,7 @@ export default class BlockLoader extends Layout {
 				)
 			),
 			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded"), "checkType": "invert/default"},
-				aSlots.slot("loader", React.createElement("div", {}, "Loading..."))
+				aSlots.slot("loader", React.createElement(Wprr.layout.loader.LoaderDisplay, {}))
 			)
 		);
 	}

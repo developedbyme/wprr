@@ -78,7 +78,7 @@ export default class DateSelection extends WprrBaseObject {
 		
 		let language = this.getFirstInput(Wprr.sourceReference("wprr/postData", "language"), "en");
 		
-		let buttonClasses = this.getFirstInputWithDefault("cursor-pointer");
+		let buttonClasses = this.getFirstInputWithDefault(Wprr.sourceProp("buttonClasses"), "cursor-pointer");
 		//date-selection-button date-selection-button-padding
 		
 		let buttonMarkup = React.createElement("div", {className: buttonClasses},
@@ -126,7 +126,7 @@ export default class DateSelection extends WprrBaseObject {
 							),
 							React.createElement("div", {className: "spacing small"}),
 							React.createElement(Wprr.EditableProps, {editableProps: "month", externalStorage: this._calendarNavigationExternalStorage},
-								React.createElement(Wprr.Calendar, {value: this._value})
+								React.createElement(Wprr.Calendar, {value: this._value, firstSelectableDate: this.getFirstInput("firstSelectableDate")})
 							)
 						)
 					)

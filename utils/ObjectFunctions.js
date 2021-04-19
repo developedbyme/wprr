@@ -90,4 +90,21 @@ export default class ObjectFunctions {
 			aToObject[objectName] = aFromObject[objectName];
 		}
 	}
+	
+	static isEqual(aValue1, aValue2) {
+		if(aValue1 !== null && typeof(aValue1) === "object") {
+			try {
+				let isChanged = (JSON.stringify(aValue1) === JSON.stringify(aValue2));
+				return isChanged;
+			}
+			catch(theError) {
+				return (aValue1 === aValue2);
+			}
+		}
+		else {
+			return (aValue1 === aValue2);
+		}
+		
+		
+	}
 }

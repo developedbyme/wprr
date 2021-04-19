@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -8,8 +9,8 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 // import TextArea from "wprr/elements/form/TextArea";
 export default class TextArea extends WprrBaseObject {
 
-	constructor( props ) {
-		super( props );
+	constructor( aProps ) {
+		super( aProps );
 		
 		this._mainElementType = "textarea";
 		
@@ -23,9 +24,16 @@ export default class TextArea extends WprrBaseObject {
 		
 		let newValue = aEvent.target.value;
 		
-		this.getReferences().getObject("value/" + this.props.valueName).updateValue(this.props.valueName, newValue);
+		this.updateProp("value", newValue);
 		
-		let commands = this.getSourcedProp("changeCommands");
+		let updater = this.getReferences().getObject("value/" + this.props.valueName);
+		if(updater) {
+			let valueName = this.getFirstInput("valueName");
+			updater.updateValue(valueName, newValue);
+		}
+		
+		
+		let commands = this.getFirstInput("changeCommands");
 		
 		if(commands) {
 			CommandPerformer.perform(commands, newValue, this);
@@ -35,16 +43,16 @@ export default class TextArea extends WprrBaseObject {
 	_getMainElementProps() {
 		let returnObject = super._getMainElementProps();
 		
-		returnObject["id"] = this.getSourcedProp("id");
-		returnObject["name"] = this.getSourcedProp("name");
-		returnObject["placeholder"] = this.getSourcedProp("placeholder");
+		returnObject["id"] = this.getFirstInput("id");
+		returnObject["name"] = this.getFirstInput("name");
+		returnObject["placeholder"] = this.getFirstInput("placeholder");
 		
-		let valueName = this.getSourcedProp("valueName");
+		let valueName = this.getFirstInput("valueName");
 		
-		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
+		let value = this.getFirstInput("value", Wprr.source("propWithDots", valueName));
 		returnObject["value"] = value;
 		
-		returnObject["rows"] = this.getSourcedProp("rows");
+		returnObject["rows"] = this.getFirstInput("rows");
 		
 		returnObject["onChange"] = this._callback_changeBound;
 		

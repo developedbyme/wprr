@@ -8,14 +8,18 @@ import AcfFunctions from "wprr/wp/AcfFunctions";
 import ArrayFunctions from "wprr/utils/ArrayFunctions";
 import AbstractDataStorage from "wprr/utils/AbstractDataStorage";
 
+import BaseObject from "wprr/core/BaseObject";
+
 // import SourceData from "wprr/reference/SourceData";
-export default class SourceData {
+export default class SourceData extends BaseObject {
 	
 	/**
 	 * Constructor
 	 */
 	constructor() {
 		//console.log("wprr/reference/SourceData::constructor");
+		
+		super();
 		
 		this._sourceFunction = SourceData.getSource;
 		this._type = null;

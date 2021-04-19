@@ -36,6 +36,12 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		return this._isLoading;
 	}
 	
+	setFieldToCheckFor(aFieldName) {
+		this._fieldToCheckFor = aFieldName;
+		
+		return this;
+	}
+	
 	setItems(aItems) {
 		this._items = aItems;
 		
@@ -85,6 +91,12 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 				currentCommand.perform();
 			}
 		}
+	}
+	
+	loadItem(aId) {
+		this._queuedItems.push(aId);
+		
+		this._queueNextLoad();
 	}
 	
 	loadItems(aIds) {

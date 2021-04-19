@@ -11,3 +11,5 @@ export {default as address} from "./Address";
 export {default as json} from "./Json";
 export {default as weekday} from "./Weekday";
 export {default as boolean} from "./Boolean";
+export {default as mapLocation} from "./MapLocation";
+export {default as mapLocationWithRadius} from "./MapLocationWithRadius";
