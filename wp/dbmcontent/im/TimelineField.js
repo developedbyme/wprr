@@ -12,7 +12,6 @@ export default class TimelineField extends MultiTypeItemConnection {
 		this._messageGroup = null;
 		
 		this.key = null;
-		this._value = null;
 		this._changes = new Array();
 		this._translations = new Object();
 		this._lastValue = null;
@@ -23,32 +22,33 @@ export default class TimelineField extends MultiTypeItemConnection {
 		this._settings = new Object();
 		
 		this._externalStorage = null;
+		
+		let valueSource = this.createSource("value", null);
+		valueSource.makeStorable();
+		valueSource.sources.get("changed").addChangeCommand(Wprr.commands.callFunction(this, this._updateGroupForFieldChange));
 	}
 	
 	get type() {
 		return this._type;
 	}
 	
-	get value() {
-		return this._value;
-	}
-	
 	get asTerm() {
 		//console.log("asTerm");
 		
-		if(!this._value) {
-			return this._value;
+		let value = this.value;
+		if(!value) {
+			return value;
 		}
 		
-		if(Number.isInteger(this._value)) {
-			let termName = "term" + this._value;
+		if(Number.isInteger(value)) {
+			let termName = "term" + value;
 			return this.item.group.getItem(termName);
 		}
 		else {
 			let taxonomy = "dbm_relation"; //METODO: set taxonomy based on type
 			let taxonomyItem = this.item.group.getItem("taxonomy-" + taxonomy);
 			
-			let returnObject = Wprr.objectPath(taxonomyItem, "termBySlug." + this._value);
+			let returnObject = Wprr.objectPath(taxonomyItem, "termBySlug." + value);
 			return returnObject;
 		}
 		
@@ -78,12 +78,17 @@ export default class TimelineField extends MultiTypeItemConnection {
 		this._externalStorage = aExternalStorage;
 		this._externalStorage.addOwner(this);
 		
-		this._lastValue = JSON.stringify(this._value);
+		let value = this.value;
 		
-		if(this._value !== undefined) {
-			this._externalStorage.updateValue("value", Wprr.utils.object.copyViaJson(this._value));
-			this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
+		let valueSource = this.sources.get("value");
+		
+		if(value !== undefined) {
+			this._externalStorage.updateValue("value", Wprr.utils.object.copyViaJson(value));
+			this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(value));
 		}
+		
+		valueSource.connectExternalStorage(this._externalStorage, "value");
+		valueSource.sources.get("storedValue").connectExternalStorage(this._externalStorage, "saved.value");
 		
 		this._externalStorage.updateValue("translations", Wprr.utils.object.copyViaJson(this._translations));
 		this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
@@ -112,8 +117,11 @@ export default class TimelineField extends MultiTypeItemConnection {
 	
 	updateSavedValues() {
 		
+		let valueSource = this.sources.get("value");
+		valueSource.store();
+		
 		if(this._externalStorage) {
-			this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this._value));
+			//this._externalStorage.updateValue("saved.value", Wprr.utils.object.copyViaJson(this.value));
 			this._externalStorage.updateValue("saved.translations", Wprr.utils.object.copyViaJson(this._translations));
 			this._externalStorage.updateValue("saved.timeline", Wprr.utils.object.copyViaJson(this._changes));
 		}
@@ -129,37 +137,22 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	hasUnsavedChange() {
-		if(this._externalStorage) {
-			let savedValue = this._externalStorage.getValue("saved.value");
-			//let savedTimeline = this._externalStorage.getValue("timeline");
-			//let savedTranslations = this._externalStorage.getValue("translations");
-			
-			if(JSON.stringify(this._value) !== JSON.stringify(savedValue)) {
-				return true;
-			}
-			
-			return false;
-		}
 		
-		console.warn("No external storage, can't compare changes", this);
-		return true;
+		let valueSource = this.sources.get("value");
+		
+		return valueSource.changed;
 	}
 	
 	getSaveData(aComment = null) {
 		let changeData = new Wprr.utils.ChangeData();
-		changeData.createChange("dbmtc/setField", {"field": this.key, "value": this._value, "comment": aComment});
+		changeData.createChange("dbmtc/setField", {"field": this.key, "value": this.value, "comment": aComment});
 		
 		return changeData;
 	}
 	
 	externalDataChange() {
-		//console.log("TimelineField::externalDataChange");
+		console.log("TimelineField::externalDataChange");
 		
-		let lastValue = this._value;
-		let value = this._externalStorage.getValue("value");
-		if(value !== undefined) {
-			this._value = value;
-		}
 		let timeline = this._externalStorage.getValue("timeline");
 		if(timeline) {
 			this._changes = timeline;
@@ -168,14 +161,12 @@ export default class TimelineField extends MultiTypeItemConnection {
 		if(translations) {
 			this._translations = translations;
 		}
-		
-		let stringValue = JSON.stringify(value);
-		
-		if(value !== undefined && this._lastValue !== stringValue) {
-			if(this._messageGroup) {
-				this._messageGroup.fieldChanged(this);
-			}
-			this._lastValue = stringValue;
+	}
+	
+	_updateGroupForFieldChange() {
+		console.log("TimelineField::_updateGroupForFieldChange");
+		if(this._messageGroup) {
+			this._messageGroup.fieldChanged(this);
 		}
 	}
 	
@@ -186,8 +177,8 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	setValue(aValue) {
-		this._value = aValue;
-		this._updateExternalStorage("value", aValue);
+		this.value = aValue;
+		//this._updateExternalStorage("value", aValue);
 		
 		return this;
 	}
@@ -207,7 +198,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	getValue() {
-		return this._value;
+		return this.value;
 	}
 	
 	getType() {
@@ -256,7 +247,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 	addToSaveData(aSaveData) {
 		
 		if(this.hasUnsavedChange()) {
-			aSaveData.changes.setDataField(this.key, this._value);
+			aSaveData.changes.setDataField(this.key, this.value);
 		
 			aSaveData.addUpdateSavedFieldCommand("value", this._externalStorage);
 		

@@ -112,4 +112,16 @@ export default class DataStorageConnection extends AbstractDataStorage {
 		
 		return newDataStorageConnection;
 	}
+	
+	createChangeCommands(aValueNames, aPerformingObject, aCommands = null) {
+		console.log("createChangeCommands");
+		console.log(aValueNames, aPerformingObject, aCommands);
+		
+		aValueNames = Wprr.utils.array.arrayOrSeparatedString(aValueNames);
+		let aFullValueNames = aValueNames.map(this.getFullName.bind(this));
+		
+		console.log(aFullValueNames);
+		
+		return this._dataStorage.createChangeCommands(aFullValueNames, aPerformingObject, aCommands);
+	}
 }

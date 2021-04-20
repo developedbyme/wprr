@@ -47,15 +47,46 @@ export default class SourceDataWithPath extends SourceData {
 	updateValueFromObject(aValue, aFromObject) {
 		
 		let sourceData = super.getSource(aFromObject);
+		console.log(">", sourceData);
+		
+		let deepPath = this._deepPath;
+		if(deepPath instanceof SourceData) {
+			deepPath = deepPath.getSource(aFromObject);
+		}
+		
 		if(sourceData instanceof Wprr.utils.AbstractDataStorage) {
-			let deepPath = this._deepPath;
-			if(deepPath instanceof SourceData) {
-				deepPath = deepPath.getSource(aFromObject);
-			}
 			sourceData.updateValue(deepPath, aValue);
+		}
+		else {
+			let valueData = Wprr.objectPath(sourceData, deepPath);
+			console.log(valueData);
+			if(valueData instanceof Wprr.utils.ValueSourceData) {
+				valueData.updateValueFromObject(aValue, aFromObject);
+			}
 		}
 		
 		return this;
+	}
+	
+	getUpdateSource(aFromObject) {
+		//console.log("getUpdateSource");
+		
+		let returnValue = super.getUpdateSource(aFromObject);
+		
+		let sourceData = super.getSource(aFromObject);
+		
+		let deepPath = this._deepPath;
+		if(deepPath instanceof SourceData) {
+			deepPath = deepPath.getSource(aFromObject);
+		}
+		
+		let valueData = Wprr.objectPath(sourceData, deepPath);
+		console.log(valueData);
+		if(valueData instanceof Wprr.utils.ValueSourceData) {
+			returnValue = valueData;
+		}
+		
+		return returnValue;
 	}
 	
 	static getDeepPathForOwner(aDeepPath, aOwner) {

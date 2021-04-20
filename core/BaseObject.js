@@ -32,7 +32,9 @@ export default class BaseObject {
 	}
 	
 	createSource(aName, aInitialValue) {
-		this.sources.create(aName);
+		let source = this.sources.create(aName);
 		this[aName] = aInitialValue;
+		
+		return source;
 	}
 }

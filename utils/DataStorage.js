@@ -20,6 +20,10 @@ export default class DataStorage extends AbstractDataStorage {
 		this._enableUpdates = true;
 	}
 	
+	getFullName(aName) {
+		return aName;
+	}
+	
 	hasObjectPathHandling() {
 		return true;
 	}

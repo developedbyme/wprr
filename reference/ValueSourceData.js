@@ -88,6 +88,7 @@ export default class ValueSourceData extends SourceData {
 		console.log("makeStorable");
 		if(!this.sources.storedValue) {
 			this.createSource("storedValue", this.value);
+			//METODO: copy
 			this.createSource("changed", false);
 			
 			let changeCommand = Wprr.commands.callFunction(this.reSource(), this._checkForStoreChange);
@@ -100,6 +101,7 @@ export default class ValueSourceData extends SourceData {
 		
 		if(this.sources.storedValue) {
 			this.storedValue = this.value;
+			//METODO: copy
 		}
 		
 		return this;
