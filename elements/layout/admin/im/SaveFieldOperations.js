@@ -88,47 +88,38 @@ export default class SaveFieldOperations extends WprrBaseObject {
 		};
 		
 		this._createAllPaths(includeTranslations, includeTimeline, allFields.valueFields, allFields.savedFields);
-		let fieldNames = [].concat(allFields.valueFields, allFields.savedFields);
-		
-		let compareAdjust = Wprr.adjusts.condition(
-			Wprr.source("command", Wprr.commands.callFunction(this, this._hasFieldChanges, [Wprr.sourceReference("field/externalStorage"), allFields.valueFields, allFields.savedFields])),
-			true,
-			"===",
-			"open"
-		);
 		
 		let saveCommands = Wprr.commands.callFunction(this, this._saveField); //Wprr.commands.callFunction(Wprr.sourceReference("editMessageGroup/save"), "saveField", [Wprr.sourceReference("field/fieldName")]);
 		let cancelCommands = Wprr.commands.callFunction(this, this._cancelFields, [Wprr.sourceReference("field/externalStorage"), allFields.valueFields, allFields.savedFields]);
 		
-		return React.createElement("wrapper", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: fieldNames,
-  externalStorage: Wprr.sourceReference("field/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.Adjust, {
-  adjust: compareAdjust
-}, /*#__PURE__*/React.createElement(Wprr.OpenCloseExpandableArea, null, /*#__PURE__*/React.createElement("div", {
-  className: "spacing micro save-field-operations-spacing"
-}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between"
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: cancelCommands
-}, /*#__PURE__*/React.createElement("div", {
-  className: "small-text-bold cursor-pointer"
-}, Wprr.idText("Cancel", "site.cancel"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: statusFieldName,
-  externalStorage: Wprr.sourceReference("field/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
-  selectedSections: Wprr.source("propWithDots", statusFieldName)
-}, /*#__PURE__*/React.createElement("div", {
-  "data-section-name": "saving"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "small-text-bold"
-}, Wprr.translateText("Saving..."))), /*#__PURE__*/React.createElement("div", {
-  "data-section-name": "normal",
-  "data-default-section": true
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: saveCommands
-}, /*#__PURE__*/React.createElement("div", {
-  className: "small-text-bold cursor-pointer"
-}, Wprr.idText("Save", "site.save"))))))))))));
+		return React.createElement("wrapper", null,
+			React.createElement(Wprr.OpenCloseExpandableArea, {"open": Wprr.sourceReference("field", "field.sources.value.sources.changed")}, 
+				React.createElement("div", {className: "spacing micro save-field-operations-spacing"}),
+					React.createElement(Wprr.FlexRow, {className: "justify-between"},
+						React.createElement(Wprr.CommandButton, {commands: cancelCommands},
+							React.createElement("div", {className: "small-text-bold cursor-pointer"},
+								Wprr.idText("Cancel", "site.cancel")
+							)
+						),
+						React.createElement("div", null, React.createElement(Wprr.ExternalStorageProps, {props: statusFieldName, externalStorage: Wprr.sourceReference("field/externalStorage")},
+							React.createElement(Wprr.SelectSection, {selectedSections: Wprr.source("propWithDots", statusFieldName)},
+								React.createElement("div", {"data-section-name": "saving"},
+									React.createElement("div", {className: "small-text-bold"},
+										Wprr.translateText("Saving...")
+									)
+								),
+								React.createElement("div", {"data-section-name": "normal", "data-default-section": true},
+									React.createElement(Wprr.CommandButton, {commands: saveCommands},
+										React.createElement("div", {className: "small-text-bold cursor-pointer"},
+											Wprr.idText("Save", "site.save")
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 }
