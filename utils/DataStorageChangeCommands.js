@@ -10,6 +10,8 @@ export default class DataStorageChangeCommands {
 	constructor() {
 		this.inputs = new InputDataHolder();
 		
+		this.inputs.setInput("performingObject", null);
+		
 		this._dataStorage = null;
 		this._lastExceutedHash = null;
 		

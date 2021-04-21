@@ -47,7 +47,6 @@ export default class SourceDataWithPath extends SourceData {
 	updateValueFromObject(aValue, aFromObject) {
 		
 		let sourceData = super.getSource(aFromObject);
-		console.log(">", sourceData);
 		
 		let deepPath = this._deepPath;
 		if(deepPath instanceof SourceData) {
@@ -59,7 +58,6 @@ export default class SourceDataWithPath extends SourceData {
 		}
 		else {
 			let valueData = Wprr.objectPath(sourceData, deepPath);
-			console.log(valueData);
 			if(valueData instanceof Wprr.utils.ValueSourceData) {
 				valueData.updateValueFromObject(aValue, aFromObject);
 			}
@@ -81,7 +79,6 @@ export default class SourceDataWithPath extends SourceData {
 		}
 		
 		let valueData = Wprr.objectPath(sourceData, deepPath);
-		console.log(valueData);
 		if(valueData instanceof Wprr.utils.ValueSourceData) {
 			returnValue = valueData;
 		}

@@ -40,6 +40,17 @@ export default class ObjectFunctions {
 		return JSON.parse(JSON.stringify(aObject));
 	}
 	
+	static tryCopyViaJson(aObject) {
+		try {
+			return Wprr.utils.object.copyViaJson(aObject);
+		}
+		catch(theError) {
+			
+		}
+		
+		return aObject;
+	}
+	
 	static sumMerge(aObjectsArray) {
 		let returnObject = new Object();
 		

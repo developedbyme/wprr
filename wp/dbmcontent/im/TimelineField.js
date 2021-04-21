@@ -151,7 +151,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	externalDataChange() {
-		console.log("TimelineField::externalDataChange");
+		//console.log("TimelineField::externalDataChange");
 		
 		let timeline = this._externalStorage.getValue("timeline");
 		if(timeline) {
@@ -164,7 +164,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	_updateGroupForFieldChange() {
-		console.log("TimelineField::_updateGroupForFieldChange");
+		//console.log("TimelineField::_updateGroupForFieldChange");
 		if(this._messageGroup) {
 			this._messageGroup.fieldChanged(this);
 		}

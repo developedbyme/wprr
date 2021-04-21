@@ -72,23 +72,22 @@ export default class ValueSourceData extends SourceData {
 	setValue(aValue) {
 		//console.log("setValue");
 		
-		//METODO: check if value has changed
+		if(!Wprr.utils.object.isEqual(this._value, aValue)) {
+			this._value = aValue;
+			this.externalDataChange();
 		
-		this._value = aValue;
-		this.externalDataChange();
-		
-		if(this._changeCommands) {
-			Wprr.utils.CommandPerformer.perform(this._changeCommands, aValue, null);
+			if(this._changeCommands) {
+				Wprr.utils.CommandPerformer.perform(this._changeCommands, aValue, null);
+			}
 		}
 		
 		return this;
 	}
 	
 	makeStorable() {
-		console.log("makeStorable");
+		//console.log("makeStorable");
 		if(!this.sources.storedValue) {
-			this.createSource("storedValue", this.value);
-			//METODO: copy
+			this.createSource("storedValue", Wprr.utils.object.tryCopyViaJson(this.value));
 			this.createSource("changed", false);
 			
 			let changeCommand = Wprr.commands.callFunction(this.reSource(), this._checkForStoreChange);
@@ -98,18 +97,27 @@ export default class ValueSourceData extends SourceData {
 	}
 	
 	store() {
+		//console.log("store");
+		//console.log(this);
 		
 		if(this.sources.storedValue) {
-			this.storedValue = this.value;
-			//METODO: copy
+			this.storedValue = Wprr.utils.object.tryCopyViaJson(this.value);
+		}
+		
+		return this;
+	}
+	
+	resetToStoredValue() {
+		if(this.sources.storedValue) {
+			this.value = Wprr.utils.object.tryCopyViaJson(this.storedValue);
 		}
 		
 		return this;
 	}
 	
 	_checkForStoreChange() {
-		console.log("_checkForStoreChange");
-		console.log(this);
+		//console.log("_checkForStoreChange");
+		//console.log(this);
 		
 		let value = this.value;
 		let storedValue = this.storedValue;

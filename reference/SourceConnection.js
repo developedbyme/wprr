@@ -24,9 +24,9 @@ export default class SourceConnection extends BaseObject {
 	}
 	
 	_updateSources(aValue) {
-		console.log("_updateSources");
-		console.log(aValue);
-		console.log(this);
+		//console.log("_updateSources");
+		//console.log(aValue);
+		//console.log(this);
 		
 		if(this._isUpdating) {
 			return;
@@ -41,7 +41,7 @@ export default class SourceConnection extends BaseObject {
 				let currentSource = currentArray[i];
 				if(!Wprr.utils.object.isEqual(aValue, currentSource.value)) {
 					try {
-						currentSource.value = aValue;
+						currentSource.value = Wprr.utils.object.tryCopyViaJson(aValue);
 					}
 					catch(theError) {
 						console.error("Error while updating source", currentSource, this, theError);
@@ -84,7 +84,6 @@ export default class SourceConnection extends BaseObject {
 		
 		let updateCommand = Wprr.commands.callFunction(this, this._updateSources, [Wprr.sourceEvent(Wprr.sourceFunction(aExternalStorage, "getFullName", [aPath]))]);
 		
-		console.log(">>>>>>>>>", aExternalStorage);
 		let commandGroup = aExternalStorage.createChangeCommands(aPath, null, updateCommand);
 		
 		let linkObject = {"externalStorage": aExternalStorage, "path": aPath, "commandGroup": commandGroup};
