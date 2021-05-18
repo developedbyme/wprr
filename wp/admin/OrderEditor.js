@@ -13,10 +13,47 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		super();
 		
 		this._orderNames = new Array();
+		this._commands = Wprr.utils.InputDataHolder.create();
 	}
 	
 	get externalStorage() {
 		return this.item.getType("orderStorage");
+	}
+	
+	addCommand(aName, aCommand) {
+		if(!this._commands.hasInput(aName)) {
+			this._commands.setInput(aName, []);
+		}
+		
+		//METODO: we just assumes that it is an array
+		this._commands.getRawInput(aName).push(aCommand);
+		
+		return this;
+	}
+	
+	getHierarchyForOrder(aName) {
+		console.log("getHierarchyForOrder");
+		
+		let links = this.item.getNamedLinks("orderHierarchies");
+		
+		if(!links.hasLinkByName(aName)) {
+			let hierarchyItem = this.item.group.createInternalItem();
+			
+			let hierarchy = new Wprr.utils.Hierarchy();
+			hierarchyItem.addType("hierarchy", hierarchy);
+			
+			let editStorage = this.item.getType("orderStorage");
+			let currentData = editStorage.getValue(aName);
+			
+			hierarchy.setup(currentData);
+			
+			hierarchy.sources.get("structure").connectExternalStorage(this.item.getType("orderStorage"), aName);
+			hierarchy.sources.get("structure").addChangeCommand(Wprr.commands.callFunction(this, this._changed));
+			
+			links.addItem(aName, hierarchyItem.id);
+		}
+		
+		return links.getLinkByName(aName);
 	}
 	
 	addOrder(aName, aInitialItems = null) {
@@ -40,6 +77,8 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		let editStorage = this.item.getType("orderStorage");
 		editStorage.updateValue(aName, storeArray);
 		editStorage.updateValue("saved." + aName, storeArray.concat([]));
+		
+		this._changed();
 	}
 	
 	ensureOrderExists(aName) {
@@ -85,6 +124,7 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		}
 		
 		editStorage.updateValue(aName, items);
+		this._changed();
 		
 		return this;
 	}
@@ -107,6 +147,7 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		}
 		
 		editStorage.updateValue(aName, items);
+		this._changed();
 		
 		return this;
 	}
@@ -141,8 +182,6 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let fieldName = currentArray[i];
 			
-			console.log(fieldName, editStorage.getValue(fieldName));
-			
 			saveData.changes.createChange("dbm/order", {"value": editStorage.getValue(fieldName), "forType": fieldName});
 			saveData.addUpdateSavedFieldCommand(fieldName, editStorage);
 		}
@@ -157,8 +196,16 @@ export default class OrderEditor extends MultiTypeItemConnection {
 		}
 		
 		let returnData = this.getSaveData();
-		console.log(">", returnData);
 		
 		return [returnData];
+	}
+	
+	_changed() {
+		//console.log("_changed");
+		
+		let commandName = "changed";
+		if(this._commands.hasInput(commandName)) {
+			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);
+		}
 	}
 }

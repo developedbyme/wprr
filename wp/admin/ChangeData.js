@@ -126,6 +126,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	addTerm(aTerm, aTaxonomy, aField = "id") {
+		this.setTerms([aTerm], aTaxonomy, aField, "addTerms");
+		
+		return this;
+	}
+	
 	toggleTerm(aActive, aTerm, aTaxonomy, aField = "id") {
 		
 		let changeType = aActive ? "addTerms" : "removeTerms";

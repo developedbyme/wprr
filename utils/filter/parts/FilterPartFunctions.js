@@ -110,6 +110,8 @@ export default class FilterPartFunctions  {
 				return (aB.indexOf(aA) !== -1);
 			case "arrayContains":
 				return (aA.indexOf(aB) !== -1);
+			case "caseInsensitiveEqual":
+				return ((""+aA).toLowerCase() == (""+aB).toLowerCase());
 			default:
 				console.error("Unknown comparison " + aCompareType);
 		}

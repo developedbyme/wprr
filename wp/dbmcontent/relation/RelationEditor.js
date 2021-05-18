@@ -164,6 +164,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStartTimeAfterCreation, [Wprr.source("event", "raw", "data.relationId"), currentTime]));
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setStatusAfterCreation, [Wprr.source("event", "raw", "data.relationId"), "private"]));
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._changed, []));
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._added, [Wprr.source("event", "raw", "data.relationId")]));
 		
 		loader.load();
 	}
@@ -284,6 +285,15 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		let commandName = "changed";
 		if(this._commands.hasInput(commandName)) {
 			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), null, this);
+		}
+	}
+	
+	_added(aId) {
+		console.log("_added");
+		
+		let commandName = "added";
+		if(this._commands.hasInput(commandName)) {
+			Wprr.utils.CommandPerformer.perform(this._commands.getInput(commandName, {}, this), aId, this);
 		}
 	}
 }

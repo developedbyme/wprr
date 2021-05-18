@@ -114,7 +114,7 @@ export default class DataStorage extends AbstractDataStorage {
 						shouldUpdate = true;
 					}
 					else {
-						console.log(type, aValue, oldValue);
+						//console.log(type, aValue, oldValue);
 						try {
 							if(JSON.stringify(aValue) !== JSON.stringify(oldValue)) {
 								shouldUpdate = true;

@@ -1,13 +1,20 @@
+import Wprr from "wprr/Wprr";
+
+import BaseObject from "wprr/core/BaseObject";
+
 // import JsonLoader from "wprr/utils/loading/JsonLoader";
 /**
  * Loader that loads json data
  */
-export default class JsonLoader {
+export default class JsonLoader extends BaseObject {
 	
 	/**
 	 * Contructor
 	 */
 	constructor() {
+		
+		super();
+		
 		this._url = null;
 		this._method = "GET";
 		this._credentials = "same-origin";
@@ -19,6 +26,8 @@ export default class JsonLoader {
 		this._status = JsonLoader.STATUS_NOT_STARTED;
 		this._data = null;
 		this._body = null;
+		this.createSource("data", null);
+		this.createSource("status", JsonLoader.STATUS_NOT_STARTED);
 		
 		this.onLoad = null;
 		
@@ -34,11 +43,12 @@ export default class JsonLoader {
 	}
 	
 	getStatus() {
-		return this._status;
+		return this.status;
 	}
 	
 	hasCompleted() {
-		return (this._status === JsonLoader.LOADED || this._status === JsonLoader.ERROR_LOADING);
+		let status = this.status;
+		return (status === JsonLoader.LOADED || status === JsonLoader.ERROR_LOADING);
 	}
 	
 	setMethod(aMethod) {
@@ -177,10 +187,11 @@ export default class JsonLoader {
 		
 		this._loadedAt = (new Date()).valueOf();
 		this._data = aData;
+		this.data = aData;
 	}
 	
 	getData() {
-		return this._data;
+		return this.data;
 	}
 	
 	setStatus(aStatus) {
@@ -188,20 +199,21 @@ export default class JsonLoader {
 		//console.log(aStatus);
 		
 		this._status = aStatus;
+		this.status = aStatus;
 		
-		if(this._status === JsonLoader.LOADED) {
+		if(this.status === JsonLoader.LOADED) {
 			
 			if(this.onLoad) { //METODO: remove the callback and just use the command
 				this.onLoad(this._data);
 			}
 			
-			this.runCommandGroup("success", this._data);
+			this.runCommandGroup("success", this.data);
 		}
-		else if(this._status === JsonLoader.ERROR_LOADING) {
-			this.runCommandGroup("error", this._data);
+		else if(this.status === JsonLoader.ERROR_LOADING) {
+			this.runCommandGroup("error", this.data);
 		}
 		
-		this.runCommandGroup("status", this._data);
+		this.runCommandGroup("status", this.data);
 		
 		return this;
 	}
@@ -214,10 +226,10 @@ export default class JsonLoader {
 	
 	load() {
 		
-		if(this._status === JsonLoader.STATUS_NOT_STARTED) {
+		if(this.status === JsonLoader.STATUS_NOT_STARTED) {
 			this.setStatus(JsonLoader.LOADING);
 		}
-		else if(this._status === JsonLoader.INVALID) {
+		else if(this.status === JsonLoader.INVALID) {
 			this.setStatus(JsonLoader.LOADING_FROM_INVALID);
 		}
 		else {
@@ -260,7 +272,7 @@ export default class JsonLoader {
 	
 	invalidate() {
 		//console.log("wprr/utils/loading/JsonLoader::invalidate");
-		if(this._status !== JsonLoader.LOADED && this._status !== JsonLoader.ERROR_LOADING) {
+		if(this.status !== JsonLoader.LOADED && this.status !== JsonLoader.ERROR_LOADING) {
 			return this;
 		}
 		

@@ -140,7 +140,7 @@ export default class InternalMessageGroup extends MultiTypeItemConnection {
 			
 			newField.setMessageGroup(this);
 			newField.setupField(key, objectPath.get(currentFieldData["type"], "slug"), objectPath.get(currentFieldData["status"], "slug"), currentFieldData.settings);
-			newField.setValue(currentFieldData["value"]);
+			newField.setInitialValue(currentFieldData["value"]);
 			if(currentFieldData["translations"]) {
 				newField.setTranslations(currentFieldData["translations"]);
 			}

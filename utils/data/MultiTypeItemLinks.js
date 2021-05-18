@@ -26,6 +26,18 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	insertItem(aId, aPosition) {
+		
+		if(aPosition === -1) {
+			aPosition = this._idsSource.value.length;
+		}
+		
+		this._idsSource.value.splice(aPosition, 0, aId);
+		this._idsSource.externalDataChange();
+		
+		return this;
+	}
+	
 	addUniqueItem(aId) {
 		if(this._idsSource.value.indexOf(aId) === -1) {
 			this.addItem(aId);
@@ -35,7 +47,11 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	}
 	
 	removeItem(aId) {
+		console.log("removeItem");
+		console.log(this._idsSource.value, aId);
+		
 		let index = this._idsSource.value.indexOf(aId);
+		console.log(index);
 		if(index > -1) {
 			this._idsSource.value.splice(index, 1);
 			this._idsSource.externalDataChange();

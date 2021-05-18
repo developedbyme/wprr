@@ -92,6 +92,12 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		return group.getItem(this._idsSource.value[index]);
 	}
 	
+	hasLinkByName(aName) {
+		let index = this._namesSource.value.indexOf(aName);
+		
+		return (index !== -1);
+	}
+	
 	removeAll() {
 		this._namesSource.value.splice(0, currentArray.length);
 		this._idsSource.value.splice(0, currentArray.length);

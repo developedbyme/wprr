@@ -22,11 +22,15 @@ export default class List extends Layout {
 	_getLayout(aSlots) {
 		
 		let itemsProp = aSlots.prop("items", []);
-		let keyField = aSlots.prop("keyField", []);
+		let keyField = aSlots.prop("keyField", null);
 		
+		let beforeListProp = aSlots.prop("beforeList", null);
 		let afterListProp = aSlots.prop("afterList", null);
 		
 		return React.createElement("div", {className: "list"},
+			React.createElement(Wprr.HasData, {check: beforeListProp},
+				aSlots.useSlot("beforeList")
+			),
 			React.createElement(Wprr.Loop, {loop: Wprr.adjusts.markupLoop(
 				itemsProp,
 				aSlots.source("defaultSlot", React.createElement("div", null, "No list item set")),

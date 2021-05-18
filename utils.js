@@ -60,6 +60,7 @@ export {default as DataStorageChangeCommands} from "wprr/utils/DataStorageChange
 export {default as DataStorageConnection} from "wprr/utils/DataStorageConnection";
 export {default as CommandPerformer} from "wprr/commands/CommandPerformer";
 export {default as CommandGroup} from "wprr/commands/CommandGroup";
+export {default as Hierarchy} from "wprr/utils/Hierarchy";
 
 import * as process from "wprr/utils/process";
 export {process as process};

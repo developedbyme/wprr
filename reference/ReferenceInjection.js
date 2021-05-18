@@ -68,7 +68,6 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		}
 		else {
 			for(let objectName in injectData) {
-				
 				let value = injectData[objectName];
 				
 				if(!(value instanceof Wprr.utils.ValueSourceData)) {

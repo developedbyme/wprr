@@ -18,17 +18,17 @@ export default class PriceSummary extends Wprr.BaseObject {
 		
 		return <div>
 			<Wprr.ReferenceInjection injectData={{"cartTotals": cart.totals}}>
-				<Wprr.FlexRow className="justify-between small-item-spacing">
+				<Wprr.FlexRow className="justify-between small-item-spacing cart-price-summary-row">
 					<div className="table-title">{Wprr.text(this.getSourcedProp("title"))}</div>
 					<div className="table-title">{Wprr.text(PriceSummary.getFormattedPrice(1*cart.totals.total, currency))}</div>
 				</Wprr.FlexRow>
 		
 				<Wprr.HasData check={totalDiscounts}>
-					<Wprr.FlexRow className="justify-between small-item-spacing">
+					<Wprr.FlexRow className="justify-between small-item-spacing cart-price-summary-row">
 						<div>{Wprr.idText("Regular price", "site.checkout.regularPrice")}</div>
-						<div>{Wprr.text(PriceSummary.getFormattedPrice(1*cart.totals.subtotal+1*cart.totals.subtotal_tax, currency))}</div>
+						<div>{Wprr.text(PriceSummary.getFormattedPrice(1*cart.totals.subtotal+1*cart.totals.subtotal_tax+1*cart.totals.fee_total, currency))}</div>
 					</Wprr.FlexRow>
-					<Wprr.FlexRow className="justify-between small-item-spacing">
+					<Wprr.FlexRow className="justify-between small-item-spacing cart-price-summary-row">
 						<div className="price-table-discount">{Wprr.idText("Rabatt", "site.checkout.discount")}</div>
 						<div className="price-table-discount">{Wprr.text(PriceSummary.getFormattedPrice(-1*totalDiscounts-1*cart.totals.discount_tax, currency))}</div>
 					</Wprr.FlexRow>

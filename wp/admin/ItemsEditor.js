@@ -16,6 +16,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			"postFields": []
 		}
 		
+		this._addingItems = false;
+		
 		this._editStorage = new Wprr.utils.DataStorage();
 		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
 		
@@ -223,12 +225,17 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		let currentArray = aData;
 		let currentArrayLength = currentArray.length;
 		
+		this._addingItems = true;
+		
 		//this._editStorage.disableUpdates();
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentData = currentArray[i];
 			this.addItemData(currentData);
 		}
 		//this._editStorage.enableUpdates();
+		
+		this._addingItems = false;
+		this._updateSaveAllStatus();
 		
 		return this;
 	}
@@ -292,6 +299,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	
 	addItems(aDatas) {
 		
+		this._addingItems = true;
+		
 		let returnArray = new Array();
 		
 		let currentArray = aDatas;
@@ -299,6 +308,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		for(let i = 0; i < currentArrayLength; i++) {
 			returnArray.push(this.addItemData(currentArray[i]));
 		}
+		
+		this._addingItems = false;
+		this._updateSaveAllStatus();
 		
 		return returnArray;
 	}
@@ -453,10 +465,14 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			}
 		}
 		
-		item.addType("orderStorage", new Wprr.utils.DataStorage());
+		let orderStorage = new Wprr.utils.DataStorage();
+		
+		item.addType("orderStorage", orderStorage);
 		let orderEditor = new OrderEditor();
 		item.addType("orderEditor", orderEditor);
 		saveItems.push(orderEditor);
+		
+		orderEditor.addCommand("changed", this._updateSaveAllStatusCommand);
 		
 		let orders = Wprr.objectPath(aData, "relations.orders");
 		if(orders) {
@@ -597,6 +613,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	
 	_updateSaveAllStatus() {
 		//console.log("_updateSaveAllStatus");
+		
+		if(this._addingItems) {
+			return;
+		}
 	
 		let hasChanges = false;
 		let currentArray = this._editStorage.getValue("allIds");

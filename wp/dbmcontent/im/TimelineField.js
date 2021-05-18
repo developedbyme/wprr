@@ -164,7 +164,7 @@ export default class TimelineField extends MultiTypeItemConnection {
 	}
 	
 	_updateGroupForFieldChange() {
-		//console.log("TimelineField::_updateGroupForFieldChange");
+		console.log("TimelineField::_updateGroupForFieldChange");
 		if(this._messageGroup) {
 			this._messageGroup.fieldChanged(this);
 		}
@@ -172,6 +172,14 @@ export default class TimelineField extends MultiTypeItemConnection {
 	
 	setMessageGroup(aMessageGroup) {
 		this._messageGroup = aMessageGroup;
+		
+		return this;
+	}
+	
+	setInitialValue(aValue) {
+		
+		this.sources.get("value").sources.get("storedValue")._value = Wprr.utils.object.tryCopyViaJson(aValue);
+		this.setValue(aValue);
 		
 		return this;
 	}
