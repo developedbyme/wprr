@@ -94,6 +94,7 @@ export {default as RelatedItem} from "wprr/reference/RelatedItem";
 export {default as SelectField} from "wprr/reference/SelectField";
 export {default as DraggableOrder} from "wprr/elements/form/DraggableOrder";
 export {default as DraggableItem} from "wprr/elements/form/DraggableItem";
+export {default as LevelIndent} from "wprr/elements/area/LevelIndent";
 
 export {default as ManipulationBaseObject} from "wprr/manipulation/ManipulationBaseObject";
 export {default as Adjust} from "wprr/manipulation/Adjust";

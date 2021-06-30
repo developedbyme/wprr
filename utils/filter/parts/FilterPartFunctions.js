@@ -22,6 +22,8 @@ export default class FilterPartFunctions  {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentItem = currentArray[i];
+			
+			//console.log(currentItem, field, matchValue);
 			if(Wprr.objectPath(currentItem, field) === matchValue) {
 				returnArray.push(currentItem);
 			}

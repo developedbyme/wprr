@@ -158,6 +158,9 @@ export default class Project {
 	}
 	
 	setUserData(aData) {
+		console.log("setUserData");
+		console.log(aData);
+		
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		this._mainReferences.addObject("wprr/userData", aData);
 		storeController.setUser(aData);

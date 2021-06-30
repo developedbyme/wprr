@@ -1,26 +1,32 @@
 import Wprr from "wprr/Wprr";
 
+import BaseObject from "wprr/core/BaseObject";
+
 //import SiteNavigation from "wprr/utils/navigation/SiteNavigation";
-export default class SiteNavigation {
+export default class SiteNavigation extends BaseObject {
 
 	constructor() {
 		
-		this._url = Wprr.sourceValue("url");
+		super();
+		
+		this.createSource("url", null);
+		this.createSource("active", false);
+		this.createSource("travelPaths", []);
+		
+		this.dataLoader = null;
 		
 		this._handleLinkBound = this._handleLink.bind(this);
 		this._handleNavigationChangeBound = this._handleNavigationChange.bind(this);
 		
-		this._ignoredPaths = new Array();
+		this.createSource("allowedPaths", []);
 		
-		this._ignoredPaths.push(new RegExp("/wp-admin/.*$"));
-	}
-	
-	get url() {
-		return this._url.value;
+		this.createSource("ignoredPaths", [
+			new RegExp("/wp-admin/.*$")
+		]);
 	}
 	
 	get urlSource() {
-		return this._url;
+		return this.sources.get("url");
 	}
 	
 	_hasSpecialKey(aEvent) {
@@ -28,14 +34,34 @@ export default class SiteNavigation {
 	}
 	
 	_shouldHandle(aLink) {
-		let currentArray = this._ignoredPaths;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentIgnoredPattern = currentArray[i];
-			if(currentIgnoredPattern.test(aLink)) {
-				return false;
+		let shouldHandle = false
+		{
+			let currentArray = this.allowedPaths;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentIgnoredPattern = currentArray[i];
+				if(currentIgnoredPattern.test(aLink)) {
+					shouldHandle = true;
+					break;
+				}
 			}
 		}
+		
+		if(!shouldHandle) {
+			return false;
+		}
+		
+		{
+			let currentArray = this.ignoredPaths;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentIgnoredPattern = currentArray[i];
+				if(currentIgnoredPattern.test(aLink)) {
+					return false;
+				}
+			}
+		}
+		
 		
 		return true;
 	}
@@ -72,10 +98,10 @@ export default class SiteNavigation {
 			return true;
 		}
 		
-		let orinalUrl = new URL(document.location.href);
+		let originalUrl = new URL(document.location.href);
 		let finalUrl = new URL(link, document.location.href);
 		
-		if(orinalUrl.hostname !== finalUrl.hostname) {
+		if(originalUrl.hostname !== finalUrl.hostname) {
 			return true;
 		}
 		
@@ -88,39 +114,92 @@ export default class SiteNavigation {
 		
 		aEvent.preventDefault();
 		
-		history.pushState({}, "Page", finalUrl.href);
-		this._url.value = finalUrl.href;
+		this._internalNavigation(finalUrl.href);
+		window.scrollTo(0, 0);
+		
+		return false;
+	}
+	
+	_addUrlToPath(aUrl) {
+		let paths = [].concat(this.travelPaths);
+			
+		paths.push(aUrl);
+		
+		this.travelPaths = paths;
+	}
+	
+	_internalNavigation(aUrl) {
+		history.pushState({}, "Page", aUrl);
+		this.url = aUrl;
 		
 		//METODO: trigger analytics
 		
-		return false;
+		this._addUrlToPath(aUrl);
 	}
 	
 	_handleNavigationChange(aEvent) {
 		//console.log("_handleNavigationChange");
 		
-		this._url.value = document.location.href;
+		this.url = document.location.href;
 		
 		//METODO: trigger analytics
+		
+		let paths = [].concat(this.travelPaths);
+		paths.pop();
+		this.travelPaths = paths;
 	}
 	
 	setUrlFromLocation() {
-		this._url.value = document.location.href;
+		let url = document.location.href;
+		this.url = url
+		
+		this._addUrlToPath(url);
 		
 		return this;
 	}
 	
 	start() {
+		
+		//METODO: move this to a change event on active
 		window.addEventListener("click", this._handleLinkBound, false);
 		window.addEventListener("popstate", this._handleNavigationChangeBound, false);
+		
+		this.active = true;
 		
 		return this;
 	}
 	
 	stop() {
+		
+		//METODO: move this to a change event on active
 		window.removeEventListener("click", this._handleLinkBound, false);
 		window.removeEventListener("popstate", this._handleNavigationChangeBound, false);
 		
+		this.active = false;
+		
 		return this;
+	}
+	
+	navigate(aUrl) {
+		
+		let originalUrl = new URL(document.location.href);
+		let finalUrl = new URL(aUrl, document.location.href);
+		
+		if(this.active && originalUrl.hostname === finalUrl.hostname && this._shouldHandle(finalUrl.href)) {
+			this._internalNavigation(finalUrl.href);
+			window.scrollTo(0, 0);
+		}
+		else {
+			document.location.href = aUrl;
+		}
+	}
+	
+	preload(aUrl) {
+		let originalUrl = new URL(document.location.href);
+		let finalUrl = new URL(aUrl, document.location.href);
+		
+		if(this.active && originalUrl.hostname === finalUrl.hostname && this._shouldHandle(finalUrl.href)) {
+			this.dataLoader.loadUrl(finalUrl.href);
+		}
 	}
 }

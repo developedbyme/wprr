@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -16,20 +17,39 @@ export default class Link extends WprrBaseObject {
 		delete aReturnObject["href"];
 		delete aReturnObject["prefix"];
 		delete aReturnObject["target"];
+		
+		delete aReturnObject["preload"];
 	}
 	
-	_renderMainElement() {
+	_prepareRender() {
 		
-		let newProps = new Object();
+		super._prepareRender();
 		
+		let preload = this.getFirstInput("preload");
+		if(preload) {
+			let siteNavigation = this.getFirstInput(Wprr.sourceReference("wprr/siteNavigation"));
+			if(siteNavigation) {
+				siteNavigation.preload(this.getUrl());
+			}
+		}
+	}
+	
+	getUrl() {
 		let href = this.getFirstInput("href");
 		if(href) {
 			let prefix = this.getFirstInput("prefix");
 			if(prefix) {
 				href = prefix + href;
 			}
-			newProps["href"] = href;
 		}
+		
+		return href;
+	}
+	
+	_renderMainElement() {
+		
+		let newProps = new Object();
+		newProps["href"] = this.getUrl();
 		
 		let target = this.getFirstInput("target");
 		if(target) {

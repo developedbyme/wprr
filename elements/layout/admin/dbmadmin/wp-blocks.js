@@ -13,6 +13,7 @@ export {default as EditNumberSequences} from "./editnumbersequences/EditNumberSe
 export {default as EditPages} from "./editpages/EditPages";
 export {default as EditPageSettings} from "./editpages/EditPageSettings";
 export {default as EditLoadedDataSources} from "./editpages/EditLoadedDataSources";
+export {default as EditStaticDataSources} from "./editpages/EditStaticDataSources";
 export {default as EditRepresentationTypes} from "./edittypes/EditRepresentationTypes";
 export {default as EditRepresentations} from "./editrepresentations/EditRepresentations";
 export {default as EditGroups} from "./editgroups/EditGroups";

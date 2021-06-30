@@ -71,10 +71,11 @@ export default class HierarchyLevelList extends Layout {
 							)
 						)
 					)
-				)
+				),
+				React.createElement("div", {"data-slot": "spacing", "className": "spacing small"})
 			),
 			React.createElement(Wprr.DraggableItem, {"dragParent": false, "addMode": "append"},
-				React.createElement("div", {"className": "append-drop-position"})
+				React.createElement("div", {"className": "append-drop-position", "style": {"marginLeft": 32}})
 			)
 		);
 	}

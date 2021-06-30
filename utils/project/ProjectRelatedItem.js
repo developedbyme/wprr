@@ -1,9 +1,13 @@
 import Wprr from "wprr/Wprr";
 
+import BaseObject from "wprr/core/BaseObject";
+
 // import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
-export default class ProjectRelatedItem {
+export default class ProjectRelatedItem extends BaseObject {
 	
 	constructor() {
+		super();
+		
 		this._project = null;
 	}
 	

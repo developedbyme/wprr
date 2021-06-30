@@ -29,6 +29,12 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	setParts(aParts) {
+		this.inputs.setInput("filters", aParts);
+		
+		return this;
+	}
+	
 	removePart(aPart) {
 		let parts = this.inputs.getInput("filters");
 		

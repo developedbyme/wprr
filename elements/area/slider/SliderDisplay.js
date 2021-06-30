@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -11,6 +12,18 @@ export default class SliderDisplay extends WprrBaseObject {
 	
 	constructor(props) {
 		super(props);
+		
+		this._maxHeight = Wprr.sourceValue(0);
+	}
+	
+	_updateHeight(aElement) {
+		console.log("_updateHeight");
+		console.log(aElement);
+		
+		let elementHeight = Wprr.objectPath(aElement.getMainElement(), "clientHeight");
+		console.log(elementHeight);
+		
+		this._maxHeight.value = Math.max(this._maxHeight.value, elementHeight);
 	}
 	
 	_getStartIndex(aPosition, aContainerWidth, aItemWidth, aSpacing) {
@@ -104,7 +117,7 @@ export default class SliderDisplay extends WprrBaseObject {
 				"width": itemWidth
 			}
 			
-			returnArray.push(React.createElement("div", {"className": placementClasses, "key": "placement-" + globalIndex, "style": styleObject}, currentElement));
+			returnArray.push(React.createElement(Wprr.BaseObject, {"className": placementClasses, "key": "placement-" + globalIndex, "style": styleObject, didMountCommands: Wprr.commands.callFunction(this, this._updateHeight, [Wprr.source("commandElement")])}, currentElement));
 		}
 		
 		return returnArray;
@@ -116,6 +129,13 @@ export default class SliderDisplay extends WprrBaseObject {
 		let items = ReactChildFunctions.getInputChildrenForComponent(this);
 		let placedItems = this._renderPlacedItems(items);
 		
-		return React.createElement("wrapper", {}, placedItems);
+		let updateHeight = this.getFirstInput("updateHeight");
+		if(updateHeight) {
+			return React.createElement("div", {}, 
+				React.createElement(Wprr.BaseObject, {"style": Wprr.source("object", {"height": this._maxHeight}), "sourceUpdates": this._maxHeight}, placedItems)
+			);
+		}
+		
+		return React.createElement("div", {}, placedItems);
 	}
 }

@@ -93,6 +93,7 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 		this._updateHeight();
 		
 		this._updateState();
+		
 	}
 	
 	componentWillUnmount() {
@@ -106,6 +107,7 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let height = this.state["height"]*this.state["envelope"];
+		
 		let styleObject = {"height": height, "overflow": "hidden"};
 		
 		if(this.state["envelope"] === 1) {
@@ -113,8 +115,9 @@ export default class OpenCloseExpandableArea extends WprrBaseObject {
 			styleObject["overflow"] = "visible";
 		}
 		
+		//MENOTE: browser can leave line artifacts on height 0
 		return React.createElement("wrapper", {},
-			React.createElement("div", {"className": "animation-element border-box-sizing", "style": styleObject},
+			React.createElement("div", {"className": "animation-element border-box-sizing position-relative", "style": styleObject},
 				React.createElement("div", {"ref": this._setHeightElementBound}, this.props.children)
 			)
 		);

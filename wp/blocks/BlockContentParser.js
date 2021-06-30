@@ -137,7 +137,7 @@ export default class BlockContentParser {
 			data["innerMarkup"] = contentString;
 			
 			let parsedContent = new BlockContentParser();
-			parsedContent.setHolder(this._holderElement);
+			parsedContent.setHolder(aElement.parentNode);
 			parsedContent.setContent(contentString);
 			parsedContent.setupExistingElement(aElement);
 			data["parsedContent"] = parsedContent;

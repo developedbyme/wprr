@@ -26,7 +26,7 @@ export default class PriceSummary extends Wprr.BaseObject {
 				<Wprr.HasData check={totalDiscounts}>
 					<Wprr.FlexRow className="justify-between small-item-spacing cart-price-summary-row">
 						<div>{Wprr.idText("Regular price", "site.checkout.regularPrice")}</div>
-						<div>{Wprr.text(PriceSummary.getFormattedPrice(1*cart.totals.subtotal+1*cart.totals.subtotal_tax+1*cart.totals.fee_total, currency))}</div>
+						<div>{Wprr.text(PriceSummary.getFormattedPrice(1*cart.totals.subtotal+1*cart.totals.total_tax+1*cart.totals.fee_total, currency))}</div>
 					</Wprr.FlexRow>
 					<Wprr.FlexRow className="justify-between small-item-spacing cart-price-summary-row">
 						<div className="price-table-discount">{Wprr.idText("Rabatt", "site.checkout.discount")}</div>

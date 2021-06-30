@@ -271,7 +271,10 @@ export default class Wprr {
 				break;
 			}
 			
-			if(currentPathPart === "(every)") {
+			if(currentPathPart === "(self)") {
+				continue;
+			}
+			else if(currentPathPart === "(every)") {
 				currentArray.shift();
 				let currentItems = Wprr.utils.array.singleOrArray(currentObject);
 				let returnArray = Wprr.utils.array.mapField(currentItems, currentArray.join("."));

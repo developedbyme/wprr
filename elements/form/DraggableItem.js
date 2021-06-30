@@ -31,6 +31,10 @@ export default class DraggableItem extends WprrBaseObject {
 		aEvent.dataTransfer.effectAllowed = "move";
 		aEvent.dataTransfer.setDragImage(currentNode, 0, 0);
 		
+		let dragData = this.getFirstInputWithDefault("dragData", {});
+		
+		aEvent.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+		
 		this._dragged.value = true;
 		
 		let dragController = this.getFirstInput("dragController", Wprr.sourceReference("dragController"));
@@ -67,9 +71,17 @@ export default class DraggableItem extends WprrBaseObject {
 	_drop(aEvent) {
 		this._over.value = false;
 		
+		console.log(aEvent, aEvent.dataTransfer.getData("text"));
+		
+		let data = null;
+		let dataString = aEvent.dataTransfer.getData("text");
+		if(dataString) {
+			data = JSON.parse(dataString);
+		}
+		
 		let dragController = this.getFirstInput("dragController", Wprr.sourceReference("dragController"));
 		if(dragController) {
-			dragController.itemDroppedOn(this);
+			dragController.itemDroppedOn(this, data);
 		}
 	}
 	
@@ -85,6 +97,21 @@ export default class DraggableItem extends WprrBaseObject {
 		}
 		
 		let children = ReactChildFunctions.getInputChildrenForComponent(this);
+		
+		let canDropOn = this.getFirstInputWithDefault("canDropOn", true);
+		
+		if(!canDropOn) {
+			return React.createElement("div", {},
+				React.createElement(Wprr.EventCommands,
+					{"events": {"onDragStart": this._startCommand, "onDragEnd": this._endCommand}},
+					React.createElement(Wprr.Adjust, {adjust: Wprr.adjusts.classFromComparison(this._dragged, true, "===", "dragging"), sourceUpdates: this._dragged},
+						React.createElement("div", {"draggable": dragParent, "className": "draggable-item"},
+							children
+						)
+					)
+				)
+			);
+		}
 		
 		return React.createElement("div", {},
 			React.createElement(Wprr.EventCommands,

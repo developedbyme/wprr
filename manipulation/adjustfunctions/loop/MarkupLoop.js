@@ -1,3 +1,4 @@
+import Wprr from "wprr/Wprr";
 import React from "react";
 
 import objectPath from "object-path";
@@ -81,18 +82,18 @@ export default class MarkupLoop extends AdjustFunction {
 	
 	_getElementForItem(aIndex, aData, aSettings) {
 		
-		if(this._cachedItems[aIndex]) {
-			if(this._cachedItems[aIndex]["data"] === aData) {
-				//console.log("Cache hit");
-				return this._cachedItems[aIndex]["element"];
+		let keyIndex = aIndex;
+		if(aSettings.keyField) {
+			let customKeyIndex = Wprr.objectPath(aData, aSettings.keyField);
+			if(customKeyIndex !== null && customKeyIndex !== undefined) {
+				keyIndex = customKeyIndex;
 			}
 		}
 		
-		let keyIndex = aIndex;
-		if(aSettings.keyField) {
-			let customKeyIndex = objectPath.get(aData, aSettings.keyField);
-			if(customKeyIndex !== null && customKeyIndex !== undefined) {
-				keyIndex = customKeyIndex;
+		if(this._cachedItems[keyIndex]) {
+			if(this._cachedItems[keyIndex]["data"] === aData) {
+				//console.log("Cache hit");
+				return this._cachedItems[keyIndex]["element"];
 			}
 		}
 		
@@ -165,7 +166,9 @@ export default class MarkupLoop extends AdjustFunction {
 					
 					let keyIndex = i;
 					if(keyField) {
-						let customKeyIndex = objectPath.get(currentData, keyField);
+						console.log(keyField);
+						let customKeyIndex = Wprr.objectPath(currentData, keyField);
+						console.log(customKeyIndex);
 						if(customKeyIndex !== null && customKeyIndex !== undefined) {
 							keyIndex = customKeyIndex;
 						}

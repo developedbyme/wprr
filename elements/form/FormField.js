@@ -89,6 +89,8 @@ export default class FormField extends WprrBaseObject {
 		
 		this._validate("blur");
 		
+		this.updateProp("isEditing", false);
+		
 		let commands = this.getSourcedProp("blurCommands");
 		
 		if(commands) {
@@ -100,6 +102,8 @@ export default class FormField extends WprrBaseObject {
 		//console.log("wprr/elements/form/FormField::_callback_focus");
 		
 		this._validate("focus");
+		
+		this.updateProp("isEditing", true);
 		
 		let commands = this.getSourcedProp("focusCommands");
 		
@@ -113,6 +117,7 @@ export default class FormField extends WprrBaseObject {
 		
 		returnObject["id"] = this.getSourcedProp("id");
 		returnObject["name"] = this.getSourcedProp("name");
+		returnObject["autocomplete"] = this.getSourcedProp("autocomplete");
 		
 		let type = this.getSourcedProp("type");
 		

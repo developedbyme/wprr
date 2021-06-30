@@ -15,9 +15,6 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	constructor(aProps) {
 		super(aProps);
 		
-		this._mainElementType = "section";
-		this._addMainElementClassName("main-section");
-		
 		this._groups = null;
 		this._containers = null;
 		this._injectComponents = null;
@@ -60,9 +57,11 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_createContent() {
+		//console.log("_createContent");
 		
 		let content = this.getFirstInput("content");
 		let parsedContent = this.getFirstInput("parsedContent");
+		
 		if((content === null || content === undefined) && (parsedContent === null || parsedContent === undefined)) {
 			content = this.getFirstInput(Wprr.source("postData", "content"));
 			let postId = this.getFirstInput(Wprr.source("postData", "id"));
@@ -169,11 +168,12 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 
 	_renderMainElement() {
-		//console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
+		console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
+		console.log(this);
 		
 		let containers = this._getContainers();
 		
-		return React.createElement("wrapper", {},
+		return React.createElement("section", {"className": "main-section"},
 			containers,
 			React.createElement("div", {"key": "injected-components", "className": "wprr-inject-components"},
 				this._renderInjectComponents

@@ -27,10 +27,10 @@ export default class InsertElement extends ManipulationBaseObject {
 		
 		let originalChildren = super._getChildrenToClone();
 		
-		let insertedElement = this.getSourcedProp("element");
+		let insertedElement = this.getFirstInput("element");
 		
 		if(!insertedElement) {
-			let canBeEmpty = this.getSourcedProp("canBeEmpty");
+			let canBeEmpty = this.getFirstInput("canBeEmpty");
 			if(canBeEmpty) {
 				return [];
 			}

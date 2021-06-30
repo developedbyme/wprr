@@ -21,7 +21,7 @@ export default class ValueSourceData extends SourceData {
 		
 		this._sourceFunction = this.getValue;
 		
-		this._callback_onCompleteBound = this._callback_onComplete.bind();
+		this._callback_onCompleteBound = this._callback_onComplete.bind(this);
 		this._changeCommands = null;
 	}
 	
@@ -74,14 +74,18 @@ export default class ValueSourceData extends SourceData {
 		
 		if(!Wprr.utils.object.isEqual(this._value, aValue)) {
 			this._value = aValue;
-			this.externalDataChange();
-		
-			if(this._changeCommands) {
-				Wprr.utils.CommandPerformer.perform(this._changeCommands, aValue, null);
-			}
+			this.updateForValueChange();
 		}
 		
 		return this;
+	}
+	
+	updateForValueChange() {
+		this.externalDataChange();
+	
+		if(this._changeCommands) {
+			Wprr.utils.CommandPerformer.perform(this._changeCommands, this._value, null);
+		}
 	}
 	
 	makeStorable() {
@@ -177,6 +181,8 @@ export default class ValueSourceData extends SourceData {
 			this._tween.stop();
 			this._tween = null;
 		}
+		
+		return this;
 	}
 	
 	animateValue(aNewValue, aTime = 0.4, aEasing = null, aDelay = 0) {
@@ -192,6 +198,26 @@ export default class ValueSourceData extends SourceData {
 			this._tween.delay(1000*aDelay);
 		}
 		this._tween.onComplete(this._callback_onCompleteBound).start();
+		
+		return this;
+	}
+	
+	setWithDelay(aValue, aDelay) {
+		setTimeout((function() {this.setValue(aValue);}).bind(this), Math.round(1000*aDelay));
+		
+		return this;
+	}
+	
+	toggleValue(aSteps = [true, false]) {
+		let currentValue = this.value;
+		let index = aSteps.indexOf(currentValue);
+		if(index === -1) {
+			console.warn(currentValue + " is not present in steps " + aSteps + ". Restarting");
+		}
+		let nextPosition = (index+1)%aSteps.length;
+		this.value = aSteps[nextPosition];
+		
+		return this;
 	}
 	
 	static create(aValue) {

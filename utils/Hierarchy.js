@@ -9,6 +9,9 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		super();
 		
 		this.createSource("structure");
+		
+		this.sources.get("structure").addChangeCommand(Wprr.commands.callFunction(this, this._updateList));
+		
 	}
 	
 	_createHierarchyItem(aLinkedId, aChildrenLinks) {
@@ -20,6 +23,8 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		childItem.addSingleLink("parent", parent.id);
 		childItem.getLinks("children");
 		aChildrenLinks.addItem(childItem.id);
+		
+		childItem.setValue("level", parent.getValue("level")+1);
 		
 		return childItem;
 	}
@@ -61,10 +66,14 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		
 		let mainParent = this.item;
 		
+		mainParent.setValue("level", -1);
+		mainParent.getLinks("list")
+		
 		if(aData && Array.isArray(aData)) {
 			let cleanedList = this._setupList(aData, mainParent);
 			console.log("cleanedList", cleanedList);
-			//METODO: update storage with cleaned list
+			
+			this.updateStructure();
 		}
 	}
 	
@@ -150,6 +159,36 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		console.log(this.structure);
 	}
 	
+	_addItemToList(aItem, aReturnArray) {
+		aReturnArray.push(aItem);
+		
+		let children = aItem.getType("children").items;
+		this._addItemsToList(children, aReturnArray);
+	}
+	
+	_addItemsToList(aArray, aReturnArray) {
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this._addItemToList(currentArray[i], aReturnArray);
+		}
+	}
+	
+	_updateList() {
+		console.log("_updateList");
+		let childen = this.item.getLinks("children").items;
+		
+		console.log("childen>>>>>>>>>>>>>", childen);
+		
+		let itemList = new Array();
+		this._addItemsToList(childen, itemList);
+		
+		let idList = Wprr.utils.array.mapField(itemList, "id");
+		console.log(idList, this);
+		
+		this.item.getLinks("list").setItems(idList);
+	}
+	
 	_isInside(aItem, aParentItem) {
 		
 		let currentItem = aItem;
@@ -186,6 +225,8 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		
 		currentChildrenList.removeItem(aItem.id);
 		aParentItem.getLinks("children").insertItem(aItem.id, aPosition);
+		
+		aItem.setValue("level", aItem.getType("parent").linkedItem.getValue("level")+1);
 		
 		this.updateStructure();
 	}

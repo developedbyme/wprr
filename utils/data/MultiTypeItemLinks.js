@@ -21,7 +21,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	
 	addItem(aId) {
 		this._idsSource.value.push(aId);
-		this._idsSource.externalDataChange();
+		this._idsSource.updateForValueChange();
 		
 		return this;
 	}
@@ -33,7 +33,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		}
 		
 		this._idsSource.value.splice(aPosition, 0, aId);
-		this._idsSource.externalDataChange();
+		this._idsSource.updateForValueChange();
 		
 		return this;
 	}
@@ -66,6 +66,10 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		}
 		
 		return this;
+	}
+	
+	setItems(aIds) {
+		this._idsSource.value = aIds;
 	}
 	
 	createItem(aId) {

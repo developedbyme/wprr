@@ -85,6 +85,24 @@ export default class SiteDataLoader {
 		}
 	}
 	
+	loadUrl(aUrl) {
+		
+		let url = aUrl;
+		let urlItem = this._items.getItem(aUrl);
+		
+		let loader;
+		if(urlItem.hasType("loader")) {
+			loader = urlItem.getType("loader");
+		}
+		else {
+			let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
+			loader = this._items.project.getSharedLoader(wprrUrl);
+		}
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._loaderLoaded, [urlItem, loader]));
+		loader.load();
+	}
+	
 	setupDataForUrl(aUrl, aData) {
 		this._setupItem(this._items.getItem(aUrl), aData);
 		

@@ -1,7 +1,7 @@
 import React from "react";
 import Wprr from "wprr/Wprr";
 
-export default class EditPages extends Wprr.BaseObject {
+export default class EditStaticDataSources extends Wprr.BaseObject {
 	
 	constructor(aProps) {
 		super(aProps);
@@ -13,19 +13,18 @@ export default class EditPages extends Wprr.BaseObject {
 		
 		let fields = {
 			"id": {"type": "select"},
-			"title": {"type": "data"},
-			"permalink": {"type": "data"},
-			"pageSettings": {"type": "relations", "relationPath": "incoming.for.settings/page-settings"},
-			"dataSources": {"type": "relations", "relationPath": "incoming.for.settings/data-source"},
+			"dataName": {"type": "field"},
+			"name": {"type": "field"},
+			"data": {"type": "field"},
 			"options": {"type": "options"}
 		};
 		
-		let operationSections = Wprr.utils.object.shallowMerge(Wprr.layout.list.operations.adminOperationAreas, Wprr.layout.list.operations.pagesOperationAreas);
+		let operationSections = Wprr.utils.object.shallowMerge(Wprr.layout.list.operations.adminOperationAreas);
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		
 		return <div>
 			<Wprr.AddReference data="publish" as="publishStatus">
-				<Wprr.layout.items.batch.BatchEditItems postType="page" dataType="post-type/page" searchFields="data.title,data.permalink,data.id" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} operationSections={operationSections} />
+				<Wprr.layout.items.batch.BatchEditItems dataType="settings/data-source/static-data-source,settings/data-source,settings,named-item" searchFields="fieldByName.name.field.value" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} operationSections={operationSections} />
 			</Wprr.AddReference>
 		</div>;
 	}
@@ -35,7 +34,7 @@ export default class EditPages extends Wprr.BaseObject {
 		
 		let dataSettings = {
 			"items": {
-				"value": "wprr/v1/range/page/drafts,privates/status,default,fields,editObjectRelations",
+				"value": "wprr/v1/range/dbm_data/drafts,privates,relation/status,fields,editObjectRelations?type=settings/data-source/static-data-source",
 				"replacements": {}
 			}
 		};

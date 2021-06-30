@@ -788,4 +788,47 @@ export default class ArrayFunctions {
 			aArray[endIndex] = temp;
 		}
 	}
+	
+	static _getAllItemsInHierarchyRecursive(aItems, aChildrenField, aReturnArray) {
+		if(aItems) {
+			let currentArray = aItems;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+				
+				if(currentItem) {
+					aReturnArray.push(currentItem);
+					let children = Wprr.objectPath(currentItem, aChildrenField);
+					ArrayFunctions._getAllItemsInHierarchyRecursive(children, aChildrenField, aReturnArray);
+				}
+			}
+		}
+	}
+	
+	static getAllItemsInHierarchy(aItems, aChildrenField = "children") {
+		let returnArray = new Array();
+		
+		if(aItems) {
+			aItems = ArrayFunctions.singleOrArray(aItems);
+		
+			ArrayFunctions._getAllItemsInHierarchyRecursive(aItems, aChildrenField, returnArray);
+		}
+		
+		return returnArray;
+	}
+	
+	static count(aArray, aValue) {
+		
+		let returnValue = 0;
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentArray[i] === aValue) {
+				returnValue++;
+			}
+		}
+		
+		return returnValue;
+	}
 }

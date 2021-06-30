@@ -52,6 +52,8 @@ export default class ModuleCreatorBaseObject {
 		
 		
 		this._siteDataLoader = new Wprr.utils.navigation.SiteDataLoader();
+		
+		this._siteNavigation.dataLoader = this._siteDataLoader;
 		this._siteNavigation.urlSource.addChangeCommand(Wprr.commands.setProperty(this._siteDataLoader.urlSource.reSource(), "value", this._siteNavigation.urlSource))
 		
 	}
@@ -240,7 +242,7 @@ export default class ModuleCreatorBaseObject {
 		let rootObject = React.createElement(Provider, {"store": this._store},
 			React.createElement(ReferenceExporter, {"references": this._referenceHolder},
 				React.createElement(RefGroup, {"group": "site"},
-					React.createElement(Wprr.ReferenceInjection, {"injectData": {"wprr/rawUrl": this._siteNavigation.urlSource, "wprr/pageItem": this._siteDataLoader.itemSource}}, 
+					React.createElement(Wprr.ReferenceInjection, {"injectData": {"wprr/siteNavigation": this._siteNavigation, "wprr/rawUrl": this._siteNavigation.urlSource, "wprr/pageItem": this._siteDataLoader.itemSource}}, 
 						React.createElement(ReferenceInjection, {"injectData": injectData},
 							this._getMainCompnentWithInjections()
 						)
@@ -308,7 +310,7 @@ export default class ModuleCreatorBaseObject {
 		}
 		
 		this._siteNavigation.setUrlFromLocation();
-		//this._siteNavigation.start();
+		this._siteNavigation.start();
 		
 		let rootObject = this._getRootObject(aData);
 		

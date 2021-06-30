@@ -113,9 +113,11 @@ export default class PageDataSources extends Layout {
 					let path = currentLoadData.value;
 					let replacements = this._getReplacements(currentLoadData.replacements);
 					let finalPath = this.getWprrUrl(this._replaceText(path, replacements));
-					console.log("<<<<>>>>>>", currentLoadData, finalPath);
 					
 					returnArray.push({"key": currentDataSource["dataName"], "value": finalPath, "format": currentLoadData.format})
+				}
+				if(currentDataSource["sourceType"] === "static-data-source") {
+					this._externalData.updateValue("injectData." + currentDataSource["dataName"], currentDataSource["data"]);
 				}
 			}
 			/*

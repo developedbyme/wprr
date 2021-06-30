@@ -27,7 +27,7 @@ export default class ItemList extends Layout {
 					loop: Wprr.adjusts.markupLoop(
 						Wprr.sourceFunction(Wprr.utils.array, "singleOrArray", [aSlots.prop("ids", [])]),
 						aSlots.source("itemInjection",
-							React.createElement(Wprr.SelectItem, {id: Wprr.sourceReference("loop/item")},
+							React.createElement(Wprr.SelectItem, {id: Wprr.sourceReference("loop/item"), as: aSlots.prop("as", "item")},
 								aSlots.default(
 									React.createElement("div", null, "No list item set")
 								)

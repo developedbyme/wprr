@@ -65,12 +65,14 @@ export default class RichTextEditor extends WprrBaseObject {
 	
 	get editorProperties() {
 		if(!this._editorProperties) {
+			let editorStyle = this.getFirstInput("editorStyle", Wprr.sourceReferenceIfExists("tinymce/editorStyle"));
 			let editorCss = this.getFirstInput("editorCss", Wprr.sourceReferenceIfExists("tinymce/editorCss"));
 			let plugins = this.getFirstInputWithDefault("plugins", Wprr.sourceReferenceIfExists("tinymce/plugins"), "link image code autoresize advlist lists");
 			let menubar = this.getFirstInputWithDefault("menubar", Wprr.sourceReferenceIfExists("tinymce/menubar"), "");
-			let toolbar = this.getFirstInputWithDefault("toolbar", Wprr.sourceReferenceIfExists("tinymce/toolbar"), "undo redo | styleselect | bold italic | link | alignleft aligncenter alignright | numlist bullist | code | fontsizeselect");
+			let toolbar = this.getFirstInputWithDefault("toolbar", Wprr.sourceReferenceIfExists("tinymce/toolbar"), "undo redo | styleselect | bold italic | link | alignleft aligncenter alignright | numlist bullist | code removeformat | fontsizeselect");
 		
 			this._editorProperties = {
+				content_style: editorStyle,
 				content_css: editorCss,
 				plugins: plugins,
 				menubar: menubar,

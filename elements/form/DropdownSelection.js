@@ -157,7 +157,7 @@ export default class DropdownSelection extends WprrBaseObject {
 					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("dropdownSelectionExternalStorage", "open")},
 					React.createElement("div", {className: "position-absolute dropdown-selection-popup full-width"},
 						React.createElement(Wprr.PortalledItem, {"overlayClassName": "layer-order-dropdown-portal"},
-							React.createElement(Wprr.ClickOutsideTrigger, {"commands": Wprr.commands.callFunction(Wprr.sourceReference("dropdownSelection"), "close"), active: Wprr.sourceReference("dropdownSelectionExternalStorage", "active")},
+							React.createElement(Wprr.ClickOutsideTrigger, {"commands": Wprr.commands.delay(Wprr.commands.callFunction(Wprr.sourceReference("dropdownSelection"), "close"), 0.1), active: Wprr.sourceReference("dropdownSelectionExternalStorage", "active")},
 								React.createElement(Wprr.OpenCloseExpandableArea, {"open": Wprr.sourceReference("dropdownSelectionExternalStorage", "open")},
 									React.createElement(Wprr.MarkupChildren, {"placement": "beforeList"}),
 									React.createElement(Wprr.MarkupChildren, {"placement": "rest"}),

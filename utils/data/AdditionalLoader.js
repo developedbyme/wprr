@@ -108,7 +108,18 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 			return;
 		}
 		
-		this._queuedItems = this._queuedItems.concat(aIds);
+		let oldIds = this._queuedItems;
+		this._queuedItems = Wprr.utils.array.removeDuplicates(oldIds.concat(aIds));
+		
+		let newIds = Wprr.utils.array.removeValues(this._queuedItems, oldIds);
+		{
+			let currentArray = newIds;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let item = this._items.getItem(currentArray[i]);
+				this.runCommandGroup("prepare", {"item": item});
+			}
+		}
 		
 		this._queueNextLoad();
 	}

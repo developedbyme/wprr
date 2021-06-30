@@ -35,7 +35,7 @@ export default class MultiStepDropdownNavigationBar extends Layout {
 					React.createElement("div", {className: "cursor-pointer"},
 						React.createElement(Wprr.FlexRow, {className: "pixel-item-spacing"},
 							"<",
-							Wprr.text(aSlots.prop("text", Wprr.sourceTranslation("Back")))
+							Wprr.text(aSlots.prop("text", Wprr.sourceTranslation("Back", "site.dropdownBack")))
 						)
 					)
 				)

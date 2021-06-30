@@ -54,7 +54,7 @@ export default class RangeSelection extends ManipulationBaseObject {
 		//METODO: get initial values
 		let skipNoSelection = this.getSourcedProp("skipNoSelection");
 		if(!skipNoSelection) {
-			let text = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose"));
+			let text = this.getFirstValidSource(Wprr.sourceProp("noSelectionLabel"), Wprr.sourceTranslation("Choose", "site.choose"));
 			adjusts.push(Wprr.adjusts.addToArray(Wprr.sourceProp("options"), [{"value": 0, "label": text}], true, "options"));
 		}
 		

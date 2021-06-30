@@ -26,27 +26,37 @@ export default class HierarchyList extends Layout {
 		this._movedElement = aElement;
 	}
 	
-	itemDroppedOn(aElement) {
+	itemDroppedOn(aElement, aData) {
 		console.log("itemDroppedOn");
-		console.log(aElement, this._movedElement);
+		console.log(aElement, this._movedElement, aData);
 		
-		let addMode = aElement.getFirstInput("addMode");
-		console.log(addMode);
+		if(this._movedElement) {
+			let addMode = aElement.getFirstInput("addMode");
 		
-		let hierarchyItem = this._movedElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
-		let atItem = aElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
-		
-		console.log(atItem, hierarchyItem, this._mainHierarchy);
-		
-		if(addMode === "append") {
-			this._mainHierarchy.moveToParent(hierarchyItem, atItem, -1);
+			if(addMode === "append") {
+				let hierarchyItem = this._movedElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
+				let atItem = aElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
+			
+				this._mainHierarchy.moveToParent(hierarchyItem, atItem, -1);
+			}
+			else if(addMode === "insertBefore") {
+				let hierarchyItem = this._movedElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
+				let atItem = aElement.getFirstInput(Wprr.sourceReference("orderHierarchyItem"));
+			
+				let parent = atItem.getType("parent").linkedItem;
+			
+				let position = parent.getLinks("children").ids.indexOf(atItem.id);
+			
+				this._mainHierarchy.moveToParent(hierarchyItem, parent, position);
+			}
+			
+			this._movedElement = null;
 		}
-		else if(addMode === "insertBefore") {
-			let parent = atItem.getType("parent").linkedItem;
-			
-			let position = parent.getLinks("children").ids.indexOf(atItem.id);
-			
-			this._mainHierarchy.moveToParent(hierarchyItem, parent, position);
+		else {
+			let dropCommands = this.getFirstInput("dropCommands");
+			if(dropCommands) {
+				this._performCommands(dropCommands, {"element": aElement, "data": aData});
+			}
 		}
 	}
 	
@@ -65,6 +75,17 @@ export default class HierarchyList extends Layout {
 		hierarchy.updateStructure();
 		
 		return hierarchyItem;
+	}
+	
+	_prepareInitialRender() {
+		super._prepareInitialRender();
+		
+		let editorSource = Wprr.sourceReference("editor");
+		let orderEditorSource = editorSource.deeper("item.orderEditor");
+		
+		let orderEditor = this.getFirstInput(orderEditorSource);
+		
+		orderEditor.addOrder(this._sources.orderId.value);
 	}
 	
 	_getLayout(aSlots) {
