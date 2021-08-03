@@ -1,3 +1,6 @@
+import * as editpost from "./editpost/wp-blocks.js";
+export {editpost};
+
 export {default as EditGlobalItems} from "./editglobalitems/EditGlobalItems";
 export {default as EditContentTemplates} from "./editcontenttemplates/EditContentTemplates";
 export {default as EditContentTemplate} from "./editcontenttemplates/EditContentTemplate";

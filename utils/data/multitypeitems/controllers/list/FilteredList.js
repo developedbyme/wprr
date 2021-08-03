@@ -29,7 +29,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("filteredListContoller", this);
+		aItem.addType("filteredListController", this);
 		this.setup();
 		
 		return this;

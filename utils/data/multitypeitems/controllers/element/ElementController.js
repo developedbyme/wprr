@@ -26,7 +26,7 @@ export default class ElementController extends MultiTypeItemConnection {
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("elementContoller", this);
+		aItem.addType("elementController", this);
 		this.setup();
 		
 		return this;

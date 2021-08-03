@@ -9,3 +9,6 @@ export {element as element};
 
 import * as list from "./list";
 export {list as list};
+
+import * as animation from "./animation";
+export {animation as animation};

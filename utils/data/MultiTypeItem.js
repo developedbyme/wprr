@@ -153,6 +153,14 @@ export default class MultiTypeItem {
 		return newSingleLink;
 	}
 	
+	requireSingleLink(aType, aDefaultId = 0) {
+		if(!this.hasType(aType)) {
+			this.addSingleLink(aType, aDefaultId);
+		}
+		
+		return this.getType(aType);
+	}
+	
 	connectData(aData) {
 		aData.setItemConnection(this);
 		

@@ -24,6 +24,7 @@ export default class ApiCommand extends WprrBaseObject {
 		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));
 		
 		let loadingSequence = Wprr.utils.loading.LoadingSequence.create();
+		loadingSequence._numberOfConcurrentLoaders = 1;
 		let baseUrl = this.getWprrUrl(this._url.value);
 		
 		let payload = this._payload.value;

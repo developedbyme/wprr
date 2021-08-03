@@ -27,7 +27,7 @@ export default class LoadAdditionalDataForList extends MultiTypeItemConnection {
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("loadAdditionalDataForListContoller", this);
+		aItem.addType("loadAdditionalDataForListController", this);
 		this.setup();
 		
 		return this;

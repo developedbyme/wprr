@@ -68,12 +68,20 @@ export default class Cell extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addClassName(aClassName) {
+		this.item.setValue("className", this.item.getValue("className") + " " + aClassName);
+		
+		return this;
+	}
+	
 	removeTitle() {
 		this.item.getType("titleElement").linkedItem.setValue("element", React.createElement(React.Fragment));
+		
+		return this;
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("gridContoller", this);
+		aItem.addType("gridController", this);
 		this.setup();
 		
 		return this;

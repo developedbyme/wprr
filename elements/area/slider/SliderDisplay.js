@@ -73,14 +73,14 @@ export default class SliderDisplay extends WprrBaseObject {
 	_renderPlacedItems(aItems) {
 		//console.log("wprr/elements/area/slider/SliderDisplay::_renderPlacedItems");
 		
-		let containerWidth = this.getSourcedProp("width");
-		let itemWidth = this.getSourcedPropWithDefault("itemWidth", SourceData.create("prop", "width"));
-		let spacing = this.getSourcedPropWithDefault("spacing", 0);
-		let position = this.getSourcedPropWithDefault("position", 0);
-		let adjustSpacing = this.getSourcedPropWithDefault("adjustSpacing", false);
+		let containerWidth = this.getFirstInput("width");
+		let itemWidth = this.getFirstInput("itemWidth", Wprr.sourceProp("width"));
+		let spacing = this.getFirstInputWithDefault("spacing", 0);
+		let position = this.getFirstInputWithDefault("position", 0);
+		let adjustSpacing = this.getFirstInputWithDefault("adjustSpacing", false);
 		
 		let placementClasses = "absolute-for-transform";
-		let propPlacementClassName = this.getSourcedProp("placementClassName");
+		let propPlacementClassName = this.getFirstInput("placementClassName");
 		if(propPlacementClassName) {
 			placementClasses += " " + propPlacementClassName;
 		}

@@ -33,24 +33,29 @@ export default class Grid extends MultiTypeItemConnection {
 		
 		this.item.setValue("showCellTitles", "top");
 		
+		this.item.getNamedLinks("namedCells");
+		
 		return this;
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("gridContoller", this);
+		aItem.addType("gridController", this);
 		this.setup();
 		
 		return this;
 	}
 	
-	addCell(aName, aElement, aVisible = true) {
+	addCell(aIdentifier, aName, aElement, aVisible = true) {
 		let newCell = this.item.group.createInternalItem();
 		
 		let controller = Wprr.utils.data.multitypeitems.controllers.list.Cell.create(newCell, aName, aElement, aVisible);
 		newCell.addType("cellController", controller);
 		newCell.addSingleLink("grid", this.item.id);
 		
+		controller.addClassName("field-" + aIdentifier);
+		
 		Wprr.objectPath(this.item, "cells.linkedItem.all").addItem(newCell.id);
+		this.item.getNamedLinks("namedCells").addItem(aIdentifier, newCell.id);
 		
 		return newCell;
 	}

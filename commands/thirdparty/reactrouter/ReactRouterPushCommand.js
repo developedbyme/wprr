@@ -23,14 +23,14 @@ export default class ReactRouterPushCommand extends BaseCommand {
 		
 		let to = this.getInput("to");
 		
-		let historyContoller = this.getInput("history");
-		if(!historyContoller) {
+		let historyController = this.getInput("history");
+		if(!historyController) {
 			console.error("Command doesn't have any history controller, can't push state.", to, this);
 			return;
 		}
 		
-		console.log(historyContoller);
-		historyContoller.push(to);
+		console.log(historyController);
+		historyController.push(to);
 	}
 	
 	static create(aTo = null, aHistory = null) {
