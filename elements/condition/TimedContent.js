@@ -63,13 +63,12 @@ export default class TimedContent extends Wprr.BaseObject {
 	_renderMainElement() {
 		//console.log("TimedContent::_renderMainElement");
 		
-		return <div>
-			<Wprr.HasData check={this._hasAccess}>
-				<div>
-					<Wprr.ContentsAndInjectedComponents content={Wprr.sourceReference("blockData", "innerMarkup")} parsedContent={Wprr.sourceReference("blockData", "parsedContent")} />
-				</div>
-			</Wprr.HasData>
-		</div>
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: this._hasAccess
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ContentsAndInjectedComponents, {
+  content: Wprr.sourceReference("blockData", "innerMarkup"),
+  parsedContent: Wprr.sourceReference("blockData", "parsedContent")
+}))));
 	}
 	
 	static getWpAdminEditor() {
@@ -88,29 +87,29 @@ export default class TimedContent extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<Wprr.layout.form.LabelledArea label="Timed access">
-				<Wprr.RangeSelection range="wprr/v1/range/dbm_data/relation/default?type=timed-access">
-					<Wprr.Selection value={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "timedContent")} />
-				</Wprr.RangeSelection>
-			</Wprr.layout.form.LabelledArea>
-				<div>
-					<Wprr.EditableProps editableProps="invert" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-						<Wprr.Checkbox className="full-width" valueName="invert" />
-					</Wprr.EditableProps>
-					<label>{Wprr.translateText("Invertera matchning")}</label>
-				</div>
-			<hr className="line no-margin"/>
-			<wp.editor.InnerBlocks />
-			<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-resize,flex-no-resize,flex-resize">
-				<hr className="line no-margin"/>
-				<div>
-					{Wprr.translateText("End:")}
-					{" "}
-					{Wprr.translateText("Timed content")}
-				</div>
-				<hr className="line no-margin"/>
-			</Wprr.FlexRow>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: "Timed access"
+}, /*#__PURE__*/React.createElement(Wprr.RangeSelection, {
+  range: "wprr/v1/range/dbm_data/relation/default?type=timed-access"
+}, /*#__PURE__*/React.createElement(Wprr.Selection, {
+  value: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "timedContent")
+}))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "invert",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  className: "full-width",
+  valueName: "invert"
+})), /*#__PURE__*/React.createElement("label", null, Wprr.translateText("Invertera matchning"))), /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+}), /*#__PURE__*/React.createElement(wp.editor.InnerBlocks, null), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing vertically-center-items",
+  itemClasses: "flex-resize,flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+}), /*#__PURE__*/React.createElement("div", null, Wprr.translateText("End:"), " ", Wprr.translateText("Timed content")), /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+})));
 	}
 }

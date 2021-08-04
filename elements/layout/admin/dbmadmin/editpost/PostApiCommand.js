@@ -83,8 +83,8 @@ export default class PostApiCommand extends Wprr.BaseObject {
 			
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+});
 	}
 }

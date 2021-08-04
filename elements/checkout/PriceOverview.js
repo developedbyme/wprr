@@ -24,26 +24,32 @@ export default class PriceOverview extends Wprr.BaseObject {
 		let initialTitle = this.getFirstInput(Wprr.sourceReference("blockData", "initialTitle"), Wprr.sourceTranslation("Initial payment", "site.cart.initialPaymentTitle"));
 		let subscriptionTitle = this.getFirstInput(Wprr.sourceReference("blockData", "subscriptionTitle"), Wprr.sourceTranslation("Subscription", "site.cart.subscriptionPaymentTitle"));
 		
-		return <div>
-			<Wprr.DataLoader loadData={{"originalCart": cartUrl}}>
-				<Wprr.HasData check={Wprr.sourceProp("originalCart", "items")} checkType="notEmpty">
-					<PriceSummary title={initialTitle} cart={Wprr.sourceProp("originalCart")}/>
-					<Wprr.HasData check={Wprr.sourceProp("originalCart", "recurring")} checkType="notEmpty">
-						<div className="spacing standard" />
-						<Wprr.Loop loop={
-							Wprr.adjusts.markupLoop(
-								Wprr.sourceProp("originalCart", "recurring"),
-								<PriceSummary title={subscriptionTitle} cart={Wprr.sourceReference("loop/item", "cart")} />,
-								<div className="spacing standard" />
-							)
-						} />
-					</Wprr.HasData>
-				</Wprr.HasData>
-				<Wprr.HasData check={Wprr.sourceProp("cart", "items")} checkType="invert/notEmpty">
-					<div></div>
-				</Wprr.HasData>
-			</Wprr.DataLoader>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.DataLoader, {
+  loadData: {
+    "originalCart": cartUrl
+  }
+}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceProp("originalCart", "items"),
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement(PriceSummary, {
+  title: initialTitle,
+  cart: Wprr.sourceProp("originalCart")
+}), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceProp("originalCart", "recurring"),
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.Loop, {
+  loop: Wprr.adjusts.markupLoop(Wprr.sourceProp("originalCart", "recurring"), /*#__PURE__*/React.createElement(PriceSummary, {
+    title: subscriptionTitle,
+    cart: Wprr.sourceReference("loop/item", "cart")
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "spacing standard"
+  }))
+}))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceProp("cart", "items"),
+  checkType: "invert/notEmpty"
+}, /*#__PURE__*/React.createElement("div", null))));
 	}
 	
 	static getWpAdminEditor() {
@@ -53,9 +59,12 @@ export default class PriceOverview extends Wprr.BaseObject {
 			
 		};
 		
-		return <div>
-			<Wprr.FormField className="full-width" value={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "initialTitle")} />
-			<Wprr.FormField className="full-width" value={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "subscriptionTitle")} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "full-width",
+  value: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "initialTitle")
+}), /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "full-width",
+  value: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage", "subscriptionTitle")
+}));
 	}
 }

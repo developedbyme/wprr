@@ -33,45 +33,55 @@ export default class CartContents extends Wprr.BaseObject {
 		let cartUrl = Wprr.utils.wprrUrl.getCartUrl();
 		cartUrl = Wprr.utils.url.addQueryString(cartUrl, "cache", cacheValue);
 		
-		return <div>
-			<Wprr.DataLoader loadData={{"originalCart": cartUrl}}>
-				<Wprr.HasData check={Wprr.sourceProp("originalCart", "items")} checkType="notEmpty">
-					<Wprr.layout.List items={Wprr.sourceProp("originalCart", "items")}>
-						<Wprr.DataLoader loadData={{"product": Wprr.sourceCombine("wprr/v1/range-item/product/idSelection/preview,product?ids=", Wprr.sourceReference("loop/item", "product.id"))}}>
-							<Wprr.AddReference data={Wprr.sourceProp("product")} as="product">
-								<div className="standard-box standard-box-padding">
-									<Wprr.FlexRow className="justify-between vertically-center-items" itemClasses="flex-resize,flex-no-resize">
-										<Wprr.Link href={Wprr.sourceReference("loop/item", "product.permalink")} target="_blank">
-											<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-no-resize,flex-resize">
-												<div className="product__img-container small overflow-hidden">
-													<Wprr.WprrLazyImage className="image background-contain full-size" data={Wprr.sourceReference("product", "image")} />
-												</div>
-												<div>
-													{Wprr.text(Wprr.sourceReference("loop/item", "product.title"))}
-													<div className="spacing small" />
-													<div className="small-description result-line-height no-paragraph-margins-around">
-														{Wprr.text(Wprr.sourceReference("product", "shortDescription"), "html")}
-													</div>
-												</div>
-											</Wprr.FlexRow>
-										</Wprr.Link>
-										<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this._removeItem, Wprr.sourceReference("loop/item", "key"))}>
-											<Wprr.Image overrideMainElementType="img" src="icons/remove.svg" location="images" />
-										</Wprr.CommandButton>
-									</Wprr.FlexRow>
-								</div>
-							</Wprr.AddReference>
-						</Wprr.DataLoader>
-						<div className="spacing small" data-slot="spacing" />
-					</Wprr.layout.List>
-				</Wprr.HasData>
-				<Wprr.HasData check={Wprr.sourceProp("cart", "items")} checkType="invert/notEmpty">
-					<div>
-						
-					</div>
-				</Wprr.HasData>
-			</Wprr.DataLoader>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.DataLoader, {
+  loadData: {
+    "originalCart": cartUrl
+  }
+}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceProp("originalCart", "items"),
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement(Wprr.layout.List, {
+  items: Wprr.sourceProp("originalCart", "items")
+}, /*#__PURE__*/React.createElement(Wprr.DataLoader, {
+  loadData: {
+    "product": Wprr.sourceCombine("wprr/v1/range-item/product/idSelection/preview,product?ids=", Wprr.sourceReference("loop/item", "product.id"))
+  }
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceProp("product"),
+  as: "product"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-box standard-box-padding"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between vertically-center-items",
+  itemClasses: "flex-resize,flex-no-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Link, {
+  href: Wprr.sourceReference("loop/item", "product.permalink"),
+  target: "_blank"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing vertically-center-items",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "product__img-container small overflow-hidden"
+}, /*#__PURE__*/React.createElement(Wprr.WprrLazyImage, {
+  className: "image background-contain full-size",
+  data: Wprr.sourceReference("product", "image")
+})), /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("loop/item", "product.title")), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "small-description result-line-height no-paragraph-margins-around"
+}, Wprr.text(Wprr.sourceReference("product", "shortDescription"), "html"))))), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: Wprr.commands.callFunction(this, this._removeItem, Wprr.sourceReference("loop/item", "key"))
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  overrideMainElementType: "img",
+  src: "icons/remove.svg",
+  location: "images"
+})))))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small",
+  "data-slot": "spacing"
+}))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceProp("cart", "items"),
+  checkType: "invert/notEmpty"
+}, /*#__PURE__*/React.createElement("div", null))));
 	}
 	
 	static getWpAdminEditor() {
@@ -81,8 +91,8 @@ export default class CartContents extends Wprr.BaseObject {
 			
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div></div>
-		</Wprr.layout.admin.WpBlockEditor>;
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null));
 	}
 }

@@ -74,11 +74,11 @@ export default class GoogleOptimizeCondition extends Wprr.BaseObject {
 	_renderMainElement() {
 		//console.log("GoogleOptimizeCondition::_renderMainElement");
 		
-		return <wrapper>
-			<Wprr.HasData check={this.state["show"]}>
-				<Wprr.ContentsAndInjectedComponents content={Wprr.sourceReference("blockData", "innerMarkup")}/>
-			</Wprr.HasData>
-		</wrapper>
+		return React.createElement("wrapper", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: this.state["show"]
+}, /*#__PURE__*/React.createElement(Wprr.ContentsAndInjectedComponents, {
+  content: Wprr.sourceReference("blockData", "innerMarkup")
+})));
 	}
 	
 	static getWpAdminEditor() {
@@ -88,47 +88,48 @@ export default class GoogleOptimizeCondition extends Wprr.BaseObject {
 			
 		};
 		
-		return <div>
-			<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-resize,flex-no-resize,flex-resize">
-				<hr className="line no-margin"/>
-				<div>{Wprr.translateText("Google optimize condition")}</div>
-				<hr className="line no-margin"/>
-			</Wprr.FlexRow>
-			<Wprr.FlexRow className="small-item-spacing" itemClasses="width-70,width-30">
-				<div>
-					<div>{Wprr.translateText("Experiment id")}</div>
-					<Wprr.EditableProps editableProps="experimentId" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-						<Wprr.FormField valueName="experimentId" className="full-width" />
-					</Wprr.EditableProps>
-				</div>
-				<div>
-					<div>{Wprr.translateText("Variant")}</div>
-					<Wprr.EditableProps editableProps="variant" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-						<Wprr.FormField valueName="variant" className="full-width" />
-					</Wprr.EditableProps>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing small" />
-			<div>
-				<Wprr.EditableProps editableProps="isDefault" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-					<Wprr.Checkbox valueName="isDefault" />
-				</Wprr.EditableProps>
-				<span>{Wprr.translateText("Show by default after ")}</span>
-					<Wprr.EditableProps editableProps="defaultTimeout" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")}>
-						<Wprr.FormField type="number" valueName="defaultTimeout" />
-					</Wprr.EditableProps>
-				<span>{Wprr.translateText(" seconds if experiment doesn't exist or is too slow to load.")}</span>
-			</div>
-			<wp.editor.InnerBlocks />
-			<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-resize,flex-no-resize,flex-resize">
-				<hr className="line no-margin"/>
-				<div>
-					{Wprr.translateText("Slut:")}
-					{" "}
-					{Wprr.translateText("Google optimize condition")}
-				</div>
-				<hr className="line no-margin"/>
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing vertically-center-items",
+  itemClasses: "flex-resize,flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+}), /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Google optimize condition")), /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+})), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing",
+  itemClasses: "width-70,width-30"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Experiment id")), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "experimentId",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  valueName: "experimentId",
+  className: "full-width"
+}))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Variant")), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "variant",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  valueName: "variant",
+  className: "full-width"
+})))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "isDefault",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  valueName: "isDefault"
+})), /*#__PURE__*/React.createElement("span", null, Wprr.translateText("Show by default after ")), /*#__PURE__*/React.createElement(Wprr.EditableProps, {
+  editableProps: "defaultTimeout",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  type: "number",
+  valueName: "defaultTimeout"
+})), /*#__PURE__*/React.createElement("span", null, Wprr.translateText(" seconds if experiment doesn't exist or is too slow to load."))), /*#__PURE__*/React.createElement(wp.editor.InnerBlocks, null), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing vertically-center-items",
+  itemClasses: "flex-resize,flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+}), /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Slut:"), " ", Wprr.translateText("Google optimize condition")), /*#__PURE__*/React.createElement("hr", {
+  className: "line no-margin"
+})));
 	}
 }

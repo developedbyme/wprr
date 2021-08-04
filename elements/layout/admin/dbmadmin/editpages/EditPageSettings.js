@@ -25,11 +25,18 @@ export default class EditPageSettings extends Wprr.BaseObject {
 		let operationSections = Wprr.utils.object.shallowMerge(Wprr.layout.list.operations.adminOperationAreas);
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		
-		return <div>
-			<Wprr.AddReference data="publish" as="publishStatus">
-				<Wprr.layout.items.batch.BatchEditItems dataType="settings/page-settings,settings,named-item,identifiable-item" searchFields="fieldByName.name.field.value" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} operationSections={operationSections} />
-			</Wprr.AddReference>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: "publish",
+  as: "publishStatus"
+}, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditItems, {
+  dataType: "settings/page-settings,settings,named-item,identifiable-item",
+  searchFields: "fieldByName.name.field.value",
+  taxonomiesToLoad: "dbm_relation",
+  title: title,
+  fields: fields,
+  cellTypes: areas,
+  operationSections: operationSections
+})));
 	}
 	
 	static getWpAdminEditor() {
@@ -42,8 +49,12 @@ export default class EditPageSettings extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<Wprr.layout.form.FieldWithLabel valueName="title" label="Title" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")} />
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  valueName: "title",
+  label: "Title",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}));
 	}
 }

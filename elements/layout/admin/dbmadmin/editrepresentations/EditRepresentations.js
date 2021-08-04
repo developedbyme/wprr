@@ -22,9 +22,14 @@ export default class EditRepresentations extends Wprr.BaseObject {
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		let operationSections = Wprr.utils.object.shallowMerge(Wprr.layout.list.operations.adminOperationAreas);
 		
-		return <div>
-			<Wprr.layout.items.batch.BatchEditItems title={title} projectName={Wprr.sourceReference("wprr/projectName")} dataType="representation" fields={fields} cellTypes={areas} operationSections={operationSections} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditItems, {
+  title: title,
+  projectName: Wprr.sourceReference("wprr/projectName"),
+  dataType: "representation",
+  fields: fields,
+  cellTypes: areas,
+  operationSections: operationSections
+}));
 	}
 	
 	static getWpAdminEditor() {
@@ -37,8 +42,8 @@ export default class EditRepresentations extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>Settings</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null, "Settings"));
 	}
 }
