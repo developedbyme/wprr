@@ -20,9 +20,13 @@ export default class EditGlobalItems extends Wprr.BaseObject {
 		
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		
-		return <div>
-			<Wprr.layout.items.batch.BatchEditItems title={title} projectName={Wprr.sourceReference("wprr/projectName")} dataType="global-item" fields={fields} cellTypes={areas} />
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditItems, {
+  title: title,
+  projectName: Wprr.sourceReference("wprr/projectName"),
+  dataType: "global-item",
+  fields: fields,
+  cellTypes: areas
+}));
 	}
 	
 	static getWpAdminEditor() {
@@ -35,8 +39,8 @@ export default class EditGlobalItems extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>Settings</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null, "Settings"));
 	}
 }

@@ -134,7 +134,7 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		
 		//MENOTE: test that this works with old functionality
 		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, React.createElement(Wprr.OpenCloseExpandableArea, {"open": Wprr.sourceFunction(this, function(aValue) {return !aValue}, [this._siteDataLoader.loadedSource]), "sourceUpdates": this._siteDataLoader.loadedSource},
-			<div>Loading...</div>
+			React.createElement("div", null, "Loading...")
 		)));
 		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, this._router.getReactElement()));
 		

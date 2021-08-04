@@ -21,11 +21,17 @@ export default class EditTemplatePositions extends Wprr.BaseObject {
 		
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		
-		return <div>
-			<Wprr.AddReference data="private" as="publishStatus">
-				<Wprr.layout.items.batch.BatchEditItems dataType="template-position" namesToLoad="content-template" taxonomiesToLoad="dbm_relation" title={title} fields={fields} cellTypes={areas} />
-			</Wprr.AddReference>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: "private",
+  as: "publishStatus"
+}, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditItems, {
+  dataType: "template-position",
+  namesToLoad: "content-template",
+  taxonomiesToLoad: "dbm_relation",
+  title: title,
+  fields: fields,
+  cellTypes: areas
+})));
 	}
 	
 	static getWpAdminEditor() {
@@ -38,8 +44,12 @@ export default class EditTemplatePositions extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<Wprr.layout.form.FieldWithLabel valueName="title" label="Title" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")} />
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  valueName: "title",
+  label: "Title",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+}));
 	}
 }

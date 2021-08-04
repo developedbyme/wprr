@@ -11,28 +11,23 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 	
 	_renderMainElement() {
 		
-		return <div>
-			<Wprr.layout.items.EditItem item={Wprr.sourceReference("item")}>
-				<Wprr.SelectField fieldName="name">
-					<h2 className="no-margins extra-small-label extra-small-label-padding">
-						<Wprr.layout.admin.im.FieldName />
-					</h2>
-					<Wprr.layout.admin.im.Field />
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="title">
-					<h2 className="no-margins extra-small-label extra-small-label-padding">
-						<Wprr.layout.admin.im.FieldName />
-					</h2>
-					<Wprr.layout.admin.im.Field />
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="content">
-					<h2 className="no-margins extra-small-label extra-small-label-padding">
-						<Wprr.layout.admin.im.FieldName />
-					</h2>
-					<Wprr.layout.admin.im.Field type="richText" />
-				</Wprr.SelectField>
-			</Wprr.layout.items.EditItem>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.EditItem, {
+  item: Wprr.sourceReference("item")
+}, /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "name"
+}, /*#__PURE__*/React.createElement("h2", {
+  className: "no-margins extra-small-label extra-small-label-padding"
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "title"
+}, /*#__PURE__*/React.createElement("h2", {
+  className: "no-margins extra-small-label extra-small-label-padding"
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "content"
+}, /*#__PURE__*/React.createElement("h2", {
+  className: "no-margins extra-small-label extra-small-label-padding"
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, {
+  type: "richText"
+}))));
 	}
 	
 	static getWpAdminEditor() {
@@ -50,10 +45,8 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 			}
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>
-				
-			</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null));
 	}
 }
