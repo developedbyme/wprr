@@ -56,6 +56,11 @@ export default class Link extends WprrBaseObject {
 			newProps["target"] = target;
 		}
 		
+		let download = this.getFirstInput("download");
+		if(download) {
+			newProps["download"] = download;
+		}
+		
 		return React.createElement("a", newProps, this.props.children);
 	}
 }
