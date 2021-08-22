@@ -9,11 +9,11 @@ export default class SingleLink extends MultiTypeItemConnection {
 		super();
 		
 		this._prefix = "group";
-		this._id = null;
+		this._idSource = Wprr.sourceValue(null);
 	}
 	
 	setId(aId) {
-		this._id = aId;
+		this._idSource.value = aId;
 		
 		return this;
 	}
@@ -25,14 +25,18 @@ export default class SingleLink extends MultiTypeItemConnection {
 	}
 	
 	get id() {
-		return this._id;
+		return this._idSource.value;
+	}
+	
+	get idSource() {
+		return this._idSource;
 	}
 	
 	get linkedItem() {
 		
-		let fullPath = this._id;
+		let fullPath = this.id;
 		if(this._prefix) {
-			fullPath = this._prefix + "." + this._id;
+			fullPath = this._prefix + "." + fullPath;
 		}
 		
 		return Wprr.objectPath(this.item, fullPath);
