@@ -69,6 +69,7 @@ export default class HierarchyList extends Layout {
 		let hierarchyItem = orderEditor.getHierarchyForOrder(aOrderId);
 		
 		let hierarchy = hierarchyItem.getType("hierarchy");
+		hierarchy.removeInactiveOrderedItems(aActiveIds);
 		hierarchy.addUnorderedItems(aActiveIds);
 		this._mainHierarchy = hierarchy;
 		

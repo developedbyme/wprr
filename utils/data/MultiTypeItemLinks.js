@@ -46,6 +46,10 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	hasItem(aId) {
+		return (this._idsSource.value.indexOf(aId) === -1);
+	}
+	
 	removeItem(aId) {
 		console.log("removeItem");
 		console.log(this._idsSource.value, aId);

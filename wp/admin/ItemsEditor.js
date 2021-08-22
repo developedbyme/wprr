@@ -21,7 +21,17 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._editStorage = new Wprr.utils.DataStorage();
 		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
 		
-		this._editStorage.updateValue("allIds", []);
+		this._editorItem = this._items.createInternalItem();
+		this._editorItem.addType("editor", this);
+		this._editorItem.getLinks("editedItems");
+		
+		this._editorItem.getLinks("creators");
+		this._editorItem.getLinks("pendingCreators");
+		
+		this._editorItem.getLinks("createdItems");
+		
+		this._editorItem.getType("editedItems").idsSource.connectExternalStorage(this._editStorage, "allIds");
+		
 		this._editStorage.updateValue("filteredIds", []);
 		this._editStorage.updateValue("operation", "none");
 		this._editStorage.updateValue("searchText", "");
@@ -38,8 +48,11 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._encoders = "privateTitle,status,fields,editObjectRelations";
 		
 		this._addChangeData = null;
+		this._updateFilterCommand = Wprr.commands.callFunction(this, this._filterItems, []);
+		this._updateSaveAllStatusCommand = Wprr.commands.callFunction(this, this._updateSaveAllStatus);
 		
-		this._editStorage.createChangeCommands("allIds,searchText,filters,filter,sortOrder,sort,searchFields", this, Wprr.commands.callFunction(this, this._filterItems, []));
+		this._editorItem.getType("editedItems").idsSource.addChangeCommand(this._updateFilterCommand).addChangeCommand(this._updateSaveAllStatusCommand);
+		this._editStorage.createChangeCommands("searchText,filters,filter,sortOrder,sort,searchFields", this, this._updateFilterCommand);
 		
 		this._filterChain =  Wprr.utils.FilterChain.create();
 		
@@ -56,14 +69,16 @@ export default class ItemsEditor extends ProjectRelatedItem {
 			Wprr.sourceStatic(this._editStorage, "searchText")
 		);
 		
-		this._updateSaveAllStatusCommand = Wprr.commands.callFunction(this, this._updateSaveAllStatus);
-		
 		this.addPostField("status", "status");
 		
 		this._commands = Wprr.utils.InputDataHolder.create();
 		
 		this._items.additionalLoader._fieldToCheckFor = "isLoadedForEdit";
 		this._items.additionalLoader.addCommand(Wprr.commands.callFunction(this, this._setupItem, [Wprr.sourceEvent("item"), Wprr.sourceEvent("data")]), "setup");
+	}
+	
+	get editorItem() {
+		return this._editorItem;
 	}
 	
 	get editStorage() {
@@ -210,10 +225,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	_filterItems() {
 		//console.log("ItemsEditor::_filterItems");
 		
-		let ids = this._editStorage.getValue("allIds");
-		let items = this._items.getItems(ids);
-		
-		items = this._filterChain.filter(items, null);
+		let items = this._filterChain.filter(this._editorItem.getLinks("editedItems").items, null);
 		this._sortChain.sort(items, null);
 		
 		let filteredIds = Wprr.utils.array.mapField(items, "id");
@@ -510,36 +522,21 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._setupItem(item, aData);
 		
-		let allIds = [].concat(this._editStorage.getValue("allIds"));
-		allIds.push(currentId);
-		this._editStorage.updateValue("allIds", allIds);
+		this._editorItem.getLinks("editedItems").addUniqueItem(currentId);
 		
 		return item;
 	}
 	
 	enableEditsForItem(aId) {
 		console.log("ItemsEditor::enableEditsForItem");
-		let allIds = [].concat(this._editStorage.getValue("allIds"));
 		
-		if(allIds.indexOf(aId) === -1) {
-			allIds.push(aId);
-			this._editStorage.updateValue("allIds", allIds);
-			
-			this._updateSaveAllStatus();
-		}
+		this._editorItem.getLinks("editedItems").addUniqueItem(currentId);
 	}
 	
 	disableEditsForItem(aId) {
 		console.log("ItemsEditor::disableEditsForItem");
-		let allIds = [].concat(this._editStorage.getValue("allIds"));
 		
-		let index = allIds.indexOf(aId);
-		if(index !== -1) {
-			allIds.splice(index, 1);
-			this._editStorage.updateValue("allIds", allIds);
-			
-			this._updateSaveAllStatus();
-		}
+		this._editorItem.getLinks("editedItems").removeItem(aId);
 	}
 	
 	setupCreation(aType, aInGroup = null, aCreationMethod = null) {
@@ -572,22 +569,50 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		return loader;
 	}
 	
+	createItemCreator() {
+		let creatorItem = this._items.createInternalItem();
+		let creator = Wprr.utils.data.multitypeitems.controllers.admin.ItemCreator.create(creatorItem);
+		
+		this._editorItem.getLinks("creators").addUniqueItem(creatorItem.id);
+		
+		let url = Wprr.utils.wprrUrl.getCreateUrl(this._dataType);
+		url = this.project.getWprrUrl(url);
+		
+		creator.setCreation(url, this._addChangeData.getCreateData());
+		
+		creatorItem.getType("createdItem").idSource.addChangeCommand(Wprr.commands.callFunction(this, this._setUrlForInitialLoad, [creatorItem]));
+		creatorItem.getType("initialData").addChangeCommand(Wprr.commands.callFunction(this, this._addCreatedRow, [Wprr.sourceStatic(creatorItem, "initialData.value")]));
+		
+		this._editorItem.getLinks("pendingCreators").addUniqueItem(creatorItem.id);
+		
+		return creatorItem;
+	}
+	
 	createItem() {
 		//console.log("createItem");
 		
 		this._editStorage.updateValue("creatingStatus", "creating");
 		
-		let loader = this._getLoader();
+		let creatorItem = this.createItemCreator();
+		let creator = creatorItem.getType("itemCreator");
 		
-		let url = Wprr.utils.wprrUrl.getCreateUrl(this._dataType);
-		url = this.project.getWprrUrl(url);
+		creator.create();
 		
-		loader.setupJsonPost(url, this._addChangeData.getCreateData());
-		
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._itemCreated, [Wprr.source("event", "raw", "data.id")]));
-		loader.load();
+		return creator;
 	}
 	
+	_setUrlForInitialLoad(aItem) {
+		console.log("_setUrlForInitialLoad");
+		
+		let id = aItem.getType("createdItem").id;
+		let language = this.project.getCurrentLanguage();
+		
+		let url = this.project.getWprrUrl("wprr/v1/range-item/" + this._dataType + "/drafts,idSelection/" + this._encoders + "?ids=" + id + "&language=" + language);
+		
+		aItem.setValue("initialDataUrl", url);
+	}
+	
+	/*
 	_itemCreated(aId) {
 		//console.log("_itemCreated");
 		
@@ -601,6 +626,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		loader.load();
 	}
+	*/
 	
 	_addCreatedRow(aData) {
 		//console.log("_addCreatedRow");
@@ -619,10 +645,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		}
 	
 		let hasChanges = false;
-		let currentArray = this._editStorage.getValue("allIds");
+		let currentArray = this._editorItem.getLinks("editedItems").items;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let saveItems = this._items.getItem(currentArray[i]).getType("saveItems");
+			let saveItems = currentArray[i].getType("saveItems");
 			let currentArray2 = saveItems;
 			let currentArray2Length = currentArray2.length;
 			for(let j = 0; j < currentArray2Length; j++) {
@@ -701,7 +727,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	getSaveAllLoaders() {
 		//console.log("getSaveAllLoaders");
 		
-		let loadingSequence = this.getSaveLoaders(this._editStorage.getValue("allIds"));
+		let loadingSequence = this.getSaveLoaders(this._editorItem.getLinks("editedItems").ids);
 		return loadingSequence;
 	}
 	

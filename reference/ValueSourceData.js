@@ -163,7 +163,14 @@ export default class ValueSourceData extends SourceData {
 		let connection = new Wprr.utils.SourceConnection();
 		connection.addValueSource(this);
 		
-		connection.addExternalStrorageVariable(aExternalStorage, aPath);
+		if(this.value) {
+			aExternalStorage.updateValue(aPath, this.value);
+		}
+		else if(aExternalStorage.getValue(aPath)) {
+			this.value = aExternalStorage.getValue(aPath);
+		}
+		
+		connection.addExternalStorageVariable(aExternalStorage, aPath);
 		
 		return connection;
 	}

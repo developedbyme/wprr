@@ -80,7 +80,7 @@ export default class SourceConnection extends BaseObject {
 		return this;
 	}
 	
-	addExternalStrorageVariable(aExternalStorage, aPath) {
+	addExternalStorageVariable(aExternalStorage, aPath) {
 		
 		let updateCommand = Wprr.commands.callFunction(this, this._updateSources, [Wprr.sourceEvent(Wprr.sourceFunction(aExternalStorage, "getFullName", [aPath]))]);
 		

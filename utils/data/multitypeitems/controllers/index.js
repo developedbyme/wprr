@@ -12,3 +12,6 @@ export {list as list};
 
 import * as animation from "./animation";
 export {animation as animation};
+
+import * as admin from "./admin";
+export {admin as admin};

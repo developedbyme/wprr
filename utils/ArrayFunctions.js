@@ -617,9 +617,9 @@ export default class ArrayFunctions {
 		let currentArray = aArray;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let currentValue = currentArray[i];
+			let currentValue = 1*currentArray[i];
 			if(isNaN(currentValue)) {
-				console.error("NaN value in array", i, currentArray);
+				console.error("NaN value in array", i, currentArray, currentArray[i]);
 				continue;
 			}
 			returnValue += currentValue;

@@ -78,9 +78,9 @@ export default class Hierarchy extends MultiTypeItemConnection {
 	}
 	
 	_getIdsForItem(aItem, aReturnArray) {
-		console.log("_getIdsForItem");
+		//console.log("_getIdsForItem");
 		let childrenLinks = aItem.getLinks("children").items;
-		console.log(childrenLinks);
+		//console.log(childrenLinks);
 		
 		let currentArray = childrenLinks;
 		let currentArrayLength = currentArray.length;
@@ -101,8 +101,58 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		return returnArray;
 	}
 	
+	_findItem(aLinkedId, aChildren) {
+		let currentArray = aChildren;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentId = Wprr.objectPath(currentItem, "link.id");
+			if(aLinkedId === currentId) {
+				return currentItem;
+			}
+			
+			let childItem = this._findItem(aLinkedId, Wprr.objectPath(currentItem, "children").items);
+			if(childItem) {
+				return childItem;
+			}
+		}
+		
+		return null;
+	}
+	
+	findItem(aLinkedId) {
+		return this._findItem(aLinkedId, this.item.getLinks("children").items);
+	}
+	
+	removeInactiveOrderedItems(aIds) {
+		//console.log("removeInactiveOrderedItems");
+		let currentIds = this.getAllIds();
+		let removedItems = Wprr.utils.array.removeValues(currentIds, aIds);
+		
+		let currentArray = removedItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentId = currentArray[i];
+			let currentItem = this.findItem(currentId);
+			
+			if(currentItem) {
+				let children = currentItem.getLinks("children").items;
+				let parent = Wprr.objectPath(currentItem, "parent.linkedItem");
+				
+				let currentArray2 = children;
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					this.moveToParent(currentArray2[j], parent);
+				}
+				
+				parent.getLinks("children").removeItem(currentItem.id);
+			}
+		}
+	}
+	
 	addUnorderedItems(aIds) {
-		console.log("addUnorderedItems");
+		//console.log("addUnorderedItems");
 		let currentIds = this.getAllIds();
 		
 		let missingItems = Wprr.utils.array.removeValues(aIds, currentIds);
