@@ -530,7 +530,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	enableEditsForItem(aId) {
 		console.log("ItemsEditor::enableEditsForItem");
 		
-		this._editorItem.getLinks("editedItems").addUniqueItem(currentId);
+		this._editorItem.getLinks("editedItems").addUniqueItem(aId);
 	}
 	
 	disableEditsForItem(aId) {
