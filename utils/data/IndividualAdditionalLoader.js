@@ -3,8 +3,8 @@ import Wprr from "wprr/Wprr";
 import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
 import MultiTypeItemsGroup from "wprr/utils/data/MultiTypeItemsGroup";
 
-// import AdditionalLoader from "wprr/utils/data/AdditionalLoader";
-export default class AdditionalLoader extends ProjectRelatedItem {
+// import IndividualAdditionalLoader from "wprr/utils/data/IndividualAdditionalLoader";
+export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 	
 	constructor() {
 		
@@ -12,13 +12,13 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		
 		this._items = null;
 		this._queuedItems = new Array();
-		this._maxNumberOfItems = 50;
+		this._loadingSequence = new Wprr.utils.LoadingSequence()
 		
 		this._commandGroups = new Object();
 		
 		this._dataTypeName = "data";
 		this._fieldToCheckFor = "data";
-		this._url = "wprr/v1/range/any/privates,draftsIfAllowed,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={ids}";
+		this._url = "wprr/v1/range/any/privates,draftsIfAllowed,idSelection/default,fields,status,editObjectRelations,privateTitle?ids={id}";
 		
 		this._isLoading = Wprr.sourceValue(false);
 		this._startQueueBound = this._startQueue.bind(this);
@@ -100,7 +100,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	loadItems(aIds) {
-		//console.log("AdditionalLoader::loadItems");
+		//console.log("IndividualAdditionalLoader::loadItems");
 		//console.log(aIds);
 		
 		if(!aIds) {
@@ -125,7 +125,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_queueNextLoad() {
-		//console.log("AdditionalLoader::_queueNextLoad");
+		//console.log("IndividualAdditionalLoader::_queueNextLoad");
 		
 		if(!this._isLoading.value && this._queuedItems.length > 0) {
 			this._isLoading.value = true;
@@ -134,7 +134,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_startQueue() {
-		console.log("AdditionalLoader::_startQueue");
+		console.log("IndividualAdditionalLoader::_startQueue");
 		
 		let ids = this._queuedItems;
 		this._queuedItems = new Array();
@@ -147,64 +147,50 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 			return;
 		}
 		
-		if(numberOfIds > this._maxNumberOfItems && this._maxNumberOfItems > 0) {
-			this._queuedItems = ids.splice(this._maxNumberOfItems, numberOfIds-this._maxNumberOfItems);
-			console.log(ids.length, this._queuedItems.join(","));
-		}
+		let currentArray = ids;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let id = currentArray[i];
+			
+			let url = this._url.split("{id}").join(id);
 		
-		let url = this._url.split("{ids}").join(ids.join(","));
-		
-		let loader = this.project.getSharedLoader(url);
-		let status = loader.getStatus();
-		
-		if(loader.getStatus() === 1) {
-			//MENOTE: add support for other API formats
-			this._updateData(loader.getData()["data"])
-		}
-		else {
-			if(loader.getStatus() === -1 || loader.getStatus() === 3) {
-				//MENOTE: do nothing
+			let loader = this.project.getSharedLoader(url);
+			let status = loader.getStatus();
+			
+			if(loader.getStatus() === 1) {
+				//MENOTE: add support for other API formats
+				this._setupItem(id, loader.getData()["data"])
 			}
 			else {
-				loader.addSuccessCommand(Wprr.commands.callFunction(this, this._updateData, [Wprr.source("event", "raw", "data")]));
-				if(loader.getStatus() === 0) {
-					loader.load();
+				if(loader.getStatus() === -1 || loader.getStatus() === 3) {
+					//MENOTE: do nothing
+				}
+				else {
+					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setupItem, [id, Wprr.source("event", "raw", "data")]));
+					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._updateData, []));
+					this._loadingSequence.addLoader(loader);
 				}
 			}
 		}
+		
+		
+		this._loadingSequence.load();
 	}
 	
-	_setupItem(aData) {
-		console.log("AdditionalLoader::_setupItem");
-		console.log(aData);
+	_setupItem(aId, aData) {
+		console.log("IndividualAdditionalLoader::_setupItem");
+		console.log(aId, aData);
 		
-		let currentId = aData["id"];
+		let currentId = aId;
 		let item = this._items.getItem(currentId);
-		if(this._dataTypeName) {
-			if(!item.hasType(this._dataTypeName)) {
-				item.addType(this._dataTypeName, aData);
-			}
-		}
 		
 		this.runCommandGroup("setup", {"item": item, "data": aData});
 		
 		return this;
 	}
 	
-	_setupItems(aData) {
-		console.log("AdditionalLoader::_setupItems");
-		let currentArray = aData;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			this._setupItem(currentArray[i]);
-		}
-		
-		return this;
-	}
-	
-	_updateData(aData) {
-		//console.log("AdditionalLoader::_updateData");
-		this._setupItems(aData);
+	_updateData() {
+		//console.log("IndividualAdditionalLoader::_updateData");
 		
 		this._isLoading.value = false;
 		

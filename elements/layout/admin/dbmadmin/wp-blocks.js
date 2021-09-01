@@ -23,3 +23,4 @@ export {default as EditGroups} from "./editgroups/EditGroups";
 export {default as EditObjectProperties} from "./editobjectproperties/EditObjectProperties";
 export {default as EditFileObjectProperties} from "./editobjectproperties/EditFileObjectProperties";
 export {default as EditRelation} from "./editrelations/EditRelation";
+export {default as RelationLinks} from "./editrelations/RelationLinks";
