@@ -27,6 +27,8 @@ export default class CustomCheckbox extends ManipulationBaseObject {
 		let valueName = this.getSourcedProp("valueName");
 		let checked = !this.getSourcedPropWithDefault("checked", Wprr.source("propWithDots", Wprr.sourceProp("valueName")));
 		
+		this.updateProp("checked", checked);
+		
 		let valueUpdater = this.getReference("value/" + valueName);
 		if(valueUpdater) {
 			valueUpdater.updateValue(valueName, checked);
@@ -39,6 +41,15 @@ export default class CustomCheckbox extends ManipulationBaseObject {
 		}
 		
 		this._validate("focus");
+	}
+	
+	_validate(aType) {
+		var validation = this.getReference("validation/validate");
+		if(validation) {
+			return validation.validate(aType);
+		}
+		
+		return 1;
 	}
 	
 	_getChildrenToClone() {

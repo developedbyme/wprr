@@ -53,6 +53,52 @@ export default class FilteredList extends MultiTypeItemConnection {
 		this.item.getLinks("filtered").setItems(Wprr.utils.array.mapField(filteredItems, "id"));
 	}
 	
+	addFieldSearch(aFields) {
+		//console.log("addFieldSearch");
+		//console.log(aFields);
+		
+		let item = this.item.group.createInternalItem();
+		let textSource = item.setValue("searchValue", "").getType("searchValue");
+		textSource.addChangeCommand(this._updateFilterCommand);
+		let fieldsSource = item.setValue("fields", aFields).getType("fields");
+		fieldsSource.addChangeCommand(this._updateFilterCommand);
+		
+		let filterPart = Wprr.utils.filterPartFunctions.createFieldsSearch(fieldsSource, textSource, textSource);
+		item.addType("filterPart", filterPart);
+		
+		this.item.getLinks("filterParts").addItem(item.id);
+		
+		return item;
+	}
+	
+	addInArrayMatch(aField, aMatchValues = []) {
+		let item = this.item.group.createInternalItem();
+		
+		let fieldSource = item.setValue("field", aField).getType("field");
+		fieldSource.addChangeCommand(this._updateFilterCommand);
+		
+		let matchValuesSource = item.setValue("matchValues", aMatchValues).getType("matchValues");
+		matchValuesSource.addChangeCommand(this._updateFilterCommand);
+		
+		let compareTypeSource = item.setValue("compareType", "inArray").getType("compareType");
+		compareTypeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let formatTypeSource = item.setValue("formatType", "string").getType("formatType");
+		formatTypeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let activeSource = item.setValue("active", aMatchValues.length > 0).getType("active");
+		activeSource.addChangeCommand(this._updateFilterCommand);
+		
+		matchValuesSource.addChangeCommand(Wprr.commands.callFunction(this, function() {activeSource.value = (matchValuesSource.value.length > 0);}));
+		
+		let filterPart = Wprr.utils.filterPartFunctions.createCompareField(fieldSource, matchValuesSource, compareTypeSource, formatTypeSource, activeSource);
+		item.addType("filterPart", filterPart);
+		
+		this.item.getLinks("filterParts").addItem(item.id);
+		
+		return item;
+	}
+	
 	_updateListeners() {
 		console.log("_updateListeners");
 		

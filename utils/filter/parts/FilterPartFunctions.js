@@ -346,6 +346,7 @@ export default class FilterPartFunctions  {
 			let currentValue = FilterPartFunctions._formatValue(Wprr.objectPath(currentItem, field), valueFormat);
 			
 			let passes = FilterPartFunctions._compare(currentValue, matchValue, compareType);
+			//console.log(passes, currentValue, matchValue, compareType);
 			
 			if(passes) {
 				returnArray.push(currentItem);
@@ -387,7 +388,7 @@ export default class FilterPartFunctions  {
 			let passes = false;
 			for(let j = 0; j < currentArray2Length; j++) {
 				let rawFieldValue = Wprr.objectPath(currentItem, currentArray2[j]);
-				console.log(rawFieldValue, currentItem, currentArray2[j]);
+				//console.log(rawFieldValue, currentItem, currentArray2[j]);
 				let fieldValue = (""+rawFieldValue).toLowerCase();
 				if(fieldValue.indexOf(searchValue) !== -1) {
 					passes = true;

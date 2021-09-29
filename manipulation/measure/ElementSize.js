@@ -26,6 +26,8 @@ export default class ElementSize extends ManipulationBaseObject {
 		if(currentWidth !== this.state["width"] || currentHeight !== this.state["height"]) {
 			this.setState({"width": currentWidth, "height": currentHeight});
 		}
+		this.updateProp("width", currentWidth);
+		this.updateProp("height", currentHeight);
 	}
 	
 	_callback_sizeChanged(aEvent) {

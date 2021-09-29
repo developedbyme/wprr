@@ -133,6 +133,12 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		}
 	}
 	
+	hasLoadedItems(aIds) {
+		let remainingIds = this._items.getIdsWithMissingType(aIds, this._fieldToCheckFor);
+		
+		return (remainingIds.length === 0);
+	}
+	
 	_startQueue() {
 		console.log("AdditionalLoader::_startQueue");
 		
@@ -175,8 +181,8 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_setupItem(aData) {
-		console.log("AdditionalLoader::_setupItem");
-		console.log(aData);
+		//console.log("AdditionalLoader::_setupItem");
+		//console.log(aData);
 		
 		let currentId = aData["id"];
 		let item = this._items.getItem(currentId);
@@ -192,7 +198,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_setupItems(aData) {
-		console.log("AdditionalLoader::_setupItems");
+		//console.log("AdditionalLoader::_setupItems");
 		let currentArray = aData;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {

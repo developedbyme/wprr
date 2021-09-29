@@ -42,8 +42,6 @@ export default class LoadAdditionalItems extends Layout {
 			Wprr.sourceReference("items", "additionalLoader")
 		);
 		
-		console.log(additionalLoader, this.getFirstInput(Wprr.sourceReference("items", "additionalLoader")), this.getFirstInput(Wprr.sourceReference("items")));
-		
 		return additionalLoader;
 	}
 	

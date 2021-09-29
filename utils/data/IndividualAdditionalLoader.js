@@ -12,7 +12,8 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 		
 		this._items = null;
 		this._queuedItems = new Array();
-		this._loadingSequence = new Wprr.utils.LoadingSequence()
+		this._loadingSequence = new Wprr.utils.LoadingSequence();
+		this._loadingSequence.addCommand("loaded", Wprr.commands.callFunction(this, this._updateData, []));
 		
 		this._commandGroups = new Object();
 		
@@ -124,6 +125,12 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 		this._queueNextLoad();
 	}
 	
+	hasLoadedItems(aIds) {
+		let remainingIds = this._items.getIdsWithMissingType(aIds, this._fieldToCheckFor);
+		
+		return (remainingIds.length === 0);
+	}
+	
 	_queueNextLoad() {
 		//console.log("IndividualAdditionalLoader::_queueNextLoad");
 		
@@ -159,7 +166,8 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 			
 			if(loader.getStatus() === 1) {
 				//MENOTE: add support for other API formats
-				this._setupItem(id, loader.getData()["data"])
+				console.log("status1>>>>>>>", id, loader.getData());
+				this._setupItem(id, loader.getData()["data"]);
 			}
 			else {
 				if(loader.getStatus() === -1 || loader.getStatus() === 3) {
@@ -167,7 +175,6 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 				}
 				else {
 					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setupItem, [id, Wprr.source("event", "raw", "data")]));
-					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._updateData, []));
 					this._loadingSequence.addLoader(loader);
 				}
 			}

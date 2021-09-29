@@ -62,7 +62,9 @@ export default class WprrRenderer  {
 		}
 		else {
 			if(this._shouldSaveInitialLoad) {
+				console.log("WprrRenderer save initial paths");
 				let paths = this._storeController.getPaths();
+				console.log(paths);
 				
 				let currentArray2 = this._pathCheckRegExps;
 				let currentArray2Length = currentArray2.length;

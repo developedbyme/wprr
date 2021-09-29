@@ -24,6 +24,10 @@ export default class SingleLink extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	set id(aValue) {
+		this.setId(aValue);
+	}
+	
 	get id() {
 		return this._idSource.value;
 	}

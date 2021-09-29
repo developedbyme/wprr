@@ -47,7 +47,7 @@ export default class BigSelectionBox extends Layout {
 					),
 					aSlots.default(
 						React.createElement("div", {},
-							React.createElement("h2", {className: "standard-field-label no-margins"},
+							React.createElement("div", {className: "standard-field-label no-margins"},
 								Wprr.text(aSlots.prop("title", ""))
 							),
 							React.createElement(Wprr.HasData, {"check": descriptionSource, "checkType": "notEmpty"},

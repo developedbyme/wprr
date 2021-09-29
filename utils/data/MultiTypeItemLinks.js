@@ -63,20 +63,38 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	}
 	
 	addItems(aIds) {
+		
+		let currentItems = [].concat(this._idsSource.value);
+		
 		let currentArray = aIds;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			this.addItem(currentArray[i]);
+			currentItems.push(currentArray[i]);
 		}
+		
+		this._idsSource.value = currentArray;
+		this._idsSource.updateForValueChange();
 		
 		return this;
 	}
 	
 	addUniqueItems(aIds) {
+		let currentItems = [].concat(this._idsSource.value);
+		let hasChange = false;
+		
 		let currentArray = aIds;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			this.addUniqueItem(currentArray[i]);
+			let currentId = currentArray[i];
+			if(currentItems.indexOf(currentId) === -1) {
+				currentItems.push(currentId);
+				hasChange = true;
+			}
+		}
+		
+		if(hasChange) {
+			this._idsSource.value = currentArray;
+			this._idsSource.updateForValueChange();
 		}
 		
 		return this;

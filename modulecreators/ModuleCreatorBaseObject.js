@@ -56,6 +56,7 @@ export default class ModuleCreatorBaseObject {
 		this._siteNavigation.dataLoader = this._siteDataLoader;
 		this._siteNavigation.urlSource.addChangeCommand(Wprr.commands.setProperty(this._siteDataLoader.urlSource.reSource(), "value", this._siteNavigation.urlSource))
 		
+		this._elementRenderedCallbackBound = this._elementRenderedCallback.bind(this);
 	}
 	
 	setWprrInstance(aWprrInstance) {
@@ -317,7 +318,17 @@ export default class ModuleCreatorBaseObject {
 		if(aAddMode === ModuleCreatorBaseObject.HYDRATE) {
 			return ReactDOM.hydrate(rootObject, aHolderNode);
 		}
-		return ReactDOM.render(rootObject, aHolderNode);
+		
+		let returnReference = ReactDOM.render(rootObject, aHolderNode, this._elementRenderedCallbackBound);
+		return returnReference;
+	}
+	
+	_elementRenderedCallback() {
+		console.log("_elementRenderedCallback");
+	}
+	
+	_setRootRef() {
+		console.log("_setRootRef");
 	}
 	
 	static create(aClass) {

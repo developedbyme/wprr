@@ -831,4 +831,20 @@ export default class ArrayFunctions {
 		
 		return returnValue;
 	}
+	
+	static insertBetween(aArray, aItem) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength-1; i++) { //MENOTE: skip the last item and add it after
+			returnArray.push(currentArray[i]);
+			returnArray.push(aItem);
+		}
+		
+		returnArray.push(currentArray[currentArray.length-1]);
+		
+		return returnArray;
+	}
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import Wprr from "wprr";
 
-export default class EditObjectProperties extends Wprr.BaseObject {
+export default class EditLinkedObjectProperties extends Wprr.BaseObject {
 	
 	constructor(aProps) {
 		super(aProps);
@@ -15,7 +15,7 @@ export default class EditObjectProperties extends Wprr.BaseObject {
 			"id": {"type": "select"},
 			"name": {"type": "field"},
 			"identifier": {"type": "field"},
-			"value": {"type": "field"},
+			"link": {"type": "relationOfAnyType", "relationPath": "incoming.for.any"},
 			"pointingTo": {"type": "relationOfAnyType", "relationPath": "outgoing.for.any"},
 			"options": {"type": "options"}
 		};
@@ -26,7 +26,7 @@ export default class EditObjectProperties extends Wprr.BaseObject {
 			React.createElement(Wprr.layout.items.batch.BatchEditItems, {
 			  title: title,
 			  projectName: Wprr.sourceReference("wprr/projectName"),
-			  dataType: "object-property,named-item,value-item,identifiable-item",
+			  dataType: "object-property/linked-object-property,object-property,named-item,identifiable-item",
 			  fields: fields,
 			  cellTypes: areas
 			})
@@ -38,7 +38,7 @@ export default class EditObjectProperties extends Wprr.BaseObject {
 		
 		let dataSettings = {
 			"items": {
-				"value": "wprr/v1/range/dbm_data/drafts,privates,relation/status,fields,editObjectRelations?type=object-property,value-item",
+				"value": "wprr/v1/range/dbm_data/drafts,privates,relation/status,fields,editObjectRelations?type=object-property/linked-object-property",
 				"replacements": {}
 			}
 		};
