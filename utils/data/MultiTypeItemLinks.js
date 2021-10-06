@@ -63,6 +63,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	}
 	
 	addItems(aIds) {
+		//console.log("addItems");
 		
 		let currentItems = [].concat(this._idsSource.value);
 		
@@ -72,7 +73,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 			currentItems.push(currentArray[i]);
 		}
 		
-		this._idsSource.value = currentArray;
+		this._idsSource.value = currentItems;
 		this._idsSource.updateForValueChange();
 		
 		return this;
@@ -93,7 +94,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		}
 		
 		if(hasChange) {
-			this._idsSource.value = currentArray;
+			this._idsSource.value = currentItems;
 			this._idsSource.updateForValueChange();
 		}
 		
