@@ -9,6 +9,8 @@ export default class CustomCheckbox extends ManipulationBaseObject {
 	constructor(aProps) {
 		super(aProps);
 		
+		this.addValueSourceFromProp("checked");
+		
 		this._changeCallbackCommand = Wprr.commands.callFunction(this, this.change);
 	}
 	
@@ -27,6 +29,7 @@ export default class CustomCheckbox extends ManipulationBaseObject {
 		let valueName = this.getSourcedProp("valueName");
 		let checked = !this.getSourcedPropWithDefault("checked", Wprr.source("propWithDots", Wprr.sourceProp("valueName")));
 		
+		this._elementTreeItem.setValue("checked", checked);
 		this.updateProp("checked", checked);
 		
 		let valueUpdater = this.getReference("value/" + valueName);

@@ -6,6 +6,7 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import UrlResolver from "wprr/utils/UrlResolver";
+import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
@@ -31,6 +32,9 @@ export default class WprrBaseObject extends React.Component {
 		
 		this._registeredSources = new Object();
 		this._sourceChangeIndex = 0;
+		
+		this._elementTreeItem = new MultiTypeItem();
+		this._elementTreeItem.addType("component", this);
 	}
 	
 	_getAdditionalSourcesToRegister() {
@@ -646,6 +650,64 @@ export default class WprrBaseObject extends React.Component {
 	_performCommands(aCommands, aData = null) {
 		CommandPerformer.perform(aCommands, aData, this);
 	}
+	
+	_addPropsToTree() {
+		
+		if(this._elementTreeItem.hasType("propsToTree")) {
+			console.log("_addPropsToTree");
+			
+			let props = this.props;
+			
+			let currentArray = this._elementTreeItem.getType("propsToTree");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentPropData = currentArray[i];
+			
+				console.log(currentPropData);
+				//METODO: copy data
+				
+				let currentProp = props[currentPropData["key"]];
+				
+				console.log(">>>>>>>", currentPropData);
+				if(currentProp instanceof Wprr.utils.SourceData) {
+					let updateSource = currentProp.getUpdateSource(this);
+					if(updateSource instanceof Wprr.utils.ValueSourceData) {
+						console.log("connect", updateSource);
+						this._elementTreeItem.getType(currentPropData["value"]).connectSource(updateSource);
+						//METODO: needs to be disconnected when unmounted
+					}
+					else {
+						console.log("resolve and add");
+						let value = this.resolveSourcedData(currentProp);
+						console.log("value>>>>>", value, updateSource);
+						this._elementTreeItem.setValue(currentPropData["value"], value);
+					}
+					console.log(updateSource);
+				}
+				else {
+					this._elementTreeItem.setValue(currentPropData["value"], currentProp);
+				}
+				
+			}
+			
+			console.log(this);
+		}
+	}
+	
+	addValueSourceFromProp(aPropName, aSourceName = null) {
+		
+		if(!aSourceName) {
+			aSourceName = aPropName;
+		}
+		
+		let source = this._elementTreeItem.requireValue(aSourceName).getType(aSourceName);
+		
+		if(!this._elementTreeItem.hasType("propsToTree")) {
+			this._elementTreeItem.addType("propsToTree", []);
+		}
+		
+		this._elementTreeItem.getType("propsToTree").push({"key": aPropName, "value": aSourceName});
+	}
 
 	componentDidMount() {
 		//console.log("wprr/WprrBaseObject.componentDidMount");
@@ -677,6 +739,20 @@ export default class WprrBaseObject extends React.Component {
 		let commands = this.getSourcedProp("willUnmountCommands");
 		if(commands) {
 			CommandPerformer.perform(commands, null, this);
+		}
+	}
+	
+	_prepareTreeItem() {
+		//console.log("_prepareTreeItem");
+		
+		let items = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/project", "items"));
+		if(items) {
+			let id = items.generateNextInternalId();
+			
+			this._elementTreeItem.id = id;
+			this._elementTreeItem.setGroup(items);
+			
+			items.addItem(this._elementTreeItem);
 		}
 	}
 	
@@ -816,10 +892,12 @@ export default class WprrBaseObject extends React.Component {
 		let initialRender = !this._hasRendered;
 		
 		if(initialRender) {
+			this._prepareTreeItem();
 			this._beforePrepareInitialRender();
 			this._prepareInitialRender();
 			this._afterPrepareInitialRender();
 		}
+		this._addPropsToTree();
 		this._beforePrepareRender();
 		this._prepareRender();
 		this._afterPrepareRender();

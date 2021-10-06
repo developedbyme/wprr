@@ -83,6 +83,15 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this._items[nameWithPrefix];
 	}
 	
+	addItem(aItem) {
+		
+		let nameWithPrefix = this._prefix + aItem.id;
+		
+		this._items[nameWithPrefix] = aItem;
+		
+		return this;
+	}
+	
 	getTerm(aId) {
 		return this.getItem("term" + aId);
 	}
