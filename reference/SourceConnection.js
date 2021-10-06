@@ -77,7 +77,21 @@ export default class SourceConnection extends BaseObject {
 		aSource.addChangeCommand(this._updateCommand);
 		this._valueSources.push(aSource);
 		
+		aSource._linkRegistration_addConnection(this);
+		
 		return this;
+	}
+	
+	hasSource(aSource) {
+		let currentArray = this._valueSources;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(currentArray[i] === aSource) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	addExternalStorageVariable(aExternalStorage, aPath) {

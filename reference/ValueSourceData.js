@@ -23,6 +23,8 @@ export default class ValueSourceData extends SourceData {
 		
 		this._callback_onCompleteBound = this._callback_onComplete.bind(this);
 		this._changeCommands = null;
+		
+		this._connections = [];
 	}
 	
 	get value() {
@@ -146,9 +148,34 @@ export default class ValueSourceData extends SourceData {
 		}
 	}
 	
+	_linkRegistration_addConnection(aConnection) {
+		
+		this._connections.push(aConnection);
+		
+		return this;
+	}
+	
+	getConnectionIfExistsTo(aSource) {
+		let currentArray = this._connections;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentConnection = currentArray[i];
+			if(currentConnection.hasSource(aSource)) {
+				return currentConnection;
+			}
+		}
+		
+		return null;
+	}
+	
 	connectSource(aSource) {
 		console.log("connectSource");
 		console.log(aSource);
+		
+		let existingConnection = this.getConnectionIfExistsTo(aSource);
+		if(existingConnection) {
+			return existingConnection;
+		}
 		
 		let connection = new Wprr.utils.SourceConnection();
 		connection.addValueSource(this);
