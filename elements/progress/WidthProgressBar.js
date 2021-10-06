@@ -29,8 +29,10 @@ export default class WidthProgressBar extends WprrBaseObject {
 		
 		let width = (100*Math.max(0, Math.min(1, (progress-startValue)/(endValue-startValue)))) + "%";
 		
+		let children = this.props.dynamicChildren ? this.getSourcedProp("dynamicChildren") : this.props.children;
+		
 		return React.createElement("div", {},
-			React.createElement("div", {"className": indicatorClasses, "style": {"width": width}})
+			React.createElement("div", {"className": indicatorClasses, "style": {"width": width}}, children)
 		);
 	}
 
