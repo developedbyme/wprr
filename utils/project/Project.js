@@ -28,6 +28,11 @@ export default class Project {
 		
 		projectItem.addSingleLink("pathCustomizer", pathCustomizerItem.id);
 		
+		let trackingItem = this._items.createInternalItem();
+		
+		let trackingController = Wprr.utils.data.multitypeitems.controllers.tracking.TrackingController.create(trackingItem);
+		
+		projectItem.addSingleLink("tracking", trackingItem.id);
 	}
 	
 	get name() {
@@ -40,6 +45,10 @@ export default class Project {
 	
 	get items() {
 		return this._items;
+	}
+	
+	get tracking() {
+		return Wprr.objectPath(this.items, "project.tracking.linkedItem.trackingController");
 	}
 	
 	setName(aName) {

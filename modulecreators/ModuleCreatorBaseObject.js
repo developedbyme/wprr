@@ -202,6 +202,7 @@ export default class ModuleCreatorBaseObject {
 			this._referenceHolder.addObject("wprr/project", this._project);
 			this._referenceHolder.addObject("wprr/projectName", this._project.name);
 			this._referenceHolder.addObject("projectLinks", Wprr.objectPath(this._project.items, "project.pathCustomizer.linkedItem.pathCustomizer"));
+			this._project.tracking.startIfCookiesAreSet();
 		}
 		
 		let paths = aData.paths;
@@ -217,6 +218,10 @@ export default class ModuleCreatorBaseObject {
 				let currentPath = pathController.getChild("wp/" + objectName);
 				currentPath.setFullPath(paths[objectName]);
 			}
+			
+			let currentPath = pathController.getChild("wp/site/(global-pages)");
+			currentPath.setSlug(null);
+			pathController.item.getNamedLinks("children").addItem("global-pages", currentPath.item.id);
 			
 			this._urlResolvers.setBasePaths(paths);
 			this._storeController.getUrlResolvers().setBasePaths(paths);

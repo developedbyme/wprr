@@ -28,9 +28,13 @@ export default class CookieBar extends Layout {
 		Cookies.set("cookie/allowMarketing", 1, {"expires": expires});
 		Cookies.set("cookie/consentTime", moment().format("Y-MM-DD[T]HH:mm:ssZ"), {"expires": expires});
 		
-		//METODO: send message to analytics
-		
 		this._open.value = false;
+		
+		let trackingController = this.getFirstInput(Wprr.sourceReference("wprr/project", "items.project.tracking.linkedItem.trackingController"));
+		if(trackingController) {
+			trackingController.setupAllowedTracking(true, true);
+			trackingController.start();
+		}
 	}
 	
 	_prepareInitialRender() {

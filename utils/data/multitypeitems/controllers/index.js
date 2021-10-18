@@ -18,3 +18,6 @@ export {admin as admin};
 
 import * as paths from "./paths";
 export {paths as paths};
+
+import * as tracking from "./tracking";
+export {tracking as tracking};

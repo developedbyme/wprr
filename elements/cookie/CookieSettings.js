@@ -36,7 +36,11 @@ export default class CookieSettings extends Layout {
 		Cookies.set("cookie/consentTime", consentTime, {"expires": expires});
 		this._consentDate.value = consentTime;
 		
-		//METODO: send message to analytics
+		let trackingController = this.getFirstInput(Wprr.sourceReference("wprr/project", "items.project.tracking.linkedItem.trackingController"));
+		if(trackingController) {
+			trackingController.setupAllowedTracking(this._statistics.value, this._marketing.value);
+			trackingController.start();
+		}
 	}
 	
 	_prepareInitialRender() {
