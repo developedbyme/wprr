@@ -9,3 +9,6 @@ export {condition};
 
 import * as checkout from "./checkout/wp-blocks.js";
 export {checkout};
+
+import * as cookie from "./cookie/wp-blocks.js";
+export {cookie};
