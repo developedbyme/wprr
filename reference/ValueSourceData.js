@@ -223,13 +223,22 @@ export default class ValueSourceData extends SourceData {
 		//console.log("animateValue");
 		this.stopAnimations();
 		
+		return this.addAnimation(aNewValue, aTime, aEasing, aDelay);
+	}
+	
+	addAnimation(aNewValue, aTime = 0.4, aEasing = null, aDelay = 0) {
 		if(!aEasing) {
 			aEasing = TWEEN.Easing.Quadratic.Out;
+		}
+		else if(typeof(aEasing) === 'string') {
+			aEasing = Wprr.objectPath(TWEEN.Easing, aEasing);
 		}
 		
 		this._tween = new TWEEN.Tween(this).to({"value": aNewValue}, 1000*aTime).easing(aEasing);
 		if(aDelay) {
 			this._tween.delay(1000*aDelay);
+			
+			this._tween.onStart(ValueSourceData.updateStartAnimationValue);
 		}
 		this._tween.onComplete(this._callback_onCompleteBound).start();
 		
@@ -260,5 +269,9 @@ export default class ValueSourceData extends SourceData {
 		newValueSourceData.setValue(aValue);
 		
 		return newValueSourceData;
+	}
+	
+	static updateStartAnimationValue(aTweenParameters) {
+		this._valuesStart["value"] = aTweenParameters["value"];
 	}
 }

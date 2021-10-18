@@ -15,3 +15,6 @@ export {animation as animation};
 
 import * as admin from "./admin";
 export {admin as admin};
+
+import * as paths from "./paths";
+export {paths as paths};

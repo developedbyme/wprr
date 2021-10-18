@@ -4,9 +4,7 @@ import Wprr from "wprr/Wprr";
 import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
-import CommandPerformer from "wprr/commands/CommandPerformer";
 import UrlResolver from "wprr/utils/UrlResolver";
-import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
@@ -33,7 +31,7 @@ export default class WprrBaseObject extends React.Component {
 		this._registeredSources = new Object();
 		this._sourceChangeIndex = 0;
 		
-		this._elementTreeItem = new MultiTypeItem();
+		this._elementTreeItem = new Wprr.utils.data.MultiTypeItem();
 		this._elementTreeItem.addType("component", this);
 	}
 	
@@ -648,7 +646,7 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	_performCommands(aCommands, aData = null) {
-		CommandPerformer.perform(aCommands, aData, this);
+		Wprr.utils.CommandPerformer.perform(aCommands, aData, this);
 	}
 	
 	_addPropsToTree() {
@@ -716,7 +714,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("didMountCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	
@@ -727,7 +725,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("didUpdateCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 
@@ -738,7 +736,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("willUnmountCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	
@@ -761,7 +759,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("prepareInitialRenderCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	
@@ -776,7 +774,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("afterPrepareInitialRenderCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	
@@ -785,7 +783,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("prepareRenderCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	
@@ -800,7 +798,7 @@ export default class WprrBaseObject extends React.Component {
 		
 		let commands = this.getSourcedProp("afterPrepareRenderCommands");
 		if(commands) {
-			CommandPerformer.perform(commands, null, this);
+			Wprr.utils.CommandPerformer.perform(commands, null, this);
 		}
 	}
 	

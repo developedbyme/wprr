@@ -38,6 +38,10 @@ export default class SingleLink extends MultiTypeItemConnection {
 	
 	get linkedItem() {
 		
+		if(!this.id) {
+			return null;
+		}
+		
 		let fullPath = this.id;
 		if(this._prefix) {
 			fullPath = this._prefix + "." + fullPath;

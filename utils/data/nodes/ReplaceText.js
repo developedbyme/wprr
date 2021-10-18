@@ -17,14 +17,19 @@ export default class ReplaceText extends BaseObject {
 	}
 	
 	addReplacement(aKey, aValue) {
+		//console.log("addReplacement");
+		//console.log(aKey, aValue);
+		
 		this.createSource(aKey, aValue).addChangeCommand(this._updateReplacedTextCommand);
 		
 		let replacements = [].concat(this.replacements);
 		replacements.push(aKey);
-		this.replacements = this.replacements;
+		this.replacements = replacements;
 	}
 	
 	_updateReplacedText() {
+		//console.log("_updateReplacedText");
+		
 		let currentText = this.text;
 		
 		let currentArray = this.replacements;

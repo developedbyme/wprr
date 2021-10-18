@@ -21,7 +21,7 @@ export default class Layout extends WprrBaseObject {
 		this._externalStorage = new Wprr.utils.DataStorage();
 		this._exposedProps = new Array();
 		
-		this._sources = new Object();
+		this._elementTreeItem.requireValue("slotNames", []);
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -53,26 +53,35 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	getSource(aName) {
-		if(!this._sources[aName]) {
-			this._sources[aName] = Wprr.sourceValue(null);
+		
+		let valueName = "slot/" + aName;
+		
+		let slotNames = this._elementTreeItem.getValue("slotNames");
+		if(slotNames.indexOf(aName) === -1) {
+			slotNames = [].concat(slotNames);
+			slotNames.push(aName);
+			this._elementTreeItem.requireValue(valueName, null);
+			this._elementTreeItem.setValue("slotNames", slotNames);
+			
+			let source = this._elementTreeItem.getType(valueName);
+			source.addChangeCommand(Wprr.commands.callFunction(this, this._sourceChanged, [aName]));
 		}
 		
-		return this._sources[aName];
+		
+		return this._elementTreeItem.getType(valueName);
+	}
+	
+	_sourceChanged(aName) {
+		console.log("_sourceChanged");
+		console.log(aName);
+		
+		let valueName = "slot/" + aName;
+		this.updateProp(aName, this._elementTreeItem.getValue(valueName));
 	}
 	
 	getSourceChain(aType) {
 		console.warn("Use getSource instead of getSourceChain", this);
 		return this.getSource(aType);
-		
-		/*
-		let returnSource = Wprr.sourceFirst(
-			Wprr.sourceReferenceIfExists(this.getExternalStorageName(), "slots." + aType),
-			Wprr.sourceReferenceIfExists(this._layoutName + "/slots/" + aType),
-			Wprr.sourceReferenceIfExists(this.getExternalStorageName(), "defaults." + aType)
-		)
-		
-		return returnSource;
-		*/
 	}
 	
 	getSlot(aType) {
@@ -118,9 +127,15 @@ export default class Layout extends WprrBaseObject {
 		let injectData = {};
 		injectData[this._layoutName] = this;
 		injectData[this._layoutName + "/externalStorage"] = this._externalStorage;
+		injectData[this._layoutName + "/elementTreeItem"] = this._elementTreeItem;
 		
-		for(let objectName in this._sources) {
-			injectData[this._layoutName + "/internalSlots/" + objectName] = this._sources[objectName];
+		
+		let slotNames = this._elementTreeItem.getValue("slotNames");
+		let currentArray = slotNames;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let slotName = currentArray[i];
+			injectData[this._layoutName + "/internalSlots/" + slotName] = this.getSource(slotName);
 		}
 		
 		return React.createElement(Wprr.ReferenceInjection, {"injectData": injectData}, 

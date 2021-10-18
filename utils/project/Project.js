@@ -9,6 +9,25 @@ export default class Project {
 		this._mainReferences = null;
 		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
 		this._items.setProject(this);
+		
+		let projectItem = this._items.getItem("project");
+		projectItem.addType("controller", this);
+		
+		let pathsItem = this._items.createInternalItem();
+		
+		let pathController = Wprr.utils.data.multitypeitems.controllers.paths.PathController.create(pathsItem);
+		
+		projectItem.addSingleLink("paths", pathsItem.id);
+		
+		pathController.setFullPath("");
+		
+		let pathCustomizerItem = this._items.createInternalItem();
+		
+		let pathCustomizer = Wprr.utils.data.multitypeitems.controllers.paths.PathCustomizer.create(pathCustomizerItem);
+		pathCustomizerItem.addSingleLink("paths", pathsItem.id);
+		
+		projectItem.addSingleLink("pathCustomizer", pathCustomizerItem.id);
+		
 	}
 	
 	get name() {
@@ -29,8 +48,8 @@ export default class Project {
 		return this;
 	}
 	
-	setMainReferences(aReferecnes) {
-		this._mainReferences = aReferecnes;
+	setMainReferences(aReferences) {
+		this._mainReferences = aReferences;
 		
 		return this;
 	}

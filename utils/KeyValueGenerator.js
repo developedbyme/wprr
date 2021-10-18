@@ -66,6 +66,15 @@ export default class KeyValueGenerator {
 		return Wprr.utils.array.getItemIndexByIfExists("key", aKey, this._values);
 	}
 	
+	getValueForKeyIfExists(aKey) {
+		let index = this.getIndexForKey(aKey);
+		if(index > -1) {
+			return this._values[index].value;
+		}
+		
+		return null;
+	}
+	
 	static create() {
 		let newKeyValueGenerator = new KeyValueGenerator();
 		
