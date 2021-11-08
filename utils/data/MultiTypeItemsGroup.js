@@ -61,9 +61,65 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		return this;
 	}
 	
+	addSetup(aType, aPrepareFunction = null, aSetupFunction = null) {
+		let typeLinks = this.getItem("itemsSetup").getNamedLinks("types");
+		
+		if(!typeLinks.hasLinkByName(aType)) {
+			let setupItem =  this.createInternalItem();
+			
+			setupItem.addType("prepareFunctions", []);
+			setupItem.addType("setupFunctions", []);
+			
+			typeLinks.addItem(aType, setupItem.id);
+		}
+		
+		let item = typeLinks.getLinkByName(aType);
+		if(aPrepareFunction) {
+			item.getType("prepareFunctions").push(aPrepareFunction);
+		}
+		if(aSetupFunction) {
+			item.getType("setupFunctions").push(aSetupFunction);
+		}
+		
+		return this;
+	}
+	
+	prepareItem(aItem, aTypes) {
+		console.log("prepareItem");
+		let types = Wprr.utils.array.arrayOrSeparatedString(aTypes);
+		let currentArray = types;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentType = currentArray[i];
+			let prepareFunctions = Wprr.objectPath(this, "itemsSetup.types." + currentType + ".prepareFunctions");
+			
+			if(prepareFunctions) {
+				let currentArray2 = prepareFunctions;
+				let currentArray2Length = currentArray2.length;
+				for(let j = 0; j < currentArray2Length; j++) {
+					let currentFunction = currentArray2[j];
+					currentFunction.call(window, aItem);
+				}
+			}
+		}
+		
+		return this;
+	}
+	
 	setupItem(aItem, aSetupType, aData) {
 		//console.log("setupItem");
 		//console.log(aItem, aSetupType);
+		
+		let setupFunctions = Wprr.objectPath(this, "itemsSetup.types." + aSetupType + ".setupFunctions");
+		
+		if(setupFunctions) {
+			let currentArray = setupFunctions;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentFunction = currentArray[i];
+				currentFunction.call(window, aItem, aData);
+			}
+		}
 		
 		this.commands.perform("setupItem/" + aSetupType, {"item": aItem, "data": aData, "setupType": aSetupType});
 		

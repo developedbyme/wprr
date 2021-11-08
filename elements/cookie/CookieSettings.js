@@ -68,8 +68,8 @@ export default class CookieSettings extends Layout {
 			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
 				<Wprr.Checkbox checked={this._performance} />
 				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Preferences cookies", "site.cookieSettings.performance.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("These cookies allow a website to remember choices you have made in the past.", "site.cookieSettings.performance.description")}</div>
+					<div className="cookie-setting-label">{Wprr.idText("Preferences cookies", "site.cookieSettings.preference.title")}</div>
+					<div className="cookie-setting-description-text">{Wprr.idText("These cookies allow a website to remember choices you have made in the past.", "site.cookieSettings.preference.description")}</div>
 				</div>
 			</Wprr.FlexRow>
 			<div className="spacing standard" />

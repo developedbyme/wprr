@@ -58,24 +58,24 @@ export default class CookieBar extends Layout {
 		
 		let textElement = <div>
 			<div className="cookie-bar-title">{Wprr.idText("Your privacy is important to us", "site.cookieBar.title")}</div>
+			<div className="spacing micro" />
 			<div className="cookie-bar-content">{Wprr.idText("We use cookies to improve your experience on our site.", "site.cookieBar.content")}</div>
 		</div>;
 		
 		let mobileLayout = <div className="centered-site">
 			{textElement}
 			<div className="spacing small" />
-			<Wprr.FlexRow className="small-item-spacing vertically-center-items justify-between">
-				<Wprr.Link href={Wprr.sourceReference("projectLinks", "global-pages/cookie-settings")} className="custom-styled-link">
-					<div className="secondary-button cookie-settings-button secondary-button-padding">
-						{Wprr.idText("Settings", "site.cookieBar.settings")}
-					</div>
-				</Wprr.Link>
-				<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this.allowAll)}>
-					<div className="standard-button allow-all-cookies-button standard-button-padding">
-						{Wprr.idText("I agree", "site.cookieBar.allowAllShort")}
-					</div>
-				</Wprr.CommandButton>
-			</Wprr.FlexRow>
+			<Wprr.CommandButton commands={Wprr.commands.callFunction(this, this.allowAll)}>
+				<div className="standard-button allow-all-cookies-button standard-button-padding text-align-center">
+					{Wprr.idText("I agree", "site.cookieBar.allowAllShort")}
+				</div>
+			</Wprr.CommandButton>
+			<div className="spacing micro" />
+			<Wprr.Link href={Wprr.sourceReference("projectLinks", "global-pages/cookie-settings")} className="custom-styled-link">
+				<div className="secondary-button cookie-settings-button secondary-button-padding text-align-center">
+					{Wprr.idText("Settings", "site.cookieBar.settings")}
+				</div>
+			</Wprr.Link>
 		</div>;
 		
 		let desktopLayout = <div className="centered-site">

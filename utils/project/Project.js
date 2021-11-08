@@ -33,6 +33,16 @@ export default class Project {
 		let trackingController = Wprr.utils.data.multitypeitems.controllers.tracking.TrackingController.create(trackingItem);
 		
 		projectItem.addSingleLink("tracking", trackingItem.id);
+		
+		let itemsSetupItem = this._items.getItem("itemsSetup");
+		let typeLinks = itemsSetupItem.getNamedLinks("types");
+		
+		this._items.addSetup("dataRangeLoader", Wprr.utils.data.multitypeitems.setup.DataRangeLoader.prepare, Wprr.utils.data.multitypeitems.setup.DataRangeLoader.setup);
+		this._items.addSetup("featuredImage", Wprr.utils.data.multitypeitems.setup.FeaturedImage.prepare, Wprr.utils.data.multitypeitems.setup.FeaturedImage.setup);
+		this._items.addSetup("image", Wprr.utils.data.multitypeitems.setup.Image.prepare, Wprr.utils.data.multitypeitems.setup.Image.setup);
+		this._items.addSetup("permalink", Wprr.utils.data.multitypeitems.setup.Permalink.prepare, Wprr.utils.data.multitypeitems.setup.Permalink.setup);
+		this._items.addSetup("taxonomyTerm", Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.prepare, Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.setup);
+		
 	}
 	
 	get name() {

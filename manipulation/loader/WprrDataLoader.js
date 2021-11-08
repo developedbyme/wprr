@@ -170,6 +170,10 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 			let currentType = "M-ROUTER-API-DATA";
 			let currentPath;
 			
+			if(!currentData) {
+				continue;
+			}
+			
 			if(typeof(currentData) === "string") {
 				currentPath = currentData;
 			}

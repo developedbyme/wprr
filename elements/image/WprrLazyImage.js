@@ -1,4 +1,5 @@
 import React from 'react';
+import Wprr from "wprr/Wprr";
 
 import LazyImage from "wprr/elements/image/LazyImage";
 
@@ -11,7 +12,7 @@ export default class WprrLazyImage extends LazyImage {
 	
 	_getImageData() {
 		
-		let data = this.getSourcedProp("data");
+		let data = this.getFirstInput("data");
 		
 		if(!data) {
 			console.warn("Image doesn't have any data.", this);
@@ -19,6 +20,6 @@ export default class WprrLazyImage extends LazyImage {
 			return null;
 		}
 		
-		return data.sizes;
+		return Wprr.objectPath(data, "sizes");
 	}
 }
