@@ -165,4 +165,8 @@ export default class SortPart  {
 		}
 		return returnValue;
 	}
+	
+	static format_caseInsensitive(aValue) {
+		return (""+aValue).toLowerCase();
+	}
 }

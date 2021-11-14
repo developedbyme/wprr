@@ -32,6 +32,13 @@ export default class DataRangeLoader extends Layout {
 		
 		let as = this.getFirstInput("as");
 		
-		return React.createElement(Wprr.AddReference, {"data": this._item, "as": as}, aSlots.default(React.createElement("div", {}, "No element set")));
+		return React.createElement(Wprr.AddReference, {"data": this._item, "as": as},
+			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference(as, "loaded")},
+				aSlots.default(React.createElement("div", {}, "No element set"))
+			),
+			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference(as, "loaded"), "checkType": "invert/default"},
+				aSlots.slot("loaderElement", React.createElement(Wprr.layout.loader.LoaderDisplay))
+			)
+		);
 	}
 }

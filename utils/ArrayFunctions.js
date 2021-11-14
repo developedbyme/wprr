@@ -177,6 +177,10 @@ export default class ArrayFunctions {
 		return -1;
 	}
 	
+	static hasItemBy(aField, aIdentifier, aArray, aCompareType = "==") {
+		return ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray, aCompareType) > -1;
+	}
+	
 	static getItemIndexBy(aField, aIdentifier, aArray, aCompareType = "==") {
 		let returnValue = ArrayFunctions.getItemIndexByIfExists(aField, aIdentifier, aArray, aCompareType);
 		

@@ -22,7 +22,7 @@ export default class DropdownButton extends Layout {
 	_getLayout(aSlots) {
 		
 		return React.createElement("div", {className: "dropdown-button standard-dropdown-button standard-dropdown-button-padding"},
-			React.createElement(Wprr.FlexRow, {className: "justify-between vertically-center-items", itemClasses: "flex-resize,flex-no-resize"},
+			React.createElement(Wprr.FlexRow, {className: "justify-between vertically-center-items micro-item-spacing", itemClasses: "flex-resize,flex-no-resize"},
 				aSlots.default(
 					Wprr.text(aSlots.prop("text", Wprr.sourceTranslation("Select", "site.select")))
 				),

@@ -61,6 +61,10 @@ export default class PathController extends MultiTypeItemConnection {
 			let parentPath = parent.getFullPath();
 			if(parentPath) {
 				if(fullPath) {
+					let queryStringIndex = parentPath.indexOf("?");
+					if(queryStringIndex !== -1) {
+						parentPath = parentPath.substring(0, queryStringIndex);
+					}
 					fullPath = parentPath + "/" + fullPath;
 				}
 				else {

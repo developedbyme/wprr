@@ -73,6 +73,12 @@ export default class FilterChain extends FilterPart {
 		return this;
 	}
 	
+	addCompareField(aField, aCompareValue, aCompareType = "=", aValueFormat = "string", aActive = null) {
+		this.addPart(Wprr.utils.filterPartFunctions.createCompareField(aField, aCompareValue, aCompareType, aValueFormat, aActive));
+		
+		return this;
+	}
+	
 	addMatchFieldToAny(aField, aCompareValues, aActive = null) {
 		this.addPart(Wprr.utils.filterPartFunctions.createInArrayField(aField, aCompareValues, aActive));
 		

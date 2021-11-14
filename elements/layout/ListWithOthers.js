@@ -5,14 +5,14 @@ import Wprr from "wprr";
 
 import Layout from "./Layout";
 
-// import List from "./List";
-export default class List extends Layout {
+// import ListWithOthers from "./ListWithOthers";
+export default class ListWithOthers extends Layout {
 
 	/**
 	 * Constructor
 	 */
 	constructor() {
-		//console.log("List::constructor");
+		//console.log("ListWithOthers::constructor");
 
 		super();
 		
