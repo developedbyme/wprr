@@ -77,7 +77,7 @@ export default class ListWithOthers extends Layout {
 			})
 		);
 		
-		return React.createElement("div", {},
+		return React.createElement("span", {},
 			React.createElement(Wprr.InsertElement, {
 			  element: Wprr.sourceFunction(this, this.getElements, [itemsProp, showNumberOfItemsProp, itemElementProp, spacingElementProp, lastSpacingElementProp, othersElementProp]),
 			  sourceUpdates: [itemsProp, showNumberOfItemsProp, itemElementProp, spacingElementProp, lastSpacingElementProp, othersElementProp]

@@ -66,6 +66,12 @@ export default class SortChain extends SortPart {
 		return this;
 	}
 	
+	setParts(aParts) {
+		this.inputs.setInput("parts", aParts);
+		
+		return this;
+	}
+	
 	removePart(aPart) {
 		let parts = this.inputs.getInput("parts");
 		

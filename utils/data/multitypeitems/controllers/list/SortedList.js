@@ -29,7 +29,7 @@ export default class SortedList extends MultiTypeItemConnection {
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("filteredListController", this);
+		aItem.addType("sortedListController", this);
 		this.setup();
 		
 		return this;
@@ -45,6 +45,7 @@ export default class SortedList extends MultiTypeItemConnection {
 	
 	updateSort() {
 		console.log("updateSort");
+		console.log(this._sortChain);
 		
 		let items = this.item.getLinks("all").items;
 		let sortedItems = this._sortChain.sort(items, null);
@@ -67,7 +68,7 @@ export default class SortedList extends MultiTypeItemConnection {
 		let activeSource = item.setValue("active", true).getType("active");
 		activeSource.addChangeCommand(this._updateSortCommand);
 		
-		let sortPart = this._sortChain.addFieldSort(fieldSource, formatSource, activeSource);
+		let sortPart = Wprr.utils.FieldSort.create(fieldSource, formatSource, activeSource);
 		sortPart.setInput("orderMultiplier", orderMultiplierSource);
 		item.addType("sortPart", sortPart);
 		

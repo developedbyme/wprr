@@ -99,6 +99,32 @@ export default class FilteredList extends MultiTypeItemConnection {
 		return item;
 	}
 	
+	addFieldCompare(aField, aCompareValue, aCompareType = "=") {
+		let item = this.item.group.createInternalItem();
+		
+		let fieldSource = item.setValue("field", aField).getType("field");
+		fieldSource.addChangeCommand(this._updateFilterCommand);
+		
+		let compareValueSource = item.setValue("compareValue", aCompareValue).getType("compareValue");
+		compareValueSource.addChangeCommand(this._updateFilterCommand);
+		
+		let compareTypeSource = item.setValue("compareType", aCompareType).getType("compareType");
+		compareTypeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let formatTypeSource = item.setValue("formatType", "string").getType("formatType");
+		formatTypeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let activeSource = item.setValue("active", true).getType("active");
+		activeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let filterPart = Wprr.utils.filterPartFunctions.createCompareField(fieldSource, compareValueSource, compareTypeSource, formatTypeSource, activeSource);
+		item.addType("filterPart", filterPart);
+		
+		this.item.getLinks("filterParts").addItem(item.id);
+		
+		return item;
+	}
+	
 	_updateListeners() {
 		console.log("_updateListeners");
 		
