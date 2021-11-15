@@ -57,7 +57,7 @@ export default class Selections extends Layout {
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		
 		let defaultSelection = React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(this, this.getIsSelectedItemForValue, [itemValueSource]), as: "isSelectedItem"},
-			React.createElement(Wprr.FlexRow, {className: "small-item-spacing", itemClasses: "flex-no-resize,flex-resize"},
+			React.createElement(Wprr.FlexRow, {className: aSlots.prop("flexClasses", "small-item-spacing"), itemClasses: "flex-no-resize,flex-resize"},
 				React.createElement(Wprr.CustomCheckbox, {checked: Wprr.sourceReference("isSelectedItem", "isSelected")},
 					React.createElement("div", {"data-section-name": "on", className: "custom-checkbox custom-checkbox-padding checked cursor-pointer"},
 						React.createElement(Wprr.Image, {src: aSlots.prop("checkmarkImagePath", "icons/checkmark.svg"), location: "images", className: "full-size background-contain"})
@@ -65,13 +65,15 @@ export default class Selections extends Layout {
 					React.createElement("div", {"data-section-name": "off", className: "custom-checkbox custom-checkbox-padding cursor-pointer"})
 				),
 				React.createElement("div", {},
-					React.createElement("div", {className: "standard-field-label no-margins"},
+					aSlots.slot("labelElement", React.createElement("div", {className: "standard-field-label no-margins"},
 						Wprr.text(Wprr.sourceReference("loop/item", "label"))
-					),
-					React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loop/item", "description"), "checkType": "notEmpty"},
-						React.createElement("div", {className: "spacing micro"}),
-						React.createElement("div", {className: "small-description no-paragraph-margins-around"},
-							Wprr.text(Wprr.sourceReference("loop/item", "description"), "html")
+					)),
+					aSlots.slot("descriptionElement", 
+						React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loop/item", "description"), "checkType": "notEmpty"},
+							React.createElement("div", {className: "spacing micro"}),
+							React.createElement("div", {className: "small-description no-paragraph-margins-around"},
+								Wprr.text(Wprr.sourceReference("loop/item", "description"), "html")
+							)
 						)
 					)
 				)

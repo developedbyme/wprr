@@ -83,7 +83,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 		let compareTypeSource = item.setValue("compareType", "inArray").getType("compareType");
 		compareTypeSource.addChangeCommand(this._updateFilterCommand);
 		
-		let formatTypeSource = item.setValue("formatType", "string").getType("formatType");
+		let formatTypeSource = item.setValue("formatType", null).getType("formatType");
 		formatTypeSource.addChangeCommand(this._updateFilterCommand);
 		
 		let activeSource = item.setValue("active", aMatchValues.length > 0).getType("active");
@@ -111,7 +111,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 		let compareTypeSource = item.setValue("compareType", aCompareType).getType("compareType");
 		compareTypeSource.addChangeCommand(this._updateFilterCommand);
 		
-		let formatTypeSource = item.setValue("formatType", "string").getType("formatType");
+		let formatTypeSource = item.setValue("formatType", null).getType("formatType");
 		formatTypeSource.addChangeCommand(this._updateFilterCommand);
 		
 		let activeSource = item.setValue("active", true).getType("active");

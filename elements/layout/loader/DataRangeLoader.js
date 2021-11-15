@@ -14,7 +14,7 @@ export default class DataRangeLoader extends Layout {
 	}
 	
 	_prepareInitialRender() {
-		console.log("DataRangeLoader::_prepareInitialRender");
+		//console.log("DataRangeLoader::_prepareInitialRender");
 		
 		super._prepareInitialRender();
 		
@@ -23,12 +23,17 @@ export default class DataRangeLoader extends Layout {
 		
 		let item = items.getItem(path);
 		
+		let calculations = this.getFirstInput("calculations");
+		if(calculations) {
+			item.setValue("calculations", calculations);
+		}
+		
 		items.prepareItem(item, "dataRangeLoader");
 		this._item.value = item;
 	}
 	
 	_getLayout(aSlots) {
-		console.log("DataRangeLoader::_getLayout");
+		//console.log("DataRangeLoader::_getLayout");
 		
 		let as = this.getFirstInput("as");
 		
