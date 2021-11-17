@@ -46,12 +46,14 @@ export default class DataRangeLoader extends BaseObject {
 				let currentCalculation = currentArray[i];
 				let rangePath = currentCalculation["range"];
 				let range = Wprr.objectPath(ranges, rangePath);
-				let calculation = currentCalculation["calculation"];
+				if(range) {
+					let calculation = currentCalculation["calculation"];
 				
-				let currentArray2 = range;
-				let currentArray2Length = currentArray2.length;
-				for(let j = 0; j < currentArray2Length; j++) {
-					calculation.call(window, currentArray2[j]);
+					let currentArray2 = range;
+					let currentArray2Length = currentArray2.length;
+					for(let j = 0; j < currentArray2Length; j++) {
+						calculation.call(window, currentArray2[j]);
+					}
 				}
 			}
 		}
