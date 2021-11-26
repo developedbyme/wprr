@@ -52,10 +52,16 @@ export default class LoadingGroup {
 		//console.log("wprr/utils/loading/LoadingGroup::addLoaderByPath");
 		
 		let loader = this._storeController.getLoader(aPath);
-		loader.addCommand(this._updateCommand, "status");
-		this._loaders.push(loader);
+		this.addLoader(loader);
 		
 		return loader;
+	}
+	
+	addLoader(aLoader) {
+		aLoader.addCommand(this._updateCommand, "status");
+		this._loaders.push(aLoader);
+		
+		return this;
 	}
 	
 	load() {

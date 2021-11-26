@@ -86,7 +86,7 @@ export default class HierarchyList extends Layout {
 		
 		let orderEditor = this.getFirstInput(orderEditorSource);
 		
-		orderEditor.addOrder(this._sources.orderId.value);
+		orderEditor.addOrder(this._elementTreeItem.getValue("slot/orderId"));
 	}
 	
 	_getLayout(aSlots) {

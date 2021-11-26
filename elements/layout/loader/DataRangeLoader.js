@@ -30,6 +30,7 @@ export default class DataRangeLoader extends Layout {
 		
 		items.prepareItem(item, "dataRangeLoader");
 		this._item.value = item;
+		item.getType("loader").load();
 	}
 	
 	_getLayout(aSlots) {

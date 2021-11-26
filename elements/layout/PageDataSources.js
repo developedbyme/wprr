@@ -65,6 +65,18 @@ export default class PageDataSources extends Layout {
 				let currentData = this._loadingGroup.getData(currentLoadData["value"]);
 				
 				switch(currentLoadData["format"]) {
+					case "itemRange":
+						{
+							let rawData = currentData["data"];
+							//METODO
+						}
+						break;
+					case "item":
+						{
+							let rawData = currentData["data"];
+							//METODO
+						}
+						break;
 					case "raw":
 						//MENOTE: do nothing
 						break;
@@ -86,22 +98,7 @@ export default class PageDataSources extends Layout {
 		
 		console.log(">>>>>>>>", dataSources);
 		
-		/*
-		loadData = {
-			"relations": {
-				"value": "wprr/v1/taxonomy/{taxonomy}/terms",
-				"replacements": {
-					"{taxonomy}": {
-						"type": "fromObject",
-						"path": "dbm_relation"
-					}
-				}
-			}
-		}
-		*/
-		
 		let returnArray = new Array();
-		
 		
 		if(dataSources) {
 			let currentArray = dataSources;
@@ -112,7 +109,8 @@ export default class PageDataSources extends Layout {
 					let currentLoadData = currentDataSource["data"];
 					let path = currentLoadData.value;
 					let replacements = this._getReplacements(currentLoadData.replacements);
-					let finalPath = this.getWprrUrl(this._replaceText(path, replacements));
+					let requestOrigin = currentLoadData.origin ? currentLoadData.origin : "rest";
+					let finalPath = this.getWprrUrl(this._replaceText(path, replacements), requestOrigin);
 					
 					returnArray.push({"key": currentDataSource["dataName"], "value": finalPath, "format": currentLoadData.format})
 				}
@@ -120,18 +118,6 @@ export default class PageDataSources extends Layout {
 					this._externalData.updateValue("injectData." + currentDataSource["dataName"], currentDataSource["data"]);
 				}
 			}
-			/*
-			for(let objectName in loadData) {
-				let currentLoadData = loadData[objectName];
-				if(currentLoadData && currentLoadData.value) {
-					let path = currentLoadData.value;
-					let replacements = this._getReplacements(currentLoadData.replacements);
-					let finalPath = this.getWprrUrl(this._replaceText(path, replacements));
-					
-					returnArray.push({"key": objectName, "value": finalPath, "format": currentLoadData.format})
-				}
-			}
-			*/
 		}
 		
 		return returnArray;
@@ -170,11 +156,11 @@ export default class PageDataSources extends Layout {
 		return React.createElement(Wprr.AddReference, {"data": this._externalData, "as": "loadingData"},
 			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded")},
 				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData")},
-					aSlots.default(React.createElement("div", {}, "No block element test"))
+					aSlots.default(React.createElement("div", {}, "No block element"))
 				)
 			),
 			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded"), "checkType": "invert/default"},
-				aSlots.slot("loader", React.createElement("div", {}, "Loading..."))
+				aSlots.slot("loader", React.createElement(Wprr.layout.loader.LoaderDisplay, null))
 			)
 		);
 	}

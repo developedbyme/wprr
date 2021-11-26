@@ -59,28 +59,25 @@ export default class DataRangeLoader extends BaseObject {
 		}
 		
 		aItem.getLinks("range").addUniqueItems(mainIds);
-		aItem.setValue("loaded", true);
+		aItem.setValue("itemsSetup", true);
 	}
 	
 	static prepare(aItem) {
 		//console.log("DataRangeLoader::prepare");
 		
 		if(!aItem.getValue("hasData/dataRangeLoader")) {
-			aItem.requireValue("loaded", false);
-			aItem.requireValue("data", null);
 			aItem.requireValue("calculations", new Array());
-			
-			aItem.getType("data").addChangeCommand(Wprr.commands.callFunction(DataRangeLoader, DataRangeLoader.setupData, [aItem]))
-			
-			aItem.getLinks("range");
-			aItem.requireSingleLink("ranges", aItem.group.createInternalItem());
-			aItem.getType("ranges").linkedItem.addSingleLink("dataRangeLoader", this);
+			aItem.requireValue("itemsSetup", false);
 			
 			let loader = aItem.group.project.getSharedLoader(aItem.id);
 			aItem.addType("loader", loader);
-			loader.load(); //MEDEBUG
-			loader.addSuccessCommand(Wprr.commands.setProperty(aItem.getType("data").reSource(), "value", Wprr.sourceEvent("data")));
 			
+			aItem.getType("data").addChangeCommand(Wprr.commands.callFunction(DataRangeLoader, DataRangeLoader.setupData, [aItem]))
+			//METODO: check if data already is loaded
+			
+			aItem.getLinks("range");
+			aItem.requireSingleLink("ranges", aItem.group.createInternalItem().id);
+			aItem.getType("ranges").linkedItem.addSingleLink("dataRangeLoader", aItem.id);
 			
 			aItem.setValue("hasData/dataRangeLoader", true);
 		}
@@ -89,6 +86,8 @@ export default class DataRangeLoader extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
+		
+		//MENOTE: do nothing
 		
 		return this;
 	}

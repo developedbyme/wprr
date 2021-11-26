@@ -61,6 +61,7 @@ export {default as DataStorageConnection} from "wprr/utils/DataStorageConnection
 export {default as CommandPerformer} from "wprr/commands/CommandPerformer";
 export {default as CommandGroup} from "wprr/commands/CommandGroup";
 export {default as Hierarchy} from "wprr/utils/Hierarchy";
+export {default as UrlResolver} from "wprr/utils/UrlResolver";
 
 import * as process from "wprr/utils/process";
 export {process as process};

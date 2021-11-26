@@ -181,13 +181,37 @@ export default class Project {
 	}
 	
 	getSharedLoader(aUrl) {
-		let storeController = this._mainReferences.getObject("redux/store/wprrController");
+		console.log("getSharedLoader");
+		console.log(aUrl, this._items);
 		
-		return storeController.getLoaderByRelativePath(aUrl);
+		let pathController = Wprr.objectPath(this.items, "project.paths.linkedItem.children.wp.children.rest.pathController");
+		
+		let absolutePath = pathController.resolveRelativePath(aUrl);
+		let item = this._items.getItem(absolutePath);
+		
+		if(!item.hasType("loader")) {
+			let loader = new Wprr.utils.loading.JsonLoader();
+			loader.setUrl(absolutePath);
+			this.addUserCredentialsToLoader(loader);
+			item.requireValue("loaded", false);
+			item.requireValue("data", null);
+			loader.addSuccessCommand(Wprr.commands.setProperty(item.getType("data").reSource(), "value", Wprr.sourceEvent("data")));
+			loader.addSuccessCommand(Wprr.commands.setProperty(item.getType("loaded").reSource(), "value", true));
+			
+			item.addType("loader", loader);
+			
+			
+			//METODO: remove this legacy
+			let storeController = this._mainReferences.getObject("redux/store/wprrController");
+			storeController.addLoader(absolutePath, loader);
+		}
+		
+		return item.getType("loader");
 	}
 	
 	addUserCredentialsToLoader(aLoader) {
 		
+		//METODO: move this to tree
 		let userData = this._mainReferences.getObject("wprr/userData");
 		if(userData) {
 			aLoader.addHeader("X-WP-Nonce", userData.restNonce);
@@ -200,6 +224,7 @@ export default class Project {
 		console.log("setUserData");
 		console.log(aData);
 		
+		//METODO: move this to tree
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		this._mainReferences.addObject("wprr/userData", aData);
 		storeController.setUser(aData);

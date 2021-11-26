@@ -103,24 +103,17 @@ export default class StoreController {
 			
 			let currentState = this._store.getState();
 			
-			if(false) {
-				//METODO: check
-			}
-			else {
-				if(this._userData) {
-					if(this._userData.apiKey && this._userData.apiPassword) {
-						loader.addHeader("X-dbm-api-key", this._userData.apiKey);
-						loader.addHeader("X-dbm-api-password", this._userData.apiPassword);
-					}
-					else if(this._userData.restNonce) {
-						loader.addHeader("X-WP-Nonce", this._userData.restNonce);
-					}
-					
+			if(this._userData) {
+				if(this._userData.apiKey && this._userData.apiPassword) {
+					loader.addHeader("X-dbm-api-key", this._userData.apiKey);
+					loader.addHeader("X-dbm-api-password", this._userData.apiPassword);
 				}
-				loader.addSuccessCommand(CallFunctionCommand.create(this, this._loaderLoaded, [aPath, loader]));
-				loader.addErrorCommand(CallFunctionCommand.create(this, this._loaderError, [aPath, loader]));
+				else if(this._userData.restNonce) {
+					loader.addHeader("X-WP-Nonce", this._userData.restNonce);
+				}
+				
 			}
-			this._loaders[aPath] = loader;
+			this.addLoader(aPath, loader);
 		}
 		
 		return loader;
@@ -128,6 +121,9 @@ export default class StoreController {
 	
 	addLoader(aPath, aLoader) {
 		this._loaders[aPath] = aLoader;
+		
+		aLoader.addSuccessCommand(CallFunctionCommand.create(this, this._loaderLoaded, [aPath, aLoader]));
+		aLoader.addErrorCommand(CallFunctionCommand.create(this, this._loaderError, [aPath, aLoader]));
 		
 		return this;
 	}

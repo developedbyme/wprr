@@ -141,6 +141,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 	}
 	
 	_setupLoading() {
+		let project = this.getReference("wprr/project");
 		let storeController = this.getReference("redux/store/wprrController");
 		if(!storeController) {
 			console.error("Store controller doesn't exist, can't request data.", this);
@@ -192,7 +193,8 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				absolutePath += separator + "language=" + language;
 			}
 			
-			this._loadingGroup.addLoaderByPath(absolutePath);
+			let loader = project.getSharedLoader(absolutePath);
+			this._loadingGroup.addLoader(loader);
 		}
 	}
 	

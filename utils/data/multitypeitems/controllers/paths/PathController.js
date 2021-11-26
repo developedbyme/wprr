@@ -142,6 +142,12 @@ export default class PathController extends MultiTypeItemConnection {
 		return Wprr.objectPath(this.getChild(firstPart), restParts);
 	}
 	
+	resolveRelativePath(aPath) {
+		let urlResolver = Wprr.utils.UrlResolver.create(this.getFullPath());
+		
+		return urlResolver.getAbsolutePath(aPath);
+	}
+	
 	toJSON() {
 		return "[PathController id=" + this._id + "]";
 	}
