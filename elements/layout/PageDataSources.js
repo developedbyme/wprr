@@ -128,7 +128,7 @@ export default class PageDataSources extends Layout {
 		
 		super._prepareInitialRender();
 		
-		this._loadingGroup.setStoreController(this.getReference("redux/store/wprrController"));
+		let project = this.getReference("wprr/project");
 		
 		let loadData = this._getLoadData();
 		
@@ -136,10 +136,10 @@ export default class PageDataSources extends Layout {
 			let currentArray = loadData;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
-				this._loadingGroup.addLoaderByPath(currentArray[i]["value"]);
+				
+				let loader = project.getSharedLoader(currentArray[i]["value"]);
+				this._loadingGroup.addLoader(loader);
 			}
-			
-			console.log(this._loadingGroup);
 			
 			this._loadingGroup.load();
 		}

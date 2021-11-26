@@ -78,8 +78,19 @@ export default class LoadingGroup {
 	}
 	
 	getData(aPath) {
-		let loader = this._storeController.getLoader(aPath);
-		return loader.getData();
+		//console.log("LoadingGroup::getData");
+		//console.log(aPath);
+		
+		let currentArray = this._loaders;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentLoader = currentArray[i];
+			if(currentLoader.getUrl() === aPath) {
+				return currentLoader.getData();
+			}
+		}
+		
+		return null;
 	}
 	
 	_determineCompleteStatus(aStatuses) {

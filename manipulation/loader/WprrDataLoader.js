@@ -158,7 +158,6 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 		
 		let locationBase = this.getSourcedPropWithDefault("location", "default");
 		
-		this._loadingGroup.setStoreController(storeController);
 		this._loadingGroup.removeAllLoaders();
 		
 		let skipLanguageParameter = this.getSourcedPropWithDefault("skipLanguageParameter", false);
@@ -186,6 +185,7 @@ export default class WprrDataLoader extends ManipulationBaseObject {
 				currentPath = currentData.path;
 			}
 			
+			//METODO: resolve this path on project instead
 			let absolutePath = storeController.getAbsolutePath(currentType, currentPath, currentLocationBase);
 			
 			if(!skipLanguageParameter && language && !hasLanguageParameterRegExp.test(absolutePath)) {
