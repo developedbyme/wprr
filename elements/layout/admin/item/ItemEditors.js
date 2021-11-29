@@ -15,8 +15,30 @@ export default class ItemEditors extends Wprr.BaseObject {
 		let objectTypes = Wprr.objectPath(item, "objectTypes.items");
 		console.log(objectTypes);
 		
+		let elements = new Array();
+		
+		let currentArray = objectTypes;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentType = currentArray[i].getValue("slug");
+			let currentElements = items.getItem("admin/editorsForType/" + currentType).getLinks("elements").items;
+			if(currentElements) {
+				elements = elements.concat(currentElements);
+			}
+		}
+		
+		if(!elements.length) {
+			let currentElements = items.getItem("admin/defaultItemEditors").getLinks("elements").items;
+			if(currentElements) {
+				elements = elements.concat(currentElements);
+			}
+		}
+		console.log(elements);
+		let realElements = Wprr.utils.array.mapField(elements, "element.value");
+		console.log(realElements);
+			
 		return React.createElement("div", null,
-			"test"
+			React.createElement(Wprr.InsertElement, {"element": realElements})
 		);
 	}
 	

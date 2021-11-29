@@ -55,7 +55,7 @@ export default class PostApiCommand extends WprrBaseObject {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		this._url.value = Wprr.utils.wprrUrl.getEditUrl(this.getFirstInput(Wprr.sourceQueryString("id")));
+		this._url.value = Wprr.utils.wprrUrl.getEditUrl(this.getFirstInput(Wprr.sourceReference("item", "id")));
 	}
 	
 	_renderMainElement() {
@@ -76,17 +76,5 @@ export default class PostApiCommand extends WprrBaseObject {
 				)
 			)
 		);
-	}
-	
-	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
-		
-		let dataSettings = {
-			
-		};
-		
-		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
-  dataSettings: dataSettings
-});
 	}
 }

@@ -56,6 +56,8 @@ export default class PageDataSources extends Layout {
 		
 		if(aStatus === 1) {
 			
+			let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
+			
 			let loadData = this._getLoadData();
 			
 			let currentArray = loadData;
@@ -67,14 +69,16 @@ export default class PageDataSources extends Layout {
 				switch(currentLoadData["format"]) {
 					case "itemRange":
 						{
-							let rawData = currentData["data"];
-							//METODO
+							let item = items.getItem(currentLoadData["value"]);
+							
+							currentData = Wprr.objectPath(item, "range.items");
 						}
 						break;
 					case "item":
 						{
-							let rawData = currentData["data"];
-							//METODO
+							let item = items.getItem(currentLoadData["value"]);
+							
+							currentData = Wprr.objectPath(item, "range.items.0");
 						}
 						break;
 					case "raw":
@@ -94,9 +98,10 @@ export default class PageDataSources extends Layout {
 	}
 	
 	_getLoadData() {
-		let dataSources = this.getFirstInput("dataSources", Wprr.sourceReference("wprr/postData", "addOns.dataSources"));
+		console.log("PageDataSoruces::_getLoadData");
 		
-		console.log(">>>>>>>>", dataSources);
+		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
+		let dataSources = this.getFirstInput("dataSources", Wprr.sourceReference("wprr/postData", "addOns.dataSources"));
 		
 		let returnArray = new Array();
 		
@@ -111,8 +116,15 @@ export default class PageDataSources extends Layout {
 					let replacements = this._getReplacements(currentLoadData.replacements);
 					let requestOrigin = currentLoadData.origin ? currentLoadData.origin : "rest";
 					let finalPath = this.getWprrUrl(this._replaceText(path, replacements), requestOrigin);
+					let format = currentLoadData.format;
 					
-					returnArray.push({"key": currentDataSource["dataName"], "value": finalPath, "format": currentLoadData.format})
+					let item = items.getItem(finalPath);
+					if(format === "itemRange" || format === "item") {
+						items.prepareItem(item, "dataRangeLoader");
+					}
+					
+					returnArray.push({"key": currentDataSource["dataName"], "value": finalPath, "format": format});
+					
 				}
 				if(currentDataSource["sourceType"] === "static-data-source") {
 					this._externalData.updateValue("injectData." + currentDataSource["dataName"], currentDataSource["data"]);

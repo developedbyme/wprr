@@ -1,4 +1,5 @@
 import Wprr from "wprr/Wprr";
+import React from "react";
 import objectPath from "object-path";
 
 // import Project from "wprr/utils/project/Project";
@@ -43,7 +44,27 @@ export default class Project {
 		this._items.addSetup("permalink", Wprr.utils.data.multitypeitems.setup.Permalink.prepare, Wprr.utils.data.multitypeitems.setup.Permalink.setup);
 		this._items.addSetup("taxonomyTerm", Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.prepare, Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.setup);
 		this._items.addSetup("menuItem", Wprr.utils.data.multitypeitems.setup.MenuItem.prepare, Wprr.utils.data.multitypeitems.setup.MenuItem.setup);
+		this._items.addSetup("relation", Wprr.utils.data.multitypeitems.setup.Relation.prepare, Wprr.utils.data.multitypeitems.setup.Relation.setup);
+		this._items.addSetup("relations", Wprr.utils.data.multitypeitems.setup.Relations.prepare, Wprr.utils.data.multitypeitems.setup.Relations.setup);
+		this._items.addSetup("objectTypes", Wprr.utils.data.multitypeitems.setup.ObjectTypes.prepare, Wprr.utils.data.multitypeitems.setup.ObjectTypes.setup);
+		this._items.addSetup("fields", Wprr.utils.data.multitypeitems.setup.Fields.prepare, Wprr.utils.data.multitypeitems.setup.Fields.setup);
+		this._items.addSetup("fieldsStructure", Wprr.utils.data.multitypeitems.setup.FieldsStructure.prepare, Wprr.utils.data.multitypeitems.setup.FieldsStructure.setup);
+		this._items.addSetup("fieldTemplate", Wprr.utils.data.multitypeitems.setup.FieldTemplate.prepare, Wprr.utils.data.multitypeitems.setup.FieldTemplate.setup);
+		this._items.addSetup("fieldTemplate/relation", Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.prepare, Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.setup);
 		
+		let defaultEditors = this._items.getItem("admin/defaultItemEditors");
+		
+		{
+			let currentEditor = this._items.getItem("admin/itemEditors/postApiCommand");
+			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.PostApiCommand, null));
+			defaultEditors.getLinks("elements").addItem(currentEditor.id);
+		}
+		
+		{
+			let currentEditor = this._items.getItem("admin/itemEditors/relationLinks");
+			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.RelationLinks, null));
+			defaultEditors.getLinks("elements").addItem(currentEditor.id);
+		}
 	}
 	
 	get name() {
