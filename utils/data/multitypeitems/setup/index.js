@@ -10,6 +10,8 @@ export {default as ObjectTypes} from "./ObjectTypes";
 export {default as Fields} from "./Fields";
 export {default as FieldsStructure} from "./FieldsStructure";
 export {default as FieldTemplate} from "./FieldTemplate";
+export {default as PostTitle} from "./PostTitle";
+export {default as PostStatus} from "./PostStatus";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

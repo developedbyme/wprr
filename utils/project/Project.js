@@ -51,8 +51,31 @@ export default class Project {
 		this._items.addSetup("fieldsStructure", Wprr.utils.data.multitypeitems.setup.FieldsStructure.prepare, Wprr.utils.data.multitypeitems.setup.FieldsStructure.setup);
 		this._items.addSetup("fieldTemplate", Wprr.utils.data.multitypeitems.setup.FieldTemplate.prepare, Wprr.utils.data.multitypeitems.setup.FieldTemplate.setup);
 		this._items.addSetup("fieldTemplate/relation", Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.prepare, Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.setup);
+		this._items.addSetup("postTitle", Wprr.utils.data.multitypeitems.setup.PostTitle.prepare, Wprr.utils.data.multitypeitems.setup.PostTitle.setup);
+		this._items.addSetup("postStatus", Wprr.utils.data.multitypeitems.setup.PostStatus.prepare, Wprr.utils.data.multitypeitems.setup.PostStatus.setup);
+		
+		
+		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
+		
+		{
+			let currentEditor = this._items.getItem("admin/itemEditors/relationHeader");
+			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.RelationHeader, null));
+			relationEditors.getLinks("elements").addItem(currentEditor.id);
+		}
+		
+		{
+			let currentEditor = this._items.getItem("admin/itemEditors/postApiCommand");
+			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.PostApiCommand, null));
+			relationEditors.getLinks("elements").addItem(currentEditor.id);
+		}
 		
 		let defaultEditors = this._items.getItem("admin/defaultItemEditors");
+		
+		{
+			let currentEditor = this._items.getItem("admin/itemEditors/itemHeader");
+			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.ItemHeader, null));
+			defaultEditors.getLinks("elements").addItem(currentEditor.id);
+		}
 		
 		{
 			let currentEditor = this._items.getItem("admin/itemEditors/postApiCommand");

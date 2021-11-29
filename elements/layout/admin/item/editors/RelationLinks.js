@@ -44,7 +44,7 @@ export default class EditRelation extends WprrBaseObject {
 								)
 							),
 							React.createElement("div", null,
-								React.createElement(Wprr.Link, {"href": Wprr.sourceCombine(this.getWprrUrl("admin/items/item", "site"), "?id=", Wprr.sourceReference("loop/item", "id"))},
+								React.createElement(Wprr.Link, {"href": Wprr.sourceCombine(this.getWprrUrl("admin/items/relation", "site"), "?id=", Wprr.sourceReference("loop/item", "id"))},
 									"Relation ",
 									Wprr.text(Wprr.sourceReference("loop/item", "id"))
 								)

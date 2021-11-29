@@ -12,8 +12,12 @@ export default class EditItem extends Wprr.BaseObject {
 	_renderMainElement() {
 		console.log("EditItem::_renderMainElement");
 		
+		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
+		
 		return React.createElement("div", null,
-			React.createElement(ItemEditors, null)
+			React.createElement(Wprr.AddReference, {"data": items, "as": "items"},
+				React.createElement(ItemEditors, null)
+			)
 		);
 	}
 	
