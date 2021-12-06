@@ -53,7 +53,7 @@ export default class Project {
 		this._items.addSetup("fieldTemplate/relation", Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.prepare, Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.setup);
 		this._items.addSetup("postTitle", Wprr.utils.data.multitypeitems.setup.PostTitle.prepare, Wprr.utils.data.multitypeitems.setup.PostTitle.setup);
 		this._items.addSetup("postStatus", Wprr.utils.data.multitypeitems.setup.PostStatus.prepare, Wprr.utils.data.multitypeitems.setup.PostStatus.setup);
-		
+		this._items.addSetup("taxonomy", Wprr.utils.data.multitypeitems.setup.Taxonomy.prepare, Wprr.utils.data.multitypeitems.setup.Taxonomy.setup);
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
