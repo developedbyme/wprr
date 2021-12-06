@@ -17,6 +17,19 @@ export default class TaxonomyTerm extends BaseObject {
 		aItem.requireValue("name", null);
 		aItem.requireValue("slug", null);
 		
+		aItem.requireSingleLink("parent");
+		aItem.getLinks("children");
+		
+		let index = aItem.id.lastIndexOf("/");
+		if(index !== -1) {
+			let parentPath = aItem.id.substring(0, index);
+			aItem.addSingleLink("parent", parentPath);
+		}
+		
+		let taxonomyIndex = aItem.id.indexOf(":");
+		let taxonomyName = aItem.id.substring(0, taxonomyIndex);
+		aItem.addSingleLink("taxonomy", "taxonomy:" + taxonomyName);
+		
 		return this;
 	}
 	

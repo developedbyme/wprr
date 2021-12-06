@@ -17,6 +17,7 @@ export default class JsonLoader extends BaseObject {
 		
 		this._url = null;
 		this._method = "GET";
+		this._mode = null;
 		this._credentials = "same-origin";
 		this._headers = {
 			"Accept": "application/json"
@@ -239,6 +240,9 @@ export default class JsonLoader extends BaseObject {
 		this._prepareLoad();
 		
 		let sendParameters =  {"credentials": this._credentials, "method": this._method, headers: this._headers};
+		if(this._mode) {
+			sendParameters["mode"] = this._mode;
+		}
 		if(this._method !== "GET" && this._method !== "HEAD") {
 			sendParameters["body"] = this._body;
 		}
