@@ -6,6 +6,7 @@ export {default as IsSelectedCondition} from "./IsSelectedCondition";
 export {default as SetObjectProperties} from "./SetObjectProperties";
 export {default as JoinValues} from "./JoinValues";
 export {default as Invert} from "./Invert";
+export {default as SourceInput} from "./SourceInput";
 
 import * as css from "./css";
 export {css as css};

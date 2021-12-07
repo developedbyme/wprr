@@ -18,7 +18,7 @@ export default class MappedList extends MultiTypeItemConnection {
 		this.item.getLinks("items").idsSource.addChangeCommand(this._updateMappedItemsCommand);
 		this.item.getLinks("mappedItems");
 		
-		this.item.requireValue("backlinkName", "item");
+		this.item.requireValue("backlinkName", "forItem");
 		this.item.requireSingleLink("setup");
 		
 		return this;
@@ -44,9 +44,28 @@ export default class MappedList extends MultiTypeItemConnection {
 		
 		console.log(newItems, removedItems);
 		
-		//METODO:
+		//METODO: remove missing items
 		
-		let newIds = Wprr.utils.array.mapField(newItems, "ids");
+		{
+			let newIds = new Array();
+			let currentArray = newItems;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentItem = currentArray[i];
+			
+				let mappedItem = this.item.group.createInternalItem();
+				mappedItem.addSingleLink(backlinkName, currentItem.id);
+			
+				//METODO: setup item
+			
+				newIds.push(mappedItem.id);
+			}
+			
+			this.item.getLinks("mappedItems").addItems(newIds);
+		}
+		
+		
+		console.log(this);
 	}
 	
 	toJSON() {
