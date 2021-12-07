@@ -30,7 +30,7 @@ export default class RoutingModuleWithRendererCreator extends RoutingModuleCreat
 	}
 	
 	_configureRenderer(aHolderNode, aData) {
-		//console.log("RoutingModuleWithRendererCreator::_configureRenderer");
+		console.log("RoutingModuleWithRendererCreator::_configureRenderer");
 		let startCheckForRender = true;
 		
 		this._renderer.setup(this._storeController, aHolderNode);
@@ -45,13 +45,15 @@ export default class RoutingModuleWithRendererCreator extends RoutingModuleCreat
 			
 				let currentLoaderData = aData.preloadedData[objectName];
 			
-				let newLoader = new Wprr.utils.JsonLoader();
+				let newLoader = this._project.getSharedLoader(objectName);
 				newLoader.setUrl(objectName);
 				newLoader.setData({"status": "success", "data": currentLoaderData.data});
 				newLoader.setStatus(Wprr.utils.JsonLoader.LOADED);
 				//console.log(currentLoaderData.performance, objectName);
+				
+				console.log(newLoader);
 			
-				this._storeController.addLoader(objectName, newLoader); //MEDEBUG: //
+				//this._storeController.addLoader(objectName, newLoader);
 			}
 		}
 		
