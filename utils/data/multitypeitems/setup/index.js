@@ -13,6 +13,8 @@ export {default as FieldTemplate} from "./FieldTemplate";
 export {default as PostTitle} from "./PostTitle";
 export {default as PostStatus} from "./PostStatus";
 export {default as Taxonomy} from "./Taxonomy";
+export {default as Type} from "./Type";
+export {default as User} from "./User";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

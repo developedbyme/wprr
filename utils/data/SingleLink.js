@@ -50,6 +50,19 @@ export default class SingleLink extends MultiTypeItemConnection {
 		return Wprr.objectPath(this.item, fullPath);
 	}
 	
+	get linkedUrlItem() {
+		if(!this.id) {
+			return null;
+		}
+		
+		let from = this.item;
+		if(this._prefix) {
+			from = Wprr.objectPath(from, this._prefix);
+		}
+		
+		return from.getItem(this.id);
+	}
+	
 	getAsType(aType) {
 		
 		return this.linkedItem.getType(aType);

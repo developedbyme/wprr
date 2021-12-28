@@ -7,6 +7,9 @@ export {default as SetObjectProperties} from "./SetObjectProperties";
 export {default as JoinValues} from "./JoinValues";
 export {default as Invert} from "./Invert";
 export {default as SourceInput} from "./SourceInput";
+export {default as LoadDataRange} from "./LoadDataRange";
+export {default as ArrayChangeCommands} from "./ArrayChangeCommands";
+export {default as ValueChangeCommands} from "./ValueChangeCommands";
 
 import * as css from "./css";
 export {css as css};

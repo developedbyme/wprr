@@ -115,8 +115,60 @@ export default class TrackingController extends MultiTypeItemConnection {
 			let currentTracker = currentArray[i];
 			
 			//METODO: try catch
+			
 			currentTracker.trackEvent(aCategory, aAction, aLabel, aValue);
 		}
+	}
+	
+	trackEcommerce(aData) {
+		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentTracker = currentArray[i];
+			
+			//METODO: try catch
+			
+			currentTracker.trackEcommerce(aData);
+		}
+	}
+	
+	trackConversion(aTransactionId, aItemName, aValue) {
+		//METODO: check permissions
+		
+		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentTracker = currentArray[i];
+			
+			//METODO: try catch
+			
+			currentTracker.trackConversion(aTransactionId, aItemName, aValue);
+		}
+	}
+	
+	trackProductView(aName, aEcommerceData) {
+		this.trackEvent("Product", "View", aName);
+		
+		this.trackEcommerce(aEcommerceData);
+	}
+	
+	trackProductAddedToBasket(aName, aEcommerceData) {
+		this.trackEvent("Product", "Added to basket", aName);
+		
+		this.trackEcommerce(aEcommerceData);
+	}
+	
+	trackProductCheckout(aName, aStep, aEcommerceData) {
+		this.trackEvent("Checkout", "Step " + aStep, aName);
+		
+		this.trackEcommerce(aEcommerceData);
+	}
+	
+	trackProductPurchase(aName, aOrderId, aValue, aEcommerceData) {
+		this.trackEvent("Purchase", "Order " + aOrderId, aName, aValue);
+		this.trackConversion(aOrderId, aName, aValue);
+		
+		this.trackEcommerce(aEcommerceData);
 	}
 	
 	toJSON() {

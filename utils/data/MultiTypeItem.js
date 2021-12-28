@@ -146,11 +146,14 @@ export default class MultiTypeItem {
 	}
 	
 	addSingleLink(aType, aId) {
-		let newSingleLink = new SingleLink();
-		newSingleLink.setId(aId);
-		this.addType(aType, newSingleLink);
+		if(!this.hasType(aType)) {
+			let newSingleLink = new SingleLink();
+			this.addType(aType, newSingleLink);
+		}
+		let link = this.getType(aType);
+		link.setId(aId);
 		
-		return newSingleLink;
+		return link;
 	}
 	
 	requireSingleLink(aType, aDefaultId = 0) {

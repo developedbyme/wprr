@@ -86,9 +86,15 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	trackEcommerce(aType, aData) {
+	trackEcommerce(aData) {
 		
-		this.addToDataLayer(this._createDataLayerEcommerceEvent(aType, aData));
+		this.addToDataLayer(this._createDataLayerEcommerceEvent("trackEcommerce", aData));
+		
+		return this;
+	}
+	
+	trackConversion(aTransactionId, aItemName, aValue) {
+		this.addToDataLayer(this._createDataLayerEvent("trackConversion", {"transaction": aTransactionId, "item": aItemName, "value": aValue}));
 		
 		return this;
 	}
