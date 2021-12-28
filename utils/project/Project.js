@@ -191,7 +191,7 @@ export default class Project {
 	}
 	
 	_callback_loginDataLoaded(aData) {
-		console.log("_callback_loginDataLoaded");
+		//console.log("_callback_loginDataLoaded");
 		if(aData.authenticated) {
 			this.setUserData({"restNonce": aData["restNonce"], "restNonceGeneratedAt": aData["restNonceGeneratedAt"], "roles": aData["roles"], "data": aData["user"]});
 		}
@@ -218,8 +218,8 @@ export default class Project {
 	}
 	
 	_callback_signupDataLoaded(aData) {
-		console.log("_callback_loginDataLoaded");
-		console.log(aData);
+		//console.log("_callback_loginDataLoaded");
+		//console.log(aData);
 		
 		if(aData.registered) {
 			this.setUserData({"restNonce": aData["restNonce"], "restNonceGeneratedAt": aData["restNonceGeneratedAt"], "roles": aData["roles"], "data": aData["user"]});
@@ -227,8 +227,8 @@ export default class Project {
 	}
 	
 	getSharedLoader(aUrl) {
-		console.log("getSharedLoader");
-		console.log(aUrl, this._items);
+		//console.log("getSharedLoader");
+		//console.log(aUrl, this._items);
 		
 		let pathController = Wprr.objectPath(this.items, "project.paths.linkedItem.children.wp.children.rest.pathController");
 		
@@ -267,8 +267,8 @@ export default class Project {
 	}
 	
 	setUserData(aData) {
-		console.log("setUserData");
-		console.log(aData);
+		//console.log("setUserData");
+		//console.log(aData);
 		
 		//METODO: move this to tree
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");

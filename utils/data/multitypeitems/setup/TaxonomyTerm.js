@@ -10,7 +10,7 @@ export default class TaxonomyTerm extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("TaxonomyTerm::prepare");
+		//console.log("TaxonomyTerm::prepare");
 		
 		aItem.requireValue("hasData/taxonomyTerm", false);
 		aItem.requireValue("systemId", null);
@@ -34,8 +34,8 @@ export default class TaxonomyTerm extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("TaxonomyTerm::setup");
-		console.log(aData);
+		//console.log("TaxonomyTerm::setup");
+		//console.log(aData);
 		
 		aItem.setValue("systemId", aData["id"]);
 		aItem.setValue("name", aData["name"]);

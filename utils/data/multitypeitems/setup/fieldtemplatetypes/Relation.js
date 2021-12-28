@@ -10,7 +10,7 @@ export default class Relation extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Relation::prepare");
+		//console.log("Relation::prepare");
 		
 		aItem.requireValue("hasData/fieldTemplate/relation", false);
 		aItem.requireSingleLink("relationType");
@@ -20,8 +20,8 @@ export default class Relation extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Relation::setup");
-		console.log(aData);
+		//console.log("Relation::setup");
+		//console.log(aData);
 		
 		aItem.addSingleLink("relationType", aData["relationType"]);
 		aItem.addSingleLink("subtree", aData["subtree"]);

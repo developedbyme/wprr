@@ -169,8 +169,8 @@ export default class ValueSourceData extends SourceData {
 	}
 	
 	connectSource(aSource) {
-		console.log("connectSource");
-		console.log(aSource);
+		//console.log("connectSource");
+		//console.log(aSource);
 		
 		let existingConnection = this.getConnectionIfExistsTo(aSource);
 		if(existingConnection) {

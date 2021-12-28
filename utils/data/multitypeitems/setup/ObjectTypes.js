@@ -10,7 +10,7 @@ export default class ObjectTypes extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("ObjectTypes::prepare");
+		//console.log("ObjectTypes::prepare");
 		
 		aItem.requireValue("hasData/objectTypes", false);
 		aItem.getLinks("objectTypes");
@@ -19,8 +19,8 @@ export default class ObjectTypes extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("ObjectTypes::setup");
-		console.log(aData);
+		//console.log("ObjectTypes::setup");
+		//console.log(aData);
 		
 		aItem.getLinks("objectTypes").addItems(Wprr.objectPath(aData, "objectTypes"));
 		aItem.setValue("hasData/objectTypes", true);

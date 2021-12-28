@@ -53,7 +53,8 @@ export default class PathController extends MultiTypeItemConnection {
 	}
 	
 	generateFullPath() {
-		console.log("generateFullPath");
+		//console.log("generateFullPath");
+		
 		let parent = Wprr.objectPath(this.item, "parent.linkedItem.pathController");
 		
 		let fullPath = this.item.getValue("slug");
@@ -80,7 +81,7 @@ export default class PathController extends MultiTypeItemConnection {
 	}
 	
 	getFullPath() {
-		console.log("getFullPath");
+		//console.log("getFullPath");
 		
 		let fullPath = this.item.getValue("fullPath");
 		if(!fullPath) {

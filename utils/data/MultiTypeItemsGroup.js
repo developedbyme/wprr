@@ -85,7 +85,8 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	prepareItem(aItem, aTypes) {
-		console.log("prepareItem");
+		//console.log("prepareItem");
+		
 		let types = Wprr.utils.array.arrayOrSeparatedString(aTypes);
 		let currentArray = types;
 		let currentArrayLength = currentArray.length;

@@ -72,8 +72,8 @@ export default class Layout extends WprrBaseObject {
 	}
 	
 	_sourceChanged(aName) {
-		console.log("_sourceChanged");
-		console.log(aName);
+		//console.log("_sourceChanged");
+		//console.log(aName);
 		
 		let valueName = "slot/" + aName;
 		this.updateProp(aName, this._elementTreeItem.getValue(valueName));

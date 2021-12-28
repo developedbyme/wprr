@@ -10,7 +10,7 @@ export default class FieldTemplate extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("FieldTemplate::prepare");
+		//console.log("FieldTemplate::prepare");
 		
 		aItem.requireValue("hasData/fieldTemplate", false);
 		
@@ -22,8 +22,8 @@ export default class FieldTemplate extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("FieldTemplate::setup");
-		console.log(aItem, aData);
+		//console.log("FieldTemplate::setup");
+		//console.log(aItem, aData);
 		
 		aItem.setValue("name", aData["name"]);
 		aItem.addSingleLink("type", aData["type"]);

@@ -10,7 +10,7 @@ export default class FieldsStructure extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("FieldsStructure::prepare");
+		//console.log("FieldsStructure::prepare");
 		
 		aItem.requireValue("hasData/fieldsStructure", false);
 		aItem.getNamedLinks("fields");
@@ -20,8 +20,8 @@ export default class FieldsStructure extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("FieldsStructure::setup");
-		console.log(aItem, aData);
+		//console.log("FieldsStructure::setup");
+		//console.log(aItem, aData);
 		
 		let fields = aItem.getNamedLinks("fields");
 		

@@ -10,7 +10,7 @@ export default class Relations extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Relations::prepare");
+		//console.log("Relations::prepare");
 		
 		aItem.requireValue("hasData/relations", false);
 		aItem.getLinks("incomingRelations");
@@ -20,8 +20,8 @@ export default class Relations extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Relations::setup");
-		console.log(aData);
+		//console.log("Relations::setup");
+		//console.log(aData);
 		
 		aItem.getLinks("incomingRelations").addItems(Wprr.objectPath(aData, "relations.incoming"));
 		aItem.getLinks("outgoingRelations").addItems(Wprr.objectPath(aData, "relations.outgoing"));
