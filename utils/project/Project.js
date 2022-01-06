@@ -56,6 +56,9 @@ export default class Project {
 		this._items.addSetup("taxonomy", Wprr.utils.data.multitypeitems.setup.Taxonomy.prepare, Wprr.utils.data.multitypeitems.setup.Taxonomy.setup);
 		this._items.addSetup("type", Wprr.utils.data.multitypeitems.setup.Type.prepare, Wprr.utils.data.multitypeitems.setup.Type.setup);
 		this._items.addSetup("user", Wprr.utils.data.multitypeitems.setup.User.prepare, Wprr.utils.data.multitypeitems.setup.User.setup);
+		this._items.addSetup("postExcerpt", Wprr.utils.data.multitypeitems.setup.PostExcerpt.prepare, Wprr.utils.data.multitypeitems.setup.PostExcerpt.setup);
+		this._items.addSetup("publishDate", Wprr.utils.data.multitypeitems.setup.PublishDate.prepare, Wprr.utils.data.multitypeitems.setup.PublishDate.setup);
+		this._items.addSetup("postTerms", Wprr.utils.data.multitypeitems.setup.PostTerms.prepare, Wprr.utils.data.multitypeitems.setup.PostTerms.setup);
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		

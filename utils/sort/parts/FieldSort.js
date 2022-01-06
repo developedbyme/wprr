@@ -40,8 +40,11 @@ export default class FieldSort extends SortPart {
 		
 		console.log(this);
 		
-		aValue = formatFunction.call(this, aValue);
-		bValue = formatFunction.call(this, bValue);
+		if(formatFunction) {
+			aValue = formatFunction.call(this, aValue);
+			bValue = formatFunction.call(this, bValue);
+		}
+		
 		
 		console.log(aValue, bValue);
 		

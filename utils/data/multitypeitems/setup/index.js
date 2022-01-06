@@ -15,6 +15,9 @@ export {default as PostStatus} from "./PostStatus";
 export {default as Taxonomy} from "./Taxonomy";
 export {default as Type} from "./Type";
 export {default as User} from "./User";
+export {default as PostExcerpt} from "./PostExcerpt";
+export {default as PublishDate} from "./PublishDate";
+export {default as PostTerms} from "./PostTerms";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

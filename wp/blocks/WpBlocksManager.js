@@ -48,7 +48,7 @@ export default class WpBlocksManager {
 	}
 	
 	registerBlocksFromClientModule(aBlocks, aIcon = "marker", aCategory = "auto") {
-		console.log("registerBlocksFromClientModule");
+		//console.log("registerBlocksFromClientModule");
 		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
 		let currentArray = mappedBlocks;
 		let currentArrayLength = currentArray.length;
@@ -138,7 +138,6 @@ export default class WpBlocksManager {
 		let newElementPluginRegistration = new ElementPluginRegistration();
 		
 		let slugId = this._prefix + "-" + ProgrammingLanguageFunctions.convertToWpSlug(aName);
-		console.log(">>>>>>", slugId);
 		
 		newElementPluginRegistration.setupRegistration(slugId, aName, aIcon);
 		newElementPluginRegistration.setElement(aElement);

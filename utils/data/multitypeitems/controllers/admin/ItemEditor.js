@@ -15,7 +15,8 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		
 		this.item.requireSingleLink("editedItem");
 		
-		Wprr.utils.data.multitypeitems.controllers.admin.EditorsGroup.create(this.item);
+		this.item.getNamedLinks("fieldEditors");
+		this.item.getNamedLinks("relationEditors");
 		
 		return this;
 	}
@@ -25,6 +26,23 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		this.setup();
 		
 		return this;
+	}
+	
+	get editorsGroup() {
+		return this.item.getType("editorsGroup").linkedItem.getType("editorsGroup");
+	}
+	
+	getFieldEditor(aName) {
+		
+		let fieldEditors = this.item.getNamedLinks("fieldEditors");
+		
+		if(!fieldEditors.hasLinkByName(aName)) {
+			let fieldEditor = this.editorsGroup.getFieldEditor(this.item.getType("editedItem").id, aName);
+			
+			fieldEditors.addItem(aName, fieldEditor.item.id);
+		}
+		
+		return fieldEditors.getLinkByName(aName).getType("valueEditor");
 	}
 	
 	addEditorsForFields() {
@@ -39,14 +57,21 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentName = currentArray[i];
 			
-			let field = fields.getLinkByName(currentName);
-			
-			let fieldEditor = Wprr.utils.data.multitypeitems.controllers.admin.FieldEditor.create(this.item.group.createInternalItem(), field.id);
-			fieldEditor.item.setValue("name", currentName);
-			editorIds.push(fieldEditor.item.id);
+			this.getFieldEditor(currentName);
+		}
+	}
+	
+	getRelationEditor(aDirection, aConnectionType, aItemType) {
+		
+		let linkName = aDirection + "-" + aConnectionType + "-" + aItemType;
+		let relationEditors = this.item.getNamedLinks("relationEditors");
+		
+		if(!relationEditors.hasLinkByName(linkName)) {
+			let relationEditor = this.editorsGroup.getRelationEditor(this.item.getType("editedItem").id, aDirection, aConnectionType, aItemType);
+			relationEditors.addItem(linkName, relationEditor.item.id);
 		}
 		
-		this.item.getType("editorsGroup").addEditors(editorIds);
+		return relationEditors.getLinkByName(linkName).getType("relationEditor");
 	}
 	
 	toJSON() {

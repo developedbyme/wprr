@@ -1,4 +1,5 @@
 import React from "react";
+import Wprr from "wprr";
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
@@ -38,11 +39,19 @@ export default class ElementBlockRegistration {
 		this._textManager = new TextManager();
 		this._storeController = new StoreController();
 		
+		this._project = wprr.getProject("admin");
+		
+		let pathController = Wprr.objectPath(this._project.items, "project.paths.linkedItem.pathController");
+		
+		let currentPath = pathController.getChild("wp/rest");
+		currentPath.setFullPath(wprrAdminData.restApiBaseUrl);
+		
 		this._store = this._createReduxStore(wprrAdminData);
 		this._storeController.setStore(this._store);
 		this._storeController.setUser(wprrAdminData.userData);
 		
 		this._referenceHolders = new Object();
+		
 	}
 	
 	_addReducers() {
@@ -140,6 +149,10 @@ export default class ElementBlockRegistration {
 			
 			referenceHolder.addObject("wprr/textManager", this._textManager);
 			referenceHolder.addObject("wprr/adminData", wprrAdminData);
+			
+			referenceHolder.addObject("wprr/project", this._project);
+			referenceHolder.addObject("wprr/projectName", this._project.name);
+			this._project.setMainReferences(referenceHolder);
 			
 			this._referenceHolders[aClientId] = referenceHolder;
 		}

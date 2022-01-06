@@ -99,7 +99,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 		return item;
 	}
 	
-	addFieldCompare(aField, aCompareValue, aCompareType = "=") {
+	addFieldCompare(aField, aCompareValue, aCompareType = "==") {
 		let item = this.item.group.createInternalItem();
 		
 		let fieldSource = item.setValue("field", aField).getType("field");

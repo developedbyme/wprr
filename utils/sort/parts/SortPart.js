@@ -48,8 +48,10 @@ export default class SortPart  {
 		}
 		
 		let formatFunction = this.getInput("formatFunction");
-		aA = formatFunction.call(this, aA);
-		aB = formatFunction.call(this, aB);
+		if(formatFunction) {
+			aA = formatFunction.call(this, aA);
+			aB = formatFunction.call(this, aB);
+		}
 		
 		if(aA < aB) {
 			return -1;

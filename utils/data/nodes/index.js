@@ -10,6 +10,7 @@ export {default as SourceInput} from "./SourceInput";
 export {default as LoadDataRange} from "./LoadDataRange";
 export {default as ArrayChangeCommands} from "./ArrayChangeCommands";
 export {default as ValueChangeCommands} from "./ValueChangeCommands";
+export {default as PartOfArray} from "./PartOfArray";
 
 import * as css from "./css";
 export {css as css};

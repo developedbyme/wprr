@@ -62,7 +62,7 @@ export default class SortedList extends MultiTypeItemConnection {
 		let formatSource = item.setValue("format", aFormat).getType("format");
 		formatSource.addChangeCommand(this._updateSortCommand);
 		
-		let orderMultiplierSource = item.setValue("orderMultiplier", true).getType("orderMultiplier");
+		let orderMultiplierSource = item.setValue("orderMultiplier", 1).getType("orderMultiplier");
 		orderMultiplierSource.addChangeCommand(this._updateSortCommand);
 		
 		let activeSource = item.setValue("active", true).getType("active");
