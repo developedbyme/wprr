@@ -27,6 +27,7 @@ export {default as PageDataSources} from "./PageDataSources";
 export {default as DataSource} from "./DataSource";
 export {default as PageSettings} from "./PageSettings";
 export {default as PageSetting} from "./PageSetting";
+export {default as Breadcrumb} from "./Breadcrumb";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

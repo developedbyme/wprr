@@ -77,7 +77,7 @@ export default class SiteDataLoader {
 			}
 			else {
 				//let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
-				let wprrUrl = "/wp-content/plugins/wprr-api/data/url/?url=" + encodeURIComponent(url);
+				let wprrUrl = this._items.project.getWprrUrl("url/?url=" + encodeURIComponent(url), "wprrData");
 				loader = this._items.project.getSharedLoader(wprrUrl);
 			}
 			
@@ -97,7 +97,7 @@ export default class SiteDataLoader {
 		}
 		else {
 			//let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
-			let wprrUrl = "/wp-content/plugins/wprr-api/data/url/?url=" + encodeURIComponent(url);
+			let wprrUrl = this._items.project.getWprrUrl("url/?url=" + encodeURIComponent(url), "wprrData");
 			loader = this._items.project.getSharedLoader(wprrUrl);
 		}
 		
@@ -106,7 +106,15 @@ export default class SiteDataLoader {
 	}
 	
 	setupDataForUrl(aUrl, aData) {
-		this._setupItem(this._items.getItem(aUrl), aData);
+		
+		let addData = true;
+		if(document.location.href.indexOf("debug_dataApi=1") >= 0) {
+			addData = false;
+		}
+		
+		if(addData) {
+			this._setupItem(this._items.getItem(aUrl), aData);
+		}
 		
 		return this;
 	}

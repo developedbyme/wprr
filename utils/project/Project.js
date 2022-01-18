@@ -68,6 +68,7 @@ export default class Project {
 		this._items.addSetup("dataSource", Wprr.utils.data.multitypeitems.setup.DataSource.prepare, Wprr.utils.data.multitypeitems.setup.DataSource.setup)
 		this._items.addSetup("pageSettings", Wprr.utils.data.multitypeitems.setup.PageSettings.prepare, Wprr.utils.data.multitypeitems.setup.PageSettings.setup)
 		this._items.addSetup("pageSetting", Wprr.utils.data.multitypeitems.setup.PageSetting.prepare, Wprr.utils.data.multitypeitems.setup.PageSetting.setup)
+		this._items.addSetup("breadcrumb", Wprr.utils.data.multitypeitems.setup.Breadcrumb.prepare, Wprr.utils.data.multitypeitems.setup.Breadcrumb.setup)
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
