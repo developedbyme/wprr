@@ -9,17 +9,25 @@ export default class MappedList extends MultiTypeItemConnection {
 		
 		super();
 		
-		this._updateMappedItemsCommand = Wprr.commands.callFunction(this, this.updateMappedItems);
+		this._itemAddedCommand = Wprr.commands.callFunction(this, this._itemAdded, [Wprr.sourceEvent()]);
+		this._itemRemovedCommand = Wprr.commands.callFunction(this, this._itemRemvoed, [Wprr.sourceEvent()]);
+		this._updatedCommand = Wprr.commands.callFunction(this, this._itemsUpdated, [Wprr.sourceEvent()]);
 		
 	}
 	
 	setup() {
 		
-		this.item.getLinks("items").idsSource.addChangeCommand(this._updateMappedItemsCommand);
+		this.item.getLinks("items");
+		this.item.getLinks("temporaryItems");
 		this.item.getLinks("mappedItems");
 		
+		let itemsChangeCommands = Wprr.utils.data.nodes.ArrayChangeCommands.connect(this.item.getLinks("items").idsSource, this._itemAddedCommand, this._itemRemovedCommand, this._updatedCommand);
+		this.item.addType("itemsChangeCommands", itemsChangeCommands);
+		
 		this.item.requireValue("backlinkName", "forItem");
-		this.item.requireSingleLink("setup");
+		
+		let setupCommands = Wprr.utils.data.nodes.ArrayChangeCommands.connect(this.item.getLinks("mappedItems").idsSource);
+		this.item.addType("setupCommands", setupCommands);
 		
 		return this;
 	}
@@ -31,41 +39,34 @@ export default class MappedList extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	updateMappedItems() {
-		console.log("updateMappedItems");
+	_itemAdded(aId) {
+		//console.log("MappedList::_itemAdded");
+		//console.log(aId);
 		
 		let backlinkName = this.item.getValue("backlinkName");
 		
-		let items = this.item.getLinks("items").items;
-		let mappedItems = Wprr.objectPath(this.item, "mappedItems.items.(every)." + backlinkName + ".linkedItem");
+		let mappedItem = this.item.group.createInternalItem();
+		mappedItem.addSingleLink(backlinkName, aId);
 		
-		let newItems = Wprr.utils.array.getUnselectedItems(mappedItems, items);
-		let removedItems = Wprr.utils.array.getUnselectedItems(items, mappedItems);
+		this.item.getLinks("temporaryItems").addItem(mappedItem.id);
+	}
+	
+	_removeRemoved(aId) {
+		//console.log("MappedList::_removeRemoved");
+		//console.log(aId);
 		
-		console.log(newItems, removedItems);
+		let backlinkName = this.item.getValue("backlinkName");
 		
-		//METODO: remove missing items
+		let mappedItem = Wprr.utils.array.getItemBy(this.item.getLinks("temporaryItems").items, backlinkName + ".id", aId);
 		
-		{
-			let newIds = new Array();
-			let currentArray = newItems;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				let currentItem = currentArray[i];
-			
-				let mappedItem = this.item.group.createInternalItem();
-				mappedItem.addSingleLink(backlinkName, currentItem.id);
-			
-				//METODO: setup item
-			
-				newIds.push(mappedItem.id);
-			}
-			
-			this.item.getLinks("mappedItems").addItems(newIds);
+		if(mappedItem) {
+			this.item.getLinks("temporaryItems").removeItem(mappedItem.id);
 		}
-		
-		
-		console.log(this);
+	}
+	
+	_itemsUpdated() {
+		console.log("_itemsUpdated");
+		this.item.getLinks("mappedItems").setItems(this.item.getLinks("temporaryItems").ids);
 	}
 	
 	toJSON() {

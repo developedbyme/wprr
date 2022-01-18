@@ -95,6 +95,11 @@ export default class PageDataRouter {
 		let item = this._item.value;
 		let itemId = Wprr.objectPath(item, "id");
 		
+		if(!item) {
+			this._element.value = React.createElement("div", {"key": "none"});
+			return;
+		}
+		
 		console.log(item, Wprr.objectPath(item, "post.linkedItem.postType"));
 		
 		let currentArray = this._routes;

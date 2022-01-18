@@ -11,6 +11,7 @@ export default class ArrayChangeCommands extends BaseObject {
 		this._lastUpdate = new Array();
 		this.addCommands = new Array();
 		this.removeCommands = new Array();
+		this.changeCompleteCommands = new Array();
 		
 		this._arrayUpdatedCommand = Wprr.commands.callFunction(this, this._arrayUpdated);
 		
@@ -44,6 +45,8 @@ export default class ArrayChangeCommands extends BaseObject {
 				this._itemAdded(currentItem);
 			}
 		}
+		
+		Wprr.utils.CommandPerformer.perform(this.changeCompleteCommands, null, null);
 	}
 	
 	_itemRemoved(aItem) {
@@ -60,7 +63,7 @@ export default class ArrayChangeCommands extends BaseObject {
 		Wprr.utils.CommandPerformer.perform(this.addCommands, aItem, null);
 	}
 	
-	static connect(aArraySource, aAddCommands = null, aRemoveCommands = null) {
+	static connect(aArraySource, aAddCommands = null, aRemoveCommands = null, aChangeCompleteCommands) {
 		//console.log("ArrayChangeCommands::connect");
 		
 		let newArrayChangeCommands = new ArrayChangeCommands();
@@ -73,6 +76,9 @@ export default class ArrayChangeCommands extends BaseObject {
 		}
 		if(aRemoveCommands) {
 			newArrayChangeCommands.removeCommands = Wprr.utils.array.singleOrArray(aRemoveCommands);
+		}
+		if(aChangeCompleteCommands) {
+			newArrayChangeCommands.changeCompleteCommands = Wprr.utils.array.singleOrArray(aChangeCompleteCommands);
 		}
 		
 		return newArrayChangeCommands;

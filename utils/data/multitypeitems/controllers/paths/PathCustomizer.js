@@ -85,7 +85,6 @@ export default class PathCustomizer extends MultiTypeItemConnection {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let replacedValue = currentArray[currentArrayLength-i-1].getValueForKeyIfExists(aKeyword);
-				console.log("<<<<", replacedValue, aKeyword);
 				if(replacedValue) {
 					return replacedValue;
 				}
@@ -126,7 +125,6 @@ export default class PathCustomizer extends MultiTypeItemConnection {
 			let currentMatch = currentArray[i][1];
 			
 			let replaceWith = this._getReplacement(currentMatch, aDynamicReplacements);
-			console.log("replaceWith", replaceWith);
 			if(replaceWith) {
 				returnPath = returnPath.split("{" + currentMatch + "}").join(replaceWith);
 			}

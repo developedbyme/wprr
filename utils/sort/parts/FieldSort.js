@@ -38,15 +38,10 @@ export default class FieldSort extends SortPart {
 			console.warn("Undefined value in sort", aValue, bValue, this, aA, aB, field);
 		}
 		
-		console.log(this);
-		
 		if(formatFunction) {
 			aValue = formatFunction.call(this, aValue);
 			bValue = formatFunction.call(this, bValue);
 		}
-		
-		
-		console.log(aValue, bValue);
 		
 		if(aValue < bValue) {
 			return -1;

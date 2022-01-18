@@ -166,9 +166,7 @@ export default class MarkupLoop extends AdjustFunction {
 					
 					let keyIndex = i;
 					if(keyField) {
-						console.log(keyField);
 						let customKeyIndex = Wprr.objectPath(currentData, keyField);
-						console.log(customKeyIndex);
 						if(customKeyIndex !== null && customKeyIndex !== undefined) {
 							keyIndex = customKeyIndex;
 						}

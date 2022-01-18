@@ -24,7 +24,7 @@ export default class User extends BaseObject {
 		
 		aItem.setValue("name", aData["name"]);
 		aItem.setValue("gravatarHash", aData["gravatarHash"]);
-		aItem.setValue("systemId", aData["systemId"]);
+		aItem.setValue("systemId", aData["id"]);
 		aItem.setValue("hasData/user", true);
 		
 		return this;

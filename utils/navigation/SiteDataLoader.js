@@ -76,7 +76,8 @@ export default class SiteDataLoader {
 				loader = urlItem.getType("loader");
 			}
 			else {
-				let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
+				//let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
+				let wprrUrl = "/wp-content/plugins/wprr-api/data/url/?url=" + encodeURIComponent(url);
 				loader = this._items.project.getSharedLoader(wprrUrl);
 			}
 			
@@ -95,7 +96,8 @@ export default class SiteDataLoader {
 			loader = urlItem.getType("loader");
 		}
 		else {
-			let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
+			//let wprrUrl = Wprr.utils.url.addQueryString(url, "mRouterData", "json");
+			let wprrUrl = "/wp-content/plugins/wprr-api/data/url/?url=" + encodeURIComponent(url);
 			loader = this._items.project.getSharedLoader(wprrUrl);
 		}
 		
@@ -110,6 +112,9 @@ export default class SiteDataLoader {
 	}
 	
 	_setupItem(aItem, aData) {
+		console.log("SiteDataLoader::_setupItem");
+		console.log(aItem, aData);
+		
 		let url = aItem.id;
 		let items = aItem.group;
 		
@@ -135,6 +140,9 @@ export default class SiteDataLoader {
 					postData.setData(currentPostData);
 					currentItem.addType("postData", postData);
 					currentItem.addType("postType", postData.getType());
+					
+					//METODO: add post template
+					//METODO: link up taxonomies
 				}
 			}
 			
@@ -168,7 +176,50 @@ export default class SiteDataLoader {
 		console.log("_loaderLoaded");
 		console.log(aItem, aLoader);
 		
-		this._setupItem(aItem, aLoader.getData()["data"]);
+		let group = aItem.group;
+		
+		//this._setupItem(aItem, aLoader.getData()["data"]);
+		
+		
+		let loaderData = aLoader.getData()["data"];
+		console.log(loaderData);
+		
+		let data = loaderData["posts"];
+		let items = Wprr.objectPath(data, "items");
+		let encodings = Wprr.objectPath(data, "encodings");
+		for(let objectName in encodings) {
+			let ids = encodings[objectName];
+			let currentArray = ids;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentId = currentArray[i];
+				let item = group.getItem(currentId);
+				group.prepareItem(item, objectName);
+				group.setupItem(item, objectName, items[""+currentId]);
+			}
+		}
+		
+		aItem.addType("pageType", loaderData["pageType"]);
+		
+		let postIds = Wprr.objectPath(loaderData, "posts.ids");
+		if(postIds) {
+			aItem.getLinks("posts").addUniqueItems(postIds);
+			if(postIds.length === 1) {
+				aItem.addSingleLink("post", postIds[0]);
+			}
+			
+			let currentArray = group.getItems(postIds);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentPostItem = currentArray[i];
+				
+				let postData = Wprr.wp.postdata.ItemPostData.create(currentPostItem);
+				currentPostItem.addType("postData", postData);
+			}
+		}
+		
+		
+		
 		
 		console.log(aItem);
 		

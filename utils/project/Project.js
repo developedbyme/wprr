@@ -59,6 +59,15 @@ export default class Project {
 		this._items.addSetup("postExcerpt", Wprr.utils.data.multitypeitems.setup.PostExcerpt.prepare, Wprr.utils.data.multitypeitems.setup.PostExcerpt.setup);
 		this._items.addSetup("publishDate", Wprr.utils.data.multitypeitems.setup.PublishDate.prepare, Wprr.utils.data.multitypeitems.setup.PublishDate.setup);
 		this._items.addSetup("postTerms", Wprr.utils.data.multitypeitems.setup.PostTerms.prepare, Wprr.utils.data.multitypeitems.setup.PostTerms.setup);
+		this._items.addSetup("product", Wprr.utils.data.multitypeitems.setup.Product.prepare, Wprr.utils.data.multitypeitems.setup.Product.setup);
+		this._items.addSetup("orderItems", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
+		this._items.addSetup("subscriptionDates", Wprr.utils.data.multitypeitems.setup.SubscriptionDates.prepare, Wprr.utils.data.multitypeitems.setup.SubscriptionDates.setup);
+		this._items.addSetup("postContent", Wprr.utils.data.multitypeitems.setup.PostContent.prepare, Wprr.utils.data.multitypeitems.setup.PostContent.setup);
+		this._items.addSetup("postType", Wprr.utils.data.multitypeitems.setup.PostType.prepare, Wprr.utils.data.multitypeitems.setup.PostType.setup)
+		this._items.addSetup("pageDataSources", Wprr.utils.data.multitypeitems.setup.PageDataSources.prepare, Wprr.utils.data.multitypeitems.setup.PageDataSources.setup)
+		this._items.addSetup("dataSource", Wprr.utils.data.multitypeitems.setup.DataSource.prepare, Wprr.utils.data.multitypeitems.setup.DataSource.setup)
+		this._items.addSetup("pageSettings", Wprr.utils.data.multitypeitems.setup.PageSettings.prepare, Wprr.utils.data.multitypeitems.setup.PageSettings.setup)
+		this._items.addSetup("pageSetting", Wprr.utils.data.multitypeitems.setup.PageSetting.prepare, Wprr.utils.data.multitypeitems.setup.PageSetting.setup)
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
@@ -241,7 +250,9 @@ export default class Project {
 		if(!item.hasType("loader")) {
 			let loader = new Wprr.utils.loading.JsonLoader();
 			loader.setUrl(absolutePath);
-			this.addUserCredentialsToLoader(loader);
+			if(absolutePath.indexOf(document.location.protocol + "//" + document.location.host) === 0) {
+				this.addUserCredentialsToLoader(loader);
+			}
 			item.requireValue("loaded", false);
 			item.requireValue("data", null);
 			loader.addSuccessCommand(Wprr.commands.setProperty(item.getType("data").reSource(), "value", Wprr.sourceEvent("data")));

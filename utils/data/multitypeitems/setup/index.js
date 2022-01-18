@@ -18,6 +18,15 @@ export {default as User} from "./User";
 export {default as PostExcerpt} from "./PostExcerpt";
 export {default as PublishDate} from "./PublishDate";
 export {default as PostTerms} from "./PostTerms";
+export {default as Product} from "./Product";
+export {default as OrderItems} from "./OrderItems";
+export {default as SubscriptionDates} from "./SubscriptionDates";
+export {default as PostContent} from "./PostContent";
+export {default as PostType} from "./PostType";
+export {default as PageDataSources} from "./PageDataSources";
+export {default as DataSource} from "./DataSource";
+export {default as PageSettings} from "./PageSettings";
+export {default as PageSetting} from "./PageSetting";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

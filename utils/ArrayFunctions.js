@@ -851,4 +851,18 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static getPartOfArray(aArray, aStartAt, aEndAt) {
+		
+		let returnArray = new Array();
+		
+		let currentArray = aArray;
+		aStartAt = Math.max(0, aStartAt);
+		aEndAt = Math.min(currentArray.length, aEndAt);
+		for(let i = aStartAt; i < aEndAt; i++) {
+			returnArray.push(currentArray[i]);
+		}
+		
+		return returnArray;
+	}
 }

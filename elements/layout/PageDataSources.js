@@ -98,36 +98,78 @@ export default class PageDataSources extends Layout {
 	}
 	
 	_getLoadData() {
-		console.log("PageDataSoruces::_getLoadData");
+		//console.log("PageDataSoruces::_getLoadData");
 		
 		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
-		let dataSources = this.getFirstInput("dataSources", Wprr.sourceReference("wprr/postData", "addOns.dataSources"));
+		
+		let itemSources = this.getFirstInput(Wprr.sourceReference("wprr/pageItem", "post.linkedItem.dataSources.items"));
 		
 		let returnArray = new Array();
 		
-		if(dataSources) {
-			let currentArray = dataSources;
+		if(itemSources) {
+			let currentArray = itemSources;
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
-				let currentDataSource = currentArray[i];
-				if(currentDataSource["sourceType"] === "loaded-data-source") {
-					let currentLoadData = currentDataSource["data"];
+				let currentItem = currentArray[i];
+				
+				let objectTypes = currentItem.getLinks("objectTypes").ids;
+				
+				let dataName = currentItem.getValue("dataName");
+				let currentData = currentItem.getValue("data");
+				
+				if(objectTypes.indexOf("dbm_type:settings/data-source/loaded-data-source") !== -1) {
+					let currentLoadData = currentData;
 					let path = currentLoadData.value;
 					let replacements = this._getReplacements(currentLoadData.replacements);
 					let requestOrigin = currentLoadData.origin ? currentLoadData.origin : "rest";
 					let finalPath = this.getWprrUrl(this._replaceText(path, replacements), requestOrigin);
 					let format = currentLoadData.format;
-					
+				
 					let item = items.getItem(finalPath);
 					if(format === "itemRange" || format === "item") {
 						items.prepareItem(item, "dataRangeLoader");
 					}
-					
-					returnArray.push({"key": currentDataSource["dataName"], "value": finalPath, "format": format});
-					
+				
+					returnArray.push({"key": dataName, "value": finalPath, "format": format});
+				
 				}
-				if(currentDataSource["sourceType"] === "static-data-source") {
-					this._externalData.updateValue("injectData." + currentDataSource["dataName"], currentDataSource["data"]);
+				if(objectTypes.indexOf("dbm_type:settings/data-source/static-data-source") !== -1) {
+					this._externalData.updateValue("injectData." + dataName, currentData);
+				}
+			}
+		}
+		else {
+			let dataSources = this.getFirstInput("dataSources", Wprr.sourceReference("wprr/postData", "addOns.dataSources"));
+			
+			if(dataSources) {
+				let currentArray = dataSources;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentDataSource = currentArray[i];
+				
+					let sourceType = currentDataSource["sourceType"];
+					let dataName = currentDataSource["dataName"];
+					let currentData = currentDataSource["data"];
+				
+					if(sourceType === "loaded-data-source") {
+						let currentLoadData = currentData;
+						let path = currentLoadData.value;
+						let replacements = this._getReplacements(currentLoadData.replacements);
+						let requestOrigin = currentLoadData.origin ? currentLoadData.origin : "rest";
+						let finalPath = this.getWprrUrl(this._replaceText(path, replacements), requestOrigin);
+						let format = currentLoadData.format;
+					
+						let item = items.getItem(finalPath);
+						if(format === "itemRange" || format === "item") {
+							items.prepareItem(item, "dataRangeLoader");
+						}
+					
+						returnArray.push({"key": dataName, "value": finalPath, "format": format});
+					
+					}
+					if(sourceType === "static-data-source") {
+						this._externalData.updateValue("injectData." + dataName, currentData);
+					}
 				}
 			}
 		}
