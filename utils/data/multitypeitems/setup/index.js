@@ -28,6 +28,10 @@ export {default as DataSource} from "./DataSource";
 export {default as PageSettings} from "./PageSettings";
 export {default as PageSetting} from "./PageSetting";
 export {default as Breadcrumb} from "./Breadcrumb";
+export {default as SequenceNumber} from "./SequenceNumber";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};
+
+import * as order from "./order";
+export {order as order};

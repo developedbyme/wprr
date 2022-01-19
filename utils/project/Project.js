@@ -61,6 +61,8 @@ export default class Project {
 		this._items.addSetup("postTerms", Wprr.utils.data.multitypeitems.setup.PostTerms.prepare, Wprr.utils.data.multitypeitems.setup.PostTerms.setup);
 		this._items.addSetup("product", Wprr.utils.data.multitypeitems.setup.Product.prepare, Wprr.utils.data.multitypeitems.setup.Product.setup);
 		this._items.addSetup("orderItems", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
+		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
+		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.order.Totals.prepare, Wprr.utils.data.multitypeitems.setup.order.Totals.setup);
 		this._items.addSetup("subscriptionDates", Wprr.utils.data.multitypeitems.setup.SubscriptionDates.prepare, Wprr.utils.data.multitypeitems.setup.SubscriptionDates.setup);
 		this._items.addSetup("postContent", Wprr.utils.data.multitypeitems.setup.PostContent.prepare, Wprr.utils.data.multitypeitems.setup.PostContent.setup);
 		this._items.addSetup("postType", Wprr.utils.data.multitypeitems.setup.PostType.prepare, Wprr.utils.data.multitypeitems.setup.PostType.setup)
@@ -69,6 +71,7 @@ export default class Project {
 		this._items.addSetup("pageSettings", Wprr.utils.data.multitypeitems.setup.PageSettings.prepare, Wprr.utils.data.multitypeitems.setup.PageSettings.setup)
 		this._items.addSetup("pageSetting", Wprr.utils.data.multitypeitems.setup.PageSetting.prepare, Wprr.utils.data.multitypeitems.setup.PageSetting.setup)
 		this._items.addSetup("breadcrumb", Wprr.utils.data.multitypeitems.setup.Breadcrumb.prepare, Wprr.utils.data.multitypeitems.setup.Breadcrumb.setup)
+		this._items.addSetup("sequenceNumber", Wprr.utils.data.multitypeitems.setup.SequenceNumber.prepare, Wprr.utils.data.multitypeitems.setup.SequenceNumber.setup)
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
