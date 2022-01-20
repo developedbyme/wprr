@@ -29,6 +29,7 @@ export {default as PageSettings} from "./PageSettings";
 export {default as PageSetting} from "./PageSetting";
 export {default as Breadcrumb} from "./Breadcrumb";
 export {default as SequenceNumber} from "./SequenceNumber";
+export {default as PageTemplate} from "./PageTemplate";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

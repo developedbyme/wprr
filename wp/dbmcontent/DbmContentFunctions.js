@@ -53,6 +53,21 @@ export default class DbmContentFunctions  {
 	}
 	
 	static hasSpecificRelation(aPostData, aRelationType) {
+		console.log("hasSpecificRelation");
+		console.log(aPostData, aRelationType);
+		
+		if(aPostData.item) {
+			console.log("hasSpecificRelation");
+			let fullPath = "dbm_relation:" + aRelationType;
+			
+			let termIds = Wprr.objectPath(aPostData.item, "terms.ids");
+			console.log(termIds);
+			
+			if(termIds && termIds.indexOf(fullPath) >= 0) {
+				return true;
+			}
+			return false;
+		}
 		
 		let tempArray = aRelationType.split("/");
 		let specifiedType = tempArray.pop();

@@ -48,7 +48,10 @@ export default class PageDataRouter {
 	createPageTemplateRoute(aTemplate, aElement) {
 		let qualifier = Wprr.routing.qualification.QualifyAll.create(
 			Wprr.routing.qualification.Compare.create("pageType", "page"),
-			Wprr.routing.qualification.Compare.create("post.linkedItem.rawPostData.meta._wp_page_template.0", aTemplate)
+			Wprr.routing.qualification.QualifyAny.create(
+				Wprr.routing.qualification.Compare.create("post.linkedItem.pageTemplate.value", aTemplate),
+				Wprr.routing.qualification.Compare.create("post.linkedItem.rawPostData.meta._wp_page_template.0", aTemplate)
+			)
 		);
 		
 		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
@@ -61,7 +64,10 @@ export default class PageDataRouter {
 	createSingularPostTypeRoute(aPostType, aElement) {
 		let qualifier = Wprr.routing.qualification.QualifyAll.create(
 			Wprr.routing.qualification.Compare.create("pageType", "page"),
-			Wprr.routing.qualification.Compare.create("post.linkedItem.postType", aPostType)
+			Wprr.routing.qualification.QualifyAny.create(
+				Wprr.routing.qualification.Compare.create("post.linkedItem.postType.value", aPostType),
+				Wprr.routing.qualification.Compare.create("post.linkedItem.postType", aPostType)
+			)
 		);
 		
 		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
@@ -83,6 +89,12 @@ export default class PageDataRouter {
 		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
 		
 		this.createRoute(qualifier, elementWithInjections);
+		
+		return this;
+	}
+	
+	createCatchAllRoute(aElement) {
+		this.createRoute(Wprr.routing.qualification.AlwaysTrue.create(), aElement);
 		
 		return this;
 	}
