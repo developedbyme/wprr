@@ -62,7 +62,8 @@ export default class Project {
 		this._items.addSetup("product", Wprr.utils.data.multitypeitems.setup.Product.prepare, Wprr.utils.data.multitypeitems.setup.Product.setup);
 		this._items.addSetup("orderItems", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
 		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
-		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.order.Totals.prepare, Wprr.utils.data.multitypeitems.setup.order.Totals.setup);
+		this._items.addSetup("order/totals", Wprr.utils.data.multitypeitems.setup.order.Totals.prepare, Wprr.utils.data.multitypeitems.setup.order.Totals.setup);
+		this._items.addSetup("order/paymentMethod", Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.prepare, Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.setup);
 		this._items.addSetup("subscriptionDates", Wprr.utils.data.multitypeitems.setup.SubscriptionDates.prepare, Wprr.utils.data.multitypeitems.setup.SubscriptionDates.setup);
 		this._items.addSetup("postContent", Wprr.utils.data.multitypeitems.setup.PostContent.prepare, Wprr.utils.data.multitypeitems.setup.PostContent.setup);
 		this._items.addSetup("postType", Wprr.utils.data.multitypeitems.setup.PostType.prepare, Wprr.utils.data.multitypeitems.setup.PostType.setup)

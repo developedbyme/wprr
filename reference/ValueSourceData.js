@@ -47,6 +47,10 @@ export default class ValueSourceData extends SourceData {
 		return this;
 	}
 	
+	_addSubscriptionsForOwner(aOwner) {
+		//MENOTE: do nothing
+	}
+	
 	_shouldUpdateOwner(aName, aOwner) {
 		return true;
 	}

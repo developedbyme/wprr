@@ -65,6 +65,8 @@ export default class SiteDataLoader {
 		let url = this._url.value;
 		let urlItem = this._items.getItem(url);
 		
+		console.log(url, urlItem, this);
+		
 		if(urlItem.hasType("canRender") && urlItem.getType("canRender")) {
 			this._setLoadedUrl(url);
 		}
@@ -226,8 +228,7 @@ export default class SiteDataLoader {
 			}
 		}
 		
-		
-		
+		aItem.addType("canRender", true);
 		
 		console.log(aItem);
 		
