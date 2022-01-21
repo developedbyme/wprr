@@ -34,6 +34,25 @@ export default class DbmContentFunctions  {
 	}
 	
 	static getSingleRelation(aPostData, aRelationType) {
+		console.log("getSingleRelation", aPostData);
+		
+		if(aPostData.item) {
+			let fullPath = "dbm_relation:" + aRelationType + "/";
+			let terms = Wprr.objectPath(aPostData.item, "terms.items");
+			if(terms) {
+				let currentArray = terms;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let term = currentArray[i];
+					if(term.id.indexOf(fullPath) === 0) {
+						return {"id": term.getValue("systemId"), "slug": term.getValue("slug"), "name": term.getValue("name")};
+					}
+				}
+			}
+			
+			return null;
+		}
+		
 		let idsArray = DbmContentFunctions.getRelationIds(aPostData, aRelationType);
 		if(idsArray.length > 0) {
 			if(idsArray.length > 1) {
@@ -53,15 +72,13 @@ export default class DbmContentFunctions  {
 	}
 	
 	static hasSpecificRelation(aPostData, aRelationType) {
-		console.log("hasSpecificRelation");
-		console.log(aPostData, aRelationType);
+		//console.log("hasSpecificRelation");
+		//console.log(aPostData, aRelationType);
 		
 		if(aPostData.item) {
-			console.log("hasSpecificRelation");
 			let fullPath = "dbm_relation:" + aRelationType;
 			
 			let termIds = Wprr.objectPath(aPostData.item, "terms.ids");
-			console.log(termIds);
 			
 			if(termIds && termIds.indexOf(fullPath) >= 0) {
 				return true;
