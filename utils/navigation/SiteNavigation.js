@@ -182,9 +182,12 @@ export default class SiteNavigation extends BaseObject {
 	}
 	
 	navigate(aUrl) {
+		console.log("SiteNavigation::navigate");
+		console.log(aUrl);
 		
 		let originalUrl = new URL(document.location.href);
 		let finalUrl = new URL(aUrl, document.location.href);
+		console.log(finalUrl);
 		
 		if(this.active && originalUrl.hostname === finalUrl.hostname && this._shouldHandle(finalUrl.href)) {
 			this._internalNavigation(finalUrl.href);

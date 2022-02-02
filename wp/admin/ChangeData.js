@@ -176,6 +176,18 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	endIncomingRelations(aType, aObjectType) {
+		this.createChange("dbm/endIncomingRelations", {"relationType": aType, "objectType": aObjectType});
+		
+		return this;
+	}
+	
+	endOutgoingRelations(aType, aObjectType) {
+		this.createChange("dbm/endOutgoingRelations", {"relationType": aType, "objectType": aObjectType});
+		
+		return this;
+	}
+	
 	setIncomingRelations(aPostIds, aType, aObjectType) {
 		this.createChange("dbm/endIncomingRelations", {"relationType": aType, "objectType": aObjectType});
 		

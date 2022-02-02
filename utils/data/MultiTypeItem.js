@@ -78,7 +78,7 @@ export default class MultiTypeItem {
 	addType(aType, aData) {
 		this._types[aType] = aData;
 		
-		if(aData && aData.setItemConnection) {
+		if(aData && aData.setItemConnection && !aData.item) {
 			this.connectData(aData);
 		}
 		

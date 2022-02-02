@@ -18,7 +18,7 @@ export default class NavigationCommand extends BaseCommand {
 	}
 	
 	perform() {
-		document.location.href = this.getInput("url");
+		wprr.navigate(this.getInput("url"));
 	}
 	
 	static create(aUrl = null) {

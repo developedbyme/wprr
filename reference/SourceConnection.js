@@ -100,6 +100,16 @@ export default class SourceConnection extends BaseObject {
 		return this;
 	}
 	
+	removeAllSources() {
+		let currentArray = [].concat(this._valueSources);
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			this.removeValueSource(currentArray[i]);
+		}
+		
+		return this;
+	}
+	
 	hasSource(aSource) {
 		let currentArray = this._valueSources;
 		let currentArrayLength = currentArray.length;

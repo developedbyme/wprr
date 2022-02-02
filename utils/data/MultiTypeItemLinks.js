@@ -101,7 +101,7 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	}
 	
 	setItems(aIds) {
-		this._idsSource.value = aIds;
+		this._idsSource.value = [].concat(aIds);
 	}
 	
 	createItem(aId) {

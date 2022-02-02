@@ -58,7 +58,7 @@ export default class ArrayChangeCommands extends BaseObject {
 	
 	_itemAdded(aItem) {
 		//console.log("_itemAdded");
-		//console.log(aItem);
+		//console.log(aItem, this.addCommands);
 		
 		Wprr.utils.CommandPerformer.perform(this.addCommands, aItem, null);
 	}

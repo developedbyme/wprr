@@ -118,4 +118,21 @@ export default class ObjectFunctions {
 		
 		
 	}
+	
+	static getAllRecursiveLinks(aItem, aPath) {
+		let returnArray = new Array();
+		
+		let currentItem = aItem;
+		let debugCounter = 0;
+		while(currentItem) {
+			if(debugCounter++ > 1000) {
+				console.error("getLinkedItems ran for too long");
+				return null;
+			}
+			returnArray.push(currentItem);
+			currentItem = Wprr.objectPath(currentItem, aPath);
+		}
+		
+		return returnArray;
+	}
 }

@@ -50,7 +50,6 @@ export default class ModuleCreatorBaseObject {
 		this._project = null;
 		this._siteNavigation = new Wprr.utils.navigation.SiteNavigation();
 		
-		
 		this._siteDataLoader = new Wprr.utils.navigation.SiteDataLoader();
 		
 		this._siteNavigation.dataLoader = this._siteDataLoader;
@@ -148,7 +147,9 @@ export default class ModuleCreatorBaseObject {
 				}
 			};
 			
-			this._siteDataLoader.setupDataForUrl(document.location.href, pageData[currentUrl]["data"]);
+			if(currentUrl && pageData && pageData[currentUrl]) {
+				this._siteDataLoader.setupDataForUrl(document.location.href, pageData[currentUrl]["data"]);
+			}
 		}
 		
 		let defaultPath = objectPath.get(initialState, "settings.wpApiUrlBase");
@@ -326,6 +327,7 @@ export default class ModuleCreatorBaseObject {
 		
 		this._siteNavigation.setUrlFromLocation();
 		this._siteNavigation.start();
+		this._wprrInstance.addSiteDataLoader(this._siteNavigation);
 		
 		let rootObject = this._getRootObject(aData);
 		

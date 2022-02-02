@@ -10,7 +10,7 @@ export default class MappedList extends MultiTypeItemConnection {
 		super();
 		
 		this._itemAddedCommand = Wprr.commands.callFunction(this, this._itemAdded, [Wprr.sourceEvent()]);
-		this._itemRemovedCommand = Wprr.commands.callFunction(this, this._itemRemvoed, [Wprr.sourceEvent()]);
+		this._itemRemovedCommand = Wprr.commands.callFunction(this, this._itemRemoved, [Wprr.sourceEvent()]);
 		this._updatedCommand = Wprr.commands.callFunction(this, this._itemsUpdated, [Wprr.sourceEvent()]);
 		
 	}
@@ -65,7 +65,8 @@ export default class MappedList extends MultiTypeItemConnection {
 	}
 	
 	_itemsUpdated() {
-		console.log("_itemsUpdated");
+		//console.log("_itemsUpdated");
+		//console.log(this.item.getLinks("temporaryItems").ids, this);
 		this.item.getLinks("mappedItems").setItems(this.item.getLinks("temporaryItems").ids);
 	}
 	

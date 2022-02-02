@@ -20,6 +20,7 @@ export default class Wprr {
 		this._moduleCreators = new Object();
 		this._projects = new Object();
 		this._scripts = new Object();
+		this._siteDataLoaders = new Array();
 		
 		if(window && window.requestAnimationFrame) {
 			function animate(time) {
@@ -72,6 +73,12 @@ export default class Wprr {
 		this.addModuleCreator(aName, newModuleCreator);
 		
 		return newModuleCreator;
+	}
+	
+	addSiteDataLoader(aSiteDataLoader) {
+		this._siteDataLoaders.push(aSiteDataLoader);
+		
+		return this;
 	}
 	
 	insertModule(aName, aHolderElement, aData, aLocalData) {
@@ -314,6 +321,23 @@ export default class Wprr {
 		else {
 			scriptLoader.addSuccessCommand(aCommands);
 			scriptLoader.load();
+		}
+	}
+	
+	navigate(aUrl) {
+		console.log("Wprr::navigate");
+		console.log(aUrl);
+		
+		let currentArray = this._siteDataLoaders;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentSiteDataLoader = currentArray[i];
+			console.log(currentSiteDataLoader);
+			currentSiteDataLoader.navigate(aUrl);
+		}
+		
+		if(!currentArrayLength) {
+			document.location.href = aUrl;
 		}
 	}
 	
