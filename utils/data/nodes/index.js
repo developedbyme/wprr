@@ -12,6 +12,10 @@ export {default as ArrayChangeCommands} from "./ArrayChangeCommands";
 export {default as ValueChangeCommands} from "./ValueChangeCommands";
 export {default as PartOfArray} from "./PartOfArray";
 export {default as GetLinks} from "./GetLinks";
+export {default as SingleValueInArray} from "./SingleValueInArray";
 
 import * as css from "./css";
 export {css as css};
+
+import * as logic from "./logic";
+export {logic as logic};

@@ -5,3 +5,5 @@ export {default as LoadAdditionalDataForList} from "./LoadAdditionalDataForList"
 export {default as Cell} from "./Cell";
 export {default as MappedList} from "./MappedList";
 export {default as MappedHierarchy} from "./MappedHierarchy";
+export {default as CombinationList} from "./CombinationList";
+export {default as MappedDataList} from "./MappedDataList";

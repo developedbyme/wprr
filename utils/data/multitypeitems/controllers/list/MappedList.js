@@ -15,6 +15,16 @@ export default class MappedList extends MultiTypeItemConnection {
 		
 	}
 	
+	get setupCommands() {
+		return this.item.getType("setupCommands");
+	}
+	
+	setItems(aItems) {
+		this.item.getLinks("items").input(aItems);
+		
+		return this;
+	}
+	
 	setup() {
 		
 		this.item.getLinks("items");
@@ -51,8 +61,8 @@ export default class MappedList extends MultiTypeItemConnection {
 		this.item.getLinks("temporaryItems").addItem(mappedItem.id);
 	}
 	
-	_removeRemoved(aId) {
-		//console.log("MappedList::_removeRemoved");
+	_itemRemoved(aId) {
+		//console.log("MappedList::_itemRemoved");
 		//console.log(aId);
 		
 		let backlinkName = this.item.getValue("backlinkName");

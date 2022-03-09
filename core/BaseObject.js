@@ -33,7 +33,7 @@ export default class BaseObject {
 	
 	createSource(aName, aInitialValue) {
 		let source = this.sources.create(aName);
-		this[aName] = aInitialValue;
+		source.input(aInitialValue);
 		
 		return source;
 	}

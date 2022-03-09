@@ -19,6 +19,18 @@ export default class ArrayChangeCommands extends BaseObject {
 		
 	}
 	
+	addAddCommand(aCommand) {
+		this.addCommands.push(aCommand);
+		
+		return this;
+	}
+	
+	addRemoveCommand(aCommand) {
+		this.removeCommands.push(aCommand);
+		
+		return this;
+	}
+	
 	_arrayUpdated() {
 		//console.log("_arrayUpdated");
 		

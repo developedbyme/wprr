@@ -124,6 +124,12 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		return returnArray;
 	}
 	
+	input(aValue) {
+		this.idsSource.input(aValue);
+		
+		return this;
+	}
+	
 	getAsType(aType) {
 		
 		let returnArray = new Array();

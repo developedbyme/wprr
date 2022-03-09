@@ -63,6 +63,12 @@ export default class SingleLink extends MultiTypeItemConnection {
 		return from.getItem(this.id);
 	}
 	
+	input(aValue) {
+		this.idSource.input(aValue);
+		
+		return this;
+	}
+	
 	getAsType(aType) {
 		
 		return this.linkedItem.getType(aType);

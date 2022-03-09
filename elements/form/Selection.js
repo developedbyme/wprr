@@ -145,7 +145,7 @@ export default class Selection extends WprrBaseObject {
 		
 		let optionElements = new Array();
 		
-		let options = this.getSourcedProp("options");
+		let options = this.getFirstInput("options");
 		
 		if(Array.isArray(options)) {
 			let currentArray = options;

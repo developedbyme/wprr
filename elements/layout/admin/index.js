@@ -5,3 +5,6 @@ export {im};
 
 import * as item from "./item/index.js";
 export {item};
+
+import * as batch from "./batch/index.js";
+export {batch};

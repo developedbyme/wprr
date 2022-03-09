@@ -24,6 +24,12 @@ export default class SliderDisplay extends WprrBaseObject {
 		console.log(elementHeight);
 		
 		this._maxHeight.value = Math.max(this._maxHeight.value, elementHeight);
+		
+		if(!elementHeight) {
+			setTimeout((function() {
+				this._updateHeight(aElement);
+			}).bind(this), 0.1*1000);
+		}
 	}
 	
 	_getStartIndex(aPosition, aContainerWidth, aItemWidth, aSpacing) {

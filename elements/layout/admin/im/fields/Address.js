@@ -11,9 +11,9 @@ export default class Address extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		return React.createElement(Wprr.SelectSection, {selectedSections: Wprr.sourceReference("field/externalStorage", "uiStatus.status")},
+		return React.createElement(Wprr.SelectSection, {selectedSections: Wprr.sourceReference("field/externalStorage", "uiState.status")},
 			React.createElement("div", {"data-section-name": "view", "data-default-section": true, },
-				React.createElement(Wprr.CommandButton, {commands: Wprr.commands.setValue(Wprr.sourceReference("field/externalStorage"), "uiStatus.status", "edit")},
+				React.createElement(Wprr.CommandButton, {commands: Wprr.commands.setValue(Wprr.sourceReference("field/externalStorage"), "uiState.status", "edit")},
 					React.createElement("div", {className: "standard-field standard-field-padding full-width"},
 						React.createElement("div", {},
 							Wprr.text(Wprr.sourceReference("field/externalStorage", "value.address1"))

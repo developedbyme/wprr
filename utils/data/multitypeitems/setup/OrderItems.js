@@ -10,7 +10,7 @@ export default class OrderItems extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("OrderItems::prepare");
+		//console.log("OrderItems::prepare");
 		
 		aItem.requireValue("hasData/orderItems", false);
 		aItem.getLinks("items");
@@ -21,7 +21,6 @@ export default class OrderItems extends BaseObject {
 	
 	static setup(aItem, aData) {
 		console.log("OrderItems::setup");
-		
 		console.log(aData);
 		
 		let group = aItem.group;
@@ -54,7 +53,7 @@ export default class OrderItems extends BaseObject {
 				let currentItem = group.getItem("lineItem" + currentData["id"]);
 				
 				currentItem.setValue("systemId", currentData["id"]);
-				currentItem.setValue("name", currentData["name"]);
+				currentItem.setValue("code", currentData["code"]);
 				currentItem.setValue("total", currentData["total"]);
 				currentItem.setValue("tax", currentData["tax"]);
 				

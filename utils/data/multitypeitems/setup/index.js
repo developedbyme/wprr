@@ -30,9 +30,29 @@ export {default as PageSetting} from "./PageSetting";
 export {default as Breadcrumb} from "./Breadcrumb";
 export {default as SequenceNumber} from "./SequenceNumber";
 export {default as PageTemplate} from "./PageTemplate";
+export {default as Task} from "./Task";
+export {default as ItemInProcess} from "./ItemInProcess";
+export {default as Process} from "./Process";
+export {default as ProcessPart} from "./ProcessPart";
+export {default as RelatedProducts} from "./RelatedProducts";
+export {default as Description} from "./Description";
+export {default as ImagesFor} from "./ImagesFor";
+export {default as Identifier} from "./Identifier";
+export {default as Tags} from "./Tags";
+export {default as DataImage} from "./DataImage";
+export {default as RelationOrder} from "./RelationOrder";
+export {default as ContentTemplate} from "./ContentTemplate";
+export {default as TemplatePosition} from "./TemplatePosition";
+export {default as Value} from "./Value";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};
 
 import * as order from "./order";
 export {order as order};
+
+import * as subscription from "./subscription";
+export {subscription as subscription};
+
+import * as discountcode from "./discountcode";
+export {discountcode as discountcode};

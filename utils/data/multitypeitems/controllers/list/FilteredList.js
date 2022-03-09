@@ -35,8 +35,14 @@ export default class FilteredList extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	setItems(aItems) {
+		this.item.getLinks("all").input(aItems);
+		
+		return this;
+	}
+	
 	_updateFilterParts() {
-		console.log("_updateFilterParts");
+		//console.log("_updateFilterParts");
 		
 		let filterParts = Wprr.objectPath(this.item, "filterParts.items.(every).filterPart");
 		this._filter.setParts(filterParts);
@@ -44,11 +50,11 @@ export default class FilteredList extends MultiTypeItemConnection {
 	}
 	
 	updateFilter() {
-		console.log("updateFilter");
+		//console.log("updateFilter");
 		
 		let items = this.item.getLinks("all").items;
 		let filteredItems = this._filter.filter(items, null);
-		console.log(items, filteredItems, Wprr.utils.array.mapField(filteredItems, "id"));
+		//console.log(items, filteredItems, Wprr.utils.array.mapField(filteredItems, "id"));
 		
 		this.item.getLinks("filtered").setItems(Wprr.utils.array.mapField(filteredItems, "id"));
 	}
@@ -124,6 +130,31 @@ export default class FilteredList extends MultiTypeItemConnection {
 		
 		return item;
 	}
+	
+	addInDateRange(aField, aStartDate, aEndDate) {
+		let item = this.item.group.createInternalItem();
+		
+		let fieldSource = item.setValue("field", aField).getType("field");
+		fieldSource.addChangeCommand(this._updateFilterCommand);
+		
+		let startDateSource = item.setValue("startDate", aStartDate).getType("startDate");
+		startDateSource.addChangeCommand(this._updateFilterCommand);
+		
+		let endDateSource = item.setValue("endDate", aEndDate).getType("endDate");
+		endDateSource.addChangeCommand(this._updateFilterCommand);
+		
+		let activeSource = item.setValue("active", true).getType("active");
+		activeSource.addChangeCommand(this._updateFilterCommand);
+		
+		let filterPart = Wprr.utils.filterPartFunctions.createInDateRange(startDateSource, endDateSource, fieldSource, activeSource);
+		item.addType("filterPart", filterPart);
+		
+		this.item.getLinks("filterParts").addItem(item.id);
+		
+		return item;
+	}
+	
+	
 	
 	_updateListeners() {
 		console.log("_updateListeners");

@@ -1,9 +1,6 @@
 "use strict";
 import Wprr from "wprr/Wprr";
 
-import objectPath from "object-path";
-const objectPathWithInheritedProps = objectPath.create({includeInheritedProps: true});
-
 import SourceData from "wprr/reference/SourceData";
 
 // import SourceDataWithPath from "wprr/reference/SourceDataWithPath";

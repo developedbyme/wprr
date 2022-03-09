@@ -64,6 +64,9 @@ export default class Project {
 		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
 		this._items.addSetup("order/totals", Wprr.utils.data.multitypeitems.setup.order.Totals.prepare, Wprr.utils.data.multitypeitems.setup.order.Totals.setup);
 		this._items.addSetup("order/paymentMethod", Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.prepare, Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.setup);
+		this._items.addSetup("order/creationType", Wprr.utils.data.multitypeitems.setup.order.CreationType.prepare, Wprr.utils.data.multitypeitems.setup.order.CreationType.setup);
+		this._items.addSetup("order/paidDate", Wprr.utils.data.multitypeitems.setup.order.PaidDate.prepare, Wprr.utils.data.multitypeitems.setup.order.PaidDate.setup);
+		this._items.addSetup("order/subscription", Wprr.utils.data.multitypeitems.setup.order.Subscription.prepare, Wprr.utils.data.multitypeitems.setup.order.Subscription.setup);
 		this._items.addSetup("subscriptionDates", Wprr.utils.data.multitypeitems.setup.SubscriptionDates.prepare, Wprr.utils.data.multitypeitems.setup.SubscriptionDates.setup);
 		this._items.addSetup("postContent", Wprr.utils.data.multitypeitems.setup.PostContent.prepare, Wprr.utils.data.multitypeitems.setup.PostContent.setup);
 		this._items.addSetup("postType", Wprr.utils.data.multitypeitems.setup.PostType.prepare, Wprr.utils.data.multitypeitems.setup.PostType.setup);
@@ -74,6 +77,23 @@ export default class Project {
 		this._items.addSetup("breadcrumb", Wprr.utils.data.multitypeitems.setup.Breadcrumb.prepare, Wprr.utils.data.multitypeitems.setup.Breadcrumb.setup);
 		this._items.addSetup("sequenceNumber", Wprr.utils.data.multitypeitems.setup.SequenceNumber.prepare, Wprr.utils.data.multitypeitems.setup.SequenceNumber.setup);
 		this._items.addSetup("pageTemplate", Wprr.utils.data.multitypeitems.setup.PageTemplate.prepare, Wprr.utils.data.multitypeitems.setup.PageTemplate.setup);
+		this._items.addSetup("task", Wprr.utils.data.multitypeitems.setup.Task.prepare, Wprr.utils.data.multitypeitems.setup.Task.setup);
+		this._items.addSetup("itemInProcess", Wprr.utils.data.multitypeitems.setup.ItemInProcess.prepare, Wprr.utils.data.multitypeitems.setup.ItemInProcess.setup);
+		this._items.addSetup("process", Wprr.utils.data.multitypeitems.setup.Process.prepare, Wprr.utils.data.multitypeitems.setup.Process.setup);
+		this._items.addSetup("processPart", Wprr.utils.data.multitypeitems.setup.ProcessPart.prepare, Wprr.utils.data.multitypeitems.setup.ProcessPart.setup);
+		this._items.addSetup("relatedProducts", Wprr.utils.data.multitypeitems.setup.RelatedProducts.prepare, Wprr.utils.data.multitypeitems.setup.RelatedProducts.setup);
+		this._items.addSetup("description", Wprr.utils.data.multitypeitems.setup.Description.prepare, Wprr.utils.data.multitypeitems.setup.Description.setup);
+		this._items.addSetup("imagesFor", Wprr.utils.data.multitypeitems.setup.ImagesFor.prepare, Wprr.utils.data.multitypeitems.setup.ImagesFor.setup);
+		this._items.addSetup("identifier", Wprr.utils.data.multitypeitems.setup.Identifier.prepare, Wprr.utils.data.multitypeitems.setup.Identifier.setup);
+		this._items.addSetup("tags", Wprr.utils.data.multitypeitems.setup.Tags.prepare, Wprr.utils.data.multitypeitems.setup.Tags.setup);
+		this._items.addSetup("dataImage", Wprr.utils.data.multitypeitems.setup.DataImage.prepare, Wprr.utils.data.multitypeitems.setup.DataImage.setup);
+		this._items.addSetup("subscription/orders", Wprr.utils.data.multitypeitems.setup.subscription.Orders.prepare, Wprr.utils.data.multitypeitems.setup.subscription.Orders.setup);
+		this._items.addSetup("discountCode", Wprr.utils.data.multitypeitems.setup.discountcode.DiscountCode.prepare, Wprr.utils.data.multitypeitems.setup.discountcode.DiscountCode.setup);
+		this._items.addSetup("discountCode/recurring_percent", Wprr.utils.data.multitypeitems.setup.discountcode.types.RecurringPercent.prepare, Wprr.utils.data.multitypeitems.setup.discountcode.types.RecurringPercent.setup);
+		this._items.addSetup("relationOrder", Wprr.utils.data.multitypeitems.setup.RelationOrder.prepare, Wprr.utils.data.multitypeitems.setup.RelationOrder.setup);
+		this._items.addSetup("contentTemplate", Wprr.utils.data.multitypeitems.setup.ContentTemplate.prepare, Wprr.utils.data.multitypeitems.setup.ContentTemplate.setup);
+		this._items.addSetup("templatePosition", Wprr.utils.data.multitypeitems.setup.TemplatePosition.prepare, Wprr.utils.data.multitypeitems.setup.TemplatePosition.setup);
+		this._items.addSetup("value", Wprr.utils.data.multitypeitems.setup.Value.prepare, Wprr.utils.data.multitypeitems.setup.Value.setup);
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
@@ -108,6 +128,8 @@ export default class Project {
 			currentEditor.setValue("element", React.createElement(Wprr.layout.admin.item.editors.RelationLinks, null));
 			defaultEditors.getLinks("elements").addItem(currentEditor.id);
 		}
+		
+		let processPartElements = projectItem.getNamedLinks("processPartElements");
 	}
 	
 	get name() {

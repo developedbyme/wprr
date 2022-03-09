@@ -9,10 +9,10 @@ import UrlResolver from "wprr/utils/UrlResolver";
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
 	
-	constructor(aProps) {
+	constructor(aProps, aContext) {
 		//console.log("WprrBaseObject::constructor");
 		
-		super(aProps);
+		super(aProps, aContext);
 		
 		this.state = new Object();
 		
@@ -33,6 +33,30 @@ export default class WprrBaseObject extends React.Component {
 		
 		this._elementTreeItem = new Wprr.utils.data.MultiTypeItem();
 		this._elementTreeItem.addType("component", this);
+		if(aContext) {
+			this._prepareTreeItem();
+		}
+		
+		
+		this._safeConstruct();
+	}
+	
+	_safeConstruct() {
+		if(WprrBaseObject.CATCH_RENDER_ERRORS) {
+			try {
+				this._construct();
+			}
+			catch(theError) {
+				console.error("Error while constructing", this, theError);
+			}
+		}
+		else {
+			this._construct();
+		}
+	}
+	
+	_construct() {
+		
 	}
 	
 	_getAdditionalSourcesToRegister() {
@@ -380,7 +404,7 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getSourcedPropInStateChange(aPropName, aNewPropsAndState) {
-		let props = this.getProps();
+		let props = aNewPropsAndState["props"];
 		
 		return this.resolveSourcedDataInStateChange(props[aPropName], aNewPropsAndState);
 	}
@@ -743,14 +767,16 @@ export default class WprrBaseObject extends React.Component {
 	_prepareTreeItem() {
 		//console.log("_prepareTreeItem");
 		
-		let items = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/project", "items"));
-		if(items) {
-			let id = items.generateNextInternalId();
+		if(!this._elementTreeItem.id) {
+			let items = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/project", "items"));
+			if(items) {
+				let id = items.generateNextInternalId();
 			
-			this._elementTreeItem.id = id;
-			this._elementTreeItem.setGroup(items);
+				this._elementTreeItem.id = id;
+				this._elementTreeItem.setGroup(items);
 			
-			items.addItem(this._elementTreeItem);
+				items.addItem(this._elementTreeItem);
+			}
 		}
 	}
 	

@@ -10,7 +10,7 @@ export default class PublishDate extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PublishDate::prepare");
+		//console.log("PublishDate::prepare");
 		
 		aItem.requireValue("hasData/publishDate", false);
 		aItem.requireValue("date", null);

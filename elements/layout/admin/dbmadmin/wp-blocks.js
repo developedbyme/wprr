@@ -32,3 +32,5 @@ export {default as EditLinkedObjectProperties} from "./editobjectproperties/Edit
 export {default as EditRelation} from "./editrelations/EditRelation";
 export {default as RelationLinks} from "./editrelations/RelationLinks";
 export {default as EditImages} from "./editimages/EditImages";
+export {default as EditProcesses} from "./editprocesses/EditProcesses";
+export {default as EditProcess} from "./editprocesses/EditProcess";

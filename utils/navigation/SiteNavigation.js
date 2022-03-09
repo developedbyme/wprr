@@ -22,7 +22,8 @@ export default class SiteNavigation extends BaseObject {
 		
 		this.createSource("ignoredPaths", [
 			new RegExp("/wp-admin/.*$"),
-			new RegExp("/wp-content/.*$")
+			new RegExp("/wp-content/.*$"),
+			new RegExp("/wp-login\\.php.*$")
 		]);
 	}
 	

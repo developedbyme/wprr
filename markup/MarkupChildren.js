@@ -16,6 +16,8 @@ export default class MarkupChildren extends ManipulationBaseObject {
 	}
 	
 	checkForReferences() {
+		//console.log("checkForReferences");
+		
 		this.setState({"referenceUpdate": this.state["referenceUpdate"]+1})
 	}
 	
@@ -31,7 +33,7 @@ export default class MarkupChildren extends ManipulationBaseObject {
 	componentWillUnmount() {
 		let controller = this.getReference("markup/referenceUpdater");
 		if(controller) {
-			controller.addReferenceUpdater(this);
+			controller.removeReferenceUpdater(this);
 		}
 		
 		super.componentWillUnmount();
@@ -213,7 +215,7 @@ export default class MarkupChildren extends ManipulationBaseObject {
 			this._clonedElement = this._performClone(returnArray[0], this._getMainElementProps());
 		}
 		else {
-			var callArray = [this._getMainElementType(), {}];
+			var callArray = [React.Fragment, {}];
 			callArray = callArray.concat(returnArray);
 			
 			this._clonedElement = React.createElement.apply(React, callArray);

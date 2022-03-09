@@ -18,11 +18,13 @@ export default class Form extends MultiTypeItemConnection {
 		this.item.setValue("isValid", true);
 		this.item.setValue("validationStatus", "not-validated");
 		
+		this.item.addType("controller", this);
+		
 		return this;
 	}
 	
 	createField(aName, aValue) {
-		console.log("createField");
+		//console.log("createField");
 		
 		let fields = this.item.getNamedLinks("fields");
 		

@@ -748,6 +748,20 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static containsAny(aArray, aItemsThatNeedToBeIncluded) {
+		
+		let currentArray = aItemsThatNeedToBeIncluded;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let selectedItem = currentArray[i];
+			if(aArray.indexOf(selectedItem) !== -1) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	static containsAll(aArray, aItemsThatNeedToBeIncluded) {
 		
 		let currentArray = aItemsThatNeedToBeIncluded;
@@ -784,7 +798,7 @@ export default class ArrayFunctions {
 		
 		for(let i = 0; i < aNumberOfMoves; i++) {
 			let startIndex = i%length;
-			let endIndex = startIndex+Math.floor(Math.random()*length)%length;
+			let endIndex = (startIndex+Math.floor(Math.random()*length))%length;
 			
 			let temp = aArray[startIndex];
 			

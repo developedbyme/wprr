@@ -5,6 +5,8 @@ import SelectLink from "wprr/utils/data/SelectLink";
 import SingleLink from "wprr/utils/data/SingleLink";
 import NamedLinks from "wprr/utils/data/NamedLinks";
 
+import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+
 // import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 export default class MultiTypeItem {
 	
@@ -203,6 +205,21 @@ export default class MultiTypeItem {
 		}
 		
 		return Wprr.objectPath(this.getType(firstPart), restParts);
+	}
+	
+	addNode(aName, aNode) {
+		
+		if(aNode instanceof MultiTypeItemConnection) {
+			let item = this.group.createInternalItem();
+			aNode.setItemConnection(item);
+			aNode.setup();
+			this.addSingleLink(aName, item.id);
+		}
+		else {
+			this.addType(aName, aNode);
+		}
+		
+		return aNode;
 	}
 	
 	static create(aId) {

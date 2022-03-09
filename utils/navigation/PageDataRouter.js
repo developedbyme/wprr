@@ -129,6 +129,6 @@ export default class PageDataRouter {
 	}
 	
 	getReactElement() {
-		return React.createElement("div", {}, React.createElement(Wprr.InsertElement, {"element": this._element}));
+		return React.createElement(React.Fragment, {}, React.createElement(Wprr.InsertElement, {"element": this._element}));
 	}
 }

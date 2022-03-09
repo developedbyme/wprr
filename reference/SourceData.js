@@ -249,7 +249,11 @@ export default class SourceData extends BaseObject {
 					return returnData;
 				}
 			case "acf":
-				return references.getObject("wprr/postData").getAcfData(aPath);
+				let dataObject = references.getObject("wprr/postData");
+				if(dataObject instanceof SourceData) {
+					dataObject = dataObject.getSourceInStateChange(aFromObject, aPropsAndState);
+				}
+				return dataObject.getAcfData(aPath);
 				//METODO: use acfField instead of post data
 			case "acfField":
 				{

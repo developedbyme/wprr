@@ -200,6 +200,7 @@ export default class ModuleCreatorBaseObject {
 		
 		if(this._project) {
 			this._project.setMainReferences(this._referenceHolder);
+			this._referenceHolder.addObject("items", this._project.items);
 			this._referenceHolder.addObject("wprr/project", this._project);
 			this._referenceHolder.addObject("wprr/projectName", this._project.name);
 			this._referenceHolder.addObject("projectLinks", Wprr.objectPath(this._project.items, "project.pathCustomizer.linkedItem.pathCustomizer"));

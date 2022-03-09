@@ -11,9 +11,9 @@ import SlotCreator from "wprr/elements/layout/SlotCreator";
 //import Layout from "wprr/elements/layout/Layout";
 export default class Layout extends WprrBaseObject {
 
-	constructor() {
+	_construct() {
 		
-		super();
+		super._construct();
 		
 		this._layoutName = "layout";
 		this._element = null;

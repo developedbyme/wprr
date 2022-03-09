@@ -12,3 +12,6 @@ export {checkout};
 
 import * as cookie from "./cookie/wp-blocks.js";
 export {cookie};
+
+import * as process from "./process/wp-blocks.js";
+export {process};

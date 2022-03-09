@@ -22,7 +22,8 @@ export default class UpdateCheck extends ManipulationBaseObject {
 	}
 	
 	shouldComponentUpdate(aNextProps, aNextStates) {
-		//console.log("shouldComponentUpdate");
+		//console.log("UpdateCheck::shouldComponentUpdate");
+		//console.log(aNextProps);
 		
 		let checksum = this.getSourcedPropInAdjust("checksum", aNextProps);
 		

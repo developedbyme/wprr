@@ -15,6 +15,13 @@ export default class Markup extends ManipulationBaseObject {
 	}
 	
 	addReferenceUpdater(aObject) {
+		console.log("addReferenceUpdater");
+		console.log(aObject);
+		
+		if(this._referenceUpdaters.indexOf(aObject) > -1) {
+			return;
+		}
+		
 		this._referenceUpdaters.push(aObject);
 	}
 	

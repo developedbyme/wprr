@@ -10,7 +10,7 @@ export default class PostStatus extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PostStatus::prepare");
+		//console.log("PostStatus::prepare");
 		
 		aItem.requireValue("hasData/postStatus", false);
 		aItem.requireValue("postStatus", null);

@@ -116,8 +116,12 @@ export default class FilterPartFunctions  {
 				return (aA.indexOf(aB) !== -1);
 			case "arrayDoesNotContain":
 				return (aA.indexOf(aB) === -1);
+			case "anyArrayOverlap":
+				return Wprr.utils.array.containsAny(aA, aB);
 			case "caseInsensitiveEqual":
 				return ((""+aA).toLowerCase() == (""+aB).toLowerCase());
+			case "startsWith":
+				return aA.indexOf(aB) == 0;
 			default:
 				console.error("Unknown comparison " + aCompareType);
 		}

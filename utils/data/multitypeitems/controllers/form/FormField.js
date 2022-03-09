@@ -51,6 +51,12 @@ export default class FormField extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addPositiveValueValidation() {
+		this.addValidationFunction(Wprr.utils.validations.positiveValue);
+		
+		return this;
+	}
+	
 	addNotEmptyValidation() {
 		this.addValidationFunction(Wprr.utils.validations.notEmpty);
 		

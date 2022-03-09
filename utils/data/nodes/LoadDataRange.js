@@ -37,6 +37,12 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	setUrl(aUrl) {
+		this.item.getType("url").input(aUrl);
+		
+		return this;
+	}
+	
 	_urlUpdated() {
 		//console.log("LoadDataRange::_urlUpdated");
 		

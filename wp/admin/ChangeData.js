@@ -96,6 +96,18 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	makePrivate() {
+		this.setStatus("private");
+		
+		return this;
+	}
+	
+	makePublic() {
+		this.setStatus("publish");
+		
+		return this;
+	}
+	
 	trash() {
 		this.createChange("trash", null);
 		
@@ -126,7 +138,7 @@ export default class ChangeData  {
 		return this;
 	}
 	
-	addTerm(aTerm, aTaxonomy, aField = "id") {
+	addTerm(aTerm, aTaxonomy, aField = "id", aCreate = false) {
 		this.setTerms([aTerm], aTaxonomy, aField, "addTerms");
 		
 		return this;
@@ -137,6 +149,16 @@ export default class ChangeData  {
 		let changeType = aActive ? "addTerms" : "removeTerms";
 		
 		this.setTerms([aTerm], aTaxonomy, aField, changeType);
+	}
+	
+	createAndAddTerm(aSlug, aTaxonomy) {
+		let changeValue = ChangeDataFunctions.createFieldData("slugPath", [aSlug]);
+		changeValue['taxonomy'] = aTaxonomy;
+		changeValue['create'] = true;
+		
+		this.addChange(ChangeDataFunctions.createChangeData("addTerms", changeValue));
+		
+		return this;
 	}
 	
 	setRelation(aTerm, aPath, aField = "id") {
@@ -158,20 +180,20 @@ export default class ChangeData  {
 		return this;
 	}
 	
-	addIncomingRelation(aPostId, aType, aMakePrivate = true) {
-		this.createChange("dbm/addIncomingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate});
+	addIncomingRelation(aPostId, aType, aMakePrivate = true, aReturnPrefix = null) {
+		this.createChange("dbm/addIncomingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate, "returnPrefix": aReturnPrefix});
 		
 		return this;
 	}
 	
-	addOutgoingRelation(aPostId, aType, aMakePrivate = true) {
-		this.createChange("dbm/addOutgoingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate});
+	addOutgoingRelation(aPostId, aType, aMakePrivate = true, aReturnPrefix = null) {
+		this.createChange("dbm/addOutgoingRelation", {"relationType": aType, "value": aPostId, "makePrivate": aMakePrivate, "returnPrefix": aReturnPrefix});
 		
 		return this;
 	}
 	
-	replaceIncomingRelation(aPostId, aType, aObjectType) {
-		this.createChange("dbm/replaceIncomingRelation", {"relationType": aType, "objectType": aObjectType, "value": aPostId});
+	replaceIncomingRelation(aPostId, aType, aObjectType, aReturnPrefix = null) {
+		this.createChange("dbm/replaceIncomingRelation", {"relationType": aType, "objectType": aObjectType, "value": aPostId, "returnPrefix": aReturnPrefix});
 		
 		return this;
 	}

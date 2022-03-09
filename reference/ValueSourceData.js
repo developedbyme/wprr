@@ -86,6 +86,29 @@ export default class ValueSourceData extends SourceData {
 		return this;
 	}
 	
+	input(aValue) {
+		if(aValue instanceof ValueSourceData) {
+			aValue.connectSource(this);
+		}
+		else {
+			let MultiTypeItemLinks = Wprr.objectPath(Wprr, "utils.data.MultiTypeItemLinks");
+			let SingleLink = Wprr.objectPath(Wprr, "utils.data.SingleLink");
+			
+			if(MultiTypeItemLinks && aValue instanceof MultiTypeItemLinks) {
+				aValue.idsSource.connectSource(this);
+			}
+			else if(SingleLink && aValue instanceof SingleLink) {
+				aValue.idSource.connectSource(this);
+			}
+			else {
+				this.setValue(aValue);
+			}
+			
+		}
+		
+		return this;
+	}
+	
 	updateForValueChange() {
 		this.externalDataChange();
 	

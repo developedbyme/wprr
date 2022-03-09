@@ -7,11 +7,16 @@ import Part from "wprr/elements/abstract/Part";
 //import MultipleRenderObject from "wprr/elements/abstract/MultipleRenderObject";
 export default class MultipleRenderObject extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	constructor(aProps, aContext) {
+		super(aProps, aContext);
+	}
+	
+	_construct() {
+		super._construct();
 		
 		this._partData = new Object();
 		this._activePart = "initial";
+		this.setPartData(this._activePart, {}, this);
 	}
 	
 	useElementReplacement() {

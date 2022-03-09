@@ -35,8 +35,14 @@ export default class SortedList extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	setItems(aItems) {
+		this.item.getLinks("all").input(aItems);
+		
+		return this;
+	}
+	
 	_updateSortParts() {
-		console.log("_updateSortParts");
+		//console.log("_updateSortParts");
 		
 		let sortParts = Wprr.objectPath(this.item, "sortParts.items.(every).sortPart");
 		this._sortChain.setParts(sortParts);
@@ -44,8 +50,8 @@ export default class SortedList extends MultiTypeItemConnection {
 	}
 	
 	updateSort() {
-		console.log("updateSort");
-		console.log(this._sortChain);
+		//console.log("updateSort");
+		//console.log(this._sortChain);
 		
 		let items = this.item.getLinks("all").items;
 		let sortedItems = this._sortChain.sort(items, null);
@@ -78,7 +84,7 @@ export default class SortedList extends MultiTypeItemConnection {
 	}
 	
 	_updateListeners() {
-		console.log("_updateListeners");
+		//console.log("_updateListeners");
 		
 		//METODO:
 	}
