@@ -54,23 +54,18 @@ export default class DragAndDropList extends Wprr.BaseObject {
     }
     
     return (
-      <wrapper>
-        <ul className="no-margins no-paddings list-style-none" onDragOver={(e) => e.preventDefault}>
-          {
-            this.state.items.length ? this.state.items.map((item, index) => (
-              <li className="cursor-move" key={item.id} onDragOver={(e) => this.onDragOver(e, index)}>
-                <div 
-                  draggable 
-                  onDragStart={e => this.onDragStart(e, index)}
-                  onDragEnd={this.onDragEnd}
-                >
-                  {this.props.children(item, disableChildElementsDrag)}
-                </div>
-              </li>
-            )) : null
-          }
-        </ul>
-      </wrapper>
+		React.createElement("wrapper", null, /*#__PURE__*/React.createElement("ul", {
+		  className: "no-margins no-paddings list-style-none",
+		  onDragOver: e => e.preventDefault
+		}, (this).state.items.length ? (this).state.items.map((item, index) => /*#__PURE__*/React.createElement("li", {
+		  className: "cursor-move",
+		  key: item.id,
+		  onDragOver: e => (this).onDragOver(e, index)
+		}, /*#__PURE__*/React.createElement("div", {
+		  draggable: true,
+		  onDragStart: e => (this).onDragStart(e, index),
+		  onDragEnd: (this).onDragEnd
+		}, (this).props.children(item, disableChildElementsDrag)))) : null))
     );
   }
 }

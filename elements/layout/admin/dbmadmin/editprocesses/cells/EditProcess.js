@@ -13,10 +13,12 @@ export default class EditProcess extends Wprr.BaseObject {
 
 	_renderMainElement() {
 		
-		return <div>
-			<Wprr.Link className="questions-edit-link" href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/processes/process"), "?id=", Wprr.sourceReference("item", "id"))}>
-				<Wprr.Image className="standard-icon background-contain" src="edit.svg" />
-			</Wprr.Link>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.Link, {
+  className: "questions-edit-link",
+  href: Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/processes/process"), "?id=", Wprr.sourceReference("item", "id"))
+}, /*#__PURE__*/React.createElement(Wprr.Image, {
+  className: "standard-icon background-contain",
+  src: "edit.svg"
+})));
 	}
 }

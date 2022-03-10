@@ -18,14 +18,19 @@ export default class PerformProcessPart extends Layout {
 		
 		let typeElement = Wprr.sourceReference("items", "project.processPartElements." + type);
 		
-		return <React.Fragment>
-			<Wprr.HasData check={typeElement}>
-				<Wprr.InsertElement element={typeElement.deeper("insertElement")} />
-			</Wprr.HasData>
-			<Wprr.HasData check={typeElement} checkType="invert/default">
-				<Wprr.TextWithReplacements text="No interface for type {type}" replacements={{"{type}": type}} />
-			</Wprr.HasData>
-		</React.Fragment>;
+		return React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: typeElement
+}, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+  element: typeElement.deeper("insertElement")
+})), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: typeElement,
+  checkType: "invert/default"
+}, /*#__PURE__*/React.createElement(Wprr.TextWithReplacements, {
+  text: "No interface for type {type}",
+  replacements: {
+    "{type}": type
+  }
+})));
 	}
 	
 	static getWpAdminEditor() {

@@ -85,13 +85,20 @@ export default class EditItems extends Wprr.BaseObject {
 		return React.createElement("div", null,
 			React.createElement(Wprr.AddReference, {"data": this._editorItem.group, "as": "items"},
 				React.createElement(Wprr.AddReference, {"data": this._editorItem, "as": "editor"},
-					<Wprr.layout.loader.DataRangeLoader path={url} as="editItems" calculations={calculations}>
-						<Wprr.layout.ItemList className="supplier-list" ids={Wprr.sourceReference("editor", "filteredRows.idsSource")} as="row" prepareRenderCommands={Wprr.commands.callFunction(this, this._setItems, [Wprr.sourceReference("editItems", "range.ids")])}>
-							<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="item">
-								<div>METODO</div>
-							</Wprr.RelatedItem>
-						</Wprr.layout.ItemList>
-					</Wprr.layout.loader.DataRangeLoader>
+		React.createElement(Wprr.layout.loader.DataRangeLoader, {
+		  path: url,
+		  as: "editItems",
+		  calculations: calculations
+		}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  className: "supplier-list",
+		  ids: Wprr.sourceReference("editor", "filteredRows.idsSource"),
+		  as: "row",
+		  prepareRenderCommands: Wprr.commands.callFunction(this, this._setItems, [Wprr.sourceReference("editItems", "range.ids")])
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: "forItem.linkedItem",
+		  from: Wprr.sourceReference("row"),
+		  as: "item"
+		}, /*#__PURE__*/React.createElement("div", null, "METODO"))))
 				)
 			)
 		);

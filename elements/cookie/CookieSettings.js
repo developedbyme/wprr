@@ -56,72 +56,84 @@ export default class CookieSettings extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return <div className="centered-content-text">
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
-				<Wprr.Checkbox checked={true} value={true} disabled={true} />
-				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Strictly necessary cookies", "site.cookieSettings.strictly.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("These cookies are essential for you to browse the website and use its features, such as accessing secure areas of the site.", "site.cookieSettings.strictly.description")}</div>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
-				<Wprr.Checkbox checked={this._performance} />
-				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Preferences cookies", "site.cookieSettings.preference.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("These cookies allow a website to remember choices you have made in the past.", "site.cookieSettings.preference.description")}</div>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
-				<Wprr.Checkbox checked={this._statistics} />
-				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Statistics cookies", "site.cookieSettings.statistics.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("These cookies collect information about how you use a website, like which pages you visited and which links you clicked on. None of this information can be used to identify you. It is all aggregated and, therefore, anonymized. Their sole purpose is to improve website functions.", "site.cookieSettings.statistics.description")}</div>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
-				<Wprr.Checkbox checked={this._marketing} />
-				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Marketing cookies", "site.cookieSettings.marketing.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("These cookies track your online activity to help advertisers deliver more relevant advertising or to limit how many times you see an ad. These cookies can share that information with other organizations or advertisers.", "site.cookieSettings.marketing.description")}</div>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize,flex-resize">
-				<Wprr.Checkbox checked={this._hideCookieBar} />
-				<div>
-					<div className="cookie-setting-label">{Wprr.idText("Hide cookie information when websites load", "site.cookieSettings.hideCookieBar.title")}</div>
-					<div className="cookie-setting-description-text">{Wprr.idText("Hides the cookie information and links that is displayed every time the website is loaded.", "site.cookieSettings.hideCookieBar.description")}</div>
-				</div>
-			</Wprr.FlexRow>
-			<div className="spacing standard" />
-			<Wprr.FlexRow className="justify-center">
-				<Wprr.CommandButton commands={[
-					Wprr.commands.callFunction(this, this.saveSelection),
-					Wprr.commands.reload()
-				]}>
-					<div className="standard-button allow-all-cookies-button standard-button-padding">
-						{Wprr.idText("Save settings", "site.cookieSettings.saveSettings")}
-					</div>
-				</Wprr.CommandButton>
-			</Wprr.FlexRow>
-			<Wprr.OpenCloseExpandableArea open={this._consentDate}>
-				<div>
-					<div className="spacing small" />
-					<div className="small-description text-align-center">
-						<Wprr.TextWithReplacements
-							text={Wprr.sourceTranslation("Settings saved at: {time}", "site.cookieSettings.savedAt")}
-							replacements={{
-								"{time}": this._consentDate
-							}}
-							sourceUpdates={this._consentDate}
-						/>
-					</div>
-				</div>
-			</Wprr.OpenCloseExpandableArea>
-		</div>;
+		return React.createElement("div", {
+  className: "centered-content-text"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: true,
+  value: true,
+  disabled: true
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-label"
+}, Wprr.idText("Strictly necessary cookies", "site.cookieSettings.strictly.title")), /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-description-text"
+}, Wprr.idText("These cookies are essential for you to browse the website and use its features, such as accessing secure areas of the site.", "site.cookieSettings.strictly.description")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: this._performance
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-label"
+}, Wprr.idText("Preferences cookies", "site.cookieSettings.preference.title")), /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-description-text"
+}, Wprr.idText("These cookies allow a website to remember choices you have made in the past.", "site.cookieSettings.preference.description")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: this._statistics
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-label"
+}, Wprr.idText("Statistics cookies", "site.cookieSettings.statistics.title")), /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-description-text"
+}, Wprr.idText("These cookies collect information about how you use a website, like which pages you visited and which links you clicked on. None of this information can be used to identify you. It is all aggregated and, therefore, anonymized. Their sole purpose is to improve website functions.", "site.cookieSettings.statistics.description")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: this._marketing
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-label"
+}, Wprr.idText("Marketing cookies", "site.cookieSettings.marketing.title")), /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-description-text"
+}, Wprr.idText("These cookies track your online activity to help advertisers deliver more relevant advertising or to limit how many times you see an ad. These cookies can share that information with other organizations or advertisers.", "site.cookieSettings.marketing.description")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: this._hideCookieBar
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-label"
+}, Wprr.idText("Hide cookie information when websites load", "site.cookieSettings.hideCookieBar.title")), /*#__PURE__*/React.createElement("div", {
+  className: "cookie-setting-description-text"
+}, Wprr.idText("Hides the cookie information and links that is displayed every time the website is loaded.", "site.cookieSettings.hideCookieBar.description")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-center"
+}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.callFunction(this, this.saveSelection), Wprr.commands.reload()]
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-button allow-all-cookies-button standard-button-padding"
+}, Wprr.idText("Save settings", "site.cookieSettings.saveSettings")))), /*#__PURE__*/React.createElement(Wprr.OpenCloseExpandableArea, {
+  open: this._consentDate
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "small-description text-align-center"
+}, /*#__PURE__*/React.createElement(Wprr.TextWithReplacements, {
+  text: Wprr.sourceTranslation("Settings saved at: {time}", "site.cookieSettings.savedAt"),
+  replacements: {
+    "{time}": this._consentDate
+  },
+  sourceUpdates: this._consentDate
+})))));
 	}
 	
 	static getWpAdminEditor() {

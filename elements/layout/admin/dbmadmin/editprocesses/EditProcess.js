@@ -38,29 +38,24 @@ export default class EditProcess extends Wprr.MultipleRenderObject {
 		
 		let items = this.getFirstInputWithDefault("items", []);
 		
-		return <div>
-			<Wprr.layout.items.EditItem item={Wprr.sourceReference("item")}>
-				<Wprr.SelectField fieldName="name">
-					<Wprr.layout.admin.im.FieldName />
-					<Wprr.layout.admin.im.Field />
-				</Wprr.SelectField>
-				<div>
-					<h2 className="standard-category-title standard-category-title-margin">Steps</h2>
-					<Wprr.RelatedItem id="relationEditors.incoming.in.process-part" as="editor">
-						<Wprr.layout.relation.OrderList orderId="parts">
-							{
-								React.createElement(Wprr.RelatedItem, {id: Wprr.sourceCombine(Wprr.sourceReference("editor", "directionIdName"), ".linkedItem")},
-									React.createElement(ProcessPartStep, null)
-								)
-							}
-						</Wprr.layout.relation.OrderList>
-						<Wprr.FlexRow>
-							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add step", "addStep")} commands={Wprr.commands.callFunction(this, this._addStep, [Wprr.sourceReference("editor")])} className="add-button add-button-padding" />
-						</Wprr.FlexRow>
-					</Wprr.RelatedItem>
-				</div>
-			</Wprr.layout.items.EditItem>
-		</div>
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.EditItem, {
+  item: Wprr.sourceReference("item")
+}, /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "name"
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", {
+  className: "standard-category-title standard-category-title-margin"
+}, "Steps"), /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+  id: "relationEditors.incoming.in.process-part",
+  as: "editor"
+}, /*#__PURE__*/React.createElement(Wprr.layout.relation.OrderList, {
+  orderId: "parts"
+}, React.createElement(Wprr.RelatedItem, {
+  id: Wprr.sourceCombine(Wprr.sourceReference("editor", "directionIdName"), ".linkedItem")
+}, React.createElement(ProcessPartStep, null))), /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  text: Wprr.sourceTranslation("Add step", "addStep"),
+  commands: Wprr.commands.callFunction(this, this._addStep, [Wprr.sourceReference("editor")]),
+  className: "add-button add-button-padding"
+}))))));
 
 	}
 	
@@ -79,10 +74,12 @@ export default class EditProcess extends Wprr.MultipleRenderObject {
 			}
 		};
 	
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>
-				<Wprr.layout.form.FieldWithLabel valueName="title" label="Title" externalStorage={Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")} />
-			</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.form.FieldWithLabel, {
+  valueName: "title",
+  label: "Title",
+  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
+})));
 	}
 }

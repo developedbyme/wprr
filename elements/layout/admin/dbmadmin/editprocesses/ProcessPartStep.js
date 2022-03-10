@@ -35,34 +35,28 @@ export default class ProcessPartStep extends Wprr.BaseObject {
 
 	_renderMainElement() {
 		
-		return <div>
-			<Wprr.FlexRow className="small-item-spacing flex-no-wrap">
-				<Wprr.SelectField fieldName="name">
-					<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Name", "site.fieldNames.name")}>
-						<Wprr.layout.admin.im.Field />
-					</Wprr.layout.form.LabelledArea>
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="identifier">
-					<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Identifier", "site.fieldNames.identifier")}>
-						<Wprr.layout.admin.im.Field />
-					</Wprr.layout.form.LabelledArea>
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="description">
-					<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Description", "site.fieldNames.description")}>
-						<Wprr.layout.admin.im.Field />
-					</Wprr.layout.form.LabelledArea>
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="type">
-					<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Type", "site.fieldNames.type")}>
-						<Wprr.layout.admin.im.Field />
-					</Wprr.layout.form.LabelledArea>
-				</Wprr.SelectField>
-				<Wprr.SelectField fieldName="value">
-					<Wprr.layout.form.LabelledArea label={Wprr.sourceTranslation("Data", "site.fieldNames.data")}>
-						<Wprr.layout.admin.im.Field />
-					</Wprr.layout.form.LabelledArea>
-				</Wprr.SelectField>
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap"
+}, /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "name"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Name", "site.fieldNames.name")
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null))), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "identifier"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Identifier", "site.fieldNames.identifier")
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null))), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "description"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Description", "site.fieldNames.description")
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null))), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "type"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Type", "site.fieldNames.type")
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null))), /*#__PURE__*/React.createElement(Wprr.SelectField, {
+  fieldName: "value"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: Wprr.sourceTranslation("Data", "site.fieldNames.data")
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)))));
 	}
 }
