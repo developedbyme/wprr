@@ -20,7 +20,11 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	}
 	
 	addItem(aId) {
-		this._idsSource.value.push(aId);
+		
+		let newArray = [].concat(this._idsSource.value);
+		newArray.push(aId);
+		
+		this._idsSource.value = newArray;
 		this._idsSource.updateForValueChange();
 		
 		return this;
@@ -28,11 +32,15 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 	
 	insertItem(aId, aPosition) {
 		
+		let newArray = [].concat(this._idsSource.value);
+		
 		if(aPosition === -1) {
-			aPosition = this._idsSource.value.length;
+			aPosition = newArray.length;
 		}
 		
-		this._idsSource.value.splice(aPosition, 0, aId);
+		newArray.splice(aPosition, 0, aId);
+		
+		this._idsSource.value = newArray;
 		this._idsSource.updateForValueChange();
 		
 		return this;
@@ -54,9 +62,13 @@ export default class MultiTypeItemLinks extends MultiTypeItemConnection {
 		//console.log("removeItem");
 		//console.log(this._idsSource.value, aId);
 		
-		let index = this._idsSource.value.indexOf(aId);
+		let newArray = [].concat(this._idsSource.value);
+		
+		let index = newArray.indexOf(aId);
 		if(index > -1) {
-			this._idsSource.value.splice(index, 1);
+			newArray.splice(index, 1);
+			
+			this._idsSource.value = newArray;
 			this._idsSource.updateForValueChange();
 		}
 	}

@@ -695,7 +695,7 @@ export default class WprrBaseObject extends React.Component {
 					let updateSource = currentProp.getUpdateSource(this);
 					if(updateSource instanceof Wprr.utils.ValueSourceData) {
 						console.log("connect", updateSource);
-						this._elementTreeItem.getType(currentPropData["value"]).connectSource(updateSource);
+						this._elementTreeItem.getType(currentPropData["value"]).input(updateSource);
 						//METODO: needs to be disconnected when unmounted
 					}
 					else {

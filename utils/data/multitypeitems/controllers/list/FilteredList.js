@@ -2,6 +2,7 @@ import Wprr from "wprr/Wprr";
 import React from "react";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+import FilterPart from "wprr/utils/filter/parts/FilterPart";
 
 export default class FilteredList extends MultiTypeItemConnection {
 	
@@ -18,6 +19,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 	
 	setup() {
 		
+		this.item.addType("controller", this);
 		this.item.getLinks("all").idsSource.addChangeCommand(this._updateFilterCommand);
 		this.item.getLinks("filtered");
 		
@@ -154,7 +156,19 @@ export default class FilteredList extends MultiTypeItemConnection {
 		return item;
 	}
 	
-	
+	addFilterFunction(aFunction) {
+		let item = this.item.group.createInternalItem();
+		
+		let filterPart = new FilterPart();
+		
+		filterPart.setInput("filterFunction", aFunction);
+		
+		item.addType("filterPart", filterPart);
+		
+		this.item.getLinks("filterParts").addItem(item.id);
+		
+		return item;
+	}
 	
 	_updateListeners() {
 		console.log("_updateListeners");

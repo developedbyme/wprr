@@ -17,6 +17,7 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 	
 	setup() {
 		
+		this.item.addType("controller", this);
 		this.item.requireValue("url", null);
 		this.item.getType("url").addChangeCommand(this._urlUpdatedCommand);
 		

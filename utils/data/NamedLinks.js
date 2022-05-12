@@ -123,6 +123,7 @@ export default class NamedLinks extends MultiTypeItemConnection {
 			case "items":
 			case "names":
 			case "ids":
+			case "idsSource":
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		

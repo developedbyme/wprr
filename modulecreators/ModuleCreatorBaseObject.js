@@ -69,6 +69,7 @@ export default class ModuleCreatorBaseObject {
 		this._project = aProject;
 		
 		this._siteDataLoader.setItems(this._project.items);
+		this._siteNavigation.setProject(this._project);
 		
 		return this;
 	}

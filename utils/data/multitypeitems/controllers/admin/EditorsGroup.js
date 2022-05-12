@@ -16,11 +16,14 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		this._changeCommandsNode = null;
 		
+		this._saveDataFieldCommand = Wprr.commands.callFunction(this, this._saveDataField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveFieldCommand = Wprr.commands.callFunction(this, this._saveField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 	}
 	
 	setup() {
 		
+		this.item.addType("editorsGroup", this);
+		this.item.addType("saveDataController", this);
 		this.item.getNamedLinks("allEditors");
 		
 		let editors = this.item.getLinks("editors");
@@ -33,8 +36,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	setupForItem(aItem) {
-		aItem.addType("editorsGroup", this);
-		aItem.addType("saveDataController", this);
+		
 		this.setup();
 		
 		return this;
@@ -82,6 +84,74 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 				field.getType("value").connectSource(newEditorItem.getType("storedValue"));
 			}
 			newEditorItem.setValue("name", aName);
+			
+			newEditorItem.setValue("saveCommands", [this._saveDataFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getCustomPathFieldEditor(aId, aName, aValuePath) {
+		console.log("getCustomPathFieldEditor");
+		console.log(aId, aName);
+		
+		let linkName = "field" + aId + "-" + aName;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			
+			let value = item.getValue(aValuePath);
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource(aValuePath).connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", aName);
+			
+			newEditorItem.setValue("saveCommands", [this._saveDataFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getPostStatusEditor(aId) {
+		console.log("getPostStatusEditor");
+		console.log(aId);
+		
+		let linkName = "postStatus" + aId;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			
+			let value = item.getValue("postStatus");
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource("postStatus").connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", "status");
 			
 			newEditorItem.setValue("saveCommands", [this._saveFieldCommand]);
 			
@@ -179,7 +249,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return "[EditorsGroup id=" + this._id + "]";
 	}
 	
-	_saveField(aItem, aSaveOperation) {
+	_saveDataField(aItem, aSaveOperation) {
 		console.log("_saveField");
 		console.log(aItem, aSaveOperation);
 		
@@ -192,6 +262,40 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	_saveField(aItem, aSaveOperation) {
+		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
+		let value = aItem.getValue("value");
+		let comment = aItem.getValue("comment");
+		
+		let editLoader = aSaveOperation.getEditLoader(itemId);
+		editLoader.changeData.setField(aItem.getValue("name"), value, comment);
+		
+		let editor = aItem.getType("valueEditor");
+		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
+	getValueForPath(aPath) {
+		//console.log("EditorsGroup::getValueForPath");
+		//console.log(aPath);
+		
+		let tempArray = (""+aPath).split(".");
+		let firstPart = tempArray.shift();
+		let restParts = tempArray.join(".");
+		
+		switch(firstPart) {
+			case "itemEditor":
+				let itemId = tempArray.shift();
+				restParts = tempArray.join(".");
+				return Wprr.objectPath(this.getItemEditor(itemId), restParts);
+		}
+		
+		return Wprr.objectPath(this[firstPart], restParts);
 	}
 	
 	static create(aItem) {

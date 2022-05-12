@@ -13,6 +13,7 @@ export {default as ValueChangeCommands} from "./ValueChangeCommands";
 export {default as PartOfArray} from "./PartOfArray";
 export {default as GetLinks} from "./GetLinks";
 export {default as SingleValueInArray} from "./SingleValueInArray";
+export {default as ValueSources} from "./ValueSources";
 
 import * as css from "./css";
 export {css as css};

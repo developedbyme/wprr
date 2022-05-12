@@ -149,7 +149,7 @@ export default class SiteDataLoader {
 					let postData = new Wprr.wp.postdata.PostData();
 					postData.setData(currentPostData);
 					currentItem.addType("postData", postData);
-					currentItem.addType("postType", postData.getType());
+					currentItem.setValue("postType", postData.getType());
 					
 					//METODO: add post template
 					//METODO: link up taxonomies

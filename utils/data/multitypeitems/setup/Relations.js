@@ -23,8 +23,32 @@ export default class Relations extends BaseObject {
 		//console.log("Relations::setup");
 		//console.log(aData);
 		
-		aItem.getLinks("incomingRelations").addItems(Wprr.objectPath(aData, "relations.incoming"));
-		aItem.getLinks("outgoingRelations").addItems(Wprr.objectPath(aData, "relations.outgoing"));
+		let incomingIds = Wprr.objectPath(aData, "relations.incoming");
+		let outgoingIds = Wprr.objectPath(aData, "relations.outgoing");
+		
+		aItem.getLinks("incomingRelations").addUniqueItems(incomingIds);
+		aItem.getLinks("outgoingRelations").addUniqueItems(outgoingIds);
+		
+		{
+			let currentArray = aItem.group.getItems(incomingIds);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentRelation = currentArray[i];
+				currentRelation.requireValue("postStatus", "private");
+				currentRelation.setValue("hasData/postStatus", true);
+			}
+		}
+		
+		{
+			let currentArray = aItem.group.getItems(outgoingIds);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentRelation = currentArray[i];
+				currentRelation.requireValue("postStatus", "private");
+				currentRelation.setValue("hasData/postStatus", true);
+			}
+		}
+		
 		aItem.setValue("hasData/relations", true);
 		
 		return this;

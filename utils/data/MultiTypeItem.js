@@ -102,12 +102,8 @@ export default class MultiTypeItem {
 		return this;
 	}
 	
-	getValueSource(aType) {
-		if(!this.hasType(aType)) {
-			let theSource = Wprr.sourceValue(null);
-			this.addType(aType, theSource);
-		}
-		
+	getValueSource(aType, aDefaultData = null) {
+		this.requireValue(aType, aDefaultData);
 		return this.getType(aType);
 	}
 	
@@ -166,6 +162,10 @@ export default class MultiTypeItem {
 		return this.getType(aType);
 	}
 	
+	getSingleLink(aType) {
+		return this.requireSingleLink(aType).linkedItem;
+	}
+	
 	connectData(aData) {
 		aData.setItemConnection(this);
 		
@@ -220,6 +220,20 @@ export default class MultiTypeItem {
 		}
 		
 		return aNode;
+	}
+	
+	createNode(aName, aType) {
+		
+		//METODO: switch this to create command
+		
+		switch(aType) {
+			case "loadDataRange":
+				return this.addNode(aName, new Wprr.utils.data.nodes.LoadDataRange());
+		}
+		
+		console.error("No type named " + aType);
+		
+		return null;
 	}
 	
 	static create(aId) {

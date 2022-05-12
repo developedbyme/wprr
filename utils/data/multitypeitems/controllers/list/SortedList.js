@@ -83,6 +83,54 @@ export default class SortedList extends MultiTypeItemConnection {
 		return item;
 	}
 	
+	addPrefixedNumericFieldSort(aField) {
+		let item = this.item.group.createInternalItem();
+		
+		let fieldSource = item.setValue("field", aField).getType("field");
+		fieldSource.addChangeCommand(this._updateSortCommand);
+		
+		let formatSource = item.setValue("format",  Wprr.utils.ArrayFieldSort.prefixedNumericFormat).getType("format");
+		formatSource.addChangeCommand(this._updateSortCommand);
+		
+		let orderMultiplierSource = item.setValue("orderMultiplier", 1).getType("orderMultiplier");
+		orderMultiplierSource.addChangeCommand(this._updateSortCommand);
+		
+		let activeSource = item.setValue("active", true).getType("active");
+		activeSource.addChangeCommand(this._updateSortCommand);
+		
+		let sortPart = Wprr.utils.ArrayFieldSort.create(fieldSource, formatSource, activeSource);
+		sortPart.setInput("orderMultiplier", orderMultiplierSource);
+		item.addType("sortPart", sortPart);
+		
+		this.item.getLinks("sortParts").addItem(item.id);
+		
+		return item;
+	}
+	
+	addFieldAccordingToOrderSort(aField, aOrder) {
+		let item = this.item.group.createInternalItem();
+		
+		let fieldSource = item.setValue("field", aField).getType("field");
+		fieldSource.addChangeCommand(this._updateSortCommand);
+		
+		let orderSource = item.setValue("order", aOrder).getType("order");
+		fieldSource.addChangeCommand(this._updateSortCommand);
+		
+		let orderMultiplierSource = item.setValue("orderMultiplier", 1).getType("orderMultiplier");
+		orderMultiplierSource.addChangeCommand(this._updateSortCommand);
+		
+		let activeSource = item.setValue("active", true).getType("active");
+		activeSource.addChangeCommand(this._updateSortCommand);
+		
+		let sortPart = Wprr.utils.FieldSort.createAccordingToOrder(fieldSource, orderSource, activeSource);
+		sortPart.setInput("orderMultiplier", orderMultiplierSource);
+		item.addType("sortPart", sortPart);
+		
+		this.item.getLinks("sortParts").addItem(item.id);
+		
+		return item;
+	}
+	
 	_updateListeners() {
 		//console.log("_updateListeners");
 		

@@ -13,6 +13,8 @@ export default class ValueEditor extends MultiTypeItemConnection {
 	
 	setup() {
 		
+		this.item.addType("valueEditor", this);
+		this.item.addType("saveDataController", this);
 		this.item.requireValue("comment", null);
 		this.item.requireValue("saveCommands", []);
 		this.item.requireValue("value");
@@ -26,9 +28,25 @@ export default class ValueEditor extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	get value() {
+		return this.item.getType("value").value;
+	}
+	
+	get valueSource() {
+		return this.item.getType("value");
+	}
+	
+	get changed() {
+		return this.item.getType("changed").value;
+	}
+	
+	get changedSource() {
+		return this.item.getType("changed");
+	}
+	
 	setupForItem(aItem) {
-		aItem.addType("valueEditor", this);
-		aItem.addType("saveDataController", this);
+		
+		this.setItemConnection(aItem);
 		this.setup();
 		
 		return this;

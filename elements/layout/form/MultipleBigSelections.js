@@ -1,27 +1,17 @@
 import React from "react";
 import Wprr from "wprr";
 
-import moment from "moment";
-
 import Layout from "wprr/elements/layout/Layout";
 
 //import MultipleBigSelections from "./MultipleBigSelections";
 export default class MultipleBigSelections extends Layout {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._addMainElementClassName("big-selections");
 		
-		
 		this._layoutName = "bigSelections";
-	}
-	
-	_prepareInitialRender() {
-		super._prepareInitialRender();
-		
-		
-		
 	}
 	
 	_getLayout(aSlots) {

@@ -1,18 +1,59 @@
 import Wprr from "wprr/Wprr";
 import React from "react";
+import moment from "moment";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+import SingleRelationEditor from "./SingleRelationEditor";
 
 export default class RelationEditor extends MultiTypeItemConnection {
 	
 	constructor() {
+		//console.log("RelationEditor::constructor");
 		
 		super();
 		
 		this._relationAddedCommand = Wprr.commands.callFunction(this, this._relationAdded, [Wprr.sourceEvent()]);
 		this._relationRemovedCommand = Wprr.commands.callFunction(this, this._relationRemoved, [Wprr.sourceEvent()]);
+		this._updateActiveFilterCommand = Wprr.commands.callFunction(this, this._updateActiveFilter);
 		
 		this._changeCommandsNode = null;
+		
+		this._filterActiveRelationsBound = this._filterActiveRelations.bind(this);
+	}
+	
+	get singleEditor() {
+		if(!this.item.hasType("singleEditor")) {
+			let singleEditor = this.item.addNode("singleEditor", new SingleRelationEditor());
+			singleEditor.item.addSingleLink("relationEditor", this.item.id);
+			singleEditor.item.getLinks("activeRelations").input(this.item.getLinks("activeRelations"));
+		}
+		
+		return Wprr.objectPath(this.item, "singleEditor.linkedItem.controller");
+	}
+	
+	_filterActiveRelations(aItems) {
+		//console.log("_filterActiveRelations");
+		
+		let currentTime = moment().unix();
+		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+		
+		let returnArray = new Array();
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let currentItemEditor = editorsGroup.getItemEditor(currentItem.id);
+			
+			let startAt = currentItemEditor.getFieldEditor("startAt").value;
+			let endAt = currentItemEditor.getFieldEditor("endAt").value;
+			
+			if((startAt === -1 || startAt <= currentTime) && (endAt === -1 || endAt > currentTime)) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
 	}
 	
 	setup() {
@@ -29,7 +70,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		{
 			let filter = Wprr.utils.data.multitypeitems.controllers.list.FilteredList.create(this.item.group.createInternalItem());
 			this.item.addSingleLink("connectionTypeFilter", filter.item.id);
-			this.item.getLinks("allRelations").idsSource.connectSource(filter.item.getLinks("all").idsSource);
+			filter.item.getLinks("all").input(this.item.getLinks("allRelations"));
 			
 			{
 				let filterPart = filter.addFieldCompare("type.id", null);
@@ -41,7 +82,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 				this.item.getType("itemType").idSource.connectSource(filterPart.getType("compareValue"));
 			}
 			
-			filter.item.getLinks("filtered").idsSource.connectSource(this.item.getLinks("typedRelations").idsSource);
+			this.item.getLinks("typedRelations").input(filter.item.getLinks("filtered"));
 		}
 		
 		
@@ -49,9 +90,18 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		this.item.addType("updateCommands", arrayChangeCommnads);
 		
-		this.item.getLinks("activeRelations");
 		
-		//METODO: add filter
+		{
+			let activeFilter = this.item.addNode("activeFilter", new Wprr.utils.data.multitypeitems.controllers.list.FilteredList());
+			activeFilter.item.getLinks("all").input(this.item.getLinks("typedRelations"));
+			
+			{
+				let filterPart = activeFilter.addFilterFunction(this._filterActiveRelationsBound);
+			}
+			
+			this.item.getLinks("activeRelations").input(activeFilter.item.getLinks("filtered"));
+		}
+		
 		//METODO: add listeners
 		
 		return this;
@@ -75,7 +125,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this.item.addSingleLink("connectionType", "dbm_type:object-relation/" + aConnectionType);
 		this.item.addSingleLink("itemType", "dbm_type:" + aItemType);
 		
-		let directedRelations = item.getType(aDirection + "Relations");
+		let directedRelations = item.getLinks(aDirection + "Relations");
 		directedRelations.idsSource.connectSource(this.item.getLinks("allRelations").idsSource);
 		if(aDirection === "incoming") {
 			this.item.setValue("objectTypeField", "from.linkedItem.objectTypes.ids");
@@ -88,19 +138,22 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationAdded(aId) {
-		console.log("_relationAdded");
-		console.log(aId, this);
+		//console.log("_relationAdded");
+		//console.log(aId, this);
 		
 		if(aId) {
 			let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
 			let itemEditor = editorGroup.getItemEditor(aId);
-			console.log(itemEditor);
 			
-			itemEditor.getFieldEditor("startAt");
-			itemEditor.getFieldEditor("endAt");
+			{
+				let valueEditor = itemEditor.getCustomPathFieldEditor("startAt", "startAt");
+				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
+			}
 			
-			
-			//METODO: this needs a changed field
+			{
+				let valueEditor = itemEditor.getCustomPathFieldEditor("endAt", "endAt");
+				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
+			}
 		}
 	}
 	
@@ -111,6 +164,14 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			
 		}
 		
+	}
+	
+	_updateActiveFilter() {
+		//console.log("_updateActiveFilter");
+		
+		let filter = Wprr.objectPath(this.item, "activeFilter.linkedItem.controller");
+		
+		filter.updateFilter();
 	}
 	
 	toJSON() {

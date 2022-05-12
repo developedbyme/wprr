@@ -30,6 +30,7 @@ export default class MappedList extends MultiTypeItemConnection {
 		this.item.getLinks("items");
 		this.item.getLinks("temporaryItems");
 		this.item.getLinks("mappedItems");
+		this.item.addType("controller", this);
 		
 		let itemsChangeCommands = Wprr.utils.data.nodes.ArrayChangeCommands.connect(this.item.getLinks("items").idsSource, this._itemAddedCommand, this._itemRemovedCommand, this._updatedCommand);
 		this.item.addType("itemsChangeCommands", itemsChangeCommands);
@@ -75,7 +76,7 @@ export default class MappedList extends MultiTypeItemConnection {
 	}
 	
 	_itemsUpdated() {
-		//console.log("_itemsUpdated");
+		console.log("_itemsUpdated");
 		//console.log(this.item.getLinks("temporaryItems").ids, this);
 		this.item.getLinks("mappedItems").setItems(this.item.getLinks("temporaryItems").ids);
 	}

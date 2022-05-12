@@ -135,9 +135,43 @@ export default class PathCustomizer extends MultiTypeItemConnection {
 	
 	getPath(aPath, aReplacements = {}) {
 		let pathController = Wprr.objectPath(this.item, "paths.linkedItem.pathController");
-		let selectedPath = pathController.getChild(aPath).getFullPath();
+		
+		let path = aPath;
+		let queryString = null;
+		
+		{
+			let queryStringIndex = path.indexOf("?");
+			if(queryStringIndex !== -1) {
+				queryString = path.substring(queryStringIndex+1, path.length);
+				path = path.substring(0, queryStringIndex);
+			}
+		}
+		
+		let trailingSlash = (path[path.length-1] === "/");
+		
+		let selectedPath = pathController.getChild(path).getFullPath();
 		
 		selectedPath = this._applyReplacements(selectedPath, aReplacements);
+		let queryStringIndex = selectedPath.indexOf("?");
+		
+		if(trailingSlash) {
+			
+			let selectedQueryString = null;
+			if(queryStringIndex !== -1) {
+				selectedQueryString = selectedPath.substring(queryStringIndex+1, selectedPath.length);
+				selectedPath = selectedPath.substring(0, queryStringIndex);
+			}
+			
+			selectedPath += "/";
+			if(selectedQueryString) {
+				selectedPath += "?" + selectedQueryString;
+			}
+		}
+		
+		if(queryString) {
+			selectedPath += (queryStringIndex !== -1) ? "&" : "?";
+			selectedPath += queryString;
+		}
 		
 		return selectedPath;
 	}

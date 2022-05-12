@@ -81,7 +81,7 @@ export default class KeyValueGenerator {
 		return newKeyValueGenerator;
 	}
 	
-	static convertArrayToOptions(aArray, aValueField, aLabelField, aDescriptionField = null) {
+	static convertArrayToOptions(aArray, aValueField, aLabelField, aDescriptionField = null, aSort = false) {
 		let returnArray = new Array();
 		
 		let currentArray = aArray;
@@ -101,7 +101,19 @@ export default class KeyValueGenerator {
 			returnArray.push(encodedData);
 		}
 		
+		if(aSort) {
+			returnArray.sort(KeyValueGenerator._sortOnLabel);
+		}
+		
 		return returnArray;
+	}
+	
+	static addFirstOption(aArray, aValue, aLabel, aDescription = null) {
+		let encodedData = {"key": aValue, "value": aValue, "label": aLabel, "description": aDescription, "item": null};
+		
+		aArray.unshift(encodedData);
+		
+		return aArray;
 	}
 	
 	static normalizeOptions(aOptions) {
@@ -208,5 +220,20 @@ export default class KeyValueGenerator {
 		}
 		
 		return returnArray;
+	}
+	
+	static _sortOnLabel(aA, aB) {
+		
+		aA = ("" + aA.label).toLowerCase();
+		aB = ("" + aB.label).toLowerCase();
+		
+		if(aA < aB) {
+			return -1;
+		}
+		else if(aA > aB) {
+			return 1;
+		}
+		
+		return 0;
 	}
 }

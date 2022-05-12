@@ -74,12 +74,16 @@ export default class TrackingController extends MultiTypeItemConnection {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentTracker = currentArray[i];
 				
-				//METODO: try catch
-				if(allowStatistics) {
-					currentTracker.startStatisticsTracking();
+				try {
+					if(allowStatistics) {
+						currentTracker.startStatisticsTracking();
+					}
+					if(allowMarketing) {
+						currentTracker.startMarketingTracking();
+					}
 				}
-				if(allowMarketing) {
-					currentTracker.startMarketingTracking();
+				catch(theError) {
+					console.error("Error occured while stating tracking", currentTracker, theError);
 				}
 			}
 		}
@@ -103,7 +107,18 @@ export default class TrackingController extends MultiTypeItemConnection {
 	}
 	
 	trackPage(aUrl) {
-		//METODO
+		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentTracker = currentArray[i];
+			
+			try {
+				currentTracker.trackPage(aUrl);
+			}
+			catch(theError) {
+				console.error("Error occured during trackPage", currentTracker, theError);
+			}
+		}
 	}
 	
 	trackEvent(aCategory, aAction, aLabel = null, aValue = null) {
@@ -114,9 +129,12 @@ export default class TrackingController extends MultiTypeItemConnection {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentTracker = currentArray[i];
 			
-			//METODO: try catch
-			
-			currentTracker.trackEvent(aCategory, aAction, aLabel, aValue);
+			try {
+				currentTracker.trackEvent(aCategory, aAction, aLabel, aValue);
+			}
+			catch(theError) {
+				console.error("Error occured during trackEvent", currentTracker, theError);
+			}
 		}
 	}
 	
@@ -126,9 +144,12 @@ export default class TrackingController extends MultiTypeItemConnection {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentTracker = currentArray[i];
 			
-			//METODO: try catch
-			
-			currentTracker.trackEcommerce(aData);
+			try {
+				currentTracker.trackEcommerce(aData);
+			}
+			catch(theError) {
+				console.error("Error occured during trackEcommerce", currentTracker, theError);
+			}
 		}
 	}
 	
@@ -140,9 +161,12 @@ export default class TrackingController extends MultiTypeItemConnection {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentTracker = currentArray[i];
 			
-			//METODO: try catch
-			
-			currentTracker.trackConversion(aTransactionId, aItemName, aValue);
+			try {
+				currentTracker.trackConversion(aTransactionId, aItemName, aValue);
+			}
+			catch(theError) {
+				console.error("Error occured during trackConversion", currentTracker, theError);
+			}
 		}
 	}
 	

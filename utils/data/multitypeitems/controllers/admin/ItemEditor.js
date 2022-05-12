@@ -45,6 +45,22 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return fieldEditors.getLinkByName(aName).getType("valueEditor");
 	}
 	
+	getCustomPathFieldEditor(aName, aValuePath) {
+		let fieldEditors = this.item.getNamedLinks("fieldEditors");
+		
+		if(!fieldEditors.hasLinkByName(aName)) {
+			let fieldEditor = this.editorsGroup.getCustomPathFieldEditor(this.item.getType("editedItem").id, aName, aValuePath);
+			
+			fieldEditors.addItem(aName, fieldEditor.item.id);
+		}
+		
+		return fieldEditors.getLinkByName(aName).getType("valueEditor");
+	}
+	
+	getPostStatusEditor() {
+		return this.editorsGroup.getPostStatusEditor(this.item.getType("editedItem").id);
+	}
+	
 	addEditorsForFields() {
 		//console.log("addEditorsForFields");
 		
@@ -72,6 +88,38 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		}
 		
 		return relationEditors.getLinkByName(linkName).getType("relationEditor");
+	}
+	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
+	getValueForPath(aPath) {
+		//console.log("ItemEditor::getValueForPath");
+		//console.log(aPath);
+		
+		let tempArray = (""+aPath).split(".");
+		let firstPart = tempArray.shift();
+		let restParts = tempArray.join(".");
+		
+		switch(firstPart) {
+			case "fieldEditor":
+				{
+					let fieldName = tempArray.shift();
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getFieldEditor(fieldName), restParts);
+				}
+			case "relationEditor":
+				{
+					let direction = tempArray.shift();
+					let connectionType = tempArray.shift();
+					let itemType = tempArray.shift();
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getRelationEditor(direction, connectionType, itemType), restParts);
+				}
+		}
+		
+		return Wprr.objectPath(this[firstPart], restParts);
 	}
 	
 	toJSON() {

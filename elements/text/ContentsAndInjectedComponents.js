@@ -57,7 +57,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_createContent() {
-		//console.log("_createContent");
+		console.log("_createContent");
 		
 		let content = this.getFirstInput("content");
 		let parsedContent = this.getFirstInput("parsedContent");
@@ -71,6 +71,8 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 		if(!parsedContent) {
 			parsedContent = Wprr.wp.blocks.BlockContentParser.createInBody(content);
 		}
+		
+		console.log(parsedContent);
 		
 		
 		this._groups = new Array();

@@ -1,9 +1,9 @@
 import Wprr from "wprr/Wprr";
 
-import BaseObject from "wprr/core/BaseObject";
+import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
 
 //import SiteNavigation from "wprr/utils/navigation/SiteNavigation";
-export default class SiteNavigation extends BaseObject {
+export default class SiteNavigation extends ProjectRelatedItem {
 
 	constructor() {
 		
@@ -107,7 +107,6 @@ export default class SiteNavigation extends BaseObject {
 			return true;
 		}
 		
-		//METODO: add exclusions
 		if(!this._shouldHandle(finalUrl.href)) {
 			return false;
 		}
@@ -130,21 +129,32 @@ export default class SiteNavigation extends BaseObject {
 		this.travelPaths = paths;
 	}
 	
+	_trackPage(aUrl) {
+		console.log("_trackPage");
+		console.log(aUrl, this.project);
+		
+		let trackingController = Wprr.objectPath(this.project.items, "project.tracking.linkedItem.trackingController");
+		if(trackingController) {
+			trackingController.trackPage(aUrl);
+		}
+	}
+	
 	_internalNavigation(aUrl) {
 		history.pushState({}, "Page", aUrl);
 		this.url = aUrl;
 		
-		//METODO: trigger analytics
+		this._trackPage(aUrl);
 		
 		this._addUrlToPath(aUrl);
 	}
 	
 	_handleNavigationChange(aEvent) {
-		//console.log("_handleNavigationChange");
+		console.log("_handleNavigationChange");
 		
-		this.url = document.location.href;
+		let url = document.location.href;;
+		this.url = url;
 		
-		//METODO: trigger analytics
+		this._trackPage(url);
 		
 		let paths = [].concat(this.travelPaths);
 		paths.pop();

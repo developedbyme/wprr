@@ -62,6 +62,7 @@ export default class ArrayFieldSort extends SortPart {
 	}
 	
 	static prefixedNumericFormat(aValue) {
+		//console.log("prefixedNumericFormat");
 		var prefixRegExp = new RegExp("^([^0-9]*)([0-9]*)(.*)$");
 		var result = prefixRegExp.exec(""+aValue);
 		

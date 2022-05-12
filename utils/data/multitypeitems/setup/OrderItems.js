@@ -28,6 +28,9 @@ export default class OrderItems extends BaseObject {
 		
 		{
 			let items = aItem.getLinks("items");
+			
+			let newIds = new Array();
+			
 			let currentArray = aData["items"];
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
@@ -40,12 +43,17 @@ export default class OrderItems extends BaseObject {
 				currentItem.setValue("total", currentData["total"]);
 				currentItem.setValue("tax", currentData["tax"]);
 				
-				items.addItem(currentItem.id);
+				newIds.push(currentItem.id);
 			}
+			
+			items.setItems(newIds);
 		}
 		
 		{
 			let coupons = aItem.getLinks("coupons");
+			
+			let newIds = new Array();
+			
 			let currentArray = aData["coupons"];
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
@@ -57,8 +65,10 @@ export default class OrderItems extends BaseObject {
 				currentItem.setValue("total", currentData["total"]);
 				currentItem.setValue("tax", currentData["tax"]);
 				
-				coupons.addItem(currentItem.id);
+				newIds.push(currentItem.id);
 			}
+			
+			coupons.setItems(newIds);
 		}
 		
 		aItem.setValue("hasData/orderItems", true);

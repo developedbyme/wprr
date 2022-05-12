@@ -8,8 +8,8 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 //import DateSelection from "./DateSelection";
 export default class DateSelection extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._addMainElementClassName("date-selection");
 		
@@ -50,13 +50,13 @@ export default class DateSelection extends WprrBaseObject {
 	
 	getValue() {
 		let valueName = this.getSourcedProp("valueName");
-		let value = this.getSourcedPropWithDefault("value", Wprr.source("propWithDots", valueName));
+		let value = this.getFirstInput("value", Wprr.source("propWithDots", valueName));
 		
 		return value;
 	}
 	
-	_prepareInitialRender() {
-		super._prepareInitialRender();
+	_prepareRender() {
+		super._prepareRender();
 		
 		let value = this.getValue();
 		

@@ -14,6 +14,20 @@ export default class Project {
 		let projectItem = this._items.getItem("project");
 		projectItem.addType("controller", this);
 		
+		let session = this._items.createInternalItem();
+		projectItem.addSingleLink("session", session.id);
+		
+		session.addType("variables", new Wprr.utils.data.nodes.ValueSources());
+		session.requireSingleLink("user");
+		
+		let cart = this._items.createInternalItem();
+		session.addSingleLink("cart", cart.id);
+		//METODO: add cart node
+		cart.setValue("cacheKey", Math.round(Math.random()*1000000000));
+		cart.setValue("loaded", false);
+		cart.getLinks("items");
+		cart.getLinks("coupons");
+		
 		let pathsItem = this._items.createInternalItem();
 		
 		let pathController = Wprr.utils.data.multitypeitems.controllers.paths.PathController.create(pathsItem);
@@ -94,6 +108,10 @@ export default class Project {
 		this._items.addSetup("contentTemplate", Wprr.utils.data.multitypeitems.setup.ContentTemplate.prepare, Wprr.utils.data.multitypeitems.setup.ContentTemplate.setup);
 		this._items.addSetup("templatePosition", Wprr.utils.data.multitypeitems.setup.TemplatePosition.prepare, Wprr.utils.data.multitypeitems.setup.TemplatePosition.setup);
 		this._items.addSetup("value", Wprr.utils.data.multitypeitems.setup.Value.prepare, Wprr.utils.data.multitypeitems.setup.Value.setup);
+		this._items.addSetup("triggers", Wprr.utils.data.multitypeitems.setup.Triggers.prepare, Wprr.utils.data.multitypeitems.setup.Triggers.setup);
+		this._items.addSetup("trigger", Wprr.utils.data.multitypeitems.setup.Trigger.prepare, Wprr.utils.data.multitypeitems.setup.Trigger.setup);
+		this._items.addSetup("shortTitle", Wprr.utils.data.multitypeitems.setup.ShortTitle.prepare, Wprr.utils.data.multitypeitems.setup.ShortTitle.setup);
+		this._items.addSetup("action", Wprr.utils.data.multitypeitems.setup.Action.prepare, Wprr.utils.data.multitypeitems.setup.Action.setup);
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
@@ -309,8 +327,17 @@ export default class Project {
 	}
 	
 	setUserData(aData) {
-		//console.log("setUserData");
-		//console.log(aData);
+		console.log("setUserData");
+		console.log(aData);
+		
+		let projectItem = this._items.getItem("project");
+		
+		if(!aData) {
+			//Signed out
+		}
+		else {
+			
+		}
 		
 		//METODO: move this to tree
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");

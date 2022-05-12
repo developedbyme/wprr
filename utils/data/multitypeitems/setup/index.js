@@ -44,6 +44,10 @@ export {default as RelationOrder} from "./RelationOrder";
 export {default as ContentTemplate} from "./ContentTemplate";
 export {default as TemplatePosition} from "./TemplatePosition";
 export {default as Value} from "./Value";
+export {default as Triggers} from "./Triggers";
+export {default as Trigger} from "./Trigger";
+export {default as ShortTitle} from "./ShortTitle";
+export {default as Action} from "./Action";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};
