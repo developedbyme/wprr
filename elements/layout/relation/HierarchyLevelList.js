@@ -46,7 +46,7 @@ export default class HierarchyLevelList extends Layout {
 				React.createElement(Wprr.AddReference, {data: Wprr.sourceReference("item"), as: "orderHierarchyItem"},
 					React.createElement(Wprr.RelatedItem, {"id": "link.linkedItem"},
 						React.createElement(Wprr.DraggableItem, {"dragParent": false, "addMode": "insertBefore"},
-							React.createElement(Wprr.FlexRow, {className: "micro-item-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize,flex-no-resize"},
+							React.createElement(Wprr.FlexRow, {className: "micro-item-spacing vertically-center-items flex-no-wrap", itemClasses: "flex-no-resize,flex-resize,flex-no-resize"},
 								React.createElement("div", {"draggable": "true"},
 									React.createElement(Wprr.Image, {"className": "standard-icon background-contain", "src": "icons/change-order.svg"})
 								),
@@ -65,7 +65,7 @@ export default class HierarchyLevelList extends Layout {
 							)
 						),
 						React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(this, this._getNextIndentLevel, [Wprr.sourceReference("hierarchyIndent")]), as: "hierarchyIndent"},
-							React.createElement(Wprr.FlexRow, {className: "micro-item-spacing", itemClasses: "flex-no-resize,flex-resize"},
+							React.createElement(Wprr.FlexRow, {className: "micro-item-spacing flex-no-wrap", itemClasses: "flex-no-resize,flex-resize"},
 								React.createElement(Wprr.BaseObject, {"style": Wprr.sourceFunction(this, this._getIndentStyle, [Wprr.sourceReference("hierarchyIndent")])}),
 								React.createElement(Wprr.layout.relation.HierarchyLevelList, {})
 							)

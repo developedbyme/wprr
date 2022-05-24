@@ -7,6 +7,8 @@ export default class Actions extends Wprr.BaseObject {
 	_construct() {
 		super._construct();
 		
+		this._elementTreeItem.setValue("date", this.getFirstInputWithDefault(Wprr.sourceQueryString("date"), moment().format("Y-MM-DD")))
+		
 		let loader = this._elementTreeItem.createNode("actionsLoader", "loadDataRange");
 		this._elementTreeItem.getLinks("items").input(loader.item.getLinks("items"));
 		
@@ -17,7 +19,7 @@ export default class Actions extends Wprr.BaseObject {
 		
 		this._elementTreeItem.getLinks("rows").input(mappedList.item.getLinks("rows"));
 		
-		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate&encode=action&type=action", "wprrData"));
+		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate,inDateRange&encode=action&type=action&startDate=" + this._elementTreeItem.getValue("date") + "&endDate=" + this._elementTreeItem.getValue("date"), "wprrData"));
 	}
 	
 	_setupSelectItem(aId) {
@@ -46,7 +48,6 @@ export default class Actions extends Wprr.BaseObject {
 				break;
 			}
 		}
-		
 	}
 	
 	_renderMainElement() {
@@ -79,7 +80,7 @@ export default class Actions extends Wprr.BaseObject {
 									</Wprr.SelectSection>
 									<div className="spacing small" />
 									<div className="small-description text-align-center">
-										<Wprr.DateDisplay date={Wprr.sourceReference("item", "currentStatusDate")} format="Y-MM-DD HH:mm:ss" inputFormat="unix" />
+										<Wprr.DateDisplay date={Wprr.sourceReference("item", "currentStatusTime")} format="Y-MM-DD HH:mm:ss" inputType="unix" />
 									</div>
 								</Wprr.HasData>
 							</div>

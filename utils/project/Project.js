@@ -235,6 +235,28 @@ export default class Project {
 		return loader;
 	}
 	
+	getPerformActionLoader(aActionType, aFromIds = [], aData = null) {
+		let loader = this.getCreateLoader("dbm_data", "action", "draft", "Action: " + aActionType);
+		
+		loader.changeData.addTypeRelation("type/action-type", aActionType);
+		
+		let currentArray = aFromIds;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			loader.changeData.addOutgoingRelation(currentArray[i], "from");
+		}
+		
+		if(aData) {
+			loader.changeData.addTerm("value-item", "dbm_type", "slugPath");
+			loader.changeData.setDataField("value", aData);
+		}
+		
+		loader.changeData.makePrivate();
+		loader.changeData.createChange("dbmtc/processAction", {});
+		
+		return loader;
+	}
+	
 	getLoginLoader(aLogin, aPassword, aRemember = false) {
 		let loader = this.getActionLoader("login");
 		loader.setJsonPostBody({
