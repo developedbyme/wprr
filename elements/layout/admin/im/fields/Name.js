@@ -5,15 +5,17 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 
 export default class Name extends WprrBaseObject {
 	
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
+		
+		this._uiState = Wprr.sourceValue("normal");
 	}
 	
 	_renderMainElement() {
 		
-		return React.createElement(Wprr.SelectSection, {selectedSections: Wprr.sourceReference("field/externalStorage", "uiStatus.status")},
+		return React.createElement(Wprr.SelectSection, {selectedSections: this._uiState},
 			React.createElement("div", {"data-section-name": "view", "data-default-section": true},
-				React.createElement(Wprr.CommandButton, {commands: Wprr.commands.setValue(Wprr.sourceReference("field/externalStorage"), "uiStatus.status", "edit")},
+				React.createElement(Wprr.CommandButton, {commands: Wprr.commands.setProperty(this._uiState.reSource(), "value", "edit")},
 					React.createElement("div", {className: "standard-field standard-field-padding full-width"},
 						Wprr.text(Wprr.sourceReference("field/externalStorage", "value.firstName")),
 						" ",
