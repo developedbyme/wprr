@@ -67,6 +67,7 @@ export default class ModuleCreatorBaseObject {
 	setProject(aProject) {
 		
 		this._project = aProject;
+		this._project.setMainReferences(this._referenceHolder);
 		
 		this._siteDataLoader.setItems(this._project.items);
 		this._siteNavigation.setProject(this._project);
@@ -184,7 +185,13 @@ export default class ModuleCreatorBaseObject {
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		this._referenceHolder.addObject("redux/store/wprrController", this._storeController);
 		
-		this._referenceHolder.addObject("wprr/userData", aData.userData);
+		console.log(aData.userData);
+		
+		if(aData.userData) {
+			this._project.setUserData(aData.userData);
+		}
+		
+		//this._referenceHolder.addObject("wprr/userData", aData.userData);
 		this._referenceHolder.addObject("wprr/settings", aData.settings);
 		
 		this._referenceHolder.addObject("wprr/moduleData", aModuleData);
@@ -200,7 +207,6 @@ export default class ModuleCreatorBaseObject {
 		this._configureReferences(aData, aModuleData);
 		
 		if(this._project) {
-			this._project.setMainReferences(this._referenceHolder);
 			this._referenceHolder.addObject("items", this._project.items);
 			this._referenceHolder.addObject("wprr/project", this._project);
 			this._referenceHolder.addObject("wprr/projectName", this._project.name);

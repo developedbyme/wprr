@@ -32,6 +32,12 @@ export default class ValueEditor extends MultiTypeItemConnection {
 		return this.item.getType("value").value;
 	}
 	
+	set value(aValue) {
+		this.item.getType("value").value = aValue;
+		
+		return this;
+	}
+	
 	get valueSource() {
 		return this.item.getType("value");
 	}

@@ -14,20 +14,23 @@ export default class EditGroups extends Wprr.BaseObject {
 		let fields = {
 			"id": {"type": "select"},
 			"name": {"type": "field"},
+			"items": {"type": "orderedRelations", "relationPath": "incoming.in.*", "orderId": "order"},
 			"options": {"type": "options"}
 		};
 		
 		let areas = Wprr.utils.object.shallowMerge(Wprr.layout.list.cells.areas);
 		let operationSections = Wprr.utils.object.shallowMerge(Wprr.layout.list.operations.adminOperationAreas);
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.batch.BatchEditItems, {
-  title: title,
-  projectName: Wprr.sourceReference("wprr/projectName"),
-  dataType: "group,named-item",
-  fields: fields,
-  cellTypes: areas,
-  operationSections: operationSections
-}));
+		return React.createElement("div", null,
+			React.createElement(Wprr.layout.items.batch.BatchEditItems, {
+				title: title,
+				projectName: Wprr.sourceReference("wprr/projectName"),
+				dataType: "group,named-item",
+				fields: fields,
+				cellTypes: areas,
+				operationSections: operationSections
+			})
+		);
 	}
 	
 	static getWpAdminEditor() {

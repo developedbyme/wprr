@@ -45,7 +45,7 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 	}
 	
 	_urlUpdated() {
-		//console.log("LoadDataRange::_urlUpdated");
+		console.log("LoadDataRange::_urlUpdated");
 		
 		let items = this.item.group;
 		
@@ -68,8 +68,8 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 	}
 	
 	_itemLoaded(aItem) {
-		//console.log("LoadDataRange::_itemLoaded");
-		//console.log(aItem, this.item.getType("loader").linkedUrlItem, this.item);
+		console.log("LoadDataRange::_itemLoaded");
+		console.log(aItem, this.item.getType("loader").linkedUrlItem, this.item);
 		
 		if(aItem === this.item.getType("loader").linkedUrlItem) {
 			this._setupRange(aItem);

@@ -7,6 +7,10 @@ export default class Actions extends Wprr.BaseObject {
 	_construct() {
 		super._construct();
 		
+		let items = this._elementTreeItem.group;
+		this._elementTreeItem.addSingleLink("operation", null);
+		this._elementTreeItem.getLinks("selectedItems");
+		
 		this._elementTreeItem.setValue("date", this.getFirstInputWithDefault(Wprr.sourceQueryString("date"), moment().format("Y-MM-DD")))
 		
 		let loader = this._elementTreeItem.createNode("actionsLoader", "loadDataRange");
@@ -19,12 +23,33 @@ export default class Actions extends Wprr.BaseObject {
 		
 		this._elementTreeItem.getLinks("rows").input(mappedList.item.getLinks("rows"));
 		
+		let batchEditItem = items.getItem("batchEdit/actions");
+		
+		{
+			let noneItem = items.createInternalItem();
+			noneItem.setValue("name", "None");
+			noneItem.setValue("selectedLabel", "Select operation");
+			batchEditItem.getLinks("batchActions").addItem(noneItem.id);
+		}
+		
+		{
+			let batchOpeartionItem = items.createInternalItem();
+			batchOpeartionItem.setValue("name", "Api command");
+			batchOpeartionItem.setValue("element", <Wprr.layout.admin.batch.ApiCommand />);
+			batchEditItem.getLinks("batchActions").addItem(batchOpeartionItem.id);
+		}
+		
 		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate,inDateRange&encode=action&type=action&startDate=" + this._elementTreeItem.getValue("date") + "&endDate=" + this._elementTreeItem.getValue("date"), "wprrData"));
 	}
 	
 	_setupSelectItem(aId) {
 		let item = this._elementTreeItem.group.getItem(aId);
 		let action = Wprr.objectPath(item, "forItem.linkedItem");
+		
+		console.log("item>>>>>", item);
+		
+		let inArrayCondition = Wprr.utils.data.nodes.InArrayCondition.connect(this._elementTreeItem.getLinks("selectedItems").idsSource, item.getValueSource("active"), item.getType("forItem").id);
+		item.addType("inArrayCondition", inArrayCondition);
 		
 		console.log("action>>>>>", action);
 		
@@ -53,6 +78,54 @@ export default class Actions extends Wprr.BaseObject {
 	_renderMainElement() {
 		
 		return <div>
+			<Wprr.AddReference data={this._elementTreeItem} as="editorItem">
+				<div>
+					<Wprr.FlexRow className="small-item-spacing" itemClasses="flex-resize,flex-no-resize">
+						<div>
+							<div className="operations">
+								<Wprr.SelectItem id="batchEdit/actions" as="batchEdit">
+									<div>
+										<Wprr.FlexRow className="micro-item-spacing">
+											{Wprr.DropdownSelection.createSelfContained(
+												React.createElement(Wprr.layout.form.DropdownButton, {
+													"className": "cursor-pointer batch-operations-text batch-operations-select-title",
+													"text": Wprr.sourceFirst(
+														Wprr.sourceReference("editorItem", "operation.linkedItem.selectedLabel"),
+														Wprr.sourceReference("editorItem", "operation.linkedItem.name"),
+														Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")
+													),
+													"sourceUpdates": Wprr.sourceReference("editorItem", "operation.idSource")
+												}),
+												<div className="custom-selection-container custom-selection-menu">
+													<Wprr.layout.ItemList ids={Wprr.sourceReference("batchEdit", "batchActions.idsSource")}>
+														<Wprr.CommandButton commands={[
+															Wprr.commands.setProperty(Wprr.sourceReference("editorItem", "operation"), "id", Wprr.sourceReference("item", "id")),
+															Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)
+														]}>
+															<div className="hover-row standard-row standard-row-padding cursor-pointer">{Wprr.text(Wprr.sourceReference("item", "name"))}</div>
+														</Wprr.CommandButton>
+													</Wprr.layout.ItemList>
+												</div>,
+												{ className: "absolute-container" }
+											)}
+											<Wprr.HasData check={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} checkType="notEmpty">
+												<Wprr.FlexRow className="micro-item-spacing batch-operations-text">
+													<div>for</div>
+													<Wprr.layout.ListWithOthers items={Wprr.sourceReference("editorItem", "selectedItems.items")} sourceUpdates={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} showNumberOfItems={2} />
+												</Wprr.FlexRow>
+											</Wprr.HasData>
+										</Wprr.FlexRow>
+									</div>
+								</Wprr.SelectItem>
+							</div>
+						</div>
+					</Wprr.FlexRow>
+					<Wprr.RelatedItem id="operation.linkedItem" from={Wprr.sourceReference("editorItem")} as="batchActionItem" sourceUpdates={Wprr.sourceReference("editorItem", "operation.idSource")}>
+						<Wprr.InsertElement element={Wprr.sourceReference("batchActionItem", "element")} canBeEmpty={true} />
+					</Wprr.RelatedItem>
+				</div>
+			</Wprr.AddReference>
+		
 			<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("rows").idsSource} as="row" className="standard-alternating-rows">
 				<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="item">
 					<div className="standard-row standard-row-padding" itemClasses="flex-no-resize,flex-no-resize,flex-no-resize,flex-no-resize,flex-resize">

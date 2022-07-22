@@ -9,8 +9,9 @@ import SourceData from "wprr/reference/SourceData";
 //import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 export default class ManipulationBaseObject extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		
+		super._construct();
 		
 		this._propsThatShouldNotCopy = new Array();
 		this._propsThatShouldNotCopy.push("didMountCommands");

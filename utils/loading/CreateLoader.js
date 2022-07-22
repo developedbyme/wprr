@@ -23,6 +23,12 @@ export default class CreateLoader extends JsonLoader {
 		return this._changeData;
 	}
 	
+	setChangeData(aChangeData) {
+		this._changeData = aChangeData;
+		
+		return this;
+	}
+	
 	_prepareLoad() {
 		super._prepareLoad();
 		

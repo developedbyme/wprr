@@ -79,6 +79,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			let newEditorItem = newEditor.item;
 			newEditorItem.addSingleLink("editorsGroup", this.item.id);
 			newEditorItem.addSingleLink("editedItem", aId);
+			
 			if(field) {
 				newEditorItem.addSingleLink("field", field.id);
 				field.getType("value").connectSource(newEditorItem.getType("storedValue"));

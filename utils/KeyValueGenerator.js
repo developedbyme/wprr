@@ -75,6 +75,10 @@ export default class KeyValueGenerator {
 		return null;
 	}
 	
+	getKeys() {
+		return Wprr.objectPath(this._values, "(every).key");
+	}
+	
 	static create() {
 		let newKeyValueGenerator = new KeyValueGenerator();
 		

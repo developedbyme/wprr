@@ -1,6 +1,5 @@
 import Wprr from "wprr/Wprr";
 import React from "react";
-import objectPath from "object-path";
 
 // import Project from "wprr/utils/project/Project";
 export default class Project {
@@ -17,13 +16,17 @@ export default class Project {
 		let session = this._items.createInternalItem();
 		projectItem.addSingleLink("session", session.id);
 		
+		let cacheKey = Math.round(Math.random()*1000000000);
+		
 		session.addType("variables", new Wprr.utils.data.nodes.ValueSources());
 		session.requireSingleLink("user");
+		session.setValue("cacheKey", cacheKey);
+		session.requireValue("restNonce");
 		
 		let cart = this._items.createInternalItem();
 		session.addSingleLink("cart", cart.id);
 		//METODO: add cart node
-		cart.setValue("cacheKey", Math.round(Math.random()*1000000000));
+		cart.setValue("cacheKey", cacheKey);
 		cart.setValue("loaded", false);
 		cart.getLinks("items");
 		cart.getLinks("coupons");
@@ -339,10 +342,10 @@ export default class Project {
 	
 	addUserCredentialsToLoader(aLoader) {
 		
-		//METODO: move this to tree
-		let userData = this._mainReferences.getObject("wprr/userData");
-		if(userData) {
-			aLoader.addHeader("X-WP-Nonce", userData.restNonce);
+		let restNonce = Wprr.objectPath(this._items, "project.session.linkedItem.restNonce.value");
+		
+		if(restNonce) {
+			aLoader.addHeader("X-WP-Nonce", restNonce);
 		}
 		
 		return aLoader;
@@ -353,15 +356,30 @@ export default class Project {
 		console.log(aData);
 		
 		let projectItem = this._items.getItem("project");
+		let session = Wprr.objectPath(projectItem, "session.linkedItem");
 		
 		if(!aData) {
-			//Signed out
+			session.getType("user").setId(0);
+			session.setValue("restNonce", null);
 		}
 		else {
 			
+			session.setValue("restNonce", aData["restNonce"]);
+			
+			let userData = aData["data"];
+			let userId = userData["id"];
+			
+			let user = this._items.getItem("user" + userId);
+			
+			user.setValue("name", userData["name"]);
+			user.setValue("firstName", userData["firstName"]);
+			user.setValue("lastName", userData["lastName"]);
+			user.setValue("email", userData["email"]);
+			user.setValue("roles", aData["roles"]);
+			
+			session.getType("user").setId("user" + userId);
 		}
 		
-		//METODO: move this to tree
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		this._mainReferences.addObject("wprr/userData", aData);
 		storeController.setUser(aData);
@@ -374,6 +392,6 @@ export default class Project {
 	}
 	
 	getCurrentLanguage() {
-		return objectPath.get(this._mainReferences.getObject("wprr/pageData"), "queryData.language");
+		return Wprr.objectPath(this._mainReferences.getObject("wprr/pageData"), "queryData.language");
 	}
 }

@@ -12,6 +12,14 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		
 	}
 	
+	get createLoader() {
+		return this.item.getType("createLoader");
+	}
+	
+	get changeData() {
+		return Wprr.objectPath(this.item.getType("createLoader"), "changeData");
+	}
+	
 	setup() {
 		
 		this.item.setValue("created", false);
@@ -19,19 +27,15 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		
 		this.item.setValue("creationUrl", null);
 		this.item.getType("creationUrl").addChangeCommand(Wprr.commands.callFunction(Wprr.sourceStatic(this.item, "createLoader"), "setUrl", [Wprr.sourceStatic(this.item, "creationUrl.value")]));
-		this.item.setValue("creationData", null);
-		this.item.getType("creationData").addChangeCommand(Wprr.commands.callFunction(Wprr.sourceStatic(this.item, "createLoader"), "setJsonPostBody", [Wprr.sourceStatic(this.item, "creationData.value")]));
 		this.item.addSingleLink("createdItem", null);
 		this.item.setValue("initialDataUrl", null);
 		this.item.getType("initialDataUrl").addChangeCommand(Wprr.commands.callFunction(Wprr.sourceStatic(this.item, "initialDataLoader"), "setUrl", [Wprr.sourceStatic(this.item, "initialDataUrl.value")]));
 		
 		this.item.setValue("initialData", null);
 		
-		let createLoader = this.item.group.project.getLoader();
-		this.item.addType("createLoader", createLoader);
-		
-		createLoader.setMethod("POST");
+		let createLoader = this.item.group.project.getCreateLoader();
 		createLoader.addSuccessCommand(Wprr.commands.callFunction(this, this._itemCreated, [Wprr.source("event", "raw", "data.id")]));
+		this.item.addType("createLoader", createLoader);
 		
 		let initialDataLoader = this.item.group.project.getLoader();
 		this.item.addType("initialDataLoader", initialDataLoader);
@@ -51,10 +55,9 @@ export default class ItemCreator extends MultiTypeItemConnection {
 	}
 	
 	
-	setCreation(aUrl, aData) {
+	setUrl(aUrl) {
 		
 		this.item.setValue("creationUrl", aUrl);
-		this.item.setValue("creationData", aData);
 		
 		return this;
 	}

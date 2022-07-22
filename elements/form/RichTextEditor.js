@@ -10,13 +10,20 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 // import RichTextEditor from "wprr/elements/form/RichTextEditor";
 export default class RichTextEditor extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
+		
+		this._loaded = Wprr.sourceValue(false);
 		
 		this._editorProperties = null;
 		
 		this._callback_changeBound = this._callback_change.bind(this);
 		this._callback_setupEditorBound = this._callback_setupEditor.bind(this);
+		
+		let apiKey = this.getFirstInput("apiKey", Wprr.sourceReference("tinymce/apiKey"));
+		
+		wprr.loadScript("https://cdn.tiny.cloud/1/" + apiKey + "/tinymce/5/tinymce.min.js", Wprr.commands.setValue(this._loaded.reSource(), "loaded", true));
+		
 	}
 	
 	_callback_setupEditor(aEditor) {
@@ -91,7 +98,11 @@ export default class RichTextEditor extends WprrBaseObject {
 		
 		let value = this.getValue();
 		
-		return React.createElement(React.Fragment, {}, React.createElement(Editor, {"init": this.editorProperties, "value": value, onEditorChange: this._callback_changeBound}));
+		return React.createElement(React.Fragment, {}, 
+			React.createElement(Wprr.HasData, {"check": this._loaded},
+				React.createElement(Editor, {"init": this.editorProperties, "value": value, onEditorChange: this._callback_changeBound})
+			)
+		);
 	}
 
 }

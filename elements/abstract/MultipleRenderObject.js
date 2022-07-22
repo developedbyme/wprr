@@ -7,16 +7,13 @@ import Part from "wprr/elements/abstract/Part";
 //import MultipleRenderObject from "wprr/elements/abstract/MultipleRenderObject";
 export default class MultipleRenderObject extends WprrBaseObject {
 
-	constructor(aProps, aContext) {
-		super(aProps, aContext);
-	}
-	
 	_construct() {
-		super._construct();
 		
 		this._partData = new Object();
 		this._activePart = "initial";
 		this.setPartData(this._activePart, {}, this);
+		
+		super._construct();
 	}
 	
 	useElementReplacement() {
@@ -24,11 +21,25 @@ export default class MultipleRenderObject extends WprrBaseObject {
 	}
 	
 	getProps() {
-		return this.getActivePart().props;
+		
+		let activePart = this.getActivePart();
+		
+		if(activePart) {
+			return activePart.props;
+		}
+		
+		return super.getProps();
 	}
 	
 	getContext() {
-		return this.getActivePart().element.context;
+		
+		let activePart = this.getActivePart();
+		
+		if(activePart) {
+			return activePart.element.context;
+		}
+		
+		return super.getContext();
 	}
 	
 	_missingRenderFunction() {
@@ -74,6 +85,10 @@ export default class MultipleRenderObject extends WprrBaseObject {
 	}
 	
 	getActivePart() {
+		if(!this._activePart) {
+			return null;
+		}
+		
 		return this._partData[this._activePart];
 	}
 	

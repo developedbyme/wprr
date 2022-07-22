@@ -105,6 +105,10 @@ export default class ObjectFunctions {
 	static isEqual(aValue1, aValue2) {
 		if(aValue1 !== null && typeof(aValue1) === "object") {
 			try {
+				if(aValue1 instanceof FileList) {
+					return (aValue1 === aValue2);
+				}
+				
 				let isChanged = (JSON.stringify(aValue1) === JSON.stringify(aValue2));
 				return isChanged;
 			}

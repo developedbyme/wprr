@@ -575,10 +575,10 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		this._editorItem.getLinks("creators").addUniqueItem(creatorItem.id);
 		
-		let url = Wprr.utils.wprrUrl.getCreateUrl(this._dataType);
-		url = this.project.getWprrUrl(url);
+		let url = this.project.getWprrUrl(Wprr.utils.wprrUrl.getCreateUrl(this._dataType));
 		
-		creator.setCreation(url, this._addChangeData.getCreateData());
+		creator.setUrl(url);
+		creator.createLoader.setChangeData(this._addChangeData.clone());
 		
 		creatorItem.getType("createdItem").idSource.addChangeCommand(Wprr.commands.callFunction(this, this._setUrlForInitialLoad, [creatorItem]));
 		creatorItem.getType("initialData").addChangeCommand(Wprr.commands.callFunction(this, this._addCreatedRow, [Wprr.sourceStatic(creatorItem, "initialData.value")]));

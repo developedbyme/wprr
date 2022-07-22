@@ -138,8 +138,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationAdded(aId) {
-		//console.log("_relationAdded");
-		//console.log(aId, this);
+		console.log("_relationAdded");
+		console.log(aId, this);
 		
 		if(aId) {
 			let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
@@ -172,6 +172,79 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		let filter = Wprr.objectPath(this.item, "activeFilter.linkedItem.controller");
 		
 		filter.updateFilter();
+	}
+	
+	createRelation(aRelatedItemId) {
+		let project = Wprr.objectPath(this.item.group, "project.controller");
+		
+		let baseObjectId = Wprr.objectPath(this.item, "editedItem.id"); 
+		let direction = Wprr.objectPath(this.item, "direction.value");
+		let connectionType = Wprr.objectPath(this.item, "connectionType.id").split("/").pop(); 
+		
+		let loader = project.getEditLoader(baseObjectId);
+		if(direction === "incoming") {
+			loader.changeData.addIncomingRelation(aRelatedItemId, connectionType, false);
+		}
+		else if(direction === "outgoing") {
+			loader.changeData.addOutgoingRelation(aRelatedItemId, connectionType, false);
+		}
+		
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.relationId")]));
+		
+		loader.load();
+	}
+	
+	_relationCreated(aId, aRelationId) {
+		console.log("_relationCreated");
+		console.log(aId, aRelationId);
+		
+		let itemId = Wprr.objectPath(this.item, "editedItem.id");
+		let direction = Wprr.objectPath(this.item, "direction.value");
+		
+		let newItem = this.item.group.getItem(aId);
+		let relationItem = this.item.group.getItem(aRelationId);
+		let item = this.item.group.getItem(itemId);
+		console.log(newItem, relationItem, item, direction);
+		
+		console.log(1);
+		if(direction === "incoming") {
+			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
+			
+			relationItem.addSingleLink("from", newItem.id);
+			relationItem.addSingleLink("to", item.id);
+		}
+		else if(direction === "outgoing") {
+			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
+			
+			relationItem.addSingleLink("to", newItem.id);
+			relationItem.addSingleLink("from", item.id);
+		}
+		
+		console.log(2);
+		let connectionType = Wprr.objectPath(this.item, "connectionType.id");
+		relationItem.addSingleLink("type", connectionType);
+		
+		console.log(3);
+		relationItem.setValue("startAt", moment().unix());
+		relationItem.setValue("endAt", -1);
+		relationItem.setValue("postStatus", "draft");
+		
+		console.log(4);
+		if(direction === "incoming") {
+			console.log(item.getLinks("incomingRelations"), relationItem.id);
+			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
+		}
+		else {
+			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
+		}
+		
+		console.log(5);
+		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+		
+		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();
+		
+		postStatusEditor.item.setValue("value", "private");
+		
 	}
 	
 	toJSON() {
