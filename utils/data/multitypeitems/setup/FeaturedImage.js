@@ -10,7 +10,7 @@ export default class FeaturedImage extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("FeaturedImage::prepare");
+		//console.log("FeaturedImage::prepare");
 		
 		aItem.requireValue("hasData/featuredImage", false);
 		aItem.requireSingleLink("image");
@@ -19,8 +19,8 @@ export default class FeaturedImage extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("FeaturedImage::setup");
-		console.log(aData);
+		//console.log("FeaturedImage::setup");
+		//console.log(aData);
 		
 		aItem.addSingleLink("image", aData["image"]);
 		aItem.setValue("hasData/featuredImage", true);

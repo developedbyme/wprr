@@ -28,7 +28,10 @@ export default class SetValueCommand extends BaseCommand {
 		let additionalData = this.getInput("additionalData");
 		
 		if(element) {
-			if(element.updateValue) {
+			if(element instanceof Wprr.utils.ValueSourceData) {
+				element.value = value;
+			}
+			else if(element.updateValue) {
 				element.updateValue(valueName, value, additionalData);
 			}
 			else {

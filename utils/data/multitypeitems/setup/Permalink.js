@@ -10,7 +10,7 @@ export default class Permalink extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Permalink::prepare");
+		//console.log("Permalink::prepare");
 		
 		aItem.requireValue("hasData/permalink", false);
 		aItem.requireValue("permalink", null);

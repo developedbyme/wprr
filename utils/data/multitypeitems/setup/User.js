@@ -10,7 +10,7 @@ export default class User extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("User::prepare");
+		//console.log("User::prepare");
 		
 		aItem.requireValue("hasData/user", false);
 		aItem.requireValue("name", null);

@@ -10,7 +10,7 @@ export default class Image extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Image::prepare");
+		//console.log("Image::prepare");
 		
 		aItem.requireValue("hasData/image", false);
 		if(!aItem.hasType("sizes")) {

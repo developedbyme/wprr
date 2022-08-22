@@ -20,8 +20,8 @@ export default class OrderItems extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("OrderItems::setup");
-		console.log(aData);
+		//console.log("OrderItems::setup");
+		//console.log(aData);
 		
 		let group = aItem.group;
 		

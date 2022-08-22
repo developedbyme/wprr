@@ -10,7 +10,7 @@ export default class SubscriptionDates extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("SubscriptionDates::prepare");
+		//console.log("SubscriptionDates::prepare");
 		
 		aItem.requireValue("hasData/subscriptionDates", false);
 		aItem.requireValue("startDate", null);

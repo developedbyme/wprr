@@ -50,7 +50,12 @@ export default class OptionsStepCommand extends BaseCommand {
 		
 		let additionalData = this.getInput("additionalData");
 		
-		element.updateValue(valueName, selectedValue, additionalData);
+		if(element instanceof Wprr.utils.ValueSourceData) {
+			element.value = selectedValue;
+		}
+		else {
+			element.updateValue(valueName, selectedValue, additionalData);
+		}
 	}
 	
 	static create(aElement = null, aValueName = null, aValue = null, aAlternateValues = null, aStep = null, aAditionalData = null) {

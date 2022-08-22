@@ -22,6 +22,7 @@ export default class Project {
 		session.requireSingleLink("user");
 		session.setValue("cacheKey", cacheKey);
 		session.requireValue("restNonce");
+		session.requireValue("checkedLoginStatus", false);
 		
 		let cart = this._items.createInternalItem();
 		session.addSingleLink("cart", cart.id);
@@ -55,12 +56,18 @@ export default class Project {
 		let itemsSetupItem = this._items.getItem("itemsSetup");
 		let typeLinks = itemsSetupItem.getNamedLinks("types");
 		
+		this._items.addSetup("id", Wprr.utils.data.multitypeitems.setup.None.prepare, Wprr.utils.data.multitypeitems.setup.None.setup);
+		this._items.addSetup("preview", Wprr.utils.data.multitypeitems.setup.None.prepare, Wprr.utils.data.multitypeitems.setup.None.setup);
+		
 		this._items.addSetup("dataRangeLoader", Wprr.utils.data.multitypeitems.setup.DataRangeLoader.prepare, Wprr.utils.data.multitypeitems.setup.DataRangeLoader.setup);
 		this._items.addSetup("featuredImage", Wprr.utils.data.multitypeitems.setup.FeaturedImage.prepare, Wprr.utils.data.multitypeitems.setup.FeaturedImage.setup);
 		this._items.addSetup("image", Wprr.utils.data.multitypeitems.setup.Image.prepare, Wprr.utils.data.multitypeitems.setup.Image.setup);
 		this._items.addSetup("permalink", Wprr.utils.data.multitypeitems.setup.Permalink.prepare, Wprr.utils.data.multitypeitems.setup.Permalink.setup);
 		this._items.addSetup("taxonomyTerm", Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.prepare, Wprr.utils.data.multitypeitems.setup.TaxonomyTerm.setup);
 		this._items.addSetup("menuItem", Wprr.utils.data.multitypeitems.setup.MenuItem.prepare, Wprr.utils.data.multitypeitems.setup.MenuItem.setup);
+		this._items.addSetup("menuItem/post_type", Wprr.utils.data.multitypeitems.setup.menuitemtypes.PostType.prepare, Wprr.utils.data.multitypeitems.setup.menuitemtypes.PostType.setup);
+		this._items.addSetup("menuItem/custom", Wprr.utils.data.multitypeitems.setup.menuitemtypes.Custom.prepare, Wprr.utils.data.multitypeitems.setup.menuitemtypes.Custom.setup);
+		this._items.addSetup("menuItem/taxonomy", Wprr.utils.data.multitypeitems.setup.menuitemtypes.Taxonomy.prepare, Wprr.utils.data.multitypeitems.setup.menuitemtypes.Taxonomy.setup);
 		this._items.addSetup("relation", Wprr.utils.data.multitypeitems.setup.Relation.prepare, Wprr.utils.data.multitypeitems.setup.Relation.setup);
 		this._items.addSetup("relations", Wprr.utils.data.multitypeitems.setup.Relations.prepare, Wprr.utils.data.multitypeitems.setup.Relations.setup);
 		this._items.addSetup("objectTypes", Wprr.utils.data.multitypeitems.setup.ObjectTypes.prepare, Wprr.utils.data.multitypeitems.setup.ObjectTypes.setup);
@@ -380,9 +387,17 @@ export default class Project {
 			session.getType("user").setId("user" + userId);
 		}
 		
+		session.setValue("checkedLoginStatus", true);
+		
 		let storeController = this._mainReferences.getObject("redux/store/wprrController");
 		this._mainReferences.addObject("wprr/userData", aData);
 		storeController.setUser(aData);
+		
+		return this;
+	}
+	
+	setUser(aUserData, aRestNonce) {
+		this.setUserData({"restNonce": aRestNonce, "roles": aUserData["roles"], "data": aUserData});
 		
 		return this;
 	}

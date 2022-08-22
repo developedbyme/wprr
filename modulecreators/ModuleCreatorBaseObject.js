@@ -185,13 +185,10 @@ export default class ModuleCreatorBaseObject {
 		this._referenceHolder.addObject("redux/store/mRouterController", this._storeController);
 		this._referenceHolder.addObject("redux/store/wprrController", this._storeController);
 		
-		console.log(aData.userData);
-		
 		if(aData.userData) {
 			this._project.setUserData(aData.userData);
 		}
 		
-		//this._referenceHolder.addObject("wprr/userData", aData.userData);
 		this._referenceHolder.addObject("wprr/settings", aData.settings);
 		
 		this._referenceHolder.addObject("wprr/moduleData", aModuleData);

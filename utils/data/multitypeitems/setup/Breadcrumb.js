@@ -10,7 +10,7 @@ export default class Breadcrumb extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Breadcrumb::prepare");
+		//console.log("Breadcrumb::prepare");
 		
 		aItem.requireValue("hasData/breadcrumb", false);
 		aItem.getLinks("breadcrumb");
@@ -19,7 +19,7 @@ export default class Breadcrumb extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log(aData);
+		//console.log(aData);
 		
 		aItem.getLinks("breadcrumb").setItems(aData["breadcrumb"]);
 		aItem.setValue("hasData/breadcrumb", true);

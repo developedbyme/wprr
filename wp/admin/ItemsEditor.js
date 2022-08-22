@@ -328,6 +328,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_setupItem(aItem, aData) {
+		console.log("_setupItem");
+		console.log(aItem, aData);
 		
 		let item = aItem;
 		
@@ -469,6 +471,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		{
 			let currentArray = this._settings["postFields"];
+			console.log(currentArray);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentSettings = currentArray[i];

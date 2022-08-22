@@ -34,7 +34,10 @@ export default class StepValueCommand extends BaseCommand {
 		let newValue = stepFunction.call(this, value, step, this);
 		
 		if(element) {
-			if(element.updateValue) {
+			if(element instanceof Wprr.utils.ValueSourceData) {
+				element.value = newValue;
+			}
+			else if(element.updateValue) {
 				element.updateValue(valueName, newValue, additionalData);
 			}
 			else {

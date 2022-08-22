@@ -10,7 +10,7 @@ export default class Product extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Product::prepare");
+		//console.log("Product::prepare");
 		
 		aItem.requireValue("hasData/product", false);
 		aItem.requireValue("price", null);
