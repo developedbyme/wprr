@@ -11,6 +11,12 @@ export default class ItemsTable extends MultiTypeItemConnection {
 		
 	}
 	
+	setup() {
+		this.item.addType("controller", this);
+		
+		return this;
+	}
+	
 	createColumn(aId, aType, aSettings = null) {
 		
 		let linkId = this.item.group.generateNextInternalId();

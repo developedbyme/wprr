@@ -35,7 +35,7 @@ export default class SetObjectProperties extends BaseObject {
 	}
 	
 	_updateObject() {
-		let object = this.baseObject;
+		let object = Wprr.utils.object.copyViaJson(this.baseObject);
 		//METODO: add option to copy object
 		
 		let currentArray = this.propertyNames;

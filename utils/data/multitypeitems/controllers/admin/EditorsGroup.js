@@ -18,6 +18,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		this._saveDataFieldCommand = Wprr.commands.callFunction(this, this._saveDataField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveFieldCommand = Wprr.commands.callFunction(this, this._saveField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
+		this._saveMetaFieldCommand = Wprr.commands.callFunction(this, this._saveMetaField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 	}
 	
 	setup() {
@@ -141,7 +142,6 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			
 			let item = items.getItem(aId);
 			
-			
 			let value = item.getValue("postStatus");
 			
 			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
@@ -155,6 +155,41 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			newEditorItem.setValue("name", "status");
 			
 			newEditorItem.setValue("saveCommands", [this._saveFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getMetaEditor(aId, aMetaKey, aFieldName = null) {
+		console.log("getMetaEditor");
+		console.log(aId);
+		
+		let linkName = "meta" + aId + "-" + aMetaKey;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			let fieldName = aFieldName ? aFieldName : aMetaKey;
+			
+			let value = item.getValue(fieldName);
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource(fieldName).connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", aMetaKey);
+			
+			newEditorItem.setValue("saveCommands", [this._saveMetaFieldCommand]);
 			
 			editors.addItem(linkName, newEditorItem.id);
 			this.addEditor(newEditorItem.id);
@@ -246,6 +281,12 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		}
 	}
 	
+	saveEditor(aEditor) {
+		let saveOperation = Wprr.utils.data.multitypeitems.controllers.admin.SaveOperation.create(this.item.group.createInternalItem());
+		aEditor.getSaveData(saveOperation);
+		saveOperation.load();
+	}
+	
 	toJSON() {
 		return "[EditorsGroup id=" + this._id + "]";
 	}
@@ -272,6 +313,18 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		let editLoader = aSaveOperation.getEditLoader(itemId);
 		editLoader.changeData.setField(aItem.getValue("name"), value, comment);
+		
+		let editor = aItem.getType("valueEditor");
+		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	_saveMetaField(aItem, aSaveOperation) {
+		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
+		let value = aItem.getValue("value");
+		let comment = aItem.getValue("comment");
+		
+		let editLoader = aSaveOperation.getEditLoader(itemId);
+		editLoader.changeData.setMeta(aItem.getValue("name"), value, comment);
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));

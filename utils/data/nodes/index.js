@@ -14,6 +14,7 @@ export {default as PartOfArray} from "./PartOfArray";
 export {default as GetLinks} from "./GetLinks";
 export {default as SingleValueInArray} from "./SingleValueInArray";
 export {default as ValueSources} from "./ValueSources";
+export {default as Pagination} from "./Pagination";
 
 import * as css from "./css";
 export {css as css};

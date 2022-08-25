@@ -59,7 +59,13 @@ export default class ValueEditor extends MultiTypeItemConnection {
 	}
 	
 	save() {
-		//METODO
+		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+		
+		editorsGroup.saveEditor(this);
+	}
+	
+	cancelEdit() {
+		this.value = this.item.getValue("storedValue");
 	}
 	
 	saved(aSavedValue) {

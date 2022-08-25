@@ -4,6 +4,7 @@ import moment from "moment";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 import SingleRelationEditor from "./SingleRelationEditor";
+import MultipleRelationsEditor from "./MultipleRelationsEditor";
 
 export default class RelationEditor extends MultiTypeItemConnection {
 	
@@ -29,6 +30,16 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		}
 		
 		return Wprr.objectPath(this.item, "singleEditor.linkedItem.controller");
+	}
+	
+	get multipleEditor() {
+		if(!this.item.hasType("multipleEditor")) {
+			let singleEditor = this.item.addNode("multipleEditor", new MultipleRelationsEditor());
+			singleEditor.item.addSingleLink("relationEditor", this.item.id);
+			singleEditor.item.getLinks("activeRelations").input(this.item.getLinks("activeRelations"));
+		}
+		
+		return Wprr.objectPath(this.item, "multipleEditor.linkedItem.controller");
 	}
 	
 	_filterActiveRelations(aItems) {

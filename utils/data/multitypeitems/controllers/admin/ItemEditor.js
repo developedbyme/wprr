@@ -61,6 +61,10 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return this.editorsGroup.getPostStatusEditor(this.item.getType("editedItem").id);
 	}
 	
+	getMetaEditor(aMetaKey, aFieldName = null) {
+		return this.editorsGroup.getMetaEditor(this.item.getType("editedItem").id, aMetaKey, aFieldName);
+	}
+	
 	addEditorsForFields() {
 		//console.log("addEditorsForFields");
 		

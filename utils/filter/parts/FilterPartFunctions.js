@@ -109,13 +109,25 @@ export default class FilterPartFunctions  {
 			case "!=":
 				return (aA != aB);
 			case "inArray":
-				return (aB.indexOf(aA) !== -1);
+				if(aB) {
+					return (aB.indexOf(aA) !== -1);
+				}
+				return false;
 			case "notInArray":
-				return (aB.indexOf(aA) === -1);
+				if(aB) {
+					return (aB.indexOf(aA) === -1);
+				}
+				return true;
 			case "arrayContains":
-				return (aA.indexOf(aB) !== -1);
+				if(aA) {
+					return (aA.indexOf(aB) !== -1);
+				}
+				return false;
 			case "arrayDoesNotContain":
-				return (aA.indexOf(aB) === -1);
+				if(aA) {
+					return (aA.indexOf(aB) === -1);
+				}
+				return true;
 			case "anyArrayOverlap":
 				return Wprr.utils.array.containsAny(aA, aB);
 			case "caseInsensitiveEqual":

@@ -1,0 +1,200 @@
+import Wprr from "wprr/Wprr";
+import React from "react";
+import moment from "moment";
+
+import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
+
+export default class MultipleRelationsEditor extends MultiTypeItemConnection {
+	
+	constructor() {
+		//console.log("MultipleRelationsEditor::constructor");
+		
+		super();
+		
+		
+	}
+	
+	setup() {
+		
+		this.item.addType("controller", this);
+		this.item.requireSingleLink("relationEditor");
+		
+		this.item.getLinks("activeRelations").idsSource.addChangeCommand(Wprr.commands.callFunction(this, this._relationsUpdated));
+		this.item.getLinks("activeItems").idsSource.addChangeCommand(Wprr.commands.callFunction(this, this._itemUpdated));
+		
+		return this;
+	}
+	
+	get activeItemsSource() {
+		return this.item.getLinks("activeItems").idsSource;
+	}
+	
+	_createRelation(aItemId) {
+		console.log("_createRelation");
+		
+		let project = Wprr.objectPath(this.item.group, "project.controller");
+		
+		let baseObjectId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id"); 
+		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
+		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id").split("/").pop(); 
+		let itemId = aItemId;
+		let relations = this.item.getLinks("activeRelations").items;
+		
+		let loader = project.getEditLoader(baseObjectId);
+		if(direction === "incoming") {
+			loader.changeData.addIncomingRelation(itemId, connectionType, false);
+		}
+		else if(direction === "outgoing") {
+			loader.changeData.addOutgoingRelation(itemId, connectionType, false);
+		}
+	
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [itemId, Wprr.sourceEvent("data.relationId")]));
+	
+		loader.load();
+	}
+	
+	_relationCreated(aId, aRelationId) {
+		console.log("_relationCreated");
+		console.log(aId, aRelationId);
+		
+		let itemId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id");
+		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
+		
+		let newItem = this.item.group.getItem(aId);
+		let relationItem = this.item.group.getItem(aRelationId);
+		let item = this.item.group.getItem(itemId);
+		
+		if(direction === "incoming") {
+			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
+			
+			relationItem.addSingleLink("from", newItem.id);
+			relationItem.addSingleLink("to", item.id);
+		}
+		else if(direction === "outgoing") {
+			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
+			
+			relationItem.addSingleLink("to", newItem.id);
+			relationItem.addSingleLink("from", item.id);
+		}
+		
+		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id");
+		relationItem.addSingleLink("type", connectionType);
+		
+		relationItem.setValue("startAt", moment().unix());
+		relationItem.setValue("endAt", -1);
+		relationItem.setValue("postStatus", "draft");
+		
+		if(direction === "incoming") {
+			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
+		}
+		else {
+			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
+		}
+		
+		let editorsGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
+		
+		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();
+		
+		postStatusEditor.item.setValue("value", "private");
+	}
+	
+	_itemUpdated() {
+		console.log("_itemUpdated");
+		console.log(this);
+		
+		if(this._isUpdating) {
+			return;
+		}
+		
+		this._isUpdating = true;
+		
+		let currentActiveIds = this._getActiveItemsFromRelations();
+		let activeIds = this.item.getLinks("activeItems").ids;
+		
+		let itemsToCreate = Wprr.utils.array.removeValues(activeIds, currentActiveIds);
+		let itemsToRemove = Wprr.utils.array.removeValues(currentActiveIds, activeIds);
+		
+		let relationsToRemove = this._getRelationsFromItems(itemsToRemove);
+		
+		this._endRelations(relationsToRemove);
+		
+		{
+			let currentArray = itemsToCreate;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				this._createRelation(currentArray[i]);
+			}
+		}
+		
+		this._isUpdating = false;
+	}
+	
+	_relationsUpdated() {
+		console.log("_relationsUpdated");
+		console.log(this);
+		
+		let newIds = this._getActiveItemsFromRelations();
+		
+		this.item.getLinks("activeItems").setItems(newIds);
+		
+		//METODO: this will need to handle pending creations
+	}
+	
+	_getActiveItemsFromRelations() {
+		
+		let returnArray = new Array();
+		
+		let relations = this.item.getLinks("activeRelations").items;
+		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
+		
+		let currentArray = relations;
+		let currentArrayLength = currentArray.length;
+		
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentRelation = currentArray[i];
+			let linkName = "to.id";
+			if(direction === "incoming") {
+				linkName = "from.id";
+			}
+			
+			returnArray.push(Wprr.objectPath(currentRelation, linkName));
+		}
+		
+		return returnArray;
+	}
+	
+	_getRelationsFromItems(aIds) {
+		let relations = this.item.getLinks("activeRelations").items;
+		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
+		
+		let linkName = "to.id";
+		if(direction === "incoming") {
+			linkName = "from.id";
+		}
+		
+		return Wprr.utils.array.getItemsBy(linkName, aIds, relations, "inArray");
+	}
+	
+	_endRelations(aRelations) {
+		//console.log("_endRelations");
+		//console.log(aRelations);
+		
+		let currentTime = moment().unix();
+		let editorsGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
+		
+		let currentArray = aRelations;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentRelation = currentArray[i];
+			let fieldEditor = editorsGroup.getItemEditor(currentRelation.id).getFieldEditor("endAt");
+			let endTime = fieldEditor.value;
+			if(endTime === -1 || endTime > currentTime) {
+				fieldEditor.valueSource.value = currentTime;
+			}
+		}
+	}
+	
+	toJSON() {
+		return "[MultipleRelationsEditor id=" + this._id + "]";
+	}
+}

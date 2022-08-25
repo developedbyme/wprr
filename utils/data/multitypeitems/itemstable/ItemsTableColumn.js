@@ -66,6 +66,22 @@ export default class ItemsTableColumn extends MultiTypeItemConnection {
 		);
 		
 		this.item.addType("element", element);
+		
+		return this;
+	}
+	
+	setElement(aElement) {
+		let columnId = this.item.getType("columnId");
+		
+		let element = React.createElement(Wprr.SelectItem, {"key": this.item.getType("columnId"), "id": this.item.id, "as": "column"},
+			React.createElement(Wprr.ReferenceInjection, {"injectData": {"cellId": Wprr.sourceReference("column", "columnId"), "cellSettings": Wprr.sourceReference("column", "settings")}},
+				aElement
+			)
+		);
+
+		this.item.addType("element", element);
+		
+		return this;
 	}
 	
 	toJSON() {

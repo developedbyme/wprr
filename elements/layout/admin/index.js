@@ -8,3 +8,6 @@ export {item};
 
 import * as batch from "./batch/index.js";
 export {batch};
+
+import * as editorsgroup from "./editorsgroup/index.js";
+export {editorsgroup};
