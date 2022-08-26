@@ -14,6 +14,32 @@ export default class ItemsTable extends MultiTypeItemConnection {
 	setup() {
 		this.item.addType("controller", this);
 		
+		let activeList = this.item.addNode("activeList", new Wprr.utils.data.multitypeitems.controllers.list.ActiveList());
+		activeList.item.getLinks("items").input(this.item.getLinks("columns"));
+		this.item.getLinks("activeRows").input(activeList.item.getLinks("sortedRows"));
+		
+		{
+			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": "row"},
+				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
+					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "cellElement")})
+				),
+				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap"})
+			);
+	
+			this.item.setValue("rowElement", element);
+		}
+		
+		{
+			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": "header-row"},
+				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
+					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "headerCellElement")})
+				),
+				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap"})
+			);
+	
+			this.item.setValue("headerRowElement", element);
+		}
+		
 		return this;
 	}
 	
@@ -29,50 +55,24 @@ export default class ItemsTable extends MultiTypeItemConnection {
 		column.setup(aId, aType, aSettings);
 		
 		this.item.getLinks("columns").addItem(column.item.id);
-		this.item.getLinks("activeColumns").addItem(column.item.id);
 		
 		return column;
 	}
 	
 	activateColumnById(aColumnId) {
+		let activeList = Wprr.objectPath(this.item, "activeList.linkedItem.controller");
 		
-		let column = Wprr.utils.array.getItemBy("columnId", aColumnId, this.item.getLinks("columns").linkedItems);
-		
-		this._internalLink_activateColumn(column);
-		column._internalLink_activate();
+		activeList.activteRowBy("forItem.linkedItem.columnId.value", aColumnId)
 		
 		return this;
 	}
 	
-	_internalLink_activateColumn(aColumn) {
-		this.getLinks("activeColumns").addItem(aColumn.item.id);
-		//METODO: sort according to colums
-	}
-	
 	deactivateColumnById(aColumnId) {
+		let activeList = Wprr.objectPath(this.item, "activeList.linkedItem.controller");
 		
-	}
-	
-	_getColumnElement(aId) {
-		//console.log("_getColumnElement");
-		//console.log(aId);
+		activeList.deactivteRowBy("forItem.linkedItem.columnId.value", aColumnId)
 		
-		let column = this.item.group.getItem(aId);
-		
-		if(!column) {
-			return null;
-		}
-		
-		return column.getType("element");
-	}
-	
-	createRowElement() {
-		
-		let itemMarkup = React.createElement(Wprr.InsertElement, {"element": Wprr.sourceFunction(this, this._getColumnElement, [Wprr.sourceReference("loop/item")])});
-		
-		let element = Wprr.Loop.createMarkupLoop(this.item.getLinks("activeColumns").idsSource, itemMarkup, null, React.createElement(Wprr.FlexRow, {"className": "small-item-spacing flex-no-wrap"}));
-		
-		this.item.addType("rowElement", element);
+		return this;
 	}
 	
 	toJSON() {

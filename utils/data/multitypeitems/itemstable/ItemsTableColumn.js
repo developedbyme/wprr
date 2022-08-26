@@ -21,65 +21,63 @@ export default class ItemsTableColumn extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	setup(aColumnId, aType, aSettings = null) {
-		this.item.addType("columnId", aColumnId);
-		this.item.addType("type", aType);
-		this.item.addType("settings", aSettings);
-		this.item.addType("active", true);
+	setup(aColumnId, aName = null, aSettings = null) {
+		this.item.setValue("columnId", aColumnId);
+		this.item.setValue("name", aName);
+		this.item.setValue("settings", aSettings);
+		
+		this.item.setValue("active", true);
+		
+		this.item.setValue("cellClasses", "standard-cell-width");
+		
+		this.item.requireValue("element", null);
+		{
+			let element = React.createElement(Wprr.BaseObject, {"className": Wprr.sourceCombine("cell", " ", "cell-in-column-", this.item.getValueSource("columnId"), " ", this.item.getValueSource("cellClasses")), "sourceUpdates": [this.item.getValueSource("columnId"), this.item.getValueSource("type"), this.item.getValueSource("cellClasses")]},
+				React.createElement(Wprr.InsertElement, {"element": this.item.getValueSource("element")})
+			);
+
+			this.item.setValue("cellElement", element);
+		}
+		this.item.requireValue("headerElement", React.createElement("div", {"className": "standard-field-label"}, React.createElement(Wprr.SourcedText, {"text": Wprr.sourceReference("column", "name")})));
+		{
+			let element = React.createElement(Wprr.BaseObject, {"className": Wprr.sourceCombine("cell", " ", "cell-in-column-", this.item.getValueSource("columnId"), " ", this.item.getValueSource("cellClasses")), "sourceUpdates": [this.item.getValueSource("columnId"), this.item.getValueSource("type"), this.item.getValueSource("cellClasses")]},
+				React.createElement(Wprr.InsertElement, {"element": this.item.getValueSource("headerElement")})
+			);
+
+			this.item.setValue("headerCellElement", element);
+		}
+		
+		return this;
+	}
+	
+	setCellClasses(aClasses) {
+		this.item.setValue("cellClasses", aClasses);
 		
 		return this;
 	}
 	
 	activate() {
-		this.table._internalLink_activateColumn(this);
-		this._internalLink_activate();
+		this.table.activateColumnById(this.item.getValue("columnId"));
 		
 		return this;
 	}
 	
-	_internalLink_activate() {
-		this.item.addType("active", true);
-		//METODO: this should be an update to not have warnings
-	}
-	
-	createElement(aCellTypes, aDefaultType = "standard") {
-		
-		let columnId = this.item.getType("columnId");
-		let type = this.item.getType("type");
-		
-		let cellElement;
-		if(aCellTypes[type]) {
-			cellElement = React.createElement(aCellTypes[type], {"className": "field-" + columnId + " wanted-field-type-" + type});
-		}
-		else if(aCellTypes[aDefaultType]) {
-			cellElement = React.createElement(aCellTypes[aDefaultType], {"className": "field-" + columnId + " wanted-field-type-" + type});
-		}
-		else {
-			console.error("No field type named " + type + " and no default type " + aDefaultType);
-			cellElement = React.createElement("div", {"className": "field-" + columnId + "field-not-found wanted-field-type-" + type});
-		}
-		
-		let element = React.createElement(Wprr.SelectItem, {"key": this.item.getType("columnId"), "id": this.item.id, "as": "column"},
-			React.createElement(Wprr.ReferenceInjection, {"injectData": {"cellId": Wprr.sourceReference("column", "columnId"), "cellSettings": Wprr.sourceReference("column", "settings")}},
-				cellElement
-			)
-		);
-		
-		this.item.addType("element", element);
+	deactivate() {
+		this.table.deactivateColumnById(this.item.getValue("columnId"));
 		
 		return this;
 	}
 	
 	setElement(aElement) {
-		let columnId = this.item.getType("columnId");
 		
-		let element = React.createElement(Wprr.SelectItem, {"key": this.item.getType("columnId"), "id": this.item.id, "as": "column"},
-			React.createElement(Wprr.ReferenceInjection, {"injectData": {"cellId": Wprr.sourceReference("column", "columnId"), "cellSettings": Wprr.sourceReference("column", "settings")}},
-				aElement
-			)
-		);
-
-		this.item.addType("element", element);
+		this.item.setValue("element", aElement);
+		
+		return this;
+	}
+	
+	setHeaderElement(aElement) {
+		
+		this.item.setValue("headerElement", aElement);
 		
 		return this;
 	}

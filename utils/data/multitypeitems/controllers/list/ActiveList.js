@@ -38,6 +38,7 @@ export default class ActiveList extends MultiTypeItemConnection {
 		
 		this.item.getLinks("rows").input(mappedList.item.getLinks("mappedItems"));
 		this.item.getLinks("activeRows");
+		this.item.getLinks("activeItems");
 		
 		let sortedList = this.item.addNode("sortedList", new Wprr.utils.data.multitypeitems.controllers.list.SortedList());
 		sortedList.setItems(this.item.getLinks("activeRows"));
@@ -53,19 +54,31 @@ export default class ActiveList extends MultiTypeItemConnection {
 	_itemAdded(aId) {
 		console.log("ActiveList::_itemAdded");
 		let item = this.item.group.getItem(aId);
+		let forItemId = item.getSingleLink("forItem").id;
 		
 		let active = this.item.getValue("activteWhenAdded");
 		
 		item.setValue("active", active);
 		
-		let inArrayCondition = item.addNode("inArrayCondition", new Wprr.utils.data.nodes.InArrayCondition());
+		{
+			let inArrayCondition = item.addNode("inArrayCondition", new Wprr.utils.data.nodes.InArrayCondition());
 		
-		inArrayCondition.sources.get("array").input(this.item.getLinks("activeRows"));
-		inArrayCondition.sources.get("value").input(aId);
-		inArrayCondition.sources.get("isInArray").input(item.getType("active"));
+			inArrayCondition.sources.get("array").input(this.item.getLinks("activeRows"));
+			inArrayCondition.sources.get("value").input(aId);
+			inArrayCondition.sources.get("isInArray").input(item.getType("active"));
+		}
+		
+		{
+			let inArrayCondition = item.addNode("inArrayConditionItem", new Wprr.utils.data.nodes.InArrayCondition());
+		
+			inArrayCondition.sources.get("array").input(this.item.getLinks("activeItems"));
+			inArrayCondition.sources.get("value").input(forItemId);
+			inArrayCondition.sources.get("isInArray").input(item.getType("active"));
+		}
 		
 		if(active) {
 			this.item.getLinks("activeRows").addUniqueItem(aId);
+			this.item.getLinks("activeItems").addUniqueItem(aId);
 		}
 	}
 	
@@ -78,15 +91,15 @@ export default class ActiveList extends MultiTypeItemConnection {
 		console.log("activteRowBy");
 		
 		let items = Wprr.utils.array.getItemsBy(aField, aValue, this.item.getLinks("rows").items, aCompareType);
-		this.item.getLinks("rows").addUniqueItems(Wprr.utils.array.mapField(items, "id"));
+		this.item.getLinks("activeRows").addUniqueItems(Wprr.utils.array.mapField(items, "id"));
 	}
 	
 	deactivteRowBy(aField, aValue, aCompareType = "==") {
 		console.log("deactivteRowBy");
 		
 		let items = Wprr.utils.array.getItemsBy(aField, aValue, this.item.getLinks("rows").items, aCompareType);
-		let newItems = Wprr.utils.array.removeValues([].concat(this.item.getLinks("rows").ids), Wprr.utils.array.mapField(items, "id"));
-		this.item.getLinks("rows").setItems(newItems);
+		let newItems = Wprr.utils.array.removeValues([].concat(this.item.getLinks("activeRows").ids), Wprr.utils.array.mapField(items, "id"));
+		this.item.getLinks("activeRows").setItems(newItems);
 	}
 	
 	toJSON() {
