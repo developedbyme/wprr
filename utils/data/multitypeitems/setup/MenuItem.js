@@ -23,6 +23,11 @@ export default class MenuItem extends BaseObject {
 		aItem.getLinks("children");
 		aItem.getLinks("orderedChildren");
 		
+		let first = aItem.addNode("labelSelection", new Wprr.utils.data.nodes.logic.First());
+		
+		first.addValues(aItem.getValueSource("text"), aItem.getValueSource("defaultText"));
+		aItem.getValueSource("label").input(first.sources.get("output"));
+		
 		return this;
 	}
 	

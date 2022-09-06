@@ -2,7 +2,6 @@ import Wprr from "wprr/Wprr";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
-import ReplaceText from "./ReplaceText";
 import LoadRange from "./LoadRange";
 
 // import LoadDataRange from "./LoadDataRange";

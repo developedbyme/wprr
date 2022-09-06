@@ -13,7 +13,7 @@ export default class Field extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		
 		let cellSwitchableArea = Wprr.creators.SwitchableAreaCreator.createFromClasses(
 			Wprr.sourceFirst(

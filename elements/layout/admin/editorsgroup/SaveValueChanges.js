@@ -10,7 +10,7 @@ export default class SaveValueChanges extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("SaveValueChanges::_renderMainElement");
+		//console.log("SaveValueChanges::_renderMainElement");
 		
 		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
 		

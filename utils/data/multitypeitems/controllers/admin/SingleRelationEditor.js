@@ -31,7 +31,7 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_createRelation() {
-		console.log("_createRelation");
+		//console.log("_createRelation");
 		
 		let project = Wprr.objectPath(this.item.group, "project.controller");
 		
@@ -61,8 +61,8 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationCreated(aId, aRelationId) {
-		console.log("_relationCreated");
-		console.log(aId, aRelationId);
+		//console.log("_relationCreated");
+		//console.log(aId, aRelationId);
 		
 		let itemId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id");
 		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
@@ -106,12 +106,10 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_itemUpdated() {
-		console.log("_itemUpdated");
-		console.log(this);
+		//console.log("_itemUpdated");
+		//console.log(this);
 		
 		let itemId = this.item.getType("activeItem").id;
-		
-		console.log(itemId);
 		
 		let currentActiveId = this._getActiveItemFromRelations();
 		if(itemId !== currentActiveId) {
@@ -120,8 +118,8 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationsUpdated() {
-		console.log("_relationsUpdated");
-		console.log(this);
+		//console.log("_relationsUpdated");
+		//console.log(this);
 		
 		let newId = this._getActiveItemFromRelations();
 		

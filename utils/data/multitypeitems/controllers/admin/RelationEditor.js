@@ -127,7 +127,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	setupSelection(aItemId, aDirection, aConnectionType, aItemType) {
-		console.log("setupSelection");
+		//console.log("setupSelection");
 		let item = this.item.group.getItem(aItemId);
 		
 		this.item.addSingleLink("editedItem", aItemId);
@@ -149,8 +149,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationAdded(aId) {
-		console.log("_relationAdded");
-		console.log(aId, this);
+		//console.log("_relationAdded");
+		//console.log(aId, this);
 		
 		if(aId) {
 			let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
@@ -169,10 +169,10 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationRemoved(aId) {
-		console.log("_relationRemoved");
+		//console.log("_relationRemoved");
 		
 		if(aId) {
-			
+			//METODO
 		}
 		
 	}
@@ -206,8 +206,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationCreated(aId, aRelationId) {
-		console.log("_relationCreated");
-		console.log(aId, aRelationId);
+		//console.log("_relationCreated");
+		//console.log(aId, aRelationId);
 		
 		let itemId = Wprr.objectPath(this.item, "editedItem.id");
 		let direction = Wprr.objectPath(this.item, "direction.value");
@@ -215,9 +215,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		let newItem = this.item.group.getItem(aId);
 		let relationItem = this.item.group.getItem(aRelationId);
 		let item = this.item.group.getItem(itemId);
-		console.log(newItem, relationItem, item, direction);
 		
-		console.log(1);
 		if(direction === "incoming") {
 			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
 			
@@ -231,16 +229,13 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			relationItem.addSingleLink("from", item.id);
 		}
 		
-		console.log(2);
 		let connectionType = Wprr.objectPath(this.item, "connectionType.id");
 		relationItem.addSingleLink("type", connectionType);
 		
-		console.log(3);
 		relationItem.setValue("startAt", moment().unix());
 		relationItem.setValue("endAt", -1);
 		relationItem.setValue("postStatus", "draft");
 		
-		console.log(4);
 		if(direction === "incoming") {
 			console.log(item.getLinks("incomingRelations"), relationItem.id);
 			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
@@ -249,7 +244,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
 		}
 		
-		console.log(5);
 		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
 		
 		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();

@@ -8,3 +8,4 @@ export {default as MappedHierarchy} from "./MappedHierarchy";
 export {default as CombinationList} from "./CombinationList";
 export {default as MappedDataList} from "./MappedDataList";
 export {default as ActiveList} from "./ActiveList";
+export {default as OptionsFromItems} from "./OptionsFromItems";

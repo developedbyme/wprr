@@ -63,12 +63,12 @@ export default class MappedList extends MultiTypeItemConnection {
 	}
 	
 	_itemRemoved(aId) {
-		//console.log("MappedList::_itemRemoved");
-		//console.log(aId);
+		console.log("MappedList::_itemRemoved");
+		console.log(aId);
 		
 		let backlinkName = this.item.getValue("backlinkName");
 		
-		let mappedItem = Wprr.utils.array.getItemBy(this.item.getLinks("temporaryItems").items, backlinkName + ".id", aId);
+		let mappedItem = Wprr.utils.array.getItemBy(backlinkName + ".id", aId, this.item.getLinks("temporaryItems").items);
 		
 		if(mappedItem) {
 			this.item.getLinks("temporaryItems").removeItem(mappedItem.id);

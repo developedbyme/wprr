@@ -14,12 +14,15 @@ export default class ItemsTable extends MultiTypeItemConnection {
 	setup() {
 		this.item.addType("controller", this);
 		
+		this.item.requireValue("rowClasses", "standard-row");
+		this.item.requireValue("headerRowClasses", "standard-row");
+		
 		let activeList = this.item.addNode("activeList", new Wprr.utils.data.multitypeitems.controllers.list.ActiveList());
 		activeList.item.getLinks("items").input(this.item.getLinks("columns"));
 		this.item.getLinks("activeRows").input(activeList.item.getLinks("sortedRows"));
 		
 		{
-			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": "row"},
+			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": this.item.getValueSource("rowClasses")},
 				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
 					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "cellElement")})
 				),
@@ -30,7 +33,7 @@ export default class ItemsTable extends MultiTypeItemConnection {
 		}
 		
 		{
-			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": "header-row"},
+			let element = React.createElement(Wprr.layout.ItemList, {"ids": this.item.getLinks("activeRows").idsSource, "as": "columnRow", "className": this.item.getValueSource("headerRowClasses")},
 				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
 					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "headerCellElement")})
 				),

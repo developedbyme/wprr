@@ -13,7 +13,7 @@ export default class Relations extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		let dataType = this.getFirstInputWithDefault("dataType", Wprr.sourceReference("cellSettings", "dataType"), "dbm_data");
 		

@@ -13,7 +13,7 @@ export default class Data extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		let label = this.getFirstInputWithDefault("label", Wprr.sourceReference("cellSettings", "label"), Wprr.sourceText("site.messageGroupFields." + fieldId), fieldId);
 		

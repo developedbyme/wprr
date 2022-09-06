@@ -59,8 +59,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	getFieldEditor(aId, aName) {
-		console.log("getFieldEditor");
-		console.log(aId, aName);
+		//console.log("getFieldEditor");
+		//console.log(aId, aName);
 		
 		let linkName = "field" + aId + "-" + aName;
 		let editors = this.item.getNamedLinks("allEditors");
@@ -97,8 +97,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	getCustomPathFieldEditor(aId, aName, aValuePath) {
-		console.log("getCustomPathFieldEditor");
-		console.log(aId, aName);
+		//console.log("getCustomPathFieldEditor");
+		//console.log(aId, aName);
 		
 		let linkName = "field" + aId + "-" + aName;
 		let editors = this.item.getNamedLinks("allEditors");
@@ -131,8 +131,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	getPostStatusEditor(aId) {
-		console.log("getPostStatusEditor");
-		console.log(aId);
+		//console.log("getPostStatusEditor");
+		//console.log(aId);
 		
 		let linkName = "postStatus" + aId;
 		let editors = this.item.getNamedLinks("allEditors");
@@ -164,8 +164,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	getMetaEditor(aId, aMetaKey, aFieldName = null) {
-		console.log("getMetaEditor");
-		console.log(aId);
+		//console.log("getMetaEditor");
+		//console.log(aId);
 		
 		let linkName = "meta" + aId + "-" + aMetaKey;
 		let editors = this.item.getNamedLinks("allEditors");
@@ -257,9 +257,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	save() {
-		console.log("save");
+		//console.log("save");
 		let saveOperation = Wprr.utils.data.multitypeitems.controllers.admin.SaveOperation.create(this.item.group.createInternalItem());
-		console.log(saveOperation);
 		
 		this.getSaveData(saveOperation);
 		
@@ -292,8 +291,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	_saveDataField(aItem, aSaveOperation) {
-		console.log("_saveField");
-		console.log(aItem, aSaveOperation);
+		//console.log("_saveField");
+		//console.log(aItem, aSaveOperation);
 		
 		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
 		let value = aItem.getValue("value");

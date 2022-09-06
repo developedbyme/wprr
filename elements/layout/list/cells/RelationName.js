@@ -13,7 +13,7 @@ export default class RelationName extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("cellId"));
+		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
 		
 		return React.createElement("div", null, /*#__PURE__*/React.createElement("div", {

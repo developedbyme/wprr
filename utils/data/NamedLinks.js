@@ -28,8 +28,8 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		this._namesSource.value.push(aName);
 		this._idsSource.value.push(aId);
 		
-		this._namesSource.externalDataChange();
-		this._idsSource.externalDataChange();
+		this._namesSource.updateForValueChange();
+		this._idsSource.updateForValueChange();
 		
 		return this;
 	}
@@ -40,8 +40,8 @@ export default class NamedLinks extends MultiTypeItemConnection {
 			this._namesSource.value.splice(index, 1);
 			this._idsSource.value.splice(index, 1);
 			
-			this._namesSource.externalDataChange();
-			this._idsSource.externalDataChange();
+			this._namesSource.updateForValueChange();
+			this._idsSource.updateForValueChange();
 		}
 	}
 	
@@ -102,8 +102,8 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		this._namesSource.value.splice(0, currentArray.length);
 		this._idsSource.value.splice(0, currentArray.length);
 		
-		this._namesSource.externalDataChange();
-		this._idsSource.externalDataChange();
+		this._namesSource.updateForValueChange();
+		this._idsSource.updateForValueChange();
 		
 		return this;
 	}

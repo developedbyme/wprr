@@ -13,30 +13,19 @@ export default class BatchEditItems extends Layout {
 	/**
 	 * Constructor
 	 */
-	constructor() {
+	_construct() {
 		//console.log("BatchEditItems::constructor");
 
-		super();
+		super._construct();
 		
 		this._layoutName = "batchEditItems";
 		
 		this._itemsEditor = new Wprr.wp.admin.ItemsEditor();
 		this._itemsTable = new Wprr.utils.data.multitypeitems.itemstable.ItemsTable();
 		this._itemsEditor.items.getItem("table").addType("table", this._itemsTable);
+		this._itemsTable.setup();
 		
 		this._loadData = {};
-	}
-	
-	get itemsEditor() {
-		return this._itemsEditor;
-	}
-	
-	_prepareInitialRender() {
-		//console.log("BatchEditItems::_prepareInitialRender");
-		
-		this._itemsTable.createRowElement();
-		
-		super._prepareInitialRender();
 		
 		let projectName = this.getFirstInput("projectName", Wprr.sourceReference("wprr/projectName"));
 		let dataTypes = [].concat(Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("dataType")));
@@ -54,8 +43,18 @@ export default class BatchEditItems extends Layout {
 			this._itemsEditor._dataType = postType;
 		}
 		
-		
 		this._itemsEditor.setSearchFields(this.getFirstInputWithDefault("searchFields", "fieldByName.name.field.value"));
+		
+		
+	}
+	
+	get itemsEditor() {
+		return this._itemsEditor;
+	}
+	
+	_prepareInitialRender() {
+		
+		super._prepareInitialRender();
 		
 		let fields = this.getFirstInput("fields");
 		
@@ -67,6 +66,7 @@ export default class BatchEditItems extends Layout {
 		
 		let itemData = this.getFirstInputWithDefault("items", Wprr.sourceReference("items"), []);
 		
+		
 		let cellTypes = this.getSource("cellTypes").value;
 		
 		if(normalizedFields) {
@@ -75,7 +75,14 @@ export default class BatchEditItems extends Layout {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentData = currentArray[i];
 				let column = this._itemsTable.createColumn(currentData["key"], currentData["value"]["type"], currentData["value"]);
-				column.createElement(cellTypes);
+				
+				console.log(cellTypes);
+				if(cellTypes[currentData["value"]["type"]]) {
+					column.setElement(React.createElement(cellTypes[currentData["value"]["type"]]));
+				}
+				else {
+					column.setElement(React.createElement(cellTypes["standard"]));
+				}
 			}
 		}
 		
@@ -138,7 +145,7 @@ export default class BatchEditItems extends Layout {
 		let operationSection = aSlots.prop("operationSections", null);
 		let operationOptions = aSlots.prop("operationOptions", null);
 		
-		let rowElement = this._itemsTable.item.getType("rowElement");
+		let rowElement = this._itemsTable.item.getValue("rowElement");
 		
 		return React.createElement("div", {className: "centered-block-for-overflow"},
 			React.createElement(Wprr.FlexRow, null,

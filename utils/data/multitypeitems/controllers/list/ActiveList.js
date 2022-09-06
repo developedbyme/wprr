@@ -27,7 +27,7 @@ export default class ActiveList extends MultiTypeItemConnection {
 	
 	setup() {
 		
-		this.item.setValue("activteWhenAdded", true);
+		this.item.setValue("activateWhenAdded", true);
 		this.item.addType("controller", this);
 		
 		this.item.getLinks("items");
@@ -56,7 +56,7 @@ export default class ActiveList extends MultiTypeItemConnection {
 		let item = this.item.group.getItem(aId);
 		let forItemId = item.getSingleLink("forItem").id;
 		
-		let active = this.item.getValue("activteWhenAdded");
+		let active = this.item.getValue("activateWhenAdded");
 		
 		item.setValue("active", active);
 		

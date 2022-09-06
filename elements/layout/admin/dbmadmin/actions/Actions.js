@@ -17,7 +17,7 @@ export default class Actions extends Wprr.BaseObject {
 		this._elementTreeItem.getLinks("items").input(loader.item.getLinks("items"));
 		
 		let mappedList = this._elementTreeItem.addNode("mappedList", new Wprr.utils.data.multitypeitems.controllers.list.ActiveList());
-		mappedList.item.setValue("activteWhenAdded", false);
+		mappedList.item.setValue("activateWhenAdded", false);
 		mappedList.setupCommands.addCommands.push(Wprr.commands.callFunction(this, this._setupSelectItem, [Wprr.sourceEvent()]));
 		mappedList.item.getLinks("items").input(this._elementTreeItem.getLinks("items"));
 		

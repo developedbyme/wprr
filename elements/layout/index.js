@@ -32,3 +32,6 @@ export {checkout};
 
 import * as loader from "./loader/index.js";
 export {loader};
+
+import * as wordpress from "./wordpress/index.js";
+export {wordpress};

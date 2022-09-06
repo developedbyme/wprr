@@ -1,4 +1,5 @@
 import React from 'react';
+import Wprr from "wprr/Wprr";
 
 import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 
@@ -67,7 +68,9 @@ export default class HasData extends ManipulationBaseObject {
 				}
 				break;
 			default:
-				console.warn("Unknown check type " + aType + ". Using default.");
+				return Wprr.utils.filterPartFunctions._compare(aData, compareValue, aType);
+			case null:
+			case undefined:
 			case "default":
 				if(aData) {
 					return true;
