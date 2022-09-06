@@ -46,11 +46,11 @@ export default class CookieSettings extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		this._performance.value = Cookies.getJSON("cookie/allowPreferences") == 1;
-		this._statistics.value = Cookies.getJSON("cookie/allowStatistics") == 1;
-		this._marketing.value = Cookies.getJSON("cookie/allowMarketing") == 1;
-		this._hideCookieBar.value = Cookies.getJSON("cookie/hideCookieBar") == 1;
-		this._consentDate.value = Cookies.getJSON("cookie/consentTime");
+		this._performance.value = Cookies.get("cookie/allowPreferences") == 1;
+		this._statistics.value = Cookies.get("cookie/allowStatistics") == 1;
+		this._marketing.value = Cookies.get("cookie/allowMarketing") == 1;
+		this._hideCookieBar.value = Cookies.get("cookie/hideCookieBar") == 1;
+		this._consentDate.value = Cookies.get("cookie/consentTime");
 		
 	}
 	

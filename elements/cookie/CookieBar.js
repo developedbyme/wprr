@@ -40,7 +40,7 @@ export default class CookieBar extends Layout {
 	_prepareInitialRender() {
 		super._prepareInitialRender();
 		
-		let showBar = !Cookies.getJSON("cookie/hideCookieBar");
+		let showBar = !(Cookies.get("cookie/hideCookieBar") == 1);
 		
 		let forceShowCookieBar = this.getFirstInput(Wprr.sourceQueryString("forceShowCookieBar")) == "1";
 		if(forceShowCookieBar) {

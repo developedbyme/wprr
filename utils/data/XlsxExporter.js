@@ -1,6 +1,6 @@
 import Wprr from "wprr/Wprr";
 
-import xlsx from "xlsx";
+import * as xlsx from "xlsx";
 import {saveAs} from "file-saver";
 
 import TableData from "./TableData";

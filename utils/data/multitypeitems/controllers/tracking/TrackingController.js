@@ -49,8 +49,8 @@ export default class TrackingController extends MultiTypeItemConnection {
 	}
 	
 	startIfCookiesAreSet() {
-		let allowStatistics = Cookies.getJSON("cookie/allowStatistics") == 1;
-		let allowMarketing = Cookies.getJSON("cookie/allowMarketing") == 1;
+		let allowStatistics = Cookies.get("cookie/allowStatistics") == 1;
+		let allowMarketing = Cookies.get("cookie/allowMarketing") == 1;
 		
 		let shouldStart = allowStatistics || allowMarketing;
 		

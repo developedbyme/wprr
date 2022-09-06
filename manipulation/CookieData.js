@@ -43,7 +43,7 @@ export default class CookieData extends ManipulationBaseObject {
 		let injectData = new Object();
 		
 		let cookieName = this.getSourcedProp("cookieName");
-		let cookieValue = Cookies.getJSON(cookieName);
+		let cookieValue = Cookies.get(cookieName);
 		if(cookieValue === undefined || cookieValue === null) {
 			cookieValue = this.getSourcedProp("defaultValue");
 		}
