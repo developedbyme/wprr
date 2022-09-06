@@ -21,7 +21,7 @@ export default class SingleUserRelation extends WprrBaseObject {
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
-		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.userRelations.", Wprr.sourceReference("cellSettings", "relationName")));
+		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.userRelations.", Wprr.sourceReference("column", "settings.value.relationName")));
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"},

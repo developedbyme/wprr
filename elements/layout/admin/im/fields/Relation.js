@@ -11,7 +11,7 @@ export default class Relation extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let cellSettings = this.getReference("cellSettings");
+		let cellSettings = this.getFirstInput(Wprr.sourceReference("column", "settings"));
 		let valueField = cellSettings["useSlug"] ? "slug" : "id";
 		
 		return React.createElement(Wprr.EditableProps, {editableProps: "value", externalStorage: Wprr.sourceReference("field/externalStorage")},

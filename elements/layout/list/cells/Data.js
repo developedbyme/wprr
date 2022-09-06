@@ -15,7 +15,7 @@ export default class Data extends WprrBaseObject {
 		
 		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
-		let label = this.getFirstInputWithDefault("label", Wprr.sourceReference("cellSettings", "label"), Wprr.sourceText("site.messageGroupFields." + fieldId), fieldId);
+		let label = this.getFirstInputWithDefault("label", Wprr.sourceReference("column", "settings.value.label"), Wprr.sourceText("site.messageGroupFields." + fieldId), fieldId);
 		
 		return React.createElement("div", null,
 			React.createElement("div", {className: "label-text-small"},

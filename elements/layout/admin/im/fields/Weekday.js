@@ -12,7 +12,7 @@ export default class Weekday extends WprrBaseObject {
 	
 	_renderMainElement() {
 		
-		let cellSettings = this.getReference("cellSettings");
+		let cellSettings = this.getFirstInput(Wprr.sourceReference("column", "settings.value"));
 		
 		let tempMoment = moment();
 		let options = new Array();

@@ -22,7 +22,7 @@ export default class Element extends WprrBaseObject {
 			),
 			React.createElement("div", {className: "spacing micro"}),
 			React.createElement(Wprr.ScrollActivatedItem, {},
-				React.createElement(Wprr.InsertElement, {element: Wprr.sourceReference("cellSettings", "element")})
+				React.createElement(Wprr.InsertElement, {element: Wprr.sourceReference("column", "settings.value.element")})
 			)
 		);
 	}

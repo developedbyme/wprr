@@ -20,8 +20,8 @@ export default class OrderedRelations extends WprrBaseObject {
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
-		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("cellSettings", "relationPath")));
-		let orderId = this.getFirstInputWithDefault(Wprr.sourceReference("cellSettings", "orderId"), "order");
+		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("column", "settings.value.relationPath")));
+		let orderId = this.getFirstInputWithDefault(Wprr.sourceReference("column", "settings.value.orderId"), "order");
 		
 		return React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
   className: "label-text-small"

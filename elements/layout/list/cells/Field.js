@@ -17,7 +17,7 @@ export default class Field extends WprrBaseObject {
 		
 		let cellSwitchableArea = Wprr.creators.SwitchableAreaCreator.createFromClasses(
 			Wprr.sourceFirst(
-				Wprr.sourceReference("cellSettings", "fieldType"),
+				Wprr.sourceReference("column", "settings.value.fieldType"),
 				Wprr.sourceFunction(
 					Wprr.utils.programmingLanguage,
 					"convertHyphensToCamelCase",

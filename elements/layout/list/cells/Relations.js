@@ -15,13 +15,13 @@ export default class Relations extends WprrBaseObject {
 		
 		let fieldId = this.getFirstInput("fieldId", Wprr.sourceReference("column", "columnId"));
 		let type = this.getFirstInput("type", Wprr.sourceReference("loop/item"));
-		let dataType = this.getFirstInputWithDefault("dataType", Wprr.sourceReference("cellSettings", "dataType"), "dbm_data");
+		let dataType = this.getFirstInputWithDefault("dataType", Wprr.sourceReference("column", "settings.value.dataType"), "dbm_data");
 		
 		let editorSource = Wprr.sourceReference("editor");
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
-		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("cellSettings", "relationPath")));
+		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("column", "settings.value.relationPath")));
 		
 		return React.createElement("div", null,
 			React.createElement(Wprr.AddReference, {"data": dataType, "as": "addRelation/slots/dataType"}, 

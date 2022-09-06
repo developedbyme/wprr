@@ -20,7 +20,7 @@ export default class RelationOfAnyType extends WprrBaseObject {
 		let activatePathSource = editorSource.deeper("activePath");
 		let externalStorageSource = editorSource.deeper("externalStorage");
 		
-		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("cellSettings", "relationPath")));
+		let editorPath = this.getFirstInput(Wprr.sourceCombine("relationEditors.", Wprr.sourceReference("column", "settings.value.relationPath")));
 		
 		return React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
   className: "label-text-small"
