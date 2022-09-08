@@ -32,6 +32,10 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return this.item.getType("editorsGroup").linkedItem.getType("editorsGroup");
 	}
 	
+	get editedItem() {
+		return this.item.getSingleLink("editedItem");
+	}
+	
 	getFieldEditor(aName) {
 		
 		let fieldEditors = this.item.getNamedLinks("fieldEditors");

@@ -34,6 +34,20 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	updateItem(aName, aId) {
+		let index = this._namesSource.value.indexOf(aName);
+		if(index >= 0) {
+			this._idsSource.value[index] = aId;
+			this._idsSource.updateForValueChange();
+		}
+		else {
+			console.warn("Link with name " + aName + " doesn't exist. Creating.");
+			this.addItem(aName, aId);
+		}
+		
+		return this;
+	}
+	
 	removeItem(aId) {
 		let index = this._idsSource.value.indexOf(aId);
 		if(index > -1) {

@@ -93,6 +93,12 @@ export default class MultiTypeItem {
 		return this;
 	}
 	
+	updateValue(aType, aData) {
+		this.setValue(aType, aData);
+		
+		return this;
+	}
+	
 	requireValue(aType, aDefaultData = null) {
 		if(!this.hasType(aType)) {
 			let theSource = Wprr.sourceValue(aDefaultData);

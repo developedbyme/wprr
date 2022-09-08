@@ -575,6 +575,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	createItemCreator() {
 		let creatorItem = this._items.createInternalItem();
 		let creator = Wprr.utils.data.multitypeitems.controllers.admin.ItemCreator.create(creatorItem);
+		creator.addLegacyInitialLoader();
 		
 		this._editorItem.getLinks("creators").addUniqueItem(creatorItem.id);
 		

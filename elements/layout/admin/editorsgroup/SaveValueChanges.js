@@ -5,14 +5,12 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 
 export default class SaveValueChanges extends WprrBaseObject {
 	
-	_constructor() {
-		super._constructor();
+	_construct() {
+		super._construct();
 	}
 	
 	_renderMainElement() {
 		//console.log("SaveValueChanges::_renderMainElement");
-		
-		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
 		
 		return React.createElement("div", null,
 			<Wprr.OpenCloseExpandableArea open={Wprr.sourceReference("valueEditor", "changedSource")}>
