@@ -79,8 +79,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this.item.getLinks("typedRelations");
 		
 		{
-			let filter = Wprr.utils.data.multitypeitems.controllers.list.FilteredList.create(this.item.group.createInternalItem());
-			this.item.addSingleLink("connectionTypeFilter", filter.item.id);
+			let filter = this.item.addNode("connectionTypeFilter", new Wprr.utils.data.multitypeitems.controllers.list.FilteredList());
+			
 			filter.item.getLinks("all").input(this.item.getLinks("allRelations"));
 			
 			{
@@ -91,6 +91,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 				let filterPart = filter.addFieldCompare("from.linkedItem.objectTypes.ids", null, "arrayContains");
 				this.item.getType("objectTypeField").connectSource(filterPart.getType("field"));
 				this.item.getType("itemType").idSource.connectSource(filterPart.getType("compareValue"));
+				filterPart.getValueSource("active").input(this.item.getType("itemType").idSource);
 			}
 			
 			this.item.getLinks("typedRelations").input(filter.item.getLinks("filtered"));
@@ -134,7 +135,9 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		this.item.setValue("direction", aDirection);
 		
 		this.item.addSingleLink("connectionType", "dbm_type:object-relation/" + aConnectionType);
-		this.item.addSingleLink("itemType", "dbm_type:" + aItemType);
+		if(aItemType !== "*") {
+			this.item.addSingleLink("itemType", "dbm_type:" + aItemType);
+		}
 		
 		let directedRelations = item.getLinks(aDirection + "Relations");
 		directedRelations.idsSource.connectSource(this.item.getLinks("allRelations").idsSource);

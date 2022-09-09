@@ -20,8 +20,8 @@ import ExternalStorageProps from "wprr/manipulation/ExternalStorageProps";
 // import DropdownSelection from "wprr/elements/form/DropdownSelection";
 export default class DropdownSelection extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._externalStorage = new Wprr.utils.DataStorage();
 	}

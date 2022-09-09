@@ -31,7 +31,9 @@ export default class ObjectProperties extends WprrBaseObject {
 					</Wprr.AddReference>
 				</Wprr.HasData>
 				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="arrayContains">
-					<div>Linked</div>
+					<div>Linked
+						<Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation direction="outgoing" relationType="for" />
+					</div>
 				</Wprr.HasData>
 			</div>);
 		}
@@ -120,7 +122,7 @@ export default class ObjectProperties extends WprrBaseObject {
 							<div className="spacing micro" data-slot="spacing" />
 						</Wprr.layout.ItemList>
 						<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("creatingRows").idsSource} as="loader">
-							<div>Creating...</div>
+							<Wprr.layout.loader.LoaderDisplay text={Wprr.sourceTranslation("Creating...", "site.creating")} />
 						</Wprr.layout.ItemList>
 						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
 						<div className="spacing small" />

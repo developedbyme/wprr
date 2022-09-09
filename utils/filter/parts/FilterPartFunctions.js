@@ -377,6 +377,8 @@ export default class FilterPartFunctions  {
 	}
 	
 	static createCompareField(aField, aCompareValue, aCompareType = "=", aValueFormat = "string", aActive = null) {
+		//console.log("createCompareField");
+		
 		let newFilterPart = FilterPart.create(FilterPartFunctions.compareField, aActive);
 		
 		newFilterPart.inputs.setInput("field", aField);

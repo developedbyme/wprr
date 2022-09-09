@@ -62,6 +62,7 @@ export default class FilterPart  {
 			let filterFunction = this.getInput("filterFunction");
 			return filterFunction.call(this, aCurrentArray, aOriginalArray);
 		}
+		
 		return aCurrentArray;
 	}
 	
