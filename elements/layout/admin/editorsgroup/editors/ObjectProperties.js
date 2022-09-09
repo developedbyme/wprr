@@ -31,8 +31,8 @@ export default class ObjectProperties extends WprrBaseObject {
 					</Wprr.AddReference>
 				</Wprr.HasData>
 				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="arrayContains">
-					<div>Linked
-						<Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation direction="outgoing" relationType="for" />
+					<div>
+						<Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation direction="outgoing" relationType="pointing-to" />
 					</div>
 				</Wprr.HasData>
 			</div>);

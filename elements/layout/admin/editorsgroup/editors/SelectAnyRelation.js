@@ -8,6 +8,27 @@ export default class SelectAnyRelation extends WprrBaseObject {
 	
 	_construct() {
 		super._construct();
+		
+		this._elementTreeItem.setValue("mode", "view");
+		this._elementTreeItem.setValue("search", "");
+		
+		this._elementTreeItem.getValueSource("search").addChangeCommand(Wprr.commands.callFunction(this, this._performSearch));
+		
+		let singleResultLoader = this._elementTreeItem.addNode("singleResultLoader", new Wprr.utils.data.nodes.LoadDataRange());
+		
+		this._elementTreeItem.getLinks("singleResults").input(singleResultLoader.item.getLinks("items"));
+	}
+	
+	_performSearch() {
+		console.log("_performSearch");
+		
+		let search = this._elementTreeItem.getValue("search");
+		
+		let singleResultLoader = Wprr.objectPath(this._elementTreeItem, "singleResultLoader.linkedItem.controller");
+		console.log(singleResultLoader, this._elementTreeItem);
+		
+		//METODO: check that search is only numbers
+		singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=" + search, "wprrData"));
 	}
 	
 	_renderMainElement() {
@@ -22,11 +43,45 @@ export default class SelectAnyRelation extends WprrBaseObject {
 		
 		return React.createElement("div", null,
 			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, type, "*"])} as="valueEditor">
-				<div>
-					{Wprr.text(Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource"))}
-					Select
-					<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-				</div>
+				<Wprr.AddReference data={Wprr.sourceReference("valueEditor").deeper("singleEditor")} as="selectedEditor">
+					<div>
+						<Wprr.SelectSection selectedSections={this._elementTreeItem.getValueSource("mode")}>
+							<div data-default-section={true}>
+								<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")}>
+									<div className="standard-field standard-field-padding full-width">
+										<Wprr.layout.ItemList ids={Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource")} as="relation">
+											<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
+												<div>
+													<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
+														<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+													</Wprr.layout.loader.DataRangeLoader>
+												</div>
+											</Wprr.RelatedItem>
+										</Wprr.layout.ItemList>
+									</div>
+								</Wprr.CommandButton>
+							</div>
+							<div data-section-name="edit">
+								<Wprr.FormField autoFocus={true} value={this._elementTreeItem.getValueSource("search")} className="standard-field standard-field-padding full-width" />
+								<div className="absolute-container">
+									<Wprr.layout.area.Overlay open={true}>
+										<div>
+											<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("singleResults").idsSource}>
+												<Wprr.CommandButton commands={[
+													Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]),
+													Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
+												]}>
+													<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+												</Wprr.CommandButton>
+											</Wprr.layout.ItemList>
+										</div>
+									</Wprr.layout.area.Overlay>
+								</div>
+							</div>
+						</Wprr.SelectSection>
+						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
+					</div>
+				</Wprr.AddReference>
 			</Wprr.AddReference>
 		);
 	}

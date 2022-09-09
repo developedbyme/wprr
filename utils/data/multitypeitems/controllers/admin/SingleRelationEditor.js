@@ -30,6 +30,12 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 		return this.item.getType("activeItem").idSource;
 	}
 	
+	setValue(aValue) {
+		this.item.addSingleLink("activeItem", aValue);
+		
+		return this;
+	}
+	
 	_createRelation() {
 		//console.log("_createRelation");
 		

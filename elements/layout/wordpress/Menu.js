@@ -22,7 +22,7 @@ export default class Menu extends Layout {
 		
 		this._elementTreeItem.requireValue("loaded", false);
 		
-		let loader = this._elementTreeItem.addNode("eventLoader", new Wprr.utils.data.nodes.LoadDataRange());
+		let loader = this._elementTreeItem.addNode("menuLoader", new Wprr.utils.data.nodes.LoadDataRange());
 		loader.setUrl(this.getWprrUrl("range/?select=menu&encode=menuItem&location=" + menuLocation, "wprrData"));
 		
 		this._elementTreeItem.getType("loaded").addChangeCommand(Wprr.commands.callFunction(this, this._loaded));
