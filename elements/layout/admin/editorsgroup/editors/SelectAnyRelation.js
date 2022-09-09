@@ -38,40 +38,64 @@ export default class SelectAnyRelation extends WprrBaseObject {
 		let editorsGroup = itemEditor.editorsGroup;
 		
 		let direction = this.getFirstInputWithDefault("direction", "outgoing");
-		let type = this.getFirstInputWithDefault("relationType", "pointing-to");
+		let relationType = this.getFirstInputWithDefault("relationType", "pointing-to");
 		let relationName = (direction === "outgoing") ? "to.linkedItem" : "from.linkedItem";
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, type, "*"])} as="valueEditor">
+			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, "*"])} as="valueEditor">
 				<Wprr.AddReference data={Wprr.sourceReference("valueEditor").deeper("singleEditor")} as="selectedEditor">
 					<div>
 						<Wprr.SelectSection selectedSections={this._elementTreeItem.getValueSource("mode")}>
 							<div data-default-section={true}>
-								<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")}>
-									<div className="standard-field standard-field-padding full-width">
+								
+								<div className="standard-field standard-field-padding full-width">
+									<Wprr.HasData check={Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource")} checkType="notEmpty">
 										<Wprr.layout.ItemList ids={Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource")} as="relation">
-											<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
-												<div>
-													<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
-														<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
-													</Wprr.layout.loader.DataRangeLoader>
-												</div>
-											</Wprr.RelatedItem>
+											<Wprr.FlexRow className="small-item-spacing" itemClasses="flex-resize,flex-no-resize">
+												<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
+													<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")}>
+														<div className="cursor-pointer">
+															<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
+																<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+															</Wprr.layout.loader.DataRangeLoader>
+														</div>
+													</Wprr.CommandButton>
+												</Wprr.RelatedItem>
+												<Wprr.CommandButton commands={Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "removeValue")}>
+													<div className="cursor-pointer">
+														{React.createElement(Wprr.Image, {"className": "field-icon background-contain", "src": "icons/remove-circle.svg"})}
+													</div>
+												</Wprr.CommandButton>
+											</Wprr.FlexRow>
 										</Wprr.layout.ItemList>
-									</div>
-								</Wprr.CommandButton>
+									</Wprr.HasData>
+									<Wprr.HasData check={Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource")} checkType="invert/notEmpty">
+										<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")}>
+											<div className="cursor-pointer">{Wprr.idText("Select", "site.select")}</div>
+										</Wprr.CommandButton>
+									</Wprr.HasData>
+								</div>
 							</div>
 							<div data-section-name="edit">
-								<Wprr.FormField autoFocus={true} value={this._elementTreeItem.getValueSource("search")} className="standard-field standard-field-padding full-width" />
+								<div className="standard-field standard-field-padding full-width">
+									<Wprr.FlexRow className="small-item-spacing vertically-center-items" itemClasses="flex-resize,flex-no-resize">
+										<Wprr.FormField autoFocus={true} value={this._elementTreeItem.getValueSource("search")} className="integrated-field full-size"/>
+										<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")}>
+											<div className="cursor-pointer">
+												{React.createElement(Wprr.Image, {"className": "field-icon background-contain", "src": "icons/remove-circle.svg"})}
+											</div>
+										</Wprr.CommandButton>
+									</Wprr.FlexRow>
+								</div>
 								<div className="absolute-container">
 									<Wprr.layout.area.Overlay open={true}>
-										<div>
+										<div className="autocomplete-popup">
 											<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("singleResults").idsSource}>
 												<Wprr.CommandButton commands={[
 													Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]),
 													Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
 												]}>
-													<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+													<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
 												</Wprr.CommandButton>
 											</Wprr.layout.ItemList>
 										</div>
