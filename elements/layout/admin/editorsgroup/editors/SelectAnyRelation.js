@@ -61,7 +61,7 @@ export default class SelectAnyRelation extends WprrBaseObject {
 														</div>
 													</Wprr.CommandButton>
 												</Wprr.RelatedItem>
-												<Wprr.CommandButton commands={Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "removeValue")}>
+												<Wprr.CommandButton commands={Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "endRelation", [Wprr.sourceReference("relation", "id")])}>
 													<div className="cursor-pointer">
 														{React.createElement(Wprr.Image, {"className": "field-icon background-contain", "src": "icons/remove-circle.svg"})}
 													</div>

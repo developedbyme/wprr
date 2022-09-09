@@ -255,6 +255,20 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 	}
 	
+	endRelation(aRelationId) {
+		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getFieldEditor("endAt");
+		
+		let currentTime = moment().unix();
+		
+		let endTime = fieldEditor.value;
+		if(endTime === -1 || endTime > currentTime) {
+			fieldEditor.valueSource.value = currentTime;
+		}
+		
+		return this;
+	}
+	
 	toJSON() {
 		return "[RelationEditor id=" + this._id + "]";
 	}
