@@ -32,7 +32,13 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		
 		
 		this.item.getValueSource("creationUrl").addChangeCommand(Wprr.commands.callFunction(Wprr.sourceStatic(this.item, "createLoader"), "setUrl", [Wprr.sourceStatic(this.item, "creationUrl.value")]));
-		this.item.requireValue("creationUrl", project.getWprrUrl(Wprr.utils.wprrUrl.getCreateUrl("dbm_data")));
+		if(project) {
+			this.item.requireValue("creationUrl", project.getWprrUrl(Wprr.utils.wprrUrl.getCreateUrl("dbm_data")));
+		}
+		else {
+			this.item.requireValue("creationUrl", "");
+		}
+		
 		this.item.requireSingleLink("createdItem", null);
 		this.item.requireSingleLink("initialLoader", null);
 		this.item.getNamedLinks("createdRelations");
