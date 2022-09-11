@@ -16,6 +16,7 @@ export {default as SingleValueInArray} from "./SingleValueInArray";
 export {default as ValueSources} from "./ValueSources";
 export {default as Pagination} from "./Pagination";
 export {default as LoadAdditionalItems} from "./LoadAdditionalItems";
+export {default as FittingItems} from "./FittingItems";
 
 import * as css from "./css";
 export {css as css};

@@ -19,6 +19,8 @@ export default class BlockInjectionFunctions {
 	}
 	
 	static addBlockFromModule(aBlocks, aReferenceHolder) {
+		console.log("addBlockFromModule");
+		
 		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
 		let currentArray = mappedBlocks;
 		let currentArrayLength = currentArray.length;
@@ -26,6 +28,7 @@ export default class BlockInjectionFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentObject = currentArray[i];
 			let blockName = Wprr.utils.programmingLanguage.convertToCamelCase(currentObject.key);
+			console.log(blockName);
 			
 			let element = React.createElement(currentObject.value, {});
 			let elementWithInjection = React.createElement(Wprr.layout.BlockLoader, {}, element);

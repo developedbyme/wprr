@@ -10,6 +10,8 @@ export default class SiteDataLoader {
 		this._loaded = Wprr.sourceValue(null);
 		this._item = Wprr.sourceValue(null);
 		
+		this.disableInitialData = false;
+		
 		this._items = null;
 		
 		this._url.addChangeCommand(Wprr.commands.callFunction(this, this._updateUrl));
@@ -114,7 +116,7 @@ export default class SiteDataLoader {
 			addData = false;
 		}
 		
-		if(addData) {
+		if(addData && !this.disableInitialData) {
 			this._setupItem(this._items.getItem(aUrl), aData);
 		}
 		

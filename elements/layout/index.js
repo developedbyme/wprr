@@ -5,6 +5,7 @@ export {default as List} from "./List";
 export {default as BlockLoader} from "./BlockLoader";
 export {default as PageDataSources} from "./PageDataSources";
 export {default as ListWithOthers} from "./ListWithOthers";
+export {default as CheckPageRedirect} from "./CheckPageRedirect";
 
 import * as relation from "./relation";
 export {relation};

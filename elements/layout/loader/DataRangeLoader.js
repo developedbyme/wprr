@@ -6,8 +6,8 @@ import Layout from "wprr/elements/layout/Layout";
 //import DataRangeLoader from "./DataRangeLoader";
 export default class DataRangeLoader extends Layout {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._layoutName = "dataRangeLoader";
 		this._item = Wprr.sourceValue(null);
