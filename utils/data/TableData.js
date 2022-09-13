@@ -171,6 +171,14 @@ export default class TableData {
 		return this;
 	}
 	
+	deleteAllRows() {
+		
+		let currentArray = this.getRows();
+		currentArray.splice(0, currentArray.length);
+		
+		return this;
+	}
+	
 	static create() {
 		let newTableData = new TableData();
 		

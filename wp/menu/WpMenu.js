@@ -12,19 +12,6 @@ export default class WpMenu extends ManipulationBaseObject {
 
 	_construct() {
 		super._construct();
-		
-		/*
-		let menuLocation = this.getFirstInput("menuLocation");
-		
-		this._elementTreeItem.requireValue("loaded", false);
-		
-		let loader = this._elementTreeItem.addNode("eventLoader", new Wprr.utils.data.nodes.LoadDataRange());
-		loader.setUrl(this.getWprrUrl("range/?select=menu&encode=menuItem&location=" + menuLocation, "wprrData"));
-		console.log("loader>>>>>", loader);
-		
-		this._elementTreeItem.getType("loaded").addChangeCommand(Wprr.commands.callFunction(this, this._loaded));
-		this._elementTreeItem.getType("loaded").input(loader.item.getType("loaded"));
-		*/
 	}
 	
 	_removeUsedProps(aReturnObject) {
