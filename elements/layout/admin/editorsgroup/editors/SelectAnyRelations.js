@@ -28,7 +28,7 @@ export default class SelectAnyRelations extends WprrBaseObject {
 		console.log(singleResultLoader, this._elementTreeItem);
 		
 		//METODO: check that search is only numbers
-		singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=" + search, "wprrData"));
+		singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,objectTypes&ids=" + search, "wprrData"));
 	}
 	
 	_renderMainElement() {

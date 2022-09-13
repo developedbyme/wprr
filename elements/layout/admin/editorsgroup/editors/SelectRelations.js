@@ -18,7 +18,7 @@ export default class SelectRelations extends WprrBaseObject {
 		
 		this._elementTreeItem.getLinks("items").input(rangeLoader.item.getLinks("items"));
 		
-		rangeLoader.setUrl(this.getWprrUrl("range/?select=anyStatus,relation&encode=postTitle,postStatus&type=" + objectType, "wprrData"));
+		rangeLoader.setUrl(this.getWprrUrl("range/?select=anyStatus,relation&encode=postTitle,postStatus,objectTypes&type=" + objectType, "wprrData"));
 		
 		let filterItem = this._elementTreeItem.group.createInternalItem();
 		let filteredList = Wprr.utils.data.multitypeitems.controllers.list.FilteredList.create(filterItem);
