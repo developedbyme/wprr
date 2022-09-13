@@ -17,6 +17,7 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		
 		this.item.getNamedLinks("fieldEditors");
 		this.item.getNamedLinks("relationEditors");
+		this.item.getNamedLinks("orderEditors");
 		
 		return this;
 	}
@@ -96,6 +97,18 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		}
 		
 		return relationEditors.getLinkByName(linkName).getType("relationEditor");
+	}
+	
+	getOrderEditor(aForType) {
+		let linkName = "order-" + aForType;
+		let orderEditors = this.item.getNamedLinks("orderEditors");
+		
+		if(!orderEditors.hasLinkByName(linkName)) {
+			let orderEditor = this.editorsGroup.getOrderEditor(this.item.getType("editedItem").id, aForType);
+			orderEditors.addItem(linkName, orderEditor.item.id);
+		}
+		
+		return orderEditors.getLinkByName(linkName).getType("orderEditor");
 	}
 	
 	hasObjectPathHandling() {

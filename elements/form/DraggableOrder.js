@@ -9,8 +9,8 @@ import ReactChildFunctions from "wprr/utils/ReactChildFunctions";
 // import DraggableOrder from "wprr/elements/form/DraggableOrder";
 export default class DraggableOrder extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._startCommand = Wprr.commands.callFunction(this, this._dragStart, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index"), Wprr.source("commandElement")]);
 		this._overCommand = Wprr.commands.callFunction(this, this._dragOver, [Wprr.sourceEvent(), Wprr.sourceReference("loop/index")]);
@@ -20,6 +20,20 @@ export default class DraggableOrder extends WprrBaseObject {
 		this._displayedOrder = Wprr.sourceValue([]);
 		this._draggedFromPosition = Wprr.sourceValue(-1);
 		this._draggedToPosition = Wprr.sourceValue(-1);
+		
+		let children = ReactChildFunctions.getInputChildrenForComponent(this);
+		this._length.value = children.length;
+		
+		this._updateOrder();
+	}
+	
+	_prepareRender() {
+		
+		super._prepareRender();
+		
+		let children = ReactChildFunctions.getInputChildrenForComponent(this);
+		this._length.value = children.length;
+		this._updateOrder();
 	}
 	
 	_dragStart(aEvent, aIndex, aElement) {
@@ -97,15 +111,6 @@ export default class DraggableOrder extends WprrBaseObject {
 		if(this._displayedOrder.value.join(",") !== range.join(",")) {
 			this._displayedOrder.value = range;
 		}
-	}
-	
-	_prepareRender() {
-		super._prepareRender();
-		
-		let children = ReactChildFunctions.getInputChildrenForComponent(this);
-		this._length.value = children.length;
-		
-		this._updateOrder();
 	}
 	
 	_renderMainElement() {

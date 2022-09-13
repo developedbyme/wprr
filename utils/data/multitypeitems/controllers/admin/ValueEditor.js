@@ -69,14 +69,15 @@ export default class ValueEditor extends MultiTypeItemConnection {
 	}
 	
 	saved(aSavedValue) {
-		console.log("saved");
-		console.log(aSavedValue);
+		//console.log("saved");
+		//console.log(aSavedValue);
 		
 		this.item.getType("storedValue").value = aSavedValue;
 	}
 	
 	getSaveData(aSaveOperation) {
 		//console.log("ValueEditor::getSaveData");
+		//console.log(this, this.item.getValue("changed"))
 		
 		if(this.item.getValue("changed")) {
 			

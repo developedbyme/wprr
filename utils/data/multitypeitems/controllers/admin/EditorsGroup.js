@@ -19,6 +19,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		this._saveDataFieldCommand = Wprr.commands.callFunction(this, this._saveDataField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveFieldCommand = Wprr.commands.callFunction(this, this._saveField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveMetaFieldCommand = Wprr.commands.callFunction(this, this._saveMetaField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
+		this._saveOrderCommand = Wprr.commands.callFunction(this, this._saveOrder, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 	}
 	
 	setup() {
@@ -218,6 +219,31 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return editors.getLinkByName(linkName).getType("relationEditor");
 	}
 	
+	getOrderEditor(aId, aForType) {
+		let linkName = "order" + aId + "-" + aForType;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.OrderEditor.create(items.createInternalItem());
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditor.setupSelection(aId, aForType);
+			
+			newEditorItem.setValue("saveCommands", [this._saveOrderCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+			
+			newEditor.setupInitialValue(item);
+		}
+		
+		return editors.getLinkByName(linkName).getType("orderEditor");
+	}
+	
 	addEditor(aId) {
 		this.item.getLinks("editors").addUniqueItem(aId);
 		
@@ -324,6 +350,18 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		let editLoader = aSaveOperation.getEditLoader(itemId);
 		editLoader.changeData.setMeta(aItem.getValue("name"), value, comment);
+		
+		let editor = aItem.getType("valueEditor");
+		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	_saveOrder(aItem, aSaveOperation) {
+		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
+		let value = aItem.getValue("value");
+		let comment = aItem.getValue("comment");
+		
+		let editLoader = aSaveOperation.getEditLoader(itemId);
+		editLoader.changeData.createChange("dbm/order", {"value": aItem.getValue("value"), "forType": aItem.getValue("forType")});
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
