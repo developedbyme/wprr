@@ -41,7 +41,8 @@ export default class OrderEditor extends ValueEditor {
 		
 		let forType = this.item.getValue("forType");
 		relations = Wprr.utils.array.getItemsBy("to.linkedItem.forType.value", forType, relations);
-		//METODO: filter out inactive
+		relations = this._filterActiveRelations(relations);
+		
 		let hasValue = false;
 		
 		if(relations.length) {
@@ -66,6 +67,28 @@ export default class OrderEditor extends ValueEditor {
 		}
 		
 		return this;
+	}
+	
+	_filterActiveRelations(aItems) {
+		//console.log("_filterActiveRelations");
+		
+		let currentTime = moment().unix();
+		
+		let returnArray = new Array();
+		let currentArray = aItems;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentItem = currentArray[i];
+			
+			let startAt = currentItem.getValue("startAt");
+			let endAt = currentItem.getValue("endAt");
+			
+			if((startAt === -1 || startAt <= currentTime) && (endAt === -1 || endAt > currentTime)) {
+				returnArray.push(currentItem);
+			}
+		}
+		
+		return returnArray;
 	}
 	
 	_getIdsFromTree(aItems, aReturnArray) {
