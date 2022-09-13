@@ -4,7 +4,7 @@ import moment from "moment";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class SelectAnyRelations extends WprrBaseObject {
+export default class SelectRelations extends WprrBaseObject {
 	
 	_construct() {
 		super._construct();
@@ -79,7 +79,7 @@ export default class SelectAnyRelations extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		//console.log("SelectAnyRelations::_renderMainElement");
+		//console.log("SelectRelations::_renderMainElement");
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
 		let editorsGroup = itemEditor.editorsGroup;
