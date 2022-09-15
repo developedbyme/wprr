@@ -186,81 +186,57 @@ export default class FileDropField extends WprrBaseObject {
 		
 		let id = fieldName + "-file-field-" + this._fieldId; //METODO: set this better
 		
-		let fileItem = React.createElement(Wprr.ExternalStorageConnectionInjection, {
-  prefix: Wprr.source("combine", ["files.", Wprr.sourceReference("loop/index")]),
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, /*#__PURE__*/React.createElement("div", {
-  className: "uploaded-file-field standard-field-padding"
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between micro-item-spacing vertically-center-items",
-  itemClasses: "flex-no-resize,flex-resize,flex-no-resize"
-}, /*#__PURE__*/React.createElement(Wprr.Image, {
-  className: "icon standard-icon background-contain",
-  src: "icons/common-file-empty.svg"
-}), /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: "url",
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.Link, {
-  className: "custom-styled-link",
-  href: Wprr.sourceProp("url"),
-  target: "_blank"
-}, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: "fileName",
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, Wprr.text(Wprr.sourceProp("fileName"))))), /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: "status",
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
-  selectedSections: Wprr.sourceProp("status")
-}, /*#__PURE__*/React.createElement("div", {
-  "data-section-name": "uploading"
-}, Wprr.idText("Uploading...", "site.progress.uploading")), /*#__PURE__*/React.createElement("div", {
-  "data-section-name": "added"
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.callFunction(this, this._removeFile, [Wprr.sourceReference("externalStorage", "internalId")])
-}, /*#__PURE__*/React.createElement(Wprr.Image, {
-  className: "icon standard-icon background-contain cursor-pointer",
-  src: "icons/delete.svg"
-}))), /*#__PURE__*/React.createElement("div", {
-  "data-section-name": "removing"
-}, Wprr.idText("Removing...", "site.progress.uploading")))))));
+		let fileItem = React.createElement(Wprr.ExternalStorageConnectionInjection, {prefix: Wprr.source("combine", ["files.", Wprr.sourceReference("loop/index")]), externalStorage: Wprr.sourceReference("externalStorage")},
+			React.createElement("div", {className: "uploaded-file-field standard-field-padding"},
+				React.createElement(Wprr.FlexRow, {className: "justify-between micro-item-spacing vertically-center-items", itemClasses: "flex-no-resize,flex-resize,flex-no-resize"},
+					React.createElement(Wprr.Image, { className: "icon standard-icon background-contain", src: "icons/common-file-empty.svg"}),
+					React.createElement(Wprr.ExternalStorageProps, {props: "url", externalStorage: Wprr.sourceReference("externalStorage")},
+						React.createElement(Wprr.Link, { className: "custom-styled-link", href: Wprr.sourceProp("url"), target: "_blank"},
+							React.createElement(Wprr.ExternalStorageProps, { props: "fileName", externalStorage: Wprr.sourceReference("externalStorage")},
+								Wprr.text(Wprr.sourceProp("fileName"))
+							)
+						)
+					),
+					React.createElement(Wprr.ExternalStorageProps, {props: "status", externalStorage: Wprr.sourceReference("externalStorage")},
+						React.createElement(Wprr.SelectSection, { selectedSections: Wprr.sourceProp("status")},
+							React.createElement("div", {"data-section-name": "uploading"},
+								Wprr.idText("Uploading...", "site.progress.uploading")
+							),
+							React.createElement("div", {"data-section-name": "added"},
+								React.createElement(Wprr.CommandButton, {commands: Wprr.commands.callFunction(this, this._removeFile, [Wprr.sourceReference("externalStorage", "internalId")])},
+									React.createElement(Wprr.Image, {className: "icon standard-icon background-contain cursor-pointer", src: "icons/delete.svg"})
+								)
+							),
+							React.createElement("div", {"data-section-name": "removing"},
+								Wprr.idText("Removing...", "site.progress.uploading")
+							)
+						)
+					)
+				)
+			)
+		);
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ExternalStorageInjection, {
-  initialExternalStorage: this._externalStorage
-}, /*#__PURE__*/React.createElement(Wprr.FormField, {
-  className: "skip-default display-none",
-  type: "file",
-  id: id,
-  multiple: "multiple",
-  changeCommands: Wprr.commands.callFunction(this, this._fileSelected, [Wprr.source("event", "raw")])
-}), /*#__PURE__*/React.createElement(Wprr.EventCommands, {
-  events: {
-    onDragEnter: Wprr.commands.callFunction(this, this._highlight, [Wprr.source("event", "raw")]),
-    onDragOver: Wprr.commands.callFunction(this, this._highlight, [Wprr.source("event", "raw")]),
-    onDragLeave: Wprr.commands.callFunction(this, this._unhighlight, [Wprr.source("event", "raw")]),
-    onDrop: Wprr.commands.callFunction(this, this._handleDrop, [Wprr.source("event", "raw")])
-  }
-}, /*#__PURE__*/React.createElement(Wprr.ExternalStorageProps, {
-  props: "files",
-  externalStorage: Wprr.sourceReference("externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourceProp("files")
-}, Wprr.Loop.createMarkupLoop(Wprr.sourceProp("files"), fileItem, /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-})), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}))), /*#__PURE__*/React.createElement(Wprr.AddProps, {
-  className: Wprr.sourceReference("externalStorage", "dropHighlightClass")
-}, /*#__PURE__*/React.createElement("label", {
-  htmlFor: id,
-  className: "drop-area drop-area-padding display-block cursor-pointer"
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-center small-item-spacing vertically-center-items"
-}, /*#__PURE__*/React.createElement(Wprr.Image, {
-  className: "icon standard-icon",
-  src: "icons/add-circle.svg"
-}), /*#__PURE__*/React.createElement("div", {
-  className: "drop-area-drop-label"
-}, Wprr.idText("Choose a file or drop it here", "site.addOrDropFiles"))))))));
+		return React.createElement("div", null,
+			React.createElement(Wprr.ExternalStorageInjection, {initialExternalStorage: this._externalStorage},
+				React.createElement(Wprr.FormField, {className: "skip-default display-none", type: "file", id: id, multiple: "multiple", changeCommands: Wprr.commands.callFunction(this, this._fileSelected, [Wprr.source("event", "raw")])}),
+				React.createElement(Wprr.EventCommands, {events: { onDragEnter: Wprr.commands.callFunction(this, this._highlight, [Wprr.source("event", "raw")]), onDragOver: Wprr.commands.callFunction(this, this._highlight, [Wprr.source("event", "raw")]), onDragLeave: Wprr.commands.callFunction(this, this._unhighlight, [Wprr.source("event", "raw")]),  onDrop: Wprr.commands.callFunction(this, this._handleDrop, [Wprr.source("event", "raw")])}},
+					React.createElement(Wprr.ExternalStorageProps, {props: "files", externalStorage: Wprr.sourceReference("externalStorage")},
+						React.createElement(Wprr.HasData, {check: Wprr.sourceProp("files")},
+							Wprr.Loop.createMarkupLoop(Wprr.sourceProp("files"), fileItem, React.createElement("div", {className: "spacing small"})), React.createElement("div", {className: "spacing small"})
+						)
+					),
+					React.createElement(Wprr.AddProps, {className: Wprr.sourceReference("externalStorage", "dropHighlightClass")}, 
+						React.createElement("label", {htmlFor: id, className: "drop-area drop-area-padding display-block cursor-pointer"},
+							React.createElement(Wprr.FlexRow, {className: "justify-center small-item-spacing vertically-center-items"},
+								React.createElement(Wprr.Image, {className: "icon standard-icon", src: "icons/add-circle.svg"}),
+								React.createElement("div", {className: "drop-area-drop-label"},
+									Wprr.idText("Choose a file or drop it here", "site.addOrDropFiles")
+								)
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 }

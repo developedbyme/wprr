@@ -89,6 +89,32 @@ export default class ObjectProperties extends WprrBaseObject {
 		creator.create();
 	}
 	
+	_addFileObjectProperty() {
+		console.log("_addFileObjectProperty");
+		
+		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
+		let itemId = itemEditor.editedItem.id;
+		
+		let creator = Wprr.utils.data.multitypeitems.controllers.admin.ItemCreator.create(this._elementTreeItem.group.createInternalItem());
+		
+		creator.setTitle("Object property for " + itemId);
+		
+		creator.setDataType("object-property");
+		creator.addType("file-value-item");
+		creator.addType("identifiable-item");
+		
+		creator.addOutgoingRelation(itemId, "for", false);
+		
+		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "postStatus", "draft"));
+		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdItem.id")]));
+		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdRelations.relation0.id")]));
+		
+		creator.addCreatedCommand(Wprr.commands.callFunction(this._elementTreeItem.getLinks("creatingRows"), "removeItem", [creator.item.id]));
+		this._elementTreeItem.getLinks("creatingRows").addItem(creator.item.id);
+		
+		creator.create();
+	}
+	
 	_makePrivate(aId) {
 		console.log("_makePrivate");
 		
@@ -126,8 +152,9 @@ export default class ObjectProperties extends WprrBaseObject {
 						</Wprr.layout.ItemList>
 						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
 						<div className="spacing small" />
-						<Wprr.FlexRow>
+						<Wprr.FlexRow clasName="micro-item-spacing">
 							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add value", "site.addValueObjectProperty")} commands={Wprr.commands.callFunction(this, this._addValueObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
+							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add file", "site.addFileObjectProperty")} commands={Wprr.commands.callFunction(this, this._addFileObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
 							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add link", "site.addLinkedObjectProperty")} commands={Wprr.commands.callFunction(this, this._addLinkedObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
 						</Wprr.FlexRow>
 					</div>

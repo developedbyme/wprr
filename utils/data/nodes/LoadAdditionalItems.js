@@ -31,6 +31,18 @@ export default class LoadAdditionalItems extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addId(aId) {
+		this.item.getLinks("ids").addUniqueItem(aId);
+		
+		return this;
+	}
+	
+	addIds(aId) {
+		this.item.getLinks("ids").addUniqueItems(aIds);
+		
+		return this;
+	}
+	
 	setupForItem(aItem) {
 		aItem.addType("controller", this);
 		this.setup();

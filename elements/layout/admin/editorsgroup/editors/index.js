@@ -4,3 +4,9 @@ export {default as SelectAnyRelations} from "./SelectAnyRelations";
 export {default as SelectRelations} from "./SelectRelations";
 export {default as SelectTypes} from "./SelectTypes";
 export {default as OrderedRelations} from "./OrderedRelations";
+export {default as Relations} from "./Relations";
+export {default as ObjectPropertiesOfType} from "./ObjectPropertiesOfType";
+export {default as ObjectPropertyValue} from "./ObjectPropertyValue";
+
+import * as files from "./files/index.js";
+export {files};

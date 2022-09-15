@@ -164,14 +164,12 @@ export default class ItemCreator extends MultiTypeItemConnection {
 	}
 	
 	_setupRelation(aRelationId, aType, aFromId, aToId, aStatus) {
-		//console.log("_setupRelation");
-		//console.log(aRelationId, aType, aFromId, aToId, aStatus);
+		console.log("_setupRelation");
+		console.log(aRelationId, aType, aFromId, aToId, aStatus);
 		
 		let fromItem = this.item.group.getItem(aFromId);
 		let relationItem = this.item.group.getItem(aRelationId);
 		let toItem = this.item.group.getItem(aToId);
-		
-		fromItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
 		
 		relationItem.addSingleLink("from", fromItem.id);
 		relationItem.addSingleLink("to", toItem.id);
@@ -181,6 +179,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		relationItem.setValue("endAt", -1);
 		relationItem.setValue("postStatus", aStatus);
 		
+		fromItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
 		toItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
 		
 	}
