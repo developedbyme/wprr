@@ -21,6 +21,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		
 		this.item.getLinks("activeRelations").idsSource.addChangeCommand(Wprr.commands.callFunction(this, this._relationsUpdated));
 		this.item.getLinks("activeItems").idsSource.addChangeCommand(Wprr.commands.callFunction(this, this._itemUpdated));
+		this.item.getLinks("pendingItems");
 		
 		return this;
 	}
@@ -37,6 +38,8 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 	
 	_createRelation(aItemId) {
 		console.log("_createRelation");
+		
+		this.item.getLinks("pendingItems").addUniqueItem(aItemId);
 		
 		let project = Wprr.objectPath(this.item.group, "project.controller");
 		
@@ -102,6 +105,8 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();
 		
 		postStatusEditor.item.setValue("value", "private");
+		
+		this.item.getLinks("pendingItems").removeItem(aId);
 	}
 	
 	_itemUpdated() {
@@ -115,6 +120,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		this._isUpdating = true;
 		
 		let currentActiveIds = this._getActiveItemsFromRelations();
+		currentActiveIds = [].concat(currentActiveIds, this.item.getLinks("pendingItems").ids);
 		let activeIds = this.item.getLinks("activeItems").ids;
 		
 		let itemsToCreate = Wprr.utils.array.removeValues(activeIds, currentActiveIds);
@@ -140,6 +146,8 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		//console.log(this);
 		
 		let newIds = this._getActiveItemsFromRelations();
+		
+		newIds = [].concat(newIds, this.item.getLinks("pendingItems").ids);
 		
 		this._isUpdating = true;
 		this.item.getLinks("activeItems").setItems(newIds);
