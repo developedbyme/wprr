@@ -63,8 +63,8 @@ export default class SelectRelations extends WprrBaseObject {
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "title", search));
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "postStatus", postStatus));
 		
-		let relationEditor = this.getRelationEditor();
-		creator.addCreatedCommand(Wprr.commands.callFunction(relationEditor, relationEditor.createRelation, [Wprr.sourceEvent("createdItem.id")]));
+		let relationEditor = this.getRelationEditor().singleEditor;
+		creator.addCreatedCommand(Wprr.commands.callFunction(relationEditor, relationEditor.setValue, [Wprr.sourceEvent("createdItem.id")]));
 		
 		creator.addCreatedCommand(Wprr.commands.callFunction(this._elementTreeItem.getLinks("creatingRows"), "removeItem", [creator.item.id]));
 		this._elementTreeItem.getLinks("creatingRows").addItem(creator.item.id);
@@ -82,10 +82,6 @@ export default class SelectRelations extends WprrBaseObject {
 		return itemEditor.getRelationEditor(direction, relationType, objectType);
 	}
 	
-	_getEncodings() {
-		return "postTitle,postStatus";
-	}
-	
 	_renderMainElement() {
 		//console.log("SelectRelations::_renderMainElement");
 		
@@ -98,11 +94,10 @@ export default class SelectRelations extends WprrBaseObject {
 		let relationName = (direction === "outgoing") ? "to.linkedItem" : "from.linkedItem";
 		
 		let allowCreation = this.getFirstInputWithDefault("allowCreation", true);
-		let encodings = this._getEncodings();
 		
 		return React.createElement("div", null,
 			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType])} as="valueEditor">
-				
+				<Wprr.AddReference data={Wprr.sourceReference("valueEditor").deeper("singleEditor")} as="selectedEditor">
 					<div>
 						<Wprr.SelectSection selectedSections={this._elementTreeItem.getValueSource("mode")}>
 							<div data-default-section={true}>
@@ -152,7 +147,7 @@ export default class SelectRelations extends WprrBaseObject {
 											<Wprr.HasData check={this._elementTreeItem.getLinks("sortedItems").idsSource} checkType="notEmpty">
 												<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("sortedItems").idsSource}>
 													<Wprr.CommandButton commands={[
-														Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "createRelation", [Wprr.sourceReference("item", "id")]),
+														Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]),
 														Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
 													]}>
 														<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
@@ -192,7 +187,7 @@ export default class SelectRelations extends WprrBaseObject {
 						</Wprr.SelectSection>
 						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
 					</div>
-
+				</Wprr.AddReference>
 			</Wprr.AddReference>
 		);
 	}

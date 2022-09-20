@@ -2,9 +2,9 @@ import React from "react";
 import Wprr from "wprr/Wprr";
 import moment from "moment";
 
-import SelectRelations from "./SelectRelations";
+import SelectRelation from "./SelectRelation";
 
-export default class SelectTypes extends SelectRelations {
+export default class SelectType extends SelectRelation {
 	
 	_construct() {
 		super._construct();
@@ -38,8 +38,8 @@ export default class SelectTypes extends SelectRelations {
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "title", search));
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "postStatus", postStatus));
 		
-		let relationEditor = this.getRelationEditor();
-		creator.addCreatedCommand(Wprr.commands.callFunction(relationEditor, relationEditor.createRelation, [Wprr.sourceEvent("createdItem.id")]));
+		let relationEditor = this.getRelationEditor().singleEditor;
+		creator.addCreatedCommand(Wprr.commands.callFunction(relationEditor, relationEditor.setValue, [Wprr.sourceEvent("createdItem.id")]));
 		
 		creator.addCreatedCommand(Wprr.commands.callFunction(this._elementTreeItem.getLinks("creatingRows"), "removeItem", [creator.item.id]));
 		this._elementTreeItem.getLinks("creatingRows").addItem(creator.item.id);

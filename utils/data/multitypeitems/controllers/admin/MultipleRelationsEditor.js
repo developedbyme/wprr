@@ -29,6 +29,12 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		return this.item.getLinks("activeItems").idsSource;
 	}
 	
+	setItems(aIds) {
+		this.item.getLinks("activeItems").setItems(aIds);
+		
+		return this;
+	}
+	
 	_createRelation(aItemId) {
 		console.log("_createRelation");
 		
@@ -99,8 +105,8 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 	}
 	
 	_itemUpdated() {
-		console.log("_itemUpdated");
-		console.log(this);
+		//console.log("_itemUpdated");
+		//console.log(this);
 		
 		if(this._isUpdating) {
 			return;
@@ -130,14 +136,15 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationsUpdated() {
-		console.log("_relationsUpdated");
-		console.log(this);
+		//console.log("_relationsUpdated");
+		//console.log(this);
 		
 		let newIds = this._getActiveItemsFromRelations();
 		
+		this._isUpdating = true;
 		this.item.getLinks("activeItems").setItems(newIds);
+		this._isUpdating = false;
 		
-		//METODO: this will need to handle pending creations
 	}
 	
 	_getActiveItemsFromRelations() {
@@ -160,7 +167,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 			returnArray.push(Wprr.objectPath(currentRelation, linkName));
 		}
 		
-		return returnArray;
+		return Wprr.utils.array.removeDuplicates(returnArray);
 	}
 	
 	_getRelationsFromItems(aIds) {

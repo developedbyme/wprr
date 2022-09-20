@@ -7,6 +7,8 @@ export {default as OrderedRelations} from "./OrderedRelations";
 export {default as Relations} from "./Relations";
 export {default as ObjectPropertiesOfType} from "./ObjectPropertiesOfType";
 export {default as ObjectPropertyValue} from "./ObjectPropertyValue";
+export {default as SelectRelation} from "./SelectRelation";
+export {default as SelectType} from "./SelectType";
 
 import * as files from "./files/index.js";
 export {files};
