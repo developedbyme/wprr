@@ -20,14 +20,23 @@ export default class RichTextEditor extends WprrBaseObject {
 		this._callback_changeBound = this._callback_change.bind(this);
 		this._callback_setupEditorBound = this._callback_setupEditor.bind(this);
 		
+		this._callback_convertUrlBound = this._callback_convertUrl.bind(this);
+		
 		let apiKey = this.getFirstInput("apiKey", Wprr.sourceReference("tinymce/apiKey"));
 		
 		wprr.loadScript("https://cdn.tiny.cloud/1/" + apiKey + "/tinymce/5/tinymce.min.js", Wprr.commands.setValue(this._loaded.reSource(), "loaded", true));
 		
 	}
 	
+	_callback_convertUrl(aUrl, aNode, aOnSave, aName) {
+		//console.log("wprr/elements/form/RichTextEditor::_callback_convertUrl");
+		//console.log(aUrl);
+		
+		return aUrl;
+	}
+	
 	_callback_setupEditor(aEditor) {
-		console.log("wprr/elements/form/RichTextEditor::_callback_setupEditor");
+		//console.log("wprr/elements/form/RichTextEditor::_callback_setupEditor");
 		
 		let commands = this.getFirstInput("setupCommands");
 		
@@ -37,9 +46,8 @@ export default class RichTextEditor extends WprrBaseObject {
 	}
 	
 	_callback_change(aText) {
-		console.log("wprr/elements/form/RichTextEditor::_callback_change");
-		console.log(aText);
-		//console.log(aEvent.target.value);
+		//console.log("wprr/elements/form/RichTextEditor::_callback_change");
+		//console.log(aText);
 		
 		let newValue = aText;
 		
@@ -60,12 +68,10 @@ export default class RichTextEditor extends WprrBaseObject {
 	}
 	
 	getValue() {
-		console.log("wprr/elements/form/RichTextEditor::getValue");
+		//console.log("wprr/elements/form/RichTextEditor::getValue");
 		let valueName = this.getFirstInputWithDefault("valueName", "value");
 		
 		let value = this.getFirstInput("value", Wprr.source("propWithDots", valueName));
-		
-		console.log(value, this);
 		
 		return value;
 	}
@@ -84,9 +90,11 @@ export default class RichTextEditor extends WprrBaseObject {
 				plugins: plugins,
 				menubar: menubar,
 				toolbar: toolbar,
+				convert_urls: false,
 				relative_urls: false,
 				remove_script_host: false,
-				setup: this._callback_setupEditorBound
+				setup: this._callback_setupEditorBound,
+				urlconverter_callback: this._callback_convertUrlBound
 			};
 		}
 		

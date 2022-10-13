@@ -71,6 +71,29 @@ export default class OrderItems extends BaseObject {
 			coupons.setItems(newIds);
 		}
 		
+		
+		{
+			let fees = aItem.getLinks("fees");
+			
+			let newIds = new Array();
+			
+			let currentArray = aData["fees"];
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentData = currentArray[i];
+				let currentItem = group.getItem("lineItem" + currentData["id"]);
+				
+				currentItem.setValue("systemId", currentData["id"]);
+				currentItem.setValue("name", currentData["name"]);
+				currentItem.setValue("total", currentData["total"]);
+				currentItem.setValue("tax", currentData["tax"]);
+				
+				newIds.push(currentItem.id);
+			}
+			
+			fees.setItems(newIds);
+		}
+		
 		aItem.setValue("hasData/orderItems", true);
 		
 		return this;

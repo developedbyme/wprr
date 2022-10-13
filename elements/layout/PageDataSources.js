@@ -8,9 +8,9 @@ import objectPath from "object-path";
 //import PageDataSources from "wprr/elements/layout/PageDataSources";
 export default class PageDataSources extends Layout {
 
-	constructor() {
+	_construct() {
 		
-		super();
+		super._construct();
 		
 		this._layoutName = "pageDataSources";
 		
@@ -20,6 +20,52 @@ export default class PageDataSources extends Layout {
 		
 		this._loadingGroup = new Wprr.utils.loading.LoadingGroup();
 		this._loadingGroup.addStatusCommand(Wprr.commands.callFunction(this, this._statusChanged, [Wprr.sourceEvent()]));
+		
+		let project = this.getReference("wprr/project");
+		
+		
+		
+		let meLoaded = this._elementTreeItem.addNode("me/skippedOrLoaded", new Wprr.utils.data.nodes.logic.Any()).addValues(
+			this._elementTreeItem.getValueSource("me/skipped"),
+			this._elementTreeItem.getValueSource("me/loaded"),
+		);
+		
+		let sourcesLoaded = this._elementTreeItem.addNode("sources/skippedOrLoaded", new Wprr.utils.data.nodes.logic.Any()).addValues(
+			this._elementTreeItem.getValueSource("sources/skipped"),
+			this._elementTreeItem.getValueSource("sources/loaded"),
+		);
+		
+		let allLoaded = this._elementTreeItem.addNode("all/done", new Wprr.utils.data.nodes.logic.All()).addValues(
+			meLoaded.sources.get("output"),
+			sourcesLoaded.sources.get("output"),
+		);
+		
+		this._elementTreeItem.getValueSource("loaded").input(allLoaded.sources.get("output"));
+		
+		let terms = this.getFirstInput(Wprr.sourceReference("wprr/pageItem", "post.linkedItem.terms.ids"));
+		if(terms && terms.indexOf("dbm_relation:restrict-access/require-signed-in") !== -1) {
+			
+		}
+		else {
+			this._elementTreeItem.setValue("me/skipped", true);
+		}
+		
+		let loadData = this._getLoadData();
+		if(loadData.length > 0) {
+			let currentArray = loadData;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				
+				let loader = project.getSharedLoader(currentArray[i]["value"]);
+				this._loadingGroup.addLoader(loader);
+			}
+			
+			this._loadingGroup.load();
+		}
+		else {
+			this._externalData.updateValue("loaded", true);
+			this._elementTreeItem.setValue("sources/skipped", true);
+		}
 	}
 	
 	_getReplacements(aData) {
@@ -94,6 +140,7 @@ export default class PageDataSources extends Layout {
 			}
 			
 			this._externalData.updateValue("loaded", true);
+			this._elementTreeItem.setVAlue("sources/loaded", true);
 		}
 	}
 	
@@ -175,31 +222,6 @@ export default class PageDataSources extends Layout {
 		}
 		
 		return returnArray;
-	}
-	
-	_prepareInitialRender() {
-		//console.log("PageDataSources::_prepareInitialRender");
-		
-		super._prepareInitialRender();
-		
-		let project = this.getReference("wprr/project");
-		
-		let loadData = this._getLoadData();
-		
-		if(loadData.length > 0) {
-			let currentArray = loadData;
-			let currentArrayLength = currentArray.length;
-			for(let i = 0; i < currentArrayLength; i++) {
-				
-				let loader = project.getSharedLoader(currentArray[i]["value"]);
-				this._loadingGroup.addLoader(loader);
-			}
-			
-			this._loadingGroup.load();
-		}
-		else {
-			this._externalData.updateValue("loaded", true);
-		}
 	}
 	
 	_getLayout(aSlots) {

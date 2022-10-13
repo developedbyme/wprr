@@ -172,6 +172,10 @@ export default class Project {
 		return this._items;
 	}
 	
+	get item() {
+		return this._items.getItem("project");
+	}
+	
 	get tracking() {
 		return Wprr.objectPath(this.items, "project.tracking.linkedItem.trackingController");
 	}
@@ -378,6 +382,7 @@ export default class Project {
 			
 			let user = this._items.getItem("user" + userId);
 			
+			user.setValue("systemId", userId);
 			user.setValue("name", userData["name"]);
 			user.setValue("firstName", userData["firstName"]);
 			user.setValue("lastName", userData["lastName"]);

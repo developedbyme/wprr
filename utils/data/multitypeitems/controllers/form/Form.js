@@ -60,7 +60,7 @@ export default class Form extends MultiTypeItemConnection {
 	}
 	
 	_isValidChange() {
-		console.log("_isValidChange");
+		//console.log("_isValidChange");
 		
 		let isValid = true;
 		let currentArray = this.item.getNamedLinks("fields").items;
@@ -93,6 +93,8 @@ export default class Form extends MultiTypeItemConnection {
 		else {
 			this.item.setValue("validationStatus", "invalid");
 		}
+		
+		return isValid;
 	}
 	
 	getValues() {

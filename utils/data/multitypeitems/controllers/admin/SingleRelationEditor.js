@@ -26,6 +26,10 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	get value() {
+		return this.item.getType("activeItem").id;
+	}
+	
 	get activeItemSource() {
 		return this.item.getType("activeItem").idSource;
 	}

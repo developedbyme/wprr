@@ -15,6 +15,7 @@ export default class Totals extends BaseObject {
 		aItem.requireValue("hasData/order/totals", false);
 		aItem.requireValue("total");
 		aItem.requireValue("tax");
+		aItem.requireValue("subtotal");
 		
 		return this;
 	}
@@ -25,6 +26,7 @@ export default class Totals extends BaseObject {
 		
 		aItem.setValue("total", aData["total"]);
 		aItem.setValue("tax", aData["tax"]);
+		aItem.setValue("subtotal", aData["subtotal"]);
 		aItem.setValue("hasData/order/totals", true);
 		
 		return this;
