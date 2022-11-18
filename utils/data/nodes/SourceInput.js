@@ -19,7 +19,7 @@ export default class SourceInput extends BaseObject {
 	
 	setValue(aValue) {
 		
-		if(aValue instanceof Wprr.ValueSourceData) {
+		if(aValue instanceof Wprr.utils.ValueSourceData) {
 			if((aValue !== this._currentSource) && (this._currentSource !== null)) {
 				this._connection.removeValueSource(this._currentSource);
 				this._currentSource = null;

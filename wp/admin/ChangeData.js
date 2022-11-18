@@ -118,7 +118,7 @@ export default class ChangeData  {
 		
 		let changeValue = ChangeDataFunctions.createFieldData(aField, aValue);
 		
-		this.addChange(ChangeDataFunctions.createChangeData("meta", changeValue));
+		this.addChange(ChangeDataFunctions.createChangeData(aChangeType, changeValue));
 		
 		return this;
 	}

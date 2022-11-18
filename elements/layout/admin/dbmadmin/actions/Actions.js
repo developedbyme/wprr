@@ -19,9 +19,16 @@ export default class Actions extends Wprr.BaseObject {
 		let mappedList = this._elementTreeItem.addNode("mappedList", new Wprr.utils.data.multitypeitems.controllers.list.ActiveList());
 		mappedList.item.setValue("activateWhenAdded", false);
 		mappedList.setupCommands.addCommands.push(Wprr.commands.callFunction(this, this._setupSelectItem, [Wprr.sourceEvent()]));
-		mappedList.item.getLinks("items").input(this._elementTreeItem.getLinks("items"));
+		
 		
 		this._elementTreeItem.getLinks("rows").input(mappedList.item.getLinks("rows"));
+		
+		let detailsLoader = this._elementTreeItem.addNode("detailsLoader", new Wprr.utils.data.nodes.LoadAdditionalItems());
+		detailsLoader.item.setValue("url", this.getWprrUrl("range/?select=idSelection,anyStatus&encode=action&ids={ids}", "wprrData"));
+		
+		mappedList.item.getLinks("items").input(detailsLoader.item.getLinks("loadedIds"));
+		detailsLoader.item.getLinks("ids").input(loader.item.getLinks("items"));
+		
 		
 		let batchEditItem = items.getItem("batchEdit/actions");
 		
@@ -39,19 +46,16 @@ export default class Actions extends Wprr.BaseObject {
 			batchEditItem.getLinks("batchActions").addItem(batchOpeartionItem.id);
 		}
 		
-		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate,inDateRange&encode=action&type=action&startDate=" + this._elementTreeItem.getValue("date") + "&endDate=" + this._elementTreeItem.getValue("date"), "wprrData"));
+		
+		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate,inDateRange&encode=id&type=action&startDate=" + this._elementTreeItem.getValue("date") + "&endDate=" + this._elementTreeItem.getValue("date"), "wprrData"));
 	}
 	
 	_setupSelectItem(aId) {
 		let item = this._elementTreeItem.group.getItem(aId);
 		let action = Wprr.objectPath(item, "forItem.linkedItem");
 		
-		console.log("item>>>>>", item);
-		
 		let inArrayCondition = Wprr.utils.data.nodes.InArrayCondition.connect(this._elementTreeItem.getLinks("selectedItems").idsSource, item.getValueSource("active"), item.getType("forItem").id);
 		item.addType("inArrayCondition", inArrayCondition);
-		
-		console.log("action>>>>>", action);
 		
 		let relations = Wprr.utils.array.getItemsBy("type.id", "dbm_type:object-relation/for", Wprr.objectPath(action, "incomingRelations.items"));
 		relations = Wprr.utils.array.getItemsBy("from.linkedItem.objectTypes.ids", "dbm_type:type/action-status", relations, "arrayContains");
@@ -62,7 +66,6 @@ export default class Actions extends Wprr.BaseObject {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentRelation = currentArray[i];
-			console.log(currentRelation);
 			
 			let startAt = currentRelation.getValue("startAt");
 			let endAt = currentRelation.getValue("endAt");
@@ -129,7 +132,7 @@ export default class Actions extends Wprr.BaseObject {
 			<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("rows").idsSource} as="row" className="standard-alternating-rows">
 				<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="item">
 					<div className="standard-row standard-row-padding" itemClasses="flex-no-resize,flex-no-resize,flex-no-resize,flex-no-resize,flex-resize">
-						<Wprr.FlexRow className="small-item-spacing">
+						<Wprr.FlexRow className="small-item-spacing flex-no-wrap">
 							<div className="table-cell-width-select">
 								<Wprr.Checkbox checked={Wprr.sourceReference("row", "active")} />
 							</div>

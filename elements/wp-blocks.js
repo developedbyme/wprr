@@ -15,3 +15,6 @@ export {cookie};
 
 import * as process from "./process/wp-blocks.js";
 export {process};
+
+import * as area from "./area/wp-blocks.js";
+export {area};

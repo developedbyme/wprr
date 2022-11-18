@@ -36,8 +36,33 @@ export default class ArrayChangeCommands extends BaseObject {
 		
 		let newArray = this.array;
 		
-		let addedItems = Wprr.utils.array.getUnselectedItems(this._lastUpdate, newArray);
-		let removedItems = Wprr.utils.array.getUnselectedItems(newArray, this._lastUpdate);
+		let addedItems;
+		let removedItems;
+		
+		if(this._lastUpdate.length === 0) {
+			addedItems = newArray;
+			removedItems = [];
+		}
+		else if(newArray.length === 0) {
+			addedItems = [];
+			removedItems = this._lastUpdate;
+		}
+		else {
+			let temp = Wprr.utils.array.findMinorDiffs(this._lastUpdate, newArray);
+			
+			if(temp[0].length === 0) {
+				addedItems = temp[1];
+				removedItems = [];
+			}
+			else if(temp[1].length === 0) {
+				addedItems = [];
+				removedItems = temp[0];
+			}
+			else {
+				addedItems = Wprr.utils.array.getUnselectedItems(temp[0], temp[1]);
+				removedItems = Wprr.utils.array.getUnselectedItems(temp[1], temp[0]);
+			}
+		}
 		
 		this._lastUpdate = Wprr.utils.array.copy(newArray);
 		

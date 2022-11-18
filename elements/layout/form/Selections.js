@@ -8,27 +8,23 @@ import Layout from "wprr/elements/layout/Layout";
 //import Selections from "./Selections";
 export default class Selections extends Layout {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
-		this._addMainElementClassName("selections");
-		
+		this._elementTreeItem.getNamedLinks("isSelectedNodes");
 		
 		this._layoutName = "selections";
 	}
 	
-	_prepareInitialRender() {
-		super._prepareInitialRender();
-		
-		
-		this._elementTreeItem.getNamedLinks("isSelectedNodes");
-	}
-	
 	getIsSelectedItemForValue(aValue) {
-		//console.log("getIsSelectedItemForValue");
+		console.log("getIsSelectedItemForValue");
+		console.log(aValue);
+		
 		let valueSource = this._elementTreeItem.getType("slot/value");
+		console.log(valueSource.value, valueSource);
 		
 		let isSelectedNodesLinks = this._elementTreeItem.getNamedLinks("isSelectedNodes");
+		
 		
 		if(!isSelectedNodesLinks.hasLinkByName(aValue)) {
 			let item = this._elementTreeItem.group.createInternalItem();
@@ -83,7 +79,7 @@ export default class Selections extends Layout {
 		let loopItem = aSlots.slot("loopItem", aSlots.default(defaultSelection));
 		let spacing = aSlots.slot("spacing", React.createElement("div", {"className": "spacing small"}));
 		
-		return React.createElement("div", {className: ""},
+		return React.createElement("div", {"className": "selections"},
 			Wprr.Loop.createMarkupLoop(aSlots.prop("options", []), loopItem, spacing)
 		);
 	}

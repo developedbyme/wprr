@@ -7,8 +7,8 @@ let cacheValue = (new Date()).valueOf();
 //import CartCondition from "./CartCondition";
 export default class CartCondition extends Wprr.BaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 	}
 	
 	_renderMainElement() {
@@ -18,27 +18,22 @@ export default class CartCondition extends Wprr.BaseObject {
 		cartUrl = Wprr.utils.url.addQueryString(cartUrl, "sessionVariables", "purchase_type");
 		cartUrl = Wprr.utils.url.addQueryString(cartUrl, "cache", cacheValue);
 		
-		let invert = objectPath.get(this.getReference("blockData"), "invert");
+		let invert = this.getFirstInput(Wprr.sourceReference("blockData", "invert"));
 		
 		let checkType = "equal";
 		if(invert) {
 			checkType = "invert/" + checkType;
 		}
 		
-		return React.createElement("wrapper", null, /*#__PURE__*/React.createElement(Wprr.DataLoader, {
-  loadData: {
-    "originalCart": cartUrl
-  }
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourceProp("originalCart", "items"),
-  checkType: "notEmpty"
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourceProp("originalCart", "session.purchase_type"),
-  checkType: checkType,
-  compareValue: Wprr.sourceReference("blockData", "purchaseType")
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.ContentsAndInjectedComponents, {
-  content: Wprr.sourceReference("blockData", "innerMarkup")
-}))))));
+		return React.createElement(React.Fragment, null,
+			React.createElement(Wprr.DataLoader, {loadData: {"originalCart": cartUrl}},
+				React.createElement(Wprr.HasData, {check: Wprr.sourceProp("originalCart", "items"), checkType: "notEmpty"},
+					React.createElement(Wprr.HasData, {check: Wprr.sourceProp("originalCart", "session.purchase_type"), checkType: checkType, compareValue: Wprr.sourceReference("blockData", "purchaseType")},
+						React.createElement(Wprr.ContentsAndInjectedComponents, {content: Wprr.sourceReference("blockData", "innerMarkup")})
+					)
+				)
+			)
+		);
 	}
 	
 	static getWpAdminEditor() {
@@ -48,37 +43,29 @@ export default class CartCondition extends Wprr.BaseObject {
 			
 		};
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "small-item-spacing vertically-center-items",
-  itemClasses: "flex-resize,flex-no-resize,flex-resize"
-}, /*#__PURE__*/React.createElement("hr", {
-  className: "line no-margin"
-}), /*#__PURE__*/React.createElement("div", null, Wprr.translateText("Cart condition")), /*#__PURE__*/React.createElement("hr", {
-  className: "line no-margin"
-})), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "small-item-spacing"
-}, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "purchaseType",
-  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.TermSelection, {
-  valueName: "purchaseType",
-  taxonomy: "dbm_relation",
-  valueField: "slug",
-  subtree: "purchase-type",
-  noSelectionLabel: Wprr.sourceTranslation("Typ av varukorg")
-})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.EditableProps, {
-  editableProps: "invert",
-  externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")
-}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
-  className: "full-width",
-  valueName: "invert"
-})), /*#__PURE__*/React.createElement("label", null, Wprr.translateText("Invertera matchning")))), /*#__PURE__*/React.createElement(wp.editor.InnerBlocks, null), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "small-item-spacing vertically-center-items",
-  itemClasses: "flex-resize,flex-no-resize,flex-resize"
-}, /*#__PURE__*/React.createElement("hr", {
-  className: "line no-margin"
-}), /*#__PURE__*/React.createElement("div", null, Wprr.translateText("End:"), " ", Wprr.translateText("Cart condition")), /*#__PURE__*/React.createElement("hr", {
-  className: "line no-margin"
-})));
+		return React.createElement("div", null,
+			React.createElement(Wprr.FlexRow, {className: "small-item-spacing vertically-center-items", itemClasses: "flex-resize,flex-no-resize,flex-resize"},
+				React.createElement("hr", { className: "line no-margin"}),
+				React.createElement("div", null, Wprr.translateText("Cart condition")),
+				React.createElement("hr", {className: "line no-margin"})
+			),
+			React.createElement(Wprr.FlexRow, {className: "small-item-spacing"},
+				React.createElement(Wprr.EditableProps, {editableProps: "purchaseType", externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")},
+					React.createElement(Wprr.TermSelection, {valueName: "purchaseType", taxonomy: "dbm_relation", valueField: "slug", subtree: "purchase-type", noSelectionLabel: Wprr.sourceTranslation("Typ av varukorg")})
+				),
+				React.createElement("div", null,
+					React.createElement(Wprr.EditableProps, {editableProps: "invert", externalStorage: Wprr.sourceReference("wprr/wpBlockEditor/externalStorage")},
+						React.createElement(Wprr.Checkbox, {className: "full-width", valueName: "invert"})
+					),
+					React.createElement("label", null, Wprr.translateText("Invertera matchning"))
+				)
+			),
+			React.createElement(wp.editor.InnerBlocks, null),
+			React.createElement(Wprr.FlexRow, {className: "small-item-spacing vertically-center-items", itemClasses: "flex-resize,flex-no-resize,flex-resize"},
+				React.createElement("hr", {className: "line no-margin"}),
+				React.createElement("div", null, Wprr.translateText("End:"), " ", Wprr.translateText("Cart condition")),
+				React.createElement("hr", {className: "line no-margin"})
+			)
+		);
 	}
 }

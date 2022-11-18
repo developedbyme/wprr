@@ -331,6 +331,40 @@ export default class ArrayFunctions {
 		return [aArrayOrItem];
 	}
 	
+	static findMinorDiffs(aArray1, aArray2) {
+		
+		let length1 = aArray1.length;
+		let length2 = aArray2.length;
+		
+		let minLength = Math.min(length1, length2);
+		let maxLength = Math.max(length1, length2);
+		
+		let returnArray1 = new Array();
+		let returnArray2 = new Array();
+		
+		for(let i = 0; i < minLength; i++) {
+			let value1 = aArray1[i];
+			let value2 = aArray2[i]
+			if(value1 !== value2) {
+				returnArray1.push(value1);
+				returnArray2.push(value2);
+			}
+		}
+		
+		if(length1 > length2) {
+			for(let i = minLength; i < maxLength; i++) {
+				returnArray1.push(aArray1[i]);
+			}
+		}
+		else if(length2 > length1) {
+			for(let i = minLength; i < maxLength; i++) {
+				returnArray2.push(aArray2[i]);
+			}
+		}
+		
+		return [returnArray1, returnArray2];
+	}
+	
 	static getUnselectedItems(aSelectedItems, aAllItems) {
 		let returnItems = new Array();
 		

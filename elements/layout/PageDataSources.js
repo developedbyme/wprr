@@ -44,7 +44,26 @@ export default class PageDataSources extends Layout {
 		
 		let terms = this.getFirstInput(Wprr.sourceReference("wprr/pageItem", "post.linkedItem.terms.ids"));
 		if(terms && terms.indexOf("dbm_relation:restrict-access/require-signed-in") !== -1) {
+			let project = Wprr.objectPath(this._elementTreeItem.group, "project.controller");
+			let checkedLogin = Wprr.objectPath(project, "item.session.linkedItem.checkedLoginStatus.value");
+		
+			if(!checkedLogin) {
+				let loader = project.getSharedLoader(this.getWprrUrl("me/", "wprrData"));
 			
+				if(loader.getStatus() === 1) {
+					let data = loader.getData();
+					this._setUserData(data["data"]);
+					this._checkRestrictedAccess();
+				}
+				else {
+					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setUserData, [Wprr.sourceEvent("data")]));
+					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._checkRestrictedAccess, [Wprr.sourceEvent("data")]));
+					loader.load();
+				}
+			}
+			else {
+				this._checkRestrictedAccess();
+			}
 		}
 		else {
 			this._elementTreeItem.setValue("me/skipped", true);
@@ -65,6 +84,74 @@ export default class PageDataSources extends Layout {
 		else {
 			this._externalData.updateValue("loaded", true);
 			this._elementTreeItem.setValue("sources/skipped", true);
+		}
+	}
+	
+	_setUserData(aData) {
+		let project = Wprr.objectPath(this._elementTreeItem.group, "project.controller");
+
+		if(aData) {
+			project.setUser(aData["user"], aData["restNonce"]);
+		}
+		else {
+			project.setUserData(null);
+		}
+	}
+	
+	_checkRestrictedAccess() {
+		//console.log("_checkRestrictedAccess");
+		
+		let project = Wprr.objectPath(this._elementTreeItem.group, "project.controller");
+		let terms = this.getFirstInput(Wprr.sourceReference("wprr/pageItem", "post.linkedItem.terms.ids"));
+		
+		let isOk = true;
+		
+		let user = Wprr.objectPath(project, "item.session.linkedItem.user.linkedItem");
+		
+		if(user) {
+			
+			let roles = user.getValue("roles");
+			
+			if(roles.indexOf("administrator") === -1) {
+				let hasRoleRequirement = false;
+				let hasRole = false;
+			
+				let currentArray = terms;
+				let currentArrayLength = currentArray.length;
+				for(let i = 0; i < currentArrayLength; i++) {
+					let currentTerm = currentArray[i];
+				
+					if(currentTerm.indexOf("dbm_relation:require-role/") === 0) {
+						hasRoleRequirement = true;
+					
+						let currentRole = currentTerm.substring("dbm_relation:require-role/".length, currentTerm.length);
+						if(roles.indexOf(currentRole) !== -1) {
+							hasRole = true;
+						}
+						else {
+							console.log("Missing role " + currentRole);
+						}
+					}
+				}
+			
+				if(hasRoleRequirement && !hasRole) {
+					isOk = false;
+				
+					let url = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/sign-in/no-access/"));
+					wprr.navigate(url);
+				}
+			}
+		}
+		else {
+			isOk = false;
+			
+			let url = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/sign-in/"));
+			url = Wprr.utils.url.addQueryString(url, "redirect_to", encodeURIComponent(document.location.href));
+			wprr.navigate(url);
+		}
+		
+		if(isOk) {
+			this._elementTreeItem.setValue("me/loaded", true);
 		}
 	}
 	
@@ -140,7 +227,7 @@ export default class PageDataSources extends Layout {
 			}
 			
 			this._externalData.updateValue("loaded", true);
-			this._elementTreeItem.setVAlue("sources/loaded", true);
+			this._elementTreeItem.setValue("sources/loaded", true);
 		}
 	}
 	
@@ -225,17 +312,17 @@ export default class PageDataSources extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		//console.log("PageDataSources::_getLayout");
+		console.log("PageDataSources::_getLayout");
 		
 		//METODO: add separate layout for the loader
 		
 		return React.createElement(Wprr.AddReference, {"data": this._externalData, "as": "loadingData"},
-			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded")},
+			React.createElement(Wprr.HasData, {"check": this._elementTreeItem.getValueSource("loaded")},
 				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData")},
 					aSlots.default(React.createElement("div", {}, "No block element"))
 				)
 			),
-			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded"), "checkType": "invert/default"},
+			React.createElement(Wprr.HasData, {"check": this._elementTreeItem.getValueSource("loaded"), "checkType": "invert/default"},
 				aSlots.slot("loader", React.createElement(Wprr.layout.loader.LoaderDisplay, null))
 			)
 		);

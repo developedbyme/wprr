@@ -325,19 +325,30 @@ export default class Wprr {
 	}
 	
 	navigate(aUrl) {
-		console.log("Wprr::navigate");
-		console.log(aUrl);
+		//console.log("Wprr::navigate");
+		//console.log(aUrl);
 		
 		let currentArray = this._siteDataLoaders;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentSiteDataLoader = currentArray[i];
-			console.log(currentSiteDataLoader);
 			currentSiteDataLoader.navigate(aUrl);
 		}
 		
 		if(!currentArrayLength) {
 			document.location.href = aUrl;
+		}
+	}
+	
+	preload(aUrl) {
+		//console.log("Wprr::preload");
+		//console.log(aUrl);
+		
+		let currentArray = this._siteDataLoaders;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentSiteDataLoader = currentArray[i];
+			currentSiteDataLoader.preload(aUrl);
 		}
 	}
 	

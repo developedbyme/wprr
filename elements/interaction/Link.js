@@ -6,8 +6,8 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 //import Link from "wprr/elements/interaction/Link";
 export default class Link extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 	}
 	
 	_removeUsedProps(aReturnObject) {

@@ -18,6 +18,7 @@ export default class ValueSourceData extends SourceData {
 		
 		this._value = null;
 		this._tween = null;
+		this._hash = null;
 		
 		this._sourceFunction = this.getValue;
 		
@@ -36,6 +37,33 @@ export default class ValueSourceData extends SourceData {
 		this.setValue(aValue);
 		
 		return this._value;
+	}
+	
+	_getHashForValue(aValue) {
+		
+		if(aValue === null || aValue === undefined) {
+			return 0;
+		}
+		else if(Array.isArray(aValue) || aValue.constructor === Object) {
+			let string;
+		
+			try {
+				string = JSON.stringify(aValue);
+			}
+			catch(theError) {
+				return aValue;
+			}
+			
+			let hash = 0;
+			let length = string.length;
+			for(let i = 0; i < length; i++) {
+				hash = Math.imul(31, hash) + string.charCodeAt(i) | 0;
+			}
+			
+			return hash;
+		}
+		
+		return aValue;
 	}
 	
 	addChangeCommand(aCommand) {
@@ -78,8 +106,47 @@ export default class ValueSourceData extends SourceData {
 	setValue(aValue) {
 		//console.log("setValue");
 		
-		if(!Wprr.utils.object.isEqual(this._value, aValue)) {
+		if(this._value !== null) {
+			if(this._hash === null) {
+				this._hash = this._getHashForValue(this._value);
+			}
+			
+			let newHash = this._getHashForValue(aValue);
+			
+			if(newHash !== this._hash) {
+				this._value = aValue;
+				this._hash = newHash;
+			
+				this.updateForValueChange();
+			}
+		}
+		else if(aValue !== null) {
 			this._value = aValue;
+			this._hash = null;
+			this.updateForValueChange();
+		}
+		
+		return this;
+	}
+	
+	setValueFromConnection(aValue, aConnection) {
+		
+		if(this._value !== null) {
+			if(this._hash === null) {
+				this._hash = this._getHashForValue(this._value);
+			}
+			
+			let newHash = this._getHashForValue(aValue);
+			if(newHash !== this._hash) {
+				this._value = aValue;
+				this._hash = newHash;
+			
+				this.updateForValueChange();
+			}
+		}
+		else {
+			this._value = aValue;
+			this._hash = null;
 			this.updateForValueChange();
 		}
 		

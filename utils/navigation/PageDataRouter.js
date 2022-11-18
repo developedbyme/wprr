@@ -100,7 +100,7 @@ export default class PageDataRouter {
 	}
 	
 	_updateElement() {
-		console.log("_updateElement");
+		//console.log("_updateElement");
 		
 		let element = React.createElement("div", {}, "No route");
 		
@@ -112,20 +112,18 @@ export default class PageDataRouter {
 			return;
 		}
 		
-		console.log(item, Wprr.objectPath(item, "post.linkedItem.postType"));
-		
 		let currentArray = this._routes;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentQualifier = currentArray[i];
-			console.log(currentQualifier);
 			if(currentQualifier["key"].qualify(item)) {
 				element = currentQualifier["value"];
 				break;
 			}
 		}
 		
-		this._element.value = React.createElement(Wprr.ReferenceInjection, {"key": itemId, "injectData": {"wprr/pageItem": this._item}}, element);
+		let newElement = React.createElement(Wprr.ReferenceInjection, {"key": itemId, "injectData": {"wprr/pageItem": this._item}}, element);
+		this._element.value = newElement;
 	}
 	
 	getReactElement() {

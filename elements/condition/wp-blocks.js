@@ -3,3 +3,4 @@ export {default as CompletedOrderCondition} from "./CompletedOrderCondition";
 export {default as CheckoutPageCondition} from "./CheckoutPageCondition";
 export {default as GoogleOptimizeCondition} from "./GoogleOptimizeCondition";
 export {default as TimedContent} from "./TimedContent";
+export {default as RoleCondition} from "./RoleCondition";

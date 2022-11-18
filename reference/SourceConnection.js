@@ -39,13 +39,13 @@ export default class SourceConnection extends BaseObject {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentSource = currentArray[i];
-				if(!Wprr.utils.object.isEqual(aValue, currentSource.value)) {
-					try {
-						currentSource.value = Wprr.utils.object.tryCopyViaJson(aValue);
-					}
-					catch(theError) {
-						console.error("Error while updating source", currentSource, this, theError);
-					}
+				let value = Wprr.utils.object.tryCopyViaJson(aValue);
+				
+				try {
+					currentSource.setValueFromConnection(value, this);
+				}
+				catch(theError) {
+					console.error("Error while updating source", currentSource, this, theError);
 				}
 			}
 		}

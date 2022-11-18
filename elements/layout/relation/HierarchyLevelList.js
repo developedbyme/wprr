@@ -58,9 +58,7 @@ export default class HierarchyLevelList extends Layout {
 									))
 								),
 								React.createElement(Wprr.CommandButton, {commands: [Wprr.commands.callFunction(editorSource, "endRelationNow", [Wprr.sourceReference("item", "id")])]},
-									React.createElement("div", {className: "edit-button edit-button-padding pointer-cursor"},
-										Wprr.translateText("Remove")
-									)
+									React.createElement(Wprr.Image, {src: "icons/remove-circle.svg", className: "standard-icon cursor-pointer background-contain"})
 								)
 							)
 						),

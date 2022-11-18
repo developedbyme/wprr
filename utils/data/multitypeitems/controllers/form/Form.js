@@ -59,6 +59,10 @@ export default class Form extends MultiTypeItemConnection {
 		return fields.getLinkByName(aName);
 	}
 	
+	getFieldValue(aName) {
+		return this.item.getNamedLinks("fields").getLinkByName(aName).getValue("value");
+	}
+	
 	_isValidChange() {
 		//console.log("_isValidChange");
 		

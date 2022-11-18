@@ -349,7 +349,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		let comment = aItem.getValue("comment");
 		
 		let editLoader = aSaveOperation.getEditLoader(itemId);
-		editLoader.changeData.setMeta(aItem.getValue("name"), value, comment);
+		editLoader.changeData.setMeta(aItem.getValue("name"), value);
+		//METODO: comment
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
