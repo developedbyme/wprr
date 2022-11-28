@@ -62,8 +62,8 @@ export default class SaveFieldOperations extends WprrBaseObject {
 	}
 	
 	_saveField() {
-		console.log("_saveField");
-		console.log(this);
+		//console.log("_saveField");
+		//console.log(this);
 		
 		let itemsEditor = this.getFirstInput(Wprr.sourceReferenceIfExists("itemsEditor"));
 		if(itemsEditor) {

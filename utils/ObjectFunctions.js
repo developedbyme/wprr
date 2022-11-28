@@ -78,7 +78,7 @@ export default class ObjectFunctions {
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentObject = currentArray[i];
 			for(let objectName in currentObject) {
-				console.log(objectName);
+				//console.log(objectName);
 				returnObject[objectName] = currentObject[objectName];
 			}
 		}

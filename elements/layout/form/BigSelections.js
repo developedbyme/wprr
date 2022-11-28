@@ -27,7 +27,7 @@ export default class BigSelections extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("BigSelections::_renderMainElement");
+		//console.log("BigSelections::_renderMainElement");
 		
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		

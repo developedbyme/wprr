@@ -79,7 +79,7 @@ export default class UrlControl extends ControlFunction {
 	 * @return	*	The modified data
 	 */
 	adjust(aData, aManipulationObject) {
-		console.log("wprr/manipulation/adjustfunctions/control/browser/UrlControl::adjust");
+		//console.log("wprr/manipulation/adjustfunctions/control/browser/UrlControl::adjust");
 		
 		aData["url"] = this._url;
 		

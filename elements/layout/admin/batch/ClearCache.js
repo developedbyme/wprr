@@ -14,7 +14,7 @@ export default class ClearCache extends WprrBaseObject {
 	}
 	
 	_update() {
-		console.log("_update");
+		//console.log("_update");
 		
 		let selectedIds = this.getFirstInput("ids", Wprr.sourceReference("editorItem", "selectedItems.ids"));
 		let items = this.getFirstInput(Wprr.sourceReference("items"));

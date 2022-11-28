@@ -126,7 +126,7 @@ export default class ValidationBaseObject extends ManipulationBaseObject {
 			else if(aType === "submit") {
 				newValid = validationFunction(checkValue, additionalDataAndElement) ? 1 : -1;
 				if(newValid === -1) {
-					console.log(checkValue + " is not valid for field " + valueName + ".", this);
+					//console.log(checkValue + " is not valid for field " + valueName + ".", this);
 				}
 			}
 		}

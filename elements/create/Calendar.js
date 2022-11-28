@@ -38,7 +38,7 @@ export default class Calendar extends WprrBaseObject {
 	}
 	
 	selectDate(aDate) {
-		console.log("Calendar::selectDate");
+		//console.log("Calendar::selectDate");
 		
 		this.updateProp("value", aDate);
 		

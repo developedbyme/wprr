@@ -49,7 +49,7 @@ export default class WprrRangeLoop extends ManipulationBaseObject {
 			loop = <Loop loop={MarkupLoop.create()} markup={injectedMarkup} />;
 		}
 		
-		console.log(children);
+		//console.log(children);
 		//{children}
 		
 		let range = this.getSourcedProp("range");

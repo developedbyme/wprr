@@ -186,7 +186,7 @@ export default class LocalFileLoader {
 	}
 	
 	_callback_loaded(aEvent) {
-		console.log("_callback_loaded");
+		//console.log("_callback_loaded");
 		
 		let data = aEvent.target.result;
 		
@@ -195,7 +195,7 @@ export default class LocalFileLoader {
 	}
 	
 	_callback_error(aEvent) {
-		console.log("_callback_error");
+		//console.log("_callback_error");
 		
 		this.setStatus(LocalFileLoader.ERROR_LOADING);
 	}

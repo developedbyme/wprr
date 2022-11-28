@@ -18,7 +18,7 @@ export default class ConfirmEmail extends Layout {
 	}
 	
 	_continue() {
-		console.log("_continue");
+		//console.log("_continue");
 		
 		this._shouldMoveOn = true;
 		if(this._sendStatus.value === "verified") {
@@ -66,8 +66,8 @@ export default class ConfirmEmail extends Layout {
 	}
 	
 	_emailSent(aVerificationId) {
-		console.log("_emailSent");
-		console.log(aVerificationId);
+		//console.log("_emailSent");
+		//console.log(aVerificationId);
 		
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
 		externalStorage.updateValue("verificationId", aVerificationId);
@@ -97,8 +97,8 @@ export default class ConfirmEmail extends Layout {
 	}
 	
 	_verificationResult(aIsVerified, aCode) {
-		console.log("_verificationResult");
-		console.log(aIsVerified, aCode);
+		//console.log("_verificationResult");
+		//console.log(aIsVerified, aCode);
 		
 		let verificationCode = this.getFirstInput(Wprr.sourceReference("externalStorage", "verificationCode"));
 		if(verificationCode === aCode) {
@@ -117,10 +117,10 @@ export default class ConfirmEmail extends Layout {
 	}
 	
 	_updateForCodeChange() {
-		console.log("_updateForCodeChange");
+		//console.log("_updateForCodeChange");
 		
 		let verificationCode = this.getFirstInput(Wprr.sourceReference("externalStorage", "verificationCode"));
-		console.log(verificationCode);
+		//console.log(verificationCode);
 		
 		verificationCode = verificationCode.split(" ").join("");
 		if(verificationCode.length >= 6) {

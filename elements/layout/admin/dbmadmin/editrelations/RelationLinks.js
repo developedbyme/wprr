@@ -15,7 +15,7 @@ export default class EditRelation extends Wprr.BaseObject {
 		let groupedOutgoing = Wprr.utils.array.groupArray(Wprr.objectPath(item, "relations.outgoing"), "connectionType");
 		let groupedIncoming = Wprr.utils.array.groupArray(Wprr.objectPath(item, "relations.incoming"), "connectionType");
 		
-		console.log(item, groupedOutgoing, Wprr.objectPath(item, "relations.outgoing"));
+		//console.log(item, groupedOutgoing, Wprr.objectPath(item, "relations.outgoing"));
 		
 		return React.createElement("div", {
   className: "centered-site"
@@ -51,7 +51,7 @@ export default class EditRelation extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			"item": {

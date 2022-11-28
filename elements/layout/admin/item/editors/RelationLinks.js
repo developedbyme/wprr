@@ -14,12 +14,12 @@ export default class EditRelation extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let item = this.getFirstInput(Wprr.sourceReference("item"));
-		console.log(item);
+		//console.log(item);
 		
 		let groupedOutgoing = Wprr.utils.array.groupArray(Wprr.objectPath(item, "outgoingRelations.items"), "type.linkedItem.slug.value");
 		let groupedIncoming = Wprr.utils.array.groupArray(Wprr.objectPath(item, "incomingRelations.items"), "type.linkedItem.slug.value");
 		
-		console.log(item, groupedOutgoing);
+		//console.log(item, groupedOutgoing);
 		
 		return React.createElement("div", {},
 			React.createElement("div", null, "Outgoing"),

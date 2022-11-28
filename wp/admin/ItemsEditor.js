@@ -328,8 +328,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_setupItem(aItem, aData) {
-		console.log("_setupItem");
-		console.log(aItem, aData);
+		//console.log("_setupItem");
+		//console.log(aItem, aData);
 		
 		let item = aItem;
 		
@@ -471,7 +471,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		
 		{
 			let currentArray = this._settings["postFields"];
-			console.log(currentArray);
+			//console.log(currentArray);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentSettings = currentArray[i];
@@ -512,8 +512,8 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	addItemData(aData) {
-		console.log("addItemData");
-		console.log(aData);
+		//console.log("addItemData");
+		//console.log(aData);
 		
 		if(!aData) {
 			console.error("No data provided", aData);
@@ -531,13 +531,13 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	enableEditsForItem(aId) {
-		console.log("ItemsEditor::enableEditsForItem");
+		//console.log("ItemsEditor::enableEditsForItem");
 		
 		this._editorItem.getLinks("editedItems").addUniqueItem(aId);
 	}
 	
 	disableEditsForItem(aId) {
-		console.log("ItemsEditor::disableEditsForItem");
+		//console.log("ItemsEditor::disableEditsForItem");
 		
 		this._editorItem.getLinks("editedItems").removeItem(aId);
 	}
@@ -606,7 +606,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 	}
 	
 	_setUrlForInitialLoad(aItem) {
-		console.log("_setUrlForInitialLoad");
+		//console.log("_setUrlForInitialLoad");
 		
 		let id = aItem.getType("createdItem").id;
 		let language = this.project.getCurrentLanguage();
@@ -684,9 +684,9 @@ export default class ItemsEditor extends ProjectRelatedItem {
 				let currentArray2Length = currentArray2.length;
 				for(let j = 0; j < currentArray2Length; j++) {
 					let currentSaveItem = currentArray2[j];
-					console.log(currentSaveItem);
+					//console.log(currentSaveItem);
 					let currentSaveDatas = currentSaveItem.getSaveDatas();
-					console.log(currentSaveDatas);
+					//console.log(currentSaveDatas);
 				
 					saveDatas = saveDatas.concat(currentSaveDatas);
 				}

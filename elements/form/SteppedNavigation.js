@@ -16,7 +16,7 @@ export default class SteppedNavigation extends WprrBaseObject {
 	}
 	
 	_goBack() {
-		console.log("wprr/elements/form/SteppedNavigation::_goBack");
+		//console.log("wprr/elements/form/SteppedNavigation::_goBack");
 		
 		let commands = this.getSourcedProp("backCommands");
 		
@@ -26,7 +26,7 @@ export default class SteppedNavigation extends WprrBaseObject {
 	}
 	
 	_goForward() {
-		console.log("wprr/elements/form/SteppedNavigation::_goForward");
+		//console.log("wprr/elements/form/SteppedNavigation::_goForward");
 		
 		let commands = this.getSourcedProp("commands");
 		

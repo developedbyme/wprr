@@ -10,7 +10,7 @@ export default class PostTerms extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PostTerms::prepare");
+		//console.log("PostTerms::prepare");
 		
 		aItem.requireValue("hasData/postTerms", false);
 		aItem.getLinks("terms");

@@ -17,11 +17,11 @@ export default class SliderDisplay extends WprrBaseObject {
 	}
 	
 	_updateHeight(aElement) {
-		console.log("_updateHeight");
-		console.log(aElement);
+		//console.log("_updateHeight");
+		//console.log(aElement);
 		
 		let elementHeight = Wprr.objectPath(aElement.getMainElement(), "clientHeight");
-		console.log(elementHeight);
+		//console.log(elementHeight);
 		
 		this._maxHeight.value = Math.max(this._maxHeight.value, elementHeight);
 		

@@ -34,7 +34,7 @@ export default class DbmContentFunctions  {
 	}
 	
 	static getSingleRelation(aPostData, aRelationType) {
-		console.log("getSingleRelation", aPostData);
+		//console.log("getSingleRelation", aPostData);
 		
 		if(aPostData.item) {
 			let fullPath = "dbm_relation:" + aRelationType + "/";

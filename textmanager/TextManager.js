@@ -178,7 +178,7 @@ export default class TextManager {
 			objectPath.set(returnObject, objectName, this._unmappedTexts[objectName]);
 		}
 		
-		console.log(JSON.stringify(returnObject, null, "\t"));
+		//console.log(JSON.stringify(returnObject, null, "\t"));
 		return returnObject;
 	}
 	
@@ -192,7 +192,7 @@ export default class TextManager {
 		
 		let returnObject = aPath ? objectPath.get(newTranslationObject, aPath) : newTranslationObject;
 		
-		console.log(JSON.stringify(returnObject, null, "\t"));
+		//console.log(JSON.stringify(returnObject, null, "\t"));
 		
 		return returnObject;
 	}

@@ -28,8 +28,8 @@ export default class HasTerm extends Qualification {
 	 * @return	Boolean	The result of the evalutation.
 	 */
 	qualify(aData) {
-		console.log("wprr/routing/qualification/wp/HasTerm::qualify");
-		console.log(aData);
+		//console.log("wprr/routing/qualification/wp/HasTerm::qualify");
+		//console.log(aData);
 		
 		let taxonomy = this.getInput("taxonomy");
 		let matchTerm = this.getInput("matchTerm");
@@ -45,7 +45,7 @@ export default class HasTerm extends Qualification {
 		let field = this.getInput("field");
 		
 		let terms = Wprr.objectPath(aData, "post.linkedItem.postData.terms." + taxonomy);
-		console.log(">>>>>", terms);
+		//console.log(">>>>>", terms);
 		if(!terms) {
 			terms = Wprr.objectPath(aData, "queriedData.terms." + taxonomy);
 		}

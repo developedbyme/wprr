@@ -35,8 +35,8 @@ export default class DragArea extends ManipulationBaseObject {
 	}
 	
 	startDrag(aPositionX, aPositionY) {
-		console.log("startDrag");
-		console.log(aPositionX, aPositionY);
+		//console.log("startDrag");
+		//console.log(aPositionX, aPositionY);
 		
 		let externalStorage = this.getFirstInput("externalStorage");
 		
@@ -96,7 +96,7 @@ export default class DragArea extends ManipulationBaseObject {
 	}
 	
 	_getChildrenToClone() {
-		console.log("DragArea::_getChildrenToClone");
+		//console.log("DragArea::_getChildrenToClone");
 		let children = super._getChildrenToClone();
 		
 		return [

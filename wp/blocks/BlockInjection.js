@@ -45,7 +45,7 @@ export default class BlockInjection {
 			this.addBlockDataProp(currentArray[i]);
 		}
 		
-		console.log(this);
+		//console.log(this);
 		
 		return this;
 	}

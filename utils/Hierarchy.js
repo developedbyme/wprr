@@ -30,8 +30,8 @@ export default class Hierarchy extends MultiTypeItemConnection {
 	}
 	
 	_setupList(aList, aItem) {
-		console.log("_setupList");
-		console.log(aList, aItem);
+		//console.log("_setupList");
+		//console.log(aList, aItem);
 		
 		let returnList = new Array();
 		let childrenLinks = aItem.getLinks("children");
@@ -71,7 +71,7 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		
 		if(aData && Array.isArray(aData)) {
 			let cleanedList = this._setupList(aData, mainParent);
-			console.log("cleanedList", cleanedList);
+			//console.log("cleanedList", cleanedList);
 			
 			this.updateStructure();
 		}
@@ -177,8 +177,8 @@ export default class Hierarchy extends MultiTypeItemConnection {
 	}
 	
 	_getJsonForItems(aItems) {
-		console.log("_getJsonForItems");
-		console.log(aItems);
+		//console.log("_getJsonForItems");
+		//console.log(aItems);
 		
 		if(!aItems) {
 			return [];
@@ -204,9 +204,9 @@ export default class Hierarchy extends MultiTypeItemConnection {
 	}
 	
 	updateStructure() {
-		console.log("updateStructure");
+		//console.log("updateStructure");
 		this.structure = this.getJsonStructure();
-		console.log(this.structure);
+		//console.log(this.structure);
 	}
 	
 	_addItemToList(aItem, aReturnArray) {
@@ -225,16 +225,16 @@ export default class Hierarchy extends MultiTypeItemConnection {
 	}
 	
 	_updateList() {
-		console.log("_updateList");
+		//console.log("_updateList");
 		let childen = this.item.getLinks("children").items;
 		
-		console.log("childen>>>>>>>>>>>>>", childen);
+		//console.log("childen>>>>>>>>>>>>>", childen);
 		
 		let itemList = new Array();
 		this._addItemsToList(childen, itemList);
 		
 		let idList = Wprr.utils.array.mapField(itemList, "id");
-		console.log(idList, this);
+		//console.log(idList, this);
 		
 		this.item.getLinks("list").setItems(idList);
 	}

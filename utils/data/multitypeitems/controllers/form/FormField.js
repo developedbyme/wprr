@@ -82,7 +82,7 @@ export default class FormField extends MultiTypeItemConnection {
 	}
 	
 	_fieldEditingChange() {
-		console.log("_fieldEditingChange");
+		//console.log("_fieldEditingChange");
 		
 		let isEditing = this.item.getValue("isEditing");
 		let validationMode = this.item.getValue("validationMode");
@@ -104,7 +104,7 @@ export default class FormField extends MultiTypeItemConnection {
 	}
 	
 	_valueChange() {
-		console.log("_valueChange");
+		//console.log("_valueChange");
 		
 		this.item.setValue("isValid", this._checkIfValid());
 		
@@ -139,7 +139,7 @@ export default class FormField extends MultiTypeItemConnection {
 	}
 	
 	validate() {
-		console.log("validate");
+		//console.log("validate");
 		
 		let isValid = this.item.getValue("isValid");
 		

@@ -69,7 +69,7 @@ export default class SortableTable extends WprrBaseObject {
 	}
 	
 	_headItemClicked(aIndex) {
-		console.log("wprr/elements/area/table/SortableTable::_headItemClicked");
+		//console.log("wprr/elements/area/table/SortableTable::_headItemClicked");
 		
 		var newState = new Object();
 		

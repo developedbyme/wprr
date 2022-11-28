@@ -88,7 +88,7 @@ export default class Relation extends MultiTypeItemConnection {
 	}
 	
 	endIfActive(aTimestamp) {
-		console.log("endIfActive");
+		//console.log("endIfActive");
 		
 		if(this._endAt === -1 || this._endAt > aTimestamp) {
 			this.setEndAt(aTimestamp);
@@ -96,7 +96,7 @@ export default class Relation extends MultiTypeItemConnection {
 	}
 	
 	endNowIfActive() {
-		console.log("endNowIfActive");
+		//console.log("endNowIfActive");
 		
 		let currentTime = moment().unix();
 		this.endIfActive(currentTime);

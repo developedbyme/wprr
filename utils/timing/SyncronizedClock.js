@@ -23,7 +23,7 @@ export default class SyncronizedClock {
 		this._syncTime = currentTime;
 		this._localTime = currentTime;
 		
-		console.log(">>>", this._correctTime, this._localTime);
+		//console.log(">>>", this._correctTime, this._localTime);
 	}
 	
 	setSyncDate(aDateString) {

@@ -10,7 +10,7 @@ export default class TemplatePosition extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("TemplatePosition::prepare");
+		//console.log("TemplatePosition::prepare");
 		
 		aItem.requireValue("name");
 		aItem.requireValue("identifier");

@@ -110,13 +110,13 @@ export default class ImageLoader {
 	}
 	
 	setData(aData) {
-		console.log("wprr/utils/loading/ImageLoader::setData");
-		console.log(aData);
+		//console.log("wprr/utils/loading/ImageLoader::setData");
+		//console.log(aData);
 		
 		this._loadedAt = (new Date()).valueOf();
 		this._data.value = aData;
 		
-		console.log(this);
+		//console.log(this);
 	}
 	
 	getData() {
@@ -168,14 +168,14 @@ export default class ImageLoader {
 	}
 	
 	_callback_loaded(aEvent) {
-		console.log("_callback_loaded");
+		//console.log("_callback_loaded");
 		
 		this.setData(this._image);
 		this.setStatus(ImageLoader.LOADED);
 	}
 	
 	_callback_error(aEvent) {
-		console.log("_callback_error");
+		//console.log("_callback_error");
 		
 		this.setStatus(ImageLoader.ERROR_LOADING);
 	}

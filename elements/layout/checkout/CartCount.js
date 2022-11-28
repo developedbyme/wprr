@@ -20,8 +20,8 @@ export default class CartCount extends Layout {
 	}
 	
 	_getCount(aCart, aCountType = "quantity") {
-		console.log("_getCount");
-		console.log(aCart);
+		//console.log("_getCount");
+		//console.log(aCart);
 		
 		let items = Wprr.objectPath(aCart, "items");
 		

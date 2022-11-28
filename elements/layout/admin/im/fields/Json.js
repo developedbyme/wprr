@@ -23,12 +23,12 @@ export default class Json extends WprrBaseObject {
 	}
 	
 	changeToRaw() {
-		console.log("changeToRaw");
+		//console.log("changeToRaw");
 		
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("field/externalStorage"));
 		this._rawData.value = JSON.stringify(externalStorage.getValue("value"), null, "\t");
 		
-		console.log(externalStorage, this._rawData);
+		//console.log(externalStorage, this._rawData);
 		
 		this._mode.value = "raw";
 	}
@@ -56,22 +56,22 @@ export default class Json extends WprrBaseObject {
 	}
 	
 	_callback_onEdit(aData) {
-		console.log("_callback_onEdit");
-		console.log(aData);
+		//console.log("_callback_onEdit");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}
 	
 	_callback_onAdd(aData) {
-		console.log("_callback_onAdd");
-		console.log(aData);
+		//console.log("_callback_onAdd");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}
 	
 	_callback_onDelete(aData) {
-		console.log("_callback_onDelete");
-		console.log(aData);
+		//console.log("_callback_onDelete");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}

@@ -25,7 +25,7 @@ export default class BigSelectionBox extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("BigSelectionBox::_renderMainElement");
+		//console.log("BigSelectionBox::_renderMainElement");
 		
 		let descriptionSource = aSlots.prop("description", "");
 		

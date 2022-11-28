@@ -40,7 +40,7 @@ export default class OptionsFromItems extends MultiTypeItemConnection {
 	}
 	
 	_itemsUpdated() {
-		console.log("_itemsUpdated");
+		//console.log("_itemsUpdated");
 		
 		let items = this.item.getLinks("items").items;
 		

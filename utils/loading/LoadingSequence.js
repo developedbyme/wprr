@@ -174,7 +174,7 @@ export default class LoadingSequence {
 		//console.log("wprr/utils/loading/LoadingSequence::_checkForFurtherLoad");
 		
 		if(this._hasError && !this._continueOnError) {
-			console.log("Loader sequence has stopped due to an error in a load.");
+			//console.log("Loader sequence has stopped due to an error in a load.");
 			this._updateStatus(-1);
 			
 			return;

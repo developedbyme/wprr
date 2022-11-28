@@ -10,7 +10,7 @@ export default class Orders extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Orders::prepare");
+		//console.log("Orders::prepare");
 		
 		aItem.requireValue("hasData/subscription/orders", false);
 		aItem.getLinks("orders");
@@ -19,7 +19,7 @@ export default class Orders extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Orders::setup");
+		//console.log("Orders::setup");
 		//console.log(aData);
 		
 		aItem.getLinks("orders").setItems(aData["orders"]);

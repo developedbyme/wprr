@@ -18,13 +18,13 @@ export default class IsSelectedCondition extends BaseObject {
 	}
 	
 	_valueUpdated() {
-		console.log("_valueUpdated");
+		//console.log("_valueUpdated");
 		
 		this.isSelected = this.selectedValue == this.value;
 	}
 	
 	_isSelectedChanged() {
-		console.log("_isSelectedChanged");
+		//console.log("_isSelectedChanged");
 		
 		if(this.isSelected) {
 			this.selectedValue = this.value;

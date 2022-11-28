@@ -66,7 +66,7 @@ export default class SetPassword extends Layout {
 	}
 	
 	_showErrorMessage() {
-		console.log("_showErrorMessage");
+		//console.log("_showErrorMessage");
 	}
 	
 	_prepareInitialRender() {

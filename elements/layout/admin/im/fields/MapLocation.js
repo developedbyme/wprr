@@ -48,8 +48,8 @@ export default class MapLocation extends WprrBaseObject {
 	}
 	
 	_callback_mapClicked(aEvent) {
-		console.log("_callback_mapClicked");
-		console.log(aEvent);
+		//console.log("_callback_mapClicked");
+		//console.log(aEvent);
 		
 		let longitude = aEvent.latLng.lng();
 		let latitude = aEvent.latLng.lat();
@@ -75,7 +75,7 @@ export default class MapLocation extends WprrBaseObject {
 	}
 	
 	_updateMarkerPosition() {
-		console.log("_updateMarkerPosition");
+		//console.log("_updateMarkerPosition");
 		
 		if(this._map && this._latitude.value !== null) {
 		
@@ -91,7 +91,7 @@ export default class MapLocation extends WprrBaseObject {
 				this._marker = new google.maps.Marker(markerData);
 			}
 		
-			console.log(this._marker.setPosition(markerLocation));
+			//console.log(this._marker.setPosition(markerLocation));
 		}
 		else {
 			if(this._marker) {

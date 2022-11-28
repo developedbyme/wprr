@@ -43,7 +43,7 @@ export default class ValidatingForm extends WprrBaseObject {
 			}
 		}
 		else {
-			console.log("Form did not validate.", this);
+			//console.log("Form did not validate.", this);
 		}
 	}
 	

@@ -15,7 +15,7 @@ export default class MultipleBigSelections extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("MultipleBigSelections::_renderMainElement");
+		//console.log("MultipleBigSelections::_renderMainElement");
 		
 		let externalStorageSource = aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"));
 		let valueNameSource = aSlots.prop("valueName", "value");

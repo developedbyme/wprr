@@ -76,7 +76,7 @@ export default class BatchEditItems extends Layout {
 				let currentData = currentArray[i];
 				let column = this._itemsTable.createColumn(currentData["key"], currentData["value"]["type"], currentData["value"]);
 				
-				console.log(cellTypes);
+				//console.log(cellTypes);
 				if(cellTypes[currentData["value"]["type"]]) {
 					column.setElement(React.createElement(cellTypes[currentData["value"]["type"]]));
 				}

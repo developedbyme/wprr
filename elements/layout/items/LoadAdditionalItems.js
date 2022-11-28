@@ -34,7 +34,7 @@ export default class LoadAdditionalItems extends Layout {
 	}
 	
 	getAdditionalLoader() {
-		console.log("getAdditionalLoader");
+		//console.log("getAdditionalLoader");
 		
 		let additionalLoader = this.getFirstInput(
 			"loader",

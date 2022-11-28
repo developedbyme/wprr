@@ -132,7 +132,7 @@ export default class SteppedPaths {
 		this._urlResolver.setupBaseUrl("", this.currentPath);
 		let fullPath = this._urlResolver.getAbsolutePath(aPath);
 		
-		console.log(fullPath);
+		//console.log(fullPath);
 		
 		return fullPath;
 	}

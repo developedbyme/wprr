@@ -20,7 +20,7 @@ export default class EditItems extends Wprr.BaseObject {
 		
 		let rowsMapItem = items.createInternalItem();
 		let rowsMap = new Wprr.utils.data.multitypeitems.controllers.list.MappedList.create(rowsMapItem);
-		console.log("rowsMap>>>>>>>>", rowsMap);
+		//console.log("rowsMap>>>>>>>>", rowsMap);
 		this._editorItem.getLinks("allItems").idsSource.connectSource(rowsMapItem.getLinks("items").idsSource);
 		
 		rowsMapItem.getLinks("mappedItems").idsSource.connectSource(this._editorItem.getLinks("allRows").idsSource);
@@ -73,7 +73,7 @@ export default class EditItems extends Wprr.BaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("EditItems::_renderMainElement");
+		//console.log("EditItems::_renderMainElement");
 		
 		
 		//let editItems = this.getFirstInput("editItems", Wprr.sourceReference("editItems"));
@@ -105,7 +105,7 @@ export default class EditItems extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

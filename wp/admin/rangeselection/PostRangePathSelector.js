@@ -13,7 +13,7 @@ export default class PostRangePathSelector extends WprrBaseObject {
 	}
 	
 	updateValue(aName, aValue, aAdditionalData) {
-		console.log("wprr/wp/admin/rangeselection/PostRangePathSelector::updateValue");
+		//console.log("wprr/wp/admin/rangeselection/PostRangePathSelector::updateValue");
 		
 		let valueName = this.getSourcedProp("valueName");
 		let value = this.getSourcedPropWithDefault("value", Wprr.source("propWithDots", valueName));
@@ -84,7 +84,7 @@ export default class PostRangePathSelector extends WprrBaseObject {
 	}
 	
 	render() {
-		console.log("wprr/wp/admin/rangeselection/PostRangePathSelector::render");
+		//console.log("wprr/wp/admin/rangeselection/PostRangePathSelector::render");
 		
 		let valueName = this.getSourcedProp("valueName");
 		let value = this.getSourcedPropWithDefault("value", Wprr.source("propWithDots", valueName));

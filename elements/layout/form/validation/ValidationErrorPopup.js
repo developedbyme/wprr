@@ -20,7 +20,7 @@ export default class ValidationErrorPopup extends Layout {
 	}
 	
 	_shouldShow(aStatus) {
-		console.log("ValidationErrorPopup::_shouldShow");
+		//console.log("ValidationErrorPopup::_shouldShow");
 		if(aStatus === "invalid") {
 			return true;
 		}

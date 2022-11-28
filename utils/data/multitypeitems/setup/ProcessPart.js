@@ -10,7 +10,7 @@ export default class ProcessPart extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("ProcessPart::prepare");
+		//console.log("ProcessPart::prepare");
 		
 		aItem.requireValue("hasData/processPart", false);
 		aItem.requireValue("name", null);

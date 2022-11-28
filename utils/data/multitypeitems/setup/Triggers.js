@@ -19,7 +19,7 @@ export default class Triggers extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Triggers::setup");
+		//console.log("Triggers::setup");
 		//console.log(aData);
 		
 		let group = aItem.group;

@@ -10,7 +10,7 @@ export default class Description extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Description::prepare");
+		//console.log("Description::prepare");
 		
 		aItem.requireValue("hasData/description", false);
 		aItem.requireValue("description", null);

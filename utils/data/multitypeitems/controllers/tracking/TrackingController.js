@@ -41,7 +41,7 @@ export default class TrackingController extends MultiTypeItemConnection {
 	}
 	
 	start() {
-		console.log("start");
+		//console.log("start");
 		
 		this.item.setValue("active", true);
 		
@@ -61,7 +61,7 @@ export default class TrackingController extends MultiTypeItemConnection {
 	}
 	
 	_activeChanged() {
-		console.log("_activeChanged");
+		//console.log("_activeChanged");
 		
 		let active = this.item.getValue("active");
 		if(active) {

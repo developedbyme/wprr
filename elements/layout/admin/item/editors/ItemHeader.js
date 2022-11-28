@@ -14,7 +14,7 @@ export default class ItemHeader extends WprrBaseObject {
 	_renderMainElement() {
 		
 		let item = this.getFirstInput(Wprr.sourceReference("item"));
-		console.log(item);
+		//console.log(item);
 		
 		return React.createElement("div", {},
 			React.createElement(Wprr.FlexRow, {"className": "small-item-spacing", "itemClasses": "flex-resize,flex-no-resize"},

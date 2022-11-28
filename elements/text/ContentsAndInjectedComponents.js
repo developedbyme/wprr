@@ -57,7 +57,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 	
 	_createContent() {
-		console.log("_createContent");
+		//console.log("_createContent");
 		
 		let content = this.getFirstInput("content");
 		let parsedContent = this.getFirstInput("parsedContent");
@@ -72,7 +72,7 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 			parsedContent = Wprr.wp.blocks.BlockContentParser.createInBody(content);
 		}
 		
-		console.log(parsedContent);
+		//console.log(parsedContent);
 		
 		
 		this._groups = new Array();
@@ -170,8 +170,8 @@ export default class ContentsAndInjectedComponents extends WprrBaseObject {
 	}
 
 	_renderMainElement() {
-		console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
-		console.log(this);
+		//console.log("wprr/elements/text/ContentsAndInjectedComponents::_renderMainElement");
+		//console.log(this);
 		
 		let containers = this._getContainers();
 		

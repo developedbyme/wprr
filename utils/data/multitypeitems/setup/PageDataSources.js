@@ -10,7 +10,7 @@ export default class PageDataSources extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PageDataSources::prepare");
+		//console.log("PageDataSources::prepare");
 		
 		aItem.requireValue("hasData/dataSources", false);
 		aItem.getLinks("dataSources");
@@ -19,7 +19,7 @@ export default class PageDataSources extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log(aData);
+		//console.log(aData);
 		
 		aItem.getLinks("dataSources").addUniqueItems(aData["dataSources"]);
 		aItem.setValue("hasData/dataSources", true);

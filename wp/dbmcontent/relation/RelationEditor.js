@@ -112,7 +112,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			item.addSingleLink("from", aFromId);
 			item.addSingleLink("to", aToId);
 			
-			console.log(">>>>>>>", item);
+			//console.log(">>>>>>>", item);
 		}
 	}
 	
@@ -224,7 +224,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	hasUnsavedChanges() {
-		console.log("hasUnsavedChanges");
+		//console.log("hasUnsavedChanges");
 		
 		let currentArray = this.externalStorage.getValue(this.path);
 		if(currentArray) {
@@ -280,7 +280,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_changed() {
-		console.log("_changed");
+		//console.log("_changed");
 		
 		let commandName = "changed";
 		if(this._commands.hasInput(commandName)) {
@@ -289,7 +289,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	_added(aId) {
-		console.log("_added");
+		//console.log("_added");
 		
 		let commandName = "added";
 		if(this._commands.hasInput(commandName)) {

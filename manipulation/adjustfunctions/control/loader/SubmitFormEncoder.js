@@ -15,7 +15,7 @@ export default class SubmitFormEncoder extends ControlFunction {
 	}
 	
 	_callback_onSubmit(aEventOrNull, aForm) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/SubmitFormEncoder::_callback_onSubmit");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/SubmitFormEncoder::_callback_onSubmit");
 		
 		if(aEventOrNull) {
 			aEventOrNull.preventDefault();
@@ -51,7 +51,7 @@ export default class SubmitFormEncoder extends ControlFunction {
 	 * @return	*	The modified data
 	 */
 	adjust(aData, aManipulationObject) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/SubmitFormEncoder::adjust");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/SubmitFormEncoder::adjust");
 		
 		//METODO: source cleanup
 		aData["onSubmit"] = this._callback_onSubmitBound;

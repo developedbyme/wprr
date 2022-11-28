@@ -10,7 +10,7 @@ export default class Task extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Task::prepare");
+		//console.log("Task::prepare");
 		
 		aItem.requireValue("hasData/task", false);
 		aItem.requireSingleLink("type");

@@ -64,7 +64,7 @@ export default class DbmJsonTranslationsEditor extends WprrBaseObject {
 	}
 	
 	_encodeForm(aFormData) {
-		console.log("wprr/elements/dbmcontent/DbmJsonTranslationsEditor::_encodeForm");
+		//console.log("wprr/elements/dbmcontent/DbmJsonTranslationsEditor::_encodeForm");
 		
 		let postChanges = new Array();
 		
@@ -87,7 +87,7 @@ export default class DbmJsonTranslationsEditor extends WprrBaseObject {
 	}
 	
 	_getTriggerUrlRequest() {
-		console.log("wprr/elements/dbmcontent/DbmJsonTranslationsEditor::_getTriggerUrlRequest");
+		//console.log("wprr/elements/dbmcontent/DbmJsonTranslationsEditor::_getTriggerUrlRequest");
 		let headers = {
 			"Content-Type": "application/json"
 		};

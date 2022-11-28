@@ -141,7 +141,7 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_startQueue() {
-		console.log("IndividualAdditionalLoader::_startQueue");
+		//console.log("IndividualAdditionalLoader::_startQueue");
 		
 		let ids = this._queuedItems;
 		this._queuedItems = new Array();
@@ -166,7 +166,7 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 			
 			if(loader.getStatus() === 1) {
 				//MENOTE: add support for other API formats
-				console.log("status1>>>>>>>", id, loader.getData());
+				//console.log("status1>>>>>>>", id, loader.getData());
 				this._setupItem(id, loader.getData()["data"]);
 			}
 			else {
@@ -185,8 +185,8 @@ export default class IndividualAdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_setupItem(aId, aData) {
-		console.log("IndividualAdditionalLoader::_setupItem");
-		console.log(aId, aData);
+		//console.log("IndividualAdditionalLoader::_setupItem");
+		//console.log(aId, aData);
 		
 		let currentId = aId;
 		let item = this._items.getItem(currentId);

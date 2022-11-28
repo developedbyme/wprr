@@ -26,8 +26,8 @@ export default class VerificationCode extends Layout {
 	}
 	
 	_replaceCharacter(aText, aIndex, aNewCharacter) {
-		console.log("_replaceCharacter");
-		console.log(aText, aIndex, aNewCharacter);
+		//console.log("_replaceCharacter");
+		//console.log(aText, aIndex, aNewCharacter);
 		
 		let length = aNewCharacter.length;
 		
@@ -35,8 +35,8 @@ export default class VerificationCode extends Layout {
 	}
 	
 	_fieldUpdated(aIndex, aNewValue) {
-		console.log("_fieldUpdated");
-		console.log(aIndex, aNewValue);
+		//console.log("_fieldUpdated");
+		//console.log(aIndex, aNewValue);
 		
 		let digitRegExp = new RegExp("[^0-9]+", "g");
 		aNewValue = aNewValue.replace(digitRegExp, "");
@@ -48,7 +48,7 @@ export default class VerificationCode extends Layout {
 			currentValue = "      ";
 		}
 		
-		console.log(currentValue);
+		//console.log(currentValue);
 		
 		let newValue = currentValue;
 		let nextIndex = -1;
@@ -68,8 +68,8 @@ export default class VerificationCode extends Layout {
 			nextIndex = aIndex+numberOfChanges;
 		}
 		
-		console.log(">>");
-		console.log(newValue);
+		//console.log(">>");
+		//console.log(newValue);
 		
 		externalStrorage.updateValue(valueName, newValue);
 		

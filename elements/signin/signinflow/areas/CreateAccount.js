@@ -16,7 +16,7 @@ export default class CreateAccount extends Layout {
 	}
 	
 	_continue() {
-		console.log("_continue");
+		//console.log("_continue");
 		
 		let externalStorage = this.getFirstInput(Wprr.sourceReference("externalStorage"));
 		
@@ -39,7 +39,7 @@ export default class CreateAccount extends Layout {
 			this._performCommands(commands, body);
 		}
 		
-		console.log(body);
+		//console.log(body);
 		let loader = project.getSignupLoader(body);
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._verifyCreationAndContinue, [Wprr.source("event", "raw", "data")]));
@@ -51,8 +51,8 @@ export default class CreateAccount extends Layout {
 	}
 	
 	_verifyCreationAndContinue(aRegistrationData) {
-		console.log("_verifyCreationAndContinue");
-		console.log(aRegistrationData);
+		//console.log("_verifyCreationAndContinue");
+		//console.log(aRegistrationData);
 		
 		if(aRegistrationData.registered) {
 			this.getReference("steppedPaths").nextStep();
@@ -63,7 +63,7 @@ export default class CreateAccount extends Layout {
 	}
 	
 	_validateForm() {
-		console.log("_validateForm");
+		//console.log("_validateForm");
 		
 		let isValid = true;
 		

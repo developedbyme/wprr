@@ -102,8 +102,8 @@ export default class ProcessChain extends ProcessPart {
 	}
 	
 	linkStep(aPath, aToPath, aIsNext = true) {
-		console.log("wprr/utils/process/ProcessChain::addStepToChain");
-		console.log(aPath, aToPath, aIsNext);
+		//console.log("wprr/utils/process/ProcessChain::addStepToChain");
+		//console.log(aPath, aToPath, aIsNext);
 		
 		this.addStepToChain(aPath, this.getStepByPath(aToPath), aIsNext);
 		
@@ -138,8 +138,8 @@ export default class ProcessChain extends ProcessPart {
 	}
 	
 	perfomChangeStep(aStep, aStepName) {
-		console.log("wprr/utils/process/ProcessChain::perfomChangeStep");
-		console.log(aStep, aStepName);
+		//console.log("wprr/utils/process/ProcessChain::perfomChangeStep");
+		//console.log(aStep, aStepName);
 		
 		//METODO: check for abort
 		

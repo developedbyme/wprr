@@ -15,7 +15,7 @@ export default class AddDbmType extends WprrBaseObject {
 	}
 	
 	_update() {
-		console.log("_update");
+		//console.log("_update");
 		
 		let selectedIds = this.getFirstInput(Wprr.sourceReference("externalStorage", "selection"));
 		let items = this.getFirstInput(Wprr.sourceReference("items"));

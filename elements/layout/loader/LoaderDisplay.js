@@ -23,7 +23,7 @@ export default class LoaderDisplay extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("BigSelections::_renderMainElement");
+		//console.log("BigSelections::_renderMainElement");
 		
 		return React.createElement("div", {className: "loader-padding"},
 			React.createElement(Wprr.FlexRow, {className: "justify-center micro-item-spacing vertically-center-items"},

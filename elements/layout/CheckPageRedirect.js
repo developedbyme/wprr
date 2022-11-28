@@ -18,7 +18,7 @@ export default class CheckPageRedirect extends Layout {
 	}
 	
 	_prepareInitialRender() {
-		console.log("CheckPageRedirect::_prepareInitialRender");
+		//console.log("CheckPageRedirect::_prepareInitialRender");
 		
 		super._prepareInitialRender();
 		
@@ -26,7 +26,7 @@ export default class CheckPageRedirect extends Layout {
 		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));
 		let userData = project.getUserData();
 		
-		console.log(pageItem, userData);
+		//console.log(pageItem, userData);
 	}
 	
 	_getLayout(aSlots) {

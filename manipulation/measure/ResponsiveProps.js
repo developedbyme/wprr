@@ -57,7 +57,7 @@ export default class ResponsiveProps extends ManipulationBaseObject {
 			}
 		}
 		else {
-			console.log("Element doesn't exist, can't get responsive props.", this);
+			//console.log("Element doesn't exist, can't get responsive props.", this);
 		}
 	}
 	

@@ -83,7 +83,7 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	}
 	
 	createSingularRouteWithQualifier(aQualifier, aReactComponent) {
-		console.log("createSingularRouteWithQualifier");
+		//console.log("createSingularRouteWithQualifier");
 		this._routeCreator.createSingularRouteWithQualifier(aQualifier, aReactComponent);
 		
 		this._router.createSingularRouteWithQualifier(aQualifier, aReactComponent);

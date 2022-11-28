@@ -71,7 +71,7 @@ export default class DraggableItem extends WprrBaseObject {
 	_drop(aEvent) {
 		this._over.value = false;
 		
-		console.log(aEvent, aEvent.dataTransfer.getData("text"));
+		//console.log(aEvent, aEvent.dataTransfer.getData("text"));
 		
 		let data = null;
 		let dataString = aEvent.dataTransfer.getData("text");

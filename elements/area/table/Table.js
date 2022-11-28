@@ -30,7 +30,7 @@ export default class Table extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("wprr/elements/area/table/Table::_renderMainElement");
+		//console.log("wprr/elements/area/table/Table::_renderMainElement");
 		
 		let markup = this.getFirstValidSource(
 			SourceData.create("prop", "markup"),

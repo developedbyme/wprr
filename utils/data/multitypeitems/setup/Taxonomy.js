@@ -10,7 +10,7 @@ export default class Taxonomy extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Taxonomy::prepare");
+		//console.log("Taxonomy::prepare");
 		
 		aItem.requireValue("hasData/taxonomy", false);
 		aItem.requireValue("hasData/topLevelTerms", false);
@@ -21,8 +21,8 @@ export default class Taxonomy extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Taxonomy::setup");
-		console.log(aData);
+		//console.log("Taxonomy::setup");
+		//console.log(aData);
 		
 		aItem.getLinks("terms").addItems(aData["terms"]);
 		aItem.setValue("hasData/taxonomy", true);
@@ -31,8 +31,8 @@ export default class Taxonomy extends BaseObject {
 	}
 	
 	static calculate_termHierarcy(aItem) {
-		console.log("Taxonomy::calculate_termHierarcy");
-		console.log(aItem);
+		//console.log("Taxonomy::calculate_termHierarcy");
+		//console.log(aItem);
 		
 		if(!aItem.getValue("hasData/termHierarcy")) {
 			let topLevelItemIds = new Array();

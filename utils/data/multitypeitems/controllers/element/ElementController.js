@@ -47,8 +47,8 @@ export default class ElementController extends MultiTypeItemConnection {
 	}
 	
 	_updateElement() {
-		console.log("_updateElement");
-		console.log(this);
+		//console.log("_updateElement");
+		//console.log(this);
 		
 		let props = new Object();
 		let currentArray = this.item.getValue("propNames");

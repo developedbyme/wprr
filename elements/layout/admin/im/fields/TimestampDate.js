@@ -14,7 +14,7 @@ export default class TimestampDate extends WprrBaseObject {
 	}
 	
 	_updateValue() {
-		console.log("_updateValue");
+		//console.log("_updateValue");
 		
 		let stringValue = this._dateValue.value;
 		

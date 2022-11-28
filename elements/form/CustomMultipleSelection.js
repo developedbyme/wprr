@@ -24,8 +24,8 @@ export default class CustomMultipleSelection extends ManipulationBaseObject {
 	}
 	
 	_changed(aNewValue) {
-		console.log("wprr/elements/form/CustomMultipleSelection::_changed");
-		console.log(aNewValue);
+		//console.log("wprr/elements/form/CustomMultipleSelection::_changed");
+		//console.log(aNewValue);
 		
 		let commands = this.getSourcedProp("changeCommands");
 		if(commands) {

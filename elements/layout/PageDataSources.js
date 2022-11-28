@@ -129,7 +129,7 @@ export default class PageDataSources extends Layout {
 							hasRole = true;
 						}
 						else {
-							console.log("Missing role " + currentRole);
+							//console.log("Missing role " + currentRole);
 						}
 					}
 				}
@@ -312,7 +312,7 @@ export default class PageDataSources extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("PageDataSources::_getLayout");
+		//console.log("PageDataSources::_getLayout");
 		
 		//METODO: add separate layout for the loader
 		

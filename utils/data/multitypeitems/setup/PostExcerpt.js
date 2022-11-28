@@ -10,7 +10,7 @@ export default class PostExcerpt extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PostExcerpt::prepare");
+		//console.log("PostExcerpt::prepare");
 		
 		aItem.requireValue("hasData/postExcerpt", false);
 		aItem.requireValue("excerpt", null);

@@ -50,16 +50,16 @@ export default class ImageSelection extends MultipleRenderObject {
 	}
 	
 	_callback_imageSelected() {
-		console.log("wprr/wp/blocks/editor/ImageSelection::_callback_imageSelected");
+		//console.log("wprr/wp/blocks/editor/ImageSelection::_callback_imageSelected");
 		
 		let selectedImages = this.frame.state().get( 'selection' ).toJSON();
-		console.log(selectedImages);
+		//console.log(selectedImages);
 		
 		let image = {
 			"id": objectPath.get(selectedImages, "0.id"),
 			"url": objectPath.get(selectedImages, "0.url")
 		}
-		console.log(image);
+		//console.log(image);
 		
 		let valueName = this.getSourcedProp("valueName");
 		this.getExternalStorage().updateValue(valueName, image);

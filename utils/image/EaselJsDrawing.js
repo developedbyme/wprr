@@ -33,7 +33,7 @@ export default class EaselJsDrawing {
 	}
 	
 	draw() {
-		console.log("draw");
+		//console.log("draw");
 		
 		let canvas = this.getCanvas();
 		

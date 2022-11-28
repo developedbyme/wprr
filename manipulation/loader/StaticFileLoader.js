@@ -74,7 +74,7 @@ export default class StaticFileLoader extends ManipulationBaseObject {
 	}
 	
 	_promise_loadingError(aError) {
-		console.log("wprr/manipulation/loader/StaticFileLoader::_promise_loadingError");
+		//console.log("wprr/manipulation/loader/StaticFileLoader::_promise_loadingError");
 		console.error(aError);
 		
 		this.setState({"status": -1});

@@ -62,12 +62,12 @@ export default class SiteDataLoader {
 	}
 	
 	_updateUrl() {
-		console.log("_updateUrl");
+		//console.log("_updateUrl");
 		
 		let url = this._url.value;
 		let urlItem = this._items.getItem(url);
 		
-		console.log(url, urlItem, this);
+		//console.log(url, urlItem, this);
 		
 		if(urlItem.hasType("canRender") && urlItem.getType("canRender")) {
 			this._setLoadedUrl(url);
@@ -124,8 +124,8 @@ export default class SiteDataLoader {
 	}
 	
 	_setupItem(aItem, aData) {
-		console.log("SiteDataLoader::_setupItem");
-		console.log(aItem, aData);
+		//console.log("SiteDataLoader::_setupItem");
+		//console.log(aItem, aData);
 		
 		let url = aItem.id;
 		let items = aItem.group;
@@ -165,7 +165,7 @@ export default class SiteDataLoader {
 			}
 		}
 		
-		console.log(data);
+		//console.log(data);
 		if(Wprr.objectPath(data, "templateSelection.is_singular")) {
 			aItem.addType("pageType", "page");
 		}
@@ -181,12 +181,12 @@ export default class SiteDataLoader {
 		
 		aItem.addType("canRender", true);
 		
-		console.log(aItem);
+		//console.log(aItem);
 	}
 	
 	_loaderLoaded(aItem, aLoader) {
-		console.log("_loaderLoaded");
-		console.log(aItem, aLoader);
+		//console.log("_loaderLoaded");
+		//console.log(aItem, aLoader);
 		
 		let group = aItem.group;
 		
@@ -194,7 +194,7 @@ export default class SiteDataLoader {
 		
 		
 		let loaderData = aLoader.getData()["data"];
-		console.log(loaderData);
+		//console.log(loaderData);
 		
 		let data = loaderData["posts"];
 		let items = Wprr.objectPath(data, "items");
@@ -232,7 +232,7 @@ export default class SiteDataLoader {
 		
 		aItem.addType("canRender", true);
 		
-		console.log(aItem);
+		//console.log(aItem);
 		
 		let url = aItem.id;
 		if(this._url.value === url) {
@@ -241,7 +241,7 @@ export default class SiteDataLoader {
 	}
 	
 	_setLoadedUrl(aUrl) {
-		console.log("_setLoadedUrl");
+		//console.log("_setLoadedUrl");
 		this._loadedUrl.value = aUrl;
 		this._item.value = this._items.getItem(aUrl);
 		this._loaded.value = true;

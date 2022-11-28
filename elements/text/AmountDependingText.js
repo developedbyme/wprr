@@ -32,7 +32,7 @@ export default class AmountDependingText extends TextWithReplacements {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentText = this.resolveSourcedData(currentArray[i]);
-			console.log(amount, this.resolveSourcedData(currentText.condition), this.resolveSourcedData(currentText.amount));
+			//console.log(amount, this.resolveSourcedData(currentText.condition), this.resolveSourcedData(currentText.amount));
 			if(ConditionEvaluation.evaluateCondition(amount, this.resolveSourcedData(currentText.condition), this.resolveSourcedData(currentText.amount))) {
 				return this.resolveSourcedData(currentText.text);
 			}

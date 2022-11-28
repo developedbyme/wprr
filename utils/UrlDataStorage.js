@@ -17,7 +17,7 @@ export default class UrlDataStorage extends DataStorage {
 	}
 	
 	startListeners() {
-		console.log("wprr/utils/UrlDataStorage::startListeners");
+		//console.log("wprr/utils/UrlDataStorage::startListeners");
 		
 		window.addEventListener("popstate", this._callback_popStateBound, false);
 		

@@ -27,8 +27,8 @@ export default class HierarchyList extends Layout {
 	}
 	
 	itemDroppedOn(aElement, aData) {
-		console.log("itemDroppedOn");
-		console.log(aElement, this._movedElement, aData);
+		//console.log("itemDroppedOn");
+		//console.log(aElement, this._movedElement, aData);
 		
 		if(this._movedElement) {
 			let addMode = aElement.getFirstInput("addMode");

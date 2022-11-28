@@ -13,7 +13,7 @@ export default class PostApiCommand extends WprrBaseObject {
 	}
 	
 	_update() {
-		console.log("_update");
+		//console.log("_update");
 		
 		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));
 		
@@ -28,8 +28,8 @@ export default class PostApiCommand extends WprrBaseObject {
 	}
 	
 	_setPayloadFile(aFileData) {
-		console.log("_setPayloadFile");
-		console.log(aFileData);
+		//console.log("_setPayloadFile");
+		//console.log(aFileData);
 		
 		let data = JSON.parse(aFileData);
 		if(data) {
@@ -38,8 +38,8 @@ export default class PostApiCommand extends WprrBaseObject {
 	}
 	
 	_loadPayloadFile(aFile) {
-		console.log("_setPayload");
-		console.log(aFile);
+		//console.log("_setPayload");
+		//console.log(aFile);
 		
 		if(aFile) {
 			let loader = new Wprr.utils.loading.LocalFileLoader();
@@ -79,7 +79,7 @@ export default class PostApiCommand extends WprrBaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

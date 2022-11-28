@@ -10,7 +10,7 @@ export default class PostTitle extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PostTitle::prepare");
+		//console.log("PostTitle::prepare");
 		
 		aItem.requireValue("hasData/postContent", false);
 		aItem.requireValue("content", null);

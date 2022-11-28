@@ -64,7 +64,7 @@ export default class ObjectProperties extends WprrBaseObject {
 	}
 	
 	_addValueObjectProperty() {
-		console.log("_addValueObjectProperty");
+		//console.log("_addValueObjectProperty");
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
 		let itemId = itemEditor.editedItem.id;
@@ -90,7 +90,7 @@ export default class ObjectProperties extends WprrBaseObject {
 	}
 	
 	_addFileObjectProperty() {
-		console.log("_addFileObjectProperty");
+		//console.log("_addFileObjectProperty");
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
 		let itemId = itemEditor.editedItem.id;
@@ -116,7 +116,7 @@ export default class ObjectProperties extends WprrBaseObject {
 	}
 	
 	_makePrivate(aId) {
-		console.log("_makePrivate");
+		//console.log("_makePrivate");
 		
 		//newItem.setValue("postStatus", "draft");
 		

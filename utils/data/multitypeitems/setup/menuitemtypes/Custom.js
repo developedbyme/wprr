@@ -10,7 +10,7 @@ export default class Custom extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Custom::prepare");
+		//console.log("Custom::prepare");
 		
 		aItem.requireValue("hasData/menuItem/custom", false);
 		
@@ -18,8 +18,8 @@ export default class Custom extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Custom::setup");
-		console.log(aData);
+		//console.log("Custom::setup");
+		//console.log(aData);
 		
 		aItem.setValue("url", aData["url"]);
 		

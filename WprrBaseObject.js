@@ -676,7 +676,7 @@ export default class WprrBaseObject extends React.Component {
 	_addPropsToTree() {
 		
 		if(this._elementTreeItem.hasType("propsToTree")) {
-			console.log("_addPropsToTree");
+			//console.log("_addPropsToTree");
 			
 			let props = this.props;
 			
@@ -685,26 +685,26 @@ export default class WprrBaseObject extends React.Component {
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentPropData = currentArray[i];
 			
-				console.log(currentPropData);
+				//console.log(currentPropData);
 				//METODO: copy data
 				
 				let currentProp = props[currentPropData["key"]];
 				
-				console.log(">>>>>>>", currentPropData);
+				//console.log(">>>>>>>", currentPropData);
 				if(currentProp instanceof Wprr.utils.SourceData) {
 					let updateSource = currentProp.getUpdateSource(this);
 					if(updateSource instanceof Wprr.utils.ValueSourceData) {
-						console.log("connect", updateSource);
+						//console.log("connect", updateSource);
 						this._elementTreeItem.getType(currentPropData["value"]).input(updateSource);
 						//METODO: needs to be disconnected when unmounted
 					}
 					else {
-						console.log("resolve and add");
+						//console.log("resolve and add");
 						let value = this.resolveSourcedData(currentProp);
-						console.log("value>>>>>", value, updateSource);
+						//console.log("value>>>>>", value, updateSource);
 						this._elementTreeItem.setValue(currentPropData["value"], value);
 					}
-					console.log(updateSource);
+					//console.log(updateSource);
 				}
 				else {
 					this._elementTreeItem.setValue(currentPropData["value"], currentProp);
@@ -712,7 +712,7 @@ export default class WprrBaseObject extends React.Component {
 				
 			}
 			
-			console.log(this);
+			//console.log(this);
 		}
 	}
 	

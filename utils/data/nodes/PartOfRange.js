@@ -58,7 +58,7 @@ export default class PartOfRange extends MultiTypeItemConnection {
 	}
 	
 	_updateAdditionalLoaders() {
-		console.log("_updateAdditionalLoaders");
+		//console.log("_updateAdditionalLoaders");
 		
 		let additionalLoaders = Wprr.objectPath(this.item.getLinks("additionalLoaders"), "items.(every).loader");
 		let currentArray = additionalLoaders;
@@ -71,7 +71,7 @@ export default class PartOfRange extends MultiTypeItemConnection {
 	}
 	
 	_addLoadedItems() {
-		console.log("_addLoadedItems");
+		//console.log("_addLoadedItems");
 		
 		let ids = Wprr.objectPath(this.item, "loadRange.linkedItem").getLinks("loadedItems").ids;
 		
@@ -87,15 +87,15 @@ export default class PartOfRange extends MultiTypeItemConnection {
 	}
 	
 	_updateFilter() {
-		console.log("_updateFilter");
+		//console.log("_updateFilter");
 		
 		Wprr.objectPath(this.item, "filter.linkedItem.filteredListController").updateFilter();
 		
-		console.log(this.item.getLinks("all"), this.item.getLinks("filtered"));
+		//console.log(this.item.getLinks("all"), this.item.getLinks("filtered"));
 	}
 	
 	_updateStatus() {
-		console.log("_updateStatus");
+		//console.log("_updateStatus");
 		
 		let loadRangeItem = Wprr.objectPath(this.item, "loadRange.linkedItem");
 		let isLoaded = loadRangeItem.getValue("loaded");
@@ -115,7 +115,7 @@ export default class PartOfRange extends MultiTypeItemConnection {
 		}
 		
 		this.item.setValue("loaded", isLoaded);
-		console.log(isLoaded);
+		//console.log(isLoaded);
 	}
 	
 	toJSON() {

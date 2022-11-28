@@ -10,7 +10,7 @@ export default class DataSource extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("DataSource::prepare");
+		//console.log("DataSource::prepare");
 		
 		aItem.requireValue("hasData/dataSource", false);
 		aItem.requireValue("dataName", null);
@@ -20,7 +20,7 @@ export default class DataSource extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log(aData);
+		//console.log(aData);
 		
 		aItem.setValue("hasData/dataSource", true);
 		aItem.setValue("dataName", aData["dataName"]);

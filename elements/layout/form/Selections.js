@@ -17,11 +17,11 @@ export default class Selections extends Layout {
 	}
 	
 	getIsSelectedItemForValue(aValue) {
-		console.log("getIsSelectedItemForValue");
-		console.log(aValue);
+		//console.log("getIsSelectedItemForValue");
+		//console.log(aValue);
 		
 		let valueSource = this._elementTreeItem.getType("slot/value");
-		console.log(valueSource.value, valueSource);
+		//console.log(valueSource.value, valueSource);
 		
 		let isSelectedNodesLinks = this._elementTreeItem.getNamedLinks("isSelectedNodes");
 		

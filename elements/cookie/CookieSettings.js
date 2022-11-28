@@ -21,7 +21,7 @@ export default class CookieSettings extends Layout {
 	}
 	
 	saveSelection() {
-		console.log("saveSelection");
+		//console.log("saveSelection");
 		
 		let expires = this.getFirstInput("expires", 365);
 		
@@ -137,7 +137,7 @@ export default class CookieSettings extends Layout {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

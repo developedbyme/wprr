@@ -18,12 +18,12 @@ export default class EditPostEncodeFunctions {
 	}
 	
 	static createAddTerms(aTaxonomy, aField = "id") {
-		console.log("wprr/wp/admin/EditPostEncodeFunctions::createAddTerms");
+		//console.log("wprr/wp/admin/EditPostEncodeFunctions::createAddTerms");
 		return EditPostEncodeFunctions.createTerms(aTaxonomy, aField, "addTerms");
 	}
 	
 	static createDbmRelation(aPath) {
-		console.log("wprr/wp/admin/EditPostEncodeFunctions::createAddTerms");
+		//console.log("wprr/wp/admin/EditPostEncodeFunctions::createAddTerms");
 		
 		let path = "dbm/relation" + "." + aPath;
 		

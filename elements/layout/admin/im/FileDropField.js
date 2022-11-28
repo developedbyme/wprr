@@ -28,7 +28,7 @@ export default class FileDropField extends WprrBaseObject {
 	}
 	
 	_getLoaderForFile(aFile) {
-		console.log(aFile, 'upload file');
+		//console.log(aFile, 'upload file');
 		
 		let internalId = this._nextInternalId++;
 		
@@ -50,12 +50,12 @@ export default class FileDropField extends WprrBaseObject {
 	}
 	
 	_fileUploaded(aInternalId, aData) {
-		console.log("_fileUploaded");
-		console.log(aInternalId, aData);
+		//console.log("_fileUploaded");
+		//console.log(aInternalId, aData);
 		
 		let files = this._externalStorage.getValue("files");
 		let index = Wprr.utils.array.getItemIndexByIfExists("internalId", aInternalId, files);
-		console.log(index);
+		//console.log(index);
 		if(index >= 0) {
 			this._externalStorage.updateValue("files." + index + ".url", aData["url"]);
 			this._externalStorage.updateValue("files." + index + ".id", aData["id"]);
@@ -64,18 +64,18 @@ export default class FileDropField extends WprrBaseObject {
 	}
 	
 	_removeFile(aInternalId) {
-		console.log("_removeFile");
-		console.log(aInternalId);
+		//console.log("_removeFile");
+		//console.log(aInternalId);
 		
 		let files = this._externalStorage.getValue("files");
 		let index = Wprr.utils.array.getItemIndexByIfExists("internalId", aInternalId, files);
-		console.log(index);
+		//console.log(index);
 		
 		if(index >= 0) {
 			
 			let messageGroupId = this.getFirstInput(Wprr.sourceProp("messageGroupId"), Wprr.sourceReference("messageGroup", "id"));
 			let fileId = files[index]["id"];
-			console.log(fileId);
+			//console.log(fileId);
 			this._externalStorage.updateValue("files." + index + ".status", "removing");
 			
 			let changeData = new Wprr.utils.ChangeData();
@@ -91,12 +91,12 @@ export default class FileDropField extends WprrBaseObject {
 	}
 	
 	_fileRemoved(aInternalId) {
-		console.log("_fileRemoved");
-		console.log(aInternalId);
+		//console.log("_fileRemoved");
+		//console.log(aInternalId);
 		
 		let files = this._externalStorage.getValue("files");
 		let index = Wprr.utils.array.getItemIndexByIfExists("internalId", aInternalId, files);
-		console.log(index);
+		//console.log(index);
 		
 		if(index >= 0) {
 			let newFiles = [].concat(files);
@@ -125,8 +125,8 @@ export default class FileDropField extends WprrBaseObject {
 	}
 	
 	_fileSelected(aFiles) {
-		console.log("_fileSelected");
-		console.log(aFiles);
+		//console.log("_fileSelected");
+		//console.log(aFiles);
 		
 		if(aFiles && aFiles.length) {
 			this._handleFiles(aFiles);
@@ -161,7 +161,7 @@ export default class FileDropField extends WprrBaseObject {
 	
 	_prepareInitialRender() {
 		let files = this.getFirstInputWithDefault("initialFiles", Wprr.sourceReference("field", "field.value"), []);
-		console.log(">>>>>>>>", files, this.getFirstInput(Wprr.sourceReference("field", "field")));
+		//console.log(">>>>>>>>", files, this.getFirstInput(Wprr.sourceReference("field", "field")));
 		if(files && !Array.isArray(files)) {
 			files = [files];
 		}

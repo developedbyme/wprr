@@ -28,8 +28,8 @@ export default class EditProcess extends Wprr.MultipleRenderObject {
 	}
 	
 	_stepCreated(aId, aEditor) {
-		console.log("_stepCreated");
-		console.log(aId, aEditor);
+		//console.log("_stepCreated");
+		//console.log(aId, aEditor);
 		
 		aEditor.add(aId);
 	}
@@ -60,7 +60,7 @@ export default class EditProcess extends Wprr.MultipleRenderObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 	
 		let dataSettings = {
 			"item": {

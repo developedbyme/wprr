@@ -31,7 +31,7 @@ export default class RichTextEditor extends MultipleRenderObject {
 	}
 	
 	_contentChanged(aContent) {
-		console.log("wprr/wp/blocks/editor/RichTextEditor::_contentChanged");
+		//console.log("wprr/wp/blocks/editor/RichTextEditor::_contentChanged");
 		
 		let valueName = this.getSourcedProp("valueName");
 		this.getExternalStorage().updateValue(valueName, aContent);

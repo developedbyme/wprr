@@ -130,8 +130,8 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	}
 	
 	_trackPage(aUrl) {
-		console.log("_trackPage");
-		console.log(aUrl, this.project);
+		//console.log("_trackPage");
+		//console.log(aUrl, this.project);
 		
 		let trackingController = Wprr.objectPath(this.project.items, "project.tracking.linkedItem.trackingController");
 		if(trackingController) {
@@ -149,7 +149,7 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	}
 	
 	_handleNavigationChange(aEvent) {
-		console.log("_handleNavigationChange");
+		//console.log("_handleNavigationChange");
 		
 		let url = document.location.href;;
 		this.url = url;
@@ -193,12 +193,12 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	}
 	
 	navigate(aUrl) {
-		console.log("SiteNavigation::navigate");
-		console.log(aUrl);
+		//console.log("SiteNavigation::navigate");
+		//console.log(aUrl);
 		
 		let originalUrl = new URL(document.location.href);
 		let finalUrl = new URL(aUrl, document.location.href);
-		console.log(finalUrl);
+		//console.log(finalUrl);
 		
 		if(this.active && originalUrl.hostname === finalUrl.hostname && this._shouldHandle(finalUrl.href)) {
 			this._internalNavigation(finalUrl.href);

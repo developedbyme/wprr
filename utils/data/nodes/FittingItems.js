@@ -22,11 +22,11 @@ export default class FittingItems extends BaseObject {
 	}
 	
 	_valueUpdated() {
-		console.log("_valueUpdated");
-		console.log(this);
+		//console.log("_valueUpdated");
+		//console.log(this);
 		
 		let size = this.size;
-		console.log(size)
+		//console.log(size)
 		if(!size) {
 			this.numberOfItems = 0;
 			this.itemSize = 0;
@@ -58,7 +58,7 @@ export default class FittingItems extends BaseObject {
 		this.itemSize = adjustedItemSize;
 		this.adjustedSpacing = (numberOfFittingItems-1)*(size-numberOfFittingItems*adjustedItemSize);
 		
-		console.log(numberOfFittingItems, adjustedItemSize, this.adjustedSpacing);
+		//console.log(numberOfFittingItems, adjustedItemSize, this.adjustedSpacing);
 		
 	}
 	

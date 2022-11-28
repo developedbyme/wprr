@@ -62,9 +62,9 @@ export default class WprrRenderer  {
 		}
 		else {
 			if(this._shouldSaveInitialLoad) {
-				console.log("WprrRenderer save initial paths");
+				//console.log("WprrRenderer save initial paths");
 				let paths = this._storeController.getPaths();
-				console.log(paths);
+				//console.log(paths);
 				
 				let currentArray2 = this._pathCheckRegExps;
 				let currentArray2Length = currentArray2.length;
@@ -109,7 +109,7 @@ export default class WprrRenderer  {
 	}
 	
 	startCheckingForRender() {
-		console.log("WprrRenderer::startCheckingForRender");
+		//console.log("WprrRenderer::startCheckingForRender");
 		
 		this._timeoutId = setTimeout(this._checkForRenderBound, 1);
 	}

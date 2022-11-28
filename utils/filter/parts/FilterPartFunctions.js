@@ -273,8 +273,8 @@ export default class FilterPartFunctions  {
 	}
 	
 	static filterOutObjectProperties(aCurrentArray, aOriginalArray) {
-		console.log("filterOutObjectProperties");
-		console.log(this);
+		//console.log("filterOutObjectProperties");
+		//console.log(this);
 		
 		let returnArray = new Array();
 		

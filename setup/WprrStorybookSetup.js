@@ -45,7 +45,7 @@ export default class WprrStorybookSetup {
 	}
 	
 	_createReduxStore() {
-		console.log("WprrStorybookSetup::_createReduxStore");
+		//console.log("WprrStorybookSetup::_createReduxStore");
 		
 		let initialState = {};
 		
@@ -65,7 +65,7 @@ export default class WprrStorybookSetup {
 	}
 	
 	setupStore() {
-		console.log("WprrStorybookSetup::setupStore");
+		//console.log("WprrStorybookSetup::setupStore");
 		
 		this._store = this._createReduxStore();
 		this._storeController.setStore(this._store);

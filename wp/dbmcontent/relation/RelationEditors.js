@@ -180,7 +180,7 @@ export default class RelationEditors extends MultiTypeItemConnection {
 	}
 	
 	_changed() {
-		console.log("_changed");
+		//console.log("_changed");
 		
 		let commandName = "changed";
 		if(this._commands.hasInput(commandName)) {

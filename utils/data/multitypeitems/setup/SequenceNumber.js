@@ -10,7 +10,7 @@ export default class SequenceNumber extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("SequenceNumber::prepare");
+		//console.log("SequenceNumber::prepare");
 		
 		aItem.requireValue("hasData/sequenceNumber", false);
 		aItem.requireValue("identifier", null);

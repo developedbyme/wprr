@@ -10,7 +10,7 @@ export default class DataImage extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("DataImage::prepare");
+		//console.log("DataImage::prepare");
 		
 		aItem.requireValue("hasData/dataImage", false);
 		aItem.requireValue("url", "");

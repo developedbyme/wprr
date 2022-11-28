@@ -475,7 +475,7 @@ export default class SourceData extends BaseObject {
 	static getSourceWithType(aPrefixedPath, aFromObject) {
 		if(!aPrefixedPath) {
 			console.error("Path is not set");
-			console.log(aFromObject);
+			//console.log(aFromObject);
 			
 			return null;
 		}

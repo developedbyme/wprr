@@ -27,7 +27,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	updateValue(aName, aValue, aAdditionalData) {
-		console.log("updateValue");
+		//console.log("updateValue");
 		
 		if(aName === "selection") {
 			this.updateValue(aValue);
@@ -44,7 +44,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	trigger(aName, aValue) {
-		console.log("trigger");
+		//console.log("trigger");
 		
 		if(aName === "setSelection") {
 			this.updateValue(aValue);
@@ -67,7 +67,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	close() {
-		console.log("close");
+		//console.log("close");
 		this.updateProp("open", false);
 		this._updateExternalValue(this.getSourcedPropWithDefault("openValueName", "open"), false);
 	}
@@ -92,7 +92,7 @@ export default class DropdownSelection extends WprrBaseObject {
 	}
 	
 	_prepareRender() {
-		console.log("DropdownSelection::_prepareRender");
+		//console.log("DropdownSelection::_prepareRender");
 		
 		super._prepareRender();
 		

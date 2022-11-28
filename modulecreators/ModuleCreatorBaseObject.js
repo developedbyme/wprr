@@ -196,8 +196,8 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_configureModule(aHolderNode, aData, aModuleData) {
-		console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
-		console.log(aHolderNode, aData, aModuleData);
+		//console.log("wprr/modulecreators/AppModuleCreator::_configureModule");
+		//console.log(aHolderNode, aData, aModuleData);
 		
 		this._store = this._createReduxStore(aData);
 		this._storeController.setStore(this._store);
@@ -314,8 +314,8 @@ export default class ModuleCreatorBaseObject {
 	 * aModuleData	Object		The dynamic data for just this module
 	 */
 	createModule(aHolderNode, aData, aModuleData, aAddMode = ModuleCreatorBaseObject.RENDER) {
-		console.log("ModuleCreatorBaseObject::createModule");
-		console.log(aHolderNode, aData, aModuleData);
+		//console.log("ModuleCreatorBaseObject::createModule");
+		//console.log(aHolderNode, aData, aModuleData);
 		
 		if(this._usedMulitpleTimes) {
 			//METODO: look over this
@@ -345,11 +345,11 @@ export default class ModuleCreatorBaseObject {
 	}
 	
 	_elementRenderedCallback() {
-		console.log("_elementRenderedCallback");
+		//console.log("_elementRenderedCallback");
 	}
 	
 	_setRootRef() {
-		console.log("_setRootRef");
+		//console.log("_setRootRef");
 	}
 	
 	static create(aClass) {

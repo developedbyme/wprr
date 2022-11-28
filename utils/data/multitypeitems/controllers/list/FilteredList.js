@@ -171,7 +171,7 @@ export default class FilteredList extends MultiTypeItemConnection {
 	}
 	
 	_updateListeners() {
-		console.log("_updateListeners");
+		//console.log("_updateListeners");
 		
 		//METODO:
 	}

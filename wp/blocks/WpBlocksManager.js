@@ -48,7 +48,7 @@ export default class WpBlocksManager {
 	}
 	
 	registerBlocksFromClientModule(aBlocks, aIcon = "marker", aCategory = "auto") {
-		console.log("registerBlocksFromClientModule");
+		//console.log("registerBlocksFromClientModule");
 		let mappedBlocks = Wprr.utils.array.getPathsInObject(aBlocks);
 		let currentArray = mappedBlocks;
 		let currentArrayLength = currentArray.length;
@@ -57,7 +57,7 @@ export default class WpBlocksManager {
 			let currentObject = currentArray[i];
 			
 			let currentClass = currentObject.value;
-			console.log(currentObject);
+			//console.log(currentObject);
 			
 			let element = null;
 			if(currentClass.getWpAdminEditor) {
@@ -129,7 +129,7 @@ export default class WpBlocksManager {
 		
 		newElementBlockRegistration.setComponent(camelCaseId);
 		
-		console.log(this._prefix, slugId);
+		//console.log(this._prefix, slugId);
 		this.addBlockRegistration(this._prefix + "/" + slugId, newElementBlockRegistration);
 		
 		return newElementBlockRegistration;

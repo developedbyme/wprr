@@ -64,8 +64,8 @@ export default class MapLocationWithRadius extends WprrBaseObject {
 	}
 	
 	_callback_mapClicked(aEvent) {
-		console.log("_callback_mapClicked");
-		console.log(aEvent);
+		//console.log("_callback_mapClicked");
+		//console.log(aEvent);
 		
 		let longitude = aEvent.latLng.lng();
 		let latitude = aEvent.latLng.lat();
@@ -92,7 +92,7 @@ export default class MapLocationWithRadius extends WprrBaseObject {
 	}
 	
 	_updateRadius() {
-		console.log("_updateRadius");
+		//console.log("_updateRadius");
 		
 		if(this._radiusCircle) {
 			if(this._map && this._latitude.value !== null && this._radius.value !== null) {
@@ -109,7 +109,7 @@ export default class MapLocationWithRadius extends WprrBaseObject {
 	}
 	
 	_updateMarkerPosition() {
-		console.log("_updateMarkerPosition");
+		//console.log("_updateMarkerPosition");
 		
 		if(this._marker) {
 			if(this._map && this._latitude.value !== null) {

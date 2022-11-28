@@ -34,7 +34,7 @@ export default class PerformProcessPart extends Layout {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

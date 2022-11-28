@@ -96,7 +96,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 	}
 	
 	_continueAfterCreation() {
-		console.log("_continueAfterCreation");
+		//console.log("_continueAfterCreation");
 		
 		if(this.item.getValue("created")) {
 			
@@ -164,8 +164,8 @@ export default class ItemCreator extends MultiTypeItemConnection {
 	}
 	
 	_setupRelation(aRelationId, aType, aFromId, aToId, aStatus) {
-		console.log("_setupRelation");
-		console.log(aRelationId, aType, aFromId, aToId, aStatus);
+		//console.log("_setupRelation");
+		//console.log(aRelationId, aType, aFromId, aToId, aStatus);
 		
 		let fromItem = this.item.group.getItem(aFromId);
 		let relationItem = this.item.group.getItem(aRelationId);

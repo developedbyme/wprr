@@ -10,7 +10,7 @@ export default class DiscountCode extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("DiscountCode::prepare");
+		//console.log("DiscountCode::prepare");
 		
 		aItem.requireValue("hasData/discountCode", false);
 		aItem.requireValue("code");

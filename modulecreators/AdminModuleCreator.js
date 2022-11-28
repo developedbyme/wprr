@@ -22,8 +22,8 @@ export default class AdminModuleCreator extends ModuleCreatorBaseObject {
 	}
 	
 	_configureModule(aHolderNode, aData, aModuleData) {
-		console.log("wprr/modulecreators/AdminModuleCreator::constructor");
-		console.log(aHolderNode, aData, aModuleData);
+		//console.log("wprr/modulecreators/AdminModuleCreator::constructor");
+		//console.log(aHolderNode, aData, aModuleData);
 		
 		super._configureModule(aHolderNode, aData, aModuleData);
 		

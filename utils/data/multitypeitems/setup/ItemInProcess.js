@@ -10,7 +10,7 @@ export default class ItemInProcess extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("ItemInProcess::prepare");
+		//console.log("ItemInProcess::prepare");
 		
 		aItem.requireValue("hasData/itemInProcess", false);
 		aItem.getLinks("processes");

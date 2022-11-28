@@ -17,7 +17,7 @@ export default class CookieBar extends Layout {
 	}
 	
 	allowAll() {
-		console.log("allowAll");
+		//console.log("allowAll");
 		
 		let expires = this.getFirstInput("expires", 365);
 		

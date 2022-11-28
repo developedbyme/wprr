@@ -363,8 +363,8 @@ export default class Project {
 	}
 	
 	setUserData(aData) {
-		console.log("setUserData");
-		console.log(aData);
+		//console.log("setUserData");
+		//console.log(aData);
 		
 		let projectItem = this._items.getItem("project");
 		let session = Wprr.objectPath(projectItem, "session.linkedItem");

@@ -71,7 +71,7 @@ export default class Slider extends WprrBaseObject {
 	
 	_updateMoveValue(aValue) {
 		//METODO
-		console.log(aValue);
+		//console.log(aValue);
 		
 		let additionalData = this.getSourcedProp("additionalData");
 		let valueName = this.getSourcedProp("valueName");
@@ -165,8 +165,8 @@ export default class Slider extends WprrBaseObject {
 	}
 	
 	_startDrag(aEvent) {
-		console.log("wprr/elements/form/Slider::_startDrag");
-		console.log(aEvent, aEvent.type);
+		//console.log("wprr/elements/form/Slider::_startDrag");
+		//console.log(aEvent, aEvent.type);
 		
 		if(aEvent.type === "touchstart") {
 			this._startMove(aEvent.touches[0].pageX, aEvent.touches[0].pageY);

@@ -11,7 +11,7 @@ export default class InternalMessageGroupInjection extends ManipulationBaseObjec
 	constructor(aProps) {
 		super(aProps);
 		
-		console.log(Wprr.utils.wp);
+		//console.log(Wprr.utils.wp);
 		
 		this._messageGroup = new Wprr.utils.wp.dbmcontent.im.InternalMessageGroup();
 	}
@@ -25,15 +25,15 @@ export default class InternalMessageGroupInjection extends ManipulationBaseObjec
 	}
 	
 	_prepareInitialRender() {
-		console.log("wprr/manipulation/InternalMessageGroupInjection::_prepareInitialRender");
+		//console.log("wprr/manipulation/InternalMessageGroupInjection::_prepareInitialRender");
 		
 		super._prepareInitialRender();
 		
 		let data = this.getFirstInput("data");
-		console.log(data);
+		//console.log(data);
 		
 		this._messageGroup.setupFields(data.fields);
-		console.log(this._messageGroup);
+		//console.log(this._messageGroup);
 	}
 	
 	_renderMainElement() {

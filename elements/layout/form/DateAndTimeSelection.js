@@ -38,7 +38,7 @@ export default class DateAndTimeSelection extends WprrBaseObject {
 	getValueAsDate() {
 		let value = this.getValue();
 		
-		console.log(">>>>>>>>>>>>>>>>>>", value);
+		//console.log(">>>>>>>>>>>>>>>>>>", value);
 		
 		if(typeof(value) === "number" && value > 0) {
 			return moment(value);
@@ -58,10 +58,10 @@ export default class DateAndTimeSelection extends WprrBaseObject {
 	}
 	
 	_dateUpdated() {
-		console.log("DateAndTimeSelection::_dateUpdated");
+		//console.log("DateAndTimeSelection::_dateUpdated");
 		
 		let fullDateString = this._date.value + "T" + this._time.value;
-		console.log(fullDateString);
+		//console.log(fullDateString);
 		
 		let date = moment(fullDateString, 'YYYY-MM-DDTHH:mm:ss', true);
 		if(date.isValid()) {

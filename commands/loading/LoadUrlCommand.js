@@ -28,8 +28,8 @@ export default class LoadUrlCommand extends BaseCommand {
 	}
 	
 	loaded(aData) {
-		console.log("loaded");
-		console.log(aData);
+		//console.log("loaded");
+		//console.log(aData);
 		
 		let currentArray = this.getInput("successCommands");
 		let currentArrayLength = currentArray.length;
@@ -50,7 +50,7 @@ export default class LoadUrlCommand extends BaseCommand {
 		let headers = this.getInput("headers");
 		let data = this.getInput("data");
 		
-		console.log(url);
+		//console.log(url);
 		
 		let loader;
 		switch(format) {
@@ -79,7 +79,7 @@ export default class LoadUrlCommand extends BaseCommand {
 		
 		loader.addSuccessCommand(successCommand);
 		
-		console.log(">>>>>>", loader);
+		//console.log(">>>>>>", loader);
 		//METODO: add error commands
 		loader.load();
 	}

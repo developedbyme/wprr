@@ -10,7 +10,7 @@ export default class Identifier extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Identifier::prepare");
+		//console.log("Identifier::prepare");
 		
 		aItem.requireValue("hasData/identifier", false);
 		aItem.requireValue("identifier", null);

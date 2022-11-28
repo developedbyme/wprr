@@ -31,8 +31,8 @@ export default class GetLinks extends MultiTypeItemConnection {
 	}
 	
 	_itemChanged() {
-		console.log("GetLinks::_itemChanged");
-		console.log(this);
+		//console.log("GetLinks::_itemChanged");
+		//console.log(this);
 		
 		
 		if(this._currentConnection) {

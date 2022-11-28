@@ -13,8 +13,8 @@ export default class MediaFileUpload extends WprrBaseObject {
 	}
 	
 	_fileUploaded(aId) {
-		console.log("wprr/wp/admin/MediaFileUpload::selectFile");
-		console.log(aId);
+		//console.log("wprr/wp/admin/MediaFileUpload::selectFile");
+		//console.log(aId);
 		
 		this.setState({"loading": false});
 		
@@ -26,7 +26,7 @@ export default class MediaFileUpload extends WprrBaseObject {
 	}
 	
 	_uploadFile(aFile) {
-		console.log("wprr/wp/admin/MediaFileUpload::selectFile");
+		//console.log("wprr/wp/admin/MediaFileUpload::selectFile");
 		
 		let loader = new Wprr.utils.JsonLoader();
 		
@@ -49,14 +49,14 @@ export default class MediaFileUpload extends WprrBaseObject {
 	}
 	
 	selectFile(aFile) {
-		console.log("wprr/wp/admin/MediaFileUpload::selectFile");
+		//console.log("wprr/wp/admin/MediaFileUpload::selectFile");
 		//console.log(aFile);
 		
 		this._uploadFile(aFile);
 	}
 	
 	removeFile(aFile) {
-		console.log("wprr/wp/admin/MediaFileUpload::removeFile");
+		//console.log("wprr/wp/admin/MediaFileUpload::removeFile");
 		
 		let valueName = this.getSourcedProp("valueName");
 		let valueController = this.getReference("value/" + valueName);
@@ -66,7 +66,7 @@ export default class MediaFileUpload extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("wprr/wp/admin/MediaFileUpload::_renderContentElement");
+		//console.log("wprr/wp/admin/MediaFileUpload::_renderContentElement");
 		
 		let valueName = this.getSourcedProp("valueName");
 		let mediaId = this.getSourcedPropWithDefault("mediaId", Wprr.sourceProp(valueName));
@@ -84,7 +84,7 @@ export default class MediaFileUpload extends WprrBaseObject {
 			"elements/media/idField": React.createElement(Wprr.FormField, {"type": "hidden", "name": valueName, "value": mediaId})
 		}
 		
-		console.log(mediaId);
+		//console.log(mediaId);
 		
 		let section = "loading";
 		if(!this.state["loading"]) {

@@ -29,7 +29,7 @@ export default class ReactRouterPushCommand extends BaseCommand {
 			return;
 		}
 		
-		console.log(historyController);
+		//console.log(historyController);
 		historyController.push(to);
 	}
 	

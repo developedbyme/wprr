@@ -54,7 +54,7 @@ export default class RelationTerms extends AdjustFunction {
 		
 		aData[outputName] = DbmContentFunctions.getRelations(postData, relation);
 		
-		console.log(outputName, aData[outputName]);
+		//console.log(outputName, aData[outputName]);
 		
 		return aData;
 	}

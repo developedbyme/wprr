@@ -94,7 +94,7 @@ export default class UserRelationEditor extends MultiTypeItemConnection {
 			item.addSingleLink("to", "user" + aToId);
 			item.addType("userId", aToId);
 			
-			console.log(">>>>>>>", item);
+			//console.log(">>>>>>>", item);
 		}
 	}
 	

@@ -10,7 +10,7 @@ export default class Process extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Process::prepare");
+		//console.log("Process::prepare");
 		
 		aItem.requireValue("hasData/itemInProcess", false);
 		aItem.getLinks("parts");
@@ -20,8 +20,8 @@ export default class Process extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("Process::setup");
-		console.log(aItem, aData);
+		//console.log("Process::setup");
+		//console.log(aItem, aData);
 		
 		aItem.setValue("name", aData["name"]);
 		aItem.getLinks("parts").addUniqueItems(aData["parts"]);

@@ -31,7 +31,7 @@ export default class Image extends WprrBaseObject {
 	}
 	
 	_getLoaderForFile(aFile) {
-		console.log(aFile, 'upload file');
+		//console.log(aFile, 'upload file');
 		
 		let fieldName = this.getFirstInput("fieldName");
 		
@@ -49,15 +49,15 @@ export default class Image extends WprrBaseObject {
 	}
 	
 	_fileUploaded(aName, aData) {
-		console.log("_fileUploaded");
-		console.log(aData);
+		//console.log("_fileUploaded");
+		//console.log(aData);
 		
 		this._elementTreeItem.setValue("value", {"id": aData["id"], "name": aName, "url": aData["url"]});
 		this._elementTreeItem.setValue("status", "none");
 	}
 	
 	_removeFile() {
-		console.log("_removeFile");
+		//console.log("_removeFile");
 		
 		this._elementTreeItem.setValue("value", null);
 	}
@@ -84,8 +84,8 @@ export default class Image extends WprrBaseObject {
 	}
 	
 	_fileSelected(aFiles) {
-		console.log("_fileSelected");
-		console.log(aFiles);
+		//console.log("_fileSelected");
+		//console.log(aFiles);
 		
 		if(aFiles && aFiles.length) {
 			this._handleFiles(aFiles);

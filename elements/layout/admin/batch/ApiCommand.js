@@ -17,7 +17,7 @@ export default class ApiCommand extends WprrBaseObject {
 	}
 	
 	_update() {
-		console.log("_update");
+		//console.log("_update");
 		
 		let selectedIds = this.getFirstInput("ids", Wprr.sourceReference("editorItem", "selectedItems.ids"));
 		let items = this.getFirstInput(Wprr.sourceReference("items"));
@@ -47,8 +47,8 @@ export default class ApiCommand extends WprrBaseObject {
 	}
 	
 	_setPayloadFile(aFileData) {
-		console.log("_setPayloadFile");
-		console.log(aFileData);
+		//console.log("_setPayloadFile");
+		//console.log(aFileData);
 		
 		let data = JSON.parse(aFileData);
 		if(data) {
@@ -57,8 +57,8 @@ export default class ApiCommand extends WprrBaseObject {
 	}
 	
 	_loadPayloadFile(aFile) {
-		console.log("_setPayload");
-		console.log(aFile);
+		//console.log("_setPayload");
+		//console.log(aFile);
 		
 		if(aFile) {
 			let loader = new Wprr.utils.loading.LocalFileLoader();

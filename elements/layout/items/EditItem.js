@@ -43,8 +43,8 @@ export default class EditItem extends Layout {
 	}
 	
 	_addNames(aData) {
-		console.log("_addNames");
-		console.log(aData);
+		//console.log("_addNames");
+		//console.log(aData);
 		
 		let namesToLoad = this.getFirstInput("namesToLoad");
 		if(namesToLoad) {

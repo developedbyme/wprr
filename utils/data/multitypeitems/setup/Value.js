@@ -10,7 +10,7 @@ export default class Value extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Value::prepare");
+		//console.log("Value::prepare");
 		
 		aItem.requireValue("hasData/value", false);
 		aItem.requireValue("value", null);

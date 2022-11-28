@@ -17,7 +17,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 	}
 	
 	getValue() {
-		console.log("ArrayEditor::getValue");
+		//console.log("ArrayEditor::getValue");
 		
 		let valueName = this.getSourcedProp("valueName");
 		
@@ -32,7 +32,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 			return [];
 		}
 		
-		console.log(value);
+		//console.log(value);
 		
 		return value;
 	}
@@ -55,7 +55,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 	}
 	
 	addItem(aData) {
-		console.log("wprr/elements/form/ArrayEditor::addItem");
+		//console.log("wprr/elements/form/ArrayEditor::addItem");
 		
 		let currentArray = [].concat(this.getValue());
 		
@@ -67,7 +67,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 	}
 	
 	createItem() {
-		console.log("wprr/elements/form/ArrayEditor::createItem");
+		//console.log("wprr/elements/form/ArrayEditor::createItem");
 		
 		let newItemTemplate = this.getSourcedPropWithDefault("newItemTemplate", {});
 		
@@ -77,8 +77,8 @@ export default class ArrayEditor extends ManipulationBaseObject {
 	}
 	
 	removeItem(aIndex) {
-		console.log("wprr/elements/form/ArrayEditor::removeItem");
-		console.log(aIndex);
+		//console.log("wprr/elements/form/ArrayEditor::removeItem");
+		//console.log(aIndex);
 		
 		let currentArray = [].concat(this.getValue());
 		
@@ -116,7 +116,7 @@ export default class ArrayEditor extends ManipulationBaseObject {
 	}
 
 	_renderClonedElement() {
-		console.log("wprr/elements/form/ArrayEditor::_renderMainElement");
+		//console.log("wprr/elements/form/ArrayEditor::_renderMainElement");
 		
 		let value = this.getValue();
 		

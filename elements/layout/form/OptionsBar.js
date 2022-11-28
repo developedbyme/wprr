@@ -25,7 +25,7 @@ export default class OptionsBar extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("OptionsBar::_renderMainElement");
+		//console.log("OptionsBar::_renderMainElement");
 		
 		let externalStorageSource = aSlots.prop("externalStorage", Wprr.sourceReference("externalStorage"));
 		let valueNameSource = aSlots.prop("valueName", "value");

@@ -153,7 +153,7 @@ export default class XlsxExporter {
 		}
 		catch(theError) {
 			console.error("Could not export file.");
-			console.log(theError);
+			//console.log(theError);
 		}
 	}
 	
@@ -174,7 +174,7 @@ export default class XlsxExporter {
 		}
 		catch(theError) {
 			console.error("Could not export file.");
-			console.log(theError);
+			//console.log(theError);
 		}
 	}
 }

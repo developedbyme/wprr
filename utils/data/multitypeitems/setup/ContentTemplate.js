@@ -10,7 +10,7 @@ export default class ContentTemplate extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("ContentTemplate::prepare");
+		//console.log("ContentTemplate::prepare");
 		
 		aItem.requireValue("hasData/contentTemplate", false);
 		aItem.requireValue("name", null);

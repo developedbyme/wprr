@@ -75,8 +75,8 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_updateElement() {
-		console.log("_updateElement");
-		console.log(this);
+		//console.log("_updateElement");
+		//console.log(this);
 		
 		if(this._elementWithListeners) {
 			this._elementWithListeners.removeEventListener("mousedown", this._callback_mouseDownBound, false);
@@ -107,8 +107,8 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_updateActive() {
-		console.log("_updateActive");
-		console.log(this);
+		//console.log("_updateActive");
+		//console.log(this);
 		
 		let element = this.item.getValue("element");
 		let active = this.item.getValue("active");
@@ -137,7 +137,7 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_callback_mouseDown(aEvent) {
-		console.log("_callback_mouseDown");
+		//console.log("_callback_mouseDown");
 		
 		this._startDragTime = (new Date()).valueOf();
 		
@@ -155,7 +155,7 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_callback_mouseMove(aEvent) {
-		console.log("_callback_mouseMove");
+		//console.log("_callback_mouseMove");
 		
 		let movementX = aEvent.pageX-this.item.getValue("startPositionX");
 		let movementY = aEvent.pageY-this.item.getValue("startPositionY");
@@ -168,7 +168,7 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_callback_mouseUp(aEvent) {
-		console.log("_callback_mouseUp");
+		//console.log("_callback_mouseUp");
 		
 		this.item.setValue("isDragging", false);
 		
@@ -180,7 +180,7 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_callback_touchStart(aEvent) {
-		console.log("_callback_touchStart");
+		//console.log("_callback_touchStart");
 		
 		let touches = aEvent.changedTouches;
 		let touch = touches[0];
@@ -226,7 +226,7 @@ export default class DragElement extends MultiTypeItemConnection {
 	}
 	
 	_callback_click(aEvent) {
-		console.log("_callback_click");
+		//console.log("_callback_click");
 		
 		let currentTime = (new Date()).valueOf();
 		

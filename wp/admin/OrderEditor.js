@@ -32,7 +32,7 @@ export default class OrderEditor extends MultiTypeItemConnection {
 	}
 	
 	getHierarchyForOrder(aName) {
-		console.log("getHierarchyForOrder");
+		//console.log("getHierarchyForOrder");
 		
 		let links = this.item.getNamedLinks("orderHierarchies");
 		
@@ -153,7 +153,7 @@ export default class OrderEditor extends MultiTypeItemConnection {
 	}
 	
 	hasUnsavedChanges() {
-		console.log("hasUnsavedChanges");
+		//console.log("hasUnsavedChanges");
 		
 		let editStorage = this.item.getType("orderStorage");
 		

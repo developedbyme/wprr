@@ -62,7 +62,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 	}
 	
 	_addFieldChange(aField, aValue, aSaveData) {
-		console.log("_addFieldChange");
+		//console.log("_addFieldChange");
 		
 		let changeData;
 		if(aField["changeGenerator"]) {
@@ -80,7 +80,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 			changeData = {"value": aValue, "field": aField["field"]};
 		}
 		
-		console.log(changeData);
+		//console.log(changeData);
 		
 		aSaveData.changes.createChange(aField["saveType"], changeData);
 		aSaveData.addUpdateSavedFieldCommand(aField["field"], this.item.getType("editStorage"));
@@ -123,7 +123,7 @@ export default class PostEditor extends MultiTypeItemConnection {
 		}
 		
 		let returnData = this.getSaveData();
-		console.log(">", returnData);
+		//console.log(">", returnData);
 		
 		return [returnData];
 	}

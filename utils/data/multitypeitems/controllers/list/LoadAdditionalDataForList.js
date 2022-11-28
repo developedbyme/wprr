@@ -34,11 +34,11 @@ export default class LoadAdditionalDataForList extends MultiTypeItemConnection {
 	}
 	
 	_loadItems() {
-		console.log("_loadItems");
+		//console.log("_loadItems");
 		
 		let loader = this.item.getType("loader").linkedItem;
 		let ids = this.item.getLinks("items").ids;
-		console.log(loader, ids);
+		//console.log(loader, ids);
 		
 		if(loader) {
 			loader.loadItems(ids);

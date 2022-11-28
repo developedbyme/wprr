@@ -40,7 +40,7 @@ export default class Selection extends WprrBaseObject {
 	}
 	
 	validate(aType) {
-		console.log("wprr/elements/form/Selection::validate");
+		//console.log("wprr/elements/form/Selection::validate");
 		
 		return this._validate(aType);
 	}

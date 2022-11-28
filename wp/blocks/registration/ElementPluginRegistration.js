@@ -112,8 +112,8 @@ export default class ElementPluginRegistration {
 	}
 	
 	render(aProps) {
-		console.log("wprr/wp/blocks/registration/ElementPluginRegistration::render");
-		console.log(aProps, this);
+		//console.log("wprr/wp/blocks/registration/ElementPluginRegistration::render");
+		//console.log(aProps, this);
 		
 		let clientId = this._clientId;
 		

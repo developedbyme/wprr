@@ -30,8 +30,8 @@ export default class AttributeDataStorage extends DataStorage {
 	}
 	
 	updateValue(aName, aValue) {
-		console.log("wprr/wp/blocks/AttributeDataStorage::updateValue");
-		console.log(aName, aValue);
+		//console.log("wprr/wp/blocks/AttributeDataStorage::updateValue");
+		//console.log(aName, aValue);
 		
 		let path = aName;
 		if(this._pathPrefix) {
@@ -40,7 +40,7 @@ export default class AttributeDataStorage extends DataStorage {
 		
 		let currentAttributes = JSON.parse(JSON.stringify(this._currentState));
 		objectPath.set(currentAttributes, path, aValue);
-		console.log(currentAttributes);
+		//console.log(currentAttributes);
 		
 		this._currentState = currentAttributes;
 		

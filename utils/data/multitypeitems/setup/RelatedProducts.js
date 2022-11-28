@@ -10,7 +10,7 @@ export default class RelatedProducts extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("RelatedProducts::prepare");
+		//console.log("RelatedProducts::prepare");
 		
 		aItem.requireValue("hasData/relatedProducts", false);
 		aItem.getLinks("crosssellProducts");
@@ -19,8 +19,8 @@ export default class RelatedProducts extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log("RelatedProducts::setup");
-		console.log(aItem, aData);
+		//console.log("RelatedProducts::setup");
+		//console.log(aItem, aData);
 		
 		aItem.getLinks("crosssellProducts").addUniqueItems(aData["crosssellProducts"]);
 		aItem.setValue("hasData/relatedProducts", true);

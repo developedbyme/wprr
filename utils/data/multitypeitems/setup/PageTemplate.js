@@ -10,7 +10,7 @@ export default class PageTemplate extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PageTemplate::prepare");
+		//console.log("PageTemplate::prepare");
 		
 		aItem.requireValue("hasData/pageTemplate", false);
 		aItem.requireValue("pageTemplate", null);

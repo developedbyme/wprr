@@ -299,8 +299,8 @@ export default class ImageLoaderManager {
 			}
 			catch(theError) {
 				console.error("Error getting data from element");
-				console.log(currentElement);
-				console.log(theError);
+				//console.log(currentElement);
+				//console.log(theError);
 			}
 		}
 	}

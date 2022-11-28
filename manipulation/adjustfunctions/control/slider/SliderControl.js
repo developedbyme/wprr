@@ -27,7 +27,7 @@ export default class SliderControl extends ControlFunction {
 	}
 	
 	trigger(aName, aValue) {
-		console.log("wprr/manipulation/adjustfunctions/control/slider/SliderControl::trigger");
+		//console.log("wprr/manipulation/adjustfunctions/control/slider/SliderControl::trigger");
 		
 		let triggerPrefix = this._name + "/";
 		let actionName = this._removePrefix(aName, triggerPrefix);
@@ -99,7 +99,7 @@ export default class SliderControl extends ControlFunction {
 	}
 	
 	slideToClosestIndex(aIndex) {
-		console.log("wprr/manipulation/adjustfunctions/control/slider/SliderControl::slideToClosestIndex");
+		//console.log("wprr/manipulation/adjustfunctions/control/slider/SliderControl::slideToClosestIndex");
 		
 		this._resetInterval();
 		this._cancelAnimation();

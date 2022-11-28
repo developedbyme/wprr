@@ -17,8 +17,8 @@ export default class CustomSelection extends ManipulationBaseObject {
 	}
 	
 	_changed(aNewValue) {
-		console.log("wprr/elements/form/CustomSelection::_changed");
-		console.log(aNewValue);
+		//console.log("wprr/elements/form/CustomSelection::_changed");
+		//console.log(aNewValue);
 		
 		let valueName = this.getSourcedProp("valueName");
 		

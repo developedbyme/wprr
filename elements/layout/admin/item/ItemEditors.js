@@ -13,7 +13,7 @@ export default class ItemEditors extends Wprr.BaseObject {
 		let items = item.group;
 		
 		let objectTypes = Wprr.objectPath(item, "objectTypes.items");
-		console.log(objectTypes);
+		//console.log(objectTypes);
 		
 		let elements = new Array();
 		
@@ -33,9 +33,9 @@ export default class ItemEditors extends Wprr.BaseObject {
 				elements = elements.concat(currentElements);
 			}
 		}
-		console.log(elements);
+		//console.log(elements);
 		let realElements = Wprr.utils.array.mapField(elements, "element.value");
-		console.log(realElements);
+		//console.log(realElements);
 			
 		return React.createElement("div", null,
 			React.createElement(Wprr.InsertElement, {"element": realElements})
@@ -43,7 +43,7 @@ export default class ItemEditors extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

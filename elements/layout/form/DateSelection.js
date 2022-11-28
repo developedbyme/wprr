@@ -25,7 +25,7 @@ export default class DateSelection extends WprrBaseObject {
 	}
 	
 	_valueChanged() {
-		console.log("_valueChanged");
+		//console.log("_valueChanged");
 		
 		let value = this._value.value;
 		
@@ -74,7 +74,7 @@ export default class DateSelection extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("DateSelection::_renderMainElement");
+		//console.log("DateSelection::_renderMainElement");
 		
 		let language = this.getFirstInput(Wprr.sourceReference("wprr/postData", "language"), "en");
 		

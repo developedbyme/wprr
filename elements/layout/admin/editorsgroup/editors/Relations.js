@@ -21,7 +21,7 @@ export default class Relations extends Layout {
 	}
 	
 	_getLayout(aSlots) {
-		console.log("Relations::_getLayout");
+		//console.log("Relations::_getLayout");
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
 		let editorsGroup = itemEditor.editorsGroup;
@@ -29,7 +29,7 @@ export default class Relations extends Layout {
 		let direction = this.getFirstInputWithDefault("direction", "incoming");
 		let relationName = (direction === "outgoing") ? "to.linkedItem" : "from.linkedItem";
 		
-		console.log(this.getRelationEditor());
+		//console.log(this.getRelationEditor());
 		
 		return React.createElement("div", null,
 			<Wprr.AddReference data={this.getRelationEditor()} as="relationsEditor">

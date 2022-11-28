@@ -57,7 +57,7 @@ export default class ConvertTermField extends AdjustFunction {
 		
 		this.removeUsedProps(aData);
 		
-		console.log(inputField, input, terms, outputField);
+		//console.log(inputField, input, terms, outputField);
 		aData[outputName] = objectPath.get(WpTermFunctions.getTermBy(inputField, input, terms), outputField);
 		
 		return aData;

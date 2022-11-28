@@ -10,7 +10,7 @@ export default class ShortTitle extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("ShortTitle::prepare");
+		//console.log("ShortTitle::prepare");
 		
 		aItem.requireValue("hasData/shortTitle", false);
 		aItem.requireValue("shortTitle", null);

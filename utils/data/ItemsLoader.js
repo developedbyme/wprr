@@ -130,7 +130,7 @@ export default class ItemsLoader extends ProjectRelatedItem {
 			this._setupItem(currentArray[i]);
 		}
 		
-		console.log(this._items);
+		//console.log(this._items);
 		
 		return this;
 	}

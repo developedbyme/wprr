@@ -86,22 +86,22 @@ export default class JsonEditor extends WprrBaseObject {
 	}
 	
 	_callback_onEdit(aData) {
-		console.log("_callback_onEdit");
-		console.log(aData);
+		//console.log("_callback_onEdit");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}
 	
 	_callback_onAdd(aData) {
-		console.log("_callback_onAdd");
-		console.log(aData);
+		//console.log("_callback_onAdd");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}
 	
 	_callback_onDelete(aData) {
-		console.log("_callback_onDelete");
-		console.log(aData);
+		//console.log("_callback_onDelete");
+		//console.log(aData);
 		
 		this._updateValue(aData["updated_src"]);
 	}

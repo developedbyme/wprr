@@ -10,7 +10,7 @@ export default class PageSettings extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PageSettings::prepare");
+		//console.log("PageSettings::prepare");
 		
 		aItem.requireValue("hasData/pageSettings", false);
 		aItem.requireSingleLink("pageSettings");
@@ -19,7 +19,7 @@ export default class PageSettings extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log(aData);
+		//console.log(aData);
 		
 		aItem.addSingleLink("pageSettings", aData["pageSettings"]);
 		aItem.setValue("hasData/pageSettings", true);

@@ -10,7 +10,7 @@ export default class RecurringPercent extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("RecurringPercent::prepare");
+		//console.log("RecurringPercent::prepare");
 		
 		aItem.requireValue("hasData/discountCode/recurringPercent", false);
 		aItem.requireValue("numberOfPayments");

@@ -20,7 +20,7 @@ export default class ExportPages extends WprrBaseObject {
 	}
 	
 	_export() {
-		console.log("_export");
+		//console.log("_export");
 		
 		let selectedIds = this.getFirstInput(Wprr.sourceReference("externalStorage", "selection"));
 		let items = this.getFirstInput(Wprr.sourceReference("items"));

@@ -140,7 +140,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 	}
 	
 	_startQueue() {
-		console.log("AdditionalLoader::_startQueue");
+		//console.log("AdditionalLoader::_startQueue");
 		
 		let ids = this._queuedItems;
 		this._queuedItems = new Array();
@@ -155,7 +155,7 @@ export default class AdditionalLoader extends ProjectRelatedItem {
 		
 		if(numberOfIds > this._maxNumberOfItems && this._maxNumberOfItems > 0) {
 			this._queuedItems = ids.splice(this._maxNumberOfItems, numberOfIds-this._maxNumberOfItems);
-			console.log(ids.length, this._queuedItems.join(","));
+			//console.log(ids.length, this._queuedItems.join(","));
 		}
 		
 		let url = this._url.split("{ids}").join(ids.join(","));

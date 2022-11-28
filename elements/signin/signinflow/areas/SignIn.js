@@ -60,7 +60,7 @@ export default class SignIn extends Layout {
 	}
 	
 	_showErrorMessage() {
-		console.log("_showErrorMessage");
+		//console.log("_showErrorMessage");
 		
 		//METODO
 	}

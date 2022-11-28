@@ -26,7 +26,7 @@ export default class Form extends WprrBaseObject {
 	}
 	
 	_callback_submit(aEvent) {
-		console.log("wprr/elements/form/Form::_callback_submit");
+		//console.log("wprr/elements/form/Form::_callback_submit");
 		//console.log(aEvent);
 		
 		let handleResult = this._handleSubmit();

@@ -10,7 +10,7 @@ export default class PageSetting extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PageSetting::prepare");
+		//console.log("PageSetting::prepare");
 		
 		aItem.requireValue("hasData/pageSetting", false);
 		aItem.requireValue("identifier", null);
@@ -24,7 +24,7 @@ export default class PageSetting extends BaseObject {
 	}
 	
 	static setup(aItem, aData) {
-		console.log(aData);
+		//console.log(aData);
 		
 		aItem.setValue("hasData/pageSetting", true);
 		

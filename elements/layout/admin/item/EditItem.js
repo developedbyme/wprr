@@ -10,7 +10,7 @@ export default class EditItem extends Wprr.BaseObject {
 	}
 	
 	_renderMainElement() {
-		console.log("EditItem::_renderMainElement");
+		//console.log("EditItem::_renderMainElement");
 		
 		let items = this.getFirstInput(Wprr.sourceReference("wprr/project", "items"));
 		
@@ -22,7 +22,7 @@ export default class EditItem extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

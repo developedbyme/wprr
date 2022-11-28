@@ -83,16 +83,16 @@ export default class Steps extends MultiTypeItemConnection {
 	}
 	
 	_updateCurrentStep() {
-		console.log("_updateCurrentStep");
+		//console.log("_updateCurrentStep");
 		
 		
 		let completedSteps = this.item.getValue("completedSteps");
 		let currentStep = this.item.getValue("currentStep");
-		console.log(completedSteps, currentStep);
+		//console.log(completedSteps, currentStep);
 		
 		if(completedSteps.indexOf(currentStep) !== -1) {
 			let nextStep = this._getNextAvailableStep(currentStep+1, completedSteps);
-			console.log("next", nextStep);
+			//console.log("next", nextStep);
 			this.item.setValue("currentStep", nextStep);
 		}
 	}

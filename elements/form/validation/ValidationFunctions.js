@@ -10,14 +10,14 @@ export default class ValidationFunctions {
 	}
 	
 	static positiveValue(aCheckValue, aAdditionalData) {
-		console.log("wprr/elements/form/validation/ValidationFunctions::positiveValue");
+		//console.log("wprr/elements/form/validation/ValidationFunctions::positiveValue");
 		
 		if(aCheckValue === null || aCheckValue === undefined) {
 			return false;
 		}
 		
 		let checkNumber = 1*aCheckValue;
-		console.log(checkNumber);
+		//console.log(checkNumber);
 		
 		return (!isNaN(checkNumber) && checkNumber > 0);
 	}
@@ -66,7 +66,7 @@ export default class ValidationFunctions {
 	}
 	
 	static matchField(aCheckValue, aAdditionalData) {
-		console.log("wprr/elements/form/validation/ValidationFunctions::matchField");
+		//console.log("wprr/elements/form/validation/ValidationFunctions::matchField");
 		
 		let secondField = aAdditionalData.data["field"];
 		let secondValue = secondField.getValue();

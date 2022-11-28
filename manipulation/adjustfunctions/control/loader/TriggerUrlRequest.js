@@ -29,7 +29,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 	}
 	
 	trigger(aName, aValue) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::trigger");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::trigger");
 		
 		if(aName === this.getInputFromSingleOwner("triggerName")) {
 			
@@ -52,7 +52,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 	}
 	
 	_promise_loadResponse(aResponse) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadResponse");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadResponse");
 		
 		this._response = aResponse;
 		
@@ -60,8 +60,8 @@ export default class TriggerUrlRequest extends ControlFunction {
 	}
 	
 	_promise_dataEncoded(aDataString) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_dataEncoded");
-		console.log(aDataString);
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_dataEncoded");
+		//console.log(aDataString);
 		
 		if(!this._response.ok) {
 			throw Error(this._response.statusText + "\n" + aDataString);
@@ -88,12 +88,12 @@ export default class TriggerUrlRequest extends ControlFunction {
 		let resultTriggerName = this.getInputFromSingleOwner("resultTriggerName");
 		
 		let currentArray = this._owners;
-		console.log(">", currentArray);
+		//console.log(">", currentArray);
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentOwner = currentArray[i];
 			let triggerController = currentOwner.getReference("trigger/" + resultTriggerName);
-			console.log(">>", triggerController);
+			//console.log(">>", triggerController);
 			if(triggerController) {
 				triggerController.trigger(resultTriggerName, data);
 			}
@@ -101,7 +101,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 	}
 	
 	_promise_loadingError(aError) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadingError");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::_promise_loadingError");
 		console.error(aError);
 		
 		//METODO: set status
@@ -152,7 +152,7 @@ export default class TriggerUrlRequest extends ControlFunction {
 	 * @return	*	The modified data
 	 */
 	adjust(aData, aManipulationObject) {
-		console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::adjust");
+		//console.log("wprr/manipulation/adjustfunctions/control/loader/TriggerUrlRequest::adjust");
 		
 		//MENOTE: do nothing
 		

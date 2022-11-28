@@ -17,9 +17,9 @@ export default class EditPostForm extends WprrBaseObject {
 	}
 	
 	setupPostData(aData) {
-		console.log("wprr/wp/admin/EditPostForm::setupPostData");
+		//console.log("wprr/wp/admin/EditPostForm::setupPostData");
 		
-		console.log(aData);
+		//console.log(aData);
 		
 		for(let objectName in aData) {
 			switch(objectName) {
@@ -34,7 +34,7 @@ export default class EditPostForm extends WprrBaseObject {
 			}
 		}
 		
-		console.log(this._externalData);
+		//console.log(this._externalData);
 		
 		let commands = this.getSourcedProp("setupCommands");
 		if(commands) {
@@ -105,7 +105,7 @@ export default class EditPostForm extends WprrBaseObject {
 	}
 	
 	getChangeData() {
-		console.log("wprr/wp/admin/EditPostForm::getChangeData");
+		//console.log("wprr/wp/admin/EditPostForm::getChangeData");
 		
 		let changeData = new Wprr.utils.ChangeData();
 		
