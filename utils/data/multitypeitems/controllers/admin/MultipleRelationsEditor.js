@@ -37,7 +37,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 	}
 	
 	_createRelation(aItemId) {
-		console.log("_createRelation");
+		//console.log("_createRelation");
 		
 		this.item.getLinks("pendingItems").addUniqueItem(aItemId);
 		
@@ -47,7 +47,6 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
 		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id").split("/").pop(); 
 		let itemId = aItemId;
-		let relations = this.item.getLinks("activeRelations").items;
 		
 		let loader = project.getEditLoader(baseObjectId);
 		if(direction === "incoming") {
@@ -63,8 +62,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 	}
 	
 	_relationCreated(aId, aRelationId) {
-		console.log("_relationCreated");
-		console.log(aId, aRelationId);
+		//console.log("_relationCreated");
 		
 		let itemId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id");
 		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
@@ -72,19 +70,6 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		let newItem = this.item.group.getItem(aId);
 		let relationItem = this.item.group.getItem(aRelationId);
 		let item = this.item.group.getItem(itemId);
-		
-		if(direction === "incoming") {
-			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
-			
-			relationItem.addSingleLink("from", newItem.id);
-			relationItem.addSingleLink("to", item.id);
-		}
-		else if(direction === "outgoing") {
-			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
-			
-			relationItem.addSingleLink("to", newItem.id);
-			relationItem.addSingleLink("from", item.id);
-		}
 		
 		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id");
 		relationItem.addSingleLink("type", connectionType);
@@ -94,9 +79,19 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		relationItem.setValue("postStatus", "draft");
 		
 		if(direction === "incoming") {
+			relationItem.addSingleLink("from", newItem.id);
+			relationItem.addSingleLink("to", item.id);
+			
+			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
+			
 			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
 		}
 		else {
+			relationItem.addSingleLink("to", newItem.id);
+			relationItem.addSingleLink("from", item.id);
+			
+			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
+			
 			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
 		}
 		
@@ -107,11 +102,12 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		postStatusEditor.item.setValue("value", "private");
 		
 		this.item.getLinks("pendingItems").removeItem(aId);
+		
 	}
 	
 	_itemUpdated() {
 		//console.log("_itemUpdated");
-		//console.log(this);
+		//console.log(this._debugId, Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id"));
 		
 		if(this._isUpdating) {
 			return;

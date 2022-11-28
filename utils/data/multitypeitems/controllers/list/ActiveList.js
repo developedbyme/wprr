@@ -52,7 +52,7 @@ export default class ActiveList extends MultiTypeItemConnection {
 	}
 	
 	_itemAdded(aId) {
-		console.log("ActiveList::_itemAdded");
+		//console.log("ActiveList::_itemAdded");
 		let item = this.item.group.getItem(aId);
 		let forItemId = item.getSingleLink("forItem").id;
 		
@@ -83,19 +83,19 @@ export default class ActiveList extends MultiTypeItemConnection {
 	}
 	
 	_itemRemoved(aId) {
-		console.log("ActiveList::_itemRemoved");
+		//console.log("ActiveList::_itemRemoved");
 		this.item.getLinks("activeRows").removeItem(aId);
 	}
 	
 	activteRowBy(aField, aValue, aCompareType = "==") {
-		console.log("activteRowBy");
+		//console.log("activteRowBy");
 		
 		let items = Wprr.utils.array.getItemsBy(aField, aValue, this.item.getLinks("rows").items, aCompareType);
 		this.item.getLinks("activeRows").addUniqueItems(Wprr.utils.array.mapField(items, "id"));
 	}
 	
 	deactivteRowBy(aField, aValue, aCompareType = "==") {
-		console.log("deactivteRowBy");
+		//console.log("deactivteRowBy");
 		
 		let items = Wprr.utils.array.getItemsBy(aField, aValue, this.item.getLinks("rows").items, aCompareType);
 		let newItems = Wprr.utils.array.removeValues([].concat(this.item.getLinks("activeRows").ids), Wprr.utils.array.mapField(items, "id"));

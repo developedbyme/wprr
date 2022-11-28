@@ -10,7 +10,7 @@ export default class PostType extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("PostType::prepare");
+		//console.log("PostType::prepare");
 		
 		aItem.requireValue("hasData/postType", false);
 		aItem.requireValue("postType", null);

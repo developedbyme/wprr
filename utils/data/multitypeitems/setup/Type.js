@@ -10,7 +10,7 @@ export default class Type extends BaseObject {
 	}
 	
 	static prepare(aItem) {
-		console.log("Type::prepare");
+		//console.log("Type::prepare");
 		
 		aItem.requireValue("hasData/type", false);
 		aItem.requireValue("identifier", null);

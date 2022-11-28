@@ -63,7 +63,7 @@ export default class LoadAdditionalItems extends MultiTypeItemConnection {
 	}
 	
 	_loadNextBatch() {
-		console.log("_loadNextBatch");
+		//console.log("_loadNextBatch");
 		
 		let idsToLoad = this.item.getLinks("ids").ids;
 		let loadedIds = this.item.getLinks("loadedIds").ids;
@@ -93,8 +93,8 @@ export default class LoadAdditionalItems extends MultiTypeItemConnection {
 	}
 	
 	_partLoaded(aIds) {
-		console.log("_partLoaded");
-		console.log(aIds);
+		//console.log("_partLoaded");
+		//console.log(aIds);
 		
 		this.item.getLinks("loadedIds").addUniqueItems(aIds);
 		

@@ -111,21 +111,21 @@ export default class ScriptLoader {
 	}
 	
 	runCommandGroup(aGroup, aData = null) {
-		console.log("runCommandGroup");
-		console.log(aGroup, this._commandGroups[aGroup], this._commandGroups);
+		//console.log("runCommandGroup");
+		//console.log(aGroup, this._commandGroups[aGroup], this._commandGroups);
 		if(this._commandGroups[aGroup]) {
 			this.runCommands(this._commandGroups[aGroup], aData);
 		}
 	}
 	
 	runCommands(aCommands, aData = null) {
-		console.log("runCommands");
+		//console.log("runCommands");
 		if(aCommands) {
 			let currentArray = [].concat(aCommands);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentCommand = currentArray[i];
-				console.log(currentCommand);
+				//console.log(currentCommand);
 		
 				currentCommand.setEventData(aData);
 				currentCommand.perform();
@@ -158,7 +158,7 @@ export default class ScriptLoader {
 	}
 	
 	_callback_scriptLoaded(aEvent) {
-		console.log("_callback_scriptLoaded");
+		//console.log("_callback_scriptLoaded");
 		this._loadedAt = (new Date()).valueOf();
 		this.setStatus(ScriptLoader.LOADED);
 	}
@@ -181,7 +181,6 @@ export default class ScriptLoader {
 		scriptElement.addEventListener("load", this._callback_scriptLoadedBound, false);
 		
 		scriptElement.src = this._url;
-		console.log(scriptElement);
 		document.querySelector("head").appendChild(scriptElement);
 		
 		return this;
