@@ -18,6 +18,7 @@ export {default as Pagination} from "./Pagination";
 export {default as LoadAdditionalItems} from "./LoadAdditionalItems";
 export {default as FittingItems} from "./FittingItems";
 export {default as GetItemProperty} from "./GetItemProperty";
+export {default as CopyValue} from "./CopyValue";
 
 import * as css from "./css";
 export {css as css};

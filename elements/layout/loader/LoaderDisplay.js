@@ -6,20 +6,12 @@ import Layout from "wprr/elements/layout/Layout";
 //import LoaderDisplay from "./LoaderDisplay";
 export default class LoaderDisplay extends Layout {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._addMainElementClassName("loader-display");
 		
-		
 		this._layoutName = "loaderDisplay";
-	}
-	
-	_prepareInitialRender() {
-		super._prepareInitialRender();
-		
-		
-		
 	}
 	
 	_getLayout(aSlots) {

@@ -12,3 +12,6 @@ export {default as SelectType} from "./SelectType";
 
 import * as files from "./files/index.js";
 export {files};
+
+import * as fields from "./fields/index.js";
+export {fields};

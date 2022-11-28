@@ -12,7 +12,7 @@ export default class ItemsTableColumn extends MultiTypeItemConnection {
 	}
 	
 	get table() {
-		return this.item.getType("table").linkedItem.getType("table");
+		return this.item.getType("table").linkedItem.getType("controller");
 	}
 	
 	setTableId(aId) {
