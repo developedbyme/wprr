@@ -4,14 +4,14 @@ import React from "react";
 import Wprr from "wprr";
 import moment from "moment";
 
-// import EditSuppliers from "./EditSuppliers";
-export default class EditSuppliers extends Wprr.BaseObject {
+// import EditItemProperties from "./EditItemProperties";
+export default class EditItemProperties extends Wprr.BaseObject {
 	
 	/**
 	 * Constructor
 	 */
 	_construct() {
-		//console.log("EditSuppliers::constructor");
+		//console.log("EditItemProperties::constructor");
 		
 		super._construct();
 		
@@ -19,7 +19,7 @@ export default class EditSuppliers extends Wprr.BaseObject {
 	}
 	
 	_renderMainElement() {
-		//console.log("EditSuppliers::_renderMainElement");
+		//console.log("EditItemProperties::_renderMainElement");
 		
 		let editorsGroup = Wprr.objectPath(this._elementTreeItem, "editorsGroup.linkedItem.editorsGroup");
 		let itemId = this.getFirstInput(Wprr.sourceReference("item", "id"), Wprr.sourceQueryString("id"));

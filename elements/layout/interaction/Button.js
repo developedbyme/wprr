@@ -28,7 +28,7 @@ export default class Button extends Layout {
 			aSlots.slot("buttonElement", 
 				React.createElement(Wprr.BaseObject,
 					{
-						className: aSlots.prop("buttonClasses", "standard-button standard-button-padding"),
+						className: aSlots.prop("buttonClasses", "standard-button standard-button-hover standard-button-padding"),
 					},
 					aSlots.default(Wprr.text(aSlots.prop("text", Wprr.sourceTranslation("Click"))))
 				)

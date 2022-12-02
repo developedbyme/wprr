@@ -123,6 +123,13 @@ export default class Project {
 		this._items.addSetup("shortTitle", Wprr.utils.data.multitypeitems.setup.ShortTitle.prepare, Wprr.utils.data.multitypeitems.setup.ShortTitle.setup);
 		this._items.addSetup("action", Wprr.utils.data.multitypeitems.setup.Action.prepare, Wprr.utils.data.multitypeitems.setup.Action.setup);
 		
+		this._items.addSetup("communication/transactionalEmail", Wprr.utils.data.multitypeitems.setup.communication.TransactionalEmail.prepare, Wprr.utils.data.multitypeitems.setup.communication.TransactionalEmail.setup);
+		this._items.addSetup("communication/content", Wprr.utils.data.multitypeitems.setup.communication.Content.prepare, Wprr.utils.data.multitypeitems.setup.communication.Content.setup);
+		this._items.addSetup("communication/title", Wprr.utils.data.multitypeitems.setup.communication.Title.prepare, Wprr.utils.data.multitypeitems.setup.communication.Title.setup);
+		
+		this._items.addSetup("signupInvite", Wprr.utils.data.multitypeitems.setup.signupinvite.SignupInvite.prepare, Wprr.utils.data.multitypeitems.setup.signupinvite.SignupInvite.setup);
+		
+		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		
 		{

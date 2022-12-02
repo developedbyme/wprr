@@ -64,3 +64,9 @@ export {discountcode as discountcode};
 
 import * as menuitemtypes from "./menuitemtypes";
 export {menuitemtypes as menuitemtypes};
+
+import * as communication from "./communication";
+export {communication as communication};
+
+import * as signupinvite from "./signupinvite";
+export {signupinvite as signupinvite};
