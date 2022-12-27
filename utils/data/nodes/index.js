@@ -19,6 +19,8 @@ export {default as LoadAdditionalItems} from "./LoadAdditionalItems";
 export {default as FittingItems} from "./FittingItems";
 export {default as GetItemProperty} from "./GetItemProperty";
 export {default as CopyValue} from "./CopyValue";
+export {default as GetProperty} from "./GetProperty";
+export {default as CreateRange} from "./CreateRange";
 
 import * as css from "./css";
 export {css as css};

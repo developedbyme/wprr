@@ -9,3 +9,6 @@ export {signin};
 
 import * as cookie from "./cookie";
 export {cookie};
+
+import * as video from "./video";
+export {video};

@@ -1,2 +1,2 @@
-import * as editors from "./editors/wp-blocks.js";
-export {editors};
+import * as edititems from "./edititems/wp-blocks.js";
+export {edititems};

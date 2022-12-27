@@ -5,12 +5,14 @@ import Grid from "wprr/elements/area/grid/Grid";
 //import EqualRowsGrid from "wprr/elements/area/grid/EqualRowsGrid";
 export default class EqualRowsGrid extends Grid {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 	}
 	
 	_getRowLength() {
-		return 1*this.getSourcedPropWithDefault("itemsPerRow", EqualRowsGrid.DEFAULT_ITEMS_PER_ROW);
+		//console.log("_getRowLength");
+		
+		return 1*this.getFirstInputWithDefault("itemsPerRow", EqualRowsGrid.DEFAULT_ITEMS_PER_ROW);
 	}
 	
 	_adjustEndRows(aRowsData) {

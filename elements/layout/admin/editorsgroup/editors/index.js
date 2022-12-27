@@ -9,6 +9,7 @@ export {default as ObjectPropertiesOfType} from "./ObjectPropertiesOfType";
 export {default as ObjectPropertyValue} from "./ObjectPropertyValue";
 export {default as SelectRelation} from "./SelectRelation";
 export {default as SelectType} from "./SelectType";
+export {default as AddRelation} from "./AddRelation";
 
 import * as files from "./files/index.js";
 export {files};

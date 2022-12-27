@@ -1,4 +1,5 @@
 import React from 'react';
+import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -7,12 +8,8 @@ import FlexRow from "wprr/elements/area/grid/FlexRow";
 //import Grid from "wprr/elements/area/grid/Grid";
 export default class Grid extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
-		
-		this._mainElementType = "div";
-		
-		this._addMainElementClassName("grid");
+	_construct() {
+		super._construct();
 		
 		this._rowClassNames = new Array();
 		
@@ -154,7 +151,9 @@ export default class Grid extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/area/grid/Grid::_renderMainElement");
 		
-		return React.createElement("wrapper", {}, this._getRows());
+		let rows = this._getRows();
+		
+		return React.createElement("div", {"className": "grid"}, rows);
 	}
 
 	static _contentCreator_row(aData, aKeyIndex, aReferences) {

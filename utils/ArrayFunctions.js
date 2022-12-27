@@ -108,11 +108,38 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
-	static createRange(aStartValue, aEndValue, aStepValue = 1) {
+	static createRange(aStartValue, aEndValue, aStepValue = 1, aIncludeEndValue = true) {
 		
 		let returnArray = new Array();
 		
-		for(let i = aStartValue; i <= aEndValue; i += aStepValue) {
+		let loopCompare;
+		 
+		if(aStepValue > 0) {
+			if(aIncludeEndValue) {
+				loopCompare = function(aIndex, aLimit) {
+					return aIndex <= aLimit;
+				};
+			}
+			else {
+				loopCompare = function(aIndex, aLimit) {
+					return aIndex < aLimit;
+				};
+			}
+		}
+		else {
+			if(aIncludeEndValue) {
+				loopCompare = function(aIndex, aLimit) {
+					return aIndex >= aLimit;
+				};
+			}
+			else {
+				loopCompare = function(aIndex, aLimit) {
+					return aIndex > aLimit;
+				};
+			}
+		}
+		
+		for(let i = aStartValue; loopCompare(i, aEndValue); i += aStepValue) {
 			returnArray.push(i);
 		}
 		

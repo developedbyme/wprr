@@ -27,8 +27,14 @@ export default class SelectAnyRelations extends WprrBaseObject {
 		let singleResultLoader = Wprr.objectPath(this._elementTreeItem, "singleResultLoader.linkedItem.controller");
 		//console.log(singleResultLoader, this._elementTreeItem);
 		
-		//METODO: check that search is only numbers
-		singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,objectTypes&ids=" + search, "wprrData"));
+		let numericSearch = 1*search;
+		
+		if(isNaN(numericSearch) || numericSearch != search) {
+			singleResultLoader.setUrl(this.getWprrUrl("range/?select=search&encode=postTitle,postStatus,objectTypes&search=" + encodeURIComponent(search), "wprrData"));
+		}
+		else {
+			singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,objectTypes&ids=" + numericSearch, "wprrData"));
+		}
 	}
 	
 	_renderMainElement() {
@@ -95,7 +101,7 @@ export default class SelectAnyRelations extends WprrBaseObject {
 													Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "createRelation", [Wprr.sourceReference("item", "id")]),
 													Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
 												]}>
-													<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+													<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))} <span className="post-id-description">({Wprr.text(Wprr.sourceReference("item", "id"))})</span></div>
 												</Wprr.CommandButton>
 											</Wprr.layout.ItemList>
 										</div>

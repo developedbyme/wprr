@@ -10,7 +10,7 @@ export default class DataRangeLoader extends BaseObject {
 	}
 	
 	static setupData(aItem) {
-		//console.log("DataRangeLoader::setupData");
+		console.log("DataRangeLoader::setupData");
 		
 		let group = aItem.group;
 		
@@ -20,9 +20,13 @@ export default class DataRangeLoader extends BaseObject {
 		let items = Wprr.objectPath(data, "items");
 		let encodings = Wprr.objectPath(data, "encodings");
 		for(let objectName in encodings) {
+			let startTime = Date.now();
+			
 			let ids = encodings[objectName];
 			let currentArray = ids;
 			let currentArrayLength = currentArray.length;
+			
+			console.log("Encode: " + objectName + " " + currentArrayLength);
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentId = currentArray[i];
 				let item = group.getItem(currentId);
@@ -30,9 +34,14 @@ export default class DataRangeLoader extends BaseObject {
 				group.setupItem(item, objectName, items[""+currentId]);
 			}
 			
+			let endTime = Date.now();
+			console.log("Encode: " + objectName + " took " + (endTime-startTime));
+			
 			if(objectName !== "id") {
 				ranges.getLinks(objectName).setItems(ids);
 			}
+			
+			
 		}
 		
 		let mainIds = Wprr.objectPath(data, "ids");
@@ -58,7 +67,11 @@ export default class DataRangeLoader extends BaseObject {
 			}
 		}
 		
-		aItem.getLinks("range").addUniqueItems(mainIds);
+		let range = aItem.getLinks("range");
+		if(mainIds) {
+			range.addUniqueItems(mainIds);
+		}
+		
 		aItem.setValue("itemsSetup", true);
 	}
 	

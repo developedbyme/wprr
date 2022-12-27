@@ -6,17 +6,19 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import ElementSize from "wprr/manipulation/measure/ElementSize";
 export default class ElementSize extends ManipulationBaseObject {
 
-	constructor(props) {
-		super(props);
+	_construct() {
+		super._construct();
 		
 		this.state["width"] = 0;
 		this.state["height"] = 0;
+		
+		this._intervalId = -1;
 		
 		this._callback_sizeChangedBound = this._callback_sizeChanged.bind(this);
 	}
 	
 	_updateWidth() {
-		//console.log("wprr/manipulation/measure/ElementSize::_updateWidth");
+		console.log("wprr/manipulation/measure/ElementSize::_updateWidth");
 		
 		let domNode = ReactDOM.findDOMNode(this);
 		
@@ -25,10 +27,9 @@ export default class ElementSize extends ManipulationBaseObject {
 		
 		if(currentWidth !== this.state["width"] || currentHeight !== this.state["height"]) {
 			this.setState({"width": currentWidth, "height": currentHeight});
+			this.updateProp("width", currentWidth);
+			this.updateProp("height", currentHeight);
 		}
-		
-		this.updateProp("width", currentWidth);
-		this.updateProp("height", currentHeight);
 	}
 	
 	_callback_sizeChanged(aEvent) {
@@ -42,6 +43,12 @@ export default class ElementSize extends ManipulationBaseObject {
 		
 		this._updateWidth();
 		
+		/*
+		this._intervalId = setInterval((function() {
+			this._updateWidth();
+		}).bind(this), 100);
+		*/
+		
 		window.addEventListener("resize", this._callback_sizeChangedBound, false);
 	}
 	
@@ -53,6 +60,9 @@ export default class ElementSize extends ManipulationBaseObject {
 	
 	componentWillUnmount() {
 		//console.log("wprr/manipulation/measure/ElementSize::componentWillUnmount");
+		
+		clearInterval(this._intervalId);
+		this._intervalId = -1;
 		
 		window.removeEventListener("resize", this._callback_sizeChangedBound, false);
 	}

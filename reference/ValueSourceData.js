@@ -75,6 +75,19 @@ export default class ValueSourceData extends SourceData {
 		return this;
 	}
 	
+	removeChangeCommand(aCommand) {
+		if(this._changeCommands) {
+			let index = this._changeCommands.indexOf(aCommand);
+			if(index >= 0) {
+				let newArray = [].concat(this._changeCommands);
+				newArray.splice(index, 1);
+				this._changeCommands = newArray;
+			}
+		}
+		
+		return this;
+	}
+	
 	_addSubscriptionsForOwner(aOwner) {
 		//MENOTE: do nothing
 	}
@@ -247,6 +260,15 @@ export default class ValueSourceData extends SourceData {
 		this._connections.push(aConnection);
 		
 		return this;
+	}
+	
+	_linkRegistration_removeConnection(aConnection) {
+		if(this._connections) {
+			let index = this._connections.indexOf(aConnection);
+			if(index >= 0) {
+				this._connections.splice(index, 1);
+			}
+		}
 	}
 	
 	getConnectionIfExistsTo(aSource) {

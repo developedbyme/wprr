@@ -52,7 +52,8 @@ export default class ActiveList extends MultiTypeItemConnection {
 	}
 	
 	_itemAdded(aId) {
-		//console.log("ActiveList::_itemAdded");
+		console.log("ActiveList::_itemAdded");
+		
 		let item = this.item.group.getItem(aId);
 		let forItemId = item.getSingleLink("forItem").id;
 		

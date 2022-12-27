@@ -53,7 +53,7 @@ export default class ModuleCreatorBaseObject {
 		this._siteDataLoader = new Wprr.utils.navigation.SiteDataLoader();
 		
 		this._siteNavigation.dataLoader = this._siteDataLoader;
-		this._siteNavigation.urlSource.addChangeCommand(Wprr.commands.setProperty(this._siteDataLoader.urlSource.reSource(), "value", this._siteNavigation.urlSource))
+		this._siteDataLoader.urlSource.input(this._siteNavigation.urlSource);
 		
 		this._elementRenderedCallbackBound = this._elementRenderedCallback.bind(this);
 	}
@@ -222,7 +222,11 @@ export default class ModuleCreatorBaseObject {
 				
 				
 				let currentPath = pathController.getChild("wp/" + objectName);
-				currentPath.setFullPath(paths[objectName]);
+				let pathUrl = paths[objectName];
+				if(pathUrl[pathUrl.length-1] === "/") {
+					pathUrl = pathUrl.substring(0, pathUrl.length-1);
+				}
+				currentPath.setFullPath(pathUrl);
 			}
 			
 			let currentPath = pathController.getChild("wp/site/(global-pages)");

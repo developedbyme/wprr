@@ -38,9 +38,8 @@ export default class PageDataRouter {
 	
 	createSingularRoute(aElement) {
 		let qualifier = Wprr.routing.qualification.Compare.create("pageType", "page");
-		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
 		
-		this.createRoute(qualifier, elementWithInjections);
+		this.createRoute(qualifier, aElement);
 		
 		return this;
 	}
@@ -54,9 +53,7 @@ export default class PageDataRouter {
 			)
 		);
 		
-		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
-		
-		this.createRoute(qualifier, elementWithInjections);
+		this.createRoute(qualifier, aElement);
 		
 		return this;
 	}
@@ -70,9 +67,7 @@ export default class PageDataRouter {
 			)
 		);
 		
-		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
-		
-		this.createRoute(qualifier, elementWithInjections);
+		this.createRoute(qualifier, aElement);
 		
 		return this;
 	}
@@ -86,9 +81,7 @@ export default class PageDataRouter {
 			aQualifier
 		);
 		
-		let elementWithInjections = React.createElement(Wprr.RelatedItem, {"id": "post.linkedItem.postData", "from": this._item, "as": "wprr/postData"}, aElement);
-		
-		this.createRoute(qualifier, elementWithInjections);
+		this.createRoute(qualifier, aElement);
 		
 		return this;
 	}
@@ -122,7 +115,7 @@ export default class PageDataRouter {
 			}
 		}
 		
-		let newElement = React.createElement(Wprr.ReferenceInjection, {"key": itemId, "injectData": {"wprr/pageItem": this._item}}, element);
+		let newElement = React.createElement(Wprr.ReferenceInjection, {"key": itemId, "injectData": {"wprr/pageItem": this._item, "wprr/postData": Wprr.sourceStatic(this._item, "post.linkedItem.postData")}}, element);
 		this._element.value = newElement;
 	}
 	
