@@ -10,7 +10,7 @@ export default class DataRangeLoader extends BaseObject {
 	}
 	
 	static setupData(aItem) {
-		console.log("DataRangeLoader::setupData");
+		//console.log("DataRangeLoader::setupData");
 		
 		let group = aItem.group;
 		
@@ -26,7 +26,7 @@ export default class DataRangeLoader extends BaseObject {
 			let currentArray = ids;
 			let currentArrayLength = currentArray.length;
 			
-			console.log("Encode: " + objectName + " " + currentArrayLength);
+			//console.log("Encode: " + objectName + " " + currentArrayLength);
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentId = currentArray[i];
 				let item = group.getItem(currentId);
@@ -35,7 +35,7 @@ export default class DataRangeLoader extends BaseObject {
 			}
 			
 			let endTime = Date.now();
-			console.log("Encode: " + objectName + " took " + (endTime-startTime));
+			//console.log("Encode: " + objectName + " took " + (endTime-startTime));
 			
 			if(objectName !== "id") {
 				ranges.getLinks(objectName).setItems(ids);
