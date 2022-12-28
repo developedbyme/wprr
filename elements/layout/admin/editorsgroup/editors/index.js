@@ -10,6 +10,7 @@ export {default as ObjectPropertyValue} from "./ObjectPropertyValue";
 export {default as SelectRelation} from "./SelectRelation";
 export {default as SelectType} from "./SelectType";
 export {default as AddRelation} from "./AddRelation";
+export {default as CreateRelation} from "./CreateRelation";
 export {default as EditGlobalItem} from "./EditGlobalItem";
 export {default as EditObjectProperty} from "./EditObjectProperty";
 
