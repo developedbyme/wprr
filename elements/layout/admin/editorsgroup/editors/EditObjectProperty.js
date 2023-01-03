@@ -44,7 +44,8 @@ export default class EditObjectProperty extends Layout {
 		}
 		loader.changeData.createChange("dbm/setAsObjectProperty", {"value": id, "identifier": identifier});
 		
-		loader.changeData.setStatus("private");
+		let status = this.getFirstInputWithDefault("status", "private");
+		loader.changeData.setStatus(status);
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._itemCreated, [Wprr.sourceEvent("data.id")]));
 		

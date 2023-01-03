@@ -21,9 +21,9 @@ export default class CreateRelation extends WprrBaseObject {
 		let name = this.getFirstInputWithDefault("name", "New item");
 		creator.setTitle(name);
 		
-		let types = Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("types"));
+		let objectType = Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("objectType"));
 		
-		let currentArray = types;
+		let currentArray = objectType;
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			if(i === 0) {
@@ -46,21 +46,23 @@ export default class CreateRelation extends WprrBaseObject {
 			creator.addOutgoingRelation(id, relationType, false);
 		}
 		
+		let status = this.getFirstInputWithDefault("status", "private");
+		
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "postStatus", "draft"));
-		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdItem.id")]));
-		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdRelations.relation0.id")]));
+		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdItem.id"), status]));
+		creator.addCreatedCommand(Wprr.commands.callFunction(this, this._makePrivate, [Wprr.sourceEvent("createdRelations.relation0.id"), "private"]));
 		
 		creator.create();
 	}
 	
-	_makePrivate(aId) {
+	_makePrivate(aId, aStatus = "private") {
 		console.log("_makePrivate");
 		console.log(aId);
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
 		let editorsGroup = itemEditor.editorsGroup;
 		
-		editorsGroup.getItemEditor(aId).getPostStatusEditor().item.setValue("value", "private");
+		editorsGroup.getItemEditor(aId).getPostStatusEditor().item.setValue("value", aStatus);
 	}
 	
 	_renderMainElement() {

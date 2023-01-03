@@ -21,10 +21,10 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 		this.item.getType("url").addChangeCommand(this._urlUpdatedCommand);
 		
 		this.item.requireSingleLink("loader");
-		//this.item.getLinks("range");
 		
 		this.item.requireValue("loaded", false);
 		
+		this.item.requireSingleLink("singleItem");
 		this.item.getLinks("items");
 		
 		return this;
@@ -79,7 +79,15 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 		//console.log("LoadDataRange::_setupRange");
 		//console.log(aItem.getLinks("range"));
 		
-		this.item.getLinks("items").setItems(aItem.getLinks("range").ids);
+		let ids = aItem.getLinks("range").ids;
+		this.item.getLinks("items").setItems(ids);
+		
+		let singleId = 0;
+		if(ids.length > 0) {
+			singleId = ids[0];
+		}
+		
+		this.item.addSingleLink("singleItem", singleId);
 		
 		this.item.setValue("loaded", true);
 	}

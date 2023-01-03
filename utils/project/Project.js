@@ -130,6 +130,10 @@ export default class Project {
 		
 		this._items.addSetup("signupInvite", Wprr.utils.data.multitypeitems.setup.signupinvite.SignupInvite.prepare, Wprr.utils.data.multitypeitems.setup.signupinvite.SignupInvite.setup);
 		
+		this._items.addSetup("group/orderedGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
+		this._items.addSetup("group/orderedTypeGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
+		this._items.addSetup("group/orderedImageGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
+		
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");
 		

@@ -71,3 +71,6 @@ export {communication as communication};
 
 import * as signupinvite from "./signupinvite";
 export {signupinvite as signupinvite};
+
+import * as group from "./group";
+export {group as group};
