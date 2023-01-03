@@ -72,6 +72,7 @@ export default class Project {
 		this._items.addSetup("relations", Wprr.utils.data.multitypeitems.setup.Relations.prepare, Wprr.utils.data.multitypeitems.setup.Relations.setup);
 		this._items.addSetup("objectTypes", Wprr.utils.data.multitypeitems.setup.ObjectTypes.prepare, Wprr.utils.data.multitypeitems.setup.ObjectTypes.setup);
 		this._items.addSetup("fields", Wprr.utils.data.multitypeitems.setup.Fields.prepare, Wprr.utils.data.multitypeitems.setup.Fields.setup);
+		this._items.addSetup("fields/translations", Wprr.utils.data.multitypeitems.setup.FieldsTranslations.prepare, Wprr.utils.data.multitypeitems.setup.FieldsTranslations.setup);
 		this._items.addSetup("fieldsStructure", Wprr.utils.data.multitypeitems.setup.FieldsStructure.prepare, Wprr.utils.data.multitypeitems.setup.FieldsStructure.setup);
 		this._items.addSetup("fieldTemplate", Wprr.utils.data.multitypeitems.setup.FieldTemplate.prepare, Wprr.utils.data.multitypeitems.setup.FieldTemplate.setup);
 		this._items.addSetup("fieldTemplate/relation", Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.prepare, Wprr.utils.data.multitypeitems.setup.fieldtemplatetypes.Relation.setup);

@@ -3,7 +3,7 @@ import React from "react";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
-export default class ValueEditor extends MultiTypeItemConnection {
+export default class TranslationValueEditor extends MultiTypeItemConnection {
 	
 	constructor() {
 		
@@ -14,9 +14,7 @@ export default class ValueEditor extends MultiTypeItemConnection {
 	setup() {
 		
 		this.item.addType("valueEditor", this);
-		this.item.addType("saveDataController", this);
-		this.item.requireValue("comment", null);
-		this.item.requireValue("saveCommands", []);
+		
 		this.item.requireValue("value");
 		
 		this._value = this.item.getType("value");
@@ -50,15 +48,6 @@ export default class ValueEditor extends MultiTypeItemConnection {
 		return this.item.getType("changed");
 	}
 	
-	get translationsEditor() {
-		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
-		
-		let itemId = Wprr.objectPath(this.item, "editedItem.id");
-		let fieldName = this.item.getValue("name");
-		
-		return editorsGroup.getTranslationsEditor(itemId, fieldName);
-	}
-	
 	setupForItem(aItem) {
 		
 		this.setItemConnection(aItem);
@@ -68,9 +57,7 @@ export default class ValueEditor extends MultiTypeItemConnection {
 	}
 	
 	save() {
-		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
-		
-		editorsGroup.saveEditor(this);
+		//METODO
 	}
 	
 	cancelEdit() {
@@ -84,31 +71,18 @@ export default class ValueEditor extends MultiTypeItemConnection {
 		this.item.getType("storedValue").value = aSavedValue;
 	}
 	
-	getSaveData(aSaveOperation) {
-		//console.log("ValueEditor::getSaveData");
-		//console.log(this, this.item.getValue("changed"))
-		
-		if(this.item.getValue("changed")) {
-			
-			let saveCommands = this.item.getValue("saveCommands");
-			
-			Wprr.utils.CommandPerformer.perform(saveCommands, {"item": this.item, "saveOperation": aSaveOperation}, null);
-			
-		}
-	}
-	
 	toJSON() {
-		return "[ValueEditor id=" + this._id + "]";
+		return "[TranslationValueEditor id=" + this._id + "]";
 	}
 	
 	static create(aItem, aValue = null) {
-		//console.log("ValueEditor::create");
-		let newValueEditor = new ValueEditor();
+		//console.log("TranslationValueEditor::create");
+		let newTranslationValueEditor = new TranslationValueEditor();
 		
-		newValueEditor.setupForItem(aItem);
+		newTranslationValueEditor.setupForItem(aItem);
 		aItem.setValue("value", aValue);
 		aItem.setValue("storedValue", aValue);
 		
-		return newValueEditor;
+		return newTranslationValueEditor;
 	}
 }

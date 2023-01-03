@@ -50,6 +50,7 @@ export {default as Trigger} from "./Trigger";
 export {default as ShortTitle} from "./ShortTitle";
 export {default as Action} from "./Action";
 export {default as UserRelation} from "./UserRelation";
+export {default as FieldsTranslations} from "./FieldsTranslations";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

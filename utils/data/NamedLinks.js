@@ -16,6 +16,10 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		return this._namesSource.value;
 	}
 	
+	get namesSource() {
+		return this._namesSource;
+	}
+	
 	get ids() {
 		return this._idsSource.value;
 	}
@@ -138,6 +142,7 @@ export default class NamedLinks extends MultiTypeItemConnection {
 			case "names":
 			case "ids":
 			case "idsSource":
+			case "namesSource":
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		

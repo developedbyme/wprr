@@ -21,6 +21,7 @@ export {default as GetItemProperty} from "./GetItemProperty";
 export {default as CopyValue} from "./CopyValue";
 export {default as GetProperty} from "./GetProperty";
 export {default as CreateRange} from "./CreateRange";
+export {default as ObjectProperty} from "./ObjectProperty";
 
 import * as css from "./css";
 export {css as css};

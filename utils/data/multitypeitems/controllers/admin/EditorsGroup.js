@@ -20,6 +20,8 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		this._saveFieldCommand = Wprr.commands.callFunction(this, this._saveField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveMetaFieldCommand = Wprr.commands.callFunction(this, this._saveMetaField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveOrderCommand = Wprr.commands.callFunction(this, this._saveOrder, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
+		this._saveFieldTranslationsCommand = Wprr.commands.callFunction(this, this._saveFieldTranslations, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
+		
 	}
 	
 	setup() {
@@ -89,6 +91,40 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			newEditorItem.setValue("name", aName);
 			
 			newEditorItem.setValue("saveCommands", [this._saveDataFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getTranslationsEditor(aId, aFieldName) {
+		let linkName = "fieldTranslations" + aId + "-" + aFieldName;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			
+			let value = {};
+			
+			//METODO: default value
+			let item = this.item.group.getItem(aId);
+			
+			let fieldTranslation = Wprr.objectPath(item, "fieldsTranslations." + aFieldName);
+			if(fieldTranslation) {
+				let storedValue = fieldTranslation.getValue("value");
+				if(storedValue) {
+					value = storedValue;
+				}
+			}
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.TranslationsEditor.create(this.item.group.createInternalItem(), value);
+			let newEditorItem = newEditor.item;
+			
+			newEditorItem.addSingleLink("editedItem", aId);
+			newEditorItem.setValue("name", aFieldName);
+			
+			newEditorItem.setValue("saveCommands", [this._saveFieldTranslationsCommand]);
 			
 			editors.addItem(linkName, newEditorItem.id);
 			this.addEditor(newEditorItem.id);
@@ -363,6 +399,17 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		let editLoader = aSaveOperation.getEditLoader(itemId);
 		editLoader.changeData.createChange("dbm/order", {"value": aItem.getValue("value"), "forType": aItem.getValue("forType")});
+		
+		let editor = aItem.getType("valueEditor");
+		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	_saveFieldTranslations(aItem, aSaveOperation) {
+		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
+		let value = aItem.getValue("value");
+		
+		let editLoader = aSaveOperation.getEditLoader(itemId);
+		editLoader.changeData.createChange("dbmtc/setFieldTranslations", {"value": aItem.getValue("value"), "field": aItem.getValue("name")});
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
