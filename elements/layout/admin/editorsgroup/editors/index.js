@@ -13,6 +13,9 @@ export {default as AddRelation} from "./AddRelation";
 export {default as CreateRelation} from "./CreateRelation";
 export {default as EditGlobalItem} from "./EditGlobalItem";
 export {default as EditObjectProperty} from "./EditObjectProperty";
+export {default as HierarchyOrderedRelations} from "./HierarchyOrderedRelations";
+export {default as SelectRelationFromItems} from "./SelectRelationFromItems";
+export {default as SelectRelationsFromItems} from "./SelectRelationsFromItems";
 
 import * as files from "./files/index.js";
 export {files};

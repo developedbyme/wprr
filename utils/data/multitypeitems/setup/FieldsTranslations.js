@@ -12,7 +12,7 @@ export default class FieldsTranslations extends BaseObject {
 	static prepare(aItem) {
 		//console.log("FieldsTranslations::prepare");
 		
-		aItem.requireValue("hasData/fieldsTranslations", false);
+		aItem.requireValue("hasData/fields/translations", false);
 		aItem.getNamedLinks("fieldsTranslations");
 		
 		return this;
@@ -40,7 +40,7 @@ export default class FieldsTranslations extends BaseObject {
 			}
 		}
 		
-		aItem.setValue("hasData/fieldsTranslations", true);
+		aItem.setValue("hasData/fields/translations", true);
 		
 		return this;
 	}

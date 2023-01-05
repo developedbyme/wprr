@@ -51,6 +51,8 @@ export {default as ShortTitle} from "./ShortTitle";
 export {default as Action} from "./Action";
 export {default as UserRelation} from "./UserRelation";
 export {default as FieldsTranslations} from "./FieldsTranslations";
+export {default as ContentTemplateTranslations} from "./ContentTemplateTranslations";
+export {default as ValueTranslations} from "./ValueTranslations";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};

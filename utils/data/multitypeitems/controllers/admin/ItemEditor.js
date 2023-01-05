@@ -111,6 +111,18 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return orderEditors.getLinkByName(linkName).getType("orderEditor");
 	}
 	
+	getHierarchyOrderEditor(aForType) {
+		let linkName = "hierarchy-order-" + aForType;
+		let orderEditors = this.item.getNamedLinks("orderEditors");
+		
+		if(!orderEditors.hasLinkByName(linkName)) {
+			let orderEditor = this.editorsGroup.getHierarchyOrderEditor(this.item.getType("editedItem").id, aForType);
+			orderEditors.addItem(linkName, orderEditor.item.id);
+		}
+		
+		return orderEditors.getLinkByName(linkName).getType("orderEditor");
+	}
+	
 	hasObjectPathHandling() {
 		return true;
 	}

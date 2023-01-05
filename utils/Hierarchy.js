@@ -67,7 +67,8 @@ export default class Hierarchy extends MultiTypeItemConnection {
 		let mainParent = this.item;
 		
 		mainParent.setValue("level", -1);
-		mainParent.getLinks("list")
+		mainParent.getLinks("list");
+		mainParent.getLinks("children").setItems([]);
 		
 		if(aData && Array.isArray(aData)) {
 			let cleanedList = this._setupList(aData, mainParent);

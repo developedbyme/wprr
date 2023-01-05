@@ -16,8 +16,6 @@ import WpData from "wprr/routing/qualification/wp/WpData";
 import HasTerm from "wprr/routing/qualification/wp/HasTerm";
 import QualifyAll from "wprr/routing/qualification/QualifyAll";
 
-import RouteCreator from "wprr/routing/RouteCreator";
-
 import Markup from "wprr/markup/Markup";
 import MarkupChildren from "wprr/markup/MarkupChildren";
 import UseMarkup from "wprr/markup/UseMarkup";
@@ -34,11 +32,9 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 		
 		super();
 		
-		this._routeCreator = RouteCreator.create();
-		
 		this._router = new Wprr.utils.navigation.PageDataRouter();
-		this._router.itemSource.value = null;
-		this._siteDataLoader.itemSource.addChangeCommand(Wprr.commands.setProperty(this._router.itemSource.reSource(), "value", this._siteDataLoader.itemSource))
+		//this._router.itemSource.value = null;
+		this._router.itemSource.input(this._siteDataLoader.itemSource);
 		
 		this._header = null;
 		this._footer = null;
@@ -67,16 +63,12 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	}
 	
 	createRoute(aQualifier, aReactComponent) {
-		this._routeCreator.createRoute(aQualifier, aReactComponent);
-		
 		this._router.createRoute(aQualifier, aReactComponent);
 		
 		return this;
 	}
 	
 	createPageTemplateRoute(aPageTemplatePath, aReactComponent) {
-		this._routeCreator.createPageTemplateRoute(aPageTemplatePath, aReactComponent);
-		
 		this._router.createPageTemplateRoute(aPageTemplatePath, aReactComponent);
 		
 		return this;
@@ -84,42 +76,30 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 	
 	createSingularRouteWithQualifier(aQualifier, aReactComponent) {
 		//console.log("createSingularRouteWithQualifier");
-		this._routeCreator.createSingularRouteWithQualifier(aQualifier, aReactComponent);
-		
 		this._router.createSingularRouteWithQualifier(aQualifier, aReactComponent);
 		
 		return this;
 	}
 	
 	createSingularRoute(aReactComponent) {
-		this._routeCreator.createSingularRoute(aReactComponent);
-		
 		this._router.createSingularRoute(aReactComponent);
 		
 		return this;
 	}
 	
 	createSingularPostTypeRoute(aPostType, aReactComponent) {
-		this._routeCreator.createSingularPostTypeRoute(aPostType, aReactComponent);
-		
 		this._router.createSingularPostTypeRoute(aPostType, aReactComponent);
 		
 		return this;
 	}
 	
 	createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent) {
-		this._routeCreator.createSingularHasTaxonomyTermRoute(aTaxonomy, aTermSlug, aReactComponent);
-		
-		//METODO
 		console.warn("createSingularHasTaxonomyTermRoute is not supported in new router", aTaxonomy, aTermSlug, aReactComponent);
 		
 		return this;
 	}
 	
 	createArchiveRoute(aReactComponent) {
-		this._routeCreator.createArchiveRoute(aReactComponent);
-		
-		//METODO
 		console.warn("createArchiveRoute is not supported in new router", aReactComponent);
 	}
 	
@@ -130,10 +110,6 @@ export default class RoutingModuleCreator extends ModuleCreatorBaseObject {
 			childrensArray.push(React.createElement(MarkupPlacement, {"placement": "header"}, this._header));
 		}
 		
-		//childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, this._routeCreator.getReactElements()));
-		
-		
-		//MENOTE: test that this works with old functionality
 		childrensArray.push(React.createElement(MarkupPlacement, {"placement": "routes"}, React.createElement("div", {"className": "page-loading-progressbar-postition no-pointer-events"},
 			React.createElement(Wprr.OpenCloseExpandableArea, {"open": Wprr.sourceFunction(this, function(aValue) {return !aValue}, [this._siteDataLoader.loadedSource]), "sourceUpdates": this._siteDataLoader.loadedSource},
 				React.createElement("div", {"className": "progressbar-height progressbar-background diagonal-background-color-progress-animation"})

@@ -179,6 +179,8 @@ export default class SiteDataLoader {
 			aItem.addType("pageType", "search");
 		}
 		
+		aItem.addType("language", Wprr.objectPath(data, "queryData.language"));
+		
 		aItem.addType("canRender", true);
 		
 		//console.log(aItem);
@@ -212,6 +214,7 @@ export default class SiteDataLoader {
 		}
 		
 		aItem.addType("pageType", loaderData["pageType"]);
+		aItem.addType("language", loaderData["language"]);
 		
 		let postIds = Wprr.objectPath(loaderData, "posts.ids");
 		if(postIds) {

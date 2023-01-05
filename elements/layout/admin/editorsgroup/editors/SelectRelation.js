@@ -4,7 +4,7 @@ import moment from "moment";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class SelectRelations extends WprrBaseObject {
+export default class SelectRelation extends WprrBaseObject {
 	
 	_construct() {
 		super._construct();
@@ -18,7 +18,9 @@ export default class SelectRelations extends WprrBaseObject {
 		
 		this._elementTreeItem.getLinks("items").input(rangeLoader.item.getLinks("items"));
 		
-		rangeLoader.setUrl(this.getWprrUrl("range/?select=anyStatus,relation&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
+		let selectPath = this.getFirstInputWithDefault("selectPath", this.getWprrUrl("range/?select=anyStatus,relation&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
+		
+		rangeLoader.setUrl(selectPath);
 		
 		let filterItem = this._elementTreeItem.group.createInternalItem();
 		let filteredList = Wprr.utils.data.multitypeitems.controllers.list.FilteredList.create(filterItem);
@@ -32,7 +34,9 @@ export default class SelectRelations extends WprrBaseObject {
 		let sort = Wprr.utils.data.multitypeitems.controllers.list.SortedList.create(sortItem);
 		this._elementTreeItem.addSingleLink("sort", sortItem.id);
 		
-		let newSortItem = sort.addFieldSort("title.value", function(aValue) {return aValue});
+		let searchResultField = this.getFirstInputWithDefault("searchResultField", "title");
+		
+		let newSortItem = sort.addFieldSort(searchResultField + ".value", function(aValue) {return aValue});
 		newSortItem.addType("element", <div>By title</div>);
 		newSortItem.setValue("buttonName", "title");
 		
@@ -95,6 +99,8 @@ export default class SelectRelations extends WprrBaseObject {
 		
 		let allowCreation = this.getFirstInputWithDefault("allowCreation", true);
 		
+		let searchResultField = this.getFirstInputWithDefault("searchResultField", "title");
+		
 		return React.createElement("div", null,
 			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType])} as="valueEditor">
 				<Wprr.AddReference data={Wprr.sourceReference("valueEditor").deeper("singleEditor")} as="selectedEditor">
@@ -150,7 +156,7 @@ export default class SelectRelations extends WprrBaseObject {
 														Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]),
 														Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
 													]}>
-														<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
+														<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", searchResultField))}</div>
 													</Wprr.CommandButton>
 												</Wprr.layout.ItemList>
 											</Wprr.HasData>

@@ -12,6 +12,7 @@ export default class Project {
 		
 		let projectItem = this._items.getItem("project");
 		projectItem.addType("controller", this);
+		projectItem.requireValue("language");
 		
 		let session = this._items.createInternalItem();
 		projectItem.addSingleLink("session", session.id);
@@ -117,8 +118,10 @@ export default class Project {
 		this._items.addSetup("discountCode/recurring_percent", Wprr.utils.data.multitypeitems.setup.discountcode.types.RecurringPercent.prepare, Wprr.utils.data.multitypeitems.setup.discountcode.types.RecurringPercent.setup);
 		this._items.addSetup("relationOrder", Wprr.utils.data.multitypeitems.setup.RelationOrder.prepare, Wprr.utils.data.multitypeitems.setup.RelationOrder.setup);
 		this._items.addSetup("contentTemplate", Wprr.utils.data.multitypeitems.setup.ContentTemplate.prepare, Wprr.utils.data.multitypeitems.setup.ContentTemplate.setup);
+		this._items.addSetup("contentTemplate/translations", Wprr.utils.data.multitypeitems.setup.ContentTemplateTranslations.prepare, Wprr.utils.data.multitypeitems.setup.ContentTemplateTranslations.setup);
 		this._items.addSetup("templatePosition", Wprr.utils.data.multitypeitems.setup.TemplatePosition.prepare, Wprr.utils.data.multitypeitems.setup.TemplatePosition.setup);
 		this._items.addSetup("value", Wprr.utils.data.multitypeitems.setup.Value.prepare, Wprr.utils.data.multitypeitems.setup.Value.setup);
+		this._items.addSetup("value/translations", Wprr.utils.data.multitypeitems.setup.ValueTranslations.prepare, Wprr.utils.data.multitypeitems.setup.ValueTranslations.setup);
 		this._items.addSetup("triggers", Wprr.utils.data.multitypeitems.setup.Triggers.prepare, Wprr.utils.data.multitypeitems.setup.Triggers.setup);
 		this._items.addSetup("trigger", Wprr.utils.data.multitypeitems.setup.Trigger.prepare, Wprr.utils.data.multitypeitems.setup.Trigger.setup);
 		this._items.addSetup("shortTitle", Wprr.utils.data.multitypeitems.setup.ShortTitle.prepare, Wprr.utils.data.multitypeitems.setup.ShortTitle.setup);

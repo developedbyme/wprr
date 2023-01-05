@@ -280,6 +280,31 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return editors.getLinkByName(linkName).getType("orderEditor");
 	}
 	
+	getHierarchyOrderEditor(aId, aForType) {
+		let linkName = "hierarchy-order" + aId + "-" + aForType;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.HierarchyOrderEditor.create(items.createInternalItem());
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditor.setupSelection(aId, aForType);
+			
+			newEditorItem.setValue("saveCommands", [this._saveOrderCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+			
+			newEditor.setupInitialValue(item);
+		}
+		
+		return editors.getLinkByName(linkName).getType("orderEditor");
+	}
+	
 	addEditor(aId) {
 		this.item.getLinks("editors").addUniqueItem(aId);
 		

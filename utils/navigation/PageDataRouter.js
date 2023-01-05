@@ -115,6 +115,8 @@ export default class PageDataRouter {
 			}
 		}
 		
+		item.group.getItem("project").setValue("language", item.getType("language"));
+		
 		let newElement = React.createElement(Wprr.ReferenceInjection, {"key": itemId, "injectData": {"wprr/pageItem": this._item, "wprr/postData": Wprr.sourceStatic(this._item, "post.linkedItem.postData")}}, element);
 		this._element.value = newElement;
 	}

@@ -252,6 +252,9 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	endRelation(aRelationId) {
+		//console.log("endRelation");
+		//console.log(aRelationId);
+		
 		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
 		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getFieldEditor("endAt");
 		

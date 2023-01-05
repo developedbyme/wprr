@@ -6,3 +6,4 @@ export {default as ValueEditor} from "./ValueEditor";
 export {default as RelationEditor} from "./RelationEditor";
 export {default as OrderEditor} from "./OrderEditor";
 export {default as TranslationsEditor} from "./TranslationsEditor";
+export {default as HierarchyOrderEditor} from "./HierarchyOrderEditor";
