@@ -31,13 +31,18 @@ export default class Name extends WprrBaseObject {
 		let fieldName = this.getFirstInputWithDefault("fieldName", "name");
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", [fieldName])} as="valueEditor">
-				<Wprr.FlexRow className="small-item-spacing flex-no-wrap">
-					<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("firstName")} />
-					<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("lastName")} />
-				</Wprr.FlexRow>
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", [fieldName]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		  className: "small-item-spacing flex-no-wrap"
+		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("firstName")
+		}), /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("lastName")
+		})), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))
 		);
 	}
 }

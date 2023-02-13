@@ -76,19 +76,19 @@ export default class EditGlobalItem extends Layout {
 	_getLayout(aSlots) {
 		//console.log("_getLayout");
 		
-		return <div>
-			<Wprr.HasData check={this._elementTreeItem.getValueSource("loaded")}>
-				<Wprr.HasData check={this._elementTreeItem.getLinks("items").idsSource} checkType="notEmpty">
-					<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("items").idsSource}>
-						{aSlots.default(<div>{Wprr.idText("No element set")}</div>)}
-					</Wprr.layout.ItemList>
-				</Wprr.HasData>
-				<Wprr.HasData check={this._elementTreeItem.getLinks("items").idsSource} checkType="invert/notEmpty">
-					<Wprr.FlexRow>
-						<Wprr.layout.interaction.Button commands={Wprr.commands.callFunction(this, this._createItem)} text={Wprr.sourceTranslation("Setup", "site.setup")} />
-					</Wprr.FlexRow>
-				</Wprr.HasData>
-			</Wprr.HasData>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: this._elementTreeItem.getValueSource("loaded")
+}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: this._elementTreeItem.getLinks("items").idsSource,
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: this._elementTreeItem.getLinks("items").idsSource
+}, aSlots.default( /*#__PURE__*/React.createElement("div", null, Wprr.idText("No element set"))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: this._elementTreeItem.getLinks("items").idsSource,
+  checkType: "invert/notEmpty"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  commands: Wprr.commands.callFunction(this, this._createItem),
+  text: Wprr.sourceTranslation("Setup", "site.setup")
+})))));
 	}
 }

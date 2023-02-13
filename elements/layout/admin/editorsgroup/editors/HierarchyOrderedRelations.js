@@ -41,28 +41,32 @@ export default class HierarchyOrderedRelations extends Layout {
 		
 		let orderEditor = itemEditor.getHierarchyOrderEditor(orderName);
 		
-		let removeButton = <Wprr.CommandButton commands={[Wprr.commands.callFunction(this.getRelationEditor(), "endRelation", [Wprr.sourceReference("relation", "id")])]}>
-			<div className="cursor-pointer">
-				{React.createElement(Wprr.Image, {"className": "field-icon background-contain", "src": "icons/remove-circle.svg"})}
-			</div>
-		</Wprr.CommandButton>;
+		let removeButton = React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.callFunction(this.getRelationEditor(), "endRelation", [Wprr.sourceReference("relation", "id")])]
+}, /*#__PURE__*/React.createElement("div", {
+  className: "cursor-pointer"
+}, React.createElement(Wprr.Image, {
+  "className": "field-icon background-contain",
+  "src": "icons/remove-circle.svg"
+})));
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={orderEditor} as="valueEditor">
-		{React.createElement(Wprr.DraggableHierarchyOrder, {"order": Wprr.sourceReference("valueEditor", "valueSource"), "sourceUpdates": [Wprr.sourceReference("valueEditor", "valueSource")]},
-				<div>
-					<Wprr.AddReference data={Wprr.sourceReference("item")} as="relation">
-						<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
-							<Wprr.FlexRow className="small-item-spacing" itemClasses="flex-resize,flex-no-resize">
-								{aSlots.default(Wprr.text(Wprr.sourceReference("item", "id")))}
-								<div>{removeButton}</div>
-							</Wprr.FlexRow>
-						</Wprr.RelatedItem>
-					</Wprr.AddReference>
-				</div>
-		)}
-		
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: orderEditor,
+		  as: "valueEditor"
+		}, React.createElement(Wprr.DraggableHierarchyOrder, {
+		  "order": Wprr.sourceReference("valueEditor", "valueSource"),
+		  "sourceUpdates": [Wprr.sourceReference("valueEditor", "valueSource")]
+		}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceReference("item"),
+		  as: "relation"
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: relationName,
+		  from: Wprr.sourceReference("relation")
+		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		  className: "small-item-spacing",
+		  itemClasses: "flex-resize,flex-no-resize"
+		}, aSlots.default(Wprr.text(Wprr.sourceReference("item", "id"))), /*#__PURE__*/React.createElement("div", null, removeButton)))))))
 		);
 	}
 }

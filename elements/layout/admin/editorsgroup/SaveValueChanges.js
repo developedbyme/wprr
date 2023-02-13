@@ -13,20 +13,17 @@ export default class SaveValueChanges extends WprrBaseObject {
 		//console.log("SaveValueChanges::_renderMainElement");
 		
 		return React.createElement("div", null,
-			<Wprr.OpenCloseExpandableArea open={Wprr.sourceReference("valueEditor", "changedSource")}>
-				<Wprr.FlexRow className="justify-between">
-					<div>
-						<Wprr.layout.interaction.Button className="action-link cursor-pointer" commands={Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "cancelEdit")}>
-							<div>{Wprr.idText("Cancel", "site.cancel")}</div>
-						</Wprr.layout.interaction.Button>
-					</div>
-					<div>
-						<Wprr.layout.interaction.Button className="action-link cursor-pointer" commands={Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "save")}>
-							<div>{Wprr.idText("Save", "site.save")}</div>
-						</Wprr.layout.interaction.Button>
-					</div>
-				</Wprr.FlexRow>
-			</Wprr.OpenCloseExpandableArea>
+		React.createElement(Wprr.OpenCloseExpandableArea, {
+		  open: Wprr.sourceReference("valueEditor", "changedSource")
+		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		  className: "justify-between"
+		}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		  className: "action-link cursor-pointer",
+		  commands: Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "cancelEdit")
+		}, /*#__PURE__*/React.createElement("div", null, Wprr.idText("Cancel", "site.cancel")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		  className: "action-link cursor-pointer",
+		  commands: Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "save")
+		}, /*#__PURE__*/React.createElement("div", null, Wprr.idText("Save", "site.save"))))))
 		);
 	}
 }

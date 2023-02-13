@@ -17,45 +17,37 @@ export default class Translations extends Layout {
 	_getLayout(aSlots) {
 		//console.log("_getLayout");
 		
-		return <div>
-			<Wprr.AddReference data={Wprr.sourceReference("valueEditor", "translationsEditor")} as="translationsEditor">
-				<div>
-					<Wprr.layout.List items={Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")}>
-						<div>
-							<Wprr.FlexRow className="small-item-spacing flex-no-wrap" itemClasses="flex-no-resize, flex-resize">
-								<div>{Wprr.text(Wprr.sourceReference("loop/item"))}</div>
-								<div>
-									<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")])} as="valueEditor">
-										{aSlots.default(<Wprr.FormField className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />)}
-									</Wprr.AddReference>
-								</div>
-							</Wprr.FlexRow>
-						</div>
-						<div data-slot="spacing" className="spacing small" />
-					</Wprr.layout.List>
-					<div className="spacing small" />
-					<Wprr.FlexRow>
-					{
-						Wprr.DropdownSelection.createSelfContained(
-							React.createElement("div", {className: "button edit-button edit-button-padding add-button cursor-pointer"},
-								Wprr.idText("Add translation", "site.addTranslation")
-							),
-							<div className="custom-selection-menu custom-selection-menu-padding">
-								<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("languages").idsSource}>
-									<Wprr.CommandButton commands={[
-										Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]),
-										Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)
-									]}>
-										<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "name"))}</div>
-									</Wprr.CommandButton>
-								</Wprr.layout.ItemList>
-							</div>,
-							{"className": "custom-dropdown"}
-						)
-					}
-					</Wprr.FlexRow>
-				</div>
-			</Wprr.AddReference>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceReference("valueEditor", "translationsEditor"),
+  as: "translationsEditor"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.List, {
+  items: Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap",
+  itemClasses: "flex-no-resize, flex-resize"
+}, /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("loop/item"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")]),
+  as: "valueEditor"
+}, aSlots.default( /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+})))))), /*#__PURE__*/React.createElement("div", {
+  "data-slot": "spacing",
+  className: "spacing small"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, null, Wprr.DropdownSelection.createSelfContained(React.createElement("div", {
+  className: "button edit-button edit-button-padding add-button cursor-pointer"
+}, Wprr.idText("Add translation", "site.addTranslation")), /*#__PURE__*/React.createElement("div", {
+  className: "custom-selection-menu custom-selection-menu-padding"
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: this._elementTreeItem.getLinks("languages").idsSource
+}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
+}, /*#__PURE__*/React.createElement("div", {
+  className: "hover-row cursor-pointer standard-row-padding"
+}, Wprr.text(Wprr.sourceReference("item", "name")))))), {
+  "className": "custom-dropdown"
+})))));
 	}
 }

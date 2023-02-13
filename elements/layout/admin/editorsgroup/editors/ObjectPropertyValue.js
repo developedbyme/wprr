@@ -15,26 +15,38 @@ export default class ObjectPropertyValue extends WprrBaseObject {
 		//console.log("ObjectPropertyValue::_renderMainElement");
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [Wprr.sourceReference("item", "id")])} as="itemEditor">
-				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="invert/arrayContains">
-					<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:value-item" checkType="arrayContains">
-						<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"])} as="valueEditor">
-							<Wprr.JsonEditor className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-							<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-						</Wprr.AddReference>
-					</Wprr.HasData>
-					<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:file-value-item" checkType="arrayContains">
-						<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"])} as="valueEditor">
-							<div>File</div>
-						</Wprr.AddReference>
-					</Wprr.HasData>
-				</Wprr.HasData>
-				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="arrayContains">
-					<div>
-						<Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation direction="outgoing" relationType="pointing-to" />
-					</div>
-				</Wprr.HasData>
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [Wprr.sourceReference("item", "id")]),
+		  as: "itemEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("item", "terms.idsSource"),
+		  compareValue: "dbm_type:object-property/linked-object-property",
+		  checkType: "invert/arrayContains"
+		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("item", "terms.idsSource"),
+		  compareValue: "dbm_type:value-item",
+		  checkType: "arrayContains"
+		}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.JsonEditor, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: Wprr.sourceReference("valueEditor", "valueSource")
+		}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("item", "terms.idsSource"),
+		  compareValue: "dbm_type:file-value-item",
+		  checkType: "arrayContains"
+		}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement("div", null, "File")))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("item", "terms.idsSource"),
+		  compareValue: "dbm_type:object-property/linked-object-property",
+		  checkType: "arrayContains"
+		}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation, {
+		  direction: "outgoing",
+		  relationType: "pointing-to"
+		}))))
 		);
 	}
 }

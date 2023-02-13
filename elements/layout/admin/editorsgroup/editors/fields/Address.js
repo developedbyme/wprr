@@ -3,7 +3,7 @@ import Wprr from "wprr/Wprr";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class Name extends WprrBaseObject {
+export default class Address extends WprrBaseObject {
 	
 	_construct() {
 		super._construct();
@@ -36,17 +36,28 @@ export default class Name extends WprrBaseObject {
 		let fieldName = this.getFirstInputWithDefault("fieldName", "address");
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", [fieldName])} as="valueEditor">
-				<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("address1")} />
-				<div className="spacing small" />
-				<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("address2")} />
-				<div className="spacing small" />
-				<Wprr.FlexRow className="small-item-spacing flex-no-wrap">
-					<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("postCode")} />
-					<Wprr.FormField className="standard-field standard-field-padding full-width" value={this._elementTreeItem.getValueSource("city")} />
-				</Wprr.FlexRow>
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", [fieldName]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("address1")
+		}), /*#__PURE__*/React.createElement("div", {
+		  className: "spacing small"
+		}), /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("address2")
+		}), /*#__PURE__*/React.createElement("div", {
+		  className: "spacing small"
+		}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		  className: "small-item-spacing flex-no-wrap"
+		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("postCode")
+		}), /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  className: "standard-field standard-field-padding full-width",
+		  value: this._elementTreeItem.getValueSource("city")
+		})), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))
 		);
 	}
 }

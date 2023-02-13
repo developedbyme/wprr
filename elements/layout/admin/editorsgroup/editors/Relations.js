@@ -32,20 +32,25 @@ export default class Relations extends Layout {
 		//console.log(this.getRelationEditor());
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={this.getRelationEditor()} as="relationsEditor">
-				<Wprr.HasData check={Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource")} checkType="notEmpty">
-					<Wprr.layout.ItemList ids={Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource")} as="relation">
-						<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
-							<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,fields,relations,objectTypes&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
-								{aSlots.default(<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>)}
-							</Wprr.layout.loader.DataRangeLoader>
-						</Wprr.RelatedItem>
-					</Wprr.layout.ItemList>
-				</Wprr.HasData>
-				<Wprr.HasData check={Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource")} checkType="invert/notEmpty">
-					{aSlots.slot("noRelations", <div />)}
-				</Wprr.HasData>
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: this.getRelationEditor(),
+		  as: "relationsEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource"),
+		  checkType: "notEmpty"
+		}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  ids: Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource"),
+		  as: "relation"
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: relationName,
+		  from: Wprr.sourceReference("relation")
+		}, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+		  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,fields,relations,objectTypes&ids=", Wprr.sourceReference("item", "id")),
+		  as: "itemLoader"
+		}, aSlots.default( /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "title")))))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: Wprr.sourceReference("relationsEditor", "item.activeRelations.idsSource"),
+		  checkType: "invert/notEmpty"
+		}, aSlots.slot("noRelations", /*#__PURE__*/React.createElement("div", null))))
 		);
 	}
 }

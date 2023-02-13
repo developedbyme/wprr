@@ -74,34 +74,30 @@ export default class AddRelation extends WprrBaseObject {
 		
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType])} as="valueEditor">
-				
-					<div>
-	{
-		Wprr.DropdownSelection.createSelfContained(
-			React.createElement("div", {className: "button edit-button edit-button-padding add-button"},
-				Wprr.idText("Add", "site.add")
-			),
-			<div className="custom-selection-menu custom-selection-menu-padding">
-				<div className="standard-field standard-field-padding full-width">
-					<Wprr.FormField autoFocus={true} value={this._elementTreeItem.getValueSource("search")} className="integrated-field full-size"/>
-				</div>
-				<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("singleResults").idsSource}>
-					<Wprr.CommandButton commands={[
-						Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "createRelation", [Wprr.sourceReference("item", "id")]),
-						Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)
-					]}>
-						<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", "title"))} <span className="post-id-description">({Wprr.text(Wprr.sourceReference("item", "id"))})</span></div>
-					</Wprr.CommandButton>
-				</Wprr.layout.ItemList>
-			</div>,
-			{"className": "custom-dropdown"}
-		)
-	}
-						
-					</div>
-
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement("div", null, Wprr.DropdownSelection.createSelfContained(React.createElement("div", {
+		  className: "button edit-button edit-button-padding add-button"
+		}, Wprr.idText("Add", "site.add")), React.createElement("div", {
+		  className: "custom-selection-menu custom-selection-menu-padding"
+		}, /*#__PURE__*/React.createElement("div", {
+		  className: "standard-field standard-field-padding full-width"
+		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		  autoFocus: true,
+		  value: this._elementTreeItem.getValueSource("search"),
+		  className: "integrated-field full-size"
+		})), /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  ids: this._elementTreeItem.getLinks("singleResults").idsSource
+		}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		  commands: [Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "createRelation", [Wprr.sourceReference("item", "id")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
+		}, /*#__PURE__*/React.createElement("div", {
+		  className: "hover-row cursor-pointer standard-row-padding"
+		}, Wprr.text(Wprr.sourceReference("item", "title")), " ", /*#__PURE__*/React.createElement("span", {
+		  className: "post-id-description"
+		}, "(", Wprr.text(Wprr.sourceReference("item", "id")), ")"))))), {
+		  "className": "custom-dropdown"
+		})))
 		);
 	}
 }

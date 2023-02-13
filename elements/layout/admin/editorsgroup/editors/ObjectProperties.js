@@ -15,27 +15,35 @@ export default class ObjectProperties extends WprrBaseObject {
 		
 		{
 			let column = table.createColumn("identifier", "Identifier");
-			column.setElement(<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["identifier"])} as="valueEditor">
-				<Wprr.FormField className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>);
+			column.setElement(React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["identifier"]),
+  as: "valueEditor"
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null)));
 		}
 		
 		{
 			let column = table.createColumn("data", "Data");
-			column.setElement(<div>
-				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="invert/arrayContains">
-					<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"])} as="valueEditor">
-						<Wprr.JsonEditor className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-					</Wprr.AddReference>
-				</Wprr.HasData>
-				<Wprr.HasData check={Wprr.sourceReference("item", "terms.idsSource")} compareValue="dbm_type:object-property/linked-object-property" checkType="arrayContains">
-					<div>
-						<Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation direction="outgoing" relationType="pointing-to" />
-					</div>
-				</Wprr.HasData>
-			</div>);
+			column.setElement(React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("item", "terms.idsSource"),
+  compareValue: "dbm_type:object-property/linked-object-property",
+  checkType: "invert/arrayContains"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["value"]),
+  as: "valueEditor"
+}, /*#__PURE__*/React.createElement(Wprr.JsonEditor, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("item", "terms.idsSource"),
+  compareValue: "dbm_type:object-property/linked-object-property",
+  checkType: "arrayContains"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectAnyRelation, {
+  direction: "outgoing",
+  relationType: "pointing-to"
+})))));
 		}
 	}
 	
@@ -133,33 +141,53 @@ export default class ObjectProperties extends WprrBaseObject {
 		let editorsGroup = itemEditor.editorsGroup;
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={Wprr.sourceStatic(this._elementTreeItem, "table.linkedItem")} as="table">
-				<Wprr.AddReference data={Wprr.sourceFunction(itemEditor, "getRelationEditor", ["incoming", "for", "object-property"])} as="valueEditor">
-					<div>
-						<Wprr.InsertElement element={Wprr.sourceReference("table", "headerRowElement")} />
-						<Wprr.layout.ItemList ids={Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource")} as="relation">
-							<Wprr.RelatedItem id="from.linkedItem" from={Wprr.sourceReference("relation")}>
-								<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations,postTerms&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
-									<Wprr.AddReference data={Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")])} as="itemEditor">
-										<Wprr.InsertElement element={Wprr.sourceReference("table", "rowElement")} />
-									</Wprr.AddReference>
-								</Wprr.layout.loader.DataRangeLoader>
-							</Wprr.RelatedItem>
-							<div className="spacing micro" data-slot="spacing" />
-						</Wprr.layout.ItemList>
-						<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("creatingRows").idsSource} as="loader">
-							<Wprr.layout.loader.LoaderDisplay text={Wprr.sourceTranslation("Creating...", "site.creating")} />
-						</Wprr.layout.ItemList>
-						<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-						<div className="spacing small" />
-						<Wprr.FlexRow clasName="micro-item-spacing">
-							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add value", "site.addValueObjectProperty")} commands={Wprr.commands.callFunction(this, this._addValueObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
-							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add file", "site.addFileObjectProperty")} commands={Wprr.commands.callFunction(this, this._addFileObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
-							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add link", "site.addLinkedObjectProperty")} commands={Wprr.commands.callFunction(this, this._addLinkedObjectProperty)} className="add-button add-button-padding  cursor-pointer" />
-						</Wprr.FlexRow>
-					</div>
-				</Wprr.AddReference>
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceStatic(this._elementTreeItem, "table.linkedItem"),
+		  as: "table"
+		}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(itemEditor, "getRelationEditor", ["incoming", "for", "object-property"]),
+		  as: "valueEditor"
+		}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+		  element: Wprr.sourceReference("table", "headerRowElement")
+		}), /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  ids: Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource"),
+		  as: "relation"
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: "from.linkedItem",
+		  from: Wprr.sourceReference("relation")
+		}, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+		  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations,postTerms&ids=", Wprr.sourceReference("item", "id")),
+		  as: "itemLoader"
+		}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		  data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")]),
+		  as: "itemEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+		  element: Wprr.sourceReference("table", "rowElement")
+		})))), /*#__PURE__*/React.createElement("div", {
+		  className: "spacing micro",
+		  "data-slot": "spacing"
+		})), /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  ids: this._elementTreeItem.getLinks("creatingRows").idsSource,
+		  as: "loader"
+		}, /*#__PURE__*/React.createElement(Wprr.layout.loader.LoaderDisplay, {
+		  text: Wprr.sourceTranslation("Creating...", "site.creating")
+		})), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null), /*#__PURE__*/React.createElement("div", {
+		  className: "spacing small"
+		}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		  clasName: "micro-item-spacing"
+		}, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		  text: Wprr.sourceTranslation("Add value", "site.addValueObjectProperty"),
+		  commands: Wprr.commands.callFunction(this, this._addValueObjectProperty),
+		  className: "add-button add-button-padding  cursor-pointer"
+		}), /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		  text: Wprr.sourceTranslation("Add file", "site.addFileObjectProperty"),
+		  commands: Wprr.commands.callFunction(this, this._addFileObjectProperty),
+		  className: "add-button add-button-padding  cursor-pointer"
+		}), /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		  text: Wprr.sourceTranslation("Add link", "site.addLinkedObjectProperty"),
+		  commands: Wprr.commands.callFunction(this, this._addLinkedObjectProperty),
+		  className: "add-button add-button-padding  cursor-pointer"
+		})))))
 		);
 	}
 }

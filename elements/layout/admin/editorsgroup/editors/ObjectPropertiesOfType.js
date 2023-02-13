@@ -78,20 +78,26 @@ export default class ObjectPropertiesOfType extends Layout {
 		let relationName = "from.linkedItem";
 		
 		return React.createElement("div", null,
-			<Wprr.AddReference data={this.getRelationEditor()} as="relationsEditor">
-				<Wprr.HasData check={this._elementTreeItem.getLinks("filteredRows").idsSource} checkType="notEmpty">
-					<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("filteredRows").idsSource} as="row">
-						<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="relation">
-							<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
-								{aSlots.default(<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>)}
-							</Wprr.RelatedItem>
-						</Wprr.RelatedItem>
-					</Wprr.layout.ItemList>
-				</Wprr.HasData>
-				<Wprr.HasData check={this._elementTreeItem.getLinks("filteredRows").idsSource} checkType="invert/notEmpty">
-					{aSlots.slot("noRelations", <div />)}
-				</Wprr.HasData>
-			</Wprr.AddReference>
+		React.createElement(Wprr.AddReference, {
+		  data: this.getRelationEditor(),
+		  as: "relationsEditor"
+		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: this._elementTreeItem.getLinks("filteredRows").idsSource,
+		  checkType: "notEmpty"
+		}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		  ids: this._elementTreeItem.getLinks("filteredRows").idsSource,
+		  as: "row"
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: "forItem.linkedItem",
+		  from: Wprr.sourceReference("row"),
+		  as: "relation"
+		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		  id: relationName,
+		  from: Wprr.sourceReference("relation")
+		}, aSlots.default( /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "title")))))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		  check: this._elementTreeItem.getLinks("filteredRows").idsSource,
+		  checkType: "invert/notEmpty"
+		}, aSlots.slot("noRelations", /*#__PURE__*/React.createElement("div", null))))
 		);
 	}
 }
