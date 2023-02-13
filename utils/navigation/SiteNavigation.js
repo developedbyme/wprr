@@ -90,6 +90,10 @@ export default class SiteNavigation extends ProjectRelatedItem {
 				let hrefAttribute = currentNode.getAttribute("href");
 				if(hrefAttribute) {
 					link = hrefAttribute.toString();
+					let hardNavigation = currentNode.getAttribute("data-not-spa-link");
+					if(hardNavigation) {
+						return true;
+					}
 					break;
 				}
 			}

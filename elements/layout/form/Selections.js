@@ -53,7 +53,7 @@ export default class Selections extends Layout {
 		let itemValueSource = Wprr.sourceReference("loop/item", "key");
 		
 		let defaultSelection = React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(this, this.getIsSelectedItemForValue, [itemValueSource]), as: "isSelectedItem"},
-			React.createElement(Wprr.FlexRow, {className: aSlots.prop("flexClasses", "small-item-spacing"), itemClasses: "flex-no-resize,flex-resize"},
+			React.createElement(Wprr.FlexRow, {className: aSlots.prop("flexClasses", "small-item-spacing flex-no-wrap"), itemClasses: "flex-no-resize,flex-resize"},
 				React.createElement(Wprr.CustomCheckbox, {checked: Wprr.sourceReference("isSelectedItem", "isSelected")},
 					React.createElement("div", {"data-section-name": "on", className: "custom-checkbox custom-checkbox-padding checked cursor-pointer"},
 						React.createElement(Wprr.Image, {src: aSlots.prop("checkmarkImagePath", "icons/checkmark.svg"), location: "images", className: "full-size background-contain"})

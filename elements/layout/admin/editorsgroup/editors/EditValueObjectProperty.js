@@ -4,7 +4,7 @@ import moment from "moment";
 
 import Layout from "wprr/elements/layout/Layout";
 
-export default class EditObjectProperty extends Layout {
+export default class EditValueObjectProperty extends Layout {
 	
 	_construct() {
 		super._construct();
@@ -20,7 +20,7 @@ export default class EditObjectProperty extends Layout {
 		this._elementTreeItem.getLinks("items").input(loader.item.getLinks("items"));
 		this._elementTreeItem.getValueSource("loaded").input(loader.item.getValueSource("loaded"));
 			
-		let url = "range/?select=objectProperty,anyStatus&encode=id&fromIds=" + id + "&identifier=" + identifier + "&path=out:pointing-to:*";
+		let url = "range/?select=objectProperty,anyStatus&encode=id&fromIds=" + id + "&identifier=" + identifier;
 		loader.item.setValue("url", this.getWprrUrl(url, "wprrData"));
 		
 		
@@ -31,18 +31,17 @@ export default class EditObjectProperty extends Layout {
 		
 		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));
 		
-		let name = this.getFirstInputWithDefault("name", "New item");
-		let types = Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("types"));
-		let id = this.getFirstInput("id", Wprr.sourceReference("item", "id"));
 		let identifier = this.getFirstInput("identifier");
+		let id = this.getFirstInput("id", Wprr.sourceReference("item", "id"));
+		let name = this.getFirstInputWithDefault("name", "Object property " + identifier + " for " + id );
 		
-		let loader = project.getCreateLoader("dbm_data", null, "draft", name);
-		let currentArray = types;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			loader.changeData.addTerm(currentArray[i], "dbm_type", "slugPath");
-		}
-		loader.changeData.createChange("dbm/setAsObjectProperty", {"value": id, "identifier": identifier});
+		let types = Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("types"));
+		
+		let loader = project.getCreateLoader("dbm_data", "object-property", "draft", name);
+		loader.changeData.addTerm('identifiable-item', "dbm_type", "slugPath");
+		loader.changeData.addTerm('value-item', "dbm_type", "slugPath");
+		loader.changeData.createChange("dbmtc/setField", {"field": "identifier", "value": identifier});
+		loader.changeData.addOutgoingRelation(id, "for");
 		
 		let status = this.getFirstInputWithDefault("status", "private");
 		loader.changeData.setStatus(status);

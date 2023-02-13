@@ -43,6 +43,7 @@ export default class Grid extends WprrBaseObject {
 		
 		aRowData.className = this._getRowClassNames(aRowData).join(" ");
 		aRowData.itemClasses = this.props.itemClasses;
+		aRowData.itemHolderType = this.getFirstInputWithDefault("itemHolderType", "div");
 	}
 	
 	_updateRowsSettings(aRowsData) {
@@ -157,7 +158,7 @@ export default class Grid extends WprrBaseObject {
 	}
 
 	static _contentCreator_row(aData, aKeyIndex, aReferences) {
-		return React.createElement(FlexRow, {"key": "row-" + aKeyIndex, "className": aData.className, "itemClasses": aData.itemClasses, "spacingMarkup": aData.spacingMarkup}, aData.children);
+		return React.createElement(FlexRow, {"key": "row-" + aKeyIndex, "className": aData.className, "itemClasses": aData.itemClasses, "spacingMarkup": aData.spacingMarkup, "itemHolderType": aData.itemHolderType}, aData.children);
 	}
 
 	static _contentCreator_rowSpacing(aData, aKeyIndex, aReferences) {

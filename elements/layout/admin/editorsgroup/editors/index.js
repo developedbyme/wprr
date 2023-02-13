@@ -16,6 +16,8 @@ export {default as EditObjectProperty} from "./EditObjectProperty";
 export {default as HierarchyOrderedRelations} from "./HierarchyOrderedRelations";
 export {default as SelectRelationFromItems} from "./SelectRelationFromItems";
 export {default as SelectRelationsFromItems} from "./SelectRelationsFromItems";
+export {default as EditValueObjectProperty} from "./EditValueObjectProperty";
+export {default as Translations} from "./Translations";
 
 import * as files from "./files/index.js";
 export {files};

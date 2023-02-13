@@ -2,9 +2,9 @@ import React from "react";
 import Wprr from "wprr/Wprr";
 import moment from "moment";
 
-import WprrBaseObject from "wprr/WprrBaseObject";
+import Layout from "wprr/elements/layout/Layout";
 
-export default class SelectRelation extends WprrBaseObject {
+export default class SelectRelation extends Layout {
 	
 	_construct() {
 		super._construct();
@@ -86,7 +86,7 @@ export default class SelectRelation extends WprrBaseObject {
 		return itemEditor.getRelationEditor(direction, relationType, objectType);
 	}
 	
-	_renderMainElement() {
+	_getLayout(aSlots) {
 		//console.log("SelectRelations::_renderMainElement");
 		
 		let itemEditor = this.getFirstInput("itemEditor", Wprr.sourceReference("itemEditor"));
@@ -115,9 +115,9 @@ export default class SelectRelation extends WprrBaseObject {
 												<Wprr.RelatedItem id={relationName} from={Wprr.sourceReference("relation")}>
 													<Wprr.CommandButton commands={Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")}>
 														<div className="cursor-pointer">
-															<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
+															{aSlots.default(<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
 																<div>{Wprr.text(Wprr.sourceReference("item", "title"))}</div>
-															</Wprr.layout.loader.DataRangeLoader>
+															</Wprr.layout.loader.DataRangeLoader>)}
 														</div>
 													</Wprr.CommandButton>
 												</Wprr.RelatedItem>
@@ -156,7 +156,9 @@ export default class SelectRelation extends WprrBaseObject {
 														Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]),
 														Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
 													]}>
-														<div className="hover-row cursor-pointer standard-row-padding">{Wprr.text(Wprr.sourceReference("item", searchResultField))}</div>
+														<div className="hover-row cursor-pointer standard-row-padding">
+															{aSlots.slot("searchResult", Wprr.text(Wprr.sourceReference("item", searchResultField)))}
+														</div>
 													</Wprr.CommandButton>
 												</Wprr.layout.ItemList>
 											</Wprr.HasData>
