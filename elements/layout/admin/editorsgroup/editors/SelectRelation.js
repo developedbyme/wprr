@@ -37,7 +37,7 @@ export default class SelectRelation extends Layout {
 		let searchResultField = this.getFirstInputWithDefault("searchResultField", "title");
 		
 		let newSortItem = sort.addFieldSort(searchResultField + ".value", function(aValue) {return aValue});
-		newSortItem.addType("element", React.createelement("div", {}, "By title"));
+		newSortItem.addType("element", React.createElement("div", {}, "By title"));
 		newSortItem.setValue("buttonName", "title");
 		
 		sortItem.getLinks("all").input(filterItem.getLinks("filtered"));
@@ -105,103 +105,103 @@ export default class SelectRelation extends Layout {
 		React.createElement(Wprr.AddReference, {
 		  data: Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType]),
 		  as: "valueEditor"
-		}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+		}, React.createElement(Wprr.AddReference, {
 		  data: Wprr.sourceReference("valueEditor").deeper("singleEditor"),
 		  as: "selectedEditor"
-		}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
+		}, React.createElement("div", null, React.createElement(Wprr.SelectSection, {
 		  selectedSections: this._elementTreeItem.getValueSource("mode")
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  "data-default-section": true
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "standard-field standard-field-padding full-width"
-		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		}, React.createElement(Wprr.HasData, {
 		  check: Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource"),
 		  checkType: "notEmpty"
-		}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		}, React.createElement(Wprr.layout.ItemList, {
 		  ids: Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource"),
 		  as: "relation"
-		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		}, React.createElement(Wprr.FlexRow, {
 		  className: "small-item-spacing flex-no-wrap",
 		  itemClasses: "flex-resize,flex-no-resize"
-		}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+		}, React.createElement(Wprr.RelatedItem, {
 		  id: relationName,
 		  from: Wprr.sourceReference("relation")
-		}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		}, React.createElement(Wprr.CommandButton, {
 		  commands: Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "cursor-pointer"
-		}, aSlots.default( /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+		}, aSlots.default( React.createElement(Wprr.layout.loader.DataRangeLoader, {
 		  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=postTitle,postStatus&ids=", Wprr.sourceReference("item", "id")),
 		  as: "itemLoader"
-		}, /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "title")))))))), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		}, React.createElement("div", null, Wprr.text(Wprr.sourceReference("item", "title")))))))), React.createElement(Wprr.CommandButton, {
 		  commands: Wprr.commands.callFunction(Wprr.sourceReference("valueEditor"), "endRelation", [Wprr.sourceReference("relation", "id")])
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "cursor-pointer"
 		}, React.createElement(Wprr.Image, {
 		  "className": "field-icon background-contain",
 		  "src": "icons/remove-circle.svg"
-		})))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		})))))), React.createElement(Wprr.HasData, {
 		  check: Wprr.sourceReference("valueEditor", "item.activeRelations.idsSource"),
 		  checkType: "invert/notEmpty"
-		}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		}, React.createElement(Wprr.CommandButton, {
 		  commands: Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "edit")
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "cursor-pointer"
-		}, Wprr.idText("Select", "site.select")))))), /*#__PURE__*/React.createElement("div", {
+		}, Wprr.idText("Select", "site.select")))))), React.createElement("div", {
 		  "data-section-name": "edit"
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "standard-field standard-field-padding full-width"
-		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+		}, React.createElement(Wprr.FlexRow, {
 		  className: "small-item-spacing vertically-center-items",
 		  itemClasses: "flex-resize,flex-no-resize"
-		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		}, React.createElement(Wprr.FormField, {
 		  autoFocus: true,
 		  value: this._elementTreeItem.getValueSource("search"),
 		  className: "integrated-field full-size"
-		}), /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		}), React.createElement(Wprr.CommandButton, {
 		  commands: Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "cursor-pointer"
 		}, React.createElement(Wprr.Image, {
 		  "className": "field-icon background-contain",
 		  "src": "icons/remove-circle.svg"
-		}))))), /*#__PURE__*/React.createElement("div", {
+		}))))), React.createElement("div", {
 		  className: "absolute-container"
-		}, /*#__PURE__*/React.createElement(Wprr.layout.area.Overlay, {
+		}, React.createElement(Wprr.layout.area.Overlay, {
 		  open: true
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "autocomplete-popup"
-		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		}, React.createElement(Wprr.HasData, {
 		  check: this._elementTreeItem.getLinks("sortedItems").idsSource,
 		  checkType: "notEmpty"
-		}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+		}, React.createElement(Wprr.layout.ItemList, {
 		  ids: this._elementTreeItem.getLinks("sortedItems").idsSource
-		}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+		}, React.createElement(Wprr.CommandButton, {
 		  commands: [Wprr.commands.callFunction(Wprr.sourceReference("selectedEditor"), "setValue", [Wprr.sourceReference("item", "id")]), Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")]
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "hover-row cursor-pointer standard-row-padding"
-		}, aSlots.slot("searchResult", Wprr.text(Wprr.sourceReference("item", searchResultField))))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		}, aSlots.slot("searchResult", Wprr.text(Wprr.sourceReference("item", searchResultField))))))), React.createElement(Wprr.HasData, {
 		  check: this._elementTreeItem.getLinks("sortedItems").idsSource,
 		  checkType: "invert/notEmpty"
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "standard-row-padding"
-		}, Wprr.idText("No results", "site.noResults"))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+		}, Wprr.idText("No results", "site.noResults"))), React.createElement(Wprr.HasData, {
 		  check: allowCreation
-		}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+		}, React.createElement(Wprr.HasData, {
 		  check: this._elementTreeItem.getValueSource("search"),
 		  checkType: "notEmpty"
-		}, /*#__PURE__*/React.createElement("div", {
+		}, React.createElement("div", {
 		  className: "standard-row-padding"
-		}, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+		}, React.createElement(Wprr.layout.interaction.Button, {
 		  commands: [Wprr.commands.callFunction(this, this._createItem), Wprr.commands.setValue(this._elementTreeItem.getValueSource("mode").reSource(), "value", "view")],
 		  className: "standard-button standard-button-padding text-align-center"
-		}, /*#__PURE__*/React.createElement(Wprr.TextWithReplacements, {
+		}, React.createElement(Wprr.TextWithReplacements, {
 		  text: Wprr.sourceTranslation("Create \"{objectType}\"", "site.createObjectType"),
 		  replacements: {
 		    "{objectType}": this._elementTreeItem.getValueSource("search")
 		  },
 		  sourceUpdates: this._elementTreeItem.getValueSource("search")
-		})))))))))), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))))
+		})))))))))), React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))))
 		);
 	}
 }
