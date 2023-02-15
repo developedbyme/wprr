@@ -25,13 +25,13 @@ export default class EditItemProperties extends Wprr.BaseObject {
 		let itemId = this.getFirstInput(Wprr.sourceReference("item", "id"), Wprr.sourceQueryString("id"));
 		
 		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: (void 0)._elementTreeItem,
+  data: (this)._elementTreeItem,
   as: "editorItem"
 }, /*#__PURE__*/React.createElement(Wprr.AddReference, {
   data: editorsGroup,
   as: "editorsGroup"
 }, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceStatic((void 0)._elementTreeItem, "table.linkedItem"),
+  data: Wprr.sourceStatic((this)._elementTreeItem, "table.linkedItem"),
   as: "table"
 }, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
   path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations&ids=", itemId),
