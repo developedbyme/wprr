@@ -35,46 +35,54 @@ export default class EditContentTemplates extends Wprr.BaseObject {
 		
 		{
 			let column = table.createColumn("select", "").setCellClasses("select-id-cell-width");
-			column.setElement(<div>
-				<Wprr.FlexRow className="micro-item-spacing vertically-center-items">
-					<Wprr.Checkbox checked={Wprr.sourceReference("row", "active")} />
-					<div className="standard-flag standard-flag-padding id-flag">{Wprr.text(Wprr.sourceReference("item", "id"))}</div>
-				</Wprr.FlexRow>
-			</div>);
+			column.setElement(React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing vertically-center-items"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: Wprr.sourceReference("row", "active")
+}), /*#__PURE__*/React.createElement("div", {
+  className: "standard-flag standard-flag-padding id-flag"
+}, Wprr.text(Wprr.sourceReference("item", "id"))))));
 		}
 		
 		{
 			let column = table.createColumn("name", "Name");
-			column.setElement(<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["name"])} as="valueEditor">
-				<Wprr.FormField className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>);
+			column.setElement(React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["name"]),
+  as: "valueEditor"
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null)));
 		}
 		
 		{
 			let column = table.createColumn("edit", "Edit").setCellClasses("short-link-cell-width");
-			column.setElement(<div>
-				<Wprr.Link href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/content-templates/content-template/?id="), Wprr.sourceReference("item", "id"))}>
-					{Wprr.idText("Edit", "site.edit")}
-				</Wprr.Link>
-			</div>);
+			column.setElement(React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.Link, {
+  href: Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/content-templates/content-template/?id="), Wprr.sourceReference("item", "id"))
+}, Wprr.idText("Edit", "site.edit"))));
 		}
 		
 		{
 			let column = table.createColumn("title", "Title");
-			column.setElement(<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["title"])} as="valueEditor">
-				<Wprr.FormField className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>);
+			column.setElement(React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["title"]),
+  as: "valueEditor"
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null)));
 			column.deactivate();
 		}
 		
 		{
 			let column = table.createColumn("content", "Content");
-			column.setElement(<Wprr.AddReference data={Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["content"])} as="valueEditor">
-				<Wprr.RichTextEditor className="standard-field standard-field-padding full-width" value={Wprr.sourceReference("valueEditor", "valueSource")} />
-				<Wprr.layout.admin.editorsgroup.SaveValueChanges />
-			</Wprr.AddReference>);
+			column.setElement(React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["content"]),
+  as: "valueEditor"
+}, /*#__PURE__*/React.createElement(Wprr.RichTextEditor, {
+  className: "standard-field standard-field-padding full-width",
+  value: Wprr.sourceReference("valueEditor", "valueSource")
+}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null)));
 			column.deactivate();
 		}
 		
@@ -90,14 +98,14 @@ export default class EditContentTemplates extends Wprr.BaseObject {
 		{
 			let batchOpeartionItem = this._elementTreeItem.group.createInternalItem();
 			batchOpeartionItem.setValue("name", "Clear cache");
-			batchOpeartionItem.setValue("element", <Wprr.layout.admin.batch.ClearCache />);
+			batchOpeartionItem.setValue("element", React.createElement(Wprr.layout.admin.batch.ClearCache));
 			batchEditItem.getLinks("batchActions").addItem(batchOpeartionItem.id);
 		}
 		
 		{
 			let batchOpeartionItem = this._elementTreeItem.group.createInternalItem();
 			batchOpeartionItem.setValue("name", "Api command");
-			batchOpeartionItem.setValue("element", <Wprr.layout.admin.batch.ApiCommand />);
+			batchOpeartionItem.setValue("element", React.createElement(Wprr.layout.admin.batch.ApiCommand));
 			batchEditItem.getLinks("batchActions").addItem(batchOpeartionItem.id);
 		}
 	}
@@ -132,107 +140,110 @@ export default class EditContentTemplates extends Wprr.BaseObject {
 		
 		let editorsGroup = Wprr.objectPath(this._elementTreeItem, "editorsGroup.linkedItem.editorsGroup");
 		
-		return <div>
-		<Wprr.AddReference data={this._elementTreeItem} as="editorItem">
-			<Wprr.AddReference data={editorsGroup} as="editorsGroup">
-				<Wprr.AddReference data={Wprr.sourceStatic(this._elementTreeItem, "table.linkedItem")} as="table">
-					<Wprr.FlexRow className="justify-between">
-<div>
-	<h2 className="no-margins">{Wprr.idText("Content templates", "site.contentTemplates")}</h2>
-	<div className="operations">
-		<Wprr.SelectItem id="batchEdit/contentTemplates" as="batchEdit">
-			<div>
-				<Wprr.FlexRow className="micro-item-spacing">
-					{Wprr.DropdownSelection.createSelfContained(
-						React.createElement(Wprr.layout.form.DropdownButton, {
-							"className": "cursor-pointer batch-operations-text batch-operations-select-title",
-							"text": Wprr.sourceFirst(
-								Wprr.sourceReference("editorItem", "operation.linkedItem.selectedLabel"),
-								Wprr.sourceReference("editorItem", "operation.linkedItem.name"),
-								Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")
-							),
-							"sourceUpdates": Wprr.sourceReference("editorItem", "operation.idSource")
-						}),
-						<div className="custom-selection-container custom-selection-menu">
-							<Wprr.layout.ItemList ids={Wprr.sourceReference("batchEdit", "batchActions.idsSource")}>
-								<Wprr.CommandButton commands={[
-									Wprr.commands.setProperty(Wprr.sourceReference("editorItem", "operation"), "id", Wprr.sourceReference("item", "id")),
-									Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)
-								]}>
-									<div className="hover-row standard-row standard-row-padding cursor-pointer">{Wprr.text(Wprr.sourceReference("item", "name"))}</div>
-								</Wprr.CommandButton>
-							</Wprr.layout.ItemList>
-						</div>,
-						{ className: "absolute-container" }
-					)}
-					<Wprr.HasData check={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} checkType="notEmpty">
-						<Wprr.FlexRow className="micro-item-spacing batch-operations-text">
-							<div>for</div>
-							<Wprr.layout.ListWithOthers items={Wprr.sourceReference("editorItem", "selectedItems.items")} nameField="fields.name.value" sourceUpdates={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} showNumberOfItems={2} />
-						</Wprr.FlexRow>
-					</Wprr.HasData>
-				</Wprr.FlexRow>
-			</div>
-		</Wprr.SelectItem>
-	</div>
-</div>
-						<div>
-							<Wprr.layout.form.MoreOptionsDropdown className="dropdown-from-right">
-								<div className="custom-selection-menu-padding">
-									<Wprr.layout.ItemList ids={Wprr.sourceReference("table", "activeList.linkedItem.rows.idsSource")}>
-										<div>
-											<Wprr.FlexRow className="micro-item-spacing vertically-center-items">
-												<Wprr.Checkbox checked={Wprr.sourceReference("item", "active")} />
-												{Wprr.text(Wprr.sourceReference("item", "forItem.linkedItem.name"))}
-											</Wprr.FlexRow>
-										</div>
-									</Wprr.layout.ItemList>
-								</div>
-							</Wprr.layout.form.MoreOptionsDropdown>
-						</div>
-					</Wprr.FlexRow>
-					<div className="spacing medium" />
-					<Wprr.RelatedItem id="operation.linkedItem" from={Wprr.sourceReference("editorItem")} as="batchActionItem" sourceUpdates={Wprr.sourceReference("editorItem", "operation.idSource")}>
-						<Wprr.InsertElement element={Wprr.sourceReference("batchActionItem", "element")} canBeEmpty={true} />
-					</Wprr.RelatedItem>
-					<div className="spacing medium" />
-					<Wprr.InsertElement element={Wprr.sourceReference("table", "headerRowElement")} />
-					<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("rows").idsSource} as="row">
-						<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="item">
-							<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations,postTerms&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
-								<Wprr.AddReference data={Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")])} as="itemEditor">
-									<Wprr.InsertElement element={Wprr.sourceReference("table", "rowElement")} />
-								</Wprr.AddReference>
-							</Wprr.layout.loader.DataRangeLoader>
-						</Wprr.RelatedItem>
-						<div className="spacing medium" data-slot="spacing" />
-					</Wprr.layout.ItemList>
-					<div className="spacing standard" />
-					<Wprr.FlexRow className="justify-between">
-						<Wprr.FlexRow>
-							<Wprr.layout.interaction.Button text={Wprr.sourceTranslation("Add", "site.add")} commands={Wprr.commands.callFunction(this, this._add, [])} className="add-button add-button-padding cursor-pointer" />
-						</Wprr.FlexRow>
-						<div>
-							<Wprr.HasData check={Wprr.sourceReference("editorsGroup", "item.changed")}>
-								<div>
-									<Wprr.layout.interaction.Button commands={Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")}>
-										<div>Save all changes</div>
-									</Wprr.layout.interaction.Button>
-								</div>
-							</Wprr.HasData>
-							<Wprr.HasData check={Wprr.sourceReference("editorsGroup", "item.changed")} checkType="invert/default">
-								<div>
-									<div className="standard-button standard-button-padding inactive">
-										<div>No changes to save</div>
-									</div>
-								</div>
-							</Wprr.HasData>
-						</div>
-					</Wprr.FlexRow>
-				</Wprr.AddReference>
-			</Wprr.AddReference>
-			</Wprr.AddReference>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: (this)._elementTreeItem,
+  as: "editorItem"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: editorsGroup,
+  as: "editorsGroup"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceStatic((this)._elementTreeItem, "table.linkedItem"),
+  as: "table"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", {
+  className: "no-margins"
+}, Wprr.idText("Content templates", "site.contentTemplates")), /*#__PURE__*/React.createElement("div", {
+  className: "operations"
+}, /*#__PURE__*/React.createElement(Wprr.SelectItem, {
+  id: "batchEdit/contentTemplates",
+  as: "batchEdit"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing"
+}, Wprr.DropdownSelection.createSelfContained(React.createElement(Wprr.layout.form.DropdownButton, {
+  "className": "cursor-pointer batch-operations-text batch-operations-select-title",
+  "text": Wprr.sourceFirst(Wprr.sourceReference("editorItem", "operation.linkedItem.selectedLabel"), Wprr.sourceReference("editorItem", "operation.linkedItem.name"), Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")),
+  "sourceUpdates": Wprr.sourceReference("editorItem", "operation.idSource")
+}), /*#__PURE__*/React.createElement("div", {
+  className: "custom-selection-container custom-selection-menu"
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: Wprr.sourceReference("batchEdit", "batchActions.idsSource")
+}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.setProperty(Wprr.sourceReference("editorItem", "operation"), "id", Wprr.sourceReference("item", "id")), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
+}, /*#__PURE__*/React.createElement("div", {
+  className: "hover-row standard-row standard-row-padding cursor-pointer"
+}, Wprr.text(Wprr.sourceReference("item", "name")))))), {
+  className: "absolute-container"
+}), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorItem", "selectedItems.idsSource"),
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing batch-operations-text"
+}, /*#__PURE__*/React.createElement("div", null, "for"), /*#__PURE__*/React.createElement(Wprr.layout.ListWithOthers, {
+  items: Wprr.sourceReference("editorItem", "selectedItems.items"),
+  nameField: "fields.name.value",
+  sourceUpdates: Wprr.sourceReference("editorItem", "selectedItems.idsSource"),
+  showNumberOfItems: 2
+})))))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.form.MoreOptionsDropdown, {
+  className: "dropdown-from-right"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "custom-selection-menu-padding"
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: Wprr.sourceReference("table", "activeList.linkedItem.rows.idsSource")
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing vertically-center-items"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: Wprr.sourceReference("item", "active")
+}), Wprr.text(Wprr.sourceReference("item", "forItem.linkedItem.name"))))))))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium"
+}), /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+  id: "operation.linkedItem",
+  from: Wprr.sourceReference("editorItem"),
+  as: "batchActionItem",
+  sourceUpdates: Wprr.sourceReference("editorItem", "operation.idSource")
+}, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+  element: Wprr.sourceReference("batchActionItem", "element"),
+  canBeEmpty: true
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium"
+}), /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+  element: Wprr.sourceReference("table", "headerRowElement")
+}), /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: (this)._elementTreeItem.getLinks("rows").idsSource,
+  as: "row"
+}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+  id: "forItem.linkedItem",
+  from: Wprr.sourceReference("row"),
+  as: "item"
+}, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations,postTerms&ids=", Wprr.sourceReference("item", "id")),
+  as: "itemLoader"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")]),
+  as: "itemEditor"
+}, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+  element: Wprr.sourceReference("table", "rowElement")
+})))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium",
+  "data-slot": "spacing"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  text: Wprr.sourceTranslation("Add", "site.add"),
+  commands: Wprr.commands.callFunction(this, (this)._add, []),
+  className: "add-button add-button-padding cursor-pointer"
+})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorsGroup", "item.changed")
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  commands: Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")
+}, /*#__PURE__*/React.createElement("div", null, "Save all changes")))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorsGroup", "item.changed"),
+  checkType: "invert/default"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "standard-button standard-button-padding inactive"
+}, /*#__PURE__*/React.createElement("div", null, "No changes to save"))))))))));
 	}
 	
 	static getWpAdminEditor() {
@@ -242,10 +253,8 @@ export default class EditContentTemplates extends Wprr.BaseObject {
 			
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>
-				
-			</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null))
 	}
 }

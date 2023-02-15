@@ -24,42 +24,35 @@ export default class EditItemProperties extends Wprr.BaseObject {
 		let editorsGroup = Wprr.objectPath(this._elementTreeItem, "editorsGroup.linkedItem.editorsGroup");
 		let itemId = this.getFirstInput(Wprr.sourceReference("item", "id"), Wprr.sourceQueryString("id"));
 		
-		return <div>
-			<Wprr.AddReference data={this._elementTreeItem} as="editorItem">
-				<Wprr.AddReference data={editorsGroup} as="editorsGroup">
-					<Wprr.AddReference data={Wprr.sourceStatic(this._elementTreeItem, "table.linkedItem")} as="table">
-						<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations&ids=", itemId)} as="itemLoader">
-							<div>
-								<Wprr.AddReference data={Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [itemId])} as="itemEditor">
-									<Wprr.layout.admin.editorsgroup.editors.ObjectProperties />
-								</Wprr.AddReference>
-		
-								<div className="spacing standard" />
-								<Wprr.FlexRow className="justify-between">
-									<div />
-									<div>
-										<Wprr.HasData check={Wprr.sourceReference("editorsGroup", "item.changed")}>
-											<div>
-												<Wprr.layout.interaction.Button commands={Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")}>
-													<div>Save all changes</div>
-												</Wprr.layout.interaction.Button>
-											</div>
-										</Wprr.HasData>
-										<Wprr.HasData check={Wprr.sourceReference("editorsGroup", "item.changed")} checkType="invert/default">
-											<div>
-												<div className="standard-button standard-button-padding inactive">
-													<div>No changes to save</div>
-												</div>
-											</div>
-										</Wprr.HasData>
-									</div>
-								</Wprr.FlexRow>
-							</div>
-						</Wprr.layout.loader.DataRangeLoader>
-					</Wprr.AddReference>
-				</Wprr.AddReference>
-			</Wprr.AddReference>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: (void 0)._elementTreeItem,
+  as: "editorItem"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: editorsGroup,
+  as: "editorsGroup"
+}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceStatic((void 0)._elementTreeItem, "table.linkedItem"),
+  as: "table"
+}, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations&ids=", itemId),
+  as: "itemLoader"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [itemId]),
+  as: "itemEditor"
+}, /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.editors.ObjectProperties, null)), /*#__PURE__*/React.createElement("div", {
+  className: "spacing standard"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "justify-between"
+}, /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorsGroup", "item.changed")
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  commands: Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")
+}, /*#__PURE__*/React.createElement("div", null, "Save all changes")))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorsGroup", "item.changed"),
+  checkType: "invert/default"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "standard-button standard-button-padding inactive"
+}, /*#__PURE__*/React.createElement("div", null, "No changes to save"))))))))))));
 	}
 	
 	static getWpAdminEditor() {
@@ -69,10 +62,8 @@ export default class EditItemProperties extends Wprr.BaseObject {
 			
 		};
 		
-		return <Wprr.layout.admin.WpBlockEditor dataSettings={dataSettings}>
-			<div>
-				
-			</div>
-		</Wprr.layout.admin.WpBlockEditor>
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
+  dataSettings: dataSettings
+}, /*#__PURE__*/React.createElement("div", null))
 	}
 }

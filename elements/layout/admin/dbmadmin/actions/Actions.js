@@ -42,7 +42,7 @@ export default class Actions extends Wprr.BaseObject {
 		{
 			let batchOpeartionItem = items.createInternalItem();
 			batchOpeartionItem.setValue("name", "Api command");
-			batchOpeartionItem.setValue("element", <Wprr.layout.admin.batch.ApiCommand />);
+			batchOpeartionItem.setValue("element", React.createElement(Wprr.layout.admin.batch.ApiCommand));
 			batchEditItem.getLinks("batchActions").addItem(batchOpeartionItem.id);
 		}
 		
@@ -80,110 +80,115 @@ export default class Actions extends Wprr.BaseObject {
 	
 	_renderMainElement() {
 		
-		return <div>
-			<Wprr.AddReference data={this._elementTreeItem} as="editorItem">
-				<div>
-					<Wprr.FlexRow className="small-item-spacing" itemClasses="flex-resize,flex-no-resize">
-						<div>
-							<div className="operations">
-								<Wprr.SelectItem id="batchEdit/actions" as="batchEdit">
-									<div>
-										<Wprr.FlexRow className="micro-item-spacing">
-											{Wprr.DropdownSelection.createSelfContained(
-												React.createElement(Wprr.layout.form.DropdownButton, {
-													"className": "cursor-pointer batch-operations-text batch-operations-select-title",
-													"text": Wprr.sourceFirst(
-														Wprr.sourceReference("editorItem", "operation.linkedItem.selectedLabel"),
-														Wprr.sourceReference("editorItem", "operation.linkedItem.name"),
-														Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")
-													),
-													"sourceUpdates": Wprr.sourceReference("editorItem", "operation.idSource")
-												}),
-												<div className="custom-selection-container custom-selection-menu">
-													<Wprr.layout.ItemList ids={Wprr.sourceReference("batchEdit", "batchActions.idsSource")}>
-														<Wprr.CommandButton commands={[
-															Wprr.commands.setProperty(Wprr.sourceReference("editorItem", "operation"), "id", Wprr.sourceReference("item", "id")),
-															Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)
-														]}>
-															<div className="hover-row standard-row standard-row-padding cursor-pointer">{Wprr.text(Wprr.sourceReference("item", "name"))}</div>
-														</Wprr.CommandButton>
-													</Wprr.layout.ItemList>
-												</div>,
-												{ className: "absolute-container" }
-											)}
-											<Wprr.HasData check={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} checkType="notEmpty">
-												<Wprr.FlexRow className="micro-item-spacing batch-operations-text">
-													<div>for</div>
-													<Wprr.layout.ListWithOthers items={Wprr.sourceReference("editorItem", "selectedItems.items")} sourceUpdates={Wprr.sourceReference("editorItem", "selectedItems.idsSource")} showNumberOfItems={2} />
-												</Wprr.FlexRow>
-											</Wprr.HasData>
-										</Wprr.FlexRow>
-									</div>
-								</Wprr.SelectItem>
-							</div>
-						</div>
-					</Wprr.FlexRow>
-					<Wprr.RelatedItem id="operation.linkedItem" from={Wprr.sourceReference("editorItem")} as="batchActionItem" sourceUpdates={Wprr.sourceReference("editorItem", "operation.idSource")}>
-						<Wprr.InsertElement element={Wprr.sourceReference("batchActionItem", "element")} canBeEmpty={true} />
-					</Wprr.RelatedItem>
-				</div>
-			</Wprr.AddReference>
-		
-			<Wprr.layout.ItemList ids={this._elementTreeItem.getLinks("rows").idsSource} as="row" className="standard-alternating-rows">
-				<Wprr.RelatedItem id="forItem.linkedItem" from={Wprr.sourceReference("row")} as="item">
-					<div className="standard-row standard-row-padding" itemClasses="flex-no-resize,flex-no-resize,flex-no-resize,flex-no-resize,flex-resize">
-						<Wprr.FlexRow className="small-item-spacing flex-no-wrap">
-							<div className="table-cell-width-select">
-								<Wprr.Checkbox checked={Wprr.sourceReference("row", "active")} />
-							</div>
-							<div className="table-cell-width-short">
-								<Wprr.Link href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/"), "?id=", Wprr.sourceReference("item", "id"))}>
-									{Wprr.text(Wprr.sourceReference("item", "id"))}
-								</Wprr.Link>
-							</div>
-							<div className="table-cell-width-text-flag">
-								<Wprr.HasData check={Wprr.sourceReference("item", "currentStatus.linkedItem.identifier.value")}>
-									<Wprr.SelectSection selectedSections={Wprr.sourceReference("item", "currentStatus.linkedItem.identifier.value")}>
-										<div data-section-name="done" className="standard-flag standard-flag-padding text-align-center button-status-green">
-											{Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name"))}
-										</div>
-										<div data-section-name="noAction" className="standard-flag standard-flag-padding text-align-center button-status-red">
-											{Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name"))}
-										</div>
-										<div data-default-section={true} className="standard-flag standard-flag-padding text-align-center">
-											{Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name"))}
-										</div>
-									</Wprr.SelectSection>
-									<div className="spacing small" />
-									<div className="small-description text-align-center">
-										<Wprr.DateDisplay date={Wprr.sourceReference("item", "currentStatusTime")} format="Y-MM-DD HH:mm:ss" inputType="unix" />
-									</div>
-								</Wprr.HasData>
-							</div>
-							<div className="table-cell-width-extra-long">
-								<div className="break-words">{Wprr.text(Wprr.sourceReference("item", "type.linkedItem.name"))}</div>
-								<Wprr.HasData check={Wprr.sourceReference("item", "data")}>
-									<div className="spacing small" />
-									<pre className="no-margins small-description break-words">{Wprr.text(Wprr.sourceFunction(JSON, JSON.stringify, [Wprr.sourceReference("item", "data.value")]))}</pre>
-								</Wprr.HasData>
-							</div>
-							<div>
-								<Wprr.layout.ItemList ids={Wprr.sourceReference("item", "from.idsSource")} as="fromItem">
-									<div className="break-words">
-										<Wprr.Link href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/"), "?id=", Wprr.sourceReference("fromItem", "id"))}>
-											{Wprr.text(Wprr.sourceReference("fromItem", "id"))}
-											{" - "}
-											{Wprr.text(Wprr.sourceReference("fromItem", "title"))}
-										</Wprr.Link>
-									</div>
-									<div data-slot="spacing" className="spacing small" />
-								</Wprr.layout.ItemList>
-							</div>
-						</Wprr.FlexRow>
-					</div>
-				</Wprr.RelatedItem>
-			</Wprr.layout.ItemList>
-		</div>;
+		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+  data: (this)._elementTreeItem,
+  as: "editorItem"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing",
+  itemClasses: "flex-resize,flex-no-resize"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  className: "operations"
+}, /*#__PURE__*/React.createElement(Wprr.SelectItem, {
+  id: "batchEdit/actions",
+  as: "batchEdit"
+}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing"
+}, Wprr.DropdownSelection.createSelfContained(React.createElement(Wprr.layout.form.DropdownButton, {
+  "className": "cursor-pointer batch-operations-text batch-operations-select-title",
+  "text": Wprr.sourceFirst(Wprr.sourceReference("editorItem", "operation.linkedItem.selectedLabel"), Wprr.sourceReference("editorItem", "operation.linkedItem.name"), Wprr.sourceTranslation("Select operation", "site.admin.selectOperation")),
+  "sourceUpdates": Wprr.sourceReference("editorItem", "operation.idSource")
+}), /*#__PURE__*/React.createElement("div", {
+  className: "custom-selection-container custom-selection-menu"
+}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: Wprr.sourceReference("batchEdit", "batchActions.idsSource")
+}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
+  commands: [Wprr.commands.setProperty(Wprr.sourceReference("editorItem", "operation"), "id", Wprr.sourceReference("item", "id")), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
+}, /*#__PURE__*/React.createElement("div", {
+  className: "hover-row standard-row standard-row-padding cursor-pointer"
+}, Wprr.text(Wprr.sourceReference("item", "name")))))), {
+  className: "absolute-container"
+}), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("editorItem", "selectedItems.idsSource"),
+  checkType: "notEmpty"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "micro-item-spacing batch-operations-text"
+}, /*#__PURE__*/React.createElement("div", null, "for"), /*#__PURE__*/React.createElement(Wprr.layout.ListWithOthers, {
+  items: Wprr.sourceReference("editorItem", "selectedItems.items"),
+  sourceUpdates: Wprr.sourceReference("editorItem", "selectedItems.idsSource"),
+  showNumberOfItems: 2
+}))))))))), /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+  id: "operation.linkedItem",
+  from: Wprr.sourceReference("editorItem"),
+  as: "batchActionItem",
+  sourceUpdates: Wprr.sourceReference("editorItem", "operation.idSource")
+}, /*#__PURE__*/React.createElement(Wprr.InsertElement, {
+  element: Wprr.sourceReference("batchActionItem", "element"),
+  canBeEmpty: true
+})))), /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: (this)._elementTreeItem.getLinks("rows").idsSource,
+  as: "row",
+  className: "standard-alternating-rows"
+}, /*#__PURE__*/React.createElement(Wprr.RelatedItem, {
+  id: "forItem.linkedItem",
+  from: Wprr.sourceReference("row"),
+  as: "item"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-row standard-row-padding",
+  itemClasses: "flex-no-resize,flex-no-resize,flex-no-resize,flex-no-resize,flex-resize"
+}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+  className: "small-item-spacing flex-no-wrap"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "table-cell-width-select"
+}, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  checked: Wprr.sourceReference("row", "active")
+})), /*#__PURE__*/React.createElement("div", {
+  className: "table-cell-width-short"
+}, /*#__PURE__*/React.createElement(Wprr.Link, {
+  href: Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/"), "?id=", Wprr.sourceReference("item", "id"))
+}, Wprr.text(Wprr.sourceReference("item", "id")))), /*#__PURE__*/React.createElement("div", {
+  className: "table-cell-width-text-flag"
+}, /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("item", "currentStatus.linkedItem.identifier.value")
+}, /*#__PURE__*/React.createElement(Wprr.SelectSection, {
+  selectedSections: Wprr.sourceReference("item", "currentStatus.linkedItem.identifier.value")
+}, /*#__PURE__*/React.createElement("div", {
+  "data-section-name": "done",
+  className: "standard-flag standard-flag-padding text-align-center button-status-green"
+}, Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name"))), /*#__PURE__*/React.createElement("div", {
+  "data-section-name": "noAction",
+  className: "standard-flag standard-flag-padding text-align-center button-status-red"
+}, Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name"))), /*#__PURE__*/React.createElement("div", {
+  "data-default-section": true,
+  className: "standard-flag standard-flag-padding text-align-center"
+}, Wprr.text(Wprr.sourceReference("item", "currentStatus.linkedItem.name")))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "small-description text-align-center"
+}, /*#__PURE__*/React.createElement(Wprr.DateDisplay, {
+  date: Wprr.sourceReference("item", "currentStatusTime"),
+  format: "Y-MM-DD HH:mm:ss",
+  inputType: "unix"
+})))), /*#__PURE__*/React.createElement("div", {
+  className: "table-cell-width-extra-long"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "break-words"
+}, Wprr.text(Wprr.sourceReference("item", "type.linkedItem.name"))), /*#__PURE__*/React.createElement(Wprr.HasData, {
+  check: Wprr.sourceReference("item", "data")
+}, /*#__PURE__*/React.createElement("div", {
+  className: "spacing small"
+}), /*#__PURE__*/React.createElement("pre", {
+  className: "no-margins small-description break-words"
+}, Wprr.text(Wprr.sourceFunction(JSON, JSON.stringify, [Wprr.sourceReference("item", "data.value")]))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
+  ids: Wprr.sourceReference("item", "from.idsSource"),
+  as: "fromItem"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "break-words"
+}, /*#__PURE__*/React.createElement(Wprr.Link, {
+  href: Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/"), "?id=", Wprr.sourceReference("fromItem", "id"))
+}, Wprr.text(Wprr.sourceReference("fromItem", "id")), " - ", Wprr.text(Wprr.sourceReference("fromItem", "title")))), /*#__PURE__*/React.createElement("div", {
+  "data-slot": "spacing",
+  className: "spacing small"
+}))))))));
 	}
 	
 	static getWpAdminEditor() {

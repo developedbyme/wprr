@@ -25,25 +25,34 @@ export default class CreateAction extends Wprr.BaseObject {
 	
 	_renderMainElement() {
 		
-		return <div className="centered-site">
-			<Wprr.layout.form.LabelledArea label="Action">
-				<Wprr.FormField value={this._action} className="standard-field standard-field-padding full-width" />
-			</Wprr.layout.form.LabelledArea>
-			<div className="spacing medium" />
-			<Wprr.layout.form.LabelledArea label="From">
-				<Wprr.FormField value={this._from} className="standard-field standard-field-padding full-width" />
-			</Wprr.layout.form.LabelledArea>
-			<div className="spacing medium" />
-			<Wprr.layout.form.LabelledArea label="Data">
-				<div className="standard-field standard-field-padding">
-					<Wprr.JsonEditor value={this._data} />
-				</div>
-			</Wprr.layout.form.LabelledArea>
-			<div className="spacing medium" />
-			<Wprr.FlexRow>
-				<Wprr.layout.interaction.Button text="Create and perform" commands={Wprr.commands.callFunction(this, this._runAction)} />
-			</Wprr.FlexRow>
-		</div>;
+		return React.createElement("div", {
+  className: "centered-site"
+}, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: "Action"
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  value: (this)._action,
+  className: "standard-field standard-field-padding full-width"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: "From"
+}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+  value: (this)._from,
+  className: "standard-field standard-field-padding full-width"
+})), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium"
+}), /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
+  label: "Data"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "standard-field standard-field-padding"
+}, /*#__PURE__*/React.createElement(Wprr.JsonEditor, {
+  value: (this)._data
+}))), /*#__PURE__*/React.createElement("div", {
+  className: "spacing medium"
+}), /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+  text: "Create and perform",
+  commands: Wprr.commands.callFunction(this, (this)._runAction)
+})));
 	}
 	
 	static getWpAdminEditor() {
