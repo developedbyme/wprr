@@ -95,6 +95,7 @@ export default class Project {
 		this._items.addSetup("order/paidDate", Wprr.utils.data.multitypeitems.setup.order.PaidDate.prepare, Wprr.utils.data.multitypeitems.setup.order.PaidDate.setup);
 		this._items.addSetup("order/subscription", Wprr.utils.data.multitypeitems.setup.order.Subscription.prepare, Wprr.utils.data.multitypeitems.setup.order.Subscription.setup);
 		this._items.addSetup("order/details", Wprr.utils.data.multitypeitems.setup.order.Details.prepare, Wprr.utils.data.multitypeitems.setup.order.Details.setup);
+		this._items.addSetup("order/refunds", Wprr.utils.data.multitypeitems.setup.order.Refunds.prepare, Wprr.utils.data.multitypeitems.setup.order.Refunds.setup);
 		this._items.addSetup("subscriptionDates", Wprr.utils.data.multitypeitems.setup.SubscriptionDates.prepare, Wprr.utils.data.multitypeitems.setup.SubscriptionDates.setup);
 		this._items.addSetup("postContent", Wprr.utils.data.multitypeitems.setup.PostContent.prepare, Wprr.utils.data.multitypeitems.setup.PostContent.setup);
 		this._items.addSetup("postType", Wprr.utils.data.multitypeitems.setup.PostType.prepare, Wprr.utils.data.multitypeitems.setup.PostType.setup);
