@@ -79,7 +79,7 @@ export default class ActiveList extends MultiTypeItemConnection {
 		
 		if(active) {
 			this.item.getLinks("activeRows").addUniqueItem(aId);
-			this.item.getLinks("activeItems").addUniqueItem(aId);
+			this.item.getLinks("activeItems").addUniqueItem(forItemId);
 		}
 	}
 	
