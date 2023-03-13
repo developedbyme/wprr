@@ -7,8 +7,9 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 //import NativeElementArea from "wprr/elements/area/NativeElementArea";
 export default class NativeElementArea extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		//console.log("NativeElementArea::_construct");
+		super._construct();
 		
 		this._element = this._createElement();
 	}
