@@ -1,4 +1,4 @@
-import Wprr from "Wprr";
+import Wprr from "wprr";
 
 import objectPath from "object-path";
 
