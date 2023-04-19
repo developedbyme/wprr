@@ -11,6 +11,8 @@ export default class DataRangeLoader extends Layout {
 		
 		this._layoutName = "dataRangeLoader";
 		this._item = Wprr.sourceValue(null);
+		
+		this.addExposedProps("path");
 	}
 	
 	_prepareInitialRender() {

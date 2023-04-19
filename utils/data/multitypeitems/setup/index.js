@@ -78,3 +78,6 @@ export {signupinvite as signupinvite};
 
 import * as group from "./group";
 export {group as group};
+
+import * as internalmessagegroup from "./internalmessagegroup";
+export {internalmessagegroup as internalmessagegroup};

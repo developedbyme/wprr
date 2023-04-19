@@ -48,7 +48,14 @@ export default class ValueSourceData extends SourceData {
 			let string;
 		
 			try {
-				string = JSON.stringify(aValue);
+				let replacer = function(key, value) {
+					if (value instanceof RegExp) {
+						return value.toString();
+					}
+					return value;
+				}
+				
+				string = JSON.stringify(aValue, replacer);
 			}
 			catch(theError) {
 				return aValue;

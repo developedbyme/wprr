@@ -11,3 +11,6 @@ export {batch};
 
 import * as editorsgroup from "./editorsgroup/index.js";
 export {editorsgroup};
+
+import * as page from "./page/index.js";
+export {page};

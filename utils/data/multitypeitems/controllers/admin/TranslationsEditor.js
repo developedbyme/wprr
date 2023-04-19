@@ -56,6 +56,10 @@ export default class TranslationsEditor extends ValueEditor {
 		return group.getLinkByName(aLanguageCode).getType("valueEditor");
 	}
 	
+	getTranslationCodes() {
+		return this.item.getNamedLinks("translationEditors").names;
+	}
+	
 	addTranslation(aLanguageCode, aDefaultValue = "") {
 		let currentValue = this.value;
 		

@@ -200,6 +200,39 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return editors.getLinkByName(linkName).getType("valueEditor");
 	}
 	
+	getContentEditor(aId) {
+		//console.log("getContentEditor");
+		//console.log(aId);
+		
+		let linkName = "content" + aId;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			let value = item.getValue("content");
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource("content").connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", "content");
+			
+			newEditorItem.setValue("saveCommands", [this._saveFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
 	getMetaEditor(aId, aMetaKey, aFieldName = null) {
 		//console.log("getMetaEditor");
 		//console.log(aId);
@@ -352,6 +385,22 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		//METODO: add to statuses
 		
 		saveOperation.load();
+		
+		return saveOperation;
+	}
+	
+	saveItemById(aId) {
+		
+		let saveOperation = Wprr.utils.data.multitypeitems.controllers.admin.SaveOperation.create(this.item.group.createInternalItem());
+		
+		let items = this.getItemEditor(aId).item.getNamedLinks("fieldEditors").items;
+		this.getSaveDataForItems(items, saveOperation);
+		
+		//METODO: add to statuses
+		
+		saveOperation.load();
+		
+		return saveOperation;
 	}
 	
 	getSaveData(aSaveOperation) {
@@ -364,6 +413,15 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 				let currentEditor = currentArray[i];
 				currentEditor.getSaveData(aSaveOperation);
 			}
+		}
+	}
+	
+	getSaveDataForItems(aItems, aSaveOperation) {
+		let currentArray = Wprr.objectPath(aItems, "(every).saveDataController");
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentEditor = currentArray[i];
+			currentEditor.getSaveData(aSaveOperation);
 		}
 	}
 	

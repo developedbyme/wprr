@@ -41,14 +41,11 @@ export default class OrderedRelations extends Layout {
 		
 		let orderEditor = itemEditor.getOrderEditor(orderName);
 		
-		let removeButton = React.createElement(Wprr.CommandButton, {
-  commands: Wprr.commands.callFunction(this.getRelationEditor(), "endRelation", [Wprr.sourceReference("relation", "id")])
-}, /*#__PURE__*/React.createElement("div", {
-  className: "cursor-pointer"
-}, React.createElement(Wprr.Image, {
-  "className": "field-icon background-contain",
-  "src": "icons/remove-circle.svg"
-})));
+		let removeButton = React.createElement(Wprr.CommandButton, {commands: Wprr.commands.callFunction(this.getRelationEditor(), "endRelation", [Wprr.sourceReference("relation", "id")])},
+			React.createElement("div", {className: "cursor-pointer"},
+				React.createElement(Wprr.Image, {"className": "field-icon background-contain", "src": "icons/remove-circle.svg"})
+			)
+		);
 		
 		return React.createElement("div", null,
 		React.createElement(Wprr.AddReference, {

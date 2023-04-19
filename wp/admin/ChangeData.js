@@ -114,6 +114,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	setParent(aId) {
+		this.setField("parent", aId);
+		
+		return this;
+	}
+	
 	setMeta(aField, aValue, aChangeType = "meta") {
 		
 		let changeValue = ChangeDataFunctions.createFieldData(aField, aValue);

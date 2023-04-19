@@ -49,6 +49,7 @@ export default class EditObjectProperty extends Layout {
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._itemCreated, [Wprr.sourceEvent("data.id")]));
 		
+		this._elementTreeItem.setValue("mode", "creating");
 		loader.load();
 		
 	}
@@ -58,6 +59,7 @@ export default class EditObjectProperty extends Layout {
 		console.log(aId);
 		
 		this._elementTreeItem.getLinks("items").addItem(aId);
+		this._elementTreeItem.setValue("mode", "created");
 	}
 	
 	_getLayout(aSlots) {
@@ -65,25 +67,33 @@ export default class EditObjectProperty extends Layout {
 		
 		let id = this.getFirstInput("id", Wprr.sourceReference("item", "id"));
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: id,
-  checkType: "positiveValue"
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: this._elementTreeItem.getValueSource("loaded")
-}, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: this._elementTreeItem.getLinks("items").idsSource,
-  checkType: "notEmpty"
-}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
-  ids: this._elementTreeItem.getLinks("items").idsSource
-}, aSlots.default( /*#__PURE__*/React.createElement("div", null, Wprr.idText("No element set"))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: this._elementTreeItem.getLinks("items").idsSource,
-  checkType: "invert/notEmpty"
-}, /*#__PURE__*/React.createElement(Wprr.FlexRow, null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
-  commands: Wprr.commands.callFunction(this, this._createItem),
-  text: Wprr.sourceTranslation("Setup", "site.setup")
-}))))), /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: id,
-  checkType: "invert/positiveValue"
-}, /*#__PURE__*/React.createElement("div", null, "No id set")));
+		return React.createElement("div", null,
+			React.createElement(Wprr.HasData, {check: id, checkType: "positiveValue"},
+				React.createElement(Wprr.HasData, {check: this._elementTreeItem.getValueSource("loaded")},
+					React.createElement(Wprr.HasData, {check: this._elementTreeItem.getLinks("items").idsSource, checkType: "notEmpty"},
+						React.createElement(Wprr.layout.ItemList, {ids: this._elementTreeItem.getLinks("items").idsSource},
+							aSlots.default(React.createElement("div", null, Wprr.idText("No element set")))
+						)
+					),
+					React.createElement(Wprr.HasData, {check: this._elementTreeItem.getLinks("items").idsSource, checkType: "invert/notEmpty"},
+						React.createElement(Wprr.SelectSection, {"selectedSections": this._elementTreeItem.getValueSource("mode")},
+							React.createElement("div", {"data-default-section": true, "data-section-name": "none"},
+								React.createElement(Wprr.FlexRow, null,
+									React.createElement(Wprr.layout.interaction.Button, {"className": "standard-button standard-button-padding cursor-pointer", commands: Wprr.commands.callFunction(this, this._createItem), text: aSlots.prop("buttonText", Wprr.sourceTranslation("Setup", "site.setup"))})
+								)
+							),
+							React.createElement("div", {"data-section-name": "creating"},
+								React.createElement(Wprr.FlexRow, null,
+									React.createElement("div", {"className": "standard-button standard-button-padding inactive-during-process"}, Wprr.text(aSlots.prop("creatingText", Wprr.sourceTranslation("Setting up", "site.settingUp"))))
+								)
+							)
+						)
+					)
+				)
+			),
+			React.createElement(Wprr.HasData, { check: id, checkType: "invert/positiveValue"},
+				React.createElement("div", null, "No id set")
+			)
+		);
 	}
 }

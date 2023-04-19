@@ -17,6 +17,7 @@ export default class SiteNavigation extends ProjectRelatedItem {
 		
 		this._handleLinkBound = this._handleLink.bind(this);
 		this._handleNavigationChangeBound = this._handleNavigationChange.bind(this);
+		this._checkNavigationLocksBound = this._checkNavigationLocks.bind(this);
 		
 		this.createSource("allowedPaths", []);
 		
@@ -144,6 +145,14 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	}
 	
 	_internalNavigation(aUrl) {
+		
+		let locks = this.getLockedNavigationLocks();
+		if(locks.length > 0) {
+			if(!confirm("Leave without saving changes?")) {
+				return;
+			}
+		}
+		
 		history.pushState({}, "Page", aUrl);
 		this.url = aUrl;
 		
@@ -165,6 +174,37 @@ export default class SiteNavigation extends ProjectRelatedItem {
 		this.travelPaths = paths;
 	}
 	
+	getLockedNavigationLocks() {
+		console.log("getLockedNavigationLocks");
+		let locks = this.project.item.getLinks("navigationLocks").items;
+		
+		let lockedLocks = Wprr.utils.array.getItemsBy("locked.value", true, locks);
+		
+		return lockedLocks;
+	}
+	
+	hasNavigationLock() {
+		
+		let locks = this.getLockedNavigationLocks();
+		
+		return (locks.length > 0);
+	}
+	
+	_checkNavigationLocks(aEvent) {
+		console.log("_checkNavigationLocks");
+		
+		let isLocked = this.hasNavigationLock();
+		
+		if(isLocked) {
+			aEvent.preventDefault();
+			aEvent.returnValue = "";
+		
+			return true;
+		}
+		
+		return false;
+	}
+	
 	setUrlFromLocation() {
 		let url = document.location.href;
 		this.url = url
@@ -177,6 +217,7 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	start() {
 		
 		//METODO: move this to a change event on active
+		window.addEventListener("beforeunload", this._checkNavigationLocksBound, true);
 		window.addEventListener("click", this._handleLinkBound, false);
 		window.addEventListener("popstate", this._handleNavigationChangeBound, false);
 		
@@ -188,6 +229,7 @@ export default class SiteNavigation extends ProjectRelatedItem {
 	stop() {
 		
 		//METODO: move this to a change event on active
+		window.removeEventListener("beforeunload", this._checkNavigationLocksBound, true);
 		window.removeEventListener("click", this._handleLinkBound, false);
 		window.removeEventListener("popstate", this._handleNavigationChangeBound, false);
 		

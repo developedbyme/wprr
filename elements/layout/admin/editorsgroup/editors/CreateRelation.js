@@ -73,7 +73,7 @@ export default class CreateRelation extends WprrBaseObject {
 		
 		return React.createElement("div", null,
 			React.createElement(Wprr.CommandButton, {"commands": Wprr.commands.callFunction(this, this._createItem)},
-				React.createElement("div", {className: "button edit-button edit-button-padding create-button"},
+				React.createElement("div", {className: "button edit-button edit-button-padding create-button cursor-pointer"},
 					Wprr.idText("Create", "site.create")
 				)
 			)

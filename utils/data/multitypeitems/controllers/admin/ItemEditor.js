@@ -62,6 +62,10 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return fieldEditors.getLinkByName(aName).getType("valueEditor");
 	}
 	
+	getContentEditor() {
+		return this.editorsGroup.getContentEditor(this.item.getType("editedItem").id);
+	}
+	
 	getPostStatusEditor() {
 		return this.editorsGroup.getPostStatusEditor(this.item.getType("editedItem").id);
 	}
@@ -149,6 +153,16 @@ export default class ItemEditor extends MultiTypeItemConnection {
 					let itemType = tempArray.shift();
 					restParts = tempArray.join(".");
 					return Wprr.objectPath(this.getRelationEditor(direction, connectionType, itemType), restParts);
+				}
+			case "contentEditor":
+				{
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getContentEditor(), restParts);
+				}
+			case "postStatusEditor":
+				{
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getPostStatusEditor(), restParts);
 				}
 		}
 		

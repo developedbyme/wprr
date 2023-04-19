@@ -14,6 +14,8 @@ export default class Project {
 		projectItem.addType("controller", this);
 		projectItem.requireValue("language");
 		
+		projectItem.getLinks("navigationLocks");
+		
 		let session = this._items.createInternalItem();
 		projectItem.addSingleLink("session", session.id);
 		
@@ -140,6 +142,8 @@ export default class Project {
 		this._items.addSetup("group/orderedGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
 		this._items.addSetup("group/orderedTypeGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
 		this._items.addSetup("group/orderedImageGroup", Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.prepare, Wprr.utils.data.multitypeitems.setup.group.OrderedGroup.setup);
+		
+		this._items.addSetup("internalMessage", Wprr.utils.data.multitypeitems.setup.internalmessagegroup.InternalMessage.prepare, Wprr.utils.data.multitypeitems.setup.internalmessagegroup.InternalMessage.setup);
 		
 		
 		let relationEditors = this._items.getItem("admin/editorsForType/object-relation");

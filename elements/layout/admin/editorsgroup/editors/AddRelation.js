@@ -78,7 +78,7 @@ export default class AddRelation extends WprrBaseObject {
 		  data: Wprr.sourceFunction(itemEditor, "getRelationEditor", [direction, relationType, objectType]),
 		  as: "valueEditor"
 		}, /*#__PURE__*/React.createElement("div", null, Wprr.DropdownSelection.createSelfContained(React.createElement("div", {
-		  className: "button edit-button edit-button-padding add-button"
+		  className: "button edit-button edit-button-padding add-button cursor-pointer"
 		}, Wprr.idText("Add", "site.add")), React.createElement("div", {
 		  className: "custom-selection-menu custom-selection-menu-padding"
 		}, /*#__PURE__*/React.createElement("div", {

@@ -11,23 +11,27 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 	
 	_renderMainElement() {
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.items.EditItem, {
-  item: Wprr.sourceReference("item")
-}, /*#__PURE__*/React.createElement(Wprr.SelectField, {
-  fieldName: "name"
-}, /*#__PURE__*/React.createElement("h2", {
-  className: "no-margins extra-small-label extra-small-label-padding"
-}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)), /*#__PURE__*/React.createElement(Wprr.SelectField, {
-  fieldName: "title"
-}, /*#__PURE__*/React.createElement("h2", {
-  className: "no-margins extra-small-label extra-small-label-padding"
-}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, null)), /*#__PURE__*/React.createElement(Wprr.SelectField, {
-  fieldName: "content"
-}, /*#__PURE__*/React.createElement("h2", {
-  className: "no-margins extra-small-label extra-small-label-padding"
-}, /*#__PURE__*/React.createElement(Wprr.layout.admin.im.FieldName, null)), /*#__PURE__*/React.createElement(Wprr.layout.admin.im.Field, {
-  type: "richText"
-}))));
+		return React.createElement("div", null,
+			React.createElement(Wprr.layout.items.EditItem, {item: Wprr.sourceReference("item")},
+				React.createElement(Wprr.SelectField, {fieldName: "name"},
+					React.createElement("h2", {className: "no-margins extra-small-label extra-small-label-padding"},
+						React.createElement(Wprr.layout.admin.im.FieldName, null)
+					),
+					React.createElement(Wprr.layout.admin.im.Field, null)),
+					React.createElement(Wprr.SelectField, {fieldName: "title"},
+					React.createElement("h2", {className: "no-margins extra-small-label extra-small-label-padding"},
+						React.createElement(Wprr.layout.admin.im.FieldName, null)
+					),
+					React.createElement(Wprr.layout.admin.im.Field, null)
+				),
+				React.createElement(Wprr.SelectField, {fieldName: "content"},
+					React.createElement("h2", {className: "no-margins extra-small-label extra-small-label-padding"},
+						React.createElement(Wprr.layout.admin.im.FieldName, null)
+					),
+					React.createElement(Wprr.layout.admin.im.Field, {type: "richText"})
+				)
+			)
+		);
 	}
 	
 	static getWpAdminEditor() {

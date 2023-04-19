@@ -28,133 +28,183 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 		languageLoader.setUrl(this.getWprrUrl("range/?select=relation&encode=type&type=type/language", "wprrData"));
 	}
 	
+	_copyValue(aFromEditor, aToEditor) {
+		//console.log("_copyTranslations");
+		//console.log(aFromEditor, aToEditor);
+		
+		aToEditor.value = aFromEditor.value;
+	}
+	
+	_copyTranslations(aFromEditor, aToEditor) {
+		//console.log("_copyTranslations");
+		//console.log(aFromEditor, aToEditor);
+		
+		let translationCodes = aFromEditor.getTranslationCodes();
+		
+		let currentArray = translationCodes;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentCode = currentArray[i];
+			aToEditor.getTranslationEditor(currentCode).value = aFromEditor.getTranslationEditor(currentCode).value;
+		}
+	}
+	
 	_renderMainElement() {
 		//console.log("EditContentTemplate::_renderMainElement");
 		
 		let editorsGroup = Wprr.objectPath(this._elementTreeItem, "editorsGroup.linkedItem.editorsGroup");
 		
-		return React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: (this)._elementTreeItem.requireSingleLink("item").idSource
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: (this)._elementTreeItem,
-  as: "editorItem"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: editorsGroup,
-  as: "editorsGroup"
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.SelectItem, {
-  id: (this)._elementTreeItem.requireSingleLink("item").idSource,
-  as: "item"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")]),
-  as: "itemEditor"
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
-  label: "Name"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["name"]),
-  as: "valueEditor"
-}, /*#__PURE__*/React.createElement(Wprr.FormField, {
-  className: "standard-field standard-field-padding full-width",
-  value: Wprr.sourceReference("valueEditor", "valueSource")
-}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))), /*#__PURE__*/React.createElement("div", {
-  className: "spacing standard"
-}), /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
-  label: "Title"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["title"]),
-  as: "valueEditor"
-}, /*#__PURE__*/React.createElement(Wprr.FormField, {
-  className: "standard-field standard-field-padding full-width",
-  value: Wprr.sourceReference("valueEditor", "valueSource")
-}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceReference("valueEditor", "translationsEditor"),
-  as: "translationsEditor"
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.List, {
-  items: Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "small-item-spacing",
-  itemClasses: "flex-no-resize, flex-resize"
-}, /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("loop/item"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")]),
-  as: "valueEditor"
-}, /*#__PURE__*/React.createElement(Wprr.FormField, {
-  className: "standard-field standard-field-padding full-width",
-  value: Wprr.sourceReference("valueEditor", "valueSource")
-}))))), /*#__PURE__*/React.createElement("div", {
-  "data-slot": "spacing",
-  className: "spacing small"
-})), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.FlexRow, null, Wprr.DropdownSelection.createSelfContained(React.createElement("div", {
-  className: "button edit-button edit-button-padding add-button cursor-pointer"
-}, Wprr.idText("Add translation", "site.addTranslation")), /*#__PURE__*/React.createElement("div", {
-  className: "custom-selection-menu custom-selection-menu-padding"
-}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
-  ids: (this)._elementTreeItem.getLinks("languages").idsSource
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: [Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
-}, /*#__PURE__*/React.createElement("div", {
-  className: "hover-row cursor-pointer standard-row-padding"
-}, Wprr.text(Wprr.sourceReference("item", "name")))))), {
-  "className": "custom-dropdown"
-})))))), /*#__PURE__*/React.createElement("div", {
-  className: "spacing standard"
-}), /*#__PURE__*/React.createElement(Wprr.layout.form.LabelledArea, {
-  label: "Content"
-}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["content"]),
-  as: "valueEditor"
-}, /*#__PURE__*/React.createElement(Wprr.RichTextEditor, {
-  className: "standard-field standard-field-padding full-width",
-  value: Wprr.sourceReference("valueEditor", "valueSource")
-}), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceReference("valueEditor", "translationsEditor"),
-  as: "translationsEditor"
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.List, {
-  items: Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "small-item-spacing",
-  itemClasses: "flex-no-resize, flex-resize"
-}, /*#__PURE__*/React.createElement("div", null, Wprr.text(Wprr.sourceReference("loop/item"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.AddReference, {
-  data: Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")]),
-  as: "valueEditor"
-}, /*#__PURE__*/React.createElement(Wprr.RichTextEditor, {
-  className: "standard-field standard-field-padding full-width",
-  value: Wprr.sourceReference("valueEditor", "valueSource")
-}))))), /*#__PURE__*/React.createElement("div", {
-  "data-slot": "spacing",
-  className: "spacing small"
-})), /*#__PURE__*/React.createElement("div", {
-  className: "spacing small"
-}), /*#__PURE__*/React.createElement(Wprr.FlexRow, null, Wprr.DropdownSelection.createSelfContained(React.createElement("div", {
-  className: "button edit-button edit-button-padding add-button cursor-pointer"
-}, Wprr.idText("Add translation", "site.addTranslation")), /*#__PURE__*/React.createElement("div", {
-  className: "custom-selection-menu custom-selection-menu-padding"
-}, /*#__PURE__*/React.createElement(Wprr.layout.ItemList, {
-  ids: (this)._elementTreeItem.getLinks("languages").idsSource
-}, /*#__PURE__*/React.createElement(Wprr.CommandButton, {
-  commands: [Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]
-}, /*#__PURE__*/React.createElement("div", {
-  className: "hover-row cursor-pointer standard-row-padding"
-}, Wprr.text(Wprr.sourceReference("item", "name")))))), {
-  "className": "custom-dropdown"
-})))))), /*#__PURE__*/React.createElement("div", {
-  className: "spacing standard"
-})))), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-  className: "justify-between"
-}, /*#__PURE__*/React.createElement("div", null), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourceReference("editorsGroup", "item.changed")
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
-  commands: Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")
-}, /*#__PURE__*/React.createElement("div", null, "Save all changes")))), /*#__PURE__*/React.createElement(Wprr.HasData, {
-  check: Wprr.sourceReference("editorsGroup", "item.changed"),
-  checkType: "invert/default"
-}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "standard-button standard-button-padding inactive"
-}, /*#__PURE__*/React.createElement("div", null, "No changes to save")))))))))));
+		return React.createElement("div", null,
+			React.createElement(Wprr.HasData, {check: this._elementTreeItem.requireSingleLink("item").idSource},
+				React.createElement(Wprr.AddReference, {data: this._elementTreeItem, as: "editorItem"},
+					React.createElement(Wprr.AddReference, {data: editorsGroup, as: "editorsGroup"},
+						React.createElement("div", null,
+							React.createElement(Wprr.SelectItem, {id: this._elementTreeItem.requireSingleLink("item").idSource, as: "item"},
+								React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")]), as: "itemEditor"},
+									React.createElement("div", null,
+										React.createElement(Wprr.layout.form.LabelledArea, {label: "Name"},
+											React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["name"]), as: "valueEditor"},
+												React.createElement(Wprr.FormField, {className: "standard-field standard-field-padding full-width", value: Wprr.sourceReference("valueEditor", "valueSource")}),
+												React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null)
+											)
+										),
+										React.createElement("div", {className: "spacing standard"}),
+										React.createElement(Wprr.layout.form.LabelledArea, {label: "Title"},
+											React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["title"]), as: "valueEditor"},
+												React.createElement(Wprr.FormField, {className: "standard-field standard-field-padding full-width", value: Wprr.sourceReference("valueEditor", "valueSource")}),
+												React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null),
+												React.createElement("div", {className: "spacing small"}),
+												React.createElement(Wprr.AddReference, {data: Wprr.sourceReference("valueEditor", "translationsEditor"), as: "translationsEditor"},
+													React.createElement("div", null,
+														React.createElement(Wprr.layout.List, {items: Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")},
+															React.createElement("div", null,
+																React.createElement(Wprr.FlexRow, {className: "small-item-spacing", itemClasses: "flex-no-resize, flex-resize"},
+																	React.createElement("div", null,
+																		Wprr.text(Wprr.sourceReference("loop/item"))
+																	),
+																	React.createElement("div", null, 
+																		React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")]), as: "valueEditor"},
+																			React.createElement(Wprr.FormField, {className: "standard-field standard-field-padding full-width", value: Wprr.sourceReference("valueEditor", "valueSource")})
+																		)
+																	)
+																)
+															),
+															React.createElement("div", {"data-slot": "spacing", className: "spacing small"})
+														),
+														React.createElement("div", {className: "spacing small"}),
+														React.createElement(Wprr.FlexRow, null,
+															Wprr.DropdownSelection.createSelfContained(
+																React.createElement("div", {className: "button edit-button edit-button-padding add-button cursor-pointer"}, Wprr.idText("Add translation", "site.addTranslation")),
+																React.createElement("div", {className: "custom-selection-menu custom-selection-menu-padding"},
+																	React.createElement(Wprr.layout.ItemList, {ids: this._elementTreeItem.getLinks("languages").idsSource},
+																		React.createElement(Wprr.CommandButton, {commands: [Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]), Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]},
+																			React.createElement("div", {className: "hover-row cursor-pointer standard-row-padding"}, Wprr.text(Wprr.sourceReference("item", "name")))
+																		)
+																	)
+																),
+																{"className": "custom-dropdown"}
+															)
+														)
+													)
+												)
+											)
+										),
+										React.createElement("div", {className: "spacing standard"}),
+										React.createElement(Wprr.layout.form.LabelledArea, {label: "Content"},
+											React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", ["content"]), as: "valueEditor"},
+												React.createElement(Wprr.RichTextEditor, {className: "standard-field standard-field-padding full-width", value: Wprr.sourceReference("valueEditor", "valueSource")}),
+												React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null),
+												React.createElement("div", {className: "spacing small"}),
+												React.createElement(Wprr.AddReference, {data: Wprr.sourceReference("valueEditor", "translationsEditor"), as: "translationsEditor"},
+													React.createElement("div", null,
+														React.createElement(Wprr.layout.List, {items: Wprr.sourceReference("translationsEditor", "item.translationEditors.namesSource")},
+															React.createElement("div", null,
+																React.createElement(Wprr.FlexRow, {className: "small-item-spacing", itemClasses: "flex-no-resize, flex-resize"},
+																	React.createElement("div", null,
+																		Wprr.text(Wprr.sourceReference("loop/item"))
+																	),
+																	React.createElement("div", null,
+																		React.createElement(Wprr.AddReference, {data: Wprr.sourceFunction(Wprr.sourceReference("translationsEditor"), "getTranslationEditor", [Wprr.sourceReference("loop/item")]), as: "valueEditor"},
+																			React.createElement(Wprr.RichTextEditor, {className: "standard-field standard-field-padding full-width", value: Wprr.sourceReference("valueEditor", "valueSource")})
+																		)
+																	)
+																)
+															),
+															React.createElement("div", {"data-slot": "spacing", className: "spacing small"})
+														),
+														React.createElement("div", {className: "spacing small"}),
+														React.createElement(Wprr.FlexRow, null,
+															Wprr.DropdownSelection.createSelfContained(
+																React.createElement("div", {className: "button edit-button edit-button-padding add-button cursor-pointer"},
+																	Wprr.idText("Add translation", "site.addTranslation")
+																),
+																React.createElement("div", {className: "custom-selection-menu custom-selection-menu-padding"},
+																	React.createElement(Wprr.layout.ItemList, {ids: this._elementTreeItem.getLinks("languages").idsSource},
+																		React.createElement(Wprr.CommandButton, {commands: [Wprr.commands.callFunction(Wprr.sourceReference("translationsEditor"), "addTranslation", [Wprr.sourceReference("item", "identifier")]),
+																			Wprr.commands.setValue(Wprr.sourceReference("value/open"), "open", false)]},
+																				React.createElement("div", {className: "hover-row cursor-pointer standard-row-padding"},
+																					Wprr.text(Wprr.sourceReference("item", "name")
+																				)
+																			)
+																		)
+																	)
+																),
+																{"className": "custom-dropdown"}
+															)
+														)
+													)
+												)
+											)
+										),
+										React.createElement("div", {className: "spacing standard"})
+									),
+									React.createElement("div", {},
+										<Wprr.AddReference data={Wprr.sourceReference("itemEditor")} as="mainItemEditor">
+											<Wprr.layout.admin.editorsgroup.editors.Relations direction="outgoing" relationType="based-on" objectType="content-template">
+												<div>
+													<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=relations,fields,postTitle,fields/translations&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
+														<Wprr.AddReference data={Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")])} as="itemEditor">
+															<div>
+																<div>Based on <Wprr.Link href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/content-templates/content-template/"), "?id=", Wprr.sourceReference("item", "id"))}>{Wprr.text(Wprr.sourceReference("item", "title"))}</Wprr.Link></div>
+																<Wprr.FlexRow className="micro-item-spacing">
+																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.title"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title")])} text={Wprr.sourceTranslation("Copy title", "site.copyTitle")} />
+																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.title.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title.translationsEditor")])} text={Wprr.sourceTranslation("Copy title translations", "site.copyTitleTranslations")} />
+																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.content"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content")])} text={Wprr.sourceTranslation("Copy content", "site.copyContent")} />
+																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.content.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content.translationsEditor")])} text={Wprr.sourceTranslation("Copy content translations", "site.copyContentTranslations")} />
+																</Wprr.FlexRow>
+															</div>
+														</Wprr.AddReference>
+													</Wprr.layout.loader.DataRangeLoader>
+												</div>
+											</Wprr.layout.admin.editorsgroup.editors.Relations>
+										</Wprr.AddReference>
+									)
+								)
+							),
+							React.createElement(Wprr.FlexRow, {className: "justify-between"},
+								React.createElement("div", null),
+								React.createElement("div", null,
+									React.createElement(Wprr.HasData, {check: Wprr.sourceReference("editorsGroup", "item.changed")},
+										React.createElement("div", null,
+											React.createElement(Wprr.layout.interaction.Button, {commands: Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")},
+												React.createElement("div", null, "Save all changes")
+											)
+										)
+									),
+									React.createElement(Wprr.HasData, {check: Wprr.sourceReference("editorsGroup", "item.changed"), checkType: "invert/default"},
+										React.createElement("div", null,
+											React.createElement("div", {className: "standard-button standard-button-padding inactive"},
+												React.createElement("div", null, "No changes to save")
+											)
+										)
+									)
+								)
+							)
+						)
+					)
+				)
+			)
+		);
 	}
 	
 	static getWpAdminEditor() {
@@ -164,8 +214,8 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 			
 		};
 		
-		return React.createElement(Wprr.layout.admin.WpBlockEditor, {
-  dataSettings: dataSettings
-}, /*#__PURE__*/React.createElement("div", null))
+		return React.createElement(Wprr.layout.admin.WpBlockEditor, {dataSettings: dataSettings},
+			React.createElement("div", null)
+		);
 	}
 }

@@ -193,7 +193,7 @@ export default class PathCustomizer extends MultiTypeItemConnection {
 				return Wprr.objectPath(this[firstPart], restParts);
 		}
 		
-		return Wprr.objectPath(this.getPath(firstPart), restParts);
+		return this.getPath(aPath);
 	}
 	
 	toJSON() {

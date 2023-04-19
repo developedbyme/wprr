@@ -4,7 +4,7 @@ import moment from "moment";
 
 import Layout from "wprr/elements/layout/Layout";
 
-export default class EditGlobalItem extends Layout {
+export default class EditGlobalPointer extends Layout {
 	
 	_construct() {
 		super._construct();
@@ -20,7 +20,7 @@ export default class EditGlobalItem extends Layout {
 		this._elementTreeItem.getLinks("items").input(loader.item.getLinks("items"));
 		this._elementTreeItem.getValueSource("loaded").input(loader.item.getValueSource("loaded"));
 			
-		let url = "range/?select=globalObjectRelation,anyStatus&encode=id&path=root&id=" + identifier;
+		let url = "range/?select=globalPointer,includePrivate&encode=id&id=" + identifier;
 		loader.item.setValue("url", this.getWprrUrl(url, "wprrData"));
 		
 		
@@ -35,35 +35,9 @@ export default class EditGlobalItem extends Layout {
 		loader.changeData.setDataField("identifier", identifier);
 		loader.changeData.setStatus("private");
 		
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._globalItemCreated, [Wprr.sourceEvent("data.id")]));
-		
-		loader.load();
-	}
-	
-	_globalItemCreated(aId) {
-		console.log("_globalItemCreated");
-		console.log(aId);
-		
-		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));
-		
-		let name = this.getFirstInputWithDefault("name", "New item");
-		let types = Wprr.utils.array.arrayOrSeparatedString(this.getFirstInput("types"));
-		
-		let loader = project.getCreateLoader("dbm_data", null, "draft", name);
-		let currentArray = types;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			loader.changeData.setTerm(currentArray[i], "dbm_type", "slugPath");
-		}
-		loader.changeData.addIncomingRelation(aId, "pointing-to", true);
-		
-		let status = this.getFirstInputWithDefault("status", "private");
-		loader.changeData.setStatus(status);
-		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._itemCreated, [Wprr.sourceEvent("data.id")]));
 		
 		loader.load();
-		
 	}
 	
 	_itemCreated(aId) {

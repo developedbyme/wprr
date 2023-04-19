@@ -12,6 +12,7 @@ export {default as SelectType} from "./SelectType";
 export {default as AddRelation} from "./AddRelation";
 export {default as CreateRelation} from "./CreateRelation";
 export {default as EditGlobalItem} from "./EditGlobalItem";
+export {default as EditGlobalPointer} from "./EditGlobalPointer";
 export {default as EditObjectProperty} from "./EditObjectProperty";
 export {default as HierarchyOrderedRelations} from "./HierarchyOrderedRelations";
 export {default as SelectRelationFromItems} from "./SelectRelationFromItems";

@@ -17,6 +17,10 @@ export default class SaveOperation extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	get loadingSequence() {
+		return this._loadingSequence;
+	}
+	
 	setupForItem(aItem) {
 		aItem.addType("saveOperation", this);
 		this.setup();
@@ -37,7 +41,6 @@ export default class SaveOperation extends MultiTypeItemConnection {
 	}
 	
 	load() {
-		//METODO
 		this._loadingSequence.load();
 	}
 	

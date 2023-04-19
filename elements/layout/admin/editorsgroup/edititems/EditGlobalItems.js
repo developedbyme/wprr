@@ -29,7 +29,7 @@ export default class EditGlobalItems extends Wprr.BaseObject {
 		this._elementTreeItem.getLinks("selectedItems").input(activeList.item.getLinks("activeItems"));
 		
 		this._elementTreeItem.getLinks("groups").idsSource.input(loader.item.getLinks("items").idsSource);
-		loader.setUrl(this.getWprrUrl("range/?select=relation,anyStatus&encode=fields,relations&type=global-item", "wprrData"));
+		loader.setUrl(this.getWprrUrl("range/?select=relation,includePrivate,includeDraft&encode=fields,relations&type=global-item", "wprrData"));
 		
 		let table = this._elementTreeItem.addNode("table", new Wprr.utils.data.multitypeitems.itemstable.ItemsTable());
 		
