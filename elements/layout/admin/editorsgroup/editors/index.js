@@ -19,6 +19,7 @@ export {default as SelectRelationFromItems} from "./SelectRelationFromItems";
 export {default as SelectRelationsFromItems} from "./SelectRelationsFromItems";
 export {default as EditValueObjectProperty} from "./EditValueObjectProperty";
 export {default as Translations} from "./Translations";
+export {default as EditorsGroup} from "./EditorsGroup";
 
 import * as files from "./files/index.js";
 export {files};

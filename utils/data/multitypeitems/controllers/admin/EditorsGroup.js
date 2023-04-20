@@ -29,6 +29,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		this.item.addType("editorsGroup", this);
 		this.item.addType("saveDataController", this);
 		this.item.getNamedLinks("allEditors");
+		this.item.requireSingleLink("parent");
 		
 		let editors = this.item.getLinks("editors");
 		
@@ -42,6 +43,12 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	setupForItem(aItem) {
 		
 		this.setup();
+		
+		return this;
+	}
+	
+	setParent(aId) {
+		this.item.addSingleLink("parent", aId);
 		
 		return this;
 	}
@@ -357,6 +364,11 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		let item = this.item.group.getItem(aId);
 		
 		item.requireValue("changed", false).getType("changed").addChangeCommand(this._hasChangesUpdateCommand);
+		
+		let parentEditor = Wprr.objectPath(this.item, "parent.linkedItem");
+		if(parentEditor) {
+			parentEditor.getLinks("editors").addUniqueItem(aId);
+		}
 	}
 	
 	_editorRemoved(aId) {
@@ -365,6 +377,11 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		let item = this.item.group.getItem(aId);
 		
 		item.requireValue("changed", false).getType("changed").removeChangeCommand(this._hasChangesUpdateCommand);
+		
+		let parentEditor = Wprr.objectPath(this.item, "parent.linkedItem");
+		if(parentEditor) {
+			parentEditor.getLinks("editors").removeItem(aId);
+		}
 	}
 	
 	_hasChangesUpdate() {
