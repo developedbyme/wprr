@@ -46,6 +46,11 @@ export default class UrlResolver  {
 			this._basePath = aPath;
 			this._folderNamesArray = new Array();
 		}
+		else if(basePathEndIndex === 0) {
+			this._basePath = "";
+			aPath = aPath.substring(basePathEndIndex, aPath.length);
+			this._folderNamesArray = aPath.split("/");
+		}
 		else {
 			this._basePath = aPath.substring(0, basePathEndIndex);
 			aPath = aPath.substring(basePathEndIndex + 1, aPath.length);
