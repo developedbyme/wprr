@@ -60,7 +60,7 @@ export default class OrderedRelations extends Layout {
 		  "dragParent": false,
 		  "sourceUpdates": [Wprr.sourceReference("valueEditor", "valueSource")]
 		}), React.createElement(Wprr.FlexRow, {
-		  className: "micro-item-spacing vertically-center-items",
+		  className: "micro-item-spacing vertically-center-items flex-no-wrap",
 		  itemClasses: "flex-no-resize,flex-resize,flex-no-resize"
 		}, React.createElement("div", {
 		  "draggable": "true"

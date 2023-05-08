@@ -22,7 +22,6 @@ export default class EditPage extends Layout {
 		
 		this._elementTreeItem.requireValue("open", false);
 		
-		let editorsGroup = this._elementTreeItem.addNode("editorsGroup", new Wprr.utils.data.multitypeitems.controllers.admin.EditorsGroup());
 	}
 	
 	_keyPressed(aEvent) {
@@ -76,7 +75,6 @@ export default class EditPage extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		let editorsGroup = Wprr.objectPath(this._elementTreeItem, "editorsGroup.linkedItem.editorsGroup");
 		let id = this.getFirstInput("id", Wprr.sourceReference("wprr/pageItem", "post.id"));
 		
 		let wpUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/wp-admin/post.php?post=" + id + "&action=edit"));
@@ -99,36 +97,18 @@ export default class EditPage extends Layout {
 										)
 									),
 									React.createElement("div", {"className": "spacing small"}),
-									React.createElement(Wprr.AddReference, {"data": editorsGroup, "as": "editorsGroup"},
-										React.createElement(Wprr.layout.loader.DataRangeLoader, {path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations&ids=", id), as: "itemLoader"},
-											React.createElement(Wprr.layout.form.LabelledArea, {"label": "Page settings"},
-												React.createElement(Wprr.AddReference, {"data": Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [id]), "as":"itemEditor"},
-													React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectRelation, {direction: "incoming", relationType: "for", objectType: "settings/page-settings"})
-												)
-											),
-											React.createElement("div", {"className": "spacing small"}),
-											React.createElement(Wprr.layout.form.LabelledArea, {"label": "Data sources"},
-												React.createElement(Wprr.AddReference, {"data": Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [id]), "as":"itemEditor"},
-													React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectRelations, {direction: "incoming", relationType: "for", objectType: "settings/data-source", allowCreation: false})
-												)
-											),
-											React.createElement("div", {"className": "spacing small"}),
-											React.createElement(Wprr.FlexRow, {className: "justify-between"},
-												React.createElement("div", null),
-												React.createElement("div", null,
-													React.createElement(Wprr.HasData, {check: Wprr.sourceReference("editorsGroup", "item.changed")},
-														React.createElement("div", null,
-															React.createElement(Wprr.layout.interaction.Button, {commands: Wprr.commands.callFunction(Wprr.sourceReference("editorsGroup"), "save")},
-																React.createElement("div", null, "Save all changes")
-															)
-														)
-													),
-													React.createElement(Wprr.HasData, {check: Wprr.sourceReference("editorsGroup", "item.changed"), checkType: "invert/default"},
-														React.createElement("div", null,
-															React.createElement("div", {className: "standard-button standard-button-padding inactive"},
-																React.createElement("div", null, "No changes to save")
-															)
-														)
+									React.createElement(Wprr.layout.admin.editorsgroup.editors.EditorsGroup, {},
+										React.createElement(Wprr.layout.admin.editorsgroup.SaveAllGroup, {},
+											React.createElement(Wprr.layout.loader.DataRangeLoader, {path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=fields,relations&ids=", id), as: "itemLoader"},
+												React.createElement(Wprr.layout.form.LabelledArea, {"label": "Page settings"},
+													React.createElement(Wprr.AddReference, {"data": Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [id]), "as":"itemEditor"},
+														React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectRelation, {direction: "incoming", relationType: "for", objectType: "settings/page-settings"})
+													)
+												),
+												React.createElement("div", {"className": "spacing small"}),
+												React.createElement(Wprr.layout.form.LabelledArea, {"label": "Data sources"},
+													React.createElement(Wprr.AddReference, {"data": Wprr.sourceFunction(Wprr.sourceReference("editorsGroup"), "getItemEditor", [id]), "as":"itemEditor"},
+														React.createElement(Wprr.layout.admin.editorsgroup.editors.SelectRelations, {direction: "incoming", relationType: "for", objectType: "settings/data-source", allowCreation: false})
 													)
 												)
 											)

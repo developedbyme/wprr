@@ -22,6 +22,7 @@ export {default as CopyValue} from "./CopyValue";
 export {default as GetProperty} from "./GetProperty";
 export {default as CreateRange} from "./CreateRange";
 export {default as ObjectProperty} from "./ObjectProperty";
+export {default as ConcatArrays} from "./ConcatArrays";
 
 import * as css from "./css";
 export {css as css};

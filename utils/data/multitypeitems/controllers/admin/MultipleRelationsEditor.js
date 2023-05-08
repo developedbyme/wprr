@@ -36,6 +36,12 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addUniqueItem(aId) {
+		this.item.getLinks("activeItems").addUniqueItem(aId);
+		
+		return this;
+	}
+	
 	_createRelation(aItemId) {
 		//console.log("_createRelation");
 		
