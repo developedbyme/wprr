@@ -38,6 +38,7 @@ export default class ModuleCreatorBaseObject {
 		this._strictMode = false;
 		this._usedMulitpleTimes = false;
 		this.parseInitialContent = true;
+		this.useSiteNavigation = true;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
@@ -334,9 +335,11 @@ export default class ModuleCreatorBaseObject {
 			this._createDomForContent(Wprr.objectPath(aData, "initialMRouterData.data"), this._referenceHolder);
 		}
 		
-		this._siteNavigation.setUrlFromLocation();
-		this._siteNavigation.start();
-		this._wprrInstance.addSiteDataLoader(this._siteNavigation);
+		if(this.useSiteNavigation) {
+			this._siteNavigation.setUrlFromLocation();
+			this._siteNavigation.start();
+			this._wprrInstance.addSiteDataLoader(this._siteNavigation);
+		}
 		
 		let rootObject = this._getRootObject(aData);
 		
