@@ -54,7 +54,6 @@ export default class ModuleCreatorBaseObject {
 		this._siteDataLoader = new Wprr.utils.navigation.SiteDataLoader();
 		
 		this._siteNavigation.dataLoader = this._siteDataLoader;
-		this._siteDataLoader.urlSource.input(this._siteNavigation.urlSource);
 		
 		this._elementRenderedCallbackBound = this._elementRenderedCallback.bind(this);
 	}
@@ -350,10 +349,12 @@ export default class ModuleCreatorBaseObject {
 		}
 		
 		if(this.useSiteNavigation) {
-			this._siteNavigation.setUrlFromLocation();
-			this._siteNavigation.start();
-			this._wprrInstance.addSiteDataLoader(this._siteNavigation);
+			this._siteDataLoader.urlSource.input(this._siteNavigation.urlSource);
 		}
+		
+		this._siteNavigation.setUrlFromLocation();
+		this._siteNavigation.start();
+		this._wprrInstance.addSiteDataLoader(this._siteNavigation);
 		
 		let rootObject = this._getRootObject(aData);
 		
