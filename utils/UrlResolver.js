@@ -30,6 +30,12 @@ export default class UrlResolver  {
 		//console.log("wprr/utils/UrlResolver::setupBaseUrlFromPath");
 		//console.log(aPath);
 		
+		if(aPath === "/") {
+			this._basePath = "";
+			this._folderNamesArray = [''];
+			return;
+		}
+		
 		if(aPath.lastIndexOf("/") === aPath.length - 1) {
 			aPath = aPath.substring(0, aPath.length - 1);
 		}
