@@ -76,6 +76,20 @@ export default class ModuleCreatorBaseObject {
 		return this;
 	}
 	
+	setProjectWithSharedReferences(aProject) {
+		
+		this._project = aProject;
+		if(!this._project.mainReferences) {
+			this._project.setMainReferences(this._referenceHolder);
+		}
+		this._referenceHolder = this._project.mainReferences;
+		
+		this._siteDataLoader.setItems(this._project.items);
+		this._siteNavigation.setProject(this._project);
+		
+		return this;
+	}
+	
 	get siteNavigation() {
 		return this._siteNavigation;
 	}
