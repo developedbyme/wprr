@@ -159,25 +159,40 @@ export default class EditContentTemplate extends Wprr.BaseObject {
 										React.createElement("div", {className: "spacing standard"})
 									),
 									React.createElement("div", {},
-										<Wprr.AddReference data={Wprr.sourceReference("itemEditor")} as="mainItemEditor">
-											<Wprr.layout.admin.editorsgroup.editors.Relations direction="outgoing" relationType="based-on" objectType="content-template">
-												<div>
-													<Wprr.layout.loader.DataRangeLoader path={Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=relations,fields,postTitle,fields/translations&ids=", Wprr.sourceReference("item", "id"))} as="itemLoader">
-														<Wprr.AddReference data={Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")])} as="itemEditor">
-															<div>
-																<div>Based on <Wprr.Link href={Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/content-templates/content-template/"), "?id=", Wprr.sourceReference("item", "id"))}>{Wprr.text(Wprr.sourceReference("item", "title"))}</Wprr.Link></div>
-																<Wprr.FlexRow className="micro-item-spacing">
-																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.title"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title")])} text={Wprr.sourceTranslation("Copy title", "site.copyTitle")} />
-																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.title.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title.translationsEditor")])} text={Wprr.sourceTranslation("Copy title translations", "site.copyTitleTranslations")} />
-																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.content"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content")])} text={Wprr.sourceTranslation("Copy content", "site.copyContent")} />
-																	<Wprr.layout.interaction.Button className="edit-button edit-button-padding cursor-pointer" commands={Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.content.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content.translationsEditor")])} text={Wprr.sourceTranslation("Copy content translations", "site.copyContentTranslations")} />
-																</Wprr.FlexRow>
-															</div>
-														</Wprr.AddReference>
-													</Wprr.layout.loader.DataRangeLoader>
-												</div>
-											</Wprr.layout.admin.editorsgroup.editors.Relations>
-										</Wprr.AddReference>
+									React.createElement(Wprr.AddReference, {
+									  data: Wprr.sourceReference("itemEditor"),
+									  as: "mainItemEditor"
+									}, /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.editors.Relations, {
+									  direction: "outgoing",
+									  relationType: "based-on",
+									  objectType: "content-template"
+									}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Wprr.layout.loader.DataRangeLoader, {
+									  path: Wprr.sourceCombine("range/?select=idSelection,anyStatus&encode=relations,fields,postTitle,fields/translations&ids=", Wprr.sourceReference("item", "id")),
+									  as: "itemLoader"
+									}, /*#__PURE__*/React.createElement(Wprr.AddReference, {
+									  data: Wprr.sourceFunction(editorsGroup, editorsGroup.getItemEditor, [Wprr.sourceReference("item", "id")]),
+									  as: "itemEditor"
+									}, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, "Based on ", /*#__PURE__*/React.createElement(Wprr.Link, {
+									  href: Wprr.sourceCombine(Wprr.sourceReference("projectLinks", "wp/site/admin/content-templates/content-template/"), "?id=", Wprr.sourceReference("item", "id"))
+									}, Wprr.text(Wprr.sourceReference("item", "title")))), /*#__PURE__*/React.createElement(Wprr.FlexRow, {
+									  className: "micro-item-spacing"
+									}, /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+									  className: "edit-button edit-button-padding cursor-pointer",
+									  commands: Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.title"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title")]),
+									  text: Wprr.sourceTranslation("Copy title", "site.copyTitle")
+									}), /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+									  className: "edit-button edit-button-padding cursor-pointer",
+									  commands: Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.title.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.title.translationsEditor")]),
+									  text: Wprr.sourceTranslation("Copy title translations", "site.copyTitleTranslations")
+									}), /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+									  className: "edit-button edit-button-padding cursor-pointer",
+									  commands: Wprr.commands.callFunction(this, this._copyValue, [Wprr.sourceReference("itemEditor", "fieldEditor.content"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content")]),
+									  text: Wprr.sourceTranslation("Copy content", "site.copyContent")
+									}), /*#__PURE__*/React.createElement(Wprr.layout.interaction.Button, {
+									  className: "edit-button edit-button-padding cursor-pointer",
+									  commands: Wprr.commands.callFunction(this, this._copyTranslations, [Wprr.sourceReference("itemEditor", "fieldEditor.content.translationsEditor"), Wprr.sourceReference("mainItemEditor", "fieldEditor.content.translationsEditor")]),
+									  text: Wprr.sourceTranslation("Copy content translations", "site.copyContentTranslations")
+									}))))))))
 									)
 								)
 							),
