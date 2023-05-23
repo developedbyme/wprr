@@ -40,6 +40,10 @@ export default class WprrStorybookSetup {
 		this._defaultPath = null;
 	}
 	
+	get project() {
+		return this._project;
+	}
+	
 	_addReducers() {
 		
 		let storeController = this._storeController;
@@ -74,6 +78,7 @@ export default class WprrStorybookSetup {
 		
 		this._store = this._createReduxStore();
 		this._storeController.setStore(this._store);
+		this._injectionData["redux/store/wprrController"] = this._storeController;
 		
 		return this;
 	}
@@ -87,13 +92,12 @@ export default class WprrStorybookSetup {
 	}
 	
 	addPath(aName, aPath) {
+		//console.log("WprrStorybookSetup::addPath");
 		
 		this._injectionData["wprr/paths/" + aName] = aPath;
 		
 		if(this._project) {
-			
 			let pathController = Wprr.objectPath(this._project.items, "project.paths.linkedItem.pathController");
-			
 			
 			let currentPath = pathController.getChild("wp/" + aName);
 			let pathUrl = aPath;

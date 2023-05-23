@@ -365,10 +365,13 @@ export default class Project {
 			
 			item.addType("loader", loader);
 			
-			
 			//METODO: remove this legacy
-			let storeController = this._mainReferences.getObject("redux/store/wprrController");
-			storeController.addLoader(absolutePath, loader);
+			if(this._mainReferences) {
+				let storeController = this._mainReferences.getObject("redux/store/wprrController");
+				if(storeController) {
+					storeController.addLoader(absolutePath, loader);
+				}
+			}
 		}
 		
 		return item.getType("loader");
