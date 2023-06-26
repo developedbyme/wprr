@@ -52,6 +52,18 @@ export default class SelectItem extends WprrBaseObject {
 		let injectData = new Object();
 		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = this._selectedItem;
 		
-		return React.createElement(ReferenceInjection, {"injectData": injectData}, children);
+		let props = {"injectData": injectData};
+		
+		/*
+		let selectedItem = this._selectedItem.value;
+		if(selectedItem) {
+			props["key"] = "item" + selectedItem.id;
+		}
+		else {
+			props["key"] = "none";
+		}
+		*/
+		
+		return React.createElement(ReferenceInjection, props, children);
 	}
 }

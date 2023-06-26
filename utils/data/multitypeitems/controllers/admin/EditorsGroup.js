@@ -54,6 +54,9 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	}
 	
 	getItemEditor(aId) {
+		//console.log("getItemEditor");
+		//console.log(aId);
+		
 		let linkName = "item" + aId;
 		let editors = this.item.getNamedLinks("allEditors");
 		

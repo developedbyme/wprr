@@ -3,19 +3,25 @@ import Wprr from "wprr/Wprr";
 import CommandPerformer from "wprr/commands/CommandPerformer";
 import InputDataHolder from "wprr/utils/InputDataHolder";
 
+import BaseObject from "wprr/core/BaseObject";
+
 // import LoadingSequence from "wprr/utils/loading/LoadingSequence";
 /**
  * Loading sequence that loads multiple loader
  */
-export default class LoadingSequence {
+export default class LoadingSequence extends BaseObject {
 	
 	/**
 	 * Contructor
 	 */
 	constructor() {
 		
-		this._status = 0;
-		this._hasError = false;
+		super();
+		
+		this.createSource("status", 0);
+		this.createSource("progress", 0);
+		this.createSource("hasError", false);
+		
 		this._checkLoadAfterAdding = false;
 		
 		this._loaders = new Array();
@@ -27,6 +33,8 @@ export default class LoadingSequence {
 		this._continueOnError = LoadingSequence.DEFAULT_CONTINUE_ON_ERROR;
 		
 		this._commands = InputDataHolder.create();
+		
+		
 	}
 	
 	addLoader(aLoader) {
@@ -35,9 +43,21 @@ export default class LoadingSequence {
 		this._waitingLoaders.push(aLoader);
 		
 		if(this._checkLoadAfterAdding) {
-			if(this._status === 1 || this._status === 2) {
+			if(this.status === 1 || this.status === 2) {
 				this._checkForFurtherLoad();
 			}
+		}
+		
+		this.progress = this.getProgress();
+		
+		return this;
+	}
+	
+	addUniqueLoader(aLoader) {
+		let index = this._loaders.indexOf(aLoader);
+		
+		if(index === -1) {
+			this.addLoader(aLoader);
 		}
 		
 		return this;
@@ -80,6 +100,7 @@ export default class LoadingSequence {
 			this._loadingLoaders.splice(index, 1);
 		}
 		this._loadedLoaders.push(aLoader);
+		this.progress = this.getProgress();
 		
 		{
 			let commandName = "loaderDone";
@@ -153,15 +174,15 @@ export default class LoadingSequence {
 	}
 	
 	_updateStatus(aNewStatus) {
-		if(aNewStatus !== this._status) {
-			this._status = aNewStatus;
+		if(aNewStatus !== this.status) {
+			this.status = aNewStatus;
 			
 			let commandName = "changeStatus";
 			if(this._commands.hasInput(commandName)) {
-				CommandPerformer.perform(this._commands.getInput(commandName, this.props, this), this._status, this);
+				CommandPerformer.perform(this._commands.getInput(commandName, this.props, this), this.status, this);
 			}
 			
-			if(this._status === 1) {
+			if(this.status === 1) {
 				let commandName = "loaded";
 				if(this._commands.hasInput(commandName)) {
 					CommandPerformer.perform(this._commands.getInput(commandName, this.props, this), [].concat(this._loaders), this);
@@ -173,7 +194,7 @@ export default class LoadingSequence {
 	_checkForFurtherLoad() {
 		//console.log("wprr/utils/loading/LoadingSequence::_checkForFurtherLoad");
 		
-		if(this._hasError && !this._continueOnError) {
+		if(this.hasError && !this._continueOnError) {
 			//console.log("Loader sequence has stopped due to an error in a load.");
 			this._updateStatus(-1);
 			
@@ -198,7 +219,7 @@ export default class LoadingSequence {
 	
 	_setErrorInLoad(aLoader) {
 		console.error("Loader had an error", aLoader, this);
-		this._hasError = true;
+		this.hasError = true;
 		this._checkForFurtherLoad();
 	}
 	

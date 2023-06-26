@@ -3,7 +3,7 @@ import React from "react";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
-export default class Name extends WprrBaseObject {
+export default class Select extends WprrBaseObject {
 	
 	constructor(aProps) {
 		super(aProps);

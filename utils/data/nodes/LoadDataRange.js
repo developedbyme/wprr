@@ -61,7 +61,16 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 			}
 			else {
 				this.item.setValue("loaded", false);
-				loaderItem.getType("loader").load();
+				//loaderItem.getType("loader").load();
+				if(this.item.hasType("loadingSequence") && this.item.getType("loadingSequence")) {
+					let loadingSequence = this.item.getType("loadingSequence");
+					loadingSequence.addUniqueLoader(loaderItem.getType("loader"));
+				}
+				else {
+					let sharedLoadingSequence = Wprr.objectPath(this.item.group, "project.sharedLoadingSequence");
+					sharedLoadingSequence.addUniqueLoader(loaderItem.getType("loader"));
+				}
+				
 			}
 		}
 	}

@@ -8,3 +8,6 @@ export {default as EditTypes} from "./EditTypes";
 
 import * as importdata from "./importdata/wp-blocks.js";
 export {importdata};
+
+import * as edititem from "./edititem/wp-blocks.js";
+export {edititem};

@@ -16,6 +16,10 @@ export default class Project {
 		
 		projectItem.getLinks("navigationLocks");
 		
+		let loadingSequence = new Wprr.utils.loading.LoadingSequence();
+		projectItem.addType("sharedLoadingSequence", loadingSequence);
+		loadingSequence.load();
+		
 		let session = this._items.createInternalItem();
 		projectItem.addSingleLink("session", session.id);
 		

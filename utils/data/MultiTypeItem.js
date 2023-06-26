@@ -244,6 +244,10 @@ export default class MultiTypeItem {
 	
 	static create(aId) {
 		let newMultiTypeItem = new MultiTypeItem();
+		
+		if(!isNaN(aId)) { //METODO: better check
+			aId = 1*aId;
+		}
 		newMultiTypeItem.id = aId;
 		
 		return newMultiTypeItem;

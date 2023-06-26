@@ -8,9 +8,8 @@ import SourceData from "wprr/reference/SourceData";
 //import HasData from "wprr/manipulation/HasData";
 export default class HasData extends ManipulationBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
-		
+	_construct() {
+		super._construct();
 	}
 	
 	_removeUsedProps(aReturnObject) {
@@ -25,11 +24,16 @@ export default class HasData extends ManipulationBaseObject {
 	
 	_checkData(aData, aType) {
 		
-		if(typeof(aType) === "string" && aType.indexOf("invert/") === 0) {
-			return !this._checkData(aData, aType.substring(("invert/").length, aType.length));
+		if(typeof(aType) === "string") {
+			if(aType.indexOf("invert/") === 0) {
+				return !this._checkData(aData, aType.substring(("invert/").length, aType.length));
+			}
+			else if(aType.indexOf("length/") === 0) {
+				return this._checkData(Wprr.objectPath(aData, "length"), aType.substring(("length/").length, aType.length));
+			}
 		}
 		
-		let compareValue = this.getSourcedProp("compareValue");
+		let compareValue = this.getFirstInput("compareValue");
 		
 		if(typeof(aType) === "function") {
 			let checkFunction = aType;
@@ -84,8 +88,8 @@ export default class HasData extends ManipulationBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/manipulation/HasData::_renderMainElement");
 		
-		let data = this.getSourcedProp("check");
-		let type = this.getSourcedPropWithDefault("checkType", "default");
+		let data = this.getFirstInput("check");
+		let type = this.getFirstInputWithDefault("checkType", "default");
 		
 		if(this._checkData(data, type)) {
 			return super._renderMainElement();

@@ -90,7 +90,26 @@ export default class ItemCreator extends MultiTypeItemConnection {
 	}
 	
 	create() {
-		this.item.getType("createLoader").load();
+		
+		let sharedLoadingSequence = Wprr.objectPath(this.item.group, "project.sharedLoadingSequence");
+		
+		if(sharedLoadingSequence) {
+			this.addLoaderToSequence(sharedLoadingSequence);
+		}
+		else {
+			this.item.getType("createLoader").load();
+		}
+		
+		return this;
+	}
+	
+	addLoaderToSequence(aSequence) {
+		//console.log("addLoaderToSequence");
+		//console.log(aSequence);
+		
+		let loader = this.item.getType("createLoader");
+		
+		aSequence.addLoader(loader);
 		
 		return this;
 	}
@@ -163,7 +182,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	_setupRelation(aRelationId, aType, aFromId, aToId, aStatus) {
+	_setupRelation(aRelationId, aType, aFromId, aToId, aStartTime, aStatus) {
 		//console.log("_setupRelation");
 		//console.log(aRelationId, aType, aFromId, aToId, aStatus);
 		
@@ -175,7 +194,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		relationItem.addSingleLink("to", toItem.id);
 		relationItem.addSingleLink("type", "dbm_type:object-relation/" + aType);
 		
-		relationItem.setValue("startAt", moment().unix());
+		relationItem.setValue("startAt", aStartTime);
 		relationItem.setValue("endAt", -1);
 		relationItem.setValue("postStatus", aStatus);
 		
@@ -196,7 +215,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		let status = aMakePrivate ? "private" : "draft";
 		
 		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(createdRelations, createdRelations.updateItem, [currentId, Wprr.sourceEvent("createResponseData.value." + currentId + "/relationId")]));
-		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(this, this._setupRelation, [Wprr.sourceEvent("createdRelations." + currentId + ".id"), aType, Wprr.sourceEvent("createdItem.id"), aId, status]));
+		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(this, this._setupRelation, [Wprr.sourceEvent("createdRelations." + currentId + ".id"), aType, Wprr.sourceEvent("createdItem.id"), aId, Wprr.sourceEvent("createResponseData.value." + currentId + "/relationTime"), status]));
 		
 		return this;
 	}
@@ -213,7 +232,7 @@ export default class ItemCreator extends MultiTypeItemConnection {
 		let status = aMakePrivate ? "private" : "draft";
 		
 		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(createdRelations, createdRelations.updateItem, [currentId, Wprr.sourceEvent("createResponseData.value." + currentId + "/relationId")]));
-		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(this, this._setupRelation, [Wprr.sourceEvent("createdRelations." + currentId + ".id"), aType, aId, Wprr.sourceEvent("createdItem.id"), status]));
+		this.item.getValue("createdCommands").push(Wprr.commands.callFunction(this, this._setupRelation, [Wprr.sourceEvent("createdRelations." + currentId + ".id"), aType, aId, Wprr.sourceEvent("createdItem.id"), Wprr.sourceEvent("createResponseData.value." + currentId + "/relationTime"), status]));
 		
 		return this;
 	}

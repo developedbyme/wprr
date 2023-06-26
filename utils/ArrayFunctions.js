@@ -940,4 +940,21 @@ export default class ArrayFunctions {
 		
 		return returnArray;
 	}
+	
+	static splitArray(aArray, aGroupSize) {
+		let returnArray = new Array();
+		let currentGroup = null;
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			if(i % aGroupSize === 0) {
+				currentGroup = new Array();
+				returnArray.push(currentGroup);
+			}
+			currentGroup.push(currentArray[i]);
+		}
+		
+		return returnArray;
+	}
 }

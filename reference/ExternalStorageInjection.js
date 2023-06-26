@@ -61,6 +61,8 @@ export default class ExternalStorageInjection extends ManipulationBaseObject {
 	}
 	
 	componentWillUnmount() {
+		super.componentWillUnmount();
+		
 		if(this._externalStorage) {
 			this._externalStorage.removeOwner(this);
 		}

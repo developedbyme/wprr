@@ -174,6 +174,7 @@ export default class DataStorage extends AbstractDataStorage {
 	}
 	
 	getValueForPath(aPath) {
+		
 		switch(aPath) {
 			case "getValue":
 				return this.getValue;
@@ -181,6 +182,8 @@ export default class DataStorage extends AbstractDataStorage {
 				return this.updateValue;
 			case "createConnection":
 				return this.createConnection;
+			case "(data)":
+				return this.getData();
 		}
 		
 		return this.getValue(aPath);

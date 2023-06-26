@@ -69,7 +69,9 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [itemId, Wprr.sourceEvent("data.relationId")]));
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._endRelations, [relations]));
 		
-			loader.load();
+			//loader.load();
+			let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
+			sharedLoadingSequence.addLoader(loader);
 		}
 		else {
 			this._endRelations(relations);

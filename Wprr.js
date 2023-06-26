@@ -108,7 +108,13 @@ export default class Wprr {
 			this._projects[aName] = newProject;
 		}
 		
+		this._defaultProject = this._projects[aName];
+		
 		return this._projects[aName];
+	}
+	
+	getDefaultProject() {
+		return this._defaultProject;
 	}
 	
 	static addClass(aName, aClass) {

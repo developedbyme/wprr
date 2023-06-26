@@ -32,7 +32,10 @@ export default class DataRangeLoader extends Layout {
 		
 		items.prepareItem(item, "dataRangeLoader");
 		this._item.value = item;
-		item.getType("loader").load();
+		
+		//item.getType("loader").load();
+		let sharedLoadingSequence = Wprr.objectPath(this._elementTreeItem.group, "project.sharedLoadingSequence");
+		sharedLoadingSequence.addUniqueLoader(item.getType("loader"));
 	}
 	
 	_getLayout(aSlots) {

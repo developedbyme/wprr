@@ -30,6 +30,7 @@ export default class EditItem extends Layout {
 		let dataType = this.getFirstInput("dataType");
 		
 		this._itemsEditor.relateToProject(projectName);
+		this._itemsEditor.setItemsGroup(this.getFirstInput(Wprr.sourceReference("wprr/project", "items")));
 		this._itemsEditor.setupCreation(dataType);
 		
 		let item = this.getFirstInput("item", Wprr.sourceReference("item"));

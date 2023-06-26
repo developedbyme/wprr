@@ -19,7 +19,7 @@ export default class ItemsEditor extends ProjectRelatedItem {
 		this._addingItems = false;
 		
 		this._editStorage = new Wprr.utils.DataStorage();
-		this._items = new Wprr.utils.data.MultiTypeItemsGroup();
+		this._items = wprr.getDefaultProject().items;
 		
 		this._editorItem = this._items.createInternalItem();
 		this._editorItem.addType("editor", this);
