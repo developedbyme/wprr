@@ -5,9 +5,6 @@ import Wprr from "wprr/Wprr";
 
 import ModuleCreatorBaseObject from "wprr/modulecreators/ModuleCreatorBaseObject";
 
-import PostDataInjection from "wprr/wp/postdata/PostDataInjection";
-import FirstMatchingRoute from "wprr/routing/FirstMatchingRoute";
-
 import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
