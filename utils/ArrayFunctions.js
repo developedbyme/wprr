@@ -108,6 +108,16 @@ export default class ArrayFunctions {
 		return returnArray;
 	}
 	
+	static mapObjectToArrayWithoutKey(aObject) {
+		let returnArray = new Array();
+		
+		for(let objectName in aObject) {
+			returnArray.push(aObject[objectName]);
+		}
+		
+		return returnArray;
+	}
+	
 	static createRange(aStartValue, aEndValue, aStepValue = 1, aIncludeEndValue = true) {
 		
 		let returnArray = new Array();
