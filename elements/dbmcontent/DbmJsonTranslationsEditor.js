@@ -22,18 +22,16 @@ import TriggerButton from "wprr/elements/interaction/TriggerButton";
 // import DbmJsonTranslationsEditor from "wprr/elements/dbmcontent/DbmJsonTranslationsEditor";
 export default class DbmJsonTranslationsEditor extends WprrBaseObject {
 
-	constructor(props) {
-		super(props);
+	_construct() {
+		super._construct();
 		
 		this._fileIds = new Array();
 		this._fileNames = new Array();
 		this._decodedFiles = new Array();
 		
 		this._submitFormEncoder = SubmitFormEncoder.create(this._encodeForm.bind(this));
-	}
-	
-	componentWillMount() {
-		let files = this.getSourcedProp("files");
+		
+		let files = this.getFirstInput("files");
 		
 		let currentArray = files;
 		let currentArrayLength = currentArray.length;
