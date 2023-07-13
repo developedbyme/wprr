@@ -55,7 +55,6 @@ export default class ModuleCreatorBaseObject {
 		
 		this._siteNavigation.dataLoader = this._siteDataLoader;
 		
-		this._elementRenderedCallbackBound = this._elementRenderedCallback.bind(this);
 	}
 	
 	setWprrInstance(aWprrInstance) {
@@ -362,12 +361,8 @@ export default class ModuleCreatorBaseObject {
 			return ReactDOM.hydrate(rootObject, aHolderNode);
 		}
 		
-		let returnReference = ReactDOM.render(rootObject, aHolderNode, this._elementRenderedCallbackBound);
+		let returnReference = ReactDOM.render(rootObject, aHolderNode);
 		return returnReference;
-	}
-	
-	_elementRenderedCallback() {
-		//console.log("_elementRenderedCallback");
 	}
 	
 	_setRootRef() {
