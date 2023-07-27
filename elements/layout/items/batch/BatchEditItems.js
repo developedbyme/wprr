@@ -22,7 +22,9 @@ export default class BatchEditItems extends Layout {
 		
 		this._itemsEditor = new Wprr.wp.admin.ItemsEditor();
 		this._itemsTable = new Wprr.utils.data.multitypeitems.itemstable.ItemsTable();
-		this._itemsEditor.items.getItem("table").addType("table", this._itemsTable);
+		
+		let tableItem = this._elementTreeItem.group.createInternalItem();
+		tableItem.addType("table", this._itemsTable);
 		this._itemsTable.setup();
 		
 		this._loadData = {};
