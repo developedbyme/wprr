@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Wprr from "wprr/Wprr";
 import WprrBaseObject from "wprr/WprrBaseObject";
 
 import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
@@ -7,8 +8,8 @@ import MultipleUrlResolver from "wprr/utils/MultipleUrlResolver";
 //import Image from "wprr/elements/image/Image";
 export default class Image extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._addMainElementClassName("image");
 		
@@ -38,8 +39,8 @@ export default class Image extends WprrBaseObject {
 	_getMainElementClassNames() {
 		let returnArray = super._getMainElementClassNames();
 		
-		let imageSource = this.getSourcedProp("src");
-		let classPrefix = this.getSourcedPropWithDefault("classPrefix", "source");
+		let imageSource = this.getFirstInput("src");
+		let classPrefix = this.getFirstInputWithDefault("classPrefix", "source");
 		
 		returnArray.push(this._getClassNameFromSource(imageSource, classPrefix));
 		
@@ -55,17 +56,17 @@ export default class Image extends WprrBaseObject {
 		
 		let fullPath = null;
 		
-		let imageSource = this.getSourcedProp("src");
-		let sourceLocation = this.getSourcedProp("location");
+		let imageSource = this.getFirstInput("src");
+		let sourceLocation = this.getFirstInput("location");
 		if(!sourceLocation) {
-			sourceLocation = this.getReference("wprr/defaultImageLocation");
+			sourceLocation = this.getFirstInput(Wprr.sourceReference("wprr/defaultImageLocation"));
 			if(!sourceLocation) {
 				sourceLocation = "theme";
 			}
 		}
 		
 		if(imageSource) {
-			this._urlResolver.setBasePaths({"default": this.getReference("wprr/paths/" + sourceLocation)});
+			this._urlResolver.setBasePaths({"default": this.getFirstInput(Wprr.sourceReference("wprr/paths/" + sourceLocation))});
 		
 			fullPath = this._urlResolver.resolveUrl(imageSource, "default");
 		}
@@ -88,6 +89,6 @@ export default class Image extends WprrBaseObject {
 	}
 	
 	_renderMainElement() {
-		return React.createElement("wrapper", {}, this.props.children);
+		return React.createElement("div", {}, this.props.children);
 	}
 }

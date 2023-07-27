@@ -5,12 +5,13 @@ import ManipulationBaseObject from "wprr/manipulation/ManipulationBaseObject";
 //import ScrollPosition from "wprr/manipulation/measure/ScrollPosition";
 export default class ScrollPosition extends ManipulationBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
-		this.state["scrollPosition"] = 0;
+		this.state["scrollPosition"] = window.pageYOffset;
 		
 		this._callback_scrollUpdateBound = this._callback_scrollUpdate.bind(this);
+		window.addEventListener("scroll", this._callback_scrollUpdateBound, false);
 	}
 	
 	_updateScrollValue() {
@@ -24,15 +25,6 @@ export default class ScrollPosition extends ManipulationBaseObject {
 	_callback_scrollUpdate(aEvent) {
 		//console.log("wprr/manipulation/measure/ScrollPosition::_callback_scrollUpdate");
 		
-		this._updateScrollValue();
-	}
-	
-	componentDidMount() {
-		//console.log("wprr/manipulation/measure/ScrollPosition::componentDidMount");
-		
-		super.componentDidMount();
-		
-		window.addEventListener("scroll", this._callback_scrollUpdateBound, false);
 		this._updateScrollValue();
 	}
 	

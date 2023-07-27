@@ -268,7 +268,7 @@ export default class PageDataSources extends Layout {
 				
 				}
 				if(objectTypes.indexOf("dbm_type:settings/data-source/static-data-source") !== -1) {
-					this._externalData.updateValue("injectData." + dataName, currentData);
+					this._externalData.updateValue("injectData." + dataName, Wprr.sourceFromExplicitJson(currentData));
 				}
 			}
 		}
@@ -302,7 +302,7 @@ export default class PageDataSources extends Layout {
 					
 					}
 					if(sourceType === "static-data-source") {
-						this._externalData.updateValue("injectData." + dataName, currentData);
+						this._externalData.updateValue("injectData." + dataName, Wprr.sourceFromExplicitJson(currentData));
 					}
 				}
 			}

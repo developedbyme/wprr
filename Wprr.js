@@ -230,7 +230,7 @@ export default class Wprr {
 		
 		let type = aObject["type"];
 		let path = aObject["path"];
-		let deepPath = aObject["deepPath"];
+		let deepPath = Wprr.sourceFromJson(aObject["deepPath"]);
 		
 		if(type === "combine") {
 			let newPathArray = new Array();
@@ -244,6 +244,52 @@ export default class Wprr {
 			}
 			
 			path = newPathArray;
+		}
+		else {
+			path = Wprr.sourceFromJson(path);
+		}
+		
+		return Wprr.source(type, path, deepPath);
+	}
+	
+	static sourceFromExplicitJson(aObject) {
+		
+		if(typeof(aObject) !== "object") {
+			return aObject;
+		}
+		
+		if(aObject["isSource"] !== true) {
+			return aObject;
+		}
+		
+		let type = aObject["type"];
+		let path = aObject["path"];
+		let deepPath = Wprr.sourceFromExplicitJson(aObject["deepPath"]);
+		
+		if(type === "combine") {
+			let newPathArray = new Array();
+			
+			let currentArray = path;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentPathPart = currentArray[i];
+				
+				newPathArray.push(Wprr.sourceFromExplicitJson(currentPathPart));
+			}
+			
+			path = newPathArray;
+		}
+		else if(type === "object") {
+			let newObject = new Object();
+			
+			for(let objectName in path) {
+				newObject[objectName] = Wprr.sourceFromExplicitJson(path[objectName]);
+			}
+			
+			path = newObject;
+		}
+		else {
+			path = Wprr.sourceFromExplicitJson(path);
 		}
 		
 		return Wprr.source(type, path, deepPath);

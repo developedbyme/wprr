@@ -13,8 +13,8 @@ import UseMarkup from "wprr/markup/UseMarkup";
 //import OverlayArea from "wprr/elements/area/OverlayArea";
 export default class OverlayArea extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._internalIdCounter = 0;
 		
@@ -33,7 +33,7 @@ export default class OverlayArea extends WprrBaseObject {
 	trigger(aName, aValue) {
 		switch(aName) {
 			case "showOverlay":
-				let template = this.getSourcedProp("template");
+				let template = this.getFirstInput("template");
 				let useMarkup = OverlayArea.createUseMarkup(template, this._closeButtonTemplate, aValue);
 				this.showOverlay(this._generateId(), useMarkup);
 				break;
@@ -148,8 +148,9 @@ export default class OverlayArea extends WprrBaseObject {
 		let injectData = new Object();
 		injectData["trigger/showOverlay"] = this;
 		injectData["trigger/hideOverlay"] = this;
+		injectData["overlayArea"] = this;
 		
-		return React.createElement("wrapper", {},
+		return React.createElement("div", {},
 			React.createElement(ReferenceInjection, {"injectData": injectData},
 				React.createElement(React.Fragment, {"key": "main"}, this.props.children),
 				overlayElement
