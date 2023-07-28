@@ -91,6 +91,7 @@ export default class StaticFileLoader extends ManipulationBaseObject {
 		delete returnObject["output"];
 		delete returnObject["url"];
 		delete returnObject["nonBlocking"];
+		delete returnObject["fileType"];
 		
 		returnObject[outputName] = this.state["loadedData"];
 		

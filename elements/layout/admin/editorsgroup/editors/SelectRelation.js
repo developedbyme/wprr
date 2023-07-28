@@ -43,6 +43,8 @@ export default class SelectRelation extends Layout {
 		sortItem.getLinks("all").input(filterItem.getLinks("filtered"));
 		
 		this._elementTreeItem.getLinks("sortedItems").input(sortItem.getType("sorted"));
+		
+		this.addExposedProps("direction", "relationType", "objectType", "allowCreation");
 	}
 	
 	_getEncodings() {

@@ -115,16 +115,26 @@ export default class FormField extends WprrBaseObject {
 	_getMainElementProps() {
 		var returnObject = super._getMainElementProps();
 		
-		returnObject["id"] = this.getSourcedProp("id");
-		returnObject["name"] = this.getSourcedProp("name");
-		returnObject["autocomplete"] = this.getSourcedProp("autocomplete");
+		returnObject["id"] = this.getFirstInput("id");
+		returnObject["name"] = this.getFirstInput("name");
 		
-		let type = this.getSourcedProp("type");
+		let autoComplete = this.getFirstInput("autoComplete");
+		if(!autoComplete) {
+			//METODO: add depreciation warning
+			autoComplete = this.getFirstInput("autocomplete");
+		}
+		
+		if(autoComplete) {
+			returnObject["autoComplete"] = autoComplete;
+		}
+		
+		
+		let type = this.getFirstInput("type");
 		
 		returnObject["type"] = type;
-		returnObject["placeholder"] = this.getSourcedProp("placeholder");
+		returnObject["placeholder"] = this.getFirstInput("placeholder");
 		
-		let valueName = this.getSourcedProp("valueName");
+		let valueName = this.getFirstInput("valueName");
 		
 		let value = this.getSourcedPropWithDefault("value", SourceData.create("propWithDots", valueName));
 		
@@ -143,9 +153,9 @@ export default class FormField extends WprrBaseObject {
 		returnObject["onBlur"] = this._callback_blurBound;
 		returnObject["onFocus"] = this._callback_focusBound;
 		
-		returnObject["autoFocus"] = this.getSourcedProp("autoFocus");
-		returnObject["maxLength"] = this.getSourcedProp("maxLength");
-		returnObject["autoComplete"] = this.getSourcedProp("autoComplete");
+		returnObject["autoFocus"] = this.getFirstInput("autoFocus");
+		returnObject["maxLength"] = this.getFirstInput("maxLength");
+		returnObject["autoComplete"] = this.getFirstInput("autoComplete");
 		
 		return returnObject;
 	}

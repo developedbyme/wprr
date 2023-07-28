@@ -133,7 +133,7 @@ export default class BlockLoader extends Layout {
 		
 		return React.createElement(Wprr.AddReference, {"data": this._externalData, "as": "loadingData"},
 			React.createElement(Wprr.HasData, {"check": Wprr.sourceReference("loadingData", "loaded")},
-				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData")},
+				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData"), "canBeEmpty": true},
 					aSlots.default(React.createElement("div", {}, "No block element test"))
 				)
 			),

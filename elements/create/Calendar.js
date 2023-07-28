@@ -26,7 +26,7 @@ export default class Calendar extends WprrBaseObject {
 		
 		this._addMainElementClassName("calendar");
 		
-		this._selectCommand = Wprr.commands.callFunction(this, this.selectDate, Wprr.sourceReference("calendar/day/date"));
+		this._selectCommand = Wprr.commands.callFunction(this, this.selectDate, [Wprr.sourceReference("calendar/day/date")]);
 		this._selectedDate = Wprr.sourceValue(null);
 	}
 	

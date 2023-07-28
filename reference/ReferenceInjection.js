@@ -11,10 +11,12 @@ import WprrContext from "wprr/reference/WprrContext";
 //import ReferenceInjection from "wprr/reference/ReferenceInjection";
 export default class ReferenceInjection extends ManipulationBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._references = new ReferenceHolder();
+		this._references.setParent(this.getContext().references);
+		
 		this._createInjectionObject();
 	}
 	
@@ -22,7 +24,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		this._injectionObject = {"value": {"references": this._references}};
 	}
 	
-	getReferences() {
+	getInjectReferences() {
 		//METODO: using a reference with the same name causing problems
 		return this._references;
 	}
@@ -31,18 +33,17 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		//console.log("wprr/reference/ReferenceInjection::_removeUsedProps");
 		
 		delete aReturnObject["injectData"];
+		delete aReturnObject["canBeEmpty"];
 		
 		return aReturnObject;
 	}
 	
 	_getInjectData() {
-		return this.getSourcedProp("injectData");
+		return this.getFirstInput("injectData");
 	}
 	
 	_prepareRender() {
 		super._prepareRender();
-		
-		this._references.setParent(this.context.references);
 		
 		let injectData = this._getInjectData();
 		
@@ -81,7 +82,9 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 		
 		
 		if(!hasData) {
-			console.warn("Injection doesn't have any fields set.", this);
+			if(!this.getFirstInput("canBeEmpty")) {
+				console.warn("Injection doesn't have any fields set.", this);
+			}
 		}
 	}
 	

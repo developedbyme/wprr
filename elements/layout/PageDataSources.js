@@ -318,7 +318,7 @@ export default class PageDataSources extends Layout {
 		
 		return React.createElement(Wprr.AddReference, {"data": this._externalData, "as": "loadingData"},
 			React.createElement(Wprr.HasData, {"check": this._elementTreeItem.getValueSource("loaded")},
-				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData")},
+				React.createElement(Wprr.ReferenceInjection, {"injectData": Wprr.sourceReference("loadingData", "injectData"), "canBeEmpty": true},
 					aSlots.default(React.createElement("div", {}, "No block element"))
 				)
 			),
