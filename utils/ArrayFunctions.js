@@ -164,15 +164,29 @@ export default class ArrayFunctions {
 		let returnArray = new Array();
 		
 		let debugCounter = 0;
-		while(currentDate <= endDate) {
-			if(debugCounter++ > 1000) {
-				console.error("Loop ran for too long");
-				break;
-			}
+		if(aStepValue < 0) {
+			while(currentDate >= endDate) {
+				if(debugCounter++ > 1000) {
+					console.error("Loop ran for too long");
+					break;
+				}
 			
-			returnArray.push(currentDate.format(aFormat));
-			currentDate.add(aStepValue, "day");
+				returnArray.push(currentDate.format(aFormat));
+				currentDate.add(aStepValue, "day");
+			}
 		}
+		else {
+			while(currentDate <= endDate) {
+				if(debugCounter++ > 1000) {
+					console.error("Loop ran for too long");
+					break;
+				}
+			
+				returnArray.push(currentDate.format(aFormat));
+				currentDate.add(aStepValue, "day");
+			}
+		}
+		
 		
 		return returnArray;
 	}
