@@ -34,15 +34,15 @@ export default class Name extends WprrBaseObject {
 		React.createElement(Wprr.AddReference, {
 		  data: Wprr.sourceFunction(Wprr.sourceReference("itemEditor"), "getFieldEditor", [fieldName]),
 		  as: "valueEditor"
-		}, /*#__PURE__*/React.createElement(Wprr.FlexRow, {
-		  className: "small-item-spacing flex-no-wrap"
-		}, /*#__PURE__*/React.createElement(Wprr.FormField, {
+		}, React.createElement(Wprr.FlexRow, {
+		  className: "small-item-spacing flex-no-wrap halfs"
+		}, React.createElement(Wprr.FormField, {
 		  className: "standard-field standard-field-padding full-width",
 		  value: this._elementTreeItem.getValueSource("firstName")
-		}), /*#__PURE__*/React.createElement(Wprr.FormField, {
+		}), React.createElement(Wprr.FormField, {
 		  className: "standard-field standard-field-padding full-width",
 		  value: this._elementTreeItem.getValueSource("lastName")
-		})), /*#__PURE__*/React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))
+		})), React.createElement(Wprr.layout.admin.editorsgroup.SaveValueChanges, null))
 		);
 	}
 }

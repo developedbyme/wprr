@@ -10,8 +10,8 @@ import SourceData from "wprr/reference/SourceData";
 // import CustomSelection from "wprr/elements/form/CustomSelection";
 export default class CustomSelection extends ManipulationBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._selectedValue = Wprr.sourceValue(null);
 	}

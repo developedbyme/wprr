@@ -10,10 +10,8 @@ import CommandPerformer from "wprr/commands/CommandPerformer";
 // import FormField from "wprr/elements/form/FormField";
 export default class FormField extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
-		
-		this._mainElementType = "input";
+	_construct() {
+		super._construct();
 		
 		this._callback_changeBound = this._callback_change.bind(this);
 		this._callback_blurBound = this._callback_blur.bind(this);
@@ -120,7 +118,7 @@ export default class FormField extends WprrBaseObject {
 		
 		let autoComplete = this.getFirstInput("autoComplete");
 		if(!autoComplete) {
-			//METODO: add depreciation warning
+			console.warn("autocomplete should be camel case autoComplete");
 			autoComplete = this.getFirstInput("autocomplete");
 		}
 		
@@ -163,7 +161,7 @@ export default class FormField extends WprrBaseObject {
 	_renderMainElement() {
 		//console.log("wprr/elements/form/FormField::_renderMainElement");
 		
-		return React.createElement("wrapper");
+		return React.createElement("input");
 	}
 	
 	static makeSelfContained(aElement, aValue = "") {

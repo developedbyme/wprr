@@ -15,10 +15,11 @@ export default class SelectRelation extends Layout {
 		let rangeLoader = this._elementTreeItem.addNode("rangeLoader", new Wprr.utils.data.nodes.LoadDataRange());
 		
 		let objectType = this.getFirstInputWithDefault("objectType", "type");
+		let statusSelection = this.getFirstInputWithDefault("statusSelection", "includePrivate");
 		
 		this._elementTreeItem.getLinks("items").input(rangeLoader.item.getLinks("items"));
 		
-		let selectPath = this.getFirstInputWithDefault("selectPath", this.getWprrUrl("range/?select=anyStatus,relation&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
+		let selectPath = this.getFirstInputWithDefault("selectPath", this.getWprrUrl("range/?select=" + statusSelection + ",byObjectType&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
 		
 		rangeLoader.setUrl(selectPath);
 		

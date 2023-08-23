@@ -15,10 +15,11 @@ export default class SelectRelations extends WprrBaseObject {
 		let rangeLoader = this._elementTreeItem.addNode("rangeLoader", new Wprr.utils.data.nodes.LoadDataRange());
 		
 		let objectType = this.getFirstInputWithDefault("objectType", "type");
+		let statusSelection = this.getFirstInputWithDefault("statusSelection", "includePrivate");
 		
 		this._elementTreeItem.getLinks("items").input(rangeLoader.item.getLinks("items"));
 		
-		rangeLoader.setUrl(this.getWprrUrl("range/?select=anyStatus,relation&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
+		rangeLoader.setUrl(this.getWprrUrl("range/?select=" + statusSelection + ",byObjectType&encode=" + this._getEncodings() + "&type=" + objectType, "wprrData"));
 		
 		let filterItem = this._elementTreeItem.group.createInternalItem();
 		let filteredList = Wprr.utils.data.multitypeitems.controllers.list.FilteredList.create(filterItem);
