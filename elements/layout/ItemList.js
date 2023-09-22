@@ -21,7 +21,7 @@ export default class ItemList extends Layout {
 	
 	_getLayout(aSlots) {
 		
-		return React.createElement("div", {className: "list"},
+		return React.createElement(Wprr.BaseObject, {className: "list", overrideMainElementType: aSlots.prop("listElementType", null)},
 			aSlots.slot("loopElement",
 				React.createElement(Wprr.Loop,
 					{

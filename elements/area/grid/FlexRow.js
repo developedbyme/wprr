@@ -6,8 +6,8 @@ import WprrBaseObject from "wprr/WprrBaseObject";
 //import FlexRow from "wprr/elements/area/grid/FlexRow";
 export default class FlexRow extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._mainElementType = "div";
 		

@@ -24,7 +24,7 @@ export default class Tags extends BaseObject {
 		
 		let group = aItem.group;
 		
-		aItem.getLinks("tags").addUniqueItems(aData["tags"]);
+		aItem.getLinks("tags").setItems(aData["tags"]);
 		
 		aItem.setValue("hasData/tags", true);
 		

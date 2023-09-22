@@ -39,7 +39,13 @@ export default class SourceConnection extends BaseObject {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentSource = currentArray[i];
-				let value = Wprr.utils.object.tryCopyViaJson(aValue);
+				let value = aValue;
+				if(value && value["$$typeof"]) {
+					//MENOTE: do nothing with react elements
+				}
+				else {
+					value = Wprr.utils.object.tryCopyViaJson(aValue);
+				}
 				
 				try {
 					currentSource.setValueFromConnection(value, this);

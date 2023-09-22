@@ -94,7 +94,7 @@ export default class JsonLoader extends BaseObject {
 	}
 	
 	setBody(aBody) {
-		this._body = (aBody instanceof String) ? aBody : JSON.stringify(aBody);
+		this._body = (aBody instanceof String || aBody instanceof FormData) ? aBody : JSON.stringify(aBody);
 		
 		return this;
 	}

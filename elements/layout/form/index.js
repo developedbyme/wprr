@@ -15,6 +15,7 @@ export {default as SteppedNumber} from "./SteppedNumber";
 export {default as VerificationCode} from "./VerificationCode";
 export {default as AutoSizedField} from "./AutoSizedField";
 export {default as Selections} from "./Selections";
+export {default as LabelDropFileArea} from "./LabelDropFileArea";
 
 import * as validation from "./validation/index.js";
 export {validation};
