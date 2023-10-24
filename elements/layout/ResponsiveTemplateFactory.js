@@ -10,6 +10,8 @@ export default class ResponsiveTemplateFactory  {
 		this._defaultTemplate = React.createElement("div");
 		this._responsiveTemplates = new Array();
 		
+		this._id = "ResponsiveTemplate" + Math.round(Math.random()*100000000000);
+		
 	}
 	
 	setDefaultTemplate(aTemplate) {
@@ -35,7 +37,9 @@ export default class ResponsiveTemplateFactory  {
 	}
 	
 	getReactElements() {
-		return React.createElement(Wprr.ResponsiveProps, {"element": this._defaultTemplate, "mediaQueries": this._responsiveTemplates}, React.createElement(Wprr.InsertElement));
+		return React.createElement(Wprr.ResponsiveProps, {"key": this._id, "element": this._defaultTemplate, "mediaQueries": [].concat(this._responsiveTemplates)},
+			React.createElement(Wprr.InsertElement)
+		);
 	}
 	
 	static create(aDefaultTemplate = null) {
