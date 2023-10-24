@@ -50,7 +50,7 @@ export default class ValidationFunctions {
 			return false;
 		}
 		
-		let re = /^\+?[0-9\\.\\-\\ \\(\\)]{8,}$/;
+		let re = new RegExp("^\\+?[0-9\\.\\-\\ \\(\\)]{8,}$");
 		return re.test(aCheckValue.toLowerCase());
 	}
 	
