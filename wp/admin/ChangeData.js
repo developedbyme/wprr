@@ -210,6 +210,12 @@ export default class ChangeData  {
 		return this;
 	}
 	
+	replaceOutgoingRelation(aPostId, aType, aObjectType, aReturnPrefix = null) {
+		this.createChange("dbm/replaceOutgoingRelation", {"relationType": aType, "objectType": aObjectType, "value": aPostId, "returnPrefix": aReturnPrefix});
+		
+		return this;
+	}
+	
 	endIncomingRelations(aType, aObjectType) {
 		this.createChange("dbm/endIncomingRelations", {"relationType": aType, "objectType": aObjectType});
 		
