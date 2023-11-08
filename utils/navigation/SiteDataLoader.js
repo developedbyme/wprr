@@ -11,6 +11,7 @@ export default class SiteDataLoader {
 		this._item = Wprr.sourceValue(null);
 		
 		this.disableInitialData = false;
+		this.updateTitle = true;
 		
 		this._items = null;
 		
@@ -247,6 +248,20 @@ export default class SiteDataLoader {
 		//console.log("_setLoadedUrl");
 		this._loadedUrl.value = aUrl;
 		this._item.value = this._items.getItem(aUrl);
+		
+		if(this.updateTitle) {
+			let title = Wprr.objectPath(this._item.value, "post.linkedItem.title.value");
+			if(title) {
+			
+				let titleSuffix = Wprr.objectPath(this._items.getItem("project"), "titleSuffix.value");
+				if(titleSuffix) {
+					title += titleSuffix;
+				}
+			
+				document.title = title;
+			}
+		} 
+		
 		this._loaded.value = true;
 	}
 }
