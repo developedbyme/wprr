@@ -493,6 +493,11 @@ export default class WprrBaseObject extends React.Component {
 				aReturnObject[objectName] = props[objectName];
 			}
 			
+			//MENOTE: copy all aria attributes
+			if(objectName.indexOf("aria-") === 0) {
+				aReturnObject[objectName] = props[objectName];
+			}
+			
 			//MENOTE: copy all callbacks
 			if(objectName.indexOf("on") === 0 && objectName.charCodeAt(2) >= 65 && objectName.charCodeAt(2) <= 90) {
 				aReturnObject[objectName] = props[objectName];
