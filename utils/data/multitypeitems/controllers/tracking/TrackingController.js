@@ -106,66 +106,80 @@ export default class TrackingController extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	get allowStatistics() {
+		return this.item.getValue("allowStatistics");
+	}
+	
+	get allowMarketing() {
+		return this.item.getValue("allowMarketing");
+	}
+	
 	trackPage(aUrl) {
-		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentTracker = currentArray[i];
+		
+		if(this.allowStatistics) {
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
 			
-			try {
-				currentTracker.trackPage(aUrl);
-			}
-			catch(theError) {
-				console.error("Error occured during trackPage", currentTracker, theError);
+				try {
+					currentTracker.trackPage(aUrl);
+				}
+				catch(theError) {
+					console.error("Error occured during trackPage", currentTracker, theError);
+				}
 			}
 		}
+		
 	}
 	
 	trackEvent(aCategory, aAction, aLabel = null, aValue = null) {
-		//METODO: check permissions
-		
-		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentTracker = currentArray[i];
+		if(this.allowStatistics) {
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
 			
-			try {
-				currentTracker.trackEvent(aCategory, aAction, aLabel, aValue);
-			}
-			catch(theError) {
-				console.error("Error occured during trackEvent", currentTracker, theError);
+				try {
+					currentTracker.trackEvent(aCategory, aAction, aLabel, aValue);
+				}
+				catch(theError) {
+					console.error("Error occured during trackEvent", currentTracker, theError);
+				}
 			}
 		}
 	}
 	
 	trackEcommerce(aData) {
-		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentTracker = currentArray[i];
+		if(this.allowMarketing) {
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
 			
-			try {
-				currentTracker.trackEcommerce(aData);
-			}
-			catch(theError) {
-				console.error("Error occured during trackEcommerce", currentTracker, theError);
+				try {
+					currentTracker.trackEcommerce(aData);
+				}
+				catch(theError) {
+					console.error("Error occured during trackEcommerce", currentTracker, theError);
+				}
 			}
 		}
 	}
 	
 	trackConversion(aTransactionId, aItemName, aValue) {
-		//METODO: check permissions
-		
-		let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentTracker = currentArray[i];
+		if(this.allowMarketing) {
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
 			
-			try {
-				currentTracker.trackConversion(aTransactionId, aItemName, aValue);
-			}
-			catch(theError) {
-				console.error("Error occured during trackConversion", currentTracker, theError);
+				try {
+					currentTracker.trackConversion(aTransactionId, aItemName, aValue);
+				}
+				catch(theError) {
+					console.error("Error occured during trackConversion", currentTracker, theError);
+				}
 			}
 		}
 	}
