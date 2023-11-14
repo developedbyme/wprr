@@ -62,6 +62,10 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return fieldEditors.getLinkByName(aName).getType("valueEditor");
 	}
 	
+	getTitleEditor() {
+		return this.editorsGroup.getTitleEditor(this.item.getType("editedItem").id);
+	}
+	
 	getContentEditor() {
 		return this.editorsGroup.getContentEditor(this.item.getType("editedItem").id);
 	}

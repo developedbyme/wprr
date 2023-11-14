@@ -77,6 +77,18 @@ export default class Image extends WprrBaseObject {
 		
 		if(elementType === "img") {
 			returnObject["src"] = fullPath;
+			let alt = this.getFirstInput("alt");
+			if(alt) {
+				returnObject["alt"] = alt;
+			}
+			let width = this.getFirstInput("width");
+			if(width) {
+				returnObject["width"] = width;
+			}
+			let height = this.getFirstInput("height");
+			if(height) {
+				returnObject["height"] = height;
+			}
 		}
 		else {
 			if(!returnObject["style"]) {

@@ -33,7 +33,8 @@ export default class GetProperty extends BaseObject {
 		
 		let propertyPath = this.propertyPath;
 		if(propertyPath) {
-			this.value = Wprr.objectPath(this.object, propertyPath);
+			let newValue = Wprr.objectPath(this.object, propertyPath);
+			this.value = newValue;
 		}
 		
 	}

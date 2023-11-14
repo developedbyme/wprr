@@ -118,8 +118,10 @@ export default class FormField extends WprrBaseObject {
 		
 		let autoComplete = this.getFirstInput("autoComplete");
 		if(!autoComplete) {
-			console.warn("autocomplete should be camel case autoComplete");
 			autoComplete = this.getFirstInput("autocomplete");
+			if(autoComplete) {
+				console.warn("autocomplete should be camel case autoComplete");
+			}
 		}
 		
 		if(autoComplete) {

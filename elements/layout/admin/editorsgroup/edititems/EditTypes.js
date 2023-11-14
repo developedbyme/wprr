@@ -31,7 +31,7 @@ export default class EditTypes extends Wprr.BaseObject {
 		let type = this.getFirstInput("type", Wprr.sourceQueryString("type"));
 		
 		this._elementTreeItem.getLinks("groups").idsSource.input(loader.item.getLinks("items").idsSource);
-		loader.setUrl(this.getWprrUrl("range/?select=relation,anyStatus&encode=fields,relations,fields/translations&type=" + type, "wprrData"));
+		loader.setUrl(this.getWprrUrl("range/?select=relation,anyStatus&encode=fields,fields/translations&type=" + type, "wprrData"));
 		
 		let table = this._elementTreeItem.addNode("table", new Wprr.utils.data.multitypeitems.itemstable.ItemsTable());
 		

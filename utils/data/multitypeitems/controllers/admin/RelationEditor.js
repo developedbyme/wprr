@@ -205,7 +205,10 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.relationId")]));
 		
-		//loader.load();
+		let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+		
+		editorGroup.addProgressLoader(loader);
+		
 		let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
 		sharedLoadingSequence.addLoader(loader);
 	}

@@ -46,6 +46,7 @@ export default class First extends BaseObject {
 	}
 	
 	_update() {
+		//console.log("First::update");
 		
 		let returnArray = new Array();
 		
@@ -54,9 +55,9 @@ export default class First extends BaseObject {
 		let currentArray = this.values.getAsArray();
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
-			let currentSoruce = currentArray[i];
-			if(currentSoruce.value.value) {
-				this.output = currentSoruce.value.value;
+			let currentSource = currentArray[i];
+			if(currentSource.value.value) {
+				this.output = currentSource.value.value;
 				break;
 			}
 		}

@@ -30,6 +30,20 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		this.item.addType("saveDataController", this);
 		this.item.getNamedLinks("allEditors");
 		this.item.requireSingleLink("parent");
+		this.item.requireValue("progressItems", []);
+		this.item.requireValue("isInProgress", false);
+		
+		let progressLength = this.item.addNode("progressLength", new Wprr.utils.data.nodes.GetProperty());
+		progressLength.sources.get("object").input(this.item.getValueSource("progressItems"));
+		progressLength.propertyPath = "length";
+		
+		let progressCompare = this.item.addNode("progressCompare", new Wprr.utils.data.nodes.logic.Compare());
+		
+		progressCompare.sources.get("input1").input(progressLength.sources.get("value"));
+		progressCompare.operation = ">";
+		progressCompare.input2 = 0;
+		this.item.getValueSource("isInProgress").input(progressCompare.sources.get("output"));
+		
 		
 		let editors = this.item.getLinks("editors");
 		
@@ -200,6 +214,39 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			item.getValueSource("postStatus").connectSource(newEditorItem.getType("storedValue"));
 			
 			newEditorItem.setValue("name", "status");
+			
+			newEditorItem.setValue("saveCommands", [this._saveFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getTitleEditor(aId) {
+		//console.log("getTitleEditor");
+		//console.log(aId);
+		
+		let linkName = "title" + aId;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			let value = item.getValue("title");
+			
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource("content").connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", "title");
 			
 			newEditorItem.setValue("saveCommands", [this._saveFieldCommand]);
 			
@@ -538,6 +585,28 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		}
 		
 		return Wprr.objectPath(this[firstPart], restParts);
+	}
+	
+	addProgressLoader(aLoader) {
+		
+		aLoader.addSuccessCommand(Wprr.commands.callFunction(this, this.removeProgressItem, [aLoader]));
+		
+		let newProgressArray = this.item.getValue("progressItems").concat([aLoader]);
+		this.item.setValue("progressItems", newProgressArray);
+		
+		return this;
+	}
+	
+	removeProgressItem(aItem) {
+		//console.log("removeProgressItem")
+		
+		let newProgressArray = this.item.getValue("progressItems");
+		
+		newProgressArray = Wprr.utils.array.removeValues(newProgressArray, [aItem]);
+		
+		this.item.setValue("progressItems", newProgressArray);
+		
+		return this;
 	}
 	
 	static create(aItem) {

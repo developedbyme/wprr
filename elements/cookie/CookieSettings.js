@@ -62,11 +62,13 @@ export default class CookieSettings extends Layout {
   className: "small-item-spacing flex-no-wrap",
   itemClasses: "flex-no-resize,flex-resize"
 }, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+	id: "cookie-setting-strictly",
   checked: true,
   value: true,
   disabled: true
-}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-setting-label"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  className: "cookie-setting-label",
+	"for": "cookie-setting-strictly"
 }, Wprr.idText("Strictly necessary cookies", "site.cookieSettings.strictly.title")), /*#__PURE__*/React.createElement("div", {
   className: "cookie-setting-description-text"
 }, Wprr.idText("These cookies are essential for you to browse the website and use its features, such as accessing secure areas of the site.", "site.cookieSettings.strictly.description")))), /*#__PURE__*/React.createElement("div", {
@@ -75,9 +77,11 @@ export default class CookieSettings extends Layout {
   className: "small-item-spacing flex-no-wrap",
   itemClasses: "flex-no-resize,flex-resize"
 }, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  id: "cookie-setting-preference",
   checked: this._performance
-}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-setting-label"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  className: "cookie-setting-label",
+	"for": "cookie-setting-preference"
 }, Wprr.idText("Preferences cookies", "site.cookieSettings.preference.title")), /*#__PURE__*/React.createElement("div", {
   className: "cookie-setting-description-text"
 }, Wprr.idText("These cookies allow a website to remember choices you have made in the past.", "site.cookieSettings.preference.description")))), /*#__PURE__*/React.createElement("div", {
@@ -86,9 +90,11 @@ export default class CookieSettings extends Layout {
   className: "small-item-spacing flex-no-wrap",
   itemClasses: "flex-no-resize,flex-resize"
 }, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+  id: "cookie-setting-statistics",
   checked: this._statistics
-}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-setting-label"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  className: "cookie-setting-label",
+	"for": "cookie-setting-statistics"
 }, Wprr.idText("Statistics cookies", "site.cookieSettings.statistics.title")), /*#__PURE__*/React.createElement("div", {
   className: "cookie-setting-description-text"
 }, Wprr.idText("These cookies collect information about how you use a website, like which pages you visited and which links you clicked on. None of this information can be used to identify you. It is all aggregated and, therefore, anonymized. Their sole purpose is to improve website functions.", "site.cookieSettings.statistics.description")))), /*#__PURE__*/React.createElement("div", {
@@ -97,9 +103,11 @@ export default class CookieSettings extends Layout {
   className: "small-item-spacing flex-no-wrap",
   itemClasses: "flex-no-resize,flex-resize"
 }, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+	id: "cookie-setting-martketing",
   checked: this._marketing
-}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-setting-label"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  className: "cookie-setting-label",
+	"for": "cookie-setting-martketing"
 }, Wprr.idText("Marketing cookies", "site.cookieSettings.marketing.title")), /*#__PURE__*/React.createElement("div", {
   className: "cookie-setting-description-text"
 }, Wprr.idText("These cookies track your online activity to help advertisers deliver more relevant advertising or to limit how many times you see an ad. These cookies can share that information with other organizations or advertisers.", "site.cookieSettings.marketing.description")))), /*#__PURE__*/React.createElement("div", {
@@ -108,9 +116,11 @@ export default class CookieSettings extends Layout {
   className: "small-item-spacing flex-no-wrap",
   itemClasses: "flex-no-resize,flex-resize"
 }, /*#__PURE__*/React.createElement(Wprr.Checkbox, {
+	id: "cookie-setting-cookiebar",
   checked: this._hideCookieBar
-}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-setting-label"
+}), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
+  className: "cookie-setting-label",
+	"for": "cookie-setting-cookiebar"
 }, Wprr.idText("Hide cookie information when websites load", "site.cookieSettings.hideCookieBar.title")), /*#__PURE__*/React.createElement("div", {
   className: "cookie-setting-description-text"
 }, Wprr.idText("Hides the cookie information and links that is displayed every time the website is loaded.", "site.cookieSettings.hideCookieBar.description")))), /*#__PURE__*/React.createElement("div", {

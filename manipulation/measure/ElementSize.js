@@ -18,7 +18,7 @@ export default class ElementSize extends ManipulationBaseObject {
 	}
 	
 	_updateWidth() {
-		console.log("wprr/manipulation/measure/ElementSize::_updateWidth");
+		//console.log("wprr/manipulation/measure/ElementSize::_updateWidth");
 		
 		let domNode = ReactDOM.findDOMNode(this);
 		

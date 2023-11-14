@@ -268,10 +268,18 @@ export default class WprrBaseObject extends React.Component {
 	}
 	
 	getMainElement() {
+		let element = this.getMainElementIfExists();
+		if(!element) {
+			console.warn("Component doesn't have a main element.", this);
+		}
+		
+		return element;
+	}
+	
+	getMainElementIfExists() {
 		if(this._elementRef.current) {
 			return this._elementRef.current;
 		}
-		console.warn("Component doesn't have a main element.", this);
 		
 		return null;
 	}
@@ -494,7 +502,7 @@ export default class WprrBaseObject extends React.Component {
 			}
 			
 			//MENOTE: copy all aria attributes
-			if(objectName.indexOf("aria-") === 0) {
+			if(objectName.indexOf("aria-") === 0 || objectName === "role") {
 				aReturnObject[objectName] = props[objectName];
 			}
 			

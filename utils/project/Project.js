@@ -64,6 +64,7 @@ export default class Project {
 		let typeLinks = itemsSetupItem.getNamedLinks("types");
 		
 		this._items.addSetup("id", Wprr.utils.data.multitypeitems.setup.None.prepare, Wprr.utils.data.multitypeitems.setup.None.setup);
+		this._items.addSetup("page", Wprr.utils.data.multitypeitems.setup.None.prepare, Wprr.utils.data.multitypeitems.setup.None.setup);
 		this._items.addSetup("preview", Wprr.utils.data.multitypeitems.setup.None.prepare, Wprr.utils.data.multitypeitems.setup.None.setup);
 		
 		this._items.addSetup("dataRangeLoader", Wprr.utils.data.multitypeitems.setup.DataRangeLoader.prepare, Wprr.utils.data.multitypeitems.setup.DataRangeLoader.setup);

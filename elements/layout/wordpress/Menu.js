@@ -41,6 +41,10 @@ export default class Menu extends Layout {
 		this._elementTreeItem.getLinks("topLevelMenuItems").input(sortedList.item.getLinks("sorted"));
 	}
 	
+	_loaded() {
+		
+	}
+	
 	_getLayout(aSlots) {
 		
 		return React.createElement("div", {className: "menu"},
