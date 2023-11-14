@@ -3,6 +3,9 @@
 import Wprr from "wprr/Wprr";
 import React from "react";
 import ReactDOM from "react-dom";
+import ReactDOMClient from "react-dom/client";
+
+
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
@@ -39,6 +42,7 @@ export default class ModuleCreatorBaseObject {
 		this._usedMulitpleTimes = false;
 		this.parseInitialContent = true;
 		this.useSiteNavigation = true;
+		this.useLegacyReactRender = false;
 		
 		this._referenceHolder = new ReferenceHolder();
 		this._storeController = new StoreController();
@@ -357,12 +361,25 @@ export default class ModuleCreatorBaseObject {
 		
 		let rootObject = this._getRootObject(aData);
 		
-		if(aAddMode === ModuleCreatorBaseObject.HYDRATE) {
-			return ReactDOM.hydrate(rootObject, aHolderNode);
+		if(this.useLegacyReactRender) {
+			if(aAddMode === ModuleCreatorBaseObject.HYDRATE) {
+				return ReactDOM.hydrate(rootObject, aHolderNode);
+			}
+		
+			let returnReference = ReactDOM.render(rootObject, aHolderNode, this._elementRenderedCallbackBound);
+			return returnReference;
 		}
 		
-		let returnReference = ReactDOM.render(rootObject, aHolderNode);
-		return returnReference;
+		let root = null;
+		if(aAddMode === ModuleCreatorBaseObject.HYDRATE) {
+			root = ReactDOMClient.hydrateRoot(aHolderNode);
+		}
+		else {
+			root = ReactDOMClient.createRoot(aHolderNode);
+		}
+		
+		root.render(rootObject);
+		return null;
 	}
 	
 	_setRootRef() {
