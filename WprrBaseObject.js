@@ -253,6 +253,22 @@ export default class WprrBaseObject extends React.Component {
 	
 	getWprrUrl(aPath, aBaseLocation = "rest") {
 		
+		let colonSlashSlashIndex = aPath.indexOf("://");
+		if(colonSlashSlashIndex > -1) {
+			let questionMarkPosition = aPath.indexOf("?");
+			if((questionMarkPosition === -1) || (colonSlashSlashIndex < questionMarkPosition)) {
+				return aPath;
+			}
+		}
+		
+		let project = this._elementTreeItem.group.getItem("project").getType("controller");
+		
+		let pathController = Wprr.objectPath(this._elementTreeItem.group.getItem("project"), "paths.linkedItem.pathController");
+		let path = "wp/" + aBaseLocation + "/" + aPath;
+		
+		return pathController.getChild(path).getFullPath();
+		
+		/*
 		let baseReferencePath = "wprr/paths/";
 		let referencePath =  baseReferencePath + aBaseLocation;
 		
@@ -265,6 +281,7 @@ export default class WprrBaseObject extends React.Component {
 		let tempUrlResolver = UrlResolver.tempUrlResolver;
 		tempUrlResolver.setupBaseUrlFromPath(baseUrl);
 		return tempUrlResolver.getAbsolutePath(aPath);
+		*/
 	}
 	
 	getMainElement() {
