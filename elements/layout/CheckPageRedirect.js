@@ -3,8 +3,6 @@ import Wprr from "wprr/Wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-import objectPath from "object-path";
-
 //import CheckPageRedirect from "wprr/elements/layout/CheckPageRedirect";
 export default class CheckPageRedirect extends Layout {
 
@@ -15,12 +13,6 @@ export default class CheckPageRedirect extends Layout {
 		this._layoutName = "checkPageRedirect";
 		
 		this._elementTreeItem.setValue("allowed", true);
-	}
-	
-	_prepareInitialRender() {
-		//console.log("CheckPageRedirect::_prepareInitialRender");
-		
-		super._prepareInitialRender();
 		
 		let pageItem = this.getFirstInput(Wprr.sourceReference("wprr/pageItem"));
 		let project = this.getFirstInput(Wprr.sourceReference("wprr/project"));

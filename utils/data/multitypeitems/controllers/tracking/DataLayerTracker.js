@@ -31,6 +31,12 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	_gtag() {
+		window.dataLayer.push(arguments);
+		
+		return this;
+	}
+	
 	_createDataLayerEvent(aType, aData) {
 		return {"event": aType, "value": aData};
 	}
@@ -42,6 +48,7 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 	startStatisticsTracking() {
 		
 		this.addToDataLayer({"event": "enableStatistics"});
+		this._gtag("consent", "update", {"analytics_storage": "granted"});
 		this.addToDataLayer({"event": "trackCurrentPage"});
 		
 		return this;
@@ -50,6 +57,7 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 	startMarketingTracking() {
 		
 		this.addToDataLayer({"event": "enableMarketing"});
+		this._gtag("consent", "update", {"ad_storage": "granted"});
 		
 		return this;
 	}

@@ -3,7 +3,7 @@ import React from "react";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
-export default class MetaPixelTracker extends MultiTypeItemConnection {
+export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnection {
 	
 	constructor() {
 		
@@ -73,7 +73,7 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 		
 		if(pixelId) {
 			window.fbq("init", pixelId);
-			window.fbq("track", "PageView");
+			window.fbq("trackSingle", pixelId, "PageView");
 		}
 		
 		return this;
@@ -89,7 +89,8 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackPage(aUrl) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq("track", "PageView");
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq("trackSingle", pixelId, "PageView");
 		}
 		
 		return this;
@@ -98,7 +99,8 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackEvent(aCategory, aAction, aLabel = null, aValue = null) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq("trackCustom", aCategory + "_" + aAction, {"label": aLabel, "value": aValue});
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq("trackSingleCustom", pixelId, aCategory + "_" + aAction, {"label": aLabel, "value": aValue});
 		}
 		
 		return this;
@@ -114,24 +116,25 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackConversion(aTransactionId, aItemName, aValue) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq('track', 'Purchase', {value: aValue, currency: this.item.getValue("currency")}, {eventID: aTransactionId});
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq('track', pixelId, 'Purchase', {value: aValue, currency: this.item.getValue("currency")}, {eventID: aTransactionId});
 		}
 		
 		return this;
 	}
 	
 	toJSON() {
-		return "[MetaPixelTracker id=" + this._id + "]";
+		return "[MetaPixelSingleAccountTracker id=" + this._id + "]";
 	}
 	
 	static create(aItem, aPixelId = null) {
-		let newMetaPixelTracker = new MetaPixelTracker();
+		let newMetaPixelSingleAccountTracker = new MetaPixelSingleAccountTracker();
 		
-		newMetaPixelTracker.setupForItem(aItem);
+		newMetaPixelSingleAccountTracker.setupForItem(aItem);
 		if(aPixelId) {
-			newMetaPixelTracker.item.setValue("pixelId", aPixelId);
+			newMetaPixelSingleAccountTracker.item.setValue("pixelId", aPixelId);
 		}
 		
-		return newMetaPixelTracker;
+		return newMetaPixelSingleAccountTracker;
 	}
 }
