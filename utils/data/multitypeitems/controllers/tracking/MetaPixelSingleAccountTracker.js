@@ -22,6 +22,7 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 		aItem.requireValue("currency", "EUR");
 		aItem.requireValue("active", false);
 		aItem.requireValue("hasDoneInit", false);
+		aItem.requireValue("skipAutomaticPageViews", true);
 		
 		this.setup();
 		
@@ -67,12 +68,12 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 		this.item.setValue("active", true);
 		let pixelId = this.item.getValue("pixelId");
 		
-		console.log("pixelId", pixelId, this.item.getValue("hasDoneInit"));
-		
 		if(pixelId) {
 			if(!this.item.getValue("hasDoneInit")) {
 				window.fbq("init", pixelId);
-				window.fbq.disablePushState = true; //MENOTE: this is dangourus
+				if(this.item.getValue("skipAutomaticPageViews")) {
+					window.fbq.disablePushState = true;
+				}
 				this.item.setValue("hasDoneInit", true);
 			}
 			
