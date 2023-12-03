@@ -21,6 +21,8 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 		aItem.requireValue("pixelId");
 		aItem.requireValue("currency", "EUR");
 		aItem.requireValue("active", false);
+		aItem.requireValue("hasDoneInit", false);
+		
 		this.setup();
 		
 		return this;
@@ -52,13 +54,9 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 	
 	_loadScript() {
 		
-		let scriptElement = document.createElement('script');
-		scriptElement.async = true;
-		scriptElement.src = "https://connect.facebook.net/en_US/fbevents.js";
+		wprr.loadScript("https://connect.facebook.net/en_US/fbevents.js");
 		
-		let headElement = document.querySelector('head');
-		headElement.appendChild(scriptElement);
-		
+		return this;
 	}
 	
 	startMarketingTracking() {
@@ -69,10 +67,15 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 		this.item.setValue("active", true);
 		let pixelId = this.item.getValue("pixelId");
 		
-		console.log("pixelId", pixelId);
+		console.log("pixelId", pixelId, this.item.getValue("hasDoneInit"));
 		
 		if(pixelId) {
-			window.fbq("init", pixelId);
+			if(!this.item.getValue("hasDoneInit")) {
+				window.fbq("init", pixelId);
+				window.fbq.disablePushState = true; //MENOTE: this is dangourus
+				this.item.setValue("hasDoneInit", true);
+			}
+			
 			window.fbq("trackSingle", pixelId, "PageView");
 		}
 		
