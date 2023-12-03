@@ -253,18 +253,27 @@ export default class WprrBaseObject extends React.Component {
 	
 	getWprrUrl(aPath, aBaseLocation = "rest") {
 		
-		let baseReferencePath = "wprr/paths/";
-		let referencePath =  baseReferencePath + aBaseLocation;
-		
-		let baseUrl = this.getReference(referencePath);
-		if(!baseUrl) {
-			console.warn("No base url for location " + aBaseLocation + " (" + referencePath + ")");
-			return aPath;
+		let colonSlashSlashIndex = aPath.indexOf("://");
+		if(colonSlashSlashIndex > -1) {
+			let questionMarkPosition = aPath.indexOf("?");
+			if((questionMarkPosition === -1) || (colonSlashSlashIndex < questionMarkPosition)) {
+				return aPath;
+			}
 		}
+		
+		let project = this._elementTreeItem.group.getItem("project").getType("controller");
+		
+		let pathController = Wprr.objectPath(this._elementTreeItem.group.getItem("project"), "paths.linkedItem.pathController");
+		let path =  + aPath;
+		
+		let baseUrl = pathController.getChild("wp/" + aBaseLocation + "/").getFullPath();
+		
+		//METODO: use the path without query string in the path controller so that paths can be rewritten
 		
 		let tempUrlResolver = UrlResolver.tempUrlResolver;
 		tempUrlResolver.setupBaseUrlFromPath(baseUrl);
 		return tempUrlResolver.getAbsolutePath(aPath);
+		
 	}
 	
 	getMainElement() {

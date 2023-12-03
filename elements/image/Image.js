@@ -66,9 +66,7 @@ export default class Image extends WprrBaseObject {
 		}
 		
 		if(imageSource) {
-			this._urlResolver.setBasePaths({"default": this.getFirstInput(Wprr.sourceReference("wprr/paths/" + sourceLocation))});
-		
-			fullPath = this._urlResolver.resolveUrl(imageSource, "default");
+			fullPath = this.getWprrUrl(imageSource, sourceLocation);
 		}
 		else {
 			console.warn("No src set for image.", this);

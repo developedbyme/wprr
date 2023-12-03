@@ -46,6 +46,25 @@ export default class ElementBlockRegistration {
 		let currentPath = pathController.getChild("wp/rest");
 		currentPath.setFullPath(wprrAdminData.restApiBaseUrl);
 		
+		let paths = wprrAdminData.paths;
+		
+		if(paths) {
+			
+			for(let objectName in paths) {
+				
+				let currentPath = pathController.getChild("wp/" + objectName);
+				let pathUrl = paths[objectName];
+				if(pathUrl[pathUrl.length-1] === "/") {
+					pathUrl = pathUrl.substring(0, pathUrl.length-1);
+				}
+				currentPath.setFullPath(pathUrl);
+			}
+			
+			let currentPath = pathController.getChild("wp/site/(global-pages)");
+			currentPath.setSlug(null);
+			pathController.item.getNamedLinks("children").addItem("global-pages", currentPath.item.id);
+		}
+		
 		this._store = this._createReduxStore(wprrAdminData);
 		this._storeController.setStore(this._store);
 		this._storeController.setUser(wprrAdminData.userData);
@@ -152,6 +171,11 @@ export default class ElementBlockRegistration {
 			
 			referenceHolder.addObject("wprr/project", this._project);
 			referenceHolder.addObject("wprr/projectName", this._project.name);
+			referenceHolder.addObject("projectLinks", Wprr.objectPath(this._project.items, "project.pathCustomizer.linkedItem.pathCustomizer"));
+			
+			referenceHolder.addObject("wprr/defaultImageLocation", "images");
+			referenceHolder.addObject("items", this._project.items);
+			
 			this._project.setMainReferences(referenceHolder);
 			
 			this._referenceHolders[aClientId] = referenceHolder;
