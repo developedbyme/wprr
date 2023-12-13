@@ -103,7 +103,35 @@ export default class TrackingController extends MultiTypeItemConnection {
 	addTracker(aId) {
 		this.item.getLinks("trackers").addUniqueItem(aId);
 		
+		let active = this.item.getValue("active");
+		if(active) {
+			let allowStatistics = this.item.getValue("allowStatistics");
+			let allowMarketing = this.item.getValue("allowMarketing");
+			
+			let currentTracker = Wprr.objectPath(this.item.group.getItem(aId), "tracker");
+			console.log("currentTracker", currentTracker);
+			try {
+				if(allowStatistics) {
+					currentTracker.startStatisticsTracking();
+				}
+				if(allowMarketing) {
+					currentTracker.startMarketingTracking();
+				}
+			}
+			catch(theError) {
+				console.error("Error occured while stating tracking", currentTracker, theError);
+			}
+		}
+		
 		return this;
+	}
+	
+	removeTracker(aId) {
+		
+		this.item.getLinks("trackers").removeItem(aId);
+		
+		let currentTracker = Wprr.objectPath(this.item.group.getItem(aId), "tracker");
+		currentTracker.stopTracking();
 	}
 	
 	get allowStatistics() {
@@ -130,7 +158,6 @@ export default class TrackingController extends MultiTypeItemConnection {
 				}
 			}
 		}
-		
 	}
 	
 	trackEvent(aCategory, aAction, aLabel = null, aValue = null) {

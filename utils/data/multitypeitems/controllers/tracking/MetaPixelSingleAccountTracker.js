@@ -3,7 +3,7 @@ import React from "react";
 
 import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 
-export default class MetaPixelTracker extends MultiTypeItemConnection {
+export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnection {
 	
 	constructor() {
 		
@@ -21,6 +21,9 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 		aItem.requireValue("pixelId");
 		aItem.requireValue("currency", "EUR");
 		aItem.requireValue("active", false);
+		aItem.requireValue("hasDoneInit", false);
+		aItem.requireValue("skipAutomaticPageViews", true);
+		
 		this.setup();
 		
 		return this;
@@ -52,13 +55,9 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	
 	_loadScript() {
 		
-		let scriptElement = document.createElement('script');
-		scriptElement.async = true;
-		scriptElement.src = "https://connect.facebook.net/en_US/fbevents.js";
+		wprr.loadScript("https://connect.facebook.net/en_US/fbevents.js");
 		
-		let headElement = document.querySelector('head');
-		headElement.appendChild(scriptElement);
-		
+		return this;
 	}
 	
 	startMarketingTracking() {
@@ -69,11 +68,16 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 		this.item.setValue("active", true);
 		let pixelId = this.item.getValue("pixelId");
 		
-		console.log("pixelId", pixelId);
-		
 		if(pixelId) {
-			window.fbq("init", pixelId);
-			window.fbq("track", "PageView");
+			if(!this.item.getValue("hasDoneInit")) {
+				window.fbq("init", pixelId);
+				if(this.item.getValue("skipAutomaticPageViews")) {
+					window.fbq.disablePushState = true;
+				}
+				this.item.setValue("hasDoneInit", true);
+			}
+			
+			window.fbq("trackSingle", pixelId, "PageView");
 		}
 		
 		return this;
@@ -89,7 +93,8 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackPage(aUrl) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq("track", "PageView");
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq("trackSingle", pixelId, "PageView");
 		}
 		
 		return this;
@@ -98,7 +103,8 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackEvent(aCategory, aAction, aLabel = null, aValue = null) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq("trackCustom", aCategory + "_" + aAction, {"label": aLabel, "value": aValue});
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq("trackSingleCustom", pixelId, aCategory + "_" + aAction, {"label": aLabel, "value": aValue});
 		}
 		
 		return this;
@@ -114,24 +120,25 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 	trackConversion(aTransactionId, aItemName, aValue) {
 		
 		if(this.item.getValue("active")) {
-			window.fbq('track', 'Purchase', {value: aValue, currency: this.item.getValue("currency")}, {eventID: aTransactionId});
+			let pixelId = this.item.getValue("pixelId");
+			window.fbq('track', pixelId, 'Purchase', {value: aValue, currency: this.item.getValue("currency")}, {eventID: aTransactionId});
 		}
 		
 		return this;
 	}
 	
 	toJSON() {
-		return "[MetaPixelTracker id=" + this._id + "]";
+		return "[MetaPixelSingleAccountTracker id=" + this._id + "]";
 	}
 	
 	static create(aItem, aPixelId = null) {
-		let newMetaPixelTracker = new MetaPixelTracker();
+		let newMetaPixelSingleAccountTracker = new MetaPixelSingleAccountTracker();
 		
-		newMetaPixelTracker.setupForItem(aItem);
+		newMetaPixelSingleAccountTracker.setupForItem(aItem);
 		if(aPixelId) {
-			newMetaPixelTracker.item.setValue("pixelId", aPixelId);
+			newMetaPixelSingleAccountTracker.item.setValue("pixelId", aPixelId);
 		}
 		
-		return newMetaPixelTracker;
+		return newMetaPixelSingleAccountTracker;
 	}
 }
