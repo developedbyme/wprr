@@ -42,29 +42,41 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	_createRelation(aItemId) {
+	_createRelation(aRelatedItemId) {
 		//console.log("_createRelation");
 		
-		this.item.getLinks("pendingItems").addUniqueItem(aItemId);
+		this.item.getLinks("pendingItems").addUniqueItem(aRelatedItemId);
 		
 		let project = Wprr.objectPath(this.item.group, "project.controller");
 		
 		let baseObjectId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id"); 
 		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
 		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id").split("/").pop(); 
-		let itemId = aItemId;
 		
-		let loader = project.getEditLoader(baseObjectId);
+		let loader = project.getLoader();
+		
+		let body = {
+			"type": connectionType
+		}
+		
 		if(direction === "incoming") {
-			loader.changeData.addIncomingRelation(itemId, connectionType, false);
+			body["from"] = aRelatedItemId;
+			body["to"] = baseObjectId;
 		}
 		else if(direction === "outgoing") {
-			loader.changeData.addOutgoingRelation(itemId, connectionType, false);
+			body["from"] = baseObjectId;
+			body["to"] = aRelatedItemId;
 		}
-	
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [itemId, Wprr.sourceEvent("data.relationId")]));
-	
-		//loader.load();
+		
+		let baseUrl = Wprr.objectPath(this.item.group.getItem("project"), "paths.linkedItem.pathController.wp/wprrData.fullPath");
+		
+		loader.setupJsonPost(baseUrl + "/admin/create-relation/", body);
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.id")]));
+		
+		let editorGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
+		
+		editorGroup.addProgressLoader(loader);
+		
 		let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
 		sharedLoadingSequence.addLoader(loader);
 	}
@@ -86,6 +98,7 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		relationItem.setValue("endAt", -1);
 		relationItem.setValue("postStatus", "draft");
 		
+		this.item.getLinks("pendingItems").removeItem(aId);
 		if(direction === "incoming") {
 			relationItem.addSingleLink("from", newItem.id);
 			relationItem.addSingleLink("to", item.id);
@@ -108,9 +121,6 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();
 		
 		postStatusEditor.item.setValue("value", "private");
-		
-		this.item.getLinks("pendingItems").removeItem(aId);
-		
 	}
 	
 	_itemUpdated() {

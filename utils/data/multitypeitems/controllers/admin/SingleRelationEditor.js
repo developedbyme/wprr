@@ -57,7 +57,11 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 		let itemId = this.item.getType("activeItem").id;
 		let relations = this.item.getLinks("activeRelations").items;
 		
+		
+		
+		
 		if(itemId) {
+			/*
 			let loader = project.getEditLoader(baseObjectId);
 			if(direction === "incoming") {
 				loader.changeData.addIncomingRelation(itemId, connectionType, false);
@@ -70,6 +74,35 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._endRelations, [relations]));
 		
 			//loader.load();
+			let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
+			sharedLoadingSequence.addLoader(loader);
+			*/
+			
+			let loader = project.getLoader();
+		
+			let body = {
+				"type": connectionType
+			}
+		
+			if(direction === "incoming") {
+				body["from"] = itemId;
+				body["to"] = baseObjectId;
+			}
+			else if(direction === "outgoing") {
+				body["from"] = baseObjectId;
+				body["to"] = itemId;
+			}
+		
+			let baseUrl = Wprr.objectPath(this.item.group.getItem("project"), "paths.linkedItem.pathController.wp/wprrData.fullPath");
+		
+			loader.setupJsonPost(baseUrl + "/admin/create-relation/", body);
+			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [itemId, Wprr.sourceEvent("data.id")]));
+			loader.addSuccessCommand(Wprr.commands.callFunction(this, this._endRelations, [relations]));
+		
+			let editorGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
+		
+			editorGroup.addProgressLoader(loader);
+		
 			let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
 			sharedLoadingSequence.addLoader(loader);
 		}

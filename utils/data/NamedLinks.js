@@ -126,6 +126,22 @@ export default class NamedLinks extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	addNode(aName, aNode) {
+		if(aNode instanceof MultiTypeItemConnection) {
+			let item = this.item.group.createInternalItem();
+			aNode.setItemConnection(item);
+			aNode.setup();
+			this.addItem(aName, item.id);
+		}
+		else {
+			let item = this.item.group.createInternalItem();
+			item.addType("node", aNode);
+			this.addItem(aName, item.id);
+		}
+		
+		return aNode;
+	}
+	
 	hasObjectPathHandling() {
 		return true;
 	}
