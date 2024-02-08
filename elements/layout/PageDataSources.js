@@ -65,6 +65,28 @@ export default class PageDataSources extends Layout {
 				this._checkRestrictedAccess();
 			}
 		}
+		else if(this.getFirstInput("loadUser")) {
+			let project = Wprr.objectPath(this._elementTreeItem.group, "project.controller");
+			let checkedLogin = Wprr.objectPath(project, "item.session.linkedItem.checkedLoginStatus.value");
+		
+			if(checkedLogin) {
+				this._elementTreeItem.setValue("me/loaded", true);
+			}
+			else {
+				let loader = project.getSharedLoader(this.getWprrUrl("me/", "wprrData"));
+			
+				if(loader.getStatus() === 1) {
+					let data = loader.getData();
+					this._setUserData(data["data"]);
+					this._elementTreeItem.setValue("me/loaded", true);
+				}
+				else {
+					loader.addSuccessCommand(Wprr.commands.callFunction(this, this._setUserData, [Wprr.sourceEvent("data")]));
+					loader.addSuccessCommand(Wprr.commands.setValue(this._elementTreeItem.getValueSource("me/loaded").reSource(), "value", true));
+					loader.load();
+				}
+			}
+		}
 		else {
 			this._elementTreeItem.setValue("me/skipped", true);
 		}
