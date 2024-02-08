@@ -195,15 +195,25 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		let direction = Wprr.objectPath(this.item, "direction.value");
 		let connectionType = Wprr.objectPath(this.item, "connectionType.id").split("/").pop(); 
 		
-		let loader = project.getEditLoader(baseObjectId);
-		if(direction === "incoming") {
-			loader.changeData.addIncomingRelation(aRelatedItemId, connectionType, false);
-		}
-		else if(direction === "outgoing") {
-			loader.changeData.addOutgoingRelation(aRelatedItemId, connectionType, false);
+		let loader = project.getLoader();
+		
+		let body = {
+			"type": connectionType
 		}
 		
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.relationId")]));
+		if(direction === "incoming") {
+			body["from"] = aRelatedItemId;
+			body["to"] = baseObjectId;
+		}
+		else if(direction === "outgoing") {
+			body["from"] = baseObjectId;
+			body["to"] = aRelatedItemId;
+		}
+		
+		let baseUrl = Wprr.objectPath(this.item.group.getItem("project"), "paths.linkedItem.pathController.wp/wprrData.fullPath");
+		
+		loader.setupJsonPost(baseUrl + "/admin/create-relation/", body);
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.id")]));
 		
 		let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
 		

@@ -1,3 +1,6 @@
+import * as copy from "./copy";
+export {copy as copy};
+
 export {default as ItemCreator} from "./ItemCreator";
 export {default as ItemUpdater} from "./ItemUpdater";
 export {default as EditorsGroup} from "./EditorsGroup";

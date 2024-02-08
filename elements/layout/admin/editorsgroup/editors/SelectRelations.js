@@ -83,10 +83,6 @@ export default class SelectRelations extends WprrBaseObject {
 		return itemEditor.getRelationEditor(direction, relationType, objectType);
 	}
 	
-	_getEncodings() {
-		return "postTitle,postStatus";
-	}
-	
 	_renderMainElement() {
 		//console.log("SelectRelations::_renderMainElement");
 		

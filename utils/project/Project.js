@@ -12,7 +12,7 @@ export default class Project {
 		
 		let projectItem = this._items.getItem("project");
 		projectItem.addType("controller", this);
-		projectItem.requireValue("language");
+		projectItem.requireValue("language", "en");
 		
 		projectItem.getLinks("navigationLocks");
 		
@@ -450,6 +450,22 @@ export default class Project {
 	}
 	
 	getCurrentLanguage() {
-		return Wprr.objectPath(this._mainReferences.getObject("wprr/pageData"), "queryData.language");
+		return this.item.getValue("language"); //Wprr.objectPath(this._mainReferences.getObject("wprr/pageData"), "queryData.language");
+	}
+	
+	setLanguageFromHtml() {
+		let locale = document.querySelector("html").getAttribute("lang");
+		if(locale) {
+			let language = locale.split("-")[0];
+			this.item.setValue("language", language);
+		}
+		
+		return this;
+	}
+	
+	setLanguage(aLanguage) {
+		this.item.setValue("language", aLanguage);
+		
+		return this;
 	}
 }

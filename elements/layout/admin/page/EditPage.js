@@ -86,7 +86,7 @@ export default class EditPage extends Layout {
 					React.createElement(Wprr.OpenCloseExpandableArea, {"open": this._elementTreeItem.getValueSource("open")},
 						React.createElement("div", {"className": "spacing standard"}),
 						React.createElement("div", {},
-							React.createElement(Wprr.FlexRow, {"className": "small-item-spacing halfs"},
+							React.createElement(Wprr.FlexRow, {"className": "small-item-spacing halfs flex-no-wrap"},
 								React.createElement("div", {},
 									React.createElement(Wprr.FlexRow, {"className": "small-item-spacing"},
 										React.createElement(Wprr.Link, {"href": wpUrl},
