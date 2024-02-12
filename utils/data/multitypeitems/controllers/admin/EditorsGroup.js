@@ -17,6 +17,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		this._changeCommandsNode = null;
 		
 		this._saveDataFieldCommand = Wprr.commands.callFunction(this, this._saveDataField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
+		this._saveRelationFieldCommand = Wprr.commands.callFunction(this, this._saveRelationField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveFieldCommand = Wprr.commands.callFunction(this, this._saveField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveMetaFieldCommand = Wprr.commands.callFunction(this, this._saveMetaField, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
 		this._saveOrderCommand = Wprr.commands.callFunction(this, this._saveOrder, [Wprr.sourceEvent("item"), Wprr.sourceEvent("saveOperation")]);
@@ -87,7 +88,7 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 	
 	getFieldEditor(aId, aName) {
 		//console.log("getFieldEditor");
-		//console.log(aId, aName);
+		console.log(aId, aName);
 		
 		let linkName = "field" + aId + "-" + aName;
 		let editors = this.item.getNamedLinks("allEditors");
@@ -115,6 +116,35 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 			newEditorItem.setValue("name", aName);
 			
 			newEditorItem.setValue("saveCommands", [this._saveDataFieldCommand]);
+			
+			editors.addItem(linkName, newEditorItem.id);
+			this.addEditor(newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("valueEditor");
+	}
+	
+	getRelationFieldEditor(aId, aName) {
+		let linkName = "field" + aId + "-" + aName;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			
+			let value = item.getValue(aName);
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.ValueEditor.create(items.createInternalItem(), value);
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditorItem.addSingleLink("editedItem", aId);
+			
+			item.getValueSource(aName).connectSource(newEditorItem.getType("storedValue"));
+			
+			newEditorItem.setValue("name", aName);
+			
+			newEditorItem.setValue("saveCommands", [this._saveRelationFieldCommand]);
 			
 			editors.addItem(linkName, newEditorItem.id);
 			this.addEditor(newEditorItem.id);
@@ -512,6 +542,20 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		
 		let editLoader = aSaveOperation.getEditLoader(itemId);
 		editLoader.changeData.setDataField(aItem.getValue("name"), value, comment);
+		
+		let editor = aItem.getType("valueEditor");
+		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));
+	}
+	
+	_saveRelationField(aItem, aSaveOperation) {
+		//console.log("_saveRelationField");
+		//console.log(aItem, aSaveOperation);
+		
+		let itemId = Wprr.objectPath(aItem, "editedItem.linkedItem.id");
+		let value = aItem.getValue("value");
+		
+		let editLoader = aSaveOperation.getEditLoader(itemId);
+		editLoader.changeData.createChange("dbm/updateObjectRelationField", {"field": aItem.getValue("name"), "value": value});
 		
 		let editor = aItem.getType("valueEditor");
 		editLoader.addSuccessCommand(Wprr.commands.callFunction(editor, editor.saved, [value]));

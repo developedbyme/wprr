@@ -38,11 +38,28 @@ export default class ItemEditor extends MultiTypeItemConnection {
 	}
 	
 	getFieldEditor(aName) {
+		//console.log("getFieldEditor");
+		//console.log(aName);
 		
 		let fieldEditors = this.item.getNamedLinks("fieldEditors");
 		
 		if(!fieldEditors.hasLinkByName(aName)) {
 			let fieldEditor = this.editorsGroup.getFieldEditor(this.item.getType("editedItem").id, aName);
+			
+			fieldEditors.addItem(aName, fieldEditor.item.id);
+		}
+		
+		return fieldEditors.getLinkByName(aName).getType("valueEditor");
+	}
+	
+	getRelationFieldEditor(aName) {
+		//console.log("getRelationFieldEditor");
+		//console.log(aName);
+		
+		let fieldEditors = this.item.getNamedLinks("fieldEditors");
+		
+		if(!fieldEditors.hasLinkByName(aName)) {
+			let fieldEditor = this.editorsGroup.getRelationFieldEditor(this.item.getType("editedItem").id, aName);
 			
 			fieldEditors.addItem(aName, fieldEditor.item.id);
 		}
