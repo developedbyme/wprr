@@ -206,7 +206,7 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 		let currentArrayLength = currentArray.length;
 		for(let i = 0; i < currentArrayLength; i++) {
 			let currentRelation = currentArray[i];
-			let fieldEditor = editorsGroup.getItemEditor(currentRelation.id).getFieldEditor("endAt");
+			let fieldEditor = editorsGroup.getItemEditor(currentRelation.id).getRelationFieldEditor("endAt");
 			let endTime = fieldEditor.value;
 			if(endTime === -1 || endTime > currentTime) {
 				fieldEditor.valueSource.value = currentTime;

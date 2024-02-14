@@ -121,7 +121,7 @@ export default class MetaPixelSingleAccountTracker extends MultiTypeItemConnecti
 		
 		if(this.item.getValue("active")) {
 			let pixelId = this.item.getValue("pixelId");
-			window.fbq('track', pixelId, 'Purchase', {value: aValue, currency: this.item.getValue("currency")}, {eventID: aTransactionId});
+			window.fbq('trackSingleCustom', pixelId, 'Purchase', {"value": aValue, "currency": this.item.getValue("currency")}, {"eventID": aTransactionId});
 		}
 		
 		return this;

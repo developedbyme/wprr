@@ -56,8 +56,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			
 			let currentItemEditor = editorsGroup.getItemEditor(currentItem.id);
 			
-			let startAt = currentItemEditor.getFieldEditor("startAt").value;
-			let endAt = currentItemEditor.getFieldEditor("endAt").value;
+			let startAt = currentItemEditor.getRelationFieldEditor("startAt").value;
+			let endAt = currentItemEditor.getRelationFieldEditor("endAt").value;
 			
 			if((startAt === -1 || startAt <= currentTime) && (endAt === -1 || endAt > currentTime)) {
 				returnArray.push(currentItem);
@@ -160,12 +160,12 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			let itemEditor = editorGroup.getItemEditor(aId);
 			
 			{
-				let valueEditor = itemEditor.getCustomPathFieldEditor("startAt", "startAt");
+				let valueEditor = itemEditor.getRelationFieldEditor("startAt");
 				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
 			}
 			
 			{
-				let valueEditor = itemEditor.getCustomPathFieldEditor("endAt", "endAt");
+				let valueEditor = itemEditor.getRelationFieldEditor("endAt");
 				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
 			}
 		}
@@ -267,11 +267,12 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	endRelation(aRelationId) {
-		//console.log("endRelation");
+		console.log("endRelation");
 		//console.log(aRelationId);
 		
 		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
-		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getFieldEditor("endAt");
+		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getRelationFieldEditor("endAt");
+		console.log(fieldEditor);
 		
 		let currentTime = moment().unix();
 		
