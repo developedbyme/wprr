@@ -138,6 +138,7 @@ export default class Project {
 		this._items.addSetup("action", Wprr.utils.data.multitypeitems.setup.Action.prepare, Wprr.utils.data.multitypeitems.setup.Action.setup);
 		this._items.addSetup("userRelation", Wprr.utils.data.multitypeitems.setup.UserRelation.prepare, Wprr.utils.data.multitypeitems.setup.UserRelation.setup);
 		this._items.addSetup("uploadedFile", Wprr.utils.data.multitypeitems.setup.UploadedFile.prepare, Wprr.utils.data.multitypeitems.setup.UploadedFile.setup);
+		this._items.addSetup("name", Wprr.utils.data.multitypeitems.setup.Name.prepare, Wprr.utils.data.multitypeitems.setup.Name.setup);
 		
 		this._items.addSetup("communication/transactionalEmail", Wprr.utils.data.multitypeitems.setup.communication.TransactionalEmail.prepare, Wprr.utils.data.multitypeitems.setup.communication.TransactionalEmail.setup);
 		this._items.addSetup("communication/content", Wprr.utils.data.multitypeitems.setup.communication.Content.prepare, Wprr.utils.data.multitypeitems.setup.communication.Content.setup);
