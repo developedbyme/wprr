@@ -53,4 +53,27 @@ export default class Transform extends BaseObject {
 		
 		return this;
 	}
+	
+	setupRotation() {
+		let amount = this.createSource("amount", 0);
+		let unit = this.createSource("unit", "deg");
+		
+		let amountAndUnit = new Wprr.utils.data.nodes.JoinValues();
+		amountAndUnit.separator = "";
+		this.createSource("amountAndUnitNode", amountAndUnit);
+		
+		amountAndUnit.addNamedValue("amount", 0);
+		amountAndUnit.addNamedValue("unit", "deg");
+		
+		amount.connectSource(amountAndUnit.sources.get("amount"));
+		unit.connectSource(amountAndUnit.sources.get("unit"));
+		
+		this.operation = "rotate";
+		
+		this.values.addNamedValue("rotation", "0deg");
+		
+		amountAndUnit.sources.get("output").connectSource(this.values.sources.get("rotation"));
+		
+		return this;
+	}
 }

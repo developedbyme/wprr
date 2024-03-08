@@ -4,3 +4,4 @@ export {default as Compare} from "./Compare";
 export {default as Switch} from "./Switch";
 export {default as First} from "./First";
 export {default as Ratio} from "./Ratio";
+export {default as Offset} from "./Offset";
