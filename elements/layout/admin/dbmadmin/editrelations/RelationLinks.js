@@ -203,22 +203,23 @@ export default class RelationLinks extends Wprr.BaseObject {
 	_renderMainElement() {
 		
 		return React.createElement("div", {"className": "centered-site"},
-			React.createElement(Wprr.HasData, {"check": this._elementTreeItem.getValueSource("loaded")},
-				React.createElement(Wprr.HasData, {"check": this._elementTreeItem.requireSingleLink("item").idSource},
-					React.createElement(Wprr.SelectItem, {"id": this._elementTreeItem.requireSingleLink("item").idSource},
+			
+			React.createElement(Wprr.HasData, {"check": this._elementTreeItem.requireSingleLink("item").idSource},
+				React.createElement(Wprr.SelectItem, {"id": this._elementTreeItem.requireSingleLink("item").idSource},
+					React.createElement("div", null, 
 						React.createElement("div", null, 
-							React.createElement("div", null, 
-								Wprr.text(Wprr.sourceReference("item", "title")),
-								React.createElement("div", {"className": "spacing small"}),
-								React.createElement(Wprr.layout.ItemList, {"ids": Wprr.sourceReference("item", "objectTypes.idsSource")},
-									React.createElement("div", {"className": "standard-flag standard-flag-padding small-text"}, 
-										Wprr.text(Wprr.sourceReference("item", "slug"))
-							
-									),
-									React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing"})
-								)
-							),
-							React.createElement("div", {"className": "spacing standard"}),
+							Wprr.text(Wprr.sourceReference("item", "title")),
+							React.createElement("div", {"className": "spacing small"}),
+							React.createElement(Wprr.layout.ItemList, {"ids": Wprr.sourceReference("item", "objectTypes.idsSource")},
+								React.createElement("div", {"className": "standard-flag standard-flag-padding small-text"}, 
+									Wprr.text(Wprr.sourceReference("item", "slug"))
+						
+								),
+								React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing"})
+							)
+						),
+						React.createElement("div", {"className": "spacing standard"}),
+						React.createElement(Wprr.HasData, {"check": this._elementTreeItem.getValueSource("loaded")},
 							React.createElement("div", null,
 								React.createElement(Wprr.FlexRow, {"className": "halfs small-item-spacing flex-no-wrap"},
 									React.createElement("div", null, 
