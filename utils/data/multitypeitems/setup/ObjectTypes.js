@@ -22,7 +22,7 @@ export default class ObjectTypes extends BaseObject {
 		//console.log("ObjectTypes::setup");
 		//console.log(aData);
 		
-		aItem.getLinks("objectTypes").addItems(Wprr.objectPath(aData, "objectTypes"));
+		aItem.getLinks("objectTypes").setItems(Wprr.objectPath(aData, "objectTypes"));
 		aItem.setValue("hasData/objectTypes", true);
 		
 		return this;

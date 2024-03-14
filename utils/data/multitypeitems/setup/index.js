@@ -55,6 +55,7 @@ export {default as ContentTemplateTranslations} from "./ContentTemplateTranslati
 export {default as ValueTranslations} from "./ValueTranslations";
 export {default as TypeTranslations} from "./TypeTranslations";
 export {default as UploadedFile} from "./UploadedFile";
+export {default as Name} from "./Name";
 
 import * as fieldtemplatetypes from "./fieldtemplatetypes";
 export {fieldtemplatetypes as fieldtemplatetypes};
