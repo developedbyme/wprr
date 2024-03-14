@@ -30,7 +30,7 @@ export default class SelectAnyRelations extends WprrBaseObject {
 		let numericSearch = 1*search;
 		
 		if(isNaN(numericSearch) || numericSearch != search) {
-			singleResultLoader.setUrl(this.getWprrUrl("range/?select=search&encode=postTitle,postStatus,objectTypes&search=" + encodeURIComponent(search), "wprrData"));
+			singleResultLoader.setUrl(this.getWprrUrl("range/?select=search,anyStatus&encode=postTitle,postStatus,objectTypes&search=" + encodeURIComponent(search), "wprrData"));
 		}
 		else {
 			singleResultLoader.setUrl(this.getWprrUrl("range/?select=idSelection,anyStatus&encode=postTitle,postStatus,objectTypes&ids=" + numericSearch, "wprrData"));

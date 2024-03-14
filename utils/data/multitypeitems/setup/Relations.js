@@ -15,6 +15,7 @@ export default class Relations extends BaseObject {
 		aItem.requireValue("hasData/relations", false);
 		aItem.getLinks("incomingRelations");
 		aItem.getLinks("outgoingRelations");
+		aItem.getLinks("userRelations");
 		
 		return this;
 	}
@@ -25,9 +26,11 @@ export default class Relations extends BaseObject {
 		
 		let incomingIds = Wprr.objectPath(aData, "relations.incoming");
 		let outgoingIds = Wprr.objectPath(aData, "relations.outgoing");
+		let userIds = Wprr.objectPath(aData, "relations.user");
 		
 		aItem.getLinks("incomingRelations").addUniqueItems(incomingIds);
 		aItem.getLinks("outgoingRelations").addUniqueItems(outgoingIds);
+		aItem.getLinks("userRelations").addUniqueItems(userIds);
 		
 		{
 			let currentArray = aItem.group.getItems(incomingIds);
@@ -41,6 +44,16 @@ export default class Relations extends BaseObject {
 		
 		{
 			let currentArray = aItem.group.getItems(outgoingIds);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentRelation = currentArray[i];
+				currentRelation.requireValue("postStatus", "private");
+				currentRelation.setValue("hasData/postStatus", true);
+			}
+		}
+		
+		{
+			let currentArray = aItem.group.getItems(userIds);
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentRelation = currentArray[i];
