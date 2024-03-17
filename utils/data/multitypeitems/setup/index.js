@@ -83,3 +83,9 @@ export {group as group};
 
 import * as internalmessagegroup from "./internalmessagegroup";
 export {internalmessagegroup as internalmessagegroup};
+
+import * as posttranslation from "./posttranslation";
+export {posttranslation as posttranslation};
+
+import * as representation from "./representation";
+export {representation as representation};

@@ -609,6 +609,30 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	hasObjectPathHandling() {
+		return true;
+	}
+	
+	getValueForPath(aPath) {
+		//console.log("EditorsGroupd::getValueForPath");
+		//console.log(aPath);
+		
+		let tempArray = (""+aPath).split(".");
+		let firstPart = tempArray.shift();
+		let restParts = tempArray.join(".");
+		
+		switch(firstPart) {
+			case "itemEditor":
+				{
+					let itemId = tempArray.shift();
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getItemEditor(itemId), restParts);
+				}
+		}
+		
+		return Wprr.objectPath(this[firstPart], restParts);
+	}
+	
 	static create(aItem) {
 		let newEditorsGroup = new EditorsGroup();
 		
