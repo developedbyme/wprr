@@ -152,9 +152,9 @@ export default class Project {
 		
 		this._items.addSetup("internalMessage", Wprr.utils.data.multitypeitems.setup.internalmessagegroup.InternalMessage.prepare, Wprr.utils.data.multitypeitems.setup.internalmessagegroup.InternalMessage.setup);
 		
-		this._items.addSetup("posttranslation/language", Wprr.utils.data.multitypeitems.setup.posttranslation.Language.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.Language.setup);
-		this._items.addSetup("posttranslation/translations", Wprr.utils.data.multitypeitems.setup.posttranslation.Translations.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.Translations.setup);
-		this._items.addSetup("posttranslation/translationGroup", Wprr.utils.data.multitypeitems.setup.posttranslation.TranslationsGroup.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.TranslationsGroup.setup);
+		this._items.addSetup("postTranslation/language", Wprr.utils.data.multitypeitems.setup.posttranslation.Language.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.Language.setup);
+		this._items.addSetup("postTranslation/translations", Wprr.utils.data.multitypeitems.setup.posttranslation.Translations.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.Translations.setup);
+		this._items.addSetup("postTranslation/translationsGroup", Wprr.utils.data.multitypeitems.setup.posttranslation.TranslationsGroup.prepare, Wprr.utils.data.multitypeitems.setup.posttranslation.TranslationsGroup.setup);
 		
 		this._items.addSetup("representation", Wprr.utils.data.multitypeitems.setup.representation.Representation.prepare, Wprr.utils.data.multitypeitems.setup.representation.Representation.setup);
 		this._items.addSetup("representation/representations", Wprr.utils.data.multitypeitems.setup.representation.Representations.prepare, Wprr.utils.data.multitypeitems.setup.representation.Representations.setup);
