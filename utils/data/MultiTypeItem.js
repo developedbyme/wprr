@@ -208,6 +208,10 @@ export default class MultiTypeItem {
 			case "cache":
 			case "settings":
 				return Wprr.objectPath(this[firstPart], restParts);
+			case "valueSource":
+				let secondPart = tempArray.shift();
+				restParts = tempArray.join(".");
+				return Wprr.objectPath(this.getValueSource(secondPart), restParts);
 		}
 		
 		return Wprr.objectPath(this.getType(firstPart), restParts);
