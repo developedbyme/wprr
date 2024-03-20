@@ -16,6 +16,7 @@ export default class GetItemProperty extends MultiTypeItemConnection {
 	
 	setup() {
 		
+		this.item.addType("controller", this);
 		this.item.getValueSource("propertyPath").addChangeCommand(this._itemChangedCommand);
 		this.item.requireSingleLink("fromItem");
 		this.item.getType("fromItem").idSource.addChangeCommand(this._itemChangedCommand);
@@ -30,7 +31,7 @@ export default class GetItemProperty extends MultiTypeItemConnection {
 	
 	
 	setupForItem(aItem) {
-		aItem.addType("controller", this);
+		this.setItemConnection(aItem);
 		this.setup();
 		
 		return this;

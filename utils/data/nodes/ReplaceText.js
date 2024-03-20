@@ -29,15 +29,21 @@ export default class ReplaceText extends BaseObject {
 	
 	_updateReplacedText() {
 		//console.log("_updateReplacedText");
+		//console.log(this);
 		
 		let currentText = this.text;
 		
-		let currentArray = this.replacements;
-		let currentArrayLength = currentArray.length;
-		for(let i = 0; i < currentArrayLength; i++) {
-			let currentKey = currentArray[i];
-			let currentValue = this[currentKey];
-			currentText = currentText.split(currentKey).join(currentValue);
+		if(currentText) {
+			let currentArray = this.replacements;
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentKey = currentArray[i];
+				let currentValue = this[currentKey];
+				
+				if(currentValue !== null && currentValue !== undefined) {
+					currentText = currentText.split(currentKey).join(currentValue);
+				}
+			}
 		}
 		
 		this.replacedText = currentText;

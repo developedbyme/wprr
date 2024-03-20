@@ -25,6 +25,7 @@ export {default as CreateDateRange} from "./CreateDateRange";
 export {default as ObjectProperty} from "./ObjectProperty";
 export {default as ConcatArrays} from "./ConcatArrays";
 export {default as AnimateValue} from "./AnimateValue";
+export {default as GetItemBy} from "./GetItemBy";
 
 import * as css from "./css";
 export {css as css};
