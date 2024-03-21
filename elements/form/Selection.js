@@ -10,10 +10,8 @@ import SourcedText from "wprr/elements/text/SourcedText";
 // import Selection from "wprr/elements/form/Selection";
 export default class Selection extends WprrBaseObject {
 
-	constructor( props ) {
-		super( props );
-		
-		this._mainElementType = "select";
+	_construct() {
+		super._construct();
 		
 		this._callback_changeBound = this._callback_change.bind(this);
 		this._callback_blurBound = this._callback_blur.bind(this);
@@ -79,9 +77,9 @@ export default class Selection extends WprrBaseObject {
 	}
 	
 	_callback_change(aEvent) {
-		//console.log("Selection::_callback_change");
-		//console.log(aEvent);
-		//console.log(aEvent.target.value);
+		console.log("Selection::_callback_change");
+		console.log(aEvent);
+		console.log(aEvent.target.value);
 		
 		let value = aEvent.target.value;
 		let additionalData = this.getSourcedProp("additionalData");
@@ -175,7 +173,7 @@ export default class Selection extends WprrBaseObject {
 		
 		let checksum = Wprr.utils.array.mapField(options, "value");
 		
-		return React.createElement("wrapper", {}, 
+		return React.createElement("select", {}, 
 			React.createElement(Wprr.UpdateCheck, {"checksum": checksum},
 				optionElements
 			)

@@ -168,6 +168,12 @@ export default class ItemEditor extends MultiTypeItemConnection {
 					restParts = tempArray.join(".");
 					return Wprr.objectPath(this.getPostStatusEditor(), restParts);
 				}
+			case "metaEditor":
+				{
+					let fieldName = tempArray.shift();
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getMetaEditor(fieldName), restParts);
+				}
 		}
 		
 		return Wprr.objectPath(this[firstPart], restParts);
