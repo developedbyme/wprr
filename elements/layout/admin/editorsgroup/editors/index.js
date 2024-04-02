@@ -21,6 +21,8 @@ export {default as EditValueObjectProperty} from "./EditValueObjectProperty";
 export {default as EditLinkedObjectProperty} from "./EditLinkedObjectProperty";
 export {default as Translations} from "./Translations";
 export {default as EditorsGroup} from "./EditorsGroup";
+export {default as SelectUserRelation} from "./SelectUserRelation";
+export {default as SelectUserRelations} from "./SelectUserRelations";
 
 import * as files from "./files/index.js";
 export {files};
