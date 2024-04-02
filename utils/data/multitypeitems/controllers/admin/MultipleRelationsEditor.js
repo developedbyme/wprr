@@ -47,80 +47,17 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		
 		this.item.getLinks("pendingItems").addUniqueItem(aRelatedItemId);
 		
-		let project = Wprr.objectPath(this.item.group, "project.controller");
+		let relationEditor = Wprr.objectPath(this.item, "relationEditor.linkedItem.relationEditor");
+		let loader = relationEditor.createRelation(aRelatedItemId);
 		
-		let baseObjectId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id"); 
-		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
-		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id").split("/").pop(); 
-		
-		let loader = project.getLoader();
-		
-		let body = {
-			"type": connectionType
-		}
-		
-		if(direction === "incoming") {
-			body["from"] = aRelatedItemId;
-			body["to"] = baseObjectId;
-		}
-		else if(direction === "outgoing") {
-			body["from"] = baseObjectId;
-			body["to"] = aRelatedItemId;
-		}
-		
-		let baseUrl = Wprr.objectPath(this.item.group.getItem("project"), "paths.linkedItem.pathController.wp/wprrData.fullPath");
-		
-		loader.setupJsonPost(baseUrl + "/admin/create-relation/", body);
-		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.id")]));
-		
-		let editorGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
-		
-		editorGroup.addProgressLoader(loader);
-		
-		let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
-		sharedLoadingSequence.addLoader(loader);
+		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId]));
 	}
 	
-	_relationCreated(aId, aRelationId) {
+	_relationCreated(aId) {
 		//console.log("_relationCreated");
 		
-		let itemId = Wprr.objectPath(this.item, "relationEditor.linkedItem.editedItem.id");
-		let direction = Wprr.objectPath(this.item, "relationEditor.linkedItem.direction.value");
+		this.item.getLinks("pendingItems").removeItem(aId); 
 		
-		let newItem = this.item.group.getItem(aId);
-		let relationItem = this.item.group.getItem(aRelationId);
-		let item = this.item.group.getItem(itemId);
-		
-		let connectionType = Wprr.objectPath(this.item, "relationEditor.linkedItem.connectionType.id");
-		relationItem.addSingleLink("type", connectionType);
-		
-		relationItem.setValue("startAt", moment().unix());
-		relationItem.setValue("endAt", -1);
-		relationItem.setValue("postStatus", "draft");
-		
-		this.item.getLinks("pendingItems").removeItem(aId);
-		if(direction === "incoming") {
-			relationItem.addSingleLink("from", newItem.id);
-			relationItem.addSingleLink("to", item.id);
-			
-			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
-			
-			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
-		}
-		else {
-			relationItem.addSingleLink("to", newItem.id);
-			relationItem.addSingleLink("from", item.id);
-			
-			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
-			
-			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
-		}
-		
-		let editorsGroup = Wprr.objectPath(this.item, "relationEditor.linkedItem.editorsGroup.linkedItem.editorsGroup");
-		
-		let postStatusEditor = editorsGroup.getItemEditor(relationItem.id).getPostStatusEditor();
-		
-		postStatusEditor.item.setValue("value", "private");
 	}
 	
 	_itemUpdated() {
@@ -185,6 +122,9 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 			if(direction === "incoming") {
 				linkName = "from.id";
 			}
+			else if(direction === "user") {
+				linkName = "user.id";
+			}
 			
 			returnArray.push(Wprr.objectPath(currentRelation, linkName));
 		}
@@ -199,6 +139,9 @@ export default class MultipleRelationsEditor extends MultiTypeItemConnection {
 		let linkName = "to.id";
 		if(direction === "incoming") {
 			linkName = "from.id";
+		}
+		else if(direction === "user") {
+			linkName = "user.id";
 		}
 		
 		return Wprr.utils.array.getItemsBy(linkName, aIds, relations, "inArray");

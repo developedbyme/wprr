@@ -6,10 +6,10 @@ import MultiTypeItemConnection from "wprr/utils/data/MultiTypeItemConnection";
 import SingleRelationEditor from "./SingleRelationEditor";
 import MultipleRelationsEditor from "./MultipleRelationsEditor";
 
-export default class RelationEditor extends MultiTypeItemConnection {
+export default class UserRelationEditor extends MultiTypeItemConnection {
 	
 	constructor() {
-		//console.log("RelationEditor::constructor");
+		//console.log("UserRelationEditor::constructor");
 		
 		super();
 		
@@ -21,6 +21,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		this._filterActiveRelationsBound = this._filterActiveRelations.bind(this);
 	}
+	
 	
 	get singleEditor() {
 		if(!this.item.hasType("singleEditor")) {
@@ -56,8 +57,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			
 			let currentItemEditor = editorsGroup.getItemEditor(currentItem.id);
 			
-			let startAt = currentItemEditor.getFieldEditor("startAt").value;
-			let endAt = currentItemEditor.getFieldEditor("endAt").value;
+			let startAt = currentItemEditor.getRelationFieldEditor("startAt").value;
+			let endAt = currentItemEditor.getRelationFieldEditor("endAt").value;
 			
 			if((startAt === -1 || startAt <= currentTime) && (endAt === -1 || endAt > currentTime)) {
 				returnArray.push(currentItem);
@@ -70,10 +71,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	setup() {
 		
 		this.item.requireSingleLink("editedItem");
-		this.item.requireValue("direction");
-		this.item.requireValue("objectTypeField", "from.linkedItem.objectTypes.ids");
 		this.item.requireSingleLink("connectionType");
-		this.item.requireSingleLink("itemType");
 		
 		this.item.getLinks("allRelations");
 		this.item.getLinks("typedRelations");
@@ -86,12 +84,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			{
 				let filterPart = filter.addFieldCompare("type.id", null);
 				this.item.getType("connectionType").idSource.connectSource(filterPart.getType("compareValue"));
-			}
-			{
-				let filterPart = filter.addFieldCompare("from.linkedItem.objectTypes.ids", null, "arrayContains");
-				this.item.getType("objectTypeField").connectSource(filterPart.getType("field"));
-				this.item.getType("itemType").idSource.connectSource(filterPart.getType("compareValue"));
-				filterPart.getValueSource("active").input(this.item.getType("itemType").idSource);
 			}
 			
 			this.item.getLinks("typedRelations").input(filter.item.getLinks("filtered"));
@@ -127,26 +119,18 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		return this;
 	}
 	
-	setupSelection(aItemId, aDirection, aConnectionType, aItemType) {
+	setupSelection(aItemId, aConnectionType) {
 		//console.log("setupSelection");
 		let item = this.item.group.getItem(aItemId);
 		
 		this.item.addSingleLink("editedItem", aItemId);
-		this.item.setValue("direction", aDirection);
+		this.item.setValue("direction", "user");
 		
-		this.item.addSingleLink("connectionType", "dbm_type:object-relation/" + aConnectionType);
-		if(aItemType !== "*") {
-			this.item.addSingleLink("itemType", "dbm_type:" + aItemType);
-		}
+		this.item.addSingleLink("connectionType", "dbm_type:object-user-relation/" + aConnectionType);
+
 		
-		let directedRelations = item.getLinks(aDirection + "Relations");
+		let directedRelations = item.getLinks("userRelations");
 		directedRelations.idsSource.connectSource(this.item.getLinks("allRelations").idsSource);
-		if(aDirection === "incoming") {
-			this.item.setValue("objectTypeField", "from.linkedItem.objectTypes.ids");
-		}
-		else {
-			this.item.setValue("objectTypeField", "to.linkedItem.objectTypes.ids");
-		}
 		
 		return this;
 	}
@@ -160,12 +144,12 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			let itemEditor = editorGroup.getItemEditor(aId);
 			
 			{
-				let valueEditor = itemEditor.getCustomPathFieldEditor("startAt", "startAt");
+				let valueEditor = itemEditor.getRelationFieldEditor("startAt");
 				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
 			}
 			
 			{
-				let valueEditor = itemEditor.getCustomPathFieldEditor("endAt", "endAt");
+				let valueEditor = itemEditor.getRelationFieldEditor("endAt");
 				valueEditor.valueSource.addChangeCommand(this._updateActiveFilterCommand);
 			}
 		}
@@ -191,9 +175,10 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	createRelation(aRelatedItemId) {
 		let project = Wprr.objectPath(this.item.group, "project.controller");
 		
-		let baseObjectId = Wprr.objectPath(this.item, "editedItem.id"); 
-		let direction = Wprr.objectPath(this.item, "direction.value");
+		let baseObjectId = Wprr.objectPath(this.item, "editedItem.id");
 		let connectionType = Wprr.objectPath(this.item, "connectionType.id").split("/").pop(); 
+		
+		let user = this.item.group.getItem(aRelatedItemId);
 		
 		let loader = project.getLoader();
 		
@@ -201,18 +186,12 @@ export default class RelationEditor extends MultiTypeItemConnection {
 			"type": connectionType
 		}
 		
-		if(direction === "incoming") {
-			body["from"] = aRelatedItemId;
-			body["to"] = baseObjectId;
-		}
-		else if(direction === "outgoing") {
-			body["from"] = baseObjectId;
-			body["to"] = aRelatedItemId;
-		}
+		body["object"] = baseObjectId;
+		body["user"] = user.getValue("systemId");
 		
 		let baseUrl = Wprr.objectPath(this.item.group.getItem("project"), "paths.linkedItem.pathController.wp/wprrData.fullPath");
 		
-		loader.setupJsonPost(baseUrl + "/admin/create-relation/", body);
+		loader.setupJsonPost(baseUrl + "/admin/create-user-relation/", body);
 		loader.addSuccessCommand(Wprr.commands.callFunction(this, this._relationCreated, [aRelatedItemId, Wprr.sourceEvent("data.id")]));
 		
 		let editorGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
@@ -221,8 +200,6 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		
 		let sharedLoadingSequence = project.item.getType("sharedLoadingSequence");
 		sharedLoadingSequence.addLoader(loader);
-		
-		return loader;
 	}
 	
 	_relationCreated(aId, aRelationId) {
@@ -230,9 +207,8 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		//console.log(aId, aRelationId);
 		
 		let itemId = Wprr.objectPath(this.item, "editedItem.id");
-		let direction = Wprr.objectPath(this.item, "direction.value");
 		
-		let newItem = this.item.group.getItem(aId);
+		//METODO: update user
 		let relationItem = this.item.group.getItem(aRelationId);
 		let item = this.item.group.getItem(itemId);
 		
@@ -243,22 +219,10 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		relationItem.setValue("endAt", -1);
 		relationItem.setValue("postStatus", "draft");
 		
-		if(direction === "incoming") {
-			relationItem.addSingleLink("from", newItem.id);
-			relationItem.addSingleLink("to", item.id);
-			
-			newItem.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
-			
-			item.getLinks("incomingRelations").addUniqueItem(relationItem.id);
-		}
-		else {
-			relationItem.addSingleLink("to", newItem.id);
-			relationItem.addSingleLink("from", item.id);
-			
-			newItem.getLinks("incomingRelations").addUniqueItem(relationItem.id);
-			
-			item.getLinks("outgoingRelations").addUniqueItem(relationItem.id);
-		}
+		relationItem.addSingleLink("object", itemId);
+		relationItem.addSingleLink("user", aId);
+		
+		item.getLinks("userRelations").addUniqueItem(relationItem.id);
 		
 		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
 		
@@ -273,7 +237,7 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		//console.log(aRelationId);
 		
 		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
-		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getFieldEditor("endAt");
+		let fieldEditor = editorsGroup.getItemEditor(aRelationId).getRelationFieldEditor("endAt");
 		
 		let currentTime = moment().unix();
 		
@@ -294,15 +258,15 @@ export default class RelationEditor extends MultiTypeItemConnection {
 	}
 	
 	toJSON() {
-		return "[RelationEditor id=" + this._id + "]";
+		return "[UserRelationEditor id=" + this._id + "]";
 	}
 	
 	static create(aItem) {
-		//console.log("RelationEditor::create");
-		let newRelationEditor = new RelationEditor();
+		//console.log("UserRelationEditor::create");
+		let newUserRelationEditor = new UserRelationEditor();
 		
-		newRelationEditor.setupForItem(aItem);
+		newUserRelationEditor.setupForItem(aItem);
 		
-		return newRelationEditor;
+		return newUserRelationEditor;
 	}
 }
