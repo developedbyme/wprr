@@ -124,6 +124,18 @@ export default class ItemEditor extends MultiTypeItemConnection {
 		return relationEditors.getLinkByName(linkName).getType("relationEditor");
 	}
 	
+	getUserRelationEditor(aConnectionType) {
+		let linkName = "userRelation-" + aConnectionType;
+		let relationEditors = this.item.getNamedLinks("relationEditors");
+		
+		if(!relationEditors.hasLinkByName(linkName)) {
+			let relationEditor = this.editorsGroup.getUserRelationEditor(this.item.getType("editedItem").id, aConnectionType);
+			relationEditors.addItem(linkName, relationEditor.item.id);
+		}
+		
+		return relationEditors.getLinkByName(linkName).getType("relationEditor");
+	}
+	
 	getOrderEditor(aForType) {
 		let linkName = "order-" + aForType;
 		let orderEditors = this.item.getNamedLinks("orderEditors");
@@ -174,6 +186,12 @@ export default class ItemEditor extends MultiTypeItemConnection {
 					let itemType = tempArray.shift();
 					restParts = tempArray.join(".");
 					return Wprr.objectPath(this.getRelationEditor(direction, connectionType, itemType), restParts);
+				}
+			case "userRelationEditor":
+				{
+					let connectionType = tempArray.shift();
+					restParts = tempArray.join(".");
+					return Wprr.objectPath(this.getUserRelationEditor(connectionType), restParts);
 				}
 			case "contentEditor":
 				{

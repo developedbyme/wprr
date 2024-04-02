@@ -375,6 +375,26 @@ export default class EditorsGroup extends MultiTypeItemConnection {
 		return editors.getLinkByName(linkName).getType("relationEditor");
 	}
 	
+	getUserRelationEditor(aId, aConnectionType) {
+		let linkName = "userRelation" + aId + "-" + aConnectionType;
+		let editors = this.item.getNamedLinks("allEditors");
+		
+		if(!editors.hasLinkByName(linkName)) {
+			let items = this.item.group;
+			
+			let item = items.getItem(aId);
+			let newEditor = Wprr.utils.data.multitypeitems.controllers.admin.UserRelationEditor.create(items.createInternalItem());
+			
+			let newEditorItem = newEditor.item;
+			newEditorItem.addSingleLink("editorsGroup", this.item.id);
+			newEditor.setupSelection(aId, aConnectionType);
+			
+			editors.addItem(linkName, newEditorItem.id);
+		}
+		
+		return editors.getLinkByName(linkName).getType("relationEditor");
+	}
+	
 	getOrderEditor(aId, aForType) {
 		let linkName = "order" + aId + "-" + aForType;
 		let editors = this.item.getNamedLinks("allEditors");
