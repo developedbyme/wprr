@@ -16,6 +16,7 @@ export default class ItemsTable extends MultiTypeItemConnection {
 		
 		this.item.requireValue("rowClasses", "standard-row");
 		this.item.requireValue("headerRowClasses", "standard-row");
+		this.item.requireValue("itemClasses", "");
 		
 		let activeList = this.item.addNode("activeList", new Wprr.utils.data.multitypeitems.controllers.list.ActiveList());
 		activeList.item.getLinks("items").input(this.item.getLinks("columns"));
@@ -26,7 +27,7 @@ export default class ItemsTable extends MultiTypeItemConnection {
 				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
 					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "cellElement")})
 				),
-				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap"})
+				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap", "itemClasses": this.item.getValueSource("itemClasses")})
 			);
 	
 			this.item.setValue("rowElement", element);
@@ -37,7 +38,7 @@ export default class ItemsTable extends MultiTypeItemConnection {
 				React.createElement(Wprr.RelatedItem, {"id": "forItem.linkedItem", "from": Wprr.sourceReference("columnRow"), "as": "column"},
 					React.createElement(Wprr.InsertElement, {"element": Wprr.sourceReference("column", "headerCellElement")})
 				),
-				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap"})
+				React.createElement(Wprr.FlexRow, {"data-slot": "insertElements", "className": "small-item-spacing flex-no-wrap", "itemClasses": this.item.getValueSource("itemClasses")})
 			);
 	
 			this.item.setValue("headerRowElement", element);
