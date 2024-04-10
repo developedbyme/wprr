@@ -72,6 +72,22 @@ export default class CopyOperation extends MultiTypeItemConnection {
 		return item;
 	}
 	
+	addManualCreation(aName, aAmount, aObjectTypes = null) {
+		let item = this.item.group.createInternalItem();
+		
+		item.addSingleLink("copyOperation", this.item.id);
+		item.requireValue("loaded", true);
+		item.setValue("objectTypes", aObjectTypes);
+		
+		let amountArray = (new Array(aAmount)).fill(0);
+		
+		item.getLinks("items").setItems(amountArray);
+		
+		this.item.getNamedLinks("connectedItems").addItem(aName, item.id);
+		
+		return item;
+	}
+	
 	_allLoaded() {
 		console.log("CopyOperation::_allLoaded");
 		
@@ -128,6 +144,7 @@ export default class CopyOperation extends MultiTypeItemConnection {
 			
 			let currentItem = connectedItems.getLinkByName(objectName);
 			
+			currentItem.getLinks("copiedItems").setItems(newIds);
 			let copyMap = currentItem.getNamedLinks("copyMap");
 			
 			let currentArray = originalIds;
