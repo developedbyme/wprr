@@ -35,7 +35,9 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 	}
 	
 	setValue(aValue) {
+		
 		this.item.addSingleLink("activeItem", aValue);
+		
 		
 		return this;
 	}
@@ -54,7 +56,9 @@ export default class SingleRelationEditor extends MultiTypeItemConnection {
 		let itemId = this.item.getType("activeItem").id;
 		
 		if(itemId) {
-			relationEditor.createRelation(itemId);
+			let loader = relationEditor.createRelation(itemId);
+			let relations = relationEditor.item.getLinks("activeRelations").items;
+			loader.addSuccessCommand(Wprr.commands.callFunction(relationEditor, relationEditor._endRelations, [relations, moment().unix()]));
 		}
 		else {
 			relationEditor.endAllRelations();

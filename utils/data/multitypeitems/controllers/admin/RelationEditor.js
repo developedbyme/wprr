@@ -293,6 +293,25 @@ export default class RelationEditor extends MultiTypeItemConnection {
 		}
 	}
 	
+	_endRelations(aRelations, aTime = null) {
+		//console.log("_endRelations");
+		//console.log(aRelations);
+	
+		let currentTime = (aTime !== null) ? aTime : moment().unix();
+		let editorsGroup = Wprr.objectPath(this.item, "editorsGroup.linkedItem.editorsGroup");
+	
+		let currentArray = aRelations;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			let currentRelation = currentArray[i];
+			let fieldEditor = editorsGroup.getItemEditor(currentRelation.id).getFieldEditor("endAt");
+			let endTime = fieldEditor.value;
+			if(endTime === -1 || endTime > currentTime) {
+				fieldEditor.valueSource.value = currentTime;
+			}
+		}
+	}
+	
 	toJSON() {
 		return "[RelationEditor id=" + this._id + "]";
 	}
