@@ -79,6 +79,10 @@ export default class MetaPixelTracker extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	startTracking() {
+		return this;
+	}
+	
 	stopTracking() {
 		
 		this.item.setValue("active", false);

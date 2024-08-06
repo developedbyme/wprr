@@ -24,7 +24,6 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 	}
 	
 	addToDataLayer(aData) {
-		window.dataLayer = window.dataLayer || [];
 		
 		window.dataLayer.push(aData);
 		
@@ -45,10 +44,27 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 		return {"event": aType, "ecommerce": aData};
 	}
 	
+	startTracking() {
+		if(!window.dataLayer) {
+			window.dataLayer = [];
+		}
+		
+		this._gtag("consent", "default", {
+			"ad_storage": "denied",
+			"ad_user_data": "denied",
+			"ad_personalization": "denied",
+			"analytics_storage": "denied"
+		});
+		
+		return this;
+	}
+	
 	startStatisticsTracking() {
 		
 		this.addToDataLayer({"event": "enableStatistics"});
-		this._gtag("consent", "update", {"analytics_storage": "granted"});
+		this._gtag("consent", "update", {
+			"analytics_storage": "granted"
+		});
 		this.addToDataLayer({"event": "trackCurrentPage"});
 		
 		return this;
@@ -57,7 +73,11 @@ export default class DataLayerTracker extends MultiTypeItemConnection {
 	startMarketingTracking() {
 		
 		this.addToDataLayer({"event": "enableMarketing"});
-		this._gtag("consent", "update", {"ad_storage": "granted"});
+		this._gtag("consent", "update", {
+			"ad_storage": "granted",
+			"ad_user_data": "granted",
+			"ad_personalization": "granted"
+		});
 		
 		return this;
 	}
