@@ -5,3 +5,4 @@ export {default as CreationType} from "./CreationType";
 export {default as Subscription} from "./Subscription";
 export {default as Details} from "./Details";
 export {default as Refunds} from "./Refunds";
+export {default as ProductIds} from "./ProductIds";

@@ -374,6 +374,17 @@ export default class ArrayFunctions {
 		
 		return aArray;
 	}
+
+	static castToBoolean(aArray) {
+		
+		let currentArray = aArray;
+		let currentArrayLength = currentArray.length;
+		for(let i = 0; i < currentArrayLength; i++) {
+			currentArray[i] = (currentArray[i] == "true" || currentArray[i] == "1");
+		}
+		
+		return aArray;
+	}
 	
 	static arrayFromSingleOrMultiple(aArrayOrItem) {
 		if(Array.isArray(aArrayOrItem)) {

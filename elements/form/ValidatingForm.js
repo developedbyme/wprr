@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 import Wprr from "wprr/Wprr";
-require('formdata-polyfill');
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 import ReferenceInjection from "wprr/reference/ReferenceInjection";
