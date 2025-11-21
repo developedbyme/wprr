@@ -18,7 +18,9 @@ export default class TrackingController extends MultiTypeItemConnection {
 		this.item.getLinks("trackers");
 		
 		this.item.setValue("allowStatistics", false);
+		this.item.getType("allowStatistics").addChangeCommand(Wprr.commands.callFunction(this, this._allowStatisticsChanged));
 		this.item.setValue("allowMarketing", false);
+		this.item.getType("allowMarketing").addChangeCommand(Wprr.commands.callFunction(this, this._allowMarketingChanged));
 		
 		this.item.setValue("active", false);
 		this.item.getType("active").addChangeCommand(Wprr.commands.callFunction(this, this._activeChanged));
@@ -48,6 +50,15 @@ export default class TrackingController extends MultiTypeItemConnection {
 		return this;
 	}
 	
+	setupPermissionsFromCookies() {
+		let allowStatistics = Cookies.get("cookie/allowStatistics") == 1;
+		let allowMarketing = Cookies.get("cookie/allowMarketing") == 1;
+		
+		this.setupAllowedTracking(allowStatistics, allowMarketing);
+		
+		return this;
+	}
+	
 	startIfCookiesAreSet() {
 		let allowStatistics = Cookies.get("cookie/allowStatistics") == 1;
 		let allowMarketing = Cookies.get("cookie/allowMarketing") == 1;
@@ -58,6 +69,8 @@ export default class TrackingController extends MultiTypeItemConnection {
 			this.setupAllowedTracking(allowStatistics, allowMarketing);
 			this.start();
 		}
+		
+		return this;
 	}
 	
 	_activeChanged() {
@@ -73,6 +86,8 @@ export default class TrackingController extends MultiTypeItemConnection {
 			let currentArrayLength = currentArray.length;
 			for(let i = 0; i < currentArrayLength; i++) {
 				let currentTracker = currentArray[i];
+				
+				currentTracker.startTracking();
 				
 				try {
 					if(allowStatistics) {
@@ -97,7 +112,50 @@ export default class TrackingController extends MultiTypeItemConnection {
 				currentTracker.stopTracking();
 			}
 		}
-		
+	}
+	
+	_allowStatisticsChanged() {
+		let active = this.item.getValue("active");
+		if(active) {
+			let allowStatistics = this.item.getValue("allowStatistics");
+			
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
+				
+				try {
+					if(allowStatistics) {
+						currentTracker.startStatisticsTracking();
+					}
+				}
+				catch(theError) {
+					console.error("Error occured while stating tracking", currentTracker, theError);
+				}
+			}
+		}
+	}
+	
+	_allowMarketingChanged() {
+		let active = this.item.getValue("active");
+		if(active) {
+			let allowMarketing = this.item.getValue("allowMarketing");
+			
+			let currentArray = Wprr.objectPath(this.item, "trackers.items.(every).tracker");
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				let currentTracker = currentArray[i];
+				
+				try {
+					if(allowMarketing) {
+						currentTracker.startMarketingTracking();
+					}
+				}
+				catch(theError) {
+					console.error("Error occured while stating tracking", currentTracker, theError);
+				}
+			}
+		}
 	}
 	
 	addTracker(aId) {
@@ -110,6 +168,9 @@ export default class TrackingController extends MultiTypeItemConnection {
 			
 			let currentTracker = Wprr.objectPath(this.item.group.getItem(aId), "tracker");
 			console.log("currentTracker", currentTracker);
+			
+			currentTracker.startTracking();
+			
 			try {
 				if(allowStatistics) {
 					currentTracker.startStatisticsTracking();
