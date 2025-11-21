@@ -96,6 +96,7 @@ export default class Project {
 		this._items.addSetup("product", Wprr.utils.data.multitypeitems.setup.Product.prepare, Wprr.utils.data.multitypeitems.setup.Product.setup);
 		this._items.addSetup("orderItems", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
 		this._items.addSetup("order/items", Wprr.utils.data.multitypeitems.setup.OrderItems.prepare, Wprr.utils.data.multitypeitems.setup.OrderItems.setup);
+		this._items.addSetup("order/productIds", Wprr.utils.data.multitypeitems.setup.order.ProductIds.prepare, Wprr.utils.data.multitypeitems.setup.order.ProductIds.setup);
 		this._items.addSetup("order/totals", Wprr.utils.data.multitypeitems.setup.order.Totals.prepare, Wprr.utils.data.multitypeitems.setup.order.Totals.setup);
 		this._items.addSetup("order/paymentMethod", Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.prepare, Wprr.utils.data.multitypeitems.setup.order.PaymentMethod.setup);
 		this._items.addSetup("order/creationType", Wprr.utils.data.multitypeitems.setup.order.CreationType.prepare, Wprr.utils.data.multitypeitems.setup.order.CreationType.setup);
