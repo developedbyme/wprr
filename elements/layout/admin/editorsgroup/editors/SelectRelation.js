@@ -63,9 +63,23 @@ export default class SelectRelation extends Layout {
 		
 		let objectType = this.getFirstInputWithDefault("objectType", "type");
 		creator.setDataType(objectType);
+
+		let additionalTypes = this.getFirstInput("additionalTypes");
+		if(additionalTypes) {
+			let currentArray = Wprr.utils.array.arrayOrSeparatedString(additionalTypes);
+			let currentArrayLength = currentArray.length;
+			for(let i = 0; i < currentArrayLength; i++) {
+				creator.changeData.addTerm(currentArray[i], "dbm_type", "slugPath");
+			}
+		}
 		
 		let postStatus = this.getFirstInputWithDefault("newItemStatus", "draft");
 		creator.changeData.setStatus(postStatus);
+
+		let setName = this.getFirstInputWithDefault("setName", false);
+		if(setName) {
+			creator.changeData.setDataField("name", search);
+		}
 		
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "title", search));
 		creator.addCreatedCommand(Wprr.commands.setValue(Wprr.sourceEvent("createdItem.linkedItem"), "postStatus", postStatus));
