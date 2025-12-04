@@ -25,7 +25,7 @@ export default class WpBlockEditor extends Layout {
 		
 		if(dataSettings) {
 			
-			externalStorage.updateValue("blockLoadData");
+			externalStorage.updateValue("blockLoadData", {});
 			
 			let currentArray = Wprr.utils.KeyValueGenerator.normalizeArrayOrObject(dataSettings);
 			let currentArrayLength = currentArray.length;

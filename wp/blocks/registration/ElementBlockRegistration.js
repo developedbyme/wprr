@@ -205,12 +205,18 @@ export default class ElementBlockRegistration {
 	save(aProps) {
 		//console.log("wprr/wp/blocks/registration/ElementBlockRegistration::save");
 		//console.log(aProps);
-		
-		let componentData = JSON.stringify(aProps.attributes.componentData);
-		if(componentData) {
-			componentData = componentData.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+
+		let blockLoadData = Wprr.objectPath(aProps.attributes.componentData, "blockLoadData");
+		if(Array.isArray(blockLoadData)) {
+			blockLoadData = {};
+			aProps.attributes.componentData.blockLoadData = blockLoadData;
 		}
 		
-		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentData}, this._saveContentInnerElement);
+		let componentDataString = JSON.stringify(aProps.attributes.componentData);
+		if(componentDataString) {
+			componentDataString = componentDataString.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+		}
+		
+		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentDataString}, this._saveContentInnerElement);
 	}
 }

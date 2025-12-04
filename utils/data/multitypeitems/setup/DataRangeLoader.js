@@ -11,6 +11,7 @@ export default class DataRangeLoader extends BaseObject {
 	
 	static setupData(aItem) {
 		//console.log("DataRangeLoader::setupData");
+		//console.log(aItem);
 		
 		let group = aItem.group;
 		

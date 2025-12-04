@@ -218,7 +218,7 @@ export default class MultiTypeItem {
 	}
 	
 	addNode(aName, aNode) {
-		
+		//console.log("addNode", aName, this)
 		if(aNode instanceof MultiTypeItemConnection) {
 			let item = this.group.createInternalItem();
 			aNode.setItemConnection(item);

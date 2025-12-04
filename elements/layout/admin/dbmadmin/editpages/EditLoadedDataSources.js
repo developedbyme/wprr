@@ -32,9 +32,7 @@ export default class EditLoadedDataSources extends Wprr.BaseObject {
 		this._elementTreeItem.addSingleLink("searchFilter", searchFilterItem.id);
 		
 		let sort = Wprr.utils.data.multitypeitems.controllers.list.SortedList.create(this._elementTreeItem.group.createInternalItem());
-		{
-			//let sortPartItem = sort.addFieldSort("forItem.linkedItem.fields.{fieldName}.value.value");
-		}
+		let sortPartItem = sort.addFieldSort("forItem.linkedItem.fields.name.value.value");
 		
 		sort.item.getType("all").input(filterItem.getType("filtered"));
 		

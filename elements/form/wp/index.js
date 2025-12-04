@@ -3,3 +3,4 @@ export {multipletermsselection};
 
 export {default as RangeSelection} from "./RangeSelection";
 export {default as TermSelection} from "./TermSelection";
+export {default as DataApiRangeSelection} from "./DataApiRangeSelection";
