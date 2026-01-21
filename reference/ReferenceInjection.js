@@ -7,6 +7,7 @@ import ReferenceHolder from "wprr/reference/ReferenceHolder";
 import SourceData from "wprr/reference/SourceData";
 
 import WprrContext from "wprr/reference/WprrContext";
+import Dbm from "dbm";
 
 //import ReferenceInjection from "wprr/reference/ReferenceInjection";
 export default class ReferenceInjection extends ManipulationBaseObject {
@@ -94,7 +95,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 			this._createInjectionObject();
 		}
 		
-		return React.createElement(Wprr.getContext().Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
+		return React.createElement(Dbm.react.context.Context.Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
 	}
 	
 	static createReactElement(aData, aChildOrChildren) {

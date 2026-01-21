@@ -36,6 +36,7 @@
   },
   "peerDependencies": {
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "dbm": "^1.2.5"
   }
 }

@@ -5,6 +5,7 @@ import SourceData from "wprr/reference/SourceData";
 import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 
 import UrlResolver from "wprr/utils/UrlResolver";
+import Dbm from "dbm";
 
 //import WprrBaseObject from "wprr/WprrBaseObject";
 export default class WprrBaseObject extends React.Component {
@@ -1010,4 +1011,4 @@ export default class WprrBaseObject extends React.Component {
 
 WprrBaseObject.CATCH_RENDER_ERRORS = true;
 
-WprrBaseObject.contextType = Wprr.getContext();
+WprrBaseObject.contextType = Dbm.react.context.Context;

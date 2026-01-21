@@ -3,6 +3,7 @@ import React from "react";
 import objectPath from "object-path";
 
 import WprrContext from "wprr/reference/WprrContext";
+import Dbm from "dbm";
 
 import TWEEN from "@tweenjs/tween.js";
 
@@ -405,7 +406,7 @@ export default class Wprr {
 	}
 	
 	getContext() {
-		return WprrContext;
+		return Dbm.react.context.Context;
 	}
 	
 	static getContext() {
@@ -413,7 +414,7 @@ export default class Wprr {
 			return window.wprr.getContext();
 		}
 		
-		return WprrContext;
+		return Dbm.react.context.Context;
 	}
 }
 
