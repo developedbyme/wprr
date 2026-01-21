@@ -29,7 +29,12 @@ export default class ReferenceExporter extends ManipulationBaseObject {
 		let clonedElements = super._renderMainElement();
 		
 		let references = this.getSourcedProp("references");
+		let values = {};
+		for(let objectName in references._objects) {
+			values[objectName] = references._objects[objectName];
+		}
+		values["references"] = references;
 		
-		return React.createElement(Dbm.react.context.Context.Provider, {"value": {"references": references}}, clonedElements);
+		return React.createElement(Dbm.react.context.AddContextVariables, {"values": values}, clonedElements);
 	}
 }

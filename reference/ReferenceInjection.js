@@ -65,6 +65,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 				let value = this.resolveSourcedData(currentData["value"]);
 				
 				this._references.addObject(key, value);
+				this._injectionObject["value"][key] = value;
 			}
 			hasData = currentArrayLength > 0;
 		}
@@ -78,6 +79,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 				hasData = true;
 				
 				this._references.addObject(objectName, value);
+				this._injectionObject["value"][objectName] = value;
 			}
 		}
 		
@@ -95,7 +97,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 			this._createInjectionObject();
 		}
 		
-		return React.createElement(Dbm.react.context.Context.Provider, this._injectionObject, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
+		return React.createElement(Dbm.react.context.AddContextVariables, {"values": this._injectionObject["value"]}, this._cloneChildrenAndAddProps(this._getChildrenToClone()));
 	}
 	
 	static createReactElement(aData, aChildOrChildren) {
