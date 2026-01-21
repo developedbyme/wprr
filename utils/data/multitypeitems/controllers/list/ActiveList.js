@@ -50,6 +50,10 @@ export default class ActiveList extends MultiTypeItemConnection {
 		
 		return this;
 	}
+
+	_setupRow(aRow) {
+
+	}
 	
 	_itemAdded(aId) {
 		console.log("ActiveList::_itemAdded");
@@ -76,6 +80,8 @@ export default class ActiveList extends MultiTypeItemConnection {
 			inArrayCondition.sources.get("value").input(forItemId);
 			inArrayCondition.sources.get("isInArray").input(item.getType("active"));
 		}
+
+		this._setupRow(item);
 		
 		if(active) {
 			this.item.getLinks("activeRows").addUniqueItem(aId);
