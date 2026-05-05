@@ -7,16 +7,9 @@ import SourceDataWithPath from "wprr/reference/SourceDataWithPath";
 import UrlResolver from "wprr/utils/UrlResolver";
 import Dbm from "dbm";
 
-//import WprrBaseObject from "wprr/WprrBaseObject";
-export default class WprrBaseObject extends React.Component {
+export default class WprrBaseObject extends Dbm.react.BaseObject {
 	
-	constructor(aProps, aContext) {
-		//console.log("WprrBaseObject::constructor");
-		
-		super(aProps, aContext);
-		
-		this.state = new Object();
-		
+	_construct() {
 		this._mainElementType = "div";
 		this._classNames = new Array();
 		
@@ -32,32 +25,9 @@ export default class WprrBaseObject extends React.Component {
 		this._registeredSources = new Object();
 		this._sourceChangeIndex = 0;
 		
-		this._elementTreeItem = new Wprr.utils.data.MultiTypeItem();
+		this._elementTreeItem = wprr.getDefaultProject().items.createInternalItem();
 		this._elementTreeItem.addType("component", this);
-		if(aContext) {
-			this._prepareTreeItem();
-		}
-		
-		
-		this._safeConstruct();
-	}
-	
-	_safeConstruct() {
-		if(WprrBaseObject.CATCH_RENDER_ERRORS) {
-			try {
-				this._construct();
-			}
-			catch(theError) {
-				console.error("Error while constructing", this, theError);
-			}
-		}
-		else {
-			this._construct();
-		}
-	}
-	
-	_construct() {
-		
+		this.item.setValue("elementTreeItem", this._elementTreeItem);
 	}
 	
 	_getAdditionalSourcesToRegister() {
@@ -778,28 +748,14 @@ export default class WprrBaseObject extends React.Component {
 
 	componentWillUnmount() {
 		//console.log("wprr/WprrBaseObject.componentWillUnmount");
+
+		super.componentWillUnmount();
 		
 		this._removeAllSources();
 		
 		let commands = this.getSourcedProp("willUnmountCommands");
 		if(commands) {
 			Wprr.utils.CommandPerformer.perform(commands, null, this);
-		}
-	}
-	
-	_prepareTreeItem() {
-		//console.log("_prepareTreeItem");
-		
-		if(!this._elementTreeItem.id) {
-			let items = this.getFirstInput(Wprr.sourceReferenceIfExists("wprr/project", "items"));
-			if(items) {
-				let id = items.generateNextInternalId();
-			
-				this._elementTreeItem.id = id;
-				this._elementTreeItem.setGroup(items);
-			
-				items.addItem(this._elementTreeItem);
-			}
 		}
 	}
 	
@@ -939,7 +895,6 @@ export default class WprrBaseObject extends React.Component {
 		let initialRender = !this._hasRendered;
 		
 		if(initialRender) {
-			this._prepareTreeItem();
 			this._beforePrepareInitialRender();
 			this._prepareInitialRender();
 			this._afterPrepareInitialRender();

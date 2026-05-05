@@ -1,4 +1,5 @@
 import Wprr from "wprr/Wprr";
+import Dbm from "dbm";
 
 import MultiTypeItem from "wprr/utils/data/MultiTypeItem";
 import ProjectRelatedItem from "wprr/utils/project/ProjectRelatedItem";
@@ -15,7 +16,6 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		this._items = new Object();
 		
 		this._internalPrefix = "-internal";
-		this._nextInternalId = 0;
 		
 		this._additionalLoader = null;
 		this._commands = null;
@@ -71,6 +71,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 			setupItem.addType("setupFunctions", []);
 			
 			typeLinks.addItem(aType, setupItem.id);
+
 		}
 		
 		let item = typeLinks.getLinkByName(aType);
@@ -264,10 +265,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	}
 	
 	generateNextInternalId() {
-		let nextId = this._nextInternalId;
-		this._nextInternalId++;
-		
-		return this._internalPrefix + nextId;
+		return this._internalPrefix + Dbm.getInstance().getNextId();
 	}
 	
 	createInternalItem() {
