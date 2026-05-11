@@ -19,21 +19,46 @@ export default class CookieSettings extends Layout {
 		this._hideCookieBar = Wprr.sourceValue(false);
 		this._consentDate = Wprr.sourceValue(null);
 	}
+
+	_getDomain() {
+		let parts = document.location.hostname.split('.');
+
+        let length = parts.length;
+        if (length === 1) {
+            return parts[0];
+        }
+        else if(parts[length-2] === "co" && parts[length-1] === "uk") {
+            return '.' + parts.slice(-3).join('.');
+        }
+        
+        return '.' + parts.slice(-2).join('.');
+	}
+
+	_removeOldCookies() {
+		Cookies.remove("cookie/hideCookieBar");
+		Cookies.remove("cookie/allowPreferences");
+		Cookies.remove("cookie/allowStatistics");
+		Cookies.remove("cookie/allowMarketing");
+		Cookies.remove("cookie/consentTime");
+	}
 	
 	saveSelection() {
-		//console.log("saveSelection");
+		console.log("saveSelection");
 		
 		let expires = this.getFirstInput("expires", 365);
+
+		let options = {"expires": expires, "domain": this._getDomain()};
 		
-		Cookies.set("cookie/hideCookieBar", this._hideCookieBar.value ? 1 : 0, {"expires": expires});
+		this._removeOldCookies();
+		Cookies.set("cookie/hideCookieBar", this._hideCookieBar.value ? 1 : 0, options);
 		
-		Cookies.set("cookie/allowPreferences", this._performance.value ? 1 : 0, {"expires": expires});
-		Cookies.set("cookie/allowStatistics", this._statistics.value ? 1 : 0, {"expires": expires});
-		Cookies.set("cookie/allowMarketing", this._marketing.value ? 1 : 0, {"expires": expires});
+		Cookies.set("cookie/allowPreferences", this._performance.value ? 1 : 0, options);
+		Cookies.set("cookie/allowStatistics", this._statistics.value ? 1 : 0, options);
+		Cookies.set("cookie/allowMarketing", this._marketing.value ? 1 : 0, options);
 		
 		let consentTime = moment().format("Y-MM-DD[T]HH:mm:ssZ");
 		
-		Cookies.set("cookie/consentTime", consentTime, {"expires": expires});
+		Cookies.set("cookie/consentTime", consentTime, options);
 		this._consentDate.value = consentTime;
 		
 		let trackingController = this.getFirstInput(Wprr.sourceReference("wprr/project", "items.project.tracking.linkedItem.trackingController"));

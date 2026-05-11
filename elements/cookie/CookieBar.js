@@ -15,18 +15,44 @@ export default class CookieBar extends Layout {
 		
 		this._open = Wprr.sourceValue(false);
 	}
+
+	_getDomain() {
+		let parts = document.location.hostname.split('.');
+
+        let length = parts.length;
+        if (length === 1) {
+            return parts[0];
+        }
+        else if(parts[length-2] === "co" && parts[length-1] === "uk") {
+            return '.' + parts.slice(-3).join('.');
+        }
+        
+        return '.' + parts.slice(-2).join('.');
+	}
+
+	_removeOldCookies() {
+		Cookies.remove("cookie/hideCookieBar");
+		Cookies.remove("cookie/allowPreferences");
+		Cookies.remove("cookie/allowStatistics");
+		Cookies.remove("cookie/allowMarketing");
+		Cookies.remove("cookie/consentTime");
+	}
 	
 	allowAll() {
 		//console.log("allowAll");
 		
 		let expires = this.getFirstInput("expires", 365);
+
+		this._removeOldCookies();
+
+		let options = {"expires": expires, "domain": this._getDomain()};
 		
-		Cookies.set("cookie/hideCookieBar", 1, {"expires": expires});
+		Cookies.set("cookie/hideCookieBar", 1, options);
 		
-		Cookies.set("cookie/allowPreferences", 1, {"expires": expires});
-		Cookies.set("cookie/allowStatistics", 1, {"expires": expires});
-		Cookies.set("cookie/allowMarketing", 1, {"expires": expires});
-		Cookies.set("cookie/consentTime", moment().format("Y-MM-DD[T]HH:mm:ssZ"), {"expires": expires});
+		Cookies.set("cookie/allowPreferences", 1, options);
+		Cookies.set("cookie/allowStatistics", 1, options);
+		Cookies.set("cookie/allowMarketing", 1, options);
+		Cookies.set("cookie/consentTime", moment().format("Y-MM-DD[T]HH:mm:ssZ"), options);
 		
 		this._open.value = false;
 		
