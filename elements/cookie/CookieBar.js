@@ -1,5 +1,6 @@
 import React from "react";
 import Wprr from "wprr/Wprr";
+import Dbm from "dbm";
 
 import Layout from "wprr/elements/layout/Layout";
 
@@ -61,6 +62,9 @@ export default class CookieBar extends Layout {
 			trackingController.setupAllowedTracking(true, true);
 			trackingController.start();
 		}
+		
+		Dbm.getInstance().repository.getItem("trackingController").allowStatistics = true;
+		Dbm.getInstance().repository.getItem("trackingController").allowMarketing = true;
 	}
 	
 	_prepareInitialRender() {
