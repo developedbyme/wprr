@@ -1,4 +1,5 @@
 import Wprr from "wprr/Wprr";
+import Dbm from "dbm";
 
 import BaseObject from "wprr/core/BaseObject";
 
@@ -32,7 +33,9 @@ export default class DataRangeLoader extends BaseObject {
 				let currentId = currentArray[i];
 				let item = group.getItem(currentId);
 				group.prepareItem(item, objectName);
-				group.setupItem(item, objectName, items[""+currentId]);
+
+				let currentData = items[""+currentId];
+				group.setupItem(item, objectName, currentData);
 			}
 			
 			let endTime = Date.now();

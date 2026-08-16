@@ -110,7 +110,7 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 	
 	setupItem(aItem, aSetupType, aData) {
 		//console.log("setupItem");
-		//console.log(aItem, aSetupType);
+		//console.log(aItem, aSetupType, aData);
 		
 		let setupFunctions = Wprr.objectPath(this, "itemsSetup.types." + aSetupType + ".setupFunctions");
 		
@@ -124,6 +124,15 @@ export default class MultiTypeItemsGroup extends ProjectRelatedItem {
 		}
 		
 		this.commands.perform("setupItem/" + aSetupType, {"item": aItem, "data": aData, "setupType": aSetupType});
+
+		let dbmItem = Dbm.repository.getItem(aItem.id);
+		let decoder = Dbm.repository.getItemIfExists("graphApi/decode/wprr/" + aSetupType);
+		if(decoder) {
+			decoder.controller.updateItemWithEncoding(dbmItem, aData);
+		}
+		else {
+			console.log("Missing dbm decoder: " + aSetupType, aData);
+		}
 		
 		return this;
 	}
