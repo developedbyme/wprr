@@ -1,5 +1,6 @@
 import React from "react";
 import Wprr from "wprr/Wprr";
+import Dbm from "dbm";
 
 import WprrBaseObject from "wprr/WprrBaseObject";
 
@@ -8,8 +9,8 @@ import ReferenceInjection from "wprr/reference/ReferenceInjection";
 //import SelectItem from "wprr/reference/SelectItem";
 export default class SelectItem extends WprrBaseObject {
 
-	constructor(aProps) {
-		super(aProps);
+	_construct() {
+		super._construct();
 		
 		this._defaultAs = "item";
 		this._defaultFrom = "items";
@@ -50,7 +51,8 @@ export default class SelectItem extends WprrBaseObject {
 		let children = this.getProps()["children"];
 		
 		let injectData = new Object();
-		injectData[this.getFirstInputWithDefault("as", this._defaultAs)] = this._selectedItem;
+		let asName = this.getFirstInputWithDefault("as", this._defaultAs);
+		injectData[asName] = this._selectedItem;
 		
 		let props = {"injectData": injectData};
 		
@@ -63,6 +65,15 @@ export default class SelectItem extends WprrBaseObject {
 			props["key"] = "none";
 		}
 		*/
+
+		let selectedItem = this._selectedItem.value;
+		if(selectedItem) {
+			let dbmItem = Dbm.repository.getItem(selectedItem.id);
+
+			return React.createElement(Dbm.react.context.AddItemToContext, {"item": dbmItem, "as": asName},
+				React.createElement(ReferenceInjection, props, children)
+			);
+		}
 		
 		return React.createElement(ReferenceInjection, props, children);
 	}

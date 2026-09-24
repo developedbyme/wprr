@@ -65,7 +65,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 				let value = this.resolveSourcedData(currentData["value"]);
 				
 				this._references.addObject(key, value);
-				this._injectionObject["value"][key] = value;
+				//this._injectionObject["value"]["wprr/" + key] = value;
 			}
 			hasData = currentArrayLength > 0;
 		}
@@ -79,7 +79,7 @@ export default class ReferenceInjection extends ManipulationBaseObject {
 				hasData = true;
 				
 				this._references.addObject(objectName, value);
-				this._injectionObject["value"][objectName] = value;
+				//this._injectionObject["value"]["wprr/" + objectName] = value;
 			}
 		}
 		

@@ -86,6 +86,7 @@ export default class LoadDataRange extends MultiTypeItemConnection {
 	
 	_setupRange(aItem) {
 		//console.log("LoadDataRange::_setupRange");
+		//console.log(aItem, this);
 		//console.log(aItem.getLinks("range"));
 		
 		let ids = aItem.getLinks("range").ids;

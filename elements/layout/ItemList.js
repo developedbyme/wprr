@@ -1,7 +1,6 @@
-"use strict";
-
 import React from "react";
 import Wprr from "wprr/Wprr";
+import Dbm from "dbm";
 
 import Layout from "./Layout";
 
