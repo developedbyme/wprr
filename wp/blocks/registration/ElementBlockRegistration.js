@@ -19,6 +19,7 @@ export default class ElementBlockRegistration {
 		
 		this._element = null;
 		this._registrationData = new Object();
+		this._registrationData["apiVersion"] = 3;
 		this._registrationData["attributes"] = new Object();
 		
 		this._componentName = null;
@@ -216,7 +217,9 @@ export default class ElementBlockRegistration {
 		if(componentDataString) {
 			componentDataString = componentDataString.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
 		}
+
+		let blockProps = wp.blockEditor.useBlockProps.save();
 		
-		return React.createElement("div", {"data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentDataString}, this._saveContentInnerElement);
+		return React.createElement("div", {...blockProps, "data-expanded-content": "1", "data-wprr-component": this._componentName, "data-wprr-component-data": componentDataString}, this._saveContentInnerElement);
 	}
 }

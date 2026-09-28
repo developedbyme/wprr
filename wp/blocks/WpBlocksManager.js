@@ -108,7 +108,7 @@ export default class WpBlocksManager {
 				
 				let categories = wp.blocks.getCategories();
 				
-				if(!Wprr.utils.array.getItemBy("slug", path, categories)) {
+				if(!Wprr.utils.array.getItemByIfExists("slug", path, categories)) {
 					categories.push({"slug": aCategory, "title": aCategory, "icon": null});
 					wp.blocks.setCategories(categories);
 				}
