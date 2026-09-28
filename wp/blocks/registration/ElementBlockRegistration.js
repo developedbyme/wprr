@@ -199,8 +199,13 @@ export default class ElementBlockRegistration {
 		
 		referenceHolder.addObject(blocksPrefix + "attributes", aProps.attributes);
 		referenceHolder.addObject(blocksPrefix + "setAttributes", aProps.setAttributes);
+
+		let ref = wp.element.useRef()
+		let blockProps = wp.blockEditor.useBlockProps({ref: ref});
 		
-		return React.createElement(ReferenceExporter, {"references": referenceHolder, "attributes": aProps.attributes}, this._element);
+		return React.createElement("div", blockProps,
+			React.createElement(ReferenceExporter, {"references": referenceHolder, "attributes": aProps.attributes}, this._element)
+		);
 	}
 	
 	save(aProps) {
