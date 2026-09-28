@@ -187,7 +187,7 @@ export default class EditGlobalItems extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

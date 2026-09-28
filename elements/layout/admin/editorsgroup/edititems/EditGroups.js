@@ -235,7 +235,7 @@ export default class EditGroups extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			

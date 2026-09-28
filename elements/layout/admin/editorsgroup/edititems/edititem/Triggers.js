@@ -42,7 +42,7 @@ export default class Triggers extends Wprr.BaseObject {
 	}
 	
 	static getWpAdminEditor() {
-		console.log("getWpAdminEditor");
+		//console.log("getWpAdminEditor");
 		
 		let dataSettings = {
 			
