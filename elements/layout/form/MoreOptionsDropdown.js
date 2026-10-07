@@ -5,16 +5,12 @@ import Wprr from "wprr/Wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-// import MoreOptionsDropdown from "./MoreOptionsDropdown";
 export default class MoreOptionsDropdown extends Layout {
 
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		//console.log("MoreOptionsDropdown::constructor");
 
-		super();
+	_construct() {
+
+		super._construct();
 		
 		this._layoutName = "moreOptionsDropdown";
 	}

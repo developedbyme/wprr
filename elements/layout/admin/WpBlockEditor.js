@@ -5,16 +5,11 @@ import Wprr from "wprr/Wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-// import WpBlockEditor from "./WpBlockEditor";
 export default class WpBlockEditor extends Layout {
 
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		//console.log("WpBlockEditor::constructor");
+	_construct() {
 
-		super();
+		super._construct();
 		
 		this._layoutName = "wpBlockEditor";
 	}

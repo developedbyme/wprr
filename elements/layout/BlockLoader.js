@@ -3,14 +3,11 @@ import Wprr from "wprr/Wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-import objectPath from "object-path";
-
-//import BlockLoader from "wprr/elements/layout/BlockLoader";
 export default class BlockLoader extends Layout {
 
-	constructor() {
+	_construct() {
 		
-		super();
+		super._construct();
 		
 		this._layoutName = "blockLoader";
 		

@@ -5,16 +5,11 @@ import Wprr from "wprr/Wprr";
 
 import Layout from "wprr/elements/layout/Layout";
 
-// import LabelledArea from "./LabelledArea";
 export default class LabelledArea extends Layout {
 
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		//console.log("LabelledArea::constructor");
+	_construct() {
 
-		super();
+		super._construct();
 		
 		this._layoutName = "labelledArea";
 	}

@@ -8,13 +8,9 @@ import Layout from "wprr/elements/layout/Layout";
 // import Button from "./Button";
 export default class Button extends Layout {
 
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		//console.log("Button::constructor");
+	_construct() {
 
-		super();
+		super._construct();
 		
 		this._layoutName = "button";
 	}

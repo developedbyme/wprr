@@ -4,16 +4,11 @@ import Dbm from "dbm";
 
 import Layout from "./Layout";
 
-// import ItemList from "./ItemList";
 export default class ItemList extends Layout {
 
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		//console.log("ItemList::constructor");
+	_construct() {
 
-		super();
+		super._construct();
 		
 		this._layoutName = "itemList";
 	}
