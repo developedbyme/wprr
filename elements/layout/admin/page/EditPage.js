@@ -159,7 +159,7 @@ export default class EditPage extends Layout {
 		let wpUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/wp-admin/post.php?post=" + id + "&action=edit"));
 		let exploreUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/?id=" + id));
 
-		let allowedRoles = this.getFirstInputWithDefault("roles", "administrator");
+		let allowedRoles = this.getFirstInputWithDefault("allowedRoles", "administrator");
 		
 		return React.createElement("div", {"className": "centered-site"},
 			React.createElement(Wprr.UserRoleSection, {},
