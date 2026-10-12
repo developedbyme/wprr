@@ -157,11 +157,13 @@ export default class EditPage extends Layout {
 		let id = this.getFirstInput("id", Wprr.sourceReference("wprr/pageItem", "post.id"));
 		
 		let wpUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/wp-admin/post.php?post=" + id + "&action=edit"));
-		let exploreUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/?id=" + id)); 
+		let exploreUrl = this.getFirstInput(Wprr.sourceReference("projectLinks", "wp/site/admin/items/item/?id=" + id));
+
+		let allowedRoles = this.getFirstInputWithDefault("roles", "administrator");
 		
 		return React.createElement("div", {"className": "centered-site"},
 			React.createElement(Wprr.UserRoleSection, {},
-				React.createElement(Wprr.BaseObject, {"data-section-name": "administrator", "didMountCommands": [Wprr.commands.callFunction(this, this._startListeners)], "willUnmountCommands": [Wprr.commands.callFunction(this, this._stopListeners)]},
+				React.createElement(Wprr.BaseObject, {"data-section-name": allowedRoles, "didMountCommands": [Wprr.commands.callFunction(this, this._startListeners)], "willUnmountCommands": [Wprr.commands.callFunction(this, this._stopListeners)]},
 					React.createElement(Wprr.OpenCloseExpandableArea, {"open": this._elementTreeItem.getValueSource("open")},
 						React.createElement("div", {"className": "spacing standard"}),
 						React.createElement("div", {},
